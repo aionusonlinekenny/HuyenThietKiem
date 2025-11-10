@@ -142,8 +142,8 @@ BOOL KLibOfBPT::Init()
 											&m_BPTHorse,
 											&m_BPTMask,
 											&m_BPTMantle,
-											&m_BPTSignet,
-											&m_BPTShipin,
+											//&m_BPTSignet,		// Temporarily disabled - need proper data files
+											//&m_BPTShipin,		// Temporarily disabled - need proper data files
 											&m_BPTGoldEquip,
 											&m_BPTBrokenEquip,
 											&m_BPTMedicine,
@@ -159,7 +159,7 @@ BOOL KLibOfBPT::Init()
 	int i;
 	for(i = 0; i < cbNumOfTables; i++)
 	{
-		if (i < 15)
+		if (i < 13)  // Changed back to 13 since Signet/Shipin are disabled
 		{
 			KBPT_Equipment* pTemp = (KBPT_Equipment*)paryBPT[i];
 			pTemp->Init(i);
