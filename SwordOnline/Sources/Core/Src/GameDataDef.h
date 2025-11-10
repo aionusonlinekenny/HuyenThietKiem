@@ -196,6 +196,8 @@ enum ITEM_PART
 	itempart_horse,
 	itempart_mask,
 	itempart_mantle,
+	itempart_signet,
+	itempart_shipin,
 	itempart_num,
 };
 
@@ -217,6 +219,8 @@ enum EQUIPDETAILTYPE
 	equip_horse,
 	equip_mask,
 	equip_mantle,
+	equip_signet,
+	equip_shipin,
 	equip_detailnum,
 };
 
@@ -374,13 +378,13 @@ enum PLAYER_INSTANT_STATE
 enum CHAT_STATUS
 {
 	CHAT_S_ONLINE = 0,		//????
-	CHAT_S_BUSY,			//æµ
+	CHAT_S_BUSY,			//ï¿½
 	CHAT_S_HIDE,			//????
 	CHAT_S_LEAVE,			//??
 	CHAT_S_DISCONNECT,		//????
 };
 
-// ?????ö???????????(by zroc)
+// ?????ï¿½???????????(by zroc)
 enum OBJ_ATTRIBYTE_TYPE
 {
 	series_metal = 0,		//	???
@@ -693,7 +697,7 @@ enum PLAYER_ACTION_LIST
 //==================================
 enum SYS_MESSAGE_TYPE
 {
-	SMT_NORMAL = 0,	//???µ????????
+	SMT_NORMAL = 0,	//???ï¿½????????
 	SMT_SYSTEM,		//???????????
 	SMT_PLAYER,		//??????
 	SMT_TEAM,		//??????
@@ -871,19 +875,21 @@ struct KUiPlayerImmedItemSkill
 //==================================
 enum UI_EQUIPMENT_POSITION
 {
-	UIEP_HEAD			= 0,		
-	UIEP_HAND			= 1,		
-	UIEP_NECK			= 2,		
-	UIEP_FINESSE		= 3,	
-	UIEP_BODY			= 4,		
-	UIEP_WAIST			= 5,		
-	UIEP_FINGER1		= 6,	
-	UIEP_FINGER2		= 7,	
+	UIEP_HEAD			= 0,
+	UIEP_HAND			= 1,
+	UIEP_NECK			= 2,
+	UIEP_FINESSE		= 3,
+	UIEP_BODY			= 4,
+	UIEP_WAIST			= 5,
+	UIEP_FINGER1		= 6,
+	UIEP_FINGER2		= 7,
 	UIEP_WAIST_DECOR	= 8,
-	UIEP_FOOT			= 9,		
+	UIEP_FOOT			= 9,
 	UIEP_HORSE			= 10,
 	UIEP_MASK			= 11,
 	UIEP_MANTLE			= 12,
+	UIEP_SIGNET			= 13,
+	UIEP_SHIPIN			= 14,
 };
 
 //==================================

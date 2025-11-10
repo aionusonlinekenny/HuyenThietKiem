@@ -678,7 +678,7 @@ int	KCoreShell::GetGameData(unsigned int uDataId, unsigned int uParam, int nPara
 			if (nParam == 1)
 				break;
 
-			int PartConvert[itempart_num] = 
+			int PartConvert[itempart_num] =
 			{
 				UIEP_HEAD,		UIEP_BODY,
 				UIEP_WAIST,		UIEP_HAND,
@@ -686,7 +686,8 @@ int	KCoreShell::GetGameData(unsigned int uDataId, unsigned int uParam, int nPara
 				UIEP_NECK,		UIEP_FINGER1,
 				UIEP_FINGER2,	UIEP_WAIST_DECOR,
 				UIEP_HORSE,		UIEP_MASK,
-				UIEP_MANTLE,
+				UIEP_MANTLE,	UIEP_SIGNET,
+				UIEP_SHIPIN,
 			};
 
 			int nCount = 0;
@@ -721,7 +722,7 @@ int	KCoreShell::GetGameData(unsigned int uDataId, unsigned int uParam, int nPara
 			if (nParam == 1)
 				break;
 
-			int PartConvert[itempart_num] = 
+			int PartConvert[itempart_num] =
 			{
 				UIEP_HEAD,		UIEP_BODY,
 				UIEP_WAIST,		UIEP_HAND,
@@ -729,7 +730,8 @@ int	KCoreShell::GetGameData(unsigned int uDataId, unsigned int uParam, int nPara
 				UIEP_NECK,		UIEP_FINGER1,
 				UIEP_FINGER2,	UIEP_WAIST_DECOR,
 				UIEP_HORSE,		UIEP_MASK,
-				UIEP_MANTLE,
+				UIEP_MANTLE,	UIEP_SIGNET,
+				UIEP_SHIPIN,
 			};
 
 			int nCount = 0;
@@ -761,7 +763,7 @@ int	KCoreShell::GetGameData(unsigned int uDataId, unsigned int uParam, int nPara
 		nRet = 0;
 		if (uParam)
 		{
-			// TODO?????û????????????
+			// TODO?????ï¿½????????????
 			if (nParam == 1)
 				break;
 
@@ -2581,15 +2583,16 @@ int	KCoreShell::OperationRequest(unsigned int uOper, unsigned int uParam, int nP
 	case GOI_SWITCH_OBJECT:
 		{
 			ItemPos	P1, P2;
-			int PartConvert[itempart_num] = 
-			{ 
+			int PartConvert[itempart_num] =
+			{
 				itempart_head,		itempart_weapon,
 				itempart_amulet,	itempart_cuff,
 				itempart_body,		itempart_belt,
 				itempart_ring1,		itempart_ring2,
 				itempart_pendant,	itempart_foot,
 				itempart_horse,		itempart_mask,
-				itempart_mantle,
+				itempart_mantle,	itempart_signet,
+				itempart_shipin,
 			};
 
 			int PartBuildItem[MAX_PART_BUILD] = //TrembleItem by kinnox;
@@ -2882,7 +2885,7 @@ int	KCoreShell::OperationRequest(unsigned int uOper, unsigned int uParam, int nP
 					break;
 				case UOC_BUILD_ITEM://TrembleItem by kinnox;
 					{
-						// TODO:???û???????
+						// TODO:???ï¿½???????
 						if (pObject2->Region.h == 1)
 							break;
 						P2.nPlace = pos_builditem;
@@ -3181,7 +3184,7 @@ int	KCoreShell::OperationRequest(unsigned int uOper, unsigned int uParam, int nP
 	case GOI_SET_SEND_CHAT_CHANNEL:
 		if (uParam)
 		{
-			KUiChatChannel* pChannelInfo = (KUiChatChannel*)uParam;// pChannelInfo ????õ?????????
+			KUiChatChannel* pChannelInfo = (KUiChatChannel*)uParam;// pChannelInfo ????ï¿½?????????
 			Player[CLIENT_PLAYER_INDEX].m_cChat.SetCurChannel(pChannelInfo->nChannelNo, pChannelInfo->uChannelId, pChannelInfo->nChannelIndex);
 		}
 		break;
