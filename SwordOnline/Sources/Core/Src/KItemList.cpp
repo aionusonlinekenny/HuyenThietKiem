@@ -1346,6 +1346,12 @@ int KItemList::GetEquipPlace(int nType)
 	case equip_mantle:
 		nRet = itempart_mantle;
 		break;
+	case equip_signet:
+		nRet = itempart_signet;
+		break;
+	case equip_shipin:
+		nRet = itempart_shipin;
+		break;
 	default:
 		break;
 	}
@@ -1409,6 +1415,14 @@ BOOL KItemList::Fit(int nIdx, int nPlace)
 		if (nPlace == itempart_mantle)
 			bRet = TRUE;
 		break;
+	case equip_signet:
+		if (nPlace == itempart_signet)
+			bRet = TRUE;
+		break;
+	case equip_shipin:
+		if (nPlace == itempart_shipin)
+			bRet = TRUE;
+		break;
 	}
 	return bRet;
 }
@@ -1468,6 +1482,14 @@ BOOL KItemList::Fit(KItem* pItem, int nPlace)
 		break;
 	case equip_mantle:
 		if (nPlace == itempart_mantle)
+			bRet = TRUE;
+		break;
+	case equip_signet:
+		if (nPlace == itempart_signet)
+			bRet = TRUE;
+		break;
+	case equip_shipin:
+		if (nPlace == itempart_shipin)
 			bRet = TRUE;
 		break;
 	}
