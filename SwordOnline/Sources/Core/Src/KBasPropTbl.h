@@ -424,6 +424,8 @@ protected:
 	KBPT_Equipment			m_BPTHorse;
 	KBPT_Equipment			m_BPTMask;
 	KBPT_Equipment			m_BPTMantle;
+	KBPT_Equipment			m_BPTSignet;
+	KBPT_Equipment			m_BPTShipin;
 	//
 	KBPT_Gold_Equipment		m_BPTGoldEquip;
 	//
@@ -479,6 +481,10 @@ public:
 	const int					GetMaskRecordNumber() const;
 	const KBASICPROP_EQUIPMENT* GetMantleRecord(IN int) const;
 	const int					GetMantleRecordNumber() const;
+	const KBASICPROP_EQUIPMENT* GetSignetRecord(IN int) const;
+	const int					GetSignetRecordNumber() const;
+	const KBASICPROP_EQUIPMENT* GetShipinRecord(IN int) const;
+	const int					GetShipinRecordNumber() const;
 	//
 	const KBASICPROP_GOLD_EQUIPMENT*	GetGoldEquipRecord(IN int nIndex) const;
 	const int							GetGoldEquipRecordNumber() const;

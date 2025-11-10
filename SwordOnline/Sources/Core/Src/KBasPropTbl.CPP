@@ -4,8 +4,8 @@
 // File:	KBasPropTbl.CPP
 // Date:	2002.08.14
 // Code:	DongBo
-// Desc:    cpp file. ±¾ÎÄ¼þÊµÏÖµÄÀàÓÃÓÚ´Ótab fileÖÐ¶Á³öµÀ¾ßµÄ³õÊ¼ÊôÐÔ,
-//			²¢Éú³É¶ÔÓ¦µÄÊôÐÔ±í
+// Desc:    cpp file. ï¿½ï¿½ï¿½Ä¼ï¿½Êµï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½tab fileï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ßµÄ³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½,
+//			ï¿½ï¿½ï¿½ï¿½ï¿½É¶ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½
 // --
 
 #include "KCore.h"
@@ -142,6 +142,8 @@ BOOL KLibOfBPT::Init()
 											&m_BPTHorse,
 											&m_BPTMask,
 											&m_BPTMantle,
+											&m_BPTSignet,
+											&m_BPTShipin,
 											&m_BPTGoldEquip,
 											&m_BPTBrokenEquip,
 											&m_BPTMedicine,
@@ -157,7 +159,7 @@ BOOL KLibOfBPT::Init()
 	int i;
 	for(i = 0; i < cbNumOfTables; i++)
 	{
-		if (i < 13)
+		if (i < 15)
 		{
 			KBPT_Equipment* pTemp = (KBPT_Equipment*)paryBPT[i];
 			pTemp->Init(i);
@@ -239,7 +241,7 @@ BOOL KLibOfBPT::InitMAIT()
 
     //#ifdef _DEBUG
     #if 0
-    //g_DebugLog("[Ä§·¨ÊôÐÔ]%sÎå·À¿¹ÐÔÉÏÏÞÔö¼Ó%d", pNpc->Name, pMagic->nValue[0]);
+    //g_DebugLog("[Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]%sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½%d", pNpc->Name, pMagic->nValue[0]);
     printf("[Magic Attribute]m_CMAIT[Type][Element System][Level][Prefix]\n");
     for (nPrefixPostfix = 0; nPrefixPostfix < MATF_PREFIXPOSFIX; nPrefixPostfix++)
     {
@@ -293,43 +295,43 @@ BOOL KLibOfBPT::InitMAIT()
 
 
 /******************************************************************************
-	¹¦ÄÜ£º	¸ù¾ÝÔ­Ê¼µÄÄ§·¨ÊôÐÔ±í£¬Í³¼Æ³öÃ¿ÖÖ×°±¸¸÷ÓÐÄÄÐ©¿ÉÄÜµÄÄ§·¨ÊôÐÔ
-	Èë¿Ú:	m_BPTMagicAttrib: ÄÚº¬´Ótab file¶ÁÈëµÄÈ«²¿Ä§·¨ÊôÐÔ
-	³ö¿Ú:	Ô­Ê¼µÄÄ§·¨ÊôÐÔ±í±»·ÖÀà, ·ÖÀàºóµÄÊý¾Ý´æÈëm_CMATÊý×éÖÐ
-			m_CMAT[i]ÖÐ¸ø³öÁËÊÊÓÃÓÚµÚiÖÖ×°±¸µÄÈ«²¿Ä§·¨ÊôÐÔ
+	ï¿½ï¿½ï¿½Ü£ï¿½	ï¿½ï¿½ï¿½ï¿½Ô­Ê¼ï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½Í³ï¿½Æ³ï¿½Ã¿ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð©ï¿½ï¿½ï¿½Üµï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	ï¿½ï¿½ï¿½:	m_BPTMagicAttrib: ï¿½Úºï¿½ï¿½ï¿½tab fileï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	ï¿½ï¿½ï¿½ï¿½:	Ô­Ê¼ï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½m_CMATï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			m_CMAT[i]ï¿½Ð¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½iï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ******************************************************************************/
 BOOL KLibOfBPT::InitMALib()
 {
 	BOOL bEC = FALSE;
 
-	// È·¶¨Ã¿ÖÖ×°±¸¸÷ÓÐ¶àÉÙÖÖ¿ÉÄÜµÄÄ§·¨ÊôÐÔ
-    int naryMACount[2][MATF_CBDR];	// µÚiÖÖ×°±¸¹²ÓÐnaryMACount[0][i]ÖÖ¿ÉÄÜµÄÇ°×º
-									//			  ºÍnaryMACount[1][i]ÖÖ¿ÉÄÜµÄºó×º
+	// È·ï¿½ï¿½Ã¿ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Ö¿ï¿½ï¿½Üµï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int naryMACount[2][MATF_CBDR];	// ï¿½ï¿½iï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½naryMACount[0][i]ï¿½Ö¿ï¿½ï¿½Üµï¿½Ç°×º
+									//			  ï¿½ï¿½naryMACount[1][i]ï¿½Ö¿ï¿½ï¿½ÜµÄºï¿½×º
 	m_BPTMagicAttrib.GetMACount((int*)naryMACount);
 
-	// ¸ù¾ÝÈ¡»ØµÄÊýÖµ£¬Îª¸÷×°±¸µÄÄ§·¨ÊôÐÔË÷Òý±í·ÖÅäÄÚÈÝ
+	// ï¿½ï¿½ï¿½ï¿½È¡ï¿½Øµï¿½ï¿½ï¿½Öµï¿½ï¿½Îªï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	for (int i = 0; i < MATF_CBDR - 1; i++)	// -1 because of horse
 	{
-		_ASSERT(naryMACount[0][i] > 0);	// ²»¿ÉÄÜÃ»ÓÐÒ»¸öÄ§·¨Ç°×ºÊÊÓÃÓÚ¸Ã×°±¸
-		_ASSERT(naryMACount[1][i] > 0);	// ²»¿ÉÄÜÃ»ÓÐÒ»¸öÄ§·¨ºó×ºÊÊÓÃÓÚ¸Ã×°±¸
+		_ASSERT(naryMACount[0][i] > 0);	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ò»ï¿½ï¿½Ä§ï¿½ï¿½Ç°×ºï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½×°ï¿½ï¿½
+		_ASSERT(naryMACount[1][i] > 0);	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ò»ï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½×ºï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½×°ï¿½ï¿½
 		if (FALSE == m_CMAT[0][i].GetMemory(naryMACount[0][i]))
 			return bEC;
 		if (FALSE == m_CMAT[1][i].GetMemory(naryMACount[1][i]))
 			return bEC;
 	}
 
-	// ±éÀúÄ§·¨ÊôÐÔ±í£¬½¨Á¢Æð¸÷×°±¸µÄÄ§·¨ÊôÐÔË÷Òý±í
-	const int nNumOfMA = m_BPTMagicAttrib.NumOfEntries();	// Ä§·¨ÊôÐÔµÄ×ÜÊý
+	// ï¿½ï¿½ï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	const int nNumOfMA = m_BPTMagicAttrib.NumOfEntries();	// Ä§ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½ï¿½ï¿½
 	_ASSERT(nNumOfMA > 0);
-	int m, n;		// µÚmÏîÄ§·¨ÊôÐÔÊÊÓÃÓÚµÚnÖÖ×°±¸
-	for (m = 0; m < nNumOfMA; m++)				// ±éÀúËùÓÐÄ§·¨ÊôÐÔ
+	int m, n;		// ï¿½ï¿½mï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½nï¿½ï¿½×°ï¿½ï¿½
+	for (m = 0; m < nNumOfMA; m++)				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	{
 		const KMAGICATTRIB_TABFILE* pRec;
 		pRec = m_BPTMagicAttrib.GetRecord(m);		
-		for (n = 0; n < MATF_CBDR; n++)			// ¹²ÓÐMATF_CBDRÖÖ×°±¸´øÄ§·¨
-		{	// È·ÈÏÄ§·¨ÊôÐÔÊÊÓÃÓÚÄÄÐ©×°±¸
+		for (n = 0; n < MATF_CBDR; n++)			// ï¿½ï¿½ï¿½ï¿½MATF_CBDRï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½Ä§ï¿½ï¿½
+		{	// È·ï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð©×°ï¿½ï¿½
 			if (0 != pRec->m_DropRate[n])
-			{	// ÔËÐÐÖÁ´Ë, ËµÃ÷µÚmÏîÄ§·¨ÊôÐÔÊÊÓÃÓÚµÚnÖÖ×°±¸
+			{	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, Ëµï¿½ï¿½ï¿½ï¿½mï¿½ï¿½Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½nï¿½ï¿½×°ï¿½ï¿½
 				int nPos;
 				nPos = (0 == pRec->m_nPos) ? 1 : 0;
 				m_CMAT[nPos][n].Set(m);
@@ -342,7 +344,7 @@ BOOL KLibOfBPT::InitMALib()
 
 
 /******************************************************************************
-	¹¦ÄÜ£º	»ñÈ¡Ö¸¶¨µÄCMAT
+	ï¿½ï¿½ï¿½Ü£ï¿½	ï¿½ï¿½È¡Ö¸ï¿½ï¿½ï¿½ï¿½CMAT
 ******************************************************************************/
 const KBPT_ClassifiedMAT* KLibOfBPT::GetCMAT(int nPos, int i) const
 {
@@ -356,7 +358,7 @@ const KBPT_ClassifiedMAT* KLibOfBPT::GetCMAT(int nPos, int i) const
 }
 
 /******************************************************************************
-	¹¦ÄÜ£º	»ñÈ¡Ö¸¶¨µÄCMAIT
+	ï¿½ï¿½ï¿½Ü£ï¿½	ï¿½ï¿½È¡Ö¸ï¿½ï¿½ï¿½ï¿½CMAIT
 ******************************************************************************/
 // Add by Freeway Chen in 2003.5.30
 const KBPT_ClassMAIT*       KLibOfBPT::GetCMIT(IN int nPrefixPostfix, IN int nType, IN int nSeries, int nLevel) const
@@ -534,6 +536,30 @@ const KBASICPROP_EQUIPMENT* KLibOfBPT::GetMantleRecord(IN int i) const
 const int KLibOfBPT::GetMantleRecordNumber() const
 {
 	return m_BPTMantle.NumOfEntries();
+}
+
+//
+
+const KBASICPROP_EQUIPMENT* KLibOfBPT::GetSignetRecord(IN int i) const
+{
+	return m_BPTSignet.GetRecord(i);
+}
+
+const int KLibOfBPT::GetSignetRecordNumber() const
+{
+	return m_BPTSignet.NumOfEntries();
+}
+
+//
+
+const KBASICPROP_EQUIPMENT* KLibOfBPT::GetShipinRecord(IN int i) const
+{
+	return m_BPTShipin.GetRecord(i);
+}
+
+const int KLibOfBPT::GetShipinRecordNumber() const
+{
+	return m_BPTShipin.NumOfEntries();
 }
 
 //
