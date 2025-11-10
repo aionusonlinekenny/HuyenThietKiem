@@ -51,7 +51,7 @@ typedef struct
 } KMACP;	
 
 
-#define			MATF_CBDR		    11
+#define			MATF_CBDR		    15		// 15 equipment types including Signet and Shipin
 #define         MATF_PREFIXPOSFIX   2       
 #define         MATF_SERIES         5       
 #define         MATF_LEVEL          10    
