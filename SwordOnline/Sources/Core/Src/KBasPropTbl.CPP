@@ -28,6 +28,8 @@
 #define		TABFILE_HORSE				"Horse.txt"
 #define		TABFILE_MASK				"Mask.txt"
 #define		TABFILE_MANTLE				"Mantle.txt"
+#define		TABFILE_SIGNET				"Signet.txt"
+#define		TABFILE_SHIPIN				"Shipin.txt"
 //
 #define		TABFILE_GOLD_EQUIPMENT		"GoldEquip.txt"
 #define		TABFILE_BROKEN_EQUIPMENT	"BrokenEquip.txt"
@@ -75,6 +77,8 @@ char*	TABFILE_EQUIPMENT[] =
 	TABFILE_HORSE,			//"Horse.txt",
 	TABFILE_MASK,			//"Mask.txt",
 	TABFILE_MANTLE,			//"Mantle.txt",
+	TABFILE_SIGNET,			//"Signet.txt",
+	TABFILE_SHIPIN,			//"Shipin.txt",
 };
 //=============================================================================
 BOOL LoadRecord(IN KTabFile* pTF, IN int nRow,
@@ -142,8 +146,8 @@ BOOL KLibOfBPT::Init()
 											&m_BPTHorse,
 											&m_BPTMask,
 											&m_BPTMantle,
-											//&m_BPTSignet,		// Temporarily disabled - need proper data files
-											//&m_BPTShipin,		// Temporarily disabled - need proper data files
+											&m_BPTSignet,
+											&m_BPTShipin,
 											&m_BPTGoldEquip,
 											&m_BPTBrokenEquip,
 											&m_BPTMedicine,
@@ -159,7 +163,7 @@ BOOL KLibOfBPT::Init()
 	int i;
 	for(i = 0; i < cbNumOfTables; i++)
 	{
-		if (i < 13)  // Changed back to 13 since Signet/Shipin are disabled
+		if (i < 15)  // 15 equipment types including Signet and Shipin
 		{
 			KBPT_Equipment* pTemp = (KBPT_Equipment*)paryBPT[i];
 			pTemp->Init(i);
