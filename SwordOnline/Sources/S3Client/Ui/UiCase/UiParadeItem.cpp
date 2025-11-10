@@ -524,6 +524,8 @@ static struct UE_CTRL_MAP
 	{ UIEP_HORSE,		"Horse"		},
 	{ UIEP_MASK,		"Mask"		},
 	{ UIEP_MANTLE,		"Mantle"	},
+	{ UIEP_SIGNET,		"Signet"	},
+	{ UIEP_SHIPIN,		"Shipin"	},
 };
 
 
@@ -604,11 +606,11 @@ void KUiParadeItemEquip::UpdateBaseData(KUiPlayerItem* pDest)
 	{	
 		if (g_pCoreShell->GetGameData(GDI_PLAYER_IS_MALE, 0, (unsigned int)pDest->uId))
 		{
-			m_MateCall.SetText("Phu nh©n");
+			m_MateCall.SetText("Phu nhï¿½n");
 		}
 		else
 		{
-			m_MateCall.SetText("T­íng c«ng");
+			m_MateCall.SetText("Tï¿½ï¿½ng cï¿½ng");
 		}
 
 		KUiPlayerBaseInfo	Info;
@@ -616,7 +618,7 @@ void KUiParadeItemEquip::UpdateBaseData(KUiPlayerItem* pDest)
 		g_pCoreShell->GetGameData(GDI_PLAYER_BASE_INFO, (int)&Info, pDest->uId);
 
 		m_Name.SetText(Info.Name);
-		m_MateName.SetText("V« hÖ");
+		m_MateName.SetText("Vï¿½ hï¿½");
 	}
 }
 
