@@ -11,7 +11,7 @@ struct KUiPlayerRuntimeInfo;
 struct KUiObjAtRegion;
 struct KUiPlayerAttribute;
 
-#define			_ITEM_COUNT			13		//			
+#define			_ITEM_COUNT			15		//			
 
 class KUiStatus : public KWndShowAnimate
 {

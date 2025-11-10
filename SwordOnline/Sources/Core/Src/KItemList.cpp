@@ -20,7 +20,7 @@
 #define		defEQUIP_POWER
 #ifdef defEQUIP_POWER
 	int		g_nEquipPower[itempart_num] =
-	{2, 4, 2, 4, 1, 1, 1, 1, 1, 1, 0};
+	{2, 4, 2, 4, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1};
 #endif
 
 // --
@@ -40,7 +40,9 @@ int KItemList::ms_ActiveEquip[itempart_num][MAX_ITEM_ACTIVE] =
 	{ itempart_belt, itempart_ring2 },	//	itempart_pendant,
 	{ itempart_horse, itempart_horse },	//	itempart_horse,
 	{ itempart_mask, itempart_mask },	//	itempart_mask,
-	{ itempart_mantle, itempart_mantle }, // itempart_mantle
+	{ itempart_mantle, itempart_mantle },	//	itempart_mantle,
+	{ itempart_signet, itempart_signet },	//	itempart_signet,
+	{ itempart_shipin, itempart_shipin },	//	itempart_shipin,
 };
 // --
 //
@@ -59,7 +61,9 @@ int KItemList::ms_ActivedEquip[itempart_num][MAX_ITEM_ACTIVE] =
 	{ itempart_foot, itempart_ring1 },	//	itempart_pendant,
 	{ itempart_horse, itempart_horse },	//	itempart_horse,
 	{ itempart_mask, itempart_mask },	//	itempart_mask,
-	{ itempart_mantle, itempart_mantle }, // itempart_mantle
+	{ itempart_mantle, itempart_mantle },	//	itempart_mantle,
+	{ itempart_signet, itempart_signet },	//	itempart_signet,
+	{ itempart_shipin, itempart_shipin },	//	itempart_shipin,
 };
 // --
 //
@@ -1342,6 +1346,12 @@ int KItemList::GetEquipPlace(int nType)
 	case equip_mantle:
 		nRet = itempart_mantle;
 		break;
+	case equip_signet:
+		nRet = itempart_signet;
+		break;
+	case equip_shipin:
+		nRet = itempart_shipin;
+		break;
 	default:
 		break;
 	}
@@ -1405,6 +1415,14 @@ BOOL KItemList::Fit(int nIdx, int nPlace)
 		if (nPlace == itempart_mantle)
 			bRet = TRUE;
 		break;
+	case equip_signet:
+		if (nPlace == itempart_signet)
+			bRet = TRUE;
+		break;
+	case equip_shipin:
+		if (nPlace == itempart_shipin)
+			bRet = TRUE;
+		break;	
 	}
 	return bRet;
 }
@@ -1464,6 +1482,14 @@ BOOL KItemList::Fit(KItem* pItem, int nPlace)
 		break;
 	case equip_mantle:
 		if (nPlace == itempart_mantle)
+			bRet = TRUE;
+		break;
+	case equip_signet:
+		if (nPlace == itempart_signet)
+			bRet = TRUE;
+		break;
+	case equip_shipin:
+		if (nPlace == itempart_shipin)
 			bRet = TRUE;
 		break;
 	}

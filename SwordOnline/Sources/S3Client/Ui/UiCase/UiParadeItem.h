@@ -10,7 +10,7 @@ enum UI_PLAYER_ATTRIBUTE;
 struct KUiPlayerRuntimeInfo; // Add By ShinT
 struct KUiObjAtRegion;
 
-#define _ITEM_COUNT 13
+#define _ITEM_COUNT 15
 
 //===========================================================================
 

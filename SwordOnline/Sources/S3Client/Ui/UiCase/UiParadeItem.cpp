@@ -524,6 +524,8 @@ static struct UE_CTRL_MAP
 	{ UIEP_HORSE,		"Horse"		},
 	{ UIEP_MASK,		"Mask"		},
 	{ UIEP_MANTLE,		"Mantle"	},
+	{ UIEP_SIGNET,		"Signet"	},
+	{ UIEP_SHIPIN,		"Shipin"	},
 };
 
 

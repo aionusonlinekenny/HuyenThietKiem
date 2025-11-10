@@ -196,6 +196,8 @@ enum ITEM_PART
 	itempart_horse,
 	itempart_mask,
 	itempart_mantle,
+	itempart_signet,
+	itempart_shipin,
 	itempart_num,
 };
 
@@ -217,6 +219,8 @@ enum EQUIPDETAILTYPE
 	equip_horse,
 	equip_mask,
 	equip_mantle,
+	equip_signet,
+	equip_shipin,
 	equip_detailnum,
 };
 
@@ -884,6 +888,8 @@ enum UI_EQUIPMENT_POSITION
 	UIEP_HORSE			= 10,
 	UIEP_MASK			= 11,
 	UIEP_MANTLE			= 12,
+	UIEP_SIGNET			= 13,
+	UIEP_SHIPIN			= 14,
 };
 
 //==================================

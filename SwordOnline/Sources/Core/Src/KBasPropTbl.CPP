@@ -149,8 +149,6 @@ BOOL KLibOfBPT::Init()
 											&m_BPTScript,
 											&m_BPTMine,
 											&m_BPTMagicAttrib,
-										
-
 										};
 
 	const int cbNumOfTables = sizeof(paryBPT)/sizeof(paryBPT[0]);
@@ -1389,6 +1387,7 @@ const KBASICPROP_MEDICINE* KBPT_Medicine::FindRecord(IN int nType,
 	}
 	return pData;
 }
+
 // --
 //
 // --

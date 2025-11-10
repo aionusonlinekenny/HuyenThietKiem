@@ -76,6 +76,7 @@ BOOL KItemGenerator::Init()
 		case equip_mantle:
 			m_EquipNumOfEntries[i] = m_BPTLib.GetMantleRecordNumber();
 			break;
+
 		default:
 			break;
 		}
@@ -163,6 +164,7 @@ BOOL KItemGenerator::Gen_Equipment(IN int nDetailType,
 	case equip_mantle:
 		pEqu = m_BPTLib.GetMantleRecord(i);
 		break;
+
 	default:
 		break;
 	}
@@ -255,6 +257,7 @@ BOOL KItemGenerator::Gen_ExistEquipment(IN int nRecord,
 	case equip_mantle:
 		pEqu = m_BPTLib.GetMantleRecord(i);
 		break;
+
 	default:
 		break;
 	}

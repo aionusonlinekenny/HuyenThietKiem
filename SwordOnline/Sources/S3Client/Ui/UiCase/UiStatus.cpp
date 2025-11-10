@@ -45,9 +45,10 @@ static struct UE_CTRL_MAP
 	{ UIEP_WAIST_DECOR,	"Pendant"	},
 	{ UIEP_FOOT,		"Shoes"		},
 	{ UIEP_HORSE,		"Horse"		},
-	
 	{ UIEP_MASK,		"Mask"		},
 	{ UIEP_MANTLE,		"Mantle"	},
+	{ UIEP_SIGNET,		"Signet"	},
+	{ UIEP_SHIPIN,		"Shipin"	},
 	
 };
 
