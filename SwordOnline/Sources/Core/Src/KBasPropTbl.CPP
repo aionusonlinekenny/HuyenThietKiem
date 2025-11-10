@@ -802,11 +802,7 @@ BOOL KBPT_MagicAttrib_TF::LoadRecord(int i, KTabFile* pTF)
 		{ PI_VARTYPE_INT,  (char*)&(pBuf->m_DropRate[7]), 0},
 		{ PI_VARTYPE_INT,  (char*)&(pBuf->m_DropRate[8]), 0},
 		{ PI_VARTYPE_INT,  (char*)&(pBuf->m_DropRate[9]), 0},
-		{ PI_VARTYPE_INT,  (char*)&(pBuf->m_DropRate[10]), 0},
-		{ PI_VARTYPE_INT,  (char*)&(pBuf->m_DropRate[11]), 0},	// Mask
-		{ PI_VARTYPE_INT,  (char*)&(pBuf->m_DropRate[12]), 0},	// Mantle
-		{ PI_VARTYPE_INT,  (char*)&(pBuf->m_DropRate[13]), 0},	// Signet
-		{ PI_VARTYPE_INT,  (char*)&(pBuf->m_DropRate[14]), 0}	// Shipin
+		{ PI_VARTYPE_INT,  (char*)&(pBuf->m_DropRate[10]), 0}
 	};
 	
 	const int nArySize = sizeof(aryPI)/ sizeof(aryPI[0]);
