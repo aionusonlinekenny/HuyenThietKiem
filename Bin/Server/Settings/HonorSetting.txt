@@ -1,0 +1,11 @@
+HONORID	HONORIMAGE	OFFX	OFFY	TOTALFRAME
+1	\spr\resspecial\rankofjx\langvan.spr	42	42	15
+2	\spr\resspecial\rankofjx\tuyetthe.spr	42	42	15
+3	\spr\resspecial\rankofjx\ngaotuyet.spr	42	42	15
+4	\spr\resspecial\rankofjx\phaquan.spr	42	42	15
+5	\spr\resspecial\rankofjx\kinhloi.spr	42	42	15
+6	\spr\resspecial\rankofjx\nguphong.spr	42	46	15
+7	\spr\resspecial\rankofjx\phequang.spr	42	46	15
+8	\spr\resspecial\rankofjx\khapthan.spr	42	46	15
+9	\spr\resspecial\rankofjx\kinhthien.spr	42	44	15
+10	\spr\resspecial\rankofjx\vocuc.spr	38	46	15

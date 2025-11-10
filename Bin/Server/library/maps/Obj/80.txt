@@ -1,0 +1,12 @@
+ObjID	MapID	PosX	PosY	Dir	State	ScriptFile	IsLoad
+1	80	53157	95427	0	0	\script\maps\obj\80\扬州-储物箱2.lua	1
+1	80	56227	96170	0	0	\script\maps\obj\80\扬州-储物箱1.lua	1
+4	80	53385	96314	0	0	\script\missions\congthanh\notice.lua	1
+3	80	56363	96312	0	0	\script\missions\congthanh\notice.lua	1
+1	80	59370	96983	0	0	\script\maps\obj\80\扬州-储物箱3.lua	1
+4	80	59785	97177	0	0	\script\missions\congthanh\notice.lua	1
+294	80	46650	98737	0	0	\script\maps\obj\contains.lua	1
+1	80	52068	101619	0	0	\script\maps\obj\80\扬州-储物箱4.lua	1
+4	80	51221	102905	0	0	\script\missions\congthanh\notice.lua	1
+1	80	54780	103159	0	0	\script\maps\obj\80\扬州-储物箱5.lua	1
+4	80	54613	103291	0	0	\script\missions\congthanh\notice.lua	1

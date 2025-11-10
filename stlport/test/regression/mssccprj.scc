@@ -1,0 +1,129 @@
+SCC = This is a Source Code Control file
+
+[bc.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[bc502.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[bcb.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[como.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[deccxx.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[djgpp.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[egcs.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[gcc-99r1.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[gcc-hp11.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[gcc-repo.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[gcc.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[gcc3.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[hmap1.dsp]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[hpacc.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[ibm390.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[intel.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[intel45.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[intel50.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[kai.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[kcc-new.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[kcc.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[MrCpp.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[SCpp.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[sgi_mipspro.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[stl_test.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[sunpro-64.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[sunpro.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[vc.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[visualage.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[watcom-qnx.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[xlC.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA
+
+[xlC50.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/regression", KKQAAAAA

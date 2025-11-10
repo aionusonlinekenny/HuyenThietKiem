@@ -1,0 +1,2 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+211	208	50880	102464	\script\global\luanpcfunctions\prison.lua	Lao ®Çu	1

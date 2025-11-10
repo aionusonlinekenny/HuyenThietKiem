@@ -1,0 +1,11 @@
+MISSION	SCRIPT
+1	\script\mission\vuotai\head.lua
+2	\script\mission\loanchien\head.lua
+3	\script\mission\battles\battles.lua
+4	\script\mission\phonglangdo\head.lua
+5	\script\mission\liendau\liendau_missions.lua
+6	\script\mission\bw\bw.lua
+7	
+8	
+9	
+10	

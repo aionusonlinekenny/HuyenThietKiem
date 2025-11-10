@@ -1,0 +1,118 @@
+
+*
+***** S3Relay Start (@ 2025/10/24 15:38:51.836) >>>>>
+*
+
+[2025/10/24 15:38:51] 1-- Initializing ...
+[2025/10/24 15:38:51] 2-- Create Channel: [Stock, GM] <00000000> GM
+[2025/10/24 15:38:51] 3-- Create Channel: [Stock] <00000001> WORLD
+[2025/10/24 15:38:51] 4-- friend timing update db: start
+[2025/10/24 15:38:51] 5-- relay server startup
+[2025/10/24 15:38:51] 6-- root client create: 192.168.254.53
+[2025/10/24 15:38:51] 7-- DBRole client create: 192.168.254.53
+[2025/10/24 15:38:51] 8-- root client close: 192.168.254.53
+[2025/10/24 15:38:51] 9-- gateway client create: 192.168.254.53
+[2025/10/24 15:38:51] 10-- host server startup
+[2025/10/24 15:38:51] 11-- tong server startup
+[2025/10/24 15:38:51] 12-- chat server startup
+[2025/10/24 15:38:51] 13-- SockThread start success
+[2025/10/24 15:38:51] 14-- tong database open ok!
+[2025/10/24 15:38:51] 15-- tongset init ok !
+[2025/10/24 15:38:51] 16-- Initialize OK
+[2025/10/24 15:39:00] 17-- host connect create: 192.168.254.5
+[2025/10/24 15:39:00] 18-- chat connect create: 192.168.254.5
+[2025/10/24 15:39:00] 19-- tong connect create: 192.168.254.5
+[2025/10/24 15:39:03] 20-- host connect create: 192.168.254.53
+[2025/10/24 15:39:03] 21-- chat connect create: 192.168.254.53
+[2025/10/24 15:39:03] 22-- tong connect create: 192.168.254.53
+[2025/10/24 15:39:03] 23-- host connect create: 192.168.254.2
+[2025/10/24 15:39:03] 24-- chat connect create: 192.168.254.2
+[2025/10/24 15:39:03] 25-- tong connect create: 192.168.254.2
+[2025/10/24 15:39:03] 26-- host connect create: 192.168.254.3
+[2025/10/24 15:39:03] 27-- chat connect create: 192.168.254.3
+[2025/10/24 15:39:03] 28-- tong connect create: 192.168.254.3
+[2025/10/24 15:39:06] 29-- host connect create: 192.168.254.4
+[2025/10/24 15:39:06] 30-- chat connect create: 192.168.254.4
+[2025/10/24 15:39:06] 31-- tong connect create: 192.168.254.4
+[2025/10/24 15:39:51] 32-- load someone: DienBaQuan
+[2025/10/24 15:39:51] 33-- player login: 123456 [DienBaQuan] (35FEA8C0, 00000000)
+[2025/10/24 15:39:51] 34-- Query ChannelID: \S from (35FEA8C0, 00000000)
+[2025/10/24 15:39:51] 35-- Create Channel: <00000002> \S905881792
+[2025/10/24 15:39:51] 36-- Query ChannelID: WORLD from (35FEA8C0, 00000000)
+[2025/10/24 15:39:51] 37-- Query ChannelID: \F2 from (35FEA8C0, 00000000)
+[2025/10/24 15:39:51] 38-- Create Channel: <00000003> \F2
+[2025/10/24 15:39:51] 39-- Query ChannelID: GM from (35FEA8C0, 00000000)
+[2025/10/24 15:39:51] 40-- Query ChannelID: \B from (35FEA8C0, 00000000)
+[2025/10/24 15:39:51] 41-- Create Channel: <00000004> \B905881792
+[2025/10/24 15:39:51] 42-- sync friend list: DienBaQuan (full)
+[2025/10/24 15:39:51] 43-- Subscribe Channel: 00000002 by (35FEA8C0,00000000)
+[2025/10/24 15:39:51] 44-- Subscribe Channel: 00000001 by (35FEA8C0,00000000)
+[2025/10/24 15:39:51] 45-- Subscribe Channel: 00000003 by (35FEA8C0,00000000)
+[2025/10/24 15:39:51] 46-- Subscribe Channel: GM <00000000> by (35FEA8C0,00000000)
+[2025/10/24 15:39:51] 47-- Subscribe Channel: 00000004 by (35FEA8C0,00000000)
+[2025/10/24 15:41:12] 48-- Destroy Channel: <00000002> \S905881792
+[2025/10/24 15:41:12] 49-- Destroy Channel: <00000003> \F2
+[2025/10/24 15:41:12] 50-- Destroy Channel: <00000004> \B905881792
+[2025/10/24 15:41:12] 51-- player logout: 123456
+[2025/10/24 15:41:12] 52-- player login: 123456 [DienBaQuan] (02FEA8C0, 00000000)
+[2025/10/24 15:41:12] 53-- Query ChannelID: \S from (02FEA8C0, 00000000)
+[2025/10/24 15:41:12] 54-- Create Channel: <00000005> \S50243776
+[2025/10/24 15:41:12] 55-- sync friend list: DienBaQuan (full)
+[2025/10/24 15:41:12] 56-- Query ChannelID: WORLD from (02FEA8C0, 00000000)
+[2025/10/24 15:41:12] 57-- Query ChannelID: \F2 from (02FEA8C0, 00000000)
+[2025/10/24 15:41:12] 58-- Create Channel: <00000006> \F2
+[2025/10/24 15:41:12] 59-- Query ChannelID: GM from (02FEA8C0, 00000000)
+[2025/10/24 15:41:12] 60-- Query ChannelID: \B from (02FEA8C0, 00000000)
+[2025/10/24 15:41:12] 61-- Create Channel: <00000007> \B50243776
+[2025/10/24 15:41:12] 62-- Subscribe Channel: 00000005 by (02FEA8C0,00000000)
+[2025/10/24 15:41:12] 63-- Subscribe Channel: 00000001 by (02FEA8C0,00000000)
+[2025/10/24 15:41:12] 64-- Subscribe Channel: 00000006 by (02FEA8C0,00000000)
+[2025/10/24 15:41:12] 65-- Subscribe Channel: GM <00000000> by (02FEA8C0,00000000)
+[2025/10/24 15:41:12] 66-- Subscribe Channel: 00000007 by (02FEA8C0,00000000)
+[2025/10/24 15:43:54] 67-- update friend DB succeed
+[2025/10/24 15:48:54] 68-- update friend DB succeed
+[2025/10/24 15:53:54] 69-- update friend DB succeed
+[2025/10/24 15:58:54] 70-- update friend DB succeed
+[2025/10/24 16:03:55] 71-- update friend DB succeed
+[2025/10/24 16:08:55] 72-- update friend DB succeed
+[2025/10/24 16:13:55] 73-- update friend DB succeed
+[2025/10/24 16:18:55] 74-- update friend DB succeed
+[2025/10/24 16:23:55] 75-- update friend DB succeed
+[2025/10/24 16:28:55] 76-- update friend DB succeed
+[2025/10/24 16:33:55] 77-- update friend DB succeed
+[2025/10/24 16:38:55] 78-- update friend DB succeed
+[2025/10/24 16:43:55] 79-- update friend DB succeed
+[2025/10/24 16:48:55] 80-- update friend DB succeed
+[2025/10/24 16:53:55] 81-- update friend DB succeed
+[2025/10/24 16:58:55] 82-- update friend DB succeed
+[2025/10/24 17:03:56] 83-- update friend DB succeed
+[2025/10/24 17:08:56] 84-- update friend DB succeed
+[2025/10/24 17:13:56] 85-- update friend DB succeed
+[2025/10/24 17:18:56] 86-- update friend DB succeed
+[2025/10/24 17:23:56] 87-- update friend DB succeed
+[2025/10/24 17:28:56] 88-- update friend DB succeed
+[2025/10/24 17:33:56] 89-- update friend DB succeed
+[2025/10/24 17:38:56] 90-- update friend DB succeed
+[2025/10/24 17:43:56] 91-- update friend DB succeed
+[2025/10/24 17:48:56] 92-- update friend DB succeed
+[2025/10/24 17:53:56] 93-- update friend DB succeed
+[2025/10/24 17:58:56] 94-- update friend DB succeed
+[2025/10/24 18:03:56] 95-- update friend DB succeed
+[2025/10/24 18:08:56] 96-- update friend DB succeed
+[2025/10/24 18:13:56] 97-- update friend DB succeed
+[2025/10/24 18:18:56] 98-- update friend DB succeed
+[2025/10/24 18:23:56] 99-- update friend DB succeed
+[2025/10/24 18:28:56] 100-- update friend DB succeed
+[2025/10/24 18:33:56] 101-- update friend DB succeed
+[2025/10/24 18:38:56] 102-- update friend DB succeed
+[2025/10/24 18:43:57] 103-- update friend DB succeed
+[2025/10/24 18:48:57] 104-- update friend DB succeed
+[2025/10/24 18:53:57] 105-- update friend DB succeed
+[2025/10/24 18:58:57] 106-- update friend DB succeed
+[2025/10/24 19:03:57] 107-- update friend DB succeed
+[2025/10/24 19:08:57] 108-- update friend DB succeed
+[2025/10/24 19:13:57] 109-- update friend DB succeed
+[2025/10/24 19:18:57] 110-- update friend DB succeed
+[2025/10/24 19:23:57] 111-- update friend DB succeed
+[2025/10/24 19:28:57] 112-- update friend DB succeed
+[2025/10/24 19:33:57] 113-- update friend DB succeed

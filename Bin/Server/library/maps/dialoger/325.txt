@@ -1,0 +1,9 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+61	325	49775	98667	\script\mission\battles\join2.lua	Kim quèc chiªu binh quan	1
+49	325	50580	98376	\script\mission\battles\shop.lua	Kim Quèc Qu©n nhu quan	1
+235	325	50187	98451	\script\mission\battles\station.lua	Xa phu Kim qu©n	1
+235	325	49144	100947	\script\mission\battles\station.lua	Xa phu	1
+55	325	49488	101082	\script\mission\battles\shop.lua	Qu©n Nhu quan (Tèng)	1
+62	325	49603	101730	\script\mission\battles\join1.lua	Mé binh quan	1
+625	325	49824	102176	\script\maps\obj\box.lua	R­¬ng chøa ®å	1
+625	325	51008	99168	\script\maps\obj\box.lua	R­¬ng chøa ®å	1

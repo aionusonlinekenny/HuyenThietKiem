@@ -1,0 +1,60 @@
+Name	ItemGenre	DetailType	ParticularType	Level	Icon	ObjID	Width	Height	Intro	Price	MagicNo1	Value1	Time1	MagicNo2	Value2	Time2	MagicNo3	Value3	Time3
+Kim S¸ng D­îc (tiÓu) 	5	0	0	1	\spr\item\medecine\obj-potion01.spr	18	1	1	Håi phôc chót Ýt khÝ huyÕt	50	153	10	100						
+Kim S¸ng D­îc (trung) 	5	0	0	2	\spr\item\medecine\obj-potion01.spr	18	1	1	Håi phôc khÝ huyÕt t­¬ng ®èi nhanh.	100	153	25	100						
+Kim S¸ng D­îc (®¹i) 	5	0	0	3	\spr\item\medecine\obj-potion02.spr	307	1	1	Håi phôc khÝ huyÕt cùc nhanh.	250	153	25	200						
+Håi Thiªn ®an	5	0	0	4	\spr\item\medecine\obj-potion02.spr	307	1	1	ThÇn d­îc ch÷a th­¬ng, c¶i tö hoµn sinh	500	153	50	200						
+Cöu ChuyÓn Hoµn Hån ®an	5	0	0	5	\spr\item\medecine\obj-potion03.spr	310	1	1	LËp tøc håi phôc 5000 ®iÓm sinh lùc	2000	153	500	100						
+Ng­ng ThÇn ®an (tiÓu) 	5	1	0	1	\spr\item\medecine\obj-potion06.spr	20	1	1	Cã thÓ håi phôc chót Ýt Néi lùc	50	154	5	200						
+Ng­ng ThÇn ®an (trung) 	5	1	0	2	\spr\item\medecine\obj-potion06.spr	20	1	1	Håi phôc Néi lùc t­¬ng ®èi nhanh.	100	154	10	200						
+Ng­ng ThÇn ®an (®¹i) 	5	1	0	3	\spr\item\medecine\obj-potion07.spr	309	1	1	Håi phôc Néi lùc côc nhanh	250	154	20	250						
+§¹i Bæ t¸n	5	1	0	4	\spr\item\medecine\obj-potion07.spr	309	1	1	Håi phôc Néi lôc trong nh¸y m¾t	500	154	50	200						
+¤ ®Çu Hoµn thÇn ®an	5	1	0	5	\spr\item\medecine\obj-potion08.spr	312	1	1	LËp tøc håi phôc 5000 ®iÓm Néi lùc	2000	154	500	100						
+Thõa Tiªn MËt (tiÓu) 	5	2	0	1	\spr\item\medecine\obj-potion11.spr	19	1	1	§ång thêi håi phôc chót Ýt Sinh lùc vµ Néi lùc.	80	153	10	100	154	6	100			
+Thõa Tiªn MËt (trung) 	5	2	0	2	\spr\item\medecine\obj-potion11.spr	19	1	1	§ång thêi håi phôc nhanh Sinh lùc vµ Néi lùc 	150	153	25	100	154	6	250			
+Thõa Tiªn MËt (®¹i) 	5	2	0	3	\spr\item\medecine\obj-potion12.spr	308	1	1	§ång thêi håi phôc cùc nhanh Sinh lùc vµ Néi lùc	375	153	25	200	154	15	200			
+ThÊt KhiÕu Bæ t©m ®an	5	2	0	4	\spr\item\medecine\obj-potion12.spr	308	1	1	LËp tøc håi phôc Sinh lùc vµ Néi lùc	750	153	50	200	154	30	200			
+Ngò Hoa Ngäc Lé Hoµn	5	2	0	5	\spr\item\medecine\obj-potion13.spr	311	1	1	§ång thêi håi phôc 5000 ®iÓm Sinh lùc vµ Néi lùc	1	153	500	100	154	500	100			
+Tam Hoa T¸n 	5	3	0	1	\spr\item\medecine\obj-potion16.spr	19	1	1	Cã thÓ håi phôc 1000 ®iÓm thÓ lùc.	50	95	50	200						
+Toµn Qu¶ hoµn	5	3	0	2	\spr\item\medecine\obj-potion17.spr	19	1	1	Cã thÓ håi phôc 5000 ®iÓm thÓ lùc.	100	95	200	200						
+Thanh Ng­u Gi¶i ®éc t¸n	5	3	0	3	\spr\item\medecine\obj-potion23.spr	19	1	1	Lo¹i bæ d­îc th«ng th­êng, t¸c dông kh«ng cao.	10	109	100	200						
+Ho¾c H­¬ng ChÝnh khÝ hoµn	5	3	0	4	\spr\item\medecine\obj-potion24.spr	19	1	1	Cã chót Ýt t¸c dông gi¶i ®éc	20	109	200	200						
+Tam ThuËn t¸n	5	3	0	5	\spr\item\medecine\obj-potion25.spr	19	1	1	Gi¶i ®éc rÊt hiÖu qu¶ 	50	109	400	200						
+Ng©n KiÒu Khø ®éc ®an	5	4	0	1	\spr\item\medecine\obj-potion26.spr	19	1	1	Gi¶i ®éc cùu kú hiÖu qu¶ 	100	109	800	200						
+Long §µm Hãa §éc ®an	5	4	0	2	\spr\item\medecine\obj-potion27.spr	19	1	1	Kh«ng ®éc kh«ng thÓ gi¶i	200	109	1200	200						
+Cöu ChuyÓn Hoµn Hån ®an	5	4	0	3	\spr\item\medecine\obj-potion03.spr	310	1	1	LËp tøc håi phôc 5000 ®iÓm sinh lùc	1	153	500	100						
+¤ ®Çu Hoµn thÇn ®an	5	4	0	4	\spr\item\medecine\obj-potion08.spr	312	1	1	LËp tøc håi phôc 5000 ®iÓm Néi lùc	1	154	500	100						
+Ngò Hoa Ngäc Lé Hoµn	5	4	0	5	\spr\item\medecine\obj-potion13.spr	311	1	1	§ång thêi håi phôc 5000 ®iÓm Sinh lùc vµ Néi lùc	1	153	500	100	154	500	100			
+Cöu ChuyÓn Hoµn Hån ®an	5	5	0	1	\spr\item\medecine\obj-potion03.spr	310	1	1	LËp tøc håi phôc 5000 ®iÓm sinh lùc	1000	153	500	100						
+¤ ®Çu Hoµn thÇn ®an	5	5	0	2	\spr\item\medecine\obj-potion08.spr	312	1	1	LËp tøc håi phôc 5000 ®iÓm Néi lùc	1000	154	500	100						
+Ngò Hoa Ngäc Lé Hoµn	5	5	0	3	\spr\item\medecine\obj-potion13.spr	311	1	1	§ång thêi håi phôc 5000 ®iÓm Sinh lùc vµ Néi lùc	1	153	500	100	154	500	100			
+Long §µm Hãa §éc ®an	5	5	0	4	\spr\item\medecine\obj-potion27.spr	19	1	1	Kh«ng ®éc kh«ng thÓ gi¶i	100	109	1200	200						
+Long §µm Hãa §éc ®an-error	5	5	0	5	\spr\item\medecine\obj-potion27.spr	19	1	1	Kh«ng ®éc kh«ng thÓ gi¶i	100	109	1200	200						
+[Tèng Kim]Kim S¸ng D­îc (tiÓu) 	5	6	0	1	\spr\item\medecine\obj-potion01.spr	18	1	1	Håi phôc chót Ýt khÝ huyÕt	50	153	10	100						
+[Tèng Kim]Kim S¸ng D­îc (trung) 	5	6	0	2	\spr\item\medecine\obj-potion01.spr	18	1	1	Håi phôc khÝ huyÕt t­¬ng ®èi nhanh.	100	153	25	100						
+[Tèng Kim]Kim S¸ng D­îc (®¹i) 	5	6	0	3	\spr\item\medecine\obj-potion02.spr	307	1	1	Håi phôc khÝ huyÕt cùc nhanh.	250	153	25	200						
+[Tèng Kim]Håi Thiªn ®an	5	6	0	4	\spr\item\medecine\obj-potion02.spr	307	1	1	ThÇn d­îc ch÷a th­¬ng, c¶i tö hoµn sinh	500	153	50	200						
+[Tèng Kim]Cöu ChuyÓn Hoµn Hån ®an	5	6	0	5	\spr\item\medecine\obj-potion03.spr	310	1	1	LËp tøc håi phôc 5000 ®iÓm sinh lùc	2000	153	500	100						
+[Tèng Kim]Ng­ng ThÇn ®an (tiÓu) 	5	7	0	1	\spr\item\medecine\obj-potion06.spr	20	1	1	Cã thÓ håi phôc chót Ýt Néi lùc	50	154	5	200						
+[Tèng Kim]]Ng­ng ThÇn ®an (trung) 	5	7	0	2	\spr\item\medecine\obj-potion06.spr	20	1	1	Håi phôc Néi lùc t­¬ng ®èi nhanh.	100	154	10	200						
+[Tèng Kim]Ng­ng ThÇn ®an (®¹i) 	5	7	0	3	\spr\item\medecine\obj-potion07.spr	309	1	1	Håi phôc Néi lùc côc nhanh	250	154	20	250						
+[Tèng Kim]§¹i Bæ t¸n	5	7	0	4	\spr\item\medecine\obj-potion07.spr	309	1	1	Håi phôc Néi lôc trong nh¸y m¾t	500	154	50	200						
+[Tèng Kim]¤ ®Çu Hoµn thÇn ®an	5	7	0	5	\spr\item\medecine\obj-potion08.spr	312	1	1	LËp tøc håi phôc 5000 ®iÓm Néi lùc	2000	154	500	100						
+[Tèng Kim]Thõa Tiªn MËt (tiÓu) 	5	8	0	1	\spr\item\medecine\obj-potion11.spr	19	1	1	§ång thêi håi phôc chót Ýt Sinh lùc vµ Néi lùc.	80	153	10	100	154	6	100			
+[Tèng Kim]Thõa Tiªn MËt (trung) 	5	8	0	2	\spr\item\medecine\obj-potion11.spr	19	1	1	§ång thêi håi phôc nhanh Sinh lùc vµ Néi lùc 	150	153	25	100	154	6	250			
+[Tèng Kim]Thõa Tiªn MËt (®¹i) 	5	8	0	3	\spr\item\medecine\obj-potion12.spr	308	1	1	§ång thêi håi phôc cùc nhanh Sinh lùc vµ Néi lùc	375	153	25	200	154	15	200			
+[Tèng Kim]ThÊt KhiÕu Bæ t©m ®an	5	8	0	4	\spr\item\medecine\obj-potion12.spr	308	1	1	LËp tøc håi phôc Sinh lùc vµ Néi lùc	750	153	50	200	154	30	200			
+[Tèng Kim]Ngò Hoa Ngäc Lé Hoµn	5	8	0	5	\spr\item\medecine\obj-potion13.spr	311	1	1	§ång thêi håi phôc 5000 ®iÓm Sinh lùc vµ Néi lùc	1	153	500	100	154	500	100			
+[Tèng Kim]Tam Hoa T¸n 	5	9	0	1	\spr\item\medecine\obj-potion16.spr	19	1	1	Cã thÓ håi phôc 1000 ®iÓm thÓ lùc.	50	95	50	200						
+[Tèng Kim]Toµn Qu¶ hoµn	5	9	0	2	\spr\item\medecine\obj-potion17.spr	19	1	1	Cã thÓ håi phôc 5000 ®iÓm thÓ lùc.	100	95	200	200						
+[Tèng Kim]Thanh Ng­u Gi¶i ®éc t¸n	5	9	0	3	\spr\item\medecine\obj-potion23.spr	19	1	1	Lo¹i bæ d­îc th«ng th­êng, t¸c dông kh«ng cao.	10	109	100	200						
+[Tèng Kim]Ho¾c H­¬ng ChÝnh khÝ hoµn	5	9	0	4	\spr\item\medecine\obj-potion24.spr	19	1	1	Cã chót Ýt t¸c dông gi¶i ®éc	20	109	200	200						
+[Tèng Kim]Tam ThuËn t¸n	5	9	0	5	\spr\item\medecine\obj-potion25.spr	19	1	1	Gi¶i ®éc rÊt hiÖu qu¶ 	50	109	400	200						
+[Tèng Kim]Ng©n KiÒu Khø ®éc ®an	5	10	0	1	\spr\item\medecine\obj-potion26.spr	19	1	1	Gi¶i ®éc cùu kú hiÖu qu¶ 	100	109	800	200						
+[Tèng Kim]Long §µm Hãa §éc ®an	5	10	0	2	\spr\item\medecine\obj-potion27.spr	19	1	1	Kh«ng ®éc kh«ng thÓ gi¶i	200	109	1200	200						
+[Tèng Kim]Cöu ChuyÓn Hoµn Hån ®an	5	10	0	3	\spr\item\medecine\obj-potion03.spr	310	1	1	LËp tøc håi phôc 5000 ®iÓm sinh lùc	1	153	500	100						
+[Tèng Kim]¤ ®Çu Hoµn thÇn ®an	5	10	0	4	\spr\item\medecine\obj-potion08.spr	312	1	1	LËp tøc håi phôc 5000 ®iÓm Néi lùc	1	154	500	100						
+[Tèng Kim]Ngò Hoa Ngäc Lé Hoµn	5	10	0	5	\spr\item\medecine\obj-potion13.spr	311	1	1	§ång thêi håi phôc 5000 ®iÓm Sinh lùc vµ Néi lùc	1	153	500	100	154	500	100			
+[Tèng Kim]Cöu ChuyÓn Hoµn Hån ®an	5	11	0	1	\spr\item\medecine\obj-potion03.spr	310	1	1	LËp tøc håi phôc 5000 ®iÓm sinh lùc	1000	153	500	100						
+[Tèng Kim]¤ ®Çu Hoµn thÇn ®an	5	11	0	2	\spr\item\medecine\obj-potion08.spr	312	1	1	LËp tøc håi phôc 5000 ®iÓm Néi lùc	1000	154	500	100						
+[Tèng Kim]Ngò Hoa Ngäc Lé Hoµn	5	11	0	3	\spr\item\medecine\obj-potion13.spr	311	1	1	§ång thêi håi phôc 5000 ®iÓm Sinh lùc vµ Néi lùc	1	153	500	100	154	500	100			
+[Tèng Kim]Long §µm Hãa §éc ®an	5	11	0	4	\spr\item\medecine\obj-potion27.spr	19	1	1	Kh«ng ®éc kh«ng thÓ gi¶i	100	109	1200	200						

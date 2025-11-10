@@ -1,0 +1,22 @@
+--Author: kinnox;
+--Date: 20/01/2022;
+--Name: Xa loi kim don;
+function OnUse(nIdx)
+	local nPK = GetPK();
+	if (nPK > 0) then
+		if (nPK >= 1 and nPK < 2) then
+		SetPK(GetPK()-1);
+		Talk(1,"","§é tµ ¸c cña ng­¬i ®· ®­îc ta ®é tr× xuèng <color=green>1 ®iÓm<color> cßn l¹i <color=yellow> "..GetPK().." <color>");
+		elseif (nPK == 2) then
+		SetPK(GetPK()-2);
+		Talk(1,"","§é tµ ¸c cña ng­¬i ®· ®­îc ta ®é tr× xuèng <color=green>2 ®iÓm<color> cßn l¹i <color=yellow> "..GetPK().." <color>");
+		else
+		SetPK(GetPK()-3);
+		Talk(1,"","§é tµ ¸c cña ng­¬i ®· ®­îc ta ®é tr× xuèng <color=green>3 ®iÓm<color> cßn l¹i <color=yellow> "..GetPK().." <color>");
+		end;
+	else
+		Talk(1,"","B¶n chÊt nhµ ng­¬i l­¬ng thiÖn ®«i tay trong s¹ch ch­a nhuém m¸u giang hå! ");
+		return 0;
+	end
+	return 1
+end

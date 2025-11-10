@@ -1,0 +1,79 @@
+NpcID	MapID	PosX	PosY	ScriptFile	NpcName	Level	IsLoad
+162	79	52998	100942		Th­¬ng binh 	60	1
+149	79	53081	100775		Cung binh ®éi tr­ëng	60	1
+154	79	52880	100996		§ao binh 	60	1
+149	79	53344	100608		Cung binh ®éi tr­ëng	60	1
+154	79	53638	100619		§ao binh 	60	1
+149	79	54268	101219		Cung binh ®éi tr­ëng	60	1
+162	79	54103	101346		Th­¬ng binh 	60	1
+154	79	54204	101314		§ao binh 	60	1
+162	79	53961	100486		Th­¬ng binh 	60	1
+149	79	53925	100793		Cung binh ®éi tr­ëng	60	1
+154	79	53872	100540		§ao binh 	60	1
+154	79	52599	102386		§ao binh 	60	1
+149	79	52741	102203		Cung binh ®éi tr­ëng	60	1
+154	79	52863	102122		§ao binh 	60	1
+154	79	53221	101737		§ao binh 	60	1
+154	79	53106	101854		§ao binh 	60	1
+149	79	53080	101407		Cung binh ®éi tr­ëng	60	1
+149	79	53449	101910		Cung binh ®éi tr­ëng	60	1
+162	79	53249	101549		Th­¬ng binh 	60	1
+149	79	53301	101636		Cung binh ®éi tr­ëng	60	1
+154	79	53644	101746		§ao binh 	60	1
+154	79	54001	101411		§ao binh 	60	1
+149	79	54143	101630		Cung binh ®éi tr­ëng	60	1
+162	79	53937	102259		Th­¬ng binh 	60	1
+154	79	541624	101952		§ao binh 	60	1
+154	79	55072	101920		§ao binh 	60	1
+162	79	552149	101681		Th­¬ng binh 	60	1
+149	79	54964	101941		Cung binh ®éi tr­ëng	60	1
+154	79	51700	102675		§ao binh 	60	1
+149	79	51903	102891		Cung binh ®éi tr­ëng	60	1
+162	79	52098	103147		Th­¬ng binh 	60	1
+162	79	52124	102811		Th­¬ng binh 	60	1
+149	79	522149	102691		Cung binh ®éi tr­ëng	60	1
+149	79	52229	103263		Cung binh ®éi tr­ëng	60	1
+149	79	52656	102641		Cung binh ®éi tr­ëng	60	1
+149	79	52989	102965		Cung binh ®éi tr­ëng	60	1
+149	79	53972	102415		Cung binh ®éi tr­ëng	60	1
+149	79	55104	102560		Cung binh ®éi tr­ëng	60	1
+149	79	54947	102435		Cung binh ®éi tr­ëng	60	1
+154	79	55289	102841		§ao binh 	60	1
+154	79	55113	102868		§ao binh 	60	1
+149	79	54977	103014		Cung binh ®éi tr­ëng	60	1
+162	79	55238	102713		Th­¬ng binh 	60	1
+53	79	56043	103366	\script\ÖÐÔ­ÄÏÇø\ÏåÑô\ÏåÑô³ÇÑÃÃÅÃØµÀ\npc\wdenemy06\wdenemy06.lua	T­¬ng D­¬ng Thñ t­íng	60	0
+154	79	52776	103854		§ao binh 	60	1
+154	79	52963	103885		§ao binh 	60	1
+149	79	52907	103968		Cung binh ®éi tr­ëng	60	1
+162	79	53032	104081		Th­¬ng binh 	60	1
+149	79	53701	1031625		Cung binh ®éi tr­ëng	60	1
+162	79	531493	104434		Th­¬ng binh 	60	1
+154	79	53795	104067		§ao binh 	60	1
+154	79	54032	103868		§ao binh 	60	1
+162	79	53894	103955		Th­¬ng binh 	60	1
+154	79	53944	104133		§ao binh 	60	1
+149	79	54304	103552		Cung binh ®éi tr­ëng	60	1
+149	79	54728	104239		Cung binh ®éi tr­ëng	60	1
+149	79	54966	103926		Cung binh ®éi tr­ëng	60	1
+154	79	55152	104083		§ao binh 	60	1
+154	79	55369	104274		§ao binh 	60	1
+149	79	56179	103913		Cung binh ®éi tr­ëng	60	1
+162	79	56137	103614		Th­¬ng binh 	60	1
+154	79	56064	103849		§ao binh 	60	1
+162	79	56011	104050		Th­¬ng binh 	60	1
+154	79	516284	103715		§ao binh 	60	1
+149	79	516230	103529		Cung binh ®éi tr­ëng	60	1
+149	79	536149	104696		Cung binh ®éi tr­ëng	60	1
+149	79	53513	104536		Cung binh ®éi tr­ëng	60	1
+149	79	53984	105024		Cung binh ®éi tr­ëng	60	1
+162	79	54020	104867		Th­¬ng binh 	60	1
+154	79	54145	104891		§ao binh 	60	1
+154	79	54508	104549		§ao binh 	60	1
+149	79	54689	104717		Cung binh ®éi tr­ëng	60	1
+149	79	54573	104448		Cung binh ®éi tr­ëng	60	1
+154	79	54678	104452		§ao binh 	60	1
+149	79	55051	104915		Cung binh ®éi tr­ëng	60	1
+162	79	55452	104452		Th­¬ng binh 	60	1
+154	79	55414	104683		§ao binh 	60	1
+149	79	55590	104469		Cung binh ®éi tr­ëng	60	1

@@ -1,0 +1,64 @@
+[2025-10-24 19:38:13.291] [WaitForAccPwd][ID=0] Received login: account="123456"
+[2025-10-24 19:38:13.291] [WaitForAccPwd][ID=0] TEMP-LOCK OK for "123456"
+[2025-10-24 19:38:13.291] [WaitForAccPwd][ID=0] Ready to send AccountLoginInfo for "123456" (next=QueryAccPwd)
+[2025-10-24 19:38:13.301] [QueryAccPwd][ID=0] Send to AccServer: Type=2 Ver=1 Operate=0 Acc="123456" passLen=32 licLen=20
+[2025-10-24 19:38:13.361] [VerifyAccount][ID=0] Acc="123456" result=1
+[2025-10-24 19:38:13.361] [VerifyAccount][ID=0] alreadyOnline=0 inTransfer=0
+[2025-10-24 19:38:13.361] [VerifyAccount][ID=0] "123456" LOCKED ACTIVE (owner=1)
+[2025-10-24 19:38:15.992] [Inactive][ID=0] Logic logout for role "DienBaQuan"
+[2025-10-24 19:38:15.992] [Inactive][ID=0] ACTIVE lock REMOVED for "123456" (owner)
+[2025-10-24 19:38:15.992] [Inactive][ID=0] Completed cleanup for "123456"
+[2025-10-24 19:46:08.852] [WaitForAccPwd][ID=0] Received login: account="123456"
+[2025-10-24 19:46:08.852] [WaitForAccPwd][ID=0] TEMP-LOCK OK for "123456"
+[2025-10-24 19:46:08.852] [WaitForAccPwd][ID=0] Ready to send AccountLoginInfo for "123456" (next=QueryAccPwd)
+[2025-10-24 19:46:08.871] [QueryAccPwd][ID=0] Send to AccServer: Type=2 Ver=1 Operate=0 Acc="123456" passLen=32 licLen=20
+[2025-10-24 19:46:08.927] [VerifyAccount][ID=0] Acc="123456" result=1
+[2025-10-24 19:46:08.927] [VerifyAccount][ID=0] alreadyOnline=0 inTransfer=0
+[2025-10-24 19:46:08.927] [VerifyAccount][ID=0] "123456" LOCKED ACTIVE (owner=1)
+[2025-10-24 19:46:10.029] [Inactive][ID=0] Logic logout for role "DienBaQuan"
+[2025-10-24 19:46:10.029] [Inactive][ID=0] ACTIVE lock REMOVED for "123456" (owner)
+[2025-10-24 19:46:10.029] [Inactive][ID=0] Completed cleanup for "123456"
+[2025-10-24 20:37:14.841] [WaitForAccPwd][ID=0] Received login: account="123456"
+[2025-10-24 20:37:14.841] [WaitForAccPwd][ID=0] TEMP-LOCK OK for "123456"
+[2025-10-24 20:37:14.841] [WaitForAccPwd][ID=0] Ready to send AccountLoginInfo for "123456" (next=QueryAccPwd)
+[2025-10-24 20:37:14.851] [QueryAccPwd][ID=0] Send to AccServer: Type=2 Ver=1 Operate=0 Acc="123456" passLen=32 licLen=20
+[2025-10-24 20:37:14.900] [VerifyAccount][ID=0] Acc="123456" result=1
+[2025-10-24 20:37:14.900] [VerifyAccount][ID=0] alreadyOnline=0 inTransfer=0
+[2025-10-24 20:37:14.900] [VerifyAccount][ID=0] "123456" LOCKED ACTIVE (owner=1)
+[2025-10-24 20:37:15.825] [Inactive][ID=0] Logic logout for role "DienBaQuan"
+[2025-10-24 20:37:15.825] [Inactive][ID=0] ACTIVE lock REMOVED for "123456" (owner)
+[2025-10-24 20:37:15.826] [Inactive][ID=0] Completed cleanup for "123456"
+[2025-10-25 13:00:59.756] [WaitForAccPwd][ID=1] Received login: account="123456"
+[2025-10-25 13:00:59.756] [WaitForAccPwd][ID=1] TEMP-LOCK OK for "123456"
+[2025-10-25 13:00:59.756] [WaitForAccPwd][ID=1] Ready to send AccountLoginInfo for "123456" (next=QueryAccPwd)
+[2025-10-25 13:00:59.766] [QueryAccPwd][ID=1] Send to AccServer: Type=2 Ver=1 Operate=1 Acc="123456" passLen=32 licLen=20
+[2025-10-25 13:00:59.811] [VerifyAccount][ID=1] Acc="123456" result=4
+[2025-10-25 13:00:59.811] [VerifyAccount][ID=1] Failed: account already exists/online "123456"
+[2025-10-25 13:00:59.827] [Inactive][ID=1] Skip ACTIVE unlock for "123456" (not owner)
+[2025-10-25 13:00:59.827] [Inactive][ID=1] Completed cleanup for "123456"
+[2025-10-25 13:00:59.913] [WaitForAccPwd][ID=2] Received login: account="123456"
+[2025-10-25 13:00:59.913] [WaitForAccPwd][ID=2] TEMP-LOCK OK for "123456"
+[2025-10-25 13:00:59.913] [WaitForAccPwd][ID=2] Ready to send AccountLoginInfo for "123456" (next=QueryAccPwd)
+[2025-10-25 13:00:59.928] [QueryAccPwd][ID=2] Send to AccServer: Type=2 Ver=1 Operate=2 Acc="123456" passLen=32 licLen=20
+[2025-10-25 13:00:59.948] [VerifyAccount][ID=2] Acc="123456" result=4
+[2025-10-25 13:00:59.948] [VerifyAccount][ID=2] Failed: account already exists/online "123456"
+[2025-10-25 13:00:59.979] [Inactive][ID=2] Skip ACTIVE unlock for "123456" (not owner)
+[2025-10-25 13:00:59.979] [Inactive][ID=2] Completed cleanup for "123456"
+[2025-10-25 13:01:00.085] [WaitForAccPwd][ID=3] Received login: account="123456"
+[2025-10-25 13:01:00.085] [WaitForAccPwd][ID=3] TEMP-LOCK OK for "123456"
+[2025-10-25 13:01:00.085] [WaitForAccPwd][ID=3] Ready to send AccountLoginInfo for "123456" (next=QueryAccPwd)
+[2025-10-25 13:01:00.101] [QueryAccPwd][ID=3] Send to AccServer: Type=2 Ver=1 Operate=3 Acc="123456" passLen=32 licLen=20
+[2025-10-25 13:01:00.121] [VerifyAccount][ID=3] Acc="123456" result=4
+[2025-10-25 13:01:00.121] [VerifyAccount][ID=3] Failed: account already exists/online "123456"
+[2025-10-25 13:01:00.131] [Inactive][ID=3] Skip ACTIVE unlock for "123456" (not owner)
+[2025-10-25 13:01:00.131] [Inactive][ID=3] Completed cleanup for "123456"
+[2025-10-25 13:01:20.199] [WaitForAccPwd][ID=4] Received login: account="123456"
+[2025-10-25 13:01:20.199] [WaitForAccPwd][ID=4] TEMP-LOCK OK for "123456"
+[2025-10-25 13:01:20.199] [WaitForAccPwd][ID=4] Ready to send AccountLoginInfo for "123456" (next=QueryAccPwd)
+[2025-10-25 13:01:20.208] [QueryAccPwd][ID=4] Send to AccServer: Type=2 Ver=1 Operate=4 Acc="123456" passLen=32 licLen=20
+[2025-10-25 13:01:20.253] [VerifyAccount][ID=4] Acc="123456" result=1
+[2025-10-25 13:01:20.253] [VerifyAccount][ID=4] alreadyOnline=0 inTransfer=0
+[2025-10-25 13:01:20.253] [VerifyAccount][ID=4] "123456" LOCKED ACTIVE (owner=1)
+[2025-10-25 13:01:20.493] [Inactive][ID=4] Logic logout for role "DienBaQuan"
+[2025-10-25 13:01:20.493] [Inactive][ID=4] ACTIVE lock REMOVED for "123456" (owner)
+[2025-10-25 13:01:20.493] [Inactive][ID=4] Completed cleanup for "123456"

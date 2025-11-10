@@ -1,0 +1,75 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+64	78	48646	98465		Tõ Vò ph¸p s­   	1
+321	78	49038	99284		¡n mµy  	1
+286	78	49452	99042		Tr­¬ng ThiÕt Chñy   	1
+246	78	49176	100203		Ph¹m §a §a  	1
+381	78	49688	99369		Ph¹m NhÞ Xu©n  	1
+62	78	46941	101206		VÖ binh thµnh m«n  	1
+224	78	47511	101229		Chñ tiÖm trµ   	1
+225	78	47725	101003		Trµ b¸c sÜ   	1
+393	78	48315	100422	\script\global\luanpcfunctions\station.lua	Xa phu  	1
+265	78	49199	101232		C¶nh L·o ®Çu   	1
+308	78	49691	100879		Tiªu ®Çu  	1
+218	78	46420	102332		C« gi¸ tiªn sinh  	1
+219	78	46733	102025		Ng­êi thu tiÒn tiÖm cÇm ®å  	1
+217	78	46655	102168		Chñ tiÖm cÇm ®å  	1
+62	78	46735	101437		VÖ binh thµnh m«n  	1
+309	78	46877	101858	\script\mission\bw\manager.lua	C«ng B×nh Tö   	1
+348	78	47692	101690		§µo §µo  	1
+371	78	48059	102329		Ph¹m §¹i C­êng  	1
+379	78	49568	102233		Cung A Ng­u  	1
+230	78	50145	102206	\script\global\luanpcfunctions\horsesale.lua	B¸n ngùa  	1
+380	78	49791	101861	\script\global\luanpcfunctions\thanbithuongnhan.lua	ThÇn bÝ Th­¬ng Nh©n  	1
+237	78	45997	102754	\script\global\luanpcfunctions\station.lua	Xa phu  	1
+247	78	46489	103163		Cung l·o Th¸i  	1
+391	78	48978	103174		Chñ TiÒn trang  	1
+198	78	49658	102857	\script\global\luanpcfunctions\blacksmith.lua	Häc trß thî rÌn  	1
+359	78	49419	103323		§oµn Tó Tµi  	1
+51	78	50989	102622		Nha M«n VÖ binh  	1
+51	78	51206	102859		Nha M«n VÖ binh  	1
+62	78	54668	102942		VÖ binh thµnh m«n  	1
+62	78	54880	103177		VÖ binh thµnh m«n  	1
+355	78	47001	103929		B¹ch V©n  	1
+386	78	47093	103998		Hµ C«   	1
+358	78	46660	104014		L­u H»ng  	1
+356	78	47291	104255		H­¬ng Nhi  	1
+324	78	47162	104132		Töu Quû   	1
+361	78	49238	104439		TiÓu §Æng tö   	1
+296	78	49292	104219		CËu bÐo Phïng  	1
+377	78	49273	103942		LÔ Quan  	1
+286	78	50748	104030		Gi¶ ThÇn To¸n  	1
+203	78	51590	103816	\script\global\luanpcfunctions\godmedicine.lua	¤ng chñ d­îc ®iÕm  	1
+308	78	51435	104298		Vâ L©m truyÒn nh©n  	1
+384	78	52144	104333	\script\global\luanpcfunctions\grocery.lua	Chñ tiÖm t¹p hãa  	1
+323	78	53370	104041		Du Kh¸ch  	1
+393	78	54138	103427	\script\global\luanpcfunctions\station.lua	Xa phu  	1
+309	78	54561	103536	\script\mission\bw\manager.lua	C«ng B×nh Tö   	1
+309	78	47178	104705	\script\mission\bw\manager.lua	C«ng B×nh Tö   	1
+259	78	47695	104508		Hµng rong  	1
+283	78	48210	105089		Qua Ph¸n  	1
+195	78	48757	104652		Chñ l÷ qu¸n  	1
+378	78	49968	104524		¤ng chñ Hµ   	1
+205	78	50679	104961		Chñ tiÖm ®å cæ   	1
+108	78	51044	105226		D· TÈu  	1
+351	78	52721	104767		§Æng Gia tÈu tö   	1
+62	78	45554	105545		VÖ binh thµnh m«n  	1
+62	78	45777	105766		VÖ binh thµnh m«n  	1
+212	78	48878	105836		¤ng chñ töu lÇu  	1
+342	78	49369	106456		§µo Gia  	1
+244	78	50573	106491		Qu¸ch Viªn ngo¹i  	1
+334	78	50891	105580		Con b¹c  	1
+209	78	51412	105659		Chñ sßng b¹c  	1
+210	78	51587	105830		B¶o kª   	1
+211	78	51507	105813		B¶o kª   	1
+374	78	51235	106082		Con b¹c  	1
+321	78	51521	106878		¡n mµy  	1
+309	78	50478	108047	\script\mission\bw\manager.lua	C«ng B×nh Tö   	1
+237	78	51140	108054	\script\global\luanpcfunctions\station.lua	Xa phu  	1
+377	78	50815	107808		DÞch tr¹m dÞch quan  	1
+62	78	51788	109482		VÖ binh thµnh m«n  	1
+62	78	51990	109272		VÖ binh thµnh m«n  	1
+396	78	41492	111383		ThuyÒn Phu  	1
+394	78	41961	111259		ThuyÒn Phu  	1
+308	78	49472	99808	\script\missions\liendau\npctalk.lua	Sø gi¶ liªn ®Êu KiÖt SuÊt  	1
+769	78	48288	102528	\script\mission\vuotai\npc_talk.lua	NhiÕp ThÝ TrÇn	1
+308	78	49120	103776	\script\mission\loanchien\npctalk.lua	Lo¹n ChiÕn T­¬ng Qu©n	1

@@ -1,0 +1,2 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+237	342	37056	76448	\script\event\tichtinhdong\npctalk.lua	Xa phu	1

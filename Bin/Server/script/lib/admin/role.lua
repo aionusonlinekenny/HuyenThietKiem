@@ -1,0 +1,7 @@
+GMRole = {}
+GMRole.Task = {
+	EQUIP_DETAIL		= 8,
+	EQUIP_PARTICULAR 	= 9,
+	EQUIP_LEVEL			= 10,
+	SEX_CHOOSE			= 11,
+}

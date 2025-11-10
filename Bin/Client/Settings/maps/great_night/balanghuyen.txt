@@ -1,0 +1,2 @@
+map_ID	nPosX	nPosY
+53	1665	3257

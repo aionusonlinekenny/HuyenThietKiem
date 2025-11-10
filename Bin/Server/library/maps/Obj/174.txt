@@ -1,0 +1,8 @@
+ObjID	MapID	PosX	PosY	Dir	State	ScriptFile	IsLoad
+294	174	54892	94271	0	0	\script\maps\obj\contains.lua	1
+297	174	58124	96269	0	0	\script\maps\obj\contains.lua	1
+1	174	51734	102092	1	0	\script\maps\obj\box.lua	1
+331	174	49289	103835	0	0	\script\maps\obj\contains.lua	1
+332	174	54133	104080	0	0	\script\maps\obj\contains.lua	1
+1	174	53058	105417	0	0	\script\maps\obj\box.lua	1
+296	174	58149	110503	0	0	\script\maps\obj\contains.lua	1

@@ -1,0 +1,10 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+240	336	47678	89918	\script\mission\phonglangdo\npc_talk_3.lua	Thuy“n phu B›nh	1
+240	336	49367	89979	\script\mission\phonglangdo\npc_talk_3.lua	Thuy“n phu B›nh	1
+240	336	41054	92995	\script\mission\phonglangdo\npc_talk_2.lua	Thuy“n phu  t	1
+240	336	42661	92551	\script\mission\phonglangdo\npc_talk_2.lua	Thuy“n phu  t	1
+240	336	37656	95399	\script\mission\phonglangdo\npc_talk_1.lua	Thuy“n phu Gi∏p	1
+240	336	36938	96853	\script\mission\phonglangdo\npc_talk_1.lua	Thuy“n phu Gi∏p	1
+1781	336	37440	95232	\script\mission\phonglangdo\npc_baonhan.lua	Bπo nh©n	1
+1781	336	42848	92224	\script\mission\phonglangdo\npc_baonhan.lua	Bπo nh©n	1
+1781	336	47904	89984	\script\mission\phonglangdo\npc_baonhan.lua	Bπo nh©n	1

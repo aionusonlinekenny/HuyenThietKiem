@@ -1,0 +1,7 @@
+ObjID	MapID	PosX	PosY	Dir	State	ScriptFile	IsLoad
+4	176	51494	93094	0	0	\script\missions\congthanh\notice.lua	1
+1	176	50369	93883	0	0	\script\maps\obj\176\临安府储物箱3.lua	1
+1	176	54041	104922	0	0	\script\maps\obj\176\临安府储物箱2.lua	1
+1	176	44540	106039	1	0	\script\maps\obj\176\临安府储物箱1.lua	1
+3	176	54112	106006	0	0	\script\missions\congthanh\notice.lua	1
+296	176	56497	109825	0	0	\script\maps\obj\contains.lua	1

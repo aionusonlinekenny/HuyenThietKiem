@@ -1,0 +1,6 @@
+14:13:55_10-08-25	1234567		BaoBao		 Nhan Mèc 20k (ti le)
+14:37:45_10-08-25	1234567		BaoBao		 Nhan Mèc 10k (ti le)
+14:37:51_10-08-25	1234567		BaoBao		 Nhan Mèc 20k (ti le)
+14:56:57_10-08-25	1234567		BaoBao		 Nhan Mèc 10k (ti le)
+14:58:09_10-08-25	1234567		BaoBao		 Nhan Mèc 10k (ti le)
+14:58:12_10-08-25	1234567		BaoBao		 Nhan Mèc 20k (ti le)

@@ -1,0 +1,390 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Bishop - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPDE4A.tmp" with contents
+[
+/nologo /MT /W3 /GX /O2 /I "..\Common" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\..\lib" /I "..\..\..\Headers" /I "..\..\Sword3PaySys\S3AccServer" /I "..\..\s3client\login" /I "..\..\RoleDBManager" /I "..\..\Core\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Bishop.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\GameServer.cpp"
+"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\Intercessor.cpp"
+"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\SmartClient.cpp"
+]
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPDE4A.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPDE4B.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Bishop.pdb" /map:"Release/Bishop.map" /debug /machine:I386 /out:"Release/Bishop.exe" 
+.\Release\Application.obj
+.\Release\Bishop.obj
+.\Release\Event.obj
+.\Release\GamePlayer.obj
+.\Release\GameServer.obj
+.\Release\Intercessor.obj
+.\Release\Network.obj
+.\Release\PlayerCreator.obj
+.\Release\SmartClient.obj
+.\Release\StdAfx.obj
+.\Release\Bishop.res
+..\..\..\Lib\release\common.lib
+..\..\..\Lib\release\engine.lib
+]
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPDE4B.tmp"
+<h3>Output Window</h3>
+Compiling...
+GameServer.cpp
+Intercessor.cpp
+SmartClient.cpp
+Generating Code...
+Linking...
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE272.bat" with contents
+[
+@echo off
+md ..\..\..\..\bin\Server
+copy release\Bishop.exe ..\..\..\..\bin\Server\Bishop.exe
+copy release\Bishop.map ..\..\..\..\bin\Server\Bishop.map
+copy release\Bishop.pdb ..\..\..\..\bin\Server\Bishop.pdb
+md ..\..\..\..\bin\Server\release\
+copy release\Bishop.exe ..\..\..\..\bin\Server\release\Bishop.exe
+copy release\Bishop.map ..\..\..\..\bin\Server\release\Bishop.map
+copy release\Bishop.pdb ..\..\..\..\bin\Server\release\Bishop.pdb
+]
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE272.bat"
+
+A subdirectory or file ..\..\..\..\bin\Server already exists.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+A subdirectory or file ..\..\..\..\bin\Server\release\ already exists.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+
+
+
+<h3>Results</h3>
+Bishop.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Core - Win32 Server Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+CoreServer.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Core - Win32 Client Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+CoreClient.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Engine - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Engine.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Engine - Win32 OuRead Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Engine.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: ExpandPackage - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+ExpandPackage.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: FilterText - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+FilterText.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: GameServer - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+GameServer.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Goddess - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Goddess.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Heaven - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Heaven.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: LuaLibDll - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+LuaLibDll.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Rainbow - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Rainbow.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Represent2 - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Represent2.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Represent3 - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Represent3.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: S3Client - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE30F.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib Winmm.lib shlwapi.lib lualibdll.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Game.pdb" /map:"Release/Game.map" /debug /machine:I386 /out:"Release/Game.exe" /libpath:"../../lib/" 
+.\Release\AutoLocateWnd.obj
+.\Release\ComWindow.obj
+.\Release\LightLoop.obj
+.\Release\MouseHover.obj
+.\Release\PopupMenu.obj
+.\Release\SpaceOver.obj
+.\Release\SpecialFuncs.obj
+.\Release\TextPic.obj
+.\Release\UiCursor.obj
+.\Release\UiImage.obj
+.\Release\WndButton.obj
+.\Release\WndChessPanel.obj
+.\Release\WndEdit.obj
+.\Release\WndImage.obj
+.\Release\WndImage2.obj
+.\Release\WndImagePart.obj
+.\Release\WndLabeledButton.obj
+.\Release\WndList.obj
+.\Release\WndList2.obj
+.\Release\WndListFilterItem.obj
+.\Release\WndListPoint.obj
+.\Release\WndMessageListBox.obj
+.\Release\WndMovingImage.obj
+.\Release\WndObjContainer.obj
+.\Release\WndPage.obj
+.\Release\WndPureTextBtn.obj
+.\Release\Wnds.obj
+.\Release\WndScrollBar.obj
+.\Release\WndShadow.obj
+.\Release\WndShowAnimate.obj
+.\Release\WndText.obj
+.\Release\WndToolBar.obj
+.\Release\WndValueImage.obj
+.\Release\WndWindow.obj
+.\Release\UiConnectInfo.obj
+.\Release\UiLogin.obj
+.\Release\UiLoginBg.obj
+.\Release\UiSelServer.obj
+.\Release\UiChooseFace.obj
+.\Release\UiFaceSelector.obj
+.\Release\UiPlayerBar.obj
+.\Release\UiStatus.obj
+.\Release\UiOptions.obj
+.\Release\UiInit.obj
+.\Release\UiTeamBuild.obj
+.\Release\UiChaPW.obj
+.\Release\UiCreatPW.obj
+.\Release\UiExpandItem.obj
+.\Release\UiGetMoney.obj
+.\Release\UiGiveBox.obj
+.\Release\UiItem.obj
+.\Release\UiKeyBoard.obj
+.\Release\UiLoginPW.obj
+.\Release\UiReWard.obj
+.\Release\UiSkills.obj
+.\Release\UiSkillTree.obj
+.\Release\UiStoreBox.obj
+.\Release\UiTimeBox.obj
+.\Release\UiESCDlg.obj
+.\Release\UiGetNumber.obj
+.\Release\UiGetString.obj
+.\Release\UiMsgSel.obj
+.\Release\UiMsgSel2.obj
+.\Release\UiParadeItem.obj
+.\Release\UiSelPlayerNearby.obj
+.\Release\UiNewPlayer.obj
+.\Release\UiSelNativePlace.obj
+.\Release\UiSelPlayer.obj
+.\Release\UiChannelSubscibe.obj
+.\Release\UiChatCentre.obj
+.\Release\UiChatPhrase.obj
+.\Release\UiChatStatus.obj
+.\Release\UiInformation.obj
+.\Release\UiInformation2.obj
+.\Release\UiInformation3.obj
+.\Release\UiTeamManage.obj
+.\Release\UiTeamStatus.obj
+.\Release\UiChatItemInfo.obj
+.\Release\UiHeaderControlBar.obj
+.\Release\UiMsgCentrePad.obj
+.\Release\UiMakeAdv.obj
+.\Release\UiMarket.obj
+.\Release\UiMarkPrice.obj
+.\Release\UiPlayerShop.obj
+.\Release\UiShop.obj
+.\Release\UiShoppingCart.obj
+.\Release\UiTrade.obj
+.\Release\UiTradeConfirmWnd.obj
+.\Release\UiGame.obj
+.\Release\UiNotification.obj
+.\Release\UiSysMsgCentre.obj
+.\Release\UiCaveMap.obj
+.\Release\UiFindPos.obj
+.\Release\UiMiniMap.obj
+.\Release\UiWorldMap.obj
+.\Release\UiSelColor.obj
+.\Release\UiNewPlayerStartMsg.obj
+.\Release\UiPlayVideo.obj
+.\Release\UiHelper.obj
+.\Release\UiHelper2.obj
+.\Release\UiHelperMission.obj
+.\Release\UiReconnect.obj
+.\Release\UiRevive.obj
+.\Release\UiTaskDataFile.obj
+.\Release\UiTaskNote.obj
+.\Release\UiNewsMessage.obj
+.\Release\UiNewsMessageEx.obj
+.\Release\UiStrengthRank.obj
+.\Release\UiPopupPasswordQuery.obj
+.\Release\UiTongAssignBox.obj
+.\Release\UiTongChangeTitle.obj
+.\Release\UiTongCreateSheet.obj
+.\Release\UiTongInformation.obj
+.\Release\UiTongManager.obj
+".\Release\UiTongSetTax .obj"
+.\Release\UiAutoPlay.obj
+.\Release\UiMiniBuff.obj
+.\Release\UiTopTKNew.obj
+.\Release\UiTrembleItem.obj
+.\Release\TrayMode.obj
+.\Release\UiSoundSetting.obj
+.\Release\GameSpaceChangedNotify.obj
+.\Release\ShortcutKey.obj
+.\Release\UiBase.obj
+.\Release\UiShell.obj
+.\Release\ChatFilter.obj
+.\Release\FilterTextLib.obj
+.\Release\S3Client.obj
+.\Release\NetConnectAgent.obj
+.\Release\Login.obj
+.\Release\TextCtrlCmd.obj
+.\Release\ErrorCode.obj
+.\Release\stdafx.obj
+.\Release\Script1.res
+..\..\Lib\release\engine.lib
+..\..\Lib\release\CoreClient.lib
+]
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPE30F.tmp"
+<h3>Output Window</h3>
+Linking...
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE3BC.bat" with contents
+[
+@echo off
+md ..\..\..\bin\client
+copy Release\Game.exe ..\..\..\bin\Client\Game.exe
+copy Release\Game.pdb ..\..\..\bin\Client\Game.pdb
+copy Release\Game.map ..\..\..\bin\Client\Game.map
+md ..\..\..\bin\client\release\
+copy Release\Game.exe ..\..\..\bin\Client\release\Game.exe
+copy Release\Game.pdb ..\..\..\bin\Client\release\Game.pdb
+copy Release\Game.map ..\..\..\bin\Client\release\Game.map
+]
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE3BC.bat"
+
+A subdirectory or file ..\..\..\bin\client already exists.
+The process cannot access the file because it is being used by another process.
+        0 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+A subdirectory or file ..\..\..\bin\client\release\ already exists.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+
+
+
+<h3>Results</h3>
+Game.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: S3Relay - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+S3Relay.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: S3RelayServer - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+S3RelayServer.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Sword3PaySys - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Sword3PaySys.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

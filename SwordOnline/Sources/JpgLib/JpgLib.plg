@@ -1,0 +1,41 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+Configuration: JpgLib - Win32 Release
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\Ken\AppData\Local\Temp\RSP5AC0.tmp" with contents
+[
+/nologo /ML /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /Fp"Release/JpgLib.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"E:\SkyGold\sword3\SwordOnline\Sources\JpgLib\Src\KJpegColor.c"
+"E:\SkyGold\sword3\SwordOnline\Sources\JpgLib\Src\KJpegDecode.c"
+"E:\SkyGold\sword3\SwordOnline\Sources\JpgLib\Src\KJpegHuffman.c"
+"E:\SkyGold\sword3\SwordOnline\Sources\JpgLib\Src\KJpegIdct.c"
+"E:\SkyGold\sword3\SwordOnline\Sources\JpgLib\Src\KJpegIdct2d.c"
+"E:\SkyGold\sword3\SwordOnline\Sources\JpgLib\Src\KJpegLib.c"
+"E:\SkyGold\sword3\SwordOnline\Sources\JpgLib\Src\KJpegQuanty.c"
+"E:\SkyGold\sword3\SwordOnline\Sources\JpgLib\Src\KJpegSegment.c"
+]
+Creating command line "cl.exe @C:\Users\Ken\AppData\Local\Temp\RSP5AC0.tmp" 
+Creating command line "link.exe -lib /nologo /out:"Release\JpgLib.lib"  .\Release\KJpegColor.obj .\Release\KJpegDecode.obj .\Release\KJpegHuffman.obj .\Release\KJpegIdct.obj .\Release\KJpegIdct2d.obj .\Release\KJpegLib.obj .\Release\KJpegQuanty.obj .\Release\KJpegSegment.obj "
+<h3>Output Window</h3>
+Compiling...
+KJpegColor.c
+KJpegDecode.c
+KJpegHuffman.c
+KJpegIdct.c
+KJpegIdct2d.c
+KJpegLib.c
+KJpegQuanty.c
+KJpegSegment.c
+Creating library...
+
+
+
+<h3>Results</h3>
+JpgLib.lib - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

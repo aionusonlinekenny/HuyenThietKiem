@@ -1,0 +1,75 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+328	162	51052	100125		Nha M«n VÖ binh	1
+328	162	51180	100243		Nha M«n VÖ binh	1
+393	162	53364	99998	\script\global\luanpcfunctions\station.lua	Xa phu	1
+377	162	53644	99650		DÞch quan	1
+62	162	53832	99605		VÖ binh thµnh m«n	1
+62	162	54033	99832		VÖ binh thµnh m«n	1
+189	162	55810	100288		Hßa Th­îng	1
+189	162	57157	100195		Hßa Th­îng	1
+189	162	57260	100283		Hßa Th­îng	1
+378	162	48486	100831		Trµ Kh¸ch 	1
+375	162	48985	101011		§oµn T­ Thµnh 	1
+234	162	52466	100739	\script\global\luanpcfunctions\horsesale.lua	B¸n ngùa	1
+287	162	52747	100498		Tr­¬ng ThiÕt Chñy 	1
+379	162	55588	100724		H­¬ng Kh¸ch 	1
+64	162	56305	100514		H­ Viªn Ph­¬ngTr­îng 	1
+344	162	55890	100816		H­¬ng Kh¸ch 	1
+318	162	56108	101125		H­¬ng Kh¸ch 	1
+189	162	56392	101116		Hßa Th­îng	1
+382	162	46291	101736		Long Truy Vò 	1
+225	162	48082	101626		Trµ b¸c sÜ 	1
+219	162	47981	101710		TiÓu nhÞ qu¸n trµ 	1
+377	162	47673	101985		Trµ Kh¸ch 	1
+224	162	48204	101509		Chñ tiÖm trµ 	1
+323	162	49524	101949		§inh A B»ng	1
+329	162	49890	102211		Töu Kh¸ch Gi¸p	1
+331	162	49951	102338		Töu Kh¸ch Êt	1
+196	162	51473	102295		TiÓu nhÞ l÷ qu¸n	1
+348	162	51767	101527		§ao Liªn Anh 	1
+308	162	52177	101925		Vâ L©m truyÒn nh©n	1
+332	162	47103	102917		§æng Kh¾c DÜ 	1
+203	162	47983	102684	\script\global\luanpcfunctions\godmedicine.lua	¤ng chñ d­îc ®iÕm	1
+204	162	48364	102979		C« g¸i h¸i thuèc	1
+244	162	49138	102411	\script\global\luanpcfunctions\grocery.lua	Chñ tiÖm t¹p hãa	1
+370	162	48865	103393		Con b¹c	1
+214	162	50150	102595		Töu B¶o 	1
+196	162	50381	102799		Töu B¶o 	1
+213	162	50224	102636		Bµ chñ töu ®iÕm	1
+330	162	50434	102912		Töu Kh¸ch Gi¸p	1
+367	162	50977	103326		Kh¸ch trä 	1
+377	162	50756	103073		LÔ Quan	1
+195	162	51310	102450		Chñ l÷ qu¸n	1
+51	162	51713	103028		Kh¸ch trä 	1
+365	162	52315	102719		Hoa N«ng 	1
+108	162	52832	103219		D· TÈu	1
+217	162	47950	103664		Chñ tiÖm cÇm ®å	1
+313	162	47881	103726		Ng­êi thu tiÒn	1
+208	162	49036	104432		Bµ chñ tiÖm vËt nu«i	1
+209	162	49201	103726		Chñ sßng b¹c	1
+210	162	49162	103681		B¶o kª 	1
+211	162	49361	103892		B¶o kª 	1
+380	162	49251	104183		Con b¹c	1
+373	162	49514	104057		Con b¹c	1
+199	162	49887	104331	\script\global\luanpcfunctions\blacksmith.lua	Häc trß thî rÌn	1
+362	162	52176	104322		A Kú 	1
+260	162	53485	103447		Hµng rong	1
+361	162	53839	104050		V¨n V¨n 	1
+236	162	47029	104604	\script\global\luanpcfunctions\station.lua	Xa phu	1
+279	162	48334	104818		§oµn L·o H¸n	1
+337	162	49622	105344		§¶n H¹nh Hoa 	1
+388	162	50103	104477		Häc trß thî rÌn	1
+312	162	50819	104516		B¹ch L·o H¸n	1
+318	162	50933	104583		Xa L·o Th¸i 	1
+237	162	54353	104856	\script\global\luanpcfunctions\station.lua	Xa phu	1
+62	162	45996	105981		VÖ binh thµnh m«n	1
+62	162	46141	106129		VÖ binh thµnh m«n	1
+343	162	48130	105851		§oµn NgäcPhông 	1
+62	162	55140	106245		VÖ binh thµnh m«n	1
+62	162	55355	106038		VÖ binh thµnh m«n	1
+298	162	52070	106593		Ng­ H¹ Than 	1
+396	162	50614	110096		Ng­ Phu Êt	1
+241	162	50650	110057		Ng­ Phu §inh 	1
+240	162	50746	110108		Ng­ Phu BÝnh 	1
+409	162	50781	110015		Ng­ Phu Gi¸p	1
+769	162	50240	102720	\script\mission\vuotai\npc_talk.lua	NhiÕp ThÝ TrÇn	1

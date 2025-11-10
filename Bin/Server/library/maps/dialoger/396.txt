@@ -1,0 +1,7 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+203	396	49792	97600	\script\global\luanpcfunctions\godmedicine.lua	Chñ d­îc ®iÓm	1
+308	396	48448	96480	\script\mission\liendau\npctalk.lua	Quan viªn héi tr­êng	1
+308	396	49088	97600	\script\mission\liendau\npctalk.lua	Quan viªn héi tr­êng	1
+308	396	47488	95968	\script\mission\liendau\npctalk.lua	Quan viªn héi tr­êng	1
+308	396	50688	94880	\script\mission\liendau\ldstationhall.lua	ThÞ vÖ héi tr­êng	1
+237	396	46752	96704	\script\mission\liendau\ldstation.lua	Xa phu	1

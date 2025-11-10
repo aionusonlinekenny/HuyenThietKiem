@@ -1,0 +1,3 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+55	380	39584	114304	\script\mission\battles\doctor.lua	HiÖu thuèc	1
+55	380	53632	97920	\script\mission\battles\doctor.lua	HiÖu thuèc	1

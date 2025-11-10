@@ -1,0 +1,12 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+377	394	45152	102528	\script\event\thienbaokho\npc_talk.lua	DÞch quan	1
+338	394	44736	79712	\script\event\thienbaokho\npc_talk.lua	Tiªu TrÊn	1
+844	394	45280	98496	\script\event\thienbaokho\baokho.lua	B¶o khè 01	1
+844	394	46080	96864	\script\event\thienbaokho\baokho.lua	B¶o khè 02	1
+844	394	45184	95232	\script\event\thienbaokho\baokho.lua	B¶o khè 03	1
+844	394	44032	93888	\script\event\thienbaokho\baokho.lua	B¶o khè 04	1
+844	394	45376	92480	\script\event\thienbaokho\baokho.lua	B¶o khè 05	1
+844	394	44032	90592	\script\event\thienbaokho\baokho.lua	B¶o khè 06	1
+844	394	45376	88864	\script\event\thienbaokho\baokho.lua	B¶o khè 07	1
+844	394	43776	87360	\script\event\thienbaokho\baokho.lua	B¶o khè 08	1
+844	394	45120	85376	\script\event\thienbaokho\baokho.lua	B¶o khè 09	1

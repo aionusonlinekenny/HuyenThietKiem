@@ -1,0 +1,8 @@
+MapId	RegionId	CellX	CellY	ScriptFile	IsLoad
+202	141	12	31	\script\maps\libtrap.lua	1
+202	141	13	31	\script\maps\libtrap.lua	1
+202	165	13	0	\script\maps\libtrap.lua	1
+202	165	14	0	\script\maps\libtrap.lua	1
+202	165	14	1	\script\maps\libtrap.lua	1
+202	165	15	1	\script\maps\libtrap.lua	1
+202	165	15	2	\script\maps\libtrap.lua	1

@@ -1,0 +1,15 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+117	2	75214	111865		Kim S¬n Ch­ëng M«n   	1
+245	2	83306	114808		Hoa S¬n L·o TÈu   	1
+238	2	83745	114757	\script\global\luanpcfunctions\station.lua	DÞch tr¹m Xa phu  	1
+189	2	83679	115050		§Ö tö Th­êng B¸ch Lý   	1
+189	2	83736	115122		§Ö tö TÝch thÞnh Phong	1
+63	2	82769	122643		Kim binh 	1
+63	2	82873	122764		Kim binh 	1
+63	2	82841	122517		Kim binh 	1
+63	2	82984	122620		Kim binh 	1
+63	2	82967	122879		Kim binh 	1
+543	2	82731	122889		T­¬ng qu©n LÜnh Th¸c NhÜ H¸n	1
+2192	2	83616	114560		Cung chóc T©n Xu©n	1
+1533	2	82848	112160		Cung chóc T©n Xu©n	1
+2192	2	83104	111936		Cung chóc T©n Xu©n	1

@@ -1,0 +1,108 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+242	176	51344	81619		ThuyÒn Phu	1
+194	176	41923	88195		HuÖ T©m S­ Th¸i	1
+193	176	42009	88118		Ni C« Thanh Hßa	1
+309	176	42401	88479		H­¬ng Kh¸ch 	1
+358	176	42127	89046		H­¬ng Kh¸ch 	1
+350	176	42133	88323		H­¬ng Kh¸ch 	1
+318	176	42565	89146		H­¬ng Kh¸ch 	1
+209	176	42053	91039		ThÇn BÝ Th­¬ng Nh©n	1
+286	176	42801	93114		Tr­¬ng ThiÕt Chñy 	1
+214	176	48844	92617		Töu B¶o 	1
+244	176	48684	92742		Bµ chñ töu ®iÕm	1
+218	176	49551	92552		Ng­êi thu tiÒn	1
+316	176	49617	92548		Chñ tiÖm cÇm ®å	1
+344	176	49614	92813		Con g¸i Chñ tiÖm cÇm ®å	1
+219	176	49464	92664		Ng­êi thu tiÒn tiÖm cÇm ®å	1
+239	176	51246	93172	\script\global\luanpcfunctions\station.lua	Xa phu	1
+62	176	51693	93010		VÖ binh thµnh m«n	1
+245	176	46892	93557		Quan Viªn tho¸i nhiÖm	1
+328	176	50146	93488		Kh¸ch trä 	1
+261	176	50592	93905		Ng­êi b¸n dÇu	1
+377	176	50873	93597		DÞch quan	1
+62	176	51892	93222		VÖ binh thµnh m«n	1
+260	176	44408	94693		Hµng rong	1
+345	176	46605	95179		Cè Tö B×nh	1
+256	176	47542	94628		Thî may	1
+203	176	49421	94811	\script\global\luanpcfunctions\godmedicine.lua	¤ng chñ d­îc ®iÕm	1
+330	176	51217	94738		Tr­¬ng TiÓu TuyÒn 	1
+343	176	46669	95260		TÇn Nh­ H©n 	1
+199	176	48600	95482	\script\global\luanpcfunctions\blacksmith.lua	Häc trß thî rÌn	1
+377	176	48179	95448		LÔ Quan	1
+201	176	48684	95450		Häc trß 	1
+108	176	50006	95341		D· TÈu	1
+203	176	51724	95234	\script\global\luanpcfunctions\godmedicine.lua	¤ng chñ d­îc ®iÕm	1
+311	176	52578	96122		Long Giíi Sinh	1
+393	176	43278	96463	\script\global\luanpcfunctions\station.lua	Xa phu	1
+210	176	46586	96848		B¶o kª 	1
+319	176	46417	96806		Con b¹c	1
+210	176	46729	96989		B¶o kª 	1
+209	176	46639	96884		Chñ sßng b¹c	1
+331	176	46779	97204		Con b¹c	1
+231	176	47808	96466		B¸n ngùa	1
+234	176	47756	96487		B¸n ngùa	1
+308	176	49100	96360		Vâ L©m truyÒn nh©n	1
+321	176	52943	96503		¡n mµy	1
+244	176	54052	96937		Bµ chñ töu ®iÕm	1
+214	176	53967	97119		Töu B¶o 	1
+335	176	53805	97272		Töu Kh¸ch Gi¸p	1
+334	176	53859	97236		Töu Kh¸ch Êt	1
+308	176	54221	97110		Töu Quû 	1
+197	176	42607	97866	\script\global\luanpcfunctions\blacksmith.lua	Häc trß thî rÌn	1
+228	176	46137	97943		Chñ TiÒn trang	1
+329	176	46359	97358		Con b¹c	1
+375	176	47841	97662		ThuËt sÜ 	1
+344	176	54331	97902		DiÖp TiÓu Ngäc	1
+329	176	41753	98850		Trµ Kh¸ch 	1
+327	176	41716	99105		Trµ Kh¸ch 	1
+224	176	42189	98384		Chñ tiÖm trµ 	1
+225	176	42060	98444		Trµ b¸c sÜ 	1
+214	176	42274	98405		TiÓu nhÞ qu¸n trµ 	1
+336	176	42151	98986		Trµ Kh¸ch 	1
+312	176	44618	98349		T¹ §¹i Gia	1
+275	176	45417	98915		T« Tam N­¬ng	1
+267	176	45743	98539		Qu¸n trµ 	1
+317	176	55712	98499		Bµ giµ mï 	1
+360	176	55408	98888		TiÓu Xuyªn	1
+363	176	55791	99243		HØ Nhi	1
+316	176	43119	99388		Hoa Viªn Ngo¹i	1
+257	176	44643	99569		TiÖm t¬ ®iÒu	1
+315	176	42866	101250	\script\global\luanpcfunctions\grocery.lua	Chñ tiÖm t¹p hãa	1
+290	176	43667	100697		TiÖm tranh	1
+321	176	54187	101468		¡n mµy	1
+358	176	42858	103364		Th­ sinh nghÌo	1
+196	176	43477	103414		TiÓu nhÞ l÷ qu¸n	1
+195	176	43660	103261		Chñ l÷ qu¸n	1
+249	176	51058	103233		Cung N÷ Gi¸p	1
+249	176	51103	103208		Cung N÷ Êt	1
+62	176	51506	103311		VÖ binh hoµng cung	1
+62	176	51745	103064		VÖ binh hoµng cung	1
+251	176	52168	102459		TiÓu Th¸i gi¸m	1
+51	176	51916	103225		 C«ng sai L©m An 	1
+62	176	52356	102515		VÖ binh hoµng cung	1
+197	176	53918	102994	\script\global\luanpcfunctions\blacksmith.lua	Häc trß thî rÌn	1
+359	176	46111	103782		§inh Viªn ngo¹i	1
+62	176	47043	103513		VÖ binh hoµng cung	1
+62	176	46956	103601		VÖ binh hoµng cung	1
+62	176	47125	103433		VÖ binh hoµng cung	1
+62	176	47473	103782		VÖ binh hoµng cung	1
+62	176	47396	103882		VÖ binh hoµng cung	1
+62	176	47307	103994		VÖ binh hoµng cung	1
+55	176	47216	103481		Thèng lÜnh cÊm VÖ 	1
+53	176	47628	103826		Nha DÞch	1
+274	176	44945	105332		T« Tam N­¬ng	1
+239	176	54286	105340	\script\global\luanpcfunctions\station.lua	Xa phu	1
+203	176	53937	106178	\script\global\luanpcfunctions\godmedicine.lua	¤ng chñ d­îc ®iÕm	1
+239	176	43890	106580	\script\global\luanpcfunctions\station.lua	Xa phu	1
+246	176	47021	107480		Ng­êi h¸i thuèc	1
+347	176	46781	107219		Con d©u T¹ gia	1
+62	176	54915	106702		VÖ binh thµnh m«n	1
+62	176	55025	106612		VÖ binh thµnh m«n	1
+62	176	43154	107821		VÖ binh thµnh m«n	1
+62	176	43260	107912		VÖ binh thµnh m«n	1
+389	176	47230	107538	\script\global\luanpcfunctions\godmedicine.lua	¤ng chñ d­îc ®iÕm	1
+205	176	47673	108013		Chñ tiÖm ®å cæ 	1
+207	176	47766	108073		Bµ chñ tiÖm vËt nu«i	1
+48	176	47410	109270		Tr­¬ng TuÊn	1
+359	176	46538	110279		Th­ sinh	1
+769	176	43872	96256	\script\mission\vuotai\npc_talk.lua	NhiÕp ThÝ TrÇn	1

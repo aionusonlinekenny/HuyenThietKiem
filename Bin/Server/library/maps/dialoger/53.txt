@@ -1,0 +1,44 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+396	53	49389	93543		ThuyÒn Phu	0
+311	53	53493	95313		Vâ S­ 	1
+359	53	57550	98829		Du Kh¸ch	0
+189	53	50936	100144	\script\global\luanpcfactions\talk\shaolin.lua	ThiÕu L©m La H¸n	1
+212	53	51371	99857		¤ng chñ töu ®iÕm	0
+103	53	51214	99970	\script\global\luanpcfactions\talk\gaibang.lua	§Ö tö C¸i Bang	1
+385	53	50064	100665		La gia ThÈm Tö 	1
+360	53	50211	100844		ThuËn Thuû	1
+309	53	50439	100656	\script\global\luanpcfactions\talk\kunlun.lua	C«n L«n Hé Ph¸p	1
+198	53	50756	100944	\script\global\luanpcfunctions\blacksmith.lua	Thî rÌn	1
+181	53	51831	101223	\script\global\luanpcfactions\talk\tianren.lua	Thiªn NhÉn Tö sÜ	1
+240	53	57625	100956		Ng­ d©n	1
+323	53	48204	101573	\script\global\luanpcfunctions\thamcuu.lua	ThÈm Cöu	1
+246	53	49863	102307		Cöu c©n l·o gia	1
+333	53	50186	101895		Ph­¬ng Kh¶ VÞ 	1
+219	53	51208	101458	\script\global\luanpcfunctions\grocery.lua	Chñ tiÖm t¹p hãa	1
+177	53	51623	101582	\script\global\luanpcfactions\talk\tangmen.lua	§­êng M«n ThÞ VÖ	1
+184	53	51528	102294	\script\global\luanpcfactions\talk\tianwang.lua	Thiªn V­¬ng T­íng LÜnh	1
+373	53	51233	102025		C«ng thµnh quan	1
+108	53	52033	101523	\script\global\luanpcfunctions\datau.lua	D· TÈu	1
+377	53	52130	102258	\script\global\luanpcfunctions\lequan.lua	LÔ Quan	1
+83	53	52374	101894	\script\global\luanpcfactions\talk\emei.lua	Nga My CÈm Y Ni	1
+188	53	52335	102036	\script\global\luanpcfactions\talk\wudang.lua	Vâ §ang §¹o Nh©n	1
+242	53	56910	101692		Ng­ d©n	1
+367	53	49649	103039		Du Cöu Ch©u	1
+171	53	50608	102481	\script\global\luanpcfactions\talk\cuiyan.lua	Thóy Yªn Hoa Sø 	1
+389	53	51150	102713	\script\global\luanpcfunctions\godmedicine.lua	Ng« ThÇn Y	1
+186	53	51891	102620	\script\global\luanpcfactions\talk\wudu.lua	Ngò §éc T¸n nh©n	1
+298	53	52239	102865		Ng­ d©n	1
+362	53	52464	102834		TiÓu Ng­ 	1
+239	53	50507	103567	\script\global\luanpcfunctions\station.lua	Xa phu	1
+347	53	51831	104136		A Ph­¬ng	1
+247	53	52202	103766		Cæ L·o Th¸i	1
+1336	53	52192	102144	\script\global\luanpcfunctions\support.lua	[NPC Hç trî ]TiÓu Phóc Sinh 	0
+1501	53	52256	102080	\script\global\luanpcfunctions\support.lua	§Ìn Phóc Sinh	0
+308	53	52160	101664	\script\mission\liendau\npctalk.lua	Sø gi¶ liªn ®Êu KiÖt SuÊt  	1
+2027	53	52256	101760	\script\global\luanpcfunctions\tong.lua	Sø gi¶ Bang héi	1
+211	53	51872	101376	\script\global\luanpcfunctions\prinsonbalang.lua	Bæ ®Çu cai ngôc	1
+1464	53	51936	101824	\script\global\luanpcfunctions\support.lua	[NPC Hç trî ]Hç trî t©n thñ 	1
+739	53	52192	102144	\script\mission\loanchien\npctalk.lua	Lo¹n ChiÕn T­¬ng Qu©n 	1
+380	53	52256	102080	\script\global\luanpcfunctions\shopvip.lua	[SHOP VIP] T©y Vùc Gia Gia  	1
+661	53	51936	101440	\script\global\luanpcfunctions\sugiachuyenphai.lua	S­ gi¶ chuyÓn ph¸i  	1
+377	53	51744	101408	\script\event\thienbaokho\npc_talk.lua	TÝn sø Thiªn B¶o Khè  	1
