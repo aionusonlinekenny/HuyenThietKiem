@@ -351,6 +351,8 @@ int KItemList::Add(int nIdx, int nPlace, int nX, int nY)
 		UIEP_HORSE,
 		UIEP_MASK,
 		UIEP_MANTLE,
+		UIEP_SIGNET,
+		UIEP_SHIPIN,
 	};
 
 	int PartBuildItem[MAX_PART_BUILD] = //TrembleItem by kinnox;
@@ -618,6 +620,8 @@ BOOL KItemList::Remove(int nGameIdx)
 		UIEP_HORSE,
 		UIEP_MASK,
 		UIEP_MANTLE,
+		UIEP_SIGNET,
+		UIEP_SHIPIN,
 	};
 
 	int PartBuildItem[MAX_PART_BUILD] = //TrembleItem by kinnox;
@@ -3121,8 +3125,10 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 			UIEP_HORSE,
 			UIEP_MASK,
 			UIEP_MANTLE,
+			UIEP_SIGNET,
+			UIEP_SHIPIN,
 		};
-		
+
 	int PartBuildItem[MAX_PART_BUILD] = //TrembleItem by kinnox;
 		{
 			UIEP_BUILDITEM1,
