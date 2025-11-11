@@ -986,15 +986,16 @@ int	KCoreShell::GetGameData(unsigned int uDataId, unsigned int uParam, int nPara
 				if (pObj->Obj.uGenre != CGOG_ITEM || pObj->Obj.uId >= MAX_ITEM)
 					break;
 
-				int PartConvert[itempart_num] = 
-				{ 
+				int PartConvert[itempart_num] =
+				{
 					itempart_head,		itempart_weapon,
 					itempart_amulet,	itempart_cuff,
 					itempart_body,		itempart_belt,
 					itempart_ring1,		itempart_ring2,
 					itempart_pendant,	itempart_foot,
 					itempart_horse,		itempart_mask,
-					itempart_mantle,
+					itempart_mantle,	itempart_signet,
+					itempart_shipin,
 				};
 
 				_ASSERT(pObj->eContainer < itempart_num);
