@@ -51,7 +51,7 @@
 
 extern int LuaGetNpcTalk(Lua_State *L);
 
-#define		defPLAYER_LOGIN_TIMEOUT			5 * 18
+#define		defPLAYER_LOGIN_TIMEOUT			6 * 18
 #define		defPLAYER_SAVE_TIMEOUT			30 * 18//30 * 20 fix by kinnox;
 
 #define		PLAYER_LEVEL_1_EXP				48
