@@ -1727,13 +1727,19 @@ int KItemList::SearchPlaceEquip(int nItemID, BYTE nPos)
 			break;	
 		case equip_mantle:
 			nRet = itempart_mantle;
-			break;	
+			break;
+		case equip_signet:
+			nRet = itempart_signet;
+			break;
+		case equip_shipin:
+			nRet = itempart_shipin;
+			break;
 		default:
 			nRet = 0;
 		break;
 	}
 	return nRet;
-} 
+}
 #endif
 BOOL KItemList::SearchPosition(int nWidth, int nHeight, ItemPos* pPos)
 {
