@@ -388,20 +388,45 @@ void CClientManager::PrepareToSend()
 
 void CClientManager::BeginToSend()
 {
-	CCriticalSection::Owner lock( m_csAction );
-
-	for ( LIST::iterator i = m_usedClientStack.begin(); 
-			i != m_usedClientStack.end();
-			i ++ )
+	// OPTIMIZATION: Copy client list first to minimize m_csAction lock time
+	// This prevents blocking other operations while we do network I/O
+	std::vector<unsigned long> clientList;
 	{
-		unsigned long ulnID = *i;
+		CCriticalSection::Owner lock( m_csAction );
+		clientList.reserve(m_usedClientStack.size());
+		for ( LIST::iterator i = m_usedClientStack.begin();
+				i != m_usedClientStack.end();
+				i ++ )
+		{
+			clientList.push_back(*i);
+		}
+	}
+	// m_csAction is now released - other threads can access client list
 
-		CCriticalSection::Owner locker( m_clientContext[ulnID].csWriteAction );
-		
-		const BYTE *pPackData = m_clientContext[ulnID].pWriteBuffer->GetBuffer();
-		const size_t used = m_clientContext[ulnID].pWriteBuffer->GetUsed();
+	// Process each client's write buffer
+	for ( std::vector<unsigned long>::iterator it = clientList.begin();
+			it != clientList.end();
+			it++ )
+	{
+		unsigned long ulnID = *it;
 
-		if ( used > 0 )
+		// Allocate temporary buffer for this client's data
+		const BYTE *pPackData = NULL;
+		size_t used = 0;
+		OnlineGameLib::Win32::CSocketServer::Socket *pSocket = NULL;
+
+		// Copy data from write buffer while holding per-client lock
+		{
+			CCriticalSection::Owner locker( m_clientContext[ulnID].csWriteAction );
+
+			pPackData = m_clientContext[ulnID].pWriteBuffer->GetBuffer();
+			used = m_clientContext[ulnID].pWriteBuffer->GetUsed();
+			pSocket = m_clientContext[ulnID].pSocket;
+		}
+		// csWriteAction is now released for this client
+
+		// Perform network I/O OUTSIDE of critical section to prevent blocking
+		if ( used > 0 && pSocket != NULL )
 		{
 		//[
 #ifdef  NETWORK_DEBUG
@@ -414,12 +439,19 @@ void CClientManager::BeginToSend()
 		dwEOSFlag[0] = gs_dwPackID ++;
 		dwEOSFlag[1] = sc_dwFlag | ( 0xFFFF & used );
 
-		m_clientContext[ulnID].pWriteBuffer->AddData( reinterpret_cast<const char*>( &dwEOSFlag ), sc_nFlagLen );
+		// Note: In NETWORK_DEBUG mode, we need to add debug flag to buffer
+		// This requires re-locking, but debug mode is not used in production
+		{
+			CCriticalSection::Owner locker( m_clientContext[ulnID].csWriteAction );
+			m_clientContext[ulnID].pWriteBuffer->AddData( reinterpret_cast<const char*>( &dwEOSFlag ), sc_nFlagLen );
+			pPackData = m_clientContext[ulnID].pWriteBuffer->GetBuffer();
+			used = m_clientContext[ulnID].pWriteBuffer->GetUsed();
+		}
 
-		m_clientContext[ulnID].pSocket->Write( reinterpret_cast<const char*>( pPackData ), used + sc_nFlagLen );
-	
+		pSocket->Write( reinterpret_cast<const char*>( pPackData ), used );
+
 /*	#define NETWORK_DEBUG_TRACE2FILE
-	#undef NETWORK_DEBUG_TRACE2FILE	
+	#undef NETWORK_DEBUG_TRACE2FILE
 	#ifdef NETWORK_DEBUG_TRACE2FILE
 	//{
 		Trace2File( _T("Package[ID:") + ToString( gs_dwPackID - 1 ) + _T("]\n") + DumpData( pPackData, used, 40 ) );
@@ -434,22 +466,26 @@ void CClientManager::BeginToSend()
 //}
 #else	// NETWORK_DEBUG
 //{
-		m_clientContext[ulnID].pSocket->Write( reinterpret_cast<const char*>( pPackData ), used );
+		pSocket->Write( reinterpret_cast<const char*>( pPackData ), used );
 //}
 #endif  // NETWORK_DEBUG
 		//]
 
 /*			Output(
-				_T("ID:") + 
-				ToString(ulnID) + 
-				_T(" - Package[length:") + 
-				ToString( used ) + 
-				_T("]\n") + 
-				DumpData( pPackData, used, 40 ) 
+				_T("ID:") +
+				ToString(ulnID) +
+				_T(" - Package[length:") +
+				ToString( used ) +
+				_T("]\n") +
+				DumpData( pPackData, used, 40 )
 				);*/
 		}
 
-		m_clientContext[ulnID].pWriteBuffer->Empty();
+		// Clear buffer after sending (re-acquire lock for this operation)
+		{
+			CCriticalSection::Owner locker( m_clientContext[ulnID].csWriteAction );
+			m_clientContext[ulnID].pWriteBuffer->Empty();
+		}
 	}
 }
 

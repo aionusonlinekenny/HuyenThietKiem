@@ -452,7 +452,7 @@ void CSocketServer::OnConnectionError( enumConnectionErrorSource /*source*/,
 /*
  * CSocketServer::Socket
  */
-CSocketServer::Socket::Socket( CSocketServer &server,                                 
+CSocketServer::Socket::Socket( CSocketServer &server,
 		SOCKET theSocket,
 		bool useSequenceNumbers )
 	: m_server( server ),
@@ -468,10 +468,21 @@ CSocketServer::Socket::Socket( CSocketServer &server,
 {
 	if ( !IsValid() )
 	{
-		throw CException( _T("CSocketServer::Socket::Socket()"), 
+		throw CException( _T("CSocketServer::Socket::Socket()"),
 			_T("Invalid socket") );
 	}
-	
+
+	// OPTIMIZATION: Disable Nagle's algorithm for low-latency real-time communication
+	// TCP_NODELAY prevents buffering of small packets, reducing latency for game traffic
+	int flag = 1;
+	if ( SOCKET_ERROR == ::setsockopt( m_socket, IPPROTO_TCP, TCP_NODELAY,
+		reinterpret_cast<const char*>(&flag), sizeof(flag) ) )
+	{
+		// Non-fatal error - log but continue
+		OnError( _T("CSocketServer::Socket::Socket() - setsockopt(TCP_NODELAY) failed - ") +
+			GetLastErrorMessage( ::WSAGetLastError() ) );
+	}
+
 	if ( useSequenceNumbers )
 	{
 		m_pSequenceData = new SequenceData( m_crit );
@@ -495,20 +506,30 @@ void CSocketServer::Socket::Attach( SOCKET theSocket )
 {
 	if ( IsValid() )
 	{
-		throw CException( _T("CSocketServer::Socket::Attach()"), 
+		throw CException( _T("CSocketServer::Socket::Attach()"),
 			_T("Socket already attached"));
 	}
-	
+
 	m_socket = theSocket;
-	
+
+	// OPTIMIZATION: Disable Nagle's algorithm for low-latency real-time communication
+	int flag = 1;
+	if ( SOCKET_ERROR == ::setsockopt( m_socket, IPPROTO_TCP, TCP_NODELAY,
+		reinterpret_cast<const char*>(&flag), sizeof(flag) ) )
+	{
+		// Non-fatal error - log but continue
+		OnError( _T("CSocketServer::Socket::Attach() - setsockopt(TCP_NODELAY) failed - ") +
+			GetLastErrorMessage( ::WSAGetLastError() ) );
+	}
+
 	SetUserData( 0 );
-	
+
 	m_readShutdown = false;
 	m_writeShutdown = false;
 	m_outstandingWrites = 0;
 	m_closing = false;
 	m_clientClosed = false;
-	
+
 	if ( m_pSequenceData )
 	{
 		m_pSequenceData->Reset();
