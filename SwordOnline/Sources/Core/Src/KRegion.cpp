@@ -135,21 +135,21 @@ BOOL KRegion::Load(int nX, int nY)
 	m_nRegionX = nX * 512;
 	m_nRegionY = nY * 1024;
 
-	// ÏÂ·½
+	// ï¿½Â·ï¿½
 	m_nConRegionID[0] = MAKELONG(nX, nY + 1);
-	// ×óÏÂ·½
+	// ï¿½ï¿½ï¿½Â·ï¿½
 	m_nConRegionID[1] = MAKELONG(nX - 1, nY + 1);
-	// ×ó·½
+	// ï¿½ï¿½
 	m_nConRegionID[2] = MAKELONG(nX - 1, nY);
-	// ×óÉÏ·½
+	// ï¿½ï¿½ï¿½Ï·ï¿½
 	m_nConRegionID[3] = MAKELONG(nX - 1, nY - 1);
-	// ÉÏ·½
+	// ï¿½Ï·ï¿½
 	m_nConRegionID[4] = MAKELONG(nX, nY - 1);
-	// ÓÒÉÏ·½
+	// ï¿½ï¿½ï¿½Ï·ï¿½
 	m_nConRegionID[5] = MAKELONG(nX + 1, nY - 1);
-	// ÓÒ·½
+	// ï¿½Ò·ï¿½
 	m_nConRegionID[6] = MAKELONG(nX + 1, nY);
-	// ÓÒÏÂ·½
+	// ï¿½ï¿½ï¿½Â·ï¿½
 	m_nConRegionID[7] = MAKELONG(nX + 1, nY + 1);
 
 	return TRUE;
@@ -636,17 +636,26 @@ void KRegion::Activate()
 		int nNpcIdx = pTmpNode->m_nIndex;
 		pNode = (KIndexNode *)pNode->GetNext();
 #ifdef _SERVER
-		if ((nCounter == m_nNpcSyncCounter / 2) && (m_nNpcSyncCounter & 1))
-		{
-			// ·¢ËÍÍ¬²½ÐÅºÅ
-			Npc[nNpcIdx].NormalSync();
-		}
+		// FIX: Remove aggressive NPC sync throttling that caused 2-5 second delay
+		// Old code only synced 1 NPC per Region::Activate() call, causing massive delays
+		// with multiple NPCs in the same region. Now sync all NPCs every frame for
+		// better responsiveness, especially for local/LAN gameplay with 4+ clients.
+		//
+		// Original throttling logic (REMOVED):
+		// if ((nCounter == m_nNpcSyncCounter / 2) && (m_nNpcSyncCounter & 1))
+		// {
+		//     Npc[nNpcIdx].NormalSync();
+		// }
+		//
+		// New logic: Always sync
+		Npc[nNpcIdx].NormalSync();
 #endif
 		//printf("Region [%03d:%03d] NPC %s active...\n", m_nRegionX, m_nRegionY, Npc[nNpcIdx].Name);	//[wxb 2003-7-29]
 		Npc[nNpcIdx].Activate();
 		nCounter++;
 //		pNode = pTmpNode;
 	}
+	// Keep counter for potential future use, but no longer used for throttling
 	m_nNpcSyncCounter++;
 	if (m_nNpcSyncCounter > m_NpcList.GetNodeCount() * 2)
 	{
@@ -658,15 +667,16 @@ void KRegion::Activate()
 	{
 		pTmpNode = (KIndexNode *)pNode->GetNext();
 #ifdef _SERVER
-		if ((nCounter == m_nObjSyncCounter / 2) && (m_nObjSyncCounter & 1))
-		{
-			Object[pNode->m_nIndex].SyncState();
-		}
+		// FIX: Remove Object sync throttling similar to NPC fix above
+		// Old code: if ((nCounter == m_nObjSyncCounter / 2) && (m_nObjSyncCounter & 1))
+		// New code: Always sync objects for better responsiveness
+		Object[pNode->m_nIndex].SyncState();
 		nCounter++;
 #endif
 		Object[pNode->m_nIndex].Activate();
 		pNode = pTmpNode;
 	}
+	// Keep counter for potential future use
 	m_nObjSyncCounter++;
 	if (m_nObjSyncCounter > m_ObjList.GetNodeCount() * 2)
 	{
@@ -692,7 +702,7 @@ void KRegion::Activate()
 #endif
 
 #ifndef _SERVER
-	if (Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_RegionIndex == m_nIndex)	// ÊÇPlayerËùÔÚµÄRegion
+	if (Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_RegionIndex == m_nIndex)	// ï¿½ï¿½Playerï¿½ï¿½ï¿½Úµï¿½Region
 	{
 		Player[CLIENT_PLAYER_INDEX].Active();
 	}

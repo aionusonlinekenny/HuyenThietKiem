@@ -12,7 +12,7 @@
 #define		FILE_NAME_LENGTH					80
 #define		PLAYER_PICKUP_CLIENT_DISTANCE		128//63
 #define		defMAX_EXEC_OBJ_SCRIPT_DISTANCE		200
-#define		defMAX_PLAYER_SEND_MOVE_FRAME		5
+#define		defMAX_PLAYER_SEND_MOVE_FRAME		2		// Reduced from 5 to 2 for faster movement updates and lower latency between clients
 #define		PLAYER_PICKUP_SERVER_DISTANCE		40000
 #define		MAX_INT								0x7fffffff
 
@@ -378,13 +378,13 @@ enum PLAYER_INSTANT_STATE
 enum CHAT_STATUS
 {
 	CHAT_S_ONLINE = 0,		//????
-	CHAT_S_BUSY,			//æµ
+	CHAT_S_BUSY,			//ï¿½
 	CHAT_S_HIDE,			//????
 	CHAT_S_LEAVE,			//??
 	CHAT_S_DISCONNECT,		//????
 };
 
-// ?????ö???????????(by zroc)
+// ?????ï¿½???????????(by zroc)
 enum OBJ_ATTRIBYTE_TYPE
 {
 	series_metal = 0,		//	???
@@ -697,7 +697,7 @@ enum PLAYER_ACTION_LIST
 //==================================
 enum SYS_MESSAGE_TYPE
 {
-	SMT_NORMAL = 0,	//???µ????????
+	SMT_NORMAL = 0,	//???ï¿½????????
 	SMT_SYSTEM,		//???????????
 	SMT_PLAYER,		//??????
 	SMT_TEAM,		//??????
