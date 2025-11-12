@@ -73,6 +73,7 @@ public:
 	BOOL			m_bFollowPeople;
 	char			m_FollowPeopleName[32];
 	int				m_nRadiusFollow;
+	int				m_nLeaderCurrentTarget;		// FIX: Track leader's attack target for coordinated combat
 	BOOL			m_bAttackAround;
 	BOOL			m_bAroundBtn;
 	int				m_PosXAuto;

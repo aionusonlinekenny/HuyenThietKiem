@@ -58,10 +58,11 @@ void KPlayerAI::Release()
 	m_nTimerMove			= 0;
 	m_bAttackAround 		= FALSE;
 	m_bAroundBtn 			= FALSE;
-	m_bFollowPeople 		= FALSE;	
+	m_bFollowPeople 		= FALSE;
 	m_FollowPeopleName[0] 	= 0;
 	m_FollowPeopleIdx 		= 0;
 	m_nRadiusFollow			= 0;
+	m_nLeaderCurrentTarget	= 0;	// FIX: Initialize leader target tracking for coordinated combat
 	m_bAutoAttack 			= TRUE;	
 	m_bFollowAttack			= FALSE;
 	m_SpaceBar 				= FALSE;
@@ -377,6 +378,20 @@ void KPlayerAI::Active()
 
 				if (m_FollowPeopleIdx)
 				{
+					// FIX: Track leader's current attack target for coordinated combat
+					// When following, follower should attack the same target as leader
+					if (Npc[m_FollowPeopleIdx].m_nPeopleIdx > 0 &&
+						Npc[m_FollowPeopleIdx].m_Index > 0)
+					{
+						// Leader is attacking someone - update our target tracking
+						m_nLeaderCurrentTarget = Npc[m_FollowPeopleIdx].m_nPeopleIdx;
+					}
+					else
+					{
+						// Leader not attacking - clear target tracking
+						m_nLeaderCurrentTarget = 0;
+					}
+
 					int distance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_FollowPeopleIdx);
 
 					// AUTO RIDE HORSE FEATURE: Auto mount when target is too far
@@ -608,6 +623,29 @@ void KPlayerAI::Active()
 int KPlayerAI::FindNearNpc2Array(int nRelation)
 {
 	int nRet = 0;
+
+	// FIX: Priority 1 - If following someone, attack their target first (coordinated combat)
+	// This ensures follower focuses on leader's target instead of randomly finding nearest NPC
+	if (m_bFollowPeople && m_FollowPeopleIdx > 0 && m_nLeaderCurrentTarget > 0)
+	{
+		// Validate leader's target is still valid and attackable
+		if (!IsNotValidNpc(m_nLeaderCurrentTarget) &&
+		    Npc[m_nLeaderCurrentTarget].m_Index > 0 &&
+		    Npc[m_nLeaderCurrentTarget].m_dwID > 0)
+		{
+			// Check if target is within reasonable range (2x follow radius)
+			int distance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_nLeaderCurrentTarget);
+			if (distance <= m_nRadiusFollow * 2)
+			{
+				// Attack same target as leader (coordinated combat)
+				return m_nLeaderCurrentTarget;
+			}
+		}
+		// Leader's target invalid/dead -> clear it and find new target below
+		m_nLeaderCurrentTarget = 0;
+	}
+
+	// Original logic: Find nearest NPC when not following or leader has no target
 	if (AutoAddNpc2Array(nRelation))
 	{
 		int distance = 0 ;
@@ -629,9 +667,9 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 					}
 				}
 				if (_findLag == TRUE)
-					continue;	
-				
-				if (IsNotValidNpc(m_ArrayNpcNeast[i]))		
+					continue;
+
+				if (IsNotValidNpc(m_ArrayNpcNeast[i]))
 					continue;
 				distance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_ArrayNpcNeast[i]);
 				if (FALSE == _fg)
