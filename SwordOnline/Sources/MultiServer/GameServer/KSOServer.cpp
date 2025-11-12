@@ -2598,8 +2598,19 @@ void KSwordOnLineSever::MainLoop()
 
 void KSwordOnLineSever::PingClient(const unsigned long lnID)
 {
-	_ASSERT(lnID < m_nMaxPlayer);
-	_ASSERT(m_pGameStatus[lnID].nPlayerIndex > 0 && m_pGameStatus[lnID].nPlayerIndex <= m_nMaxPlayer);
+	// FIX: Replace _ASSERT() with validation to prevent MessageBox crash
+	// When player disconnects but ping packet arrives late ? crash with "CIntercessor class" MessageBox
+	if (lnID >= m_nMaxPlayer)
+	{
+		printf("[WARNING] PingClient: Invalid lnID=%lu (max=%d), ignoring\n", lnID, m_nMaxPlayer);
+		return;
+	}
+	if (m_pGameStatus[lnID].nPlayerIndex <= 0 || m_pGameStatus[lnID].nPlayerIndex > m_nMaxPlayer)
+	{
+		printf("[WARNING] PingClient: Player lnID=%lu not active (nPlayerIndex=%d), ignoring\n",
+			lnID, m_pGameStatus[lnID].nPlayerIndex);
+		return;
+	}
 	
 	//printf("PingClient(%d) called\n", lnID);
 	PING_COMMAND	pc;
@@ -2620,8 +2631,19 @@ void KSwordOnLineSever::PingClient(const unsigned long lnID)
 }
 void KSwordOnLineSever::ProcessPingReply(const unsigned long lnID, const char* pData, size_t dataLength)
 {
-    _ASSERT(lnID < m_nMaxPlayer);
-    _ASSERT(m_pGameStatus[lnID].nPlayerIndex > 0 && m_pGameStatus[lnID].nPlayerIndex <= m_nMaxPlayer);
+	// FIX: Replace _ASSERT() with validation to prevent MessageBox crash
+	// When player disconnects but ping packet arrives late ? crash with "CIntercessor class" MessageBox
+	if (lnID >= m_nMaxPlayer)
+	{
+		printf("[WARNING] PingClient: Invalid lnID=%lu (max=%d), ignoring\n", lnID, m_nMaxPlayer);
+		return;
+	}
+	if (m_pGameStatus[lnID].nPlayerIndex <= 0 || m_pGameStatus[lnID].nPlayerIndex > m_nMaxPlayer)
+	{
+		printf("[WARNING] PingClient: Player lnID=%lu not active (nPlayerIndex=%d), ignoring\n",
+			lnID, m_pGameStatus[lnID].nPlayerIndex);
+		return;
+	}
 
     if (dataLength != sizeof(PING_CLIENTREPLY_COMMAND))
     {
@@ -2671,67 +2693,6 @@ void KSwordOnLineSever::ProcessPingReply(const unsigned long lnID, const char* p
     m_pServer->PackDataToClient(lnID, &pc, sizeof(PING_COMMAND));
 }
 
-/* Kenny test
-void KSwordOnLineSever::ProcessPingReply(const unsigned long lnID, const char* pData, size_t dataLength)
-{
-	_ASSERT(lnID < m_nMaxPlayer);
-	_ASSERT(m_pGameStatus[lnID].nPlayerIndex > 0 && m_pGameStatus[lnID].nPlayerIndex <= m_nMaxPlayer);*/
-/*
-	//printf("receive ping from client...\n");
-	if (dataLength != sizeof(PING_CLIENTREPLY_COMMAND))
-	{
-		printf("ping cmd size not correct, may be Non-offical Client...\n");
-		m_pServer->ShutdownClient(lnID);
-		return;
-	}
-	
-	PING_CLIENTREPLY_COMMAND*	pPC = (PING_CLIENTREPLY_COMMAND *)pData;
-	if (pPC->m_dwReplyServerTime != m_pGameStatus[lnID].nSendPingTime)
-	{
-		printf("wrong time in ping cmd content, kill it...\n");
-		m_pServer->ShutdownClient(lnID);
-		return;
-	}
-	m_pGameStatus[lnID].nReplyPingTime = m_nGameLoop;*/
-	//Kenny fixed
-	/*if (dataLength != sizeof(PING_CLIENTREPLY_COMMAND))
-{
-    printf("ping cmd size not correct, ignore\n");
-    return;
-}
-
-PING_CLIENTREPLY_COMMAND* pPC = (PING_CLIENTREPLY_COMMAND *)pData;
-int expected = m_pGameStatus[lnID].nSendPingTime;
-int replied  = (int)pPC->m_dwReplyServerTime;
-
-if (replied != expected)
-{
-    const int grace = defMAX_PING_INTERVAL * 3;
-
-    if (replied < expected)
-    {
-
-        if (expected - replied <= grace)
-        {
-
-        }
-        else
-        {
-            return;
-        }
-    }
-    else
-    {
-        return;
-    }
-}
-	m_pGameStatus[lnID].nReplyPingTime = m_nGameLoop;
-	PING_COMMAND	pc;
-	pc.ProtocolType = s2c_replyclientping;
-	pc.m_dwTime = pPC->m_dwClientTime;
-	m_pServer->PackDataToClient(lnID, &pc, sizeof(PING_COMMAND));
-}
-*/
 // 保持连接的玩家自动存盘
 void KSwordOnLineSever::SavePlayerData()
 {
