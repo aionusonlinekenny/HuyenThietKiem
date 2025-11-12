@@ -281,15 +281,19 @@ int		KObjSet::Add(int nDataID, KMapPos MapPos, KObjItemInfo sItemInfo)
 		}
 		else if(Item[sItemInfo.m_nItemID].GetGenre() == item_equip)
 		{
-			// Kiểm tra TẤT CẢ magic attributes [0-5], không chỉ [0]
+			// Check GeneratorLevel thay vì MagicAttrib vì MagicAttrib được generate sau
 			BOOL bHasMagic = FALSE;
 			int nAttribIdx;
-			for(nAttribIdx = 0; nAttribIdx < 6; nAttribIdx++)
+			KItemGeneratorParam* pGenParam = Item[sItemInfo.m_nItemID].GetGeneratorParam();
+			if(pGenParam)
 			{
-				if(Item[sItemInfo.m_nItemID].GetAttribType(nAttribIdx) > 0)
+				for(nAttribIdx = 0; nAttribIdx < 6; nAttribIdx++)
 				{
-					bHasMagic = TRUE;
-					break;
+					if(pGenParam->nGeneratorLevel[nAttribIdx] > 0)
+					{
+						bHasMagic = TRUE;
+						break;
+					}
 				}
 			}
 			if(bHasMagic)
@@ -300,18 +304,18 @@ int		KObjSet::Add(int nDataID, KMapPos MapPos, KObjItemInfo sItemInfo)
 			{
 				sItemInfo.m_nColorID = 0;
 			}
-			// Debug log - always print
-			printf("[ITEM_COLOR_DEBUG] %s | Genre:%d ColorID:%d HasMagic:%d | Attrib:[%d,%d,%d,%d,%d,%d]\n",
+			// Debug log
+			printf("[ITEM_COLOR_FIX] %s | Genre:%d ColorID:%d HasMagic:%d | GenLevel:[%d,%d,%d,%d,%d,%d]\n",
 				Item[sItemInfo.m_nItemID].GetName(),
 				Item[sItemInfo.m_nItemID].GetGenre(),
 				sItemInfo.m_nColorID,
 				bHasMagic,
-				Item[sItemInfo.m_nItemID].GetAttribType(0),
-				Item[sItemInfo.m_nItemID].GetAttribType(1),
-				Item[sItemInfo.m_nItemID].GetAttribType(2),
-				Item[sItemInfo.m_nItemID].GetAttribType(3),
-				Item[sItemInfo.m_nItemID].GetAttribType(4),
-				Item[sItemInfo.m_nItemID].GetAttribType(5));
+				pGenParam ? pGenParam->nGeneratorLevel[0] : -1,
+				pGenParam ? pGenParam->nGeneratorLevel[1] : -1,
+				pGenParam ? pGenParam->nGeneratorLevel[2] : -1,
+				pGenParam ? pGenParam->nGeneratorLevel[3] : -1,
+				pGenParam ? pGenParam->nGeneratorLevel[4] : -1,
+				pGenParam ? pGenParam->nGeneratorLevel[5] : -1);
 		}
 		else if(Item[sItemInfo.m_nItemID].GetGenre() == item_task ||
 				Item[sItemInfo.m_nItemID].GetGenre() == item_script)
