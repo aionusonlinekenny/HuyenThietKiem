@@ -300,6 +300,18 @@ int		KObjSet::Add(int nDataID, KMapPos MapPos, KObjItemInfo sItemInfo)
 			{
 				sItemInfo.m_nColorID = 0;
 			}
+			// Debug log - always print
+			printf("[ITEM_COLOR_DEBUG] %s | Genre:%d ColorID:%d HasMagic:%d | Attrib:[%d,%d,%d,%d,%d,%d]\n",
+				Item[sItemInfo.m_nItemID].GetName(),
+				Item[sItemInfo.m_nItemID].GetGenre(),
+				sItemInfo.m_nColorID,
+				bHasMagic,
+				Item[sItemInfo.m_nItemID].GetAttribType(0),
+				Item[sItemInfo.m_nItemID].GetAttribType(1),
+				Item[sItemInfo.m_nItemID].GetAttribType(2),
+				Item[sItemInfo.m_nItemID].GetAttribType(3),
+				Item[sItemInfo.m_nItemID].GetAttribType(4),
+				Item[sItemInfo.m_nItemID].GetAttribType(5));
 		}
 		else if(Item[sItemInfo.m_nItemID].GetGenre() == item_task ||
 				Item[sItemInfo.m_nItemID].GetGenre() == item_script)
