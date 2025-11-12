@@ -1124,9 +1124,10 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 	if (m_CommonAttrib.cGenre == item_equip)
 	{
 		// Kiểm tra TẤT CẢ magic attributes [0-5], không chỉ [0]
-		for(int i = 0; i < 6; i++)
+		int nAttribIdx;
+		for(nAttribIdx = 0; nAttribIdx < 6; nAttribIdx++)
 		{
-			if(m_aryMagicAttrib[i].nAttribType)
+			if(m_aryMagicAttrib[nAttribIdx].nAttribType > 0)
 			{
 				strcpy(szColor[item_equip], "<color=Blue>");
 				break;

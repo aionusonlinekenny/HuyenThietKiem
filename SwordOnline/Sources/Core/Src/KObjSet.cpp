@@ -283,9 +283,10 @@ int		KObjSet::Add(int nDataID, KMapPos MapPos, KObjItemInfo sItemInfo)
 		{
 			// Kiểm tra TẤT CẢ magic attributes [0-5], không chỉ [0]
 			BOOL bHasMagic = FALSE;
-			for(int i = 0; i < 6; i++)
+			int nAttribIdx;
+			for(nAttribIdx = 0; nAttribIdx < 6; nAttribIdx++)
 			{
-				if(Item[sItemInfo.m_nItemID].GetAttribType(i) > 0)
+				if(Item[sItemInfo.m_nItemID].GetAttribType(nAttribIdx) > 0)
 				{
 					bHasMagic = TRUE;
 					break;
