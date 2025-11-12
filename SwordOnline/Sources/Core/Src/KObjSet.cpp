@@ -265,21 +265,42 @@ int		KObjSet::Add(int nDataID, KMapPos MapPos, KObjItemInfo sItemInfo)
 	if (nAddNo < 0)
 		return -1;
 	 
-	if(Object[nAddNo].m_nKind == Obj_Kind_Item) 
+	if(Object[nAddNo].m_nKind == Obj_Kind_Item)
 	{
 		if(Item[sItemInfo.m_nItemID].GetGenre() == item_goldequip)
 		{
 			sItemInfo.m_nColorID = 2;
 		}
-		else if ( (Item[sItemInfo.m_nItemID].GetGenre() == item_equip) && (Item[sItemInfo.m_nItemID].GetAttribType(0) > 0) )       
-		{
-			sItemInfo.m_nColorID = 3;
-		}
 		else if(Item[sItemInfo.m_nItemID].GetGenre() == item_purpleequip)
 		{
 			sItemInfo.m_nColorID = 4;
 		}
-		else if(Item[sItemInfo.m_nItemID].GetGenre() == item_task || 
+		else if(Item[sItemInfo.m_nItemID].GetGenre() == item_platinaequip)
+		{
+			sItemInfo.m_nColorID = 1;
+		}
+		else if(Item[sItemInfo.m_nItemID].GetGenre() == item_equip)
+		{
+			// Kiểm tra TẤT CẢ magic attributes [0-5], không chỉ [0]
+			BOOL bHasMagic = FALSE;
+			for(int i = 0; i < 6; i++)
+			{
+				if(Item[sItemInfo.m_nItemID].GetAttribType(i) > 0)
+				{
+					bHasMagic = TRUE;
+					break;
+				}
+			}
+			if(bHasMagic)
+			{
+				sItemInfo.m_nColorID = 3;
+			}
+			else
+			{
+				sItemInfo.m_nColorID = 0;
+			}
+		}
+		else if(Item[sItemInfo.m_nItemID].GetGenre() == item_task ||
 				Item[sItemInfo.m_nItemID].GetGenre() == item_script)
 		{
 			sItemInfo.m_nColorID = 0;
