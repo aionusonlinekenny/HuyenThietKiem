@@ -73,6 +73,7 @@ public:
 	BOOL			m_bFollowPeople;
 	char			m_FollowPeopleName[32];
 	int				m_nRadiusFollow;
+	int				m_nLeaderCurrentTarget;	
 	BOOL			m_bAttackAround;
 	BOOL			m_bAroundBtn;
 	int				m_PosXAuto;

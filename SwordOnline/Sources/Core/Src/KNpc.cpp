@@ -828,6 +828,11 @@ BOOL KNpc::ProcessState()
 	}
 	if(!(m_LoopFrames % 5))
 	{
+		// Broadcast position if currently moving
+		if (m_Doing == do_run || m_Doing == do_walk)
+		{
+			BroadCastPosition();
+		}
 		if(!IsPlayer() && m_nTotalReceiveDamage > 0)
 		{
 			SendBloodNo(m_dwID, m_nTotalReceiveDamage);
@@ -6132,7 +6137,7 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 				strcat(szString, "Lo¹n");
 			strcat(szString, ")");
 		}
-	
+	//Kenny hieu ung dinh don
 		g_pRepresent->OutputText(nFontSize, szString, KRF_ZERO_END, nMpsX - nFontSize * g_StrLen(Name) / 4, nMpsY, dwColor, 0, nHeightOff, dwBorderColor);
 		
 		if(m_wMaskType > 0)

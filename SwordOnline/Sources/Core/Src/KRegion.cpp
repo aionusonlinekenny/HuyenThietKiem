@@ -636,11 +636,19 @@ void KRegion::Activate()
 		int nNpcIdx = pTmpNode->m_nIndex;
 		pNode = (KIndexNode *)pNode->GetNext();
 #ifdef _SERVER
-		if ((nCounter == m_nNpcSyncCounter / 2) && (m_nNpcSyncCounter & 1))
-		{
-			// 发送同步信号
-			Npc[nNpcIdx].NormalSync();
-		}
+		// FIX: Remove aggressive NPC sync throttling that caused 2-5 second delay
+		// Old code only synced 1 NPC per Region::Activate() call, causing massive delays
+		// with multiple NPCs in the same region. Now sync all NPCs every frame for
+		// better responsiveness, especially for local/LAN gameplay with 4+ clients.
+		//
+		// Original throttling logic (REMOVED):
+		// if ((nCounter == m_nNpcSyncCounter / 2) && (m_nNpcSyncCounter & 1))
+		// {
+		//     Npc[nNpcIdx].NormalSync();
+		// }
+		//
+		// New logic: Always sync
+		Npc[nNpcIdx].NormalSync();
 #endif
 		//printf("Region [%03d:%03d] NPC %s active...\n", m_nRegionX, m_nRegionY, Npc[nNpcIdx].Name);	//[wxb 2003-7-29]
 		Npc[nNpcIdx].Activate();
@@ -658,10 +666,10 @@ void KRegion::Activate()
 	{
 		pTmpNode = (KIndexNode *)pNode->GetNext();
 #ifdef _SERVER
-		if ((nCounter == m_nObjSyncCounter / 2) && (m_nObjSyncCounter & 1))
-		{
-			Object[pNode->m_nIndex].SyncState();
-		}
+		// FIX: Remove Object sync throttling similar to NPC fix above
+		// Old code: if ((nCounter == m_nObjSyncCounter / 2) && (m_nObjSyncCounter & 1))
+		// New code: Always sync objects for better responsiveness
+		Object[pNode->m_nIndex].SyncState();
 		nCounter++;
 #endif
 		Object[pNode->m_nIndex].Activate();

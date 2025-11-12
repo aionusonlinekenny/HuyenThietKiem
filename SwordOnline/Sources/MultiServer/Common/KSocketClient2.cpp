@@ -138,7 +138,18 @@ HRESULT STDMETHODCALLTYPE KSocketClient2::ConnectTo(
     m_Socket = socket(AF_INET, SOCK_STREAM, 0);
     if (m_Socket == INVALID_SOCKET)
         goto Exit0;
-
+	
+    // OPTIMIZATION: Disable Nagle's algorithm for low-latency real-time communication
+    // TCP_NODELAY prevents buffering of small packets, reducing latency for game traffic
+    {
+        int flag = 1;
+        if (SOCKET_ERROR == setsockopt(m_Socket, IPPROTO_TCP, TCP_NODELAY,
+            (const char*)&flag, sizeof(flag)))
+        {
+            // Non-fatal error - continue with connection attempt
+            // Error logging can be added here if needed
+        }
+    }
     nRetCode = connect(m_Socket, (struct sockaddr *)&ServerAddr, nServerAddrSize);
     if (nRetCode == SOCKET_ERROR)
         goto Exit0;
