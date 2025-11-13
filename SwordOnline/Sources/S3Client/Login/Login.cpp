@@ -651,18 +651,26 @@ void KLogin::ProcessToLoginGameServResponse(tagNotifyPlayerLogin* pResponse)
 			{
 				m_Status = LL_S_ENTERING_GAME;
 				m_Result = LL_R_NOTHING;
+
+				// FIX: Delay disconnect from Bishop to allow GameServer connection to establish
+				// Previous bug: Disconnected immediately causing Bishop to cleanup before GS connected
+				// Now: Keep Bishop connection alive briefly while connecting to GameServer
+				// Bishop will detect disconnect naturally when client fully transitions to GS
+				// g_NetConnectAgent.DisconnectClient();  // ❌ REMOVED - Don't disconnect yet
 			}
 			else
 			{
 				ReturnToIdle();
 				m_Result = LL_R_CONNECT_FAILED;
+				// FIX: Only disconnect Bishop if GameServer connection FAILED
+				g_NetConnectAgent.DisconnectClient();
 			}
-			g_NetConnectAgent.DisconnectClient();
 		}
 		else
 		{
 			ReturnToIdle();
 			m_Result = LL_R_SERVER_SHUTDOWN;
+			g_NetConnectAgent.DisconnectClient();
 		}
 	}
 }

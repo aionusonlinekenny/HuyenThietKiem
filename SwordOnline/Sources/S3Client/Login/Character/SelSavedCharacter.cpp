@@ -1,5 +1,5 @@
 /*****************************************************************************************
-//	´æµµ½ÇÉ«Ñ¡Ôñ
+//	ï¿½æµµï¿½ï¿½É«Ñ¡ï¿½ï¿½
 //	Copyright : Kingsoft 2002
 //	Author	:   Wooy(Wu yue)
 //	CreateTime:	2002-9-12
@@ -37,7 +37,7 @@ void RandMemSet(int nSize, unsigned char *pbyBuffer)
     }
 }
 -
-//	¹¦ÄÜ£º¹¹Ôìº¯Êý
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½
 -
 KSelSavedCharacter::KSelSavedCharacter()
 {
@@ -55,7 +55,7 @@ KSelSavedCharacter::~KSelSavedCharacter()
 }
 
 -
-//	¹¦ÄÜ£º¿ªÊ¼ÔØÈë½ÇÉ«Êý¾Ý
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½
 -
 int KSelSavedCharacter::LoadData()
 {
@@ -67,7 +67,7 @@ int KSelSavedCharacter::LoadData()
 }
 
 -
-//	¹¦ÄÜ£º·µ»ØÖµÎªÃ·¾ÙSSC_STATUSµÄÈ¡ÖµÖ®Ò»£¬·µ»ØÖµº¬ÒåÇë¿´Ïà¹ØµÄÖµÉùÃ÷
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÎªÃ·ï¿½ï¿½SSC_STATUSï¿½ï¿½È¡ÖµÖ®Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ë¿´ï¿½ï¿½Øµï¿½Öµï¿½ï¿½ï¿½ï¿½
 -
 int	KSelSavedCharacter::GetStatus()
 {
@@ -75,7 +75,7 @@ int	KSelSavedCharacter::GetStatus()
 }
 
 -
-//	¹¦ÄÜ£ºÉèÖÃ×îºóÒ»´Î²Ù×÷µÄ·µ»Ø½á¹û
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î²ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½Ø½ï¿½ï¿½
 -
 void KSelSavedCharacter::SetLastActionResult(int nResult)
 {
@@ -83,7 +83,7 @@ void KSelSavedCharacter::SetLastActionResult(int nResult)
 }
 
 -
-//	¹¦ÄÜ£ºµÃµ½×îºóÒ»´Î²Ù×÷µÄ·µ»Ø½á¹û
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î²ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½Ø½ï¿½ï¿½
 -
 int	KSelSavedCharacter::GetLastActionResult()
 {
@@ -93,7 +93,7 @@ int	KSelSavedCharacter::GetLastActionResult()
 }
 
 -
-//	¹¦ÄÜ£º»ñÈ¡½ÇÉ«µÄÊýÄ¿
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½È¡ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½Ä¿
 -
 int KSelSavedCharacter::GetCharacterNum()
 {
@@ -101,7 +101,7 @@ int KSelSavedCharacter::GetCharacterNum()
 }
 
 -
-//	¹¦ÄÜ£º»ñÈ¡Ä³¸ö½ÇÉ«µÄÐÅÏ¢
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½È¡Ä³ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½Ï¢
 -
 int	KSelSavedCharacter::GetCharacterInfo(int nIndex, KNewCharacterInfo* pInfo)
 {
@@ -120,7 +120,7 @@ int	KSelSavedCharacter::GetCharacterInfo(int nIndex, KNewCharacterInfo* pInfo)
 }
 
 -
-//	¹¦ÄÜ£ºÇëÇóÐÂ½¨Ò»¸ö½ÇÉ«
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½É«
 -
 int KSelSavedCharacter::NewCharacter(KNewCharacterInfo* pData)
 {
@@ -156,7 +156,7 @@ int KSelSavedCharacter::NewCharacter(KNewCharacterInfo* pData)
 }
 
 -
-//	¹¦ÄÜ£ºÇëÇóÉ¾³ýÒ»¸ö½ÇÉ«
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½É«
 -
 int KSelSavedCharacter::DeleteCharacter(int nIndex, const char* pszPassword)
 {
@@ -182,7 +182,7 @@ int KSelSavedCharacter::DeleteCharacter(int nIndex, const char* pszPassword)
 }
 
 -
-//	¹¦ÄÜ£ºÑ¡ÔñÄ³¸ö½ÇÉ«
+//	ï¿½ï¿½ï¿½Ü£ï¿½Ñ¡ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½É«
 -
 int	KSelSavedCharacter::SelCharacter(int nIndex)
 {
@@ -202,7 +202,7 @@ int	KSelSavedCharacter::SelCharacter(int nIndex)
 }
 
 -
-//	¹¦ÄÜ£ºÊÍ·Å½ÇÉ«Êý¾Ý
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½Í·Å½ï¿½É«ï¿½ï¿½ï¿½ï¿½
 -
 void KSelSavedCharacter::FreeData()
 {
@@ -233,8 +233,8 @@ void KSelSavedCharacter::SetCharacterBaseInfo(int nNum, const RoleBaseInfo *pInf
 }
 
 // -
-// º¯Êý		: KUiSelPlayer::AcceptNetMsg
-// ¹¦ÄÜ		: ´¦ÀíÍøÂçÏûÏ¢
+// ï¿½ï¿½ï¿½ï¿½		: KUiSelPlayer::AcceptNetMsg
+// ï¿½ï¿½ï¿½ï¿½		: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 // -
 void KSelSavedCharacter::AcceptNetMsg(void* pMsgData)
 {
@@ -257,33 +257,38 @@ void KSelSavedCharacter::AcceptNetMsg(void* pMsgData)
 				tagNotifyPlayerLogin* pNPL = (tagNotifyPlayerLogin*)pMsgData;
 				if (strcmp((const char*)pNPL->szRoleName, m_szProcessingRoleName) == 0 && pNPL->bPermit)
 				{
-					// ¿ªÊ¼ÓëGameSvr½øÐÐÁ¬½Ó
+					// FIX: Connect to GameServer
 					if (g_NetConnectAgent.ConnectToGameSvr((const unsigned char*)&pNPL->nIPAddr, pNPL->nPort, &pNPL->guid))
 					{
 						g_NetConnectAgent.UpdateClientRequestTime(false);
 						m_nLastOperResult = SSC_R_IN_PROGRESS;
+
+						// FIX: Delay disconnect from Bishop to allow GameServer connection
+						// Previous bug: Disconnected immediately causing Bishop Inactive() before GS ready
+						// Now: Keep Bishop alive briefly, will disconnect naturally when entering game
+						// g_NetConnectAgent.DisconnectClient();  // âŒ REMOVED
+						g_NetConnectAgent.UpdateClientRequestTime(true);
 					}
 					else
 					{
 						m_nLastOperResult = SSC_R_FAILED;
 						m_Status = SSC_S_STANDBY;
+						// FIX: Only disconnect if connection FAILED
+						g_NetConnectAgent.DisconnectClient();
+						g_NetConnectAgent.UpdateClientRequestTime(true);
 					}
-
-					// ¶Ï¿ªÓëÍø¹ØµÄÁ¬½Ó
-					g_NetConnectAgent.DisconnectClient();
-					g_NetConnectAgent.UpdateClientRequestTime(true);
-
 				}
 				else
 				{
 						m_nLastOperResult = SSC_R_SVR_DOWN;
 						m_Status = SSC_S_STANDBY;
+						g_NetConnectAgent.DisconnectClient();
 				}
 			}
 			break;
 		case s2c_rolenewdelresponse:
 			tagNewDelRoleResponse* pResponse = (tagNewDelRoleResponse*)pMsgData;
-//			if (strcmp(pResponse->szRoleName, m_szProcessingRoleName) == 0)	/* ÁõÅôµ÷ÊÔ°æ */
+//			if (strcmp(pResponse->szRoleName, m_szProcessingRoleName) == 0)	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô°ï¿½ */
 			{
 				if (m_Status == SSC_S_CREATING_CHARACTER)
 				{
