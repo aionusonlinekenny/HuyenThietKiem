@@ -9,9 +9,11 @@
 #include "../../../core/src/coreshell.h"
 #include "../../../core/src/SkillDef.h"
 #include "../../../Engine/src/KDebug.h"
-#include "../UiBase.h" 
+#include "../UiBase.h"
 #include "../UiSoundSetting.h"
 #include "../../../Represent/iRepresent/iRepresentShell.h"
+#include "../../../Headers/KProtocolDef.h"
+#include "../../../core/src/KCore.h"
 
 extern iRepresentShell* g_pRepresentShell;
 extern iCoreShell* g_pCoreShell;
@@ -1068,7 +1070,6 @@ void KUiPick::OnAutoSortClick()
 {
 	// Send protocol to server to trigger auto-sort
 	// Server will handle all sorting logic and send back item move packets
-	extern iClientConnectServer* g_pClient;
 	if (g_pClient)
 	{
 		// Use proper struct for protocol
