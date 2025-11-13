@@ -99,6 +99,7 @@ private:
 	void	OnCheckInput();
 	void	OnCheckLevel();
 	void	OnFillterItem();
+	void	OnAutoSortClick();
 	void	OnSelectPickType(int nIndex);
 	void	OnSelectReturnPlace();	
 	void 	SetPick(int nIndex, int nSel);
@@ -116,6 +117,8 @@ private:
 	KWndText32	m_PickAllEdit;
 	KWndButton	m_PickAllPopup;
 	KWndButton	m_PickFilterCK;
+	KWndButton	m_PickAutoSortBtn;
+	KWndText32	t_PickAutoSortTxt;
 	KWndButton	m_PickFollowTargetCK;
 	KWndEdit32	m_PickFollowTargetEdit;
 	KWndText32	m_PickChooseFilterTxt;
