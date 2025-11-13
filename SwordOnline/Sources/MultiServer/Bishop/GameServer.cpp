@@ -560,13 +560,26 @@ bool CGameServer::_NotifyLeaveGame(const void *pData, size_t datalength)
     {
         BeginTransfer(pAccountName);
         bool result = PopAccount(pAccountName, false);
-        printf("[BISHOP] LeaveGame (transfer): %s detached=%d\n", pAccountName, result ? 1 : 0);
+        printf("[BISHOP] LeaveGame (already transferring): %s detached=%d\n", pAccountName, result ? 1 : 0);
         return result;
     }
 
-    bool result = PopAccount(pAccountName, !hold && !isTransferring);
-    printf("[BISHOP] LeaveGame (normal): %s detached=%d, unlocked=%d\n",
-           pAccountName, result ? 1 : 0, (!hold && !isTransferring) ? 1 : 0);
+    // FIX: If HOLDACC_LEAVEGAME received, this is a cross-GS transfer
+    // Must call BeginTransfer() to track account in transfer state
+    // This allows EndTransfer() to work correctly when player enters new GS
+    if (hold)
+    {
+        BeginTransfer(pAccountName);
+        bool result = PopAccount(pAccountName, false);
+        printf("[BISHOP] LeaveGame (hold for transfer): %s detached=%d, tracking transfer\n",
+               pAccountName, result ? 1 : 0);
+        return result;
+    }
+
+    // Normal logout - unlock account
+    bool result = PopAccount(pAccountName, true);
+    printf("[BISHOP] LeaveGame (normal logout): %s detached=%d, unlocked=%d\n",
+           pAccountName, result ? 1 : 0, 1);
     return result;
 }
 
