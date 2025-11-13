@@ -4484,14 +4484,24 @@ void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
     }
 
     // Re-add items in sorted order from top-left
+    // Scan horizontally first (left to right), then vertically (top to bottom)
     for (int i = 0; i < nItemCount; i++)
     {
-        POINT ptPos;
-        if (Player[nIndex].m_ItemList.m_Room[room_equipment].FindRoom(
-            sortedItems[i].nWidth, sortedItems[i].nHeight, &ptPos))
+        BOOL bPlaced = FALSE;
+
+        // Scan row by row (y first), then column by column (x)
+        for (int y = 0; y < EQUIPMENT_ROOM_HEIGHT && !bPlaced; y++)
         {
-            // Add item back at new position
-            Player[nIndex].m_ItemList.Add(sortedItems[i].nIdx, pos_equiproom, ptPos.x, ptPos.y);
+            for (int x = 0; x < EQUIPMENT_ROOM_WIDTH && !bPlaced; x++)
+            {
+                if (Player[nIndex].m_ItemList.m_Room[room_equipment].CheckRoom(
+                    x, y, sortedItems[i].nWidth, sortedItems[i].nHeight))
+                {
+                    // Add item at this position
+                    Player[nIndex].m_ItemList.Add(sortedItems[i].nIdx, pos_equiproom, x, y);
+                    bPlaced = TRUE;
+                }
+            }
         }
     }
 
