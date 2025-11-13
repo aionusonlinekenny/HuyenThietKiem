@@ -63,7 +63,7 @@ extern CORE_API int g_ScreenY;
 #define __TEXT_LINE__(LINE) ITOA(LINE)
 
 //#ifdef _DEBUG
-#define ATTENTION(MSG) __FILE__"("__TEXT_LINE__(__LINE__)") : ¡ïATTENTION¡ï ¡ú "#MSG
+#define ATTENTION(MSG) __FILE__"("__TEXT_LINE__(__LINE__)") : ï¿½ï¿½ATTENTIONï¿½ï¿½ ï¿½ï¿½ "#MSG
 //#else
 //#define ATTENTION(MSG) __FILE__"("__TEXT_LINE__(__LINE__)") : ATTENTION!! error: "#MSG
 //#endif
@@ -185,9 +185,9 @@ inline int GetRandomNumber(int nMin, int nMax)
 }
 #ifdef _SERVER
 	void g_SetServer(LPVOID pServer);
-	extern IServer* g_pServer;
+	extern CORE_API IServer* g_pServer;
 #else
 	void g_SetClient(LPVOID pClient);
-	extern IClient* g_pClient;
+	extern CORE_API IClient* g_pClient;
 #endif
 #endif
