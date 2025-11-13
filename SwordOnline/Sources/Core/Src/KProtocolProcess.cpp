@@ -4434,17 +4434,17 @@ void KProtocolProcess::PlayerRightAutoMove(int nIndex, BYTE* pProtocol)
 
 void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
 {
-    // Auto-sort equipment inventory - simple implementation
-    // Just trigger a re-pack of items from left to right, top to bottom
+    // Auto-sort equipment inventory - server-side processing
+    // Sorts items from left to right, top to bottom
 
     if (nIndex <= 0 || nIndex >= MAX_PLAYER)
         return;
 
-    // For now, implement basic server-side sort logic
-    // Later we can enhance this with more sophisticated sorting
+    // Cast protocol to proper struct (defined in KProtocol.cpp)
+    // AUTO_SORT_EQUIPMENT* pReq = (AUTO_SORT_EQUIPMENT*)pProtocol;
 
-    // The client sent request, server will process and send back updates
-    // We'll use the existing item move system to rearrange items
+    // For now, just log the request
+    // Phase 2 will implement full sorting logic with ITEM_RIGHT_AUTO_MOVE packets
 
     g_DebugLog("[SERVER] PlayerAutoSortEquipment: player=%d requested inventory sort", nIndex);
 }

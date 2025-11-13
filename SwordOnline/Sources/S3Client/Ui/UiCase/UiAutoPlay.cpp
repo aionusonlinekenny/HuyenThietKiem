@@ -1066,13 +1066,19 @@ void KUiPick::OnFillterItem()
 
 void KUiPick::OnAutoSortClick()
 {
-	// Send simple protocol to server to trigger auto-sort
+	// Send protocol to server to trigger auto-sort
 	// Server will handle all sorting logic and send back item move packets
 	extern iClientConnectServer* g_pClient;
 	if (g_pClient)
 	{
-		BYTE protocol = 161; // c2s_autosortequipment - temporary ID, will define properly
-		g_pClient->SendPackToServer(&protocol, sizeof(protocol));
+		// Use proper struct for protocol
+		struct AUTO_SORT_EQUIPMENT_REQ {
+			BYTE ProtocolType;
+		};
+
+		AUTO_SORT_EQUIPMENT_REQ req;
+		req.ProtocolType = 161; // c2s_autosortequipment
+		g_pClient->SendPackToServer((BYTE*)&req, sizeof(req));
 	}
 }
 

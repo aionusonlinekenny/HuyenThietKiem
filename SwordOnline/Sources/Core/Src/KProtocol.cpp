@@ -6,6 +6,12 @@
 #include "KItemList.h"
 #include "KLadder.h"
 
+// Auto-sort equipment protocol
+typedef struct
+{
+	BYTE ProtocolType;
+} AUTO_SORT_EQUIPMENT;
+
 int	g_nProtocolSize[MAX_PROTOCOL_NUM] = 
 {
 #ifndef _SERVER				// �ͻ��˽��յ��ķ��������ͻ��˵�Э�鳤��
@@ -233,7 +239,7 @@ int	g_nProtocolSize[MAX_PROTOCOL_NUM] =
 	sizeof(AVATAR_PLAYER),						// c2s_avatarplayer //Player Avatar by kinnox; ID: 159
 	sizeof(RECOVERY_BOX_CMD),					// c2s_recoverybox //TrembleItem by kinnox; ID: 160
 	sizeof(ITEM_RIGHT_AUTO_MOVE_REQ),			// c2s_rightitemautomove
-	sizeof(BYTE),								// c2s_autosortequipment ID: 161
+	sizeof(AUTO_SORT_EQUIPMENT),				// c2s_autosortequipment ID: 161
 #endif
 };
 
