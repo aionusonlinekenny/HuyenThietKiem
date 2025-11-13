@@ -4469,12 +4469,12 @@ void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
         Player[nIndex].m_ItemList.Remove(sortedItems[i].nIdx);
     }
 
-    // Sort by area (larger items first for better packing)
+    // Sort by area (smaller items first: 1x1, then 2x2, 2x3, etc.)
     for (int i = 0; i < nItemCount - 1; i++)
     {
         for (int j = i + 1; j < nItemCount; j++)
         {
-            if (sortedItems[j].nArea > sortedItems[i].nArea)
+            if (sortedItems[j].nArea < sortedItems[i].nArea)
             {
                 SortItem temp = sortedItems[i];
                 sortedItems[i] = sortedItems[j];
