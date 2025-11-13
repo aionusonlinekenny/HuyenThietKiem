@@ -895,7 +895,7 @@ void KUiPick::Initialize()
 	AddChild(&m_PickAllEdit);//m_PickTypeTxt
 	AddChild(&m_PickAllPopup);// m_PickAllPopup
 	AddChild(&m_PickFilterCK); // m_PickFilterCK
-	AddChild(&m_PickAutoSortBtn);
+	AddChild(&m_PickAutoSortCK);
 	AddChild(&t_PickAutoSortTxt);
 	//AddChild(&m_PickFollowTargetCK);
 	//AddChild(&m_PickFollowTargetEdit);
@@ -935,7 +935,7 @@ void KUiPick::LoadScheme(KIniFile* pIni)
 	m_PickAllEdit.Init(pIni,"PickAllEdit");
 	m_PickAllPopup.Init(pIni,"PickAllPopup");
 	m_PickFilterCK.Init(pIni,"PickFilterCK");
-	m_PickAutoSortBtn.Init(pIni,"PickAutoSortBtn");
+	m_PickAutoSortCK.Init(pIni,"PickAutoSortCK");
 	t_PickAutoSortTxt.Init(pIni,"PickAutoSortTxt");
 	//m_PickFollowTargetCK.Init(pIni,"PickFollowTargetCK");
 	//m_PickFollowTargetEdit.Init(pIni,"PickFollowTargetEdit");
@@ -967,7 +967,7 @@ int KUiPick::WndProc(unsigned int uMsg, unsigned int uParam, int nParam)
 			OnGiveItem();
 		else if (uParam == (unsigned int)(KWndWindow*)&m_PickFilterCK)
 			OnFillterItem();
-		else if (uParam == (unsigned int)(KWndWindow*)&m_PickAutoSortBtn)
+		else if (uParam == (unsigned int)(KWndWindow*)&m_PickAutoSortCK)
 			OnAutoSortClick();
 		else if (uParam == (unsigned int)(KWndWindow*)&m_PickAllPopup)
 			OnSelectPickType(MENU_SELECT_PICK_TYPE);
