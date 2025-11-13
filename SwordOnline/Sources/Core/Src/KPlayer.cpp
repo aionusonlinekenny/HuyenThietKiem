@@ -61,7 +61,7 @@ extern int LuaGetNpcTalk(Lua_State *L);
 #define		PLAYER_TEAM_EXP_ADD				50
 
 #define		MAX_APPLY_TEAM_TIME				500
-#define		AUTO_TIME_SORT_ITEM				50		// Time interval for auto-sort check (in milliseconds)
+
 #define		BASE_WALK_SPEED					5
 #define		BASE_RUN_SPEED					10
 
@@ -122,11 +122,6 @@ void	KPlayer::Release()
 	m_MouseDown[0] = FALSE;
 	m_MouseDown[1] = FALSE;
 	m_bDebugMode	= FALSE;
-	// Initialize auto-sort variables
-	m_SpaceActionTime = 0;
-	m_SortEQCountDown = 0;
-	m_bSortEquipment_Active = FALSE;
-	m_bSortEquipment = FALSE;
 	m_cAI.Release(); //AutoAI by kinnox;
 	ZeroMemory(m_szExpAddNo, sizeof(m_szExpAddNo));
 	m_btExpAddTime	= 0;
@@ -9743,94 +9738,5 @@ void KPlayer::GiveBoxCmd(DWORD dwID, int nX, int nY)//GiveBox by kinnox; //Tremb
 		m_ItemList.Add(nIndex, pos_hand, 0, 0);
 	}
 }
-#endif
-// Auto-sort equipment implementation
-void KPlayer::SetSortEquipment(BOOL bFlag)
-{
-	if (m_bActiveAuto)
-	{
-		// Clear equipment list when starting sort
-		for (int i = MAX_ITEM - 1; i > 0; i--)
-		{
-			m_sListEquipment.m_Link.Remove(i);
-		}
-		m_bSortEquipment = bFlag;
-	}
-}
 
-void KPlayer::SortEquipment()
-{
-	if (!m_bSortEquipment)
-		return;
-#ifndef _SERVER
-	// Check if there's an item in hand first
-	int nHand = Player[CLIENT_PLAYER_INDEX].m_ItemList.Hand();
-	if (nHand)
-	{
-		// Find position for item in hand
-		ItemPos P;
-		if (FALSE == Player[CLIENT_PLAYER_INDEX].m_ItemList.SearchPosition(
-			Item[nHand].GetWidth(), Item[nHand].GetHeight(), &P))
-		{
-			// Can't find space, stop sorting
-			m_bSortEquipment = FALSE;
-			return;
-		}
-
-		// Move item from hand to position (triggers game logic)
-		Player[CLIENT_PLAYER_INDEX].MoveItem(P, P);
-
-		// Mark this item as processed
-		if (!m_sListEquipment.FindSame(nHand))
-		{
-			m_sListEquipment.m_Link.Insert(nHand);
-		}
-	}
-	else
-	{
-		// No item in hand, process inventory items
-		ItemPos P;
-		PlayerItem* pItem = Player[CLIENT_PLAYER_INDEX].m_ItemList.GetFirstItem();
-
-		if (pItem)
-		{
-			if (pItem->nPlace == pos_equiproom)
-			{
-				// Check if this item hasn't been processed yet
-				if (!m_sListEquipment.FindSame(pItem->nIdx))
-				{
-					P.nPlace = pItem->nPlace;
-					P.nX = pItem->nX;
-					P.nY = pItem->nY;
-					// Move item to same position (triggers re-arrangement)
-					Player[CLIENT_PLAYER_INDEX].MoveItem(P, P);
-					return;
-				}
-			}
-		}
-
-		// Process rest of items
-		while (pItem)
-		{
-			pItem = Player[CLIENT_PLAYER_INDEX].m_ItemList.GetNextItem();
-			if (pItem)
-			{
-				if (pItem->nPlace == pos_equiproom)
-				{
-					if (!m_sListEquipment.FindSame(pItem->nIdx))
-					{
-						P.nPlace = pItem->nPlace;
-						P.nX = pItem->nX;
-						P.nY = pItem->nY;
-						Player[CLIENT_PLAYER_INDEX].MoveItem(P, P);
-						return;
-					}
-				}
-			}
-		}
-
-		// All items processed, stop sorting
-		m_bSortEquipment = FALSE;
-	}
-}
 #endif

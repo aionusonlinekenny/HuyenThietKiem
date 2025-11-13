@@ -127,7 +127,6 @@ void KPlayerAI::Release()
 	m_bObject 				= FALSE;
 	m_nObject 				= 0;
 	m_bFilterEquipment 		= FALSE;
-	m_bAutoSortEquipment 	= FALSE;
 	m_bPiceItem				= FALSE;
 	m_nPiceItem				= 0;
 	m_bLevelItem			= FALSE;
@@ -245,42 +244,6 @@ void KPlayerAI::Active()
 			PlayerFilterEquip();
 		}
 		// 
-		// Auto-sort equipment timer check
-
-
-
-		if (IR_GetCurrentTime() - Player[CLIENT_PLAYER_INDEX].m_SortEQCountDown > 50000)
-
-
-		{
-
-
-			Player[CLIENT_PLAYER_INDEX].m_SortEQCountDown = IR_GetCurrentTime();
-
-
-			Player[CLIENT_PLAYER_INDEX].SetSortEquipment(Player[CLIENT_PLAYER_INDEX].m_bSortEquipment_Active);
-
-
-		}
-
-
-
-
-
-		if (IR_GetCurrentTime() - Player[CLIENT_PLAYER_INDEX].m_SpaceActionTime > AUTO_TIME_SORT_ITEM)
-
-
-		{
-
-
-			Player[CLIENT_PLAYER_INDEX].m_SpaceActionTime = IR_GetCurrentTime();
-
-
-			Player[CLIENT_PLAYER_INDEX].SortEquipment();
-
-
-		}
-		
 		if (Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_FightMode) // trang thai chien dau
 		{
 			if (g_SubWorldSet.GetGameTime() % 4 == 0)

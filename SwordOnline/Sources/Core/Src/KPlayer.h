@@ -119,12 +119,6 @@ private:
 	int				m_nRightSkillID;
 	int				m_nRightSkillLevel;
 	BOOL			m_MouseDown[2];
-	// Auto-sort equipment variables
-	unsigned int	m_SpaceActionTime;		// Timer for auto-sort check
-	unsigned int	m_SortEQCountDown;		// Timer for setting sort flag
-	BOOL			m_bSortEquipment_Active;	// Flag from UI (user enabled/disabled)
-	BOOL			m_bSortEquipment;		// Internal flag for sorting state
-	KEquipmentArray	m_sListEquipment;		// Linked list to track processed items
 #endif
 
 #ifdef _SERVER
@@ -595,10 +589,7 @@ public:
 	//
 	//void			InitLog();
 	void			SetNumImgAvatar(int ID);//Player Avatar by kinnox;
-	void			GiveBoxCmd(DWORD dwID, int nX, int nY);//GiveBox by kinnox;
-	// Auto-sort equipment methods
-	void			SetSortEquipment(BOOL bFlag);
-	void			SortEquipment();
+	void			GiveBoxCmd(DWORD dwID, int nX, int nY);//GiveBox by kinnox;	
 #endif
 
 private:
