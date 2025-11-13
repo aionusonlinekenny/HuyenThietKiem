@@ -432,8 +432,9 @@ bool CGamePlayer::Inactive()
 
             // Method 1: Detach from m_nAttachServerID first
             CGameServer *pGS = static_cast<CGameServer*>(pGServer);
-            if (pGS && pGS->HaveAccountInGameServer(m_sAccountName.c_str()))
+            if (pGS)
             {
+                // DetachAccountFromGameServer() has internal validation
                 if (pGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
                 {
                     nDetachCount++;
@@ -443,8 +444,9 @@ bool CGamePlayer::Inactive()
             }
 
             // Method 2: Check ALL other GameServers for stuck accounts
+            int nMaxLoops = 10;  // Safety limit to prevent infinite loop
             int nStuckGS = CGameServer::FindServerByAccount(m_sAccountName.c_str());
-            while (nStuckGS != -1 && nStuckGS != m_nAttachServerID)
+            while (nStuckGS != -1 && nStuckGS != m_nAttachServerID && nMaxLoops-- > 0)
             {
                 IGServer *pStuckServer = CGameServer::GetServer(nStuckGS);
                 if (pStuckServer)
@@ -459,7 +461,6 @@ bool CGamePlayer::Inactive()
                 }
                 // Check again for more stuck servers
                 nStuckGS = CGameServer::FindServerByAccount(m_sAccountName.c_str());
-                if (nStuckGS == m_nAttachServerID) break;  // Prevent infinite loop
             }
 
             LoginLog("[Inactive][ID=%ld] Detached \"%s\" from %d GameServer(s)",
