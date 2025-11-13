@@ -19,7 +19,7 @@ extern iCoreShell* g_pCoreShell;
 KUiPlayerItem*	m_pNearbyPlayersList; //
 
 #define 	SCHEME_INI				"UiAutoPlay.ini"
-#define		MSG_NON_SETTINGS		"Kh«ng thiÕt lËp"
+#define		MSG_NON_SETTINGS		"Khï¿½ng thiï¿½t lï¿½p"
 #define		MSG_FORMAT_POS			"%d:%d/%d"
 #define		MSG_FORMAT_MAGIC		"%s >= %d"
 #define		MENU_SELECT_DEFENSE							0x00
@@ -52,10 +52,10 @@ KUiPlayerItem*	m_pNearbyPlayersList; //
 KUiRecovery* KUiRecovery::m_pSelf = NULL;
 char szArray_SelRoom[][64] =
 {
-	"Hµnh trang hÕt chç 0 «",
-	"Hµnh trang hÕt chç 2 «",
-	"Hµnh trang hÕt chç 4 «",
-	"Hµnh trang hÕt chç 6 «",
+	"Hï¿½nh trang hï¿½t chï¿½ 0 ï¿½",
+	"Hï¿½nh trang hï¿½t chï¿½ 2 ï¿½",
+	"Hï¿½nh trang hï¿½t chï¿½ 4 ï¿½",
+	"Hï¿½nh trang hï¿½t chï¿½ 6 ï¿½",
 };
 void KUiRecovery::Initialize()
 {
@@ -154,7 +154,7 @@ void KUiRecovery::LoadScheme(KIniFile* pIni)
 	m_OtherEmeiBuffEdit.SetText(" 50% ");
 	m_OtherSpamChatCK.Init(pIni, "OtherSpamChatCK");
 	m_OtherSpamChatEdit.Init(pIni, "OtherSpamChatEdit");
-	m_cMessenger = " (xh)<color=orange>Vâ L©m TruyÒn Kú <color> (dd)<color=red>AutoPlay<color> ";
+	m_cMessenger = " (xh)<color=orange>Vï¿½ Lï¿½m Truyï¿½n Kï¿½ <color> (dd)<color=red>AutoPlay<color> ";
 	m_OtherSpamChatEdit.SetText(m_cMessenger);
 	LoadRecoverySetting();
 
@@ -786,99 +786,99 @@ void KUiRecovery::SaveRecoverySetting()
 KUiPick* KUiPick::m_pSelf = NULL;
 char Data_Pick[][64] = 
 {
-	"NhÆt Ng©n L­îng",
-	"NhÆt VËt PhÈm",	
-	"NhÆt Trang BÞ",	
-	"NhÆt TÊt C¶",
+	"Nhï¿½t Ngï¿½n Lï¿½ï¿½ng",
+	"Nhï¿½t Vï¿½t Phï¿½m",	
+	"Nhï¿½t Trang Bï¿½",	
+	"Nhï¿½t Tï¿½t Cï¿½",
 };
 
 /*char Data_Magic[defMAX_AUTO_FILTERL][2][64] = 
 {
-	"Sinh lùc(®)", 		"lifemax_v",
-	"Néi lùc(®)", 		"manamax_v",
-	"ThÓ lùc(®)", 		"staminamax_v",
-	"Phôc håi sinh lùc(®)", 	"lifereplenish_v",
-	"Phôc håi néi lùc(®)", 	"manareplenish_v",
-	"Phôc håi thÓ lùc(®)", 	"staminareplenish_v",
-	"Hót sinh lùc(%)", 	"steallifeenhance_p",
-	"Hót néi lùc(%)", 	"stealmanaenhance_p",
+	"Sinh lï¿½c(ï¿½)", 		"lifemax_v",
+	"Nï¿½i lï¿½c(ï¿½)", 		"manamax_v",
+	"Thï¿½ lï¿½c(ï¿½)", 		"staminamax_v",
+	"Phï¿½c hï¿½i sinh lï¿½c(ï¿½)", 	"lifereplenish_v",
+	"Phï¿½c hï¿½i nï¿½i lï¿½c(ï¿½)", 	"manareplenish_v",
+	"Phï¿½c hï¿½i thï¿½ lï¿½c(ï¿½)", 	"staminareplenish_v",
+	"Hï¿½t sinh lï¿½c(%)", 	"steallifeenhance_p",
+	"Hï¿½t nï¿½i lï¿½c(%)", 	"stealmanaenhance_p",
 	"Uy danh(h)", 		"addtitle_v",
-	"Søc m¹nh(®)", 		"strength_v",
-	"Th©n ph¸p(®)", 	"dexterity_v",
-	"Sinh khÝ(®)", 		"vitality_v",
-	"Néi c«ng(®)", 		"energy_v",
-	"Phßng thñ(%)", 	"physicsres_p",
-	"Kh¸ng ®éc(%)", 	"poisonres_p",
-	"Kh¸ng b¨ng(%)", 	"coldres_p",
-	"Kh¸ng háa(%)", 	"fireres_p",
-	"Kh¸ng l«i(%)", 	"lightingres_p",
-	"Kh¸ng tÊt c¶(%)", 	"allres_p",
-	"Tèc ®éc ch¹y(%)", 	"fastwalkrun_p",
-	"Tèc ®é ®¸nh(%)", 	"attackspeed_v",
-	"Ph¶n ®ßn cËn(®)", 	"meleedamagereturn_v",
-	"STVL ngo¹i(®)", 	"addphysicsdamage_v",
-	"B¨ng s¸t ngo¹i(®)", "addcolddamage_v",
-	"§éc s¸t ngo¹i(®)", "addpoisondamage_v",
-	"S¸t th­¬ng VLý ngo¹i(%)", 	"addphysicsdamage_p",
+	"Sï¿½c mï¿½nh(ï¿½)", 		"strength_v",
+	"Thï¿½n phï¿½p(ï¿½)", 	"dexterity_v",
+	"Sinh khï¿½(ï¿½)", 		"vitality_v",
+	"Nï¿½i cï¿½ng(ï¿½)", 		"energy_v",
+	"Phï¿½ng thï¿½(%)", 	"physicsres_p",
+	"Khï¿½ng ï¿½ï¿½c(%)", 	"poisonres_p",
+	"Khï¿½ng bï¿½ng(%)", 	"coldres_p",
+	"Khï¿½ng hï¿½a(%)", 	"fireres_p",
+	"Khï¿½ng lï¿½i(%)", 	"lightingres_p",
+	"Khï¿½ng tï¿½t cï¿½(%)", 	"allres_p",
+	"Tï¿½c ï¿½ï¿½c chï¿½y(%)", 	"fastwalkrun_p",
+	"Tï¿½c ï¿½ï¿½ ï¿½ï¿½nh(%)", 	"attackspeed_v",
+	"Phï¿½n ï¿½ï¿½n cï¿½n(ï¿½)", 	"meleedamagereturn_v",
+	"STVL ngoï¿½i(ï¿½)", 	"addphysicsdamage_v",
+	"Bï¿½ng sï¿½t ngoï¿½i(ï¿½)", "addcolddamage_v",
+	"ï¿½ï¿½c sï¿½t ngoï¿½i(ï¿½)", "addpoisondamage_v",
+	"Sï¿½t thï¿½ï¿½ng VLï¿½ ngoï¿½i(%)", 	"addphysicsdamage_p",
 	"CHSTTNL(%)", 		"damage2addmana_p",
-	"May m¾n(%)", 		"lucky_v",
-	"T©m ph¸p(t)", 		"addskill_v",	
-//	"Bá qua nÐ tr¸nh(%)", "ignoredefense_p",
-	"§é chÝnh x¸c(®)", 	"attackrating_v",
-	"S¸t th­¬ng VLý néi(®)", 	"addphysicsmagic_v",
-	"B¨ng s¸t néi c«ng(®)", 	"addcoldmagic_v",
-	"Háa s¸t néi c«ng(®)", 	"addfiremagic_v",
-	"L«i s¸t néi c«ng(®)", 	"addlightingmagic_v",
-	"§éc s¸t néi c«ng(®)", 	"addpoisonmagic_v",
-	"TGian chËm(%)", 	"freezetimereduce_p",
-	"TGian tróng ®éc(%)", "poisontimereduce_p",
-	"TGian cho¸ng(%)", 	"stuntimereduce_p",
-	"TGian phôc håi(%)", 	"fasthitrecover_v",
-	"Kü n¨ng vèn cã(®)", "allskill_v",
+	"May mï¿½n(%)", 		"lucky_v",
+	"Tï¿½m phï¿½p(t)", 		"addskill_v",	
+//	"Bï¿½ qua nï¿½ trï¿½nh(%)", "ignoredefense_p",
+	"ï¿½ï¿½ chï¿½nh xï¿½c(ï¿½)", 	"attackrating_v",
+	"Sï¿½t thï¿½ï¿½ng VLï¿½ nï¿½i(ï¿½)", 	"addphysicsmagic_v",
+	"Bï¿½ng sï¿½t nï¿½i cï¿½ng(ï¿½)", 	"addcoldmagic_v",
+	"Hï¿½a sï¿½t nï¿½i cï¿½ng(ï¿½)", 	"addfiremagic_v",
+	"Lï¿½i sï¿½t nï¿½i cï¿½ng(ï¿½)", 	"addlightingmagic_v",
+	"ï¿½ï¿½c sï¿½t nï¿½i cï¿½ng(ï¿½)", 	"addpoisonmagic_v",
+	"TGian chï¿½m(%)", 	"freezetimereduce_p",
+	"TGian trï¿½ng ï¿½ï¿½c(%)", "poisontimereduce_p",
+	"TGian choï¿½ng(%)", 	"stuntimereduce_p",
+	"TGian phï¿½c hï¿½i(%)", 	"fasthitrecover_v",
+	"Kï¿½ nï¿½ng vï¿½n cï¿½(ï¿½)", "allskill_v",
 };*/
 char Data_Magic[defMAX_AUTO_FILTERL][2][64] = 
 {
-	"Sinh lùc ®", 		"lifemax_v",
-	"Néi lùc ®", 		"manamax_v",
-	"ThÓ lùc ®", 		"staminamax_v",
-	"PH Sl ®", 	"lifereplenish_v",
-	"PH Nl ®", 	"manareplenish_v",
-	"PH Tl ®", 	"staminareplenish_v",
-	"Hót Sl %", 	"steallifeenhance_p",
-	"Hót Nl %", 	"stealmanaenhance_p",
+	"Sinh lï¿½c ï¿½", 		"lifemax_v",
+	"Nï¿½i lï¿½c ï¿½", 		"manamax_v",
+	"Thï¿½ lï¿½c ï¿½", 		"staminamax_v",
+	"PH Sl ï¿½", 	"lifereplenish_v",
+	"PH Nl ï¿½", 	"manareplenish_v",
+	"PH Tl ï¿½", 	"staminareplenish_v",
+	"Hï¿½t Sl %", 	"steallifeenhance_p",
+	"Hï¿½t Nl %", 	"stealmanaenhance_p",
 	"Uy danh h", 		"addtitle_v",
-	"Søc m¹nh ®", 		"strength_v",
-	"Th©n ph¸p ®", 	"dexterity_v",
-	"Sinh khÝ ®", 		"vitality_v",
-	"Néi c«ng ®", 		"energy_v",
-	"Phßng thñ %", 	"physicsres_p",
-	"K ®éc %", 	"poisonres_p",
-	"K b¨ng %", 	"coldres_p",
-	"K háa %", 	"fireres_p",
-	"K l«i %", 	"lightingres_p",
+	"Sï¿½c mï¿½nh ï¿½", 		"strength_v",
+	"Thï¿½n phï¿½p ï¿½", 	"dexterity_v",
+	"Sinh khï¿½ ï¿½", 		"vitality_v",
+	"Nï¿½i cï¿½ng ï¿½", 		"energy_v",
+	"Phï¿½ng thï¿½ %", 	"physicsres_p",
+	"K ï¿½ï¿½c %", 	"poisonres_p",
+	"K bï¿½ng %", 	"coldres_p",
+	"K hï¿½a %", 	"fireres_p",
+	"K lï¿½i %", 	"lightingres_p",
 	"KTC %", 	"allres_p",
-	"T§ ch¹y %", 	"fastwalkrun_p",
-	"T§ ®¸nh %", 	"attackspeed_v",
-	"Ph¶n ®ßn ®", 	"meleedamagereturn_v",
-	"STVL ngo¹i ®", 	"addphysicsdamage_v",
-	"BS ngo¹i ®", "addcolddamage_v",
-	"§S ngo¹i ®", "addpoisondamage_v",
-	"STVL ngo¹i %", 	"addphysicsdamage_p",
+	"Tï¿½ chï¿½y %", 	"fastwalkrun_p",
+	"Tï¿½ ï¿½ï¿½nh %", 	"attackspeed_v",
+	"Phï¿½n ï¿½ï¿½n ï¿½", 	"meleedamagereturn_v",
+	"STVL ngoï¿½i ï¿½", 	"addphysicsdamage_v",
+	"BS ngoï¿½i ï¿½", "addcolddamage_v",
+	"ï¿½S ngoï¿½i ï¿½", "addpoisondamage_v",
+	"STVL ngoï¿½i %", 	"addphysicsdamage_p",
 	"CHSTTNL %", 		"damage2addmana_p",
-	"May m¾n %", 		"lucky_v",
-	"T©m ph¸p(t)", 		"addskill_v",	
-//	"Bá qua nÐ tr¸nh-%", "ignoredefense_p",
-	"ChÝnh x¸c ®", 	"attackrating_v",
-	"STVL néi ®", 	"addphysicsmagic_v",
-	"BS néi ®", 	"addcoldmagic_v",
-	"HS néi ®", 	"addfiremagic_v",
-	"LS néi ®", 	"addlightingmagic_v",
-	"§S néi ®", 	"addpoisonmagic_v",
-	"TGian chËm %", 	"freezetimereduce_p",
-	"TGian T§ %", "poisontimereduce_p",
-	"TG cho¸ng %", 	"stuntimereduce_p",
+	"May mï¿½n %", 		"lucky_v",
+	"Tï¿½m phï¿½p(t)", 		"addskill_v",	
+//	"Bï¿½ qua nï¿½ trï¿½nh-%", "ignoredefense_p",
+	"Chï¿½nh xï¿½c ï¿½", 	"attackrating_v",
+	"STVL nï¿½i ï¿½", 	"addphysicsmagic_v",
+	"BS nï¿½i ï¿½", 	"addcoldmagic_v",
+	"HS nï¿½i ï¿½", 	"addfiremagic_v",
+	"LS nï¿½i ï¿½", 	"addlightingmagic_v",
+	"ï¿½S nï¿½i ï¿½", 	"addpoisonmagic_v",
+	"TGian chï¿½m %", 	"freezetimereduce_p",
+	"TGian Tï¿½ %", "poisontimereduce_p",
+	"TG choï¿½ng %", 	"stuntimereduce_p",
 	"TGian PH %", 	"fasthitrecover_v",
-	"KN vèn cã ®", "allskill_v",
+	"KN vï¿½n cï¿½ ï¿½", "allskill_v",
 };
 
 void KUiPick::Initialize()
@@ -1068,7 +1068,6 @@ void KUiPick::OnAutoSortClick()
 {
 	// Send simple protocol to server to trigger auto-sort
 	// Server will handle all sorting logic and send back item move packets
-	extern iClientConnectServer* g_pClient;
 	if (g_pClient)
 	{
 		BYTE protocol = c2s_autosortequipment; // c2s_autosortequipment - temporary ID, will define properly
@@ -1331,7 +1330,7 @@ KUiFight* KUiFight::m_pSelf = NULL;
 char szArray_FightBack[][64] =
 {
 	MSG_NON_SETTINGS,
-	"Thæ ®Þa phï",
+	"Thï¿½ ï¿½ï¿½a phï¿½",
 };
 //end code
 
@@ -1339,19 +1338,19 @@ char szArray_FightBack[][64] =
 char szArray_FightBoss[][64] =
 {
 	MSG_NON_SETTINGS,
-	"Tr¸nh tÊt c¶ Boss",
-	"Tr¸nh Boss Xanh",
-	"Tr¸nh Boss Vµng",
-	"Tr¸nh Boss TÝm",
+	"Trï¿½nh tï¿½t cï¿½ Boss",
+	"Trï¿½nh Boss Xanh",
+	"Trï¿½nh Boss Vï¿½ng",
+	"Trï¿½nh Boss Tï¿½m",
 };
 //end code
 
 //Bo qua
 char szArray_Ingore[][64] =
 {
-	"Bá qua",
-	"Lªn ngùa",
-	"Xuèng ngùa",
+	"Bï¿½ qua",
+	"Lï¿½n ngï¿½a",
+	"Xuï¿½ng ngï¿½a",
 };
 void KUiFight::Initialize()
 {
@@ -1423,7 +1422,7 @@ void KUiFight::LoadScheme(KIniFile* pIni)
 	c_FightPeople.Init(pIni, "FightPeople");
 	
 	t_FightMenu.Init(pIni,"FightMenu");
-	t_FightMenu.SetText("Bá qua");
+	t_FightMenu.SetText("Bï¿½ qua");
 	p_FightMenuPopup.Init(pIni,"FightMenuPopup");
 	
 	t_FightMenuSelfDefense.Init(pIni,"FightMenuSelfDefense");
@@ -1704,7 +1703,7 @@ void KUiFight::SetSupportAnyOption(int nIndex, int nID)
 			break;
 			case enumFight:
 			m_CurrentSelOption[enumFight] = 0;
-			t_FightMenu.SetText("Bá qua");
+			t_FightMenu.SetText("Bï¿½ qua");
 			g_pCoreShell->PAIOperation(GPI_F_RIDER, 0, NULL, NULL);
 			break;
 		}
@@ -2157,17 +2156,17 @@ KUiOther* KUiOther::m_pSelf = NULL;
 char szArray_Team[][64] =
 {
 	MSG_NON_SETTINGS,
-	"Tù mêi nhãm tÊt c¶",
-	"Tù mêi nhãm theo danh s¸ch",
+	"Tï¿½ mï¿½i nhï¿½m tï¿½t cï¿½",
+	"Tï¿½ mï¿½i nhï¿½m theo danh sï¿½ch",
 };
 
 
 char szArray_Team_Join_Group[][64] =
 {
 	MSG_NON_SETTINGS,
-	"Tù nhËn tÊt c¶ lêi mêi nhãm",
-	"ChØ nhËn nhãm cã trong danh s¸ch",
-	"Tõ chèi vµo nhãm",
+	"Tï¿½ nhï¿½n tï¿½t cï¿½ lï¿½i mï¿½i nhï¿½m",
+	"Chï¿½ nhï¿½n nhï¿½m cï¿½ trong danh sï¿½ch",
+	"Tï¿½ chï¿½i vï¿½o nhï¿½m",
 };
 
 void KUiOther::Initialize()
@@ -2432,7 +2431,7 @@ int KUiOther::WndProc(unsigned int uMsg, unsigned int uParam, int nParam)
 						Msg.byPriority = 0;
 						Msg.eType = SMT_NORMAL;
 						Msg.uReservedForUi = 0;
-						strcpy(Msg.szMessage, "Danh s¸ch trèng th­a ®¹i hiÖp!");
+						strcpy(Msg.szMessage, "Danh sï¿½ch trï¿½ng thï¿½a ï¿½ï¿½i hiï¿½p!");
 						KUiSysMsgCentre::AMessageArrival(&Msg, NULL);
 					}
 					else
@@ -2553,7 +2552,7 @@ void KUiOther::MenuListParty()
 		Msg.byPriority = 0;
 		Msg.eType = SMT_NORMAL;
 		Msg.uReservedForUi = 0;
-		strcpy(Msg.szMessage, "N¬i nµy ®ång kh«ng m«ng qu¹nh, kh«ng mét bãng ng­êi!");
+		strcpy(Msg.szMessage, "Nï¿½i nï¿½y ï¿½ï¿½ng khï¿½ng mï¿½ng quï¿½nh, khï¿½ng mï¿½t bï¿½ng ngï¿½ï¿½i!");
 		KUiSysMsgCentre::AMessageArrival(&Msg, NULL);
 	}
 }
@@ -2889,7 +2888,7 @@ int KUiMovePlayer::WndProc(unsigned int uMsg, unsigned int uParam, int nParam)
 					Msg.byPriority = 0;
 					Msg.eType = SMT_NORMAL;
 					Msg.uReservedForUi = 0;
-					strcpy(Msg.szMessage, "Täa ®é chØ ®Þnh ch­a thiÕt lËp!");
+					strcpy(Msg.szMessage, "Tï¿½a ï¿½ï¿½ chï¿½ ï¿½ï¿½nh chï¿½a thiï¿½t lï¿½p!");
 					KUiSysMsgCentre::AMessageArrival(&Msg, NULL);
 				}
 			}
@@ -3092,7 +3091,7 @@ void KUiMovePlayer::PopUpFollowPeople()
 		Msg.byPriority = 0;
 		Msg.eType = SMT_NORMAL;
 		Msg.uReservedForUi = 0;
-		strcpy(Msg.szMessage, "N¬i nµy ®ång kh«ng m«ng qu¹nh, kh«ng mét bãng ng­êi!");
+		strcpy(Msg.szMessage, "Nï¿½i nï¿½y ï¿½ï¿½ng khï¿½ng mï¿½ng quï¿½nh, khï¿½ng mï¿½t bï¿½ng ngï¿½ï¿½i!");
 		KUiSysMsgCentre::AMessageArrival(&Msg, NULL);
 	}
 }
@@ -3230,17 +3229,17 @@ void KUiMovePlayer::SaveMoveSetting()
 ////////////////////////////////////////////
 char szArray_Map[][64] =
 {
-	"Trë l¹i khi chÕt",
-	"Kháa lang ®éng",
-	"Sa m¹c mª cung",
-	"Tr­êng b¹ch s¬n",
-	"Sa m¹c 1",
-	"Sa m¹c 2",
-	"Sa m¹c 3",
-	"Tr­êng b¹ch B¾c",
-	"Tr­êng b¹ch Nam",
-	"Phong l¨ng ®é",
-	"M¹c cao quËt",
+	"Trï¿½ lï¿½i khi chï¿½t",
+	"Khï¿½a lang ï¿½ï¿½ng",
+	"Sa mï¿½c mï¿½ cung",
+	"Trï¿½ï¿½ng bï¿½ch sï¿½n",
+	"Sa mï¿½c 1",
+	"Sa mï¿½c 2",
+	"Sa mï¿½c 3",
+	"Trï¿½ï¿½ng bï¿½ch Bï¿½c",
+	"Trï¿½ï¿½ng bï¿½ch Nam",
+	"Phong lï¿½ng ï¿½ï¿½",
+	"Mï¿½c cao quï¿½t",
 };
 
 void KUiSupportPlayer::Initialize()
