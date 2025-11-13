@@ -4434,15 +4434,78 @@ void KProtocolProcess::PlayerRightAutoMove(int nIndex, BYTE* pProtocol)
 
 void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
 {
-    // Auto-sort equipment inventory - simple implementation
-    // Just trigger a re-pack of items from left to right, top to bottom
+    // Auto-sort equipment inventory - compact items to top-left
     if (nIndex <= 0 || nIndex >= MAX_PLAYER)
         return;
-    // For now, implement basic server-side sort logic
-    // Later we can enhance this with more sophisticated sorting
-    // The client sent request, server will process and send back updates
-    // We'll use the existing item move system to rearrange items
-    g_DebugLog("[SERVER] PlayerAutoSortEquipment: player=%d requested inventory sort", nIndex);
+
+    // Collect all items from equiproom
+    struct SortItem {
+        int nIdx;
+        int nWidth;
+        int nHeight;
+        int nArea;
+    };
+    SortItem sortedItems[MAX_EQUIPMENT_ITEM];
+    int nItemCount = 0;
+
+    // Gather all items in equipment room and remove them temporarily
+    PlayerItem* pItem = Player[nIndex].m_ItemList.GetFirstItem();
+    while (pItem && nItemCount < MAX_EQUIPMENT_ITEM)
+    {
+        if (pItem->nIdx > 0 && pItem->nPlace == pos_equiproom)
+        {
+            sortedItems[nItemCount].nIdx = pItem->nIdx;
+            sortedItems[nItemCount].nWidth = Item[pItem->nIdx].GetWidth();
+            sortedItems[nItemCount].nHeight = Item[pItem->nIdx].GetHeight();
+            sortedItems[nItemCount].nArea = sortedItems[nItemCount].nWidth * sortedItems[nItemCount].nHeight;
+            nItemCount++;
+        }
+        pItem = Player[nIndex].m_ItemList.GetNextItem();
+    }
+
+    // Remove all items from ItemList and inventory grid
+    for (int i = 0; i < nItemCount; i++)
+    {
+        Player[nIndex].m_ItemList.Remove(sortedItems[i].nIdx);
+    }
+
+    // Sort by area (smaller items first: 1x1, then 2x2, 2x3, etc.)
+    for (i = 0; i < nItemCount - 1; i++)
+    {
+        for (int j = i + 1; j < nItemCount; j++)
+        {
+            if (sortedItems[j].nArea < sortedItems[i].nArea)
+            {
+                SortItem temp = sortedItems[i];
+                sortedItems[i] = sortedItems[j];
+                sortedItems[j] = temp;
+            }
+        }
+    }
+
+    // Re-add items in sorted order from top-left
+    // Scan horizontally first (left to right), then vertically (top to bottom)
+    for (i = 0; i < nItemCount; i++)
+    {
+        BOOL bPlaced = FALSE;
+
+        // Scan row by row (y first), then column by column (x)
+        for (int y = 0; y < EQUIPMENT_ROOM_HEIGHT && !bPlaced; y++)
+        {
+            for (int x = 0; x < EQUIPMENT_ROOM_WIDTH && !bPlaced; x++)
+            {
+                if (Player[nIndex].m_ItemList.m_Room[room_equipment].CheckRoom(
+                    x, y, sortedItems[i].nWidth, sortedItems[i].nHeight))
+                {
+                    // Add item at this position
+                    Player[nIndex].m_ItemList.Add(sortedItems[i].nIdx, pos_equiproom, x, y);
+                    bPlaced = TRUE;
+                }
+            }
+        }
+    }
+
+    g_DebugLog("[SERVER] PlayerAutoSortEquipment: player=%d sorted %d items", nIndex, nItemCount);
 }
 void KProtocolProcess::PlayerMoveItem(int nIndex, BYTE* pProtocol)
 {

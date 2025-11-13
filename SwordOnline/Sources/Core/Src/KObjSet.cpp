@@ -308,17 +308,7 @@ int		KObjSet::Add(int nDataID, KMapPos MapPos, KObjItemInfo sItemInfo)
 			{
 				sItemInfo.m_nColorID = 0;
 			}
-			printf("[ITEM_COLOR_FIX] %s | Genre:%d ColorID:%d HasMagic:%d | GenLevel:[%d,%d,%d,%d,%d,%d]\n",
-				Item[sItemInfo.m_nItemID].GetName(),
-				Item[sItemInfo.m_nItemID].GetGenre(),
-				sItemInfo.m_nColorID,
-				bHasMagic,
-				pGenParam ? pGenParam->nGeneratorLevel[0] : -1,
-				pGenParam ? pGenParam->nGeneratorLevel[1] : -1,
-				pGenParam ? pGenParam->nGeneratorLevel[2] : -1,
-				pGenParam ? pGenParam->nGeneratorLevel[3] : -1,
-				pGenParam ? pGenParam->nGeneratorLevel[4] : -1,
-				pGenParam ? pGenParam->nGeneratorLevel[5] : -1);
+
 		}
 		else if(Item[sItemInfo.m_nItemID].GetGenre() == item_task || 
 				Item[sItemInfo.m_nItemID].GetGenre() == item_script)
