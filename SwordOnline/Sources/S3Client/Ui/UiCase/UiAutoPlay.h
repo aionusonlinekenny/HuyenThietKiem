@@ -117,7 +117,7 @@ private:
 	KWndText32	m_PickAllEdit;
 	KWndButton	m_PickAllPopup;
 	KWndButton	m_PickFilterCK;
-	KWndButton	m_PickAutoSortBtn;
+	KWndButton	m_PickAutoSortCK;
 	KWndText32	t_PickAutoSortTxt;
 	KWndButton	m_PickFollowTargetCK;
 	KWndEdit32	m_PickFollowTargetEdit;
