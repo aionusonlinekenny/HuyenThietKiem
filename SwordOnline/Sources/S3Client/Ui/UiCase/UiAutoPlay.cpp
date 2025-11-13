@@ -12,7 +12,8 @@
 #include "../UiBase.h" 
 #include "../UiSoundSetting.h"
 #include "../../../Represent/iRepresent/iRepresentShell.h"
-
+#include "../../../Headers/KProtocolDef.h"  // cho c2s_autosortequipment
+#include "../../../core/src/KCore.h"        // cho g_pClient
 extern iRepresentShell* g_pRepresentShell;
 extern iCoreShell* g_pCoreShell;
 KUiPlayerItem*	m_pNearbyPlayersList; //

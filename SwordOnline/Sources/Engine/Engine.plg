@@ -6,6 +6,48 @@
 --------------------Configuration: Bishop - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPD7E3.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Bishop.pdb" /map:"Release/Bishop.map" /debug /machine:I386 /out:"Release/Bishop.exe" 
+.\Release\Application.obj
+.\Release\Bishop.obj
+.\Release\Event.obj
+.\Release\GamePlayer.obj
+.\Release\GameServer.obj
+.\Release\Intercessor.obj
+.\Release\Network.obj
+.\Release\PlayerCreator.obj
+.\Release\SmartClient.obj
+.\Release\StdAfx.obj
+.\Release\Bishop.res
+..\..\..\Lib\release\common.lib
+..\..\..\Lib\release\engine.lib
+]
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPD7E3.tmp"
+<h3>Output Window</h3>
+Linking...
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPD8AF.bat" with contents
+[
+@echo off
+md ..\..\..\..\bin\Server
+copy release\Bishop.exe ..\..\..\..\bin\Server\Bishop.exe
+copy release\Bishop.map ..\..\..\..\bin\Server\Bishop.map
+copy release\Bishop.pdb ..\..\..\..\bin\Server\Bishop.pdb
+md ..\..\..\..\bin\Server\release\
+copy release\Bishop.exe ..\..\..\..\bin\Server\release\Bishop.exe
+copy release\Bishop.map ..\..\..\..\bin\Server\release\Bishop.map
+copy release\Bishop.pdb ..\..\..\..\bin\Server\release\Bishop.pdb
+]
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPD8AF.bat"
+
+A subdirectory or file ..\..\..\..\bin\Server already exists.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+A subdirectory or file ..\..\..\..\bin\Server\release\ already exists.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
 
 
 
@@ -15,13 +57,7 @@ Bishop.exe - 0 error(s), 0 warning(s)
 --------------------Configuration: Core - Win32 Server Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP64E3.tmp" with contents
-[
-/nologo /MT /W2 /GX /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /D "NDEBUG" /D "_SERVER" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FR"ServerRelease/" /Fp"ServerRelease/Core.pch" /Yu"KCore.h" /Fo"ServerRelease/" /Fd"ServerRelease/" /FD /c 
-"D:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KObjSet.cpp"
-]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP64E3.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP64E4.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPD91D.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib lualibdll.lib Ws2_32.lib Winmm.lib Shlwapi.lib /nologo /dll /incremental:no /pdb:"ServerRelease/CoreServer.pdb" /map:"ServerRelease/CoreServer.map" /debug /machine:I386 /out:"ServerRelease\CoreServer.dll" /implib:"ServerRelease/CoreServer.lib" 
 .\ServerRelease\KPartnerSkill.obj
@@ -108,14 +144,12 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Src\USBKey\EP1KDL20.LIB
 .\Src\USBKey\EpsForJoLib.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP64E4.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPD91D.tmp"
 <h3>Output Window</h3>
-Compiling...
-KObjSet.cpp
 Linking...
    Creating library ServerRelease/CoreServer.lib and object ServerRelease/CoreServer.exp
 ServerRelease\CoreServer.dll : warning LNK4084: total image size 673771520 exceeds max (268435456); image may not run
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP660E.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPD9CA.bat" with contents
 [
 @echo off
 md ..\..\lib\release
@@ -129,7 +163,7 @@ copy ServerRelease\CoreServer.map ..\..\..\bin\Server\release\Coreserver.map
 copy ServerRelease\CoreServer.pdb ..\..\..\bin\Server\release\Coreserver.pdb
 copy ServerRelease\CoreServer.dll ..\..\..\bin\Server\release\Coreserver.dll
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP660E.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPD9CA.bat"
 
 A subdirectory or file ..\..\lib\release already exists.
         1 file(s) copied.
@@ -150,13 +184,7 @@ CoreServer.dll - 0 error(s), 1 warning(s)
 --------------------Configuration: Core - Win32 Client Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP667C.tmp" with contents
-[
-/nologo /MD /W2 /GX /Zi /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /I "src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FR"ClientRelease/" /Fp"ClientRelease/Core.pch" /Yu"KCore.h" /Fo"ClientRelease/" /Fd"ClientRelease/" /FD /c 
-"D:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KObjSet.cpp"
-]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP667C.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP667D.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPDA48.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib lualibdll.lib Shlwapi.lib Winmm.lib /nologo /dll /incremental:no /pdb:"ClientRelease/CoreClient.pdb" /map:"ClientRelease/CoreClient.map" /debug /machine:I386 /out:"ClientRelease\CoreClient.dll" /implib:"ClientRelease/CoreClient.lib" /libpath:"../../lib/" 
 .\ClientRelease\KPartnerSkill.obj
@@ -249,13 +277,11 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Src\USBKey\EP1KDL20.LIB
 .\Src\USBKey\EpsForJoLib.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP667D.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPDA48.tmp"
 <h3>Output Window</h3>
-Compiling...
-KObjSet.cpp
 Linking...
    Creating library ClientRelease/CoreClient.lib and object ClientRelease/CoreClient.exp
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6788.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPDB14.bat" with contents
 [
 @echo off
 md ..\..\..\bin\Client\release
@@ -268,14 +294,13 @@ copy ClientRelease\CoreClient.lib ..\..\lib\release\CoreClient.lib
 copy ClientRelease\CoreClient.map ..\..\..\bin\Client\release\CoreClient.map
 copy ClientRelease\CoreClient.pdb ..\..\..\bin\Client\release\CoreClient.pdb
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6788.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPDB14.bat"
 
 A subdirectory or file ..\..\..\bin\Client\release already exists.
 A subdirectory or file ..\..\lib\release already exists.
         1 file(s) copied.
         1 file(s) copied.
-The process cannot access the file because it is being used by another process.
-        0 file(s) copied.
+        1 file(s) copied.
         1 file(s) copied.
         1 file(s) copied.
         1 file(s) copied.
@@ -388,11 +413,163 @@ Represent3.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: S3Client - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPDC2F.tmp" with contents
+[
+/nologo /MD /W3 /GX /Zi /O2 /I "../Engine/src" /I "../Core/src" /I "../Engine/include" /I "../../Headers" /D "WIN32" /D "NDEBUG_WINDOWS" /D "_MBCS" /D "SWORDONLINE_USE_MD5_PASSWORD" /Fp"Release/S3Client.pch" /Yu"KWin32.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiAutoPlay.cpp"
+]
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPDC2F.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPDC30.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib Winmm.lib shlwapi.lib lualibdll.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Game.pdb" /map:"Release/Game.map" /debug /machine:I386 /out:"Release/Game.exe" /libpath:"../../lib/" 
+.\Release\AutoLocateWnd.obj
+.\Release\ComWindow.obj
+.\Release\LightLoop.obj
+.\Release\MouseHover.obj
+.\Release\PopupMenu.obj
+.\Release\SpaceOver.obj
+.\Release\SpecialFuncs.obj
+.\Release\TextPic.obj
+.\Release\UiCursor.obj
+.\Release\UiImage.obj
+.\Release\WndButton.obj
+.\Release\WndChessPanel.obj
+.\Release\WndEdit.obj
+.\Release\WndImage.obj
+.\Release\WndImage2.obj
+.\Release\WndImagePart.obj
+.\Release\WndLabeledButton.obj
+.\Release\WndList.obj
+.\Release\WndList2.obj
+.\Release\WndListFilterItem.obj
+.\Release\WndListPoint.obj
+.\Release\WndMessageListBox.obj
+.\Release\WndMovingImage.obj
+.\Release\WndObjContainer.obj
+.\Release\WndPage.obj
+.\Release\WndPureTextBtn.obj
+.\Release\Wnds.obj
+.\Release\WndScrollBar.obj
+.\Release\WndShadow.obj
+.\Release\WndShowAnimate.obj
+.\Release\WndText.obj
+.\Release\WndToolBar.obj
+.\Release\WndValueImage.obj
+.\Release\WndWindow.obj
+.\Release\UiConnectInfo.obj
+.\Release\UiLogin.obj
+.\Release\UiLoginBg.obj
+.\Release\UiSelServer.obj
+.\Release\UiChooseFace.obj
+.\Release\UiFaceSelector.obj
+.\Release\UiPlayerBar.obj
+.\Release\UiStatus.obj
+.\Release\UiOptions.obj
+.\Release\UiInit.obj
+.\Release\UiTeamBuild.obj
+.\Release\UiChaPW.obj
+.\Release\UiCreatPW.obj
+.\Release\UiExpandItem.obj
+.\Release\UiGetMoney.obj
+.\Release\UiGiveBox.obj
+.\Release\UiItem.obj
+.\Release\UiKeyBoard.obj
+.\Release\UiLoginPW.obj
+.\Release\UiReWard.obj
+.\Release\UiSkills.obj
+.\Release\UiSkillTree.obj
+.\Release\UiStoreBox.obj
+.\Release\UiTimeBox.obj
+.\Release\UiESCDlg.obj
+.\Release\UiGetNumber.obj
+.\Release\UiGetString.obj
+.\Release\UiMsgSel.obj
+.\Release\UiMsgSel2.obj
+.\Release\UiParadeItem.obj
+.\Release\UiSelPlayerNearby.obj
+.\Release\UiNewPlayer.obj
+.\Release\UiSelNativePlace.obj
+.\Release\UiSelPlayer.obj
+.\Release\UiChannelSubscibe.obj
+.\Release\UiChatCentre.obj
+.\Release\UiChatPhrase.obj
+.\Release\UiChatStatus.obj
+.\Release\UiInformation.obj
+.\Release\UiInformation2.obj
+.\Release\UiInformation3.obj
+.\Release\UiTeamManage.obj
+.\Release\UiTeamStatus.obj
+.\Release\UiChatItemInfo.obj
+.\Release\UiHeaderControlBar.obj
+.\Release\UiMsgCentrePad.obj
+.\Release\UiMakeAdv.obj
+.\Release\UiMarket.obj
+.\Release\UiMarkPrice.obj
+.\Release\UiPlayerShop.obj
+.\Release\UiShop.obj
+.\Release\UiShoppingCart.obj
+.\Release\UiTrade.obj
+.\Release\UiTradeConfirmWnd.obj
+.\Release\UiGame.obj
+.\Release\UiNotification.obj
+.\Release\UiSysMsgCentre.obj
+.\Release\UiCaveMap.obj
+.\Release\UiFindPos.obj
+.\Release\UiMiniMap.obj
+.\Release\UiWorldMap.obj
+.\Release\UiSelColor.obj
+.\Release\UiNewPlayerStartMsg.obj
+.\Release\UiPlayVideo.obj
+.\Release\UiHelper.obj
+.\Release\UiHelper2.obj
+.\Release\UiHelperMission.obj
+.\Release\UiReconnect.obj
+.\Release\UiRevive.obj
+.\Release\UiTaskDataFile.obj
+.\Release\UiTaskNote.obj
+.\Release\UiNewsMessage.obj
+.\Release\UiNewsMessageEx.obj
+.\Release\UiStrengthRank.obj
+.\Release\UiPopupPasswordQuery.obj
+.\Release\UiTongAssignBox.obj
+.\Release\UiTongChangeTitle.obj
+.\Release\UiTongCreateSheet.obj
+.\Release\UiTongInformation.obj
+.\Release\UiTongManager.obj
+".\Release\UiTongSetTax .obj"
+.\Release\UiAutoPlay.obj
+.\Release\UiMiniBuff.obj
+.\Release\UiTopTKNew.obj
+.\Release\UiTrembleItem.obj
+.\Release\TrayMode.obj
+.\Release\UiSoundSetting.obj
+.\Release\GameSpaceChangedNotify.obj
+.\Release\ShortcutKey.obj
+.\Release\UiBase.obj
+.\Release\UiShell.obj
+.\Release\ChatFilter.obj
+.\Release\FilterTextLib.obj
+.\Release\S3Client.obj
+.\Release\NetConnectAgent.obj
+.\Release\Login.obj
+.\Release\TextCtrlCmd.obj
+.\Release\ErrorCode.obj
+.\Release\stdafx.obj
+.\Release\Script1.res
+..\..\Lib\release\engine.lib
+..\..\Lib\release\CoreClient.lib
+]
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPDC30.tmp"
+<h3>Output Window</h3>
+Compiling...
+UiAutoPlay.cpp
+D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiAutoPlay.cpp(1071) : error C2143: syntax error : missing ';' before '*'
+Error executing cl.exe.
 
 
 
 <h3>Results</h3>
-Game.exe - 0 error(s), 0 warning(s)
+Game.exe - 1 error(s), 0 warning(s)
 <h3>
 --------------------Configuration: S3Relay - Win32 Release--------------------
 </h3>

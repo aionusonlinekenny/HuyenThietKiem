@@ -1605,54 +1605,6 @@ _TEXT	ENDS
 ;	COMDAT ?_Adjust_heap@std@@YAXPAVOpenNodePtr@@HHV2@@Z
 _TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
 _TEXT	ENDS
-;	COMDAT ?_Doraise@invalid_argument@std@@MBEXXZ
-_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
-_TEXT	ENDS
-;	COMDAT ??0invalid_argument@std@@QAE@ABV01@@Z
-_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
-_TEXT	ENDS
-;	COMDAT __imp_??0logic_error@std@@QAE@ABV01@@Z
-_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
-_TEXT	ENDS
-;	COMDAT __imp_??1logic_error@std@@UAE@XZ
-_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
-_TEXT	ENDS
-;	COMDAT ??_7invalid_argument@std@@6B@
-CONST	SEGMENT DWORD USE32 PUBLIC 'CONST'
-CONST	ENDS
-;	COMDAT __TI3?AVinvalid_argument@std@@
-xdata$x	SEGMENT DWORD USE32 PUBLIC 'CONST'
-xdata$x	ENDS
-;	COMDAT ??1invalid_argument@std@@UAE@XZ
-_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
-_TEXT	ENDS
-;	COMDAT __CTA3?AVinvalid_argument@std@@
-xdata$x	SEGMENT DWORD USE32 PUBLIC 'CONST'
-xdata$x	ENDS
-;	COMDAT __CT??_R0?AVinvalid_argument@std@@@8??0invalid_argument@std@@QAE@ABV01@@Z28
-xdata$x	SEGMENT DWORD USE32 PUBLIC 'CONST'
-xdata$x	ENDS
-;	COMDAT ??_R0?AVinvalid_argument@std@@@8
-_DATA	SEGMENT DWORD USE32 PUBLIC 'DATA'
-_DATA	ENDS
-;	COMDAT __CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QAE@ABV01@@Z28
-xdata$x	SEGMENT DWORD USE32 PUBLIC 'CONST'
-xdata$x	ENDS
-;	COMDAT ??_R0?AVlogic_error@std@@@8
-_DATA	SEGMENT DWORD USE32 PUBLIC 'DATA'
-_DATA	ENDS
-;	COMDAT __imp_?what@logic_error@std@@UBEPBDXZ
-_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
-_TEXT	ENDS
-;	COMDAT ??_Ginvalid_argument@std@@UAEPAXI@Z
-_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
-_TEXT	ENDS
-;	COMDAT ??_GKWorldMsgNode@@UAEPAXI@Z
-_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
-_TEXT	ENDS
-;	COMDAT ??1KWorldMsgNode@@UAE@XZ
-_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
-_TEXT	ENDS
 ;	COMDAT ?GetSkillLevelUpScriptId@ISkill@@UBEKXZ
 _TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
 _TEXT	ENDS
@@ -1696,6 +1648,54 @@ _TEXT	ENDS
 _TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
 _TEXT	ENDS
 ;	COMDAT __imp_?what@runtime_error@std@@UBEPBDXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??_GKWorldMsgNode@@UAEPAXI@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??1KWorldMsgNode@@UAE@XZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ?_Doraise@invalid_argument@std@@MBEXXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??0invalid_argument@std@@QAE@ABV01@@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT __imp_??0logic_error@std@@QAE@ABV01@@Z
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT __imp_??1logic_error@std@@UAE@XZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??_7invalid_argument@std@@6B@
+CONST	SEGMENT DWORD USE32 PUBLIC 'CONST'
+CONST	ENDS
+;	COMDAT __TI3?AVinvalid_argument@std@@
+xdata$x	SEGMENT DWORD USE32 PUBLIC 'CONST'
+xdata$x	ENDS
+;	COMDAT ??1invalid_argument@std@@UAE@XZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT __CTA3?AVinvalid_argument@std@@
+xdata$x	SEGMENT DWORD USE32 PUBLIC 'CONST'
+xdata$x	ENDS
+;	COMDAT __CT??_R0?AVinvalid_argument@std@@@8??0invalid_argument@std@@QAE@ABV01@@Z28
+xdata$x	SEGMENT DWORD USE32 PUBLIC 'CONST'
+xdata$x	ENDS
+;	COMDAT ??_R0?AVinvalid_argument@std@@@8
+_DATA	SEGMENT DWORD USE32 PUBLIC 'DATA'
+_DATA	ENDS
+;	COMDAT __CT??_R0?AVlogic_error@std@@@8??0logic_error@std@@QAE@ABV01@@Z28
+xdata$x	SEGMENT DWORD USE32 PUBLIC 'CONST'
+xdata$x	ENDS
+;	COMDAT ??_R0?AVlogic_error@std@@@8
+_DATA	SEGMENT DWORD USE32 PUBLIC 'DATA'
+_DATA	ENDS
+;	COMDAT __imp_?what@logic_error@std@@UBEPBDXZ
+_TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
+_TEXT	ENDS
+;	COMDAT ??_Ginvalid_argument@std@@UAEPAXI@Z
 _TEXT	SEGMENT PARA USE32 PUBLIC 'CODE'
 _TEXT	ENDS
 ;	COMDAT ??_GKIndexNode@@UAEPAXI@Z
@@ -2883,10 +2883,10 @@ _nMoney$ = 8
 
 	mov	eax, DWORD PTR _nMoney$[esp-4]
 	test	eax, eax
-	jge	SHORT $L92645
+	jge	SHORT $L92646
 	xor	eax, eax
 	ret	4
-$L92645:
+$L92646:
 	mov	DWORD PTR [ecx+4], eax
 	mov	eax, 1
 	ret	4
@@ -3058,14 +3058,14 @@ EXTRN	___CxxFrameHandler:NEAR
 EXTRN	__imp_??1KLinkArray@@QAE@XZ:NEAR
 ;	COMDAT xdata$x
 xdata$x	SEGMENT
-$T105821 DD	019930520H
+$T105822 DD	019930520H
 	DD	01H
-	DD	FLAT:$T105824
+	DD	FLAT:$T105825
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	ORG $+4
-$T105824 DD	0ffffffffH
-	DD	FLAT:$L105816
+$T105825 DD	0ffffffffH
+	DD	FLAT:$L105817
 xdata$x	ENDS
 ;	COMDAT ??1KMissleSet@@QAE@XZ
 _TEXT	SEGMENT
@@ -3073,7 +3073,7 @@ __$EHRec$ = -12
 _this$ = -16
 ??1KMissleSet@@QAE@XZ PROC NEAR				; KMissleSet::~KMissleSet, COMDAT
 	push	-1
-	push	$L105822
+	push	$L105823
 	mov	eax, DWORD PTR fs:__except_list
 	push	eax
 	mov	DWORD PTR fs:__except_list, esp
@@ -3098,11 +3098,11 @@ _this$ = -16
 _TEXT	ENDS
 ;	COMDAT text$x
 text$x	SEGMENT
-$L105816:
+$L105817:
 	mov	ecx, DWORD PTR _this$[ebp]
 	jmp	DWORD PTR __imp_??1KLinkArray@@QAE@XZ
-$L105822:
-	mov	eax, OFFSET FLAT:$T105821
+$L105823:
+	mov	eax, OFFSET FLAT:$T105822
 	jmp	___CxxFrameHandler
 text$x	ENDS
 ??1KMissleSet@@QAE@XZ ENDP				; KMissleSet::~KMissleSet
@@ -3214,14 +3214,14 @@ CONST	SEGMENT
 CONST	ENDS
 ;	COMDAT xdata$x
 xdata$x	SEGMENT
-$T105868 DD	019930520H
+$T105869 DD	019930520H
 	DD	01H
-	DD	FLAT:$T105870
+	DD	FLAT:$T105871
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	ORG $+4
-$T105870 DD	0ffffffffH
-	DD	FLAT:$L105855
+$T105871 DD	0ffffffffH
+	DD	FLAT:$L105856
 xdata$x	ENDS
 ;	COMDAT ??0KMissle@@QAE@XZ
 _TEXT	SEGMENT
@@ -3232,7 +3232,7 @@ _this$ = -16
 ; 135  : {
 
 	push	-1
-	push	$L105869
+	push	$L105870
 	mov	eax, DWORD PTR fs:__except_list
 	push	eax
 	mov	DWORD PTR fs:__except_list, esp
@@ -3299,12 +3299,12 @@ _this$ = -16
 _TEXT	ENDS
 ;	COMDAT text$x
 text$x	SEGMENT
-$L105855:
+$L105856:
 	mov	ecx, DWORD PTR _this$[ebp]
 	add	ecx, 4
 	jmp	??1KIndexNode@@UAE@XZ			; KIndexNode::~KIndexNode
-$L105869:
-	mov	eax, OFFSET FLAT:$T105868
+$L105870:
+	mov	eax, OFFSET FLAT:$T105869
 	jmp	___CxxFrameHandler
 text$x	ENDS
 ??0KMissle@@QAE@XZ ENDP					; KMissle::KMissle
@@ -3317,11 +3317,11 @@ ___flags$ = 8
 	mov	esi, ecx
 	call	??1KMissle@@UAE@XZ			; KMissle::~KMissle
 	test	BYTE PTR ___flags$[esp], 1
-	je	SHORT $L105876
+	je	SHORT $L105877
 	push	esi
 	call	??3@YAXPAX@Z				; operator delete
 	add	esp, 4
-$L105876:
+$L105877:
 	mov	eax, esi
 	pop	esi
 	ret	4
@@ -3391,14 +3391,14 @@ CONST	SEGMENT
 CONST	ENDS
 ;	COMDAT xdata$x
 xdata$x	SEGMENT
-$T105896 DD	019930520H
+$T105897 DD	019930520H
 	DD	01H
-	DD	FLAT:$T105898
+	DD	FLAT:$T105899
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	ORG $+4
-$T105898 DD	0ffffffffH
-	DD	FLAT:$L105883
+$T105899 DD	0ffffffffH
+	DD	FLAT:$L105884
 xdata$x	ENDS
 ;	COMDAT ??1KMissle@@UAE@XZ
 _TEXT	SEGMENT
@@ -3409,7 +3409,7 @@ _this$ = -16
 ; 175  : {
 
 	push	-1
-	push	$L105897
+	push	$L105898
 	mov	eax, DWORD PTR fs:__except_list
 	push	eax
 	mov	DWORD PTR fs:__except_list, esp
@@ -3434,12 +3434,12 @@ _this$ = -16
 _TEXT	ENDS
 ;	COMDAT text$x
 text$x	SEGMENT
-$L105883:
+$L105884:
 	mov	ecx, DWORD PTR _this$[ebp]
 	add	ecx, 4
 	jmp	??1KIndexNode@@UAE@XZ			; KIndexNode::~KIndexNode
-$L105897:
-	mov	eax, OFFSET FLAT:$T105896
+$L105898:
+	mov	eax, OFFSET FLAT:$T105897
 	jmp	___CxxFrameHandler
 text$x	ENDS
 ??1KMissle@@UAE@XZ ENDP					; KMissle::~KMissle
@@ -3452,11 +3452,11 @@ ___flags$ = 8
 	mov	esi, ecx
 	test	al, 1
 	mov	DWORD PTR [esi], OFFSET FLAT:??_7KNode@@6B@ ; KNode::`vftable'
-	je	SHORT $L105907
+	je	SHORT $L105908
 	push	esi
 	call	??3@YAXPAX@Z				; operator delete
 	add	esp, 4
-$L105907:
+$L105908:
 	mov	eax, esi
 	pop	esi
 	ret	4
@@ -3474,13 +3474,13 @@ _nMissleId$ = 8
 
 	mov	eax, DWORD PTR _nMissleId$[esp-4]
 	test	eax, eax
-	jg	SHORT $L100853
+	jg	SHORT $L100854
 	xor	eax, eax
 
 ; 191  : }
 
 	ret	4
-$L100853:
+$L100854:
 
 ; 189  : 	KITabFile * pITabFile = &g_MisslesSetting;
 ; 190  : 	return GetInfoFromTabFile(pITabFile, nMissleId);
@@ -3712,7 +3712,7 @@ _nLightRadius$ = -340
 	mov	ebx, ecx
 	cmp	edi, ebp
 	mov	DWORD PTR _this$[esp+360], ebx
-	jg	SHORT $L100860
+	jg	SHORT $L100861
 	pop	edi
 	pop	ebp
 	xor	eax, eax
@@ -3722,7 +3722,7 @@ _nLightRadius$ = -340
 
 	add	esp, 348				; 0000015cH
 	ret	8
-$L100860:
+$L100861:
 	push	esi
 
 ; 196  : 	m_nMissleId		= nMissleId;
@@ -4069,7 +4069,7 @@ $L100860:
 	call	DWORD PTR [edx+48]
 	mov	ebp, 1
 	add	ebx, 616				; 00000268H
-$L100906:
+$L100907:
 
 ; 245  : 	for (int i  = 0; i < MAX_MISSLE_STATUS; i++)
 ; 246  : 	{
@@ -4312,7 +4312,7 @@ $L100906:
 	add	ebx, 212				; 000000d4H
 	lea	edx, DWORD PTR [ebp-1]
 	cmp	edx, 4
-	jl	$L100906
+	jl	$L100907
 
 ; 290  : 
 ; 291  : 		//sscanf(szAnimFileInfo, "%d,%d,%d", 
@@ -4406,11 +4406,11 @@ ___flags$ = 8
 	mov	esi, ecx
 	call	??1KIndexNode@@UAE@XZ			; KIndexNode::~KIndexNode
 	test	BYTE PTR ___flags$[esp], 1
-	je	SHORT $L105920
+	je	SHORT $L105921
 	push	esi
 	call	??3@YAXPAX@Z				; operator delete
 	add	esp, 4
-$L105920:
+$L105921:
 	mov	eax, esi
 	pop	esi
 	ret	4
@@ -4465,10 +4465,10 @@ EXTRN	?FlyEvent@KSkill@@ABEXPAVKMissle@@@Z:NEAR	; KSkill::FlyEvent
 EXTRN	?Collidsion@KSkill@@ABEXPAVKMissle@@@Z:NEAR	; KSkill::Collidsion
 ;	COMDAT ?Activate@KMissle@@QAEHXZ
 _TEXT	SEGMENT
-_nSrcX2$100951 = -4
-_nSrcY2$100952 = -8
-_nSrcX$100970 = -8
-_nSrcY$100971 = -4
+_nSrcX2$100952 = -4
+_nSrcY2$100953 = -8
+_nSrcX$100971 = -8
+_nSrcY$100972 = -4
 ?Activate@KMissle@@QAEHXZ PROC NEAR			; KMissle::Activate, COMDAT
 
 ; 326  : {	
@@ -4481,10 +4481,10 @@ _nSrcY$100971 = -4
 
 	mov	eax, DWORD PTR [esi+356]
 	test	eax, eax
-	jle	$L100933
+	jle	$L100934
 	mov	eax, DWORD PTR [esi+364]
 	test	eax, eax
-	jl	$L100933
+	jl	$L100934
 
 ; 330  : 	}
 ; 331  : 	
@@ -4496,7 +4496,7 @@ _nSrcY$100971 = -4
 
 ; 334  : 		return 0;
 
-	jle	$L100933
+	jle	$L100934
 
 ; 335  : 	
 ; 336  : 	if (!Npc[m_nLauncher].IsMatch(m_dwLauncherId) || 
@@ -4512,14 +4512,14 @@ _nSrcY$100971 = -4
 	mov	ecx, DWORD PTR [esi+336]
 	shl	eax, 5
 	cmp	ecx, DWORD PTR ?Npc@@3PAVKNpc@@A[eax]
-	jne	$L100937
+	jne	$L100938
 	mov	edx, DWORD PTR [esi+360]
 	mov	ecx, DWORD PTR ?Npc@@3PAVKNpc@@A[eax+2604]
 	cmp	ecx, edx
-	jne	$L100937
+	jne	$L100938
 	mov	ecx, DWORD PTR ?Npc@@3PAVKNpc@@A[eax+2608]
 	test	ecx, ecx
-	jl	$L100937
+	jl	$L100938
 
 ; 341  : 		return 0;	
 ; 342  : 	}
@@ -4528,7 +4528,7 @@ _nSrcY$100971 = -4
 
 	mov	ecx, DWORD PTR [esi+324]
 	test	ecx, ecx
-	jle	SHORT $L100939
+	jle	SHORT $L100940
 
 ; 345  : 	{
 ; 346  : 		if (!Npc[m_nFollowNpcIdx].IsMatch(m_dwFollowNpcID) || 
@@ -4546,16 +4546,16 @@ _nSrcY$100971 = -4
 	mov	ebx, DWORD PTR ?Npc@@3PAVKNpc@@A[eax]
 	cmp	ecx, ebx
 	pop	ebx
-	jne	SHORT $L100940
+	jne	SHORT $L100941
 	cmp	DWORD PTR ?Npc@@3PAVKNpc@@A[eax+2604], edx
-	je	SHORT $L100939
-$L100940:
+	je	SHORT $L100940
+$L100941:
 
 ; 348  : 		{
 ; 349  : 			m_nFollowNpcIdx = 0;
 
 	mov	DWORD PTR [esi+324], 0
-$L100939:
+$L100940:
 
 ; 350  : 		}
 ; 351  : 	}
@@ -4571,19 +4571,19 @@ $L100939:
 	mov	edx, DWORD PTR [esi+204]
 	mov	eax, DWORD PTR [esi+92]
 	cmp	edx, eax
-	jl	SHORT $L100942
+	jl	SHORT $L100943
 	mov	eax, DWORD PTR [esi+352]
 	cmp	eax, 2
-	je	SHORT $L100942
+	je	SHORT $L100943
 	cmp	eax, 3
-	je	SHORT $L100942
+	je	SHORT $L100943
 
 ; 360  : 	{
 ; 361  : 		if (m_bAutoExplode)
 
 	mov	eax, DWORD PTR [esi+112]
 	test	eax, eax
-	je	SHORT $L100948
+	je	SHORT $L100949
 
 ; 362  : 		{
 ; 363  : 			ProcessCollision();
@@ -4595,7 +4595,7 @@ $L100939:
 
 	mov	eax, DWORD PTR [esi+188]
 	test	eax, eax
-	je	SHORT $L100948
+	je	SHORT $L100949
 
 ; 365  : 			{
 ; 366  : 				_ASSERT(m_nSkillId < MAX_SKILL && m_nLevel < MAX_SKILLLEVEL);
@@ -4604,32 +4604,32 @@ $L100939:
 	mov	eax, DWORD PTR [esi+100]
 	mov	ecx, DWORD PTR [esi+320]
 	cmp	eax, 2000				; 000007d0H
-	jg	SHORT $L100948
+	jg	SHORT $L100949
 	test	eax, eax
-	jle	SHORT $L100948
+	jle	SHORT $L100949
 	test	ecx, ecx
-	jle	SHORT $L100948
+	jle	SHORT $L100949
 	cmp	ecx, 64					; 00000040H
-	jg	SHORT $L100948
+	jg	SHORT $L100949
 	mov	edx, eax
 	shl	edx, 6
 	add	edx, ecx
 	mov	edx, DWORD PTR ?g_SkillManager@@3VKSkillManager@@A[edx*4+31740]
 	test	edx, edx
-	je	SHORT $L105946
+	je	SHORT $L105947
 	mov	eax, edx
-	jmp	SHORT $L105941
-$L105946:
+	jmp	SHORT $L105942
+$L105947:
 	push	ecx
 	push	eax
 	mov	ecx, OFFSET FLAT:?g_SkillManager@@3VKSkillManager@@A
 	call	?InstanceSkill@KSkillManager@@AAEPAVISkill@@KK@Z ; KSkillManager::InstanceSkill
-$L105941:
+$L105942:
 
 ; 368  : 				if (pOrdinSkill)
 
 	test	eax, eax
-	je	SHORT $L100948
+	je	SHORT $L100949
 
 ; 369  : 				{
 ; 370  : 					pOrdinSkill->Collidsion(this);
@@ -4637,7 +4637,7 @@ $L105941:
 	push	esi
 	mov	ecx, eax
 	call	?Collidsion@KSkill@@ABEXPAVKMissle@@@Z	; KSkill::Collidsion
-$L100948:
+$L100949:
 
 ; 371  : 				}
 ; 372  : 			}
@@ -4646,7 +4646,7 @@ $L100948:
 
 	mov	ecx, esi
 	call	?DoVanish@KMissle@@AAEXXZ		; KMissle::DoVanish
-$L100942:
+$L100943:
 
 ; 375  : #ifdef _SERVER
 ; 376  : 		m_nCurrentLife ++;
@@ -4659,9 +4659,9 @@ $L100942:
 	mov	eax, DWORD PTR [esi+204]
 	mov	ecx, DWORD PTR [esi+208]
 	cmp	eax, ecx
-	jne	$L100953
+	jne	$L100954
 	cmp	DWORD PTR [esi+352], 2
-	je	SHORT $L100953
+	je	SHORT $L100954
 
 ; 382  : 	{
 ; 383  : 		if (PrePareFly())
@@ -4669,7 +4669,7 @@ $L100942:
 	mov	ecx, esi
 	call	?PrePareFly@KMissle@@AAEHXZ		; KMissle::PrePareFly
 	test	eax, eax
-	je	SHORT $L100950
+	je	SHORT $L100951
 
 ; 384  : 		{
 ; 385  : #ifndef _SERVER
@@ -4678,8 +4678,8 @@ $L100942:
 ; 388  : 			SubWorld[0].Map2Mps(m_nRegionId, m_nCurrentMapX, m_nCurrentMapY,m_nXOffset, m_nYOffset, &nSrcX2, &nSrcY2);
 
 	mov	eax, DWORD PTR [esi+232]
-	lea	ecx, DWORD PTR _nSrcY2$100952[esp+12]
-	lea	edx, DWORD PTR _nSrcX2$100951[esp+12]
+	lea	ecx, DWORD PTR _nSrcY2$100953[esp+12]
+	lea	edx, DWORD PTR _nSrcX2$100952[esp+12]
 	push	ecx
 	mov	ecx, DWORD PTR [esi+228]
 	push	edx
@@ -4692,14 +4692,14 @@ $L100942:
 	push	eax
 	push	ecx
 	mov	ecx, OFFSET FLAT:?SubWorld@@3PAVKSubWorld@@A
-	mov	DWORD PTR _nSrcX2$100951[esp+40], 0
-	mov	DWORD PTR _nSrcY2$100952[esp+40], 0
+	mov	DWORD PTR _nSrcX2$100952[esp+40], 0
+	mov	DWORD PTR _nSrcY2$100953[esp+40], 0
 	call	?Map2Mps@KSubWorld@@QAEXHHHHHPAH0@Z	; KSubWorld::Map2Mps
 
 ; 389  : 			m_MissleRes.PlaySound(MS_DoFly, nSrcX2, nSrcY2, 0);
 
-	mov	edx, DWORD PTR _nSrcY2$100952[esp+12]
-	mov	eax, DWORD PTR _nSrcX2$100951[esp+12]
+	mov	edx, DWORD PTR _nSrcY2$100953[esp+12]
+	mov	eax, DWORD PTR _nSrcX2$100952[esp+12]
 	push	0
 	push	edx
 	push	eax
@@ -4718,14 +4718,14 @@ $L100942:
 ; 394  : 		}
 ; 395  : 		else
 
-	jmp	SHORT $L100953
-$L100950:
+	jmp	SHORT $L100954
+$L100951:
 
 ; 396  : 			DoVanish();
 
 	mov	ecx, esi
 	call	?DoVanish@KMissle@@AAEXXZ		; KMissle::DoVanish
-$L100953:
+$L100954:
 
 ; 397  : 	}
 ; 398  : 	
@@ -4734,9 +4734,9 @@ $L100953:
 
 	mov	eax, DWORD PTR [esi+352]
 	cmp	eax, 3
-	ja	$L100955
-	jmp	DWORD PTR $L105961[eax*4]
-$L100958:
+	ja	$L100956
+	jmp	DWORD PTR $L105962[eax*4]
+$L100959:
 
 ; 401  : 	case MS_DoWait:
 ; 402  : 		{
@@ -4748,8 +4748,8 @@ $L100958:
 ; 404  : 		}
 ; 405  : 		break;
 
-	jmp	$L100955
-$L100959:
+	jmp	$L100956
+$L100960:
 
 ; 406  : 	case MS_DoFly:
 ; 407  : 		{
@@ -4762,7 +4762,7 @@ $L100959:
 
 	mov	eax, DWORD PTR [esi+172]
 	test	eax, eax
-	je	SHORT $L100955
+	je	SHORT $L100956
 
 ; 410  : 			{
 ; 411  : 				if ( (m_nCurrentLife - m_nStartLifeTime) % m_nFlyEventTime == 0 )
@@ -4773,7 +4773,7 @@ $L100959:
 	cdq
 	idiv	DWORD PTR [esi+176]
 	test	edx, edx
-	jne	SHORT $L100955
+	jne	SHORT $L100956
 
 ; 412  : 				{
 ; 413  : 					_ASSERT(m_nSkillId < MAX_SKILL && m_nLevel < MAX_SKILLLEVEL);
@@ -4781,38 +4781,38 @@ $L100959:
 
 	mov	eax, DWORD PTR [esi+320]
 	test	eax, eax
-	jle	$L100933
+	jle	$L100934
 
 ; 415  : 					KSkill * pOrdinSkill = (KSkill *) g_SkillManager.GetSkill(m_nSkillId , m_nLevel);
 
 	mov	ecx, DWORD PTR [esi+100]
 	cmp	ecx, 2000				; 000007d0H
-	jg	SHORT $L100955
+	jg	SHORT $L100956
 	test	ecx, ecx
-	jle	SHORT $L100955
+	jle	SHORT $L100956
 	test	eax, eax
-	jle	SHORT $L100955
+	jle	SHORT $L100956
 	cmp	eax, 64					; 00000040H
-	jg	SHORT $L100955
+	jg	SHORT $L100956
 	mov	edx, ecx
 	shl	edx, 6
 	add	edx, eax
 	mov	edx, DWORD PTR ?g_SkillManager@@3VKSkillManager@@A[edx*4+31740]
 	test	edx, edx
-	je	SHORT $L105956
+	je	SHORT $L105957
 	mov	eax, edx
-	jmp	SHORT $L105951
-$L105956:
+	jmp	SHORT $L105952
+$L105957:
 	push	eax
 	push	ecx
 	mov	ecx, OFFSET FLAT:?g_SkillManager@@3VKSkillManager@@A
 	call	?InstanceSkill@KSkillManager@@AAEPAVISkill@@KK@Z ; KSkillManager::InstanceSkill
-$L105951:
+$L105952:
 
 ; 416  : 					if (pOrdinSkill)
 
 	test	eax, eax
-	je	SHORT $L100955
+	je	SHORT $L100956
 
 ; 417  : 					{
 ; 418  : 						pOrdinSkill->FlyEvent(this);
@@ -4827,8 +4827,8 @@ $L105951:
 ; 422  : 		}
 ; 423  : 		break;
 
-	jmp	SHORT $L100955
-$L100967:
+	jmp	SHORT $L100956
+$L100968:
 
 ; 424  : 	case MS_DoCollision:
 ; 425  : 		{
@@ -4840,8 +4840,8 @@ $L100967:
 ; 427  : 		}
 ; 428  : 		break;
 
-	jmp	SHORT $L100955
-$L100968:
+	jmp	SHORT $L100956
+$L100969:
 
 ; 429  : 	case MS_DoVanish:
 ; 430  : 		{
@@ -4849,7 +4849,7 @@ $L100968:
 
 	mov	ecx, esi
 	call	?OnVanish@KMissle@@AAEXXZ		; KMissle::OnVanish
-$L100955:
+$L100956:
 
 ; 432  : 		}
 ; 433  : 		break;
@@ -4860,7 +4860,7 @@ $L100955:
 
 	mov	eax, DWORD PTR [esi+356]
 	test	eax, eax
-	jle	$L100973
+	jle	$L100974
 
 ; 438  : 	{
 ; 439  : 		int nSrcX;
@@ -4869,8 +4869,8 @@ $L100955:
 ; 442  : 		SubWorld[0].Map2Mps(m_nRegionId, m_nCurrentMapX, m_nCurrentMapY,m_nXOffset, m_nYOffset, &nSrcX, &nSrcY);
 
 	mov	edx, DWORD PTR [esi+232]
-	lea	eax, DWORD PTR _nSrcY$100971[esp+12]
-	lea	ecx, DWORD PTR _nSrcX$100970[esp+12]
+	lea	eax, DWORD PTR _nSrcY$100972[esp+12]
+	lea	ecx, DWORD PTR _nSrcX$100971[esp+12]
 	push	eax
 	mov	eax, DWORD PTR [esi+228]
 	push	ecx
@@ -4888,19 +4888,19 @@ $L100955:
 ; 443  : 		if (m_usLightRadius && m_eMissleStatus != MS_DoWait)
 
 	cmp	WORD PTR [esi+468], 0
-	je	SHORT $L100972
+	je	SHORT $L100973
 	mov	eax, DWORD PTR [esi+352]
 	test	eax, eax
-	je	SHORT $L100972
+	je	SHORT $L100973
 
 ; 444  : 			g_ScenePlace.MoveObject(CGOG_MISSLE, m_nMissleId, nSrcX, nSrcY, m_nCurrentMapZ, m_SceneID, IPOT_RL_OBJECT | IPOT_RL_LIGHT_PROP );
 
 	mov	edx, DWORD PTR [esi+224]
-	mov	eax, DWORD PTR _nSrcY$100971[esp+12]
+	mov	eax, DWORD PTR _nSrcY$100972[esp+12]
 	lea	ecx, DWORD PTR [esi+2940]
 	push	10					; 0000000aH
 	push	ecx
-	mov	ecx, DWORD PTR _nSrcX$100970[esp+20]
+	mov	ecx, DWORD PTR _nSrcX$100971[esp+20]
 	push	edx
 	mov	edx, DWORD PTR [esi+356]
 	push	eax
@@ -4909,27 +4909,27 @@ $L100955:
 
 ; 445  : 		else
 
-	jmp	SHORT $L105960
-$L100972:
+	jmp	SHORT $L105961
+$L100973:
 
 ; 446  : 			g_ScenePlace.MoveObject(CGOG_MISSLE, m_nMissleId, nSrcX, nSrcY, m_nCurrentMapZ, m_SceneID, IPOT_RL_OBJECT);
 
 	mov	ecx, DWORD PTR [esi+224]
-	mov	edx, DWORD PTR _nSrcY$100971[esp+12]
+	mov	edx, DWORD PTR _nSrcY$100972[esp+12]
 	lea	eax, DWORD PTR [esi+2940]
 	push	2
 	push	eax
-	mov	eax, DWORD PTR _nSrcX$100970[esp+20]
+	mov	eax, DWORD PTR _nSrcX$100971[esp+20]
 	push	ecx
 	mov	ecx, DWORD PTR [esi+356]
 	push	edx
 	push	eax
 	push	ecx
-$L105960:
+$L105961:
 	push	9
 	mov	ecx, OFFSET FLAT:?g_ScenePlace@@3VKScenePlaceC@@A
 	call	?MoveObject@KScenePlaceC@@QAEIIHHHHAAIH@Z ; KScenePlaceC::MoveObject
-$L100973:
+$L100974:
 
 ; 447  : 	}
 ; 448  : 	
@@ -4949,14 +4949,14 @@ $L100973:
 
 	add	esp, 8
 	ret	0
-$L100937:
+$L100938:
 
 ; 339  : 	{
 ; 340  : 		DoVanish();
 
 	mov	ecx, esi
 	call	?DoVanish@KMissle@@AAEXXZ		; KMissle::DoVanish
-$L100933:
+$L100934:
 
 ; 328  : 	{
 ; 329  : 		return  0 ;
@@ -4969,11 +4969,11 @@ $L100933:
 	add	esp, 8
 	ret	0
 	npad	3
-$L105961:
-	DD	$L100958
+$L105962:
 	DD	$L100959
+	DD	$L100960
+	DD	$L100969
 	DD	$L100968
-	DD	$L100967
 ?Activate@KMissle@@QAEHXZ ENDP				; KMissle::Activate
 _TEXT	ENDS
 ;	COMDAT ?OnWait@KMissle@@AAEXXZ
@@ -5026,7 +5026,7 @@ _nSearchRegion$ = -4
 	push	edi
 	mov	eax, DWORD PTR [esi+224]
 	cmp	eax, ebx
-	jg	SHORT $L100983
+	jg	SHORT $L100984
 	pop	edi
 	pop	esi
 
@@ -5040,7 +5040,7 @@ _nSearchRegion$ = -4
 
 	add	esp, 12					; 0000000cH
 	ret	0
-$L100983:
+$L100984:
 
 ; 487  : 	}
 ; 488  : 	
@@ -5048,13 +5048,13 @@ $L100983:
 ; 490  : 	if (m_nCurrentMapZ > MISSLE_MAX_COLLISION_ZHEIGHT) return 0;
 
 	cmp	eax, 20					; 00000014H
-	jg	$L101014
+	jg	$L101015
 
 ; 491  : 	
 ; 492  : 	if (m_nRegionId < 0) 
 
 	cmp	DWORD PTR [esi+364], ebx
-	jge	SHORT $L100985
+	jge	SHORT $L100986
 	pop	edi
 	pop	esi
 
@@ -5068,7 +5068,7 @@ $L100983:
 
 	add	esp, 12					; 0000000cH
 	ret	0
-$L100985:
+$L100986:
 
 ; 495  : 	}
 ; 496  : 
@@ -5098,7 +5098,7 @@ $L100985:
 	cmp	eax, 1
 	mov	DWORD PTR _nRMy$[esp+24], ebx
 	mov	DWORD PTR _nSearchRegion$[esp+24], ebx
-	jne	$L101003
+	jne	$L101004
 
 ; 517  : 	{
 ; 518  : 		/*if (m_bNeedReclaim && m_nCurrentLife >= m_nFirstReclaimTime && m_nCurrentLife <= m_nEndReclaimTime)
@@ -5126,13 +5126,13 @@ $L100985:
 ; 531  : 		if (nNpcIdx > 0)
 
 	cmp	edi, ebx
-	jle	$L101014
+	jle	$L101015
 
 ; 532  : 		{
 ; 533  : 			if (m_nDamageRange == 1)
 
 	cmp	DWORD PTR [esi+148], 1
-	jne	SHORT $L101005
+	jne	SHORT $L101006
 
 ; 534  : 				ProcessCollision(m_nLauncher, Npc[nNpcIdx].m_RegionIndex, Npc[nNpcIdx].m_MapX, Npc[nNpcIdx].m_MapY, m_nDamageRange, m_eRelation);
 
@@ -5159,19 +5159,19 @@ $L100985:
 
 ; 535  : 			else
 
-	jmp	SHORT $L101006
-$L101005:
+	jmp	SHORT $L101007
+$L101006:
 
 ; 536  : 				ProcessCollision();
 
 	mov	ecx, esi
 	call	?ProcessCollision@KMissle@@AAEHXZ	; KMissle::ProcessCollision
-$L101006:
+$L101007:
 
 ; 537  : 			if (m_nLastDoCollisionIdx == nNpcIdx)
 
 	cmp	DWORD PTR [esi+444], edi
-	je	SHORT $L101008
+	je	SHORT $L101009
 
 ; 538  : 			{
 ; 539  : 				//return 1; thu bo cho nay xem sao
@@ -5181,18 +5181,18 @@ $L101006:
 ; 543  : 				if (this->m_eMoveKind == MISSLE_MMK_Line)
 
 	cmp	DWORD PTR [esi+76], 1
-	jne	SHORT $L101009
+	jne	SHORT $L101010
 
 ; 544  : 					m_nLastDoCollisionIdx = nNpcIdx;
 
 	mov	DWORD PTR [esi+444], edi
-$L101009:
+$L101010:
 
 ; 545  : 				DoCollision();
 
 	mov	ecx, esi
 	call	?DoCollision@KMissle@@AAEXXZ		; KMissle::DoCollision
-$L101008:
+$L101009:
 	pop	edi
 	pop	esi
 
@@ -5206,7 +5206,7 @@ $L101008:
 
 	add	esp, 12					; 0000000cH
 	ret	0
-$L101003:
+$L101004:
 
 ; 548  : 		}
 ; 549  : 	}
@@ -5217,16 +5217,16 @@ $L101003:
 	mov	ebx, eax
 	neg	ebx
 	cmp	ebx, eax
-	jg	$L101014
-$L101012:
+	jg	$L101015
+$L101013:
 
 ; 553  : 			for (int j = -m_nCollideRange; j <= m_nCollideRange; j ++)
 
 	mov	edi, eax
 	neg	edi
 	cmp	edi, eax
-	jg	$L101013
-$L101016:
+	jg	$L101014
+$L101017:
 
 ; 554  : 			{
 ; 555  : 				if (!GetOffsetAxis(m_nSubWorldId, m_nRegionId, m_nCurrentMapX, m_nCurrentMapY, i , j , nSearchRegion, nRMx, nRMy))
@@ -5250,7 +5250,7 @@ $L101016:
 	call	?GetOffsetAxis@KMissle@@SAHHHHHHHAAH00@Z ; KMissle::GetOffsetAxis
 	add	esp, 36					; 00000024H
 	test	eax, eax
-	je	SHORT $L101017
+	je	SHORT $L101018
 
 ; 556  : 					continue;
 ; 557  : 				
@@ -5280,16 +5280,16 @@ $L101016:
 ; 560  : 				if (nNpcIdx > 0)
 
 	test	eax, eax
-	jg	SHORT $L105973
-$L101017:
+	jg	SHORT $L105974
+$L101018:
 
 ; 553  : 			for (int j = -m_nCollideRange; j <= m_nCollideRange; j ++)
 
 	mov	eax, DWORD PTR [esi+144]
 	inc	edi
 	cmp	edi, eax
-	jle	$L101016
-$L101013:
+	jle	$L101017
+$L101014:
 
 ; 548  : 		}
 ; 549  : 	}
@@ -5300,8 +5300,8 @@ $L101013:
 	mov	eax, DWORD PTR [esi+144]
 	inc	ebx
 	cmp	ebx, eax
-	jle	$L101012
-$L101014:
+	jle	$L101013
+$L101015:
 	pop	edi
 	pop	esi
 
@@ -5318,7 +5318,7 @@ $L101014:
 
 	add	esp, 12					; 0000000cH
 	ret	0
-$L105973:
+$L105974:
 
 ; 561  : 				{
 ; 562  : 					ProcessCollision();
@@ -5359,32 +5359,32 @@ EXTRN	?g_nCos@@3PAHA:DWORD				; g_nCos
 EXTRN	?g_InternalDirSinCosCode@@3PAEA:DWORD		; g_InternalDirSinCosCode
 ;	COMDAT ?OnFly@KMissle@@AAEXXZ
 _TEXT	SEGMENT
-_fi$106078 = -8
-_tmp$106082 = -8
-_nRet$106084 = -16
-_nPX$101030 = -12
-_nPY$101031 = -24
-_nSrcX2$101034 = -20
-_nSrcY2$101035 = -16
-_nSrcX3$101037 = -20
-_nSrcY3$101038 = -16
-_nPreAngle$101053 = -20
-_dx$101056 = -24
-_dy$101057 = -12
-_nPX$101060 = -16
-_nPY$101061 = -28
-_nSrcMpsX$101066 = -20
-_nSrcMpsY$101067 = -32
-_nOldRegion$101068 = -8
-_nPreAngle$101075 = -20
-_dx$101078 = -12
-_dy$101079 = -8
-_nSrcMpsX$101090 = -28
-_nSrcMpsY$101091 = -20
-_nDesMpsX$101092 = -32
-_nDesMpsY$101093 = -24
-_nSrcX4$101110 = -16
-_nSrcY4$101111 = -12
+_fi$106079 = -8
+_tmp$106083 = -8
+_nRet$106085 = -16
+_nPX$101031 = -12
+_nPY$101032 = -24
+_nSrcX2$101035 = -20
+_nSrcY2$101036 = -16
+_nSrcX3$101038 = -20
+_nSrcY3$101039 = -16
+_nPreAngle$101054 = -20
+_dx$101057 = -24
+_dy$101058 = -12
+_nPX$101061 = -16
+_nPY$101062 = -28
+_nSrcMpsX$101067 = -20
+_nSrcMpsY$101068 = -32
+_nOldRegion$101069 = -8
+_nPreAngle$101076 = -20
+_dx$101079 = -12
+_dy$101080 = -8
+_nSrcMpsX$101091 = -28
+_nSrcMpsY$101092 = -20
+_nDesMpsX$101093 = -32
+_nDesMpsY$101094 = -24
+_nSrcX4$101111 = -16
+_nSrcY4$101112 = -12
 ?OnFly@KMissle@@AAEXXZ PROC NEAR			; KMissle::OnFly, COMDAT
 
 ; 578  : {
@@ -5401,20 +5401,20 @@ _nSrcY4$101111 = -12
 	push	edi
 	mov	eax, DWORD PTR [esi+128]
 	cmp	eax, ebx
-	je	$L101032
+	je	$L101033
 
 ; 580  : 	{
 ; 581  : 		if (m_nInteruptTypeWhenMove == Interupt_EndOldMissleLifeWhenMove)
 
 	cmp	eax, 2
-	jne	$L101032
+	jne	$L101033
 
 ; 582  : 		{
 ; 583  : 			int nPX, nPY;
 ; 584  : 			Npc[m_nLauncher].GetMpsPos(&nPX, &nPY);
 
-	lea	eax, DWORD PTR _nPY$101031[esp+48]
-	lea	ecx, DWORD PTR _nPX$101030[esp+48]
+	lea	eax, DWORD PTR _nPY$101032[esp+48]
+	lea	ecx, DWORD PTR _nPX$101031[esp+48]
 	push	eax
 	push	ecx
 	mov	ecx, DWORD PTR [esi+332]
@@ -5430,15 +5430,15 @@ _nSrcY4$101111 = -12
 
 ; 585  : 			if (nPX != m_nLauncherSrcPX || nPY != m_nLauncherSrcPY)
 
-	mov	eax, DWORD PTR _nPX$101030[esp+48]
+	mov	eax, DWORD PTR _nPX$101031[esp+48]
 	mov	ecx, DWORD PTR [esi+136]
 	cmp	eax, ecx
-	jne	SHORT $L101033
-	mov	ecx, DWORD PTR _nPY$101031[esp+48]
+	jne	SHORT $L101034
+	mov	ecx, DWORD PTR _nPY$101032[esp+48]
 	mov	eax, DWORD PTR [esi+140]
 	cmp	ecx, eax
-	je	SHORT $L101032
-$L101033:
+	je	SHORT $L101033
+$L101034:
 
 ; 586  : 			{
 ; 587  : 				
@@ -5448,8 +5448,8 @@ $L101033:
 ; 591  : 				SubWorld[0].Map2Mps(m_nRegionId, m_nCurrentMapX, m_nCurrentMapY,m_nXOffset, m_nYOffset, &nSrcX2, &nSrcY2);
 
 	mov	ecx, DWORD PTR [esi+232]
-	lea	edx, DWORD PTR _nSrcY2$101035[esp+48]
-	lea	eax, DWORD PTR _nSrcX2$101034[esp+48]
+	lea	edx, DWORD PTR _nSrcY2$101036[esp+48]
+	lea	eax, DWORD PTR _nSrcX2$101035[esp+48]
 	push	edx
 	mov	edx, DWORD PTR [esi+228]
 	push	eax
@@ -5462,15 +5462,15 @@ $L101033:
 	push	ecx
 	push	edx
 	mov	ecx, OFFSET FLAT:?SubWorld@@3PAVKSubWorld@@A
-	mov	DWORD PTR _nSrcX2$101034[esp+76], ebx
-	mov	DWORD PTR _nSrcY2$101035[esp+76], ebx
+	mov	DWORD PTR _nSrcX2$101035[esp+76], ebx
+	mov	DWORD PTR _nSrcY2$101036[esp+76], ebx
 	call	?Map2Mps@KSubWorld@@QAEXHHHHHPAH0@Z	; KSubWorld::Map2Mps
 
 ; 592  : 				CreateSpecialEffect(MS_DoVanish, nSrcX2, nSrcY2, m_nCurrentMapZ);
 
 	mov	eax, DWORD PTR [esi+224]
-	mov	ecx, DWORD PTR _nSrcY2$101035[esp+48]
-	mov	edx, DWORD PTR _nSrcX2$101034[esp+48]
+	mov	ecx, DWORD PTR _nSrcY2$101036[esp+48]
+	mov	edx, DWORD PTR _nSrcX2$101035[esp+48]
 	push	ebx
 	push	eax
 	push	ecx
@@ -5481,8 +5481,8 @@ $L101033:
 ; 595  : 				DoVanish();
 ; 596  : 				return ;
 
-	jmp	$L106114
-$L101032:
+	jmp	$L106115
+$L101033:
 
 ; 597  : 			}
 ; 598  : 		}
@@ -5512,10 +5512,10 @@ $L101032:
 	call	?TestBarrier@KSubWorld@@QAEEHHHHHHH@Z	; KSubWorld::TestBarrier
 	and	eax, 255				; 000000ffH
 	cmp	eax, 1
-	je	SHORT $L105984
+	je	SHORT $L105985
 	cmp	eax, 3
-	jne	SHORT $L101036
-$L105984:
+	jne	SHORT $L101037
+$L105985:
 
 ; 602  : 	{
 ; 603  : #ifndef _SERVER 
@@ -5524,8 +5524,8 @@ $L105984:
 ; 606  : 		SubWorld[0].Map2Mps(m_nRegionId, m_nCurrentMapX, m_nCurrentMapY,m_nXOffset, m_nYOffset, &nSrcX3, &nSrcY3);
 
 	mov	edx, DWORD PTR [esi+232]
-	lea	eax, DWORD PTR _nSrcY3$101038[esp+48]
-	lea	ecx, DWORD PTR _nSrcX3$101037[esp+48]
+	lea	eax, DWORD PTR _nSrcY3$101039[esp+48]
+	lea	ecx, DWORD PTR _nSrcX3$101038[esp+48]
 	push	eax
 	mov	eax, DWORD PTR [esi+228]
 	push	ecx
@@ -5538,15 +5538,15 @@ $L105984:
 	push	edx
 	push	eax
 	mov	ecx, OFFSET FLAT:?SubWorld@@3PAVKSubWorld@@A
-	mov	DWORD PTR _nSrcX3$101037[esp+76], ebx
-	mov	DWORD PTR _nSrcY3$101038[esp+76], ebx
+	mov	DWORD PTR _nSrcX3$101038[esp+76], ebx
+	mov	DWORD PTR _nSrcY3$101039[esp+76], ebx
 	call	?Map2Mps@KSubWorld@@QAEXHHHHHPAH0@Z	; KSubWorld::Map2Mps
 
 ; 607  : 		CreateSpecialEffect(MS_DoVanish, nSrcX3, nSrcY3, m_nCurrentMapZ);
 
 	mov	ecx, DWORD PTR [esi+224]
-	mov	edx, DWORD PTR _nSrcY3$101038[esp+48]
-	mov	eax, DWORD PTR _nSrcX3$101037[esp+48]
+	mov	edx, DWORD PTR _nSrcY3$101039[esp+48]
+	mov	eax, DWORD PTR _nSrcX3$101038[esp+48]
 	push	ebx
 	push	ecx
 	push	edx
@@ -5555,8 +5555,8 @@ $L105984:
 ; 609  : 		DoVanish();
 ; 610  : 		return;
 
-	jmp	$L106115
-$L101036:
+	jmp	$L106116
+$L101037:
 
 ; 611  : 	}
 ; 612  : 	
@@ -5569,18 +5569,18 @@ $L101036:
 	xor	eax, eax
 	xor	ecx, ecx
 	test	ebx, ebx
-	je	SHORT $L105989
+	je	SHORT $L105990
 	mov	edx, DWORD PTR [esi+88]
 	add	DWORD PTR [esi+84], edx
-	jns	SHORT $L105990
+	jns	SHORT $L105991
 	mov	DWORD PTR [esi+84], ecx
-$L105990:
+$L105991:
 	sub	edx, ebx
 	mov	DWORD PTR [esi+88], edx
 	mov	edx, DWORD PTR [esi+84]
 	sar	edx, 10					; 0000000aH
 	mov	DWORD PTR [esi+224], edx
-$L105989:
+$L105990:
 
 ; 617  : 	switch(this->m_eMoveKind)
 ; 618  : 	{
@@ -5588,11 +5588,11 @@ $L105989:
 	mov	edx, DWORD PTR [esi+76]
 	dec	edx
 	cmp	edx, 99					; 00000063H
-	ja	$L101105
+	ja	$L101106
 	xor	ebx, ebx
-	mov	bl, BYTE PTR $L106116[edx]
-	jmp	DWORD PTR $L106117[ebx*4]
-$L101047:
+	mov	bl, BYTE PTR $L106117[edx]
+	jmp	DWORD PTR $L106118[ebx*4]
+$L101048:
 
 ; 619  : 	case	MISSLE_MMK_Stand:							
 ; 620  : 		{
@@ -5612,7 +5612,7 @@ $L101047:
 
 	mov	eax, DWORD PTR [esi+412]
 	test	eax, eax
-	jne	$L101046
+	jne	$L101047
 
 ; 634  : 			{
 ; 635  : 				if (m_nTempParam2 <= m_nCurrentLife)
@@ -5620,7 +5620,7 @@ $L101047:
 	mov	eax, DWORD PTR [esi+416]
 	mov	ecx, DWORD PTR [esi+204]
 	cmp	eax, ecx
-	jg	$L101046
+	jg	$L101047
 
 ; 636  : 				{
 ; 637  : 					m_nXFactor = -m_nXFactor;
@@ -5645,7 +5645,7 @@ $L101047:
 
 ; 641  : 					if (m_nDir < 0) m_nDir += MaxMissleDir;
 
-	jns	$L101046
+	jns	$L101047
 	add	eax, 64					; 00000040H
 	mov	DWORD PTR [esi+424], eax
 
@@ -5657,8 +5657,8 @@ $L101047:
 ; 647  : 		}
 ; 648  : 		break;
 
-	jmp	$L101046
-$L101052:
+	jmp	$L101047
+$L101053:
 
 ; 649  : 	case	MISSLE_MMK_Random:						
 ; 650  : 		{
@@ -5675,10 +5675,10 @@ $L101052:
 ; 657  : 			if (nPreAngle < 0) nPreAngle = MaxMissleDir - 1;
 
 	test	ecx, ecx
-	mov	DWORD PTR _nPreAngle$101053[esp+48], ecx
-	jge	SHORT $L101054
-	mov	DWORD PTR _nPreAngle$101053[esp+48], 63	; 0000003fH
-$L101054:
+	mov	DWORD PTR _nPreAngle$101054[esp+48], ecx
+	jge	SHORT $L101055
+	mov	DWORD PTR _nPreAngle$101054[esp+48], 63	; 0000003fH
+$L101055:
 
 ; 658  : 			m_nDir = m_nAngle + (MaxMissleDir / 4);
 
@@ -5688,10 +5688,10 @@ $L101054:
 
 	cmp	ecx, 64					; 00000040H
 	mov	DWORD PTR [esi+424], ecx
-	jl	SHORT $L101055
+	jl	SHORT $L101056
 	add	ecx, -64				; ffffffc0H
 	mov	DWORD PTR [esi+424], ecx
-$L101055:
+$L101056:
 
 ; 660  : 			int dx = (m_nSpeed + m_nParam3)  * (g_DirCos(m_nAngle,MaxMissleDir) - g_DirCos(nPreAngle,MaxMissleDir)) ;
 
@@ -5700,7 +5700,7 @@ $L101055:
 	mov	eax, DWORD PTR ?g_nCos@@3PAHA		; g_nCos
 	push	eax
 	call	DWORD PTR ?g_InternalDirSinCosCode@@3PAEA ; g_InternalDirSinCosCode
-	mov	ecx, DWORD PTR _nPreAngle$101053[esp+60]
+	mov	ecx, DWORD PTR _nPreAngle$101054[esp+60]
 	mov	edx, DWORD PTR ?g_nCos@@3PAHA		; g_nCos
 	push	64					; 00000040H
 	push	ecx
@@ -5718,11 +5718,11 @@ $L101055:
 	mov	ecx, DWORD PTR ?g_nSin@@3PAHA		; g_nSin
 	imul	ebx, eax
 	mov	eax, DWORD PTR [esi+428]
-	mov	DWORD PTR _dx$101056[esp+76], ebx
+	mov	DWORD PTR _dx$101057[esp+76], ebx
 	push	eax
 	push	ecx
 	call	DWORD PTR ?g_InternalDirSinCosCode@@3PAEA ; g_InternalDirSinCosCode
-	mov	edx, DWORD PTR _nPreAngle$101053[esp+84]
+	mov	edx, DWORD PTR _nPreAngle$101054[esp+84]
 	mov	ebx, eax
 	mov	eax, DWORD PTR ?g_nSin@@3PAHA		; g_nSin
 	push	64					; 00000040H
@@ -5742,28 +5742,28 @@ $L101055:
 	add	esp, 48					; 00000030H
 	mov	ecx, ebx
 	test	eax, eax
-	mov	DWORD PTR _dy$101057[esp+48], ecx
-	je	SHORT $L101058
+	mov	DWORD PTR _dy$101058[esp+48], ecx
+	je	SHORT $L101059
 
 ; 664  : 			{	
 ; 665  : 				nDOffsetX = dx;
 
-	mov	eax, DWORD PTR _dx$101056[esp+48]
+	mov	eax, DWORD PTR _dx$101057[esp+48]
 
 ; 666  : 				nDOffsetY = dy;
 ; 667  : 			}
 ; 668  : 			else
 
-	jmp	$L101059
-$L101058:
+	jmp	$L101060
+$L101059:
 
 ; 669  : 			{		
 ; 670  : 				int nPX, nPY;
 ; 671  : 				Npc[m_nLauncher].GetMpsPos(&nPX, &nPY);
 
 	mov	ecx, DWORD PTR [esi+332]
-	lea	edx, DWORD PTR _nPY$101061[esp+48]
-	lea	eax, DWORD PTR _nPX$101060[esp+48]
+	lea	edx, DWORD PTR _nPY$101062[esp+48]
+	lea	eax, DWORD PTR _nPX$101061[esp+48]
 	push	edx
 	push	eax
 	lea	eax, DWORD PTR [ecx+ecx*2]
@@ -5778,15 +5778,15 @@ $L101058:
 
 ; 672  : 				if (nPX != m_nLauncherSrcPX || nPY != m_nLauncherSrcPY)
 
-	mov	eax, DWORD PTR _nPX$101060[esp+48]
+	mov	eax, DWORD PTR _nPX$101061[esp+48]
 	mov	ecx, DWORD PTR [esi+136]
 	cmp	eax, ecx
-	jne	SHORT $L101063
-	mov	ecx, DWORD PTR _nPY$101061[esp+48]
+	jne	SHORT $L101064
+	mov	ecx, DWORD PTR _nPY$101062[esp+48]
 	mov	eax, DWORD PTR [esi+140]
 	cmp	ecx, eax
-	je	$L101069
-$L101063:
+	je	$L101070
+$L101064:
 
 ; 673  : 				{		
 ; 674  : 					int a = nPX - m_nLauncherSrcPX;
@@ -5798,8 +5798,8 @@ $L101063:
 
 ; 678  : 					SubWorld[m_nSubWorldId].Map2Mps(nOldRegion, m_nCurrentMapX, m_nCurrentMapY, m_nXOffset, m_nYOffset, &nSrcMpsX, &nSrcMpsY);	
 
-	lea	edx, DWORD PTR _nSrcMpsY$101067[esp+48]
-	lea	ecx, DWORD PTR _nSrcMpsX$101066[esp+48]
+	lea	edx, DWORD PTR _nSrcMpsY$101068[esp+48]
+	lea	ecx, DWORD PTR _nSrcMpsX$101067[esp+48]
 	push	edx
 	mov	edx, DWORD PTR [esi+232]
 	push	ecx
@@ -5810,7 +5810,7 @@ $L101063:
 	mov	ecx, DWORD PTR [esi+216]
 	push	edx
 	push	ecx
-	mov	DWORD PTR _nOldRegion$101068[esp+72], eax
+	mov	DWORD PTR _nOldRegion$101069[esp+72], eax
 	push	eax
 	mov	eax, DWORD PTR [esi+360]
 	mov	edx, eax
@@ -5840,9 +5840,9 @@ $L101063:
 
 ; 680  : 					nSrcMpsX = nPX + (nSrcMpsX - m_nLauncherSrcPX + dx) / (m_nParam3 * 2);
 
-	mov	eax, DWORD PTR _nSrcMpsX$101066[esp+48]
+	mov	eax, DWORD PTR _nSrcMpsX$101067[esp+48]
 	mov	ebx, DWORD PTR [esi+136]
-	mov	edx, DWORD PTR _dx$101056[esp+48]
+	mov	edx, DWORD PTR _dx$101057[esp+48]
 	mov	ecx, DWORD PTR [esi+400]
 	sub	eax, ebx
 	add	eax, edx
@@ -5854,16 +5854,16 @@ $L101063:
 
 	mov	edx, DWORD PTR [esi+140]
 	mov	ebx, eax
-	mov	eax, DWORD PTR _nPX$101060[esp+48]
+	mov	eax, DWORD PTR _nPX$101061[esp+48]
 	add	ebx, eax
-	mov	eax, DWORD PTR _nSrcMpsY$101067[esp+48]
+	mov	eax, DWORD PTR _nSrcMpsY$101068[esp+48]
 	sub	eax, edx
-	mov	edx, DWORD PTR _dy$101057[esp+48]
+	mov	edx, DWORD PTR _dy$101058[esp+48]
 	add	eax, edx
-	mov	DWORD PTR _nSrcMpsX$101066[esp+48], ebx
+	mov	DWORD PTR _nSrcMpsX$101067[esp+48], ebx
 	cdq
 	idiv	ecx
-	mov	ecx, DWORD PTR _nPY$101061[esp+48]
+	mov	ecx, DWORD PTR _nPY$101062[esp+48]
 	add	eax, ecx
 
 ; 682  : 					SubWorld[m_nSubWorldId].Mps2Map(nSrcMpsX, nSrcMpsY, &m_nRegionId, &m_nCurrentMapX, &m_nCurrentMapY, &m_nXOffset, &m_nYOffset);
@@ -5876,7 +5876,7 @@ $L101063:
 	push	ebp
 	push	ecx
 	push	edi
-	mov	DWORD PTR _nSrcMpsY$101067[esp+68], eax
+	mov	DWORD PTR _nSrcMpsY$101068[esp+68], eax
 	push	eax
 	mov	eax, DWORD PTR [esi+360]
 	mov	ecx, eax
@@ -5909,9 +5909,9 @@ $L101063:
 ; 685  : 					if (nOldRegion != m_nRegionId)
 
 	mov	eax, DWORD PTR [edi]
-	mov	ecx, DWORD PTR _nOldRegion$101068[esp+48]
+	mov	ecx, DWORD PTR _nOldRegion$101069[esp+48]
 	cmp	ecx, eax
-	je	SHORT $L101069
+	je	SHORT $L101070
 
 ; 686  : 					{
 ; 687  : 						SubWorld[m_nSubWorldId].m_WorldMessage.Send(GWM_MISSLE_CHANGE_REGION, nOldRegion, m_nRegionId, m_nMissleId);	
@@ -5927,26 +5927,26 @@ $L101063:
 	sub	ecx, eax
 	lea	ecx, DWORD PTR ?SubWorld@@3PAVKSubWorld@@A[ecx*4+204]
 	call	?Send@KWorldMsg@@QAEHKHHH@Z		; KWorldMsg::Send
-$L101069:
+$L101070:
 
 ; 688  : 					} 
 ; 689  : 				}
 ; 690  : 		
 ; 691  : 				nDOffsetX = dx;
 
-	mov	eax, DWORD PTR _dx$101056[esp+48]
+	mov	eax, DWORD PTR _dx$101057[esp+48]
 
 ; 692  : 				nDOffsetY = dy;
 
-	mov	ecx, DWORD PTR _dy$101057[esp+48]
-$L101059:
+	mov	ecx, DWORD PTR _dy$101058[esp+48]
+$L101060:
 
 ; 693  : 			}
 ; 694  : 			if (m_nParam1)
 
 	mov	edx, DWORD PTR [esi+392]
 	test	edx, edx
-	je	$L101070
+	je	$L101071
 
 ; 695  : 			{
 ; 696  : 				m_nAngle ++;
@@ -5955,8 +5955,8 @@ $L101059:
 ; 699  : 			}
 ; 700  : 			else
 
-	jmp	$L106113
-$L101074:
+	jmp	$L106114
+$L101075:
 
 ; 701  : 			{
 ; 702  : 				m_nAngle--;
@@ -5976,14 +5976,14 @@ $L101074:
 ; 712  : 			if (nPreAngle < 0) 
 
 	test	ecx, ecx
-	mov	DWORD PTR _nPreAngle$101075[esp+48], ecx
-	jge	SHORT $L101076
+	mov	DWORD PTR _nPreAngle$101076[esp+48], ecx
+	jge	SHORT $L101077
 
 ; 713  : 			{
 ; 714  : 				nPreAngle = MaxMissleDir -1;
 
-	mov	DWORD PTR _nPreAngle$101075[esp+48], 63	; 0000003fH
-$L101076:
+	mov	DWORD PTR _nPreAngle$101076[esp+48], 63	; 0000003fH
+$L101077:
 
 ; 715  : 			}
 ; 716  : 			m_nDir = m_nAngle + (MaxMissleDir / 4);
@@ -5994,10 +5994,10 @@ $L101076:
 
 	cmp	ecx, 64					; 00000040H
 	mov	DWORD PTR [esi+424], ecx
-	jl	SHORT $L101077
+	jl	SHORT $L101078
 	add	ecx, -64				; ffffffc0H
 	mov	DWORD PTR [esi+424], ecx
-$L101077:
+$L101078:
 
 ; 718  : 			
 ; 719  : 			int dx = (m_nSpeed + m_nCurrentLife + 50)  * (g_DirCos(m_nAngle,MaxMissleDir) - g_DirCos(nPreAngle, MaxMissleDir)) ;
@@ -6009,7 +6009,7 @@ $L101077:
 	call	DWORD PTR ?g_InternalDirSinCosCode@@3PAEA ; g_InternalDirSinCosCode
 	mov	ecx, DWORD PTR ?g_nCos@@3PAHA		; g_nCos
 	mov	ebx, eax
-	mov	eax, DWORD PTR _nPreAngle$101075[esp+60]
+	mov	eax, DWORD PTR _nPreAngle$101076[esp+60]
 	push	64					; 00000040H
 	push	eax
 	push	ecx
@@ -6027,11 +6027,11 @@ $L101077:
 	mov	edx, DWORD PTR ?g_nSin@@3PAHA		; g_nSin
 	push	eax
 	push	edx
-	mov	DWORD PTR _dx$101078[esp+84], ebx
+	mov	DWORD PTR _dx$101079[esp+84], ebx
 	call	DWORD PTR ?g_InternalDirSinCosCode@@3PAEA ; g_InternalDirSinCosCode
 	mov	ecx, DWORD PTR ?g_nSin@@3PAHA		; g_nSin
 	mov	ebx, eax
-	mov	eax, DWORD PTR _nPreAngle$101075[esp+84]
+	mov	eax, DWORD PTR _nPreAngle$101076[esp+84]
 	push	64					; 00000040H
 	push	eax
 	push	ecx
@@ -6049,20 +6049,20 @@ $L101077:
 	imul	ebx, ecx
 	mov	ecx, ebx
 	test	eax, eax
-	mov	DWORD PTR _dy$101079[esp+48], ecx
-	je	SHORT $L101080
+	mov	DWORD PTR _dy$101080[esp+48], ecx
+	je	SHORT $L101081
 
 ; 723  : 			{
 ; 724  : 				nDOffsetX = dx;
 
-	mov	eax, DWORD PTR _dx$101078[esp+48]
+	mov	eax, DWORD PTR _dx$101079[esp+48]
 
 ; 725  : 				nDOffsetY = dy;
 ; 726  : 			}
 ; 727  : 			else			// 围绕着发送者转
 
-	jmp	$L101081
-$L101080:
+	jmp	$L101082
+$L101081:
 
 ; 728  : 			{
 ; 729  : 				int nOldRegion = m_nRegionId;
@@ -6134,7 +6134,7 @@ $L101080:
 
 	mov	eax, DWORD PTR [edi]
 	cmp	ebx, eax
-	je	SHORT $L101083
+	je	SHORT $L101084
 
 ; 739  : 				{
 ; 740  : 					SubWorld[m_nSubWorldId].m_WorldMessage.Send(GWM_MISSLE_CHANGE_REGION, nOldRegion, m_nRegionId, m_nMissleId);
@@ -6150,17 +6150,17 @@ $L101080:
 	sub	edx, eax
 	lea	ecx, DWORD PTR ?SubWorld@@3PAVKSubWorld@@A[edx*4+204]
 	call	?Send@KWorldMsg@@QAEHKHHH@Z		; KWorldMsg::Send
-$L101083:
+$L101084:
 
 ; 741  : 				}  
 ; 742  : 				nDOffsetX = dx;
 
-	mov	eax, DWORD PTR _dx$101078[esp+48]
+	mov	eax, DWORD PTR _dx$101079[esp+48]
 
 ; 743  : 				nDOffsetY = dy;
 
-	mov	ecx, DWORD PTR _dy$101079[esp+48]
-$L101081:
+	mov	ecx, DWORD PTR _dy$101080[esp+48]
+$L101082:
 
 ; 744  : 			}
 ; 745  : 			
@@ -6168,8 +6168,8 @@ $L101081:
 
 	mov	edx, DWORD PTR [esi+392]
 	test	edx, edx
-	je	SHORT $L101070
-$L106113:
+	je	SHORT $L101071
+$L106114:
 
 ; 747  : 			{
 ; 748  : 				m_nAngle ++;
@@ -6182,7 +6182,7 @@ $L106113:
 	mov	edx, ebx
 	mov	DWORD PTR [esi+428], ebx
 	cmp	edx, 64					; 00000040H
-	jl	$L101105
+	jl	$L101106
 
 ; 750  : 					m_nAngle = 0;
 
@@ -6191,8 +6191,8 @@ $L106113:
 ; 751  : 			}
 ; 752  : 			else
 
-	jmp	$L101105
-$L101070:
+	jmp	$L101106
+$L101071:
 
 ; 753  : 			{
 ; 754  : 				m_nAngle--;
@@ -6203,7 +6203,7 @@ $L101070:
 
 ; 755  : 				if (m_nAngle < 0 )
 
-	jns	$L101105
+	jns	$L101106
 
 ; 756  : 					m_nAngle = MaxMissleDir - 1;
 
@@ -6213,8 +6213,8 @@ $L101070:
 ; 758  : 		}
 ; 759  : 		break; 
 
-	jmp	$L101105
-$L101088:
+	jmp	$L101106
+$L101089:
 
 ; 760  : 	case	MISSLE_MMK_Follow:
 ; 761  : 		{
@@ -6229,13 +6229,13 @@ $L101088:
 	mov	eax, DWORD PTR [esi+392]
 	xor	edx, edx
 	cmp	eax, 6
-	mov	DWORD PTR _nSrcMpsX$101090[esp+48], edx
+	mov	DWORD PTR _nSrcMpsX$101091[esp+48], edx
 	lea	ecx, DWORD PTR [eax+1]
-	mov	DWORD PTR _nSrcMpsY$101091[esp+48], edx
-	mov	DWORD PTR _nDesMpsX$101092[esp+48], edx
-	mov	DWORD PTR _nDesMpsY$101093[esp+48], edx
+	mov	DWORD PTR _nSrcMpsY$101092[esp+48], edx
+	mov	DWORD PTR _nDesMpsX$101093[esp+48], edx
+	mov	DWORD PTR _nDesMpsY$101094[esp+48], edx
 	mov	DWORD PTR [esi+392], ecx
-	jl	$L101046
+	jl	$L101047
 
 ; 769  : 			{
 ; 770  : 				m_nParam1 = 0;
@@ -6244,7 +6244,7 @@ $L101088:
 	mov	ecx, DWORD PTR [esi+324]
 	mov	DWORD PTR [esi+392], edx
 	cmp	ecx, edx
-	jle	$L101046
+	jle	$L101047
 	lea	eax, DWORD PTR [ecx+ecx*2]
 	shl	eax, 3
 	sub	eax, ecx
@@ -6254,14 +6254,14 @@ $L101088:
 	mov	ecx, DWORD PTR [esi+328]
 	shl	eax, 5
 	cmp	ecx, DWORD PTR ?Npc@@3PAVKNpc@@A[eax]
-	jne	$L101046
+	jne	$L101047
 
 ; 772  : 				{					
 ; 773  : 					SubWorld[m_nSubWorldId].Map2Mps(m_nRegionId, m_nCurrentMapX, m_nCurrentMapY, m_nXOffset, m_nYOffset, &nSrcMpsX, &nSrcMpsY);
 
 	mov	ecx, DWORD PTR [esi+232]
-	lea	edx, DWORD PTR _nSrcMpsY$101091[esp+48]
-	lea	eax, DWORD PTR _nSrcMpsX$101090[esp+48]
+	lea	edx, DWORD PTR _nSrcMpsY$101092[esp+48]
+	lea	eax, DWORD PTR _nSrcMpsX$101091[esp+48]
 	push	edx
 	mov	edx, DWORD PTR [esi+228]
 	push	eax
@@ -6289,9 +6289,9 @@ $L101088:
 	lea	eax, DWORD PTR [eax+eax*2]
 	lea	edx, DWORD PTR [eax+eax*8]
 	lea	eax, DWORD PTR [ecx+edx*2]
-	lea	ecx, DWORD PTR _nDesMpsY$101093[esp+48]
+	lea	ecx, DWORD PTR _nDesMpsY$101094[esp+48]
 	shl	eax, 5
-	lea	edx, DWORD PTR _nDesMpsX$101092[esp+48]
+	lea	edx, DWORD PTR _nDesMpsX$101093[esp+48]
 	push	ecx
 	mov	ecx, DWORD PTR ?Npc@@3PAVKNpc@@A[eax+3128]
 	push	edx
@@ -6313,13 +6313,13 @@ $L101088:
 
 ; 775  : 					nDistance = SubWorld[m_nSubWorldId].GetDistance(nSrcMpsX, nSrcMpsY, nDesMpsX, nDesMpsY);
 
-	mov	edx, DWORD PTR _nDesMpsY$101093[esp+48]
-	mov	eax, DWORD PTR _nDesMpsX$101092[esp+48]
-	mov	ecx, DWORD PTR _nSrcMpsY$101091[esp+48]
+	mov	edx, DWORD PTR _nDesMpsY$101094[esp+48]
+	mov	eax, DWORD PTR _nDesMpsX$101093[esp+48]
+	mov	ecx, DWORD PTR _nSrcMpsY$101092[esp+48]
 	push	edx
 	push	eax
 	mov	eax, DWORD PTR [esi+360]
-	mov	edx, DWORD PTR _nSrcMpsX$101090[esp+56]
+	mov	edx, DWORD PTR _nSrcMpsX$101091[esp+56]
 	push	ecx
 	mov	ecx, eax
 	push	edx
@@ -6333,27 +6333,27 @@ $L101088:
 ; 777  : 					if (nDistance != 0)
 
 	test	ebx, ebx
-	je	$L101046
+	je	$L101047
 
 ; 778  : 					{
 ; 779  : 							m_nDir = g_GetDirIndex ( nSrcMpsX, nSrcMpsY, nDesMpsX, nDesMpsY);
 
-	mov	edx, DWORD PTR _nSrcMpsX$101090[esp+48]
-	mov	ecx, DWORD PTR _nDesMpsX$101092[esp+48]
+	mov	edx, DWORD PTR _nSrcMpsX$101091[esp+48]
+	mov	ecx, DWORD PTR _nDesMpsX$101093[esp+48]
 	or	eax, -1
 	cmp	edx, ecx
-	mov	DWORD PTR _nRet$106084[esp+48], eax
-	jne	SHORT $L106085
-	mov	ecx, DWORD PTR _nSrcMpsY$101091[esp+48]
-	mov	edx, DWORD PTR _nDesMpsY$101093[esp+48]
+	mov	DWORD PTR _nRet$106085[esp+48], eax
+	jne	SHORT $L106086
+	mov	ecx, DWORD PTR _nSrcMpsY$101092[esp+48]
+	mov	edx, DWORD PTR _nDesMpsY$101094[esp+48]
 	cmp	ecx, edx
-	je	$L106083
-$L106085:
-	mov	eax, DWORD PTR _nSrcMpsY$101091[esp+48]
-	mov	ecx, DWORD PTR _nDesMpsY$101093[esp+48]
-	mov	edx, DWORD PTR _nDesMpsX$101092[esp+48]
+	je	$L106084
+$L106086:
+	mov	eax, DWORD PTR _nSrcMpsY$101092[esp+48]
+	mov	ecx, DWORD PTR _nDesMpsY$101094[esp+48]
+	mov	edx, DWORD PTR _nDesMpsX$101093[esp+48]
 	sub	eax, ecx
-	mov	ecx, DWORD PTR _nSrcMpsX$101090[esp+48]
+	mov	ecx, DWORD PTR _nSrcMpsX$101091[esp+48]
 	sub	ecx, edx
 	mov	edx, ecx
 	imul	edx, ecx
@@ -6363,70 +6363,70 @@ $L106085:
 	mov	DWORD PTR -8+[esp+48], edx
 	xor	edx, edx
 	fild	DWORD PTR -8+[esp+48]
-	fstp	DWORD PTR _fi$106078[esp+48]
-	mov	eax, DWORD PTR _fi$106078[esp+48]
-	mov	dl, BYTE PTR _fi$106078[esp+50]
+	fstp	DWORD PTR _fi$106079[esp+48]
+	mov	eax, DWORD PTR _fi$106079[esp+48]
+	mov	dl, BYTE PTR _fi$106079[esp+50]
 	shr	eax, 1
 	mov	ecx, DWORD PTR _sqrttable[edx*4]
 	and	eax, 1065353216				; 3f800000H
 	add	ecx, eax
 	mov	eax, DWORD PTR _bias
-	mov	DWORD PTR _fi$106078[esp+48], ecx
-	fld	DWORD PTR _fi$106078[esp+48]
+	mov	DWORD PTR _fi$106079[esp+48], ecx
+	fld	DWORD PTR _fi$106079[esp+48]
 	fadd	DWORD PTR _bias
-	fstp	DWORD PTR _tmp$106082[esp+48]
-	mov	ecx, DWORD PTR _tmp$106082[esp+48]
+	fstp	DWORD PTR _tmp$106083[esp+48]
+	mov	ecx, DWORD PTR _tmp$106083[esp+48]
 	sub	ecx, eax
-	jne	SHORT $L106087
+	jne	SHORT $L106088
 	or	eax, -1
-	jmp	SHORT $L106083
-$L106087:
-	mov	eax, DWORD PTR _nDesMpsY$101093[esp+48]
-	mov	edx, DWORD PTR _nSrcMpsY$101091[esp+48]
+	jmp	SHORT $L106084
+$L106088:
+	mov	eax, DWORD PTR _nDesMpsY$101094[esp+48]
+	mov	edx, DWORD PTR _nSrcMpsY$101092[esp+48]
 	sub	eax, edx
 	shl	eax, 10					; 0000000aH
 	cdq
 	idiv	ecx
 	cmp	eax, 1024				; 00000400H
-	jle	SHORT $L106090
+	jle	SHORT $L106091
 	mov	eax, 1024				; 00000400H
-	jmp	SHORT $L106092
-$L106090:
+	jmp	SHORT $L106093
+$L106091:
 	cmp	eax, -1024				; fffffc00H
-	jge	SHORT $L106092
+	jge	SHORT $L106093
 	mov	eax, -1024				; fffffc00H
-$L106092:
+$L106093:
 	mov	edx, DWORD PTR ?g_nSin@@3PAHA		; g_nSin
 	xor	ecx, ecx
-$L106094:
+$L106095:
 	cmp	eax, DWORD PTR [edx]
-	jg	SHORT $L106101
-	mov	DWORD PTR _nRet$106084[esp+48], ecx
+	jg	SHORT $L106102
+	mov	DWORD PTR _nRet$106085[esp+48], ecx
 	inc	ecx
 	add	edx, 4
 	cmp	ecx, 32					; 00000020H
-	jl	SHORT $L106094
-$L106101:
-	mov	edx, DWORD PTR _nDesMpsX$101092[esp+48]
-	mov	ecx, DWORD PTR _nSrcMpsX$101090[esp+48]
+	jl	SHORT $L106095
+$L106102:
+	mov	edx, DWORD PTR _nDesMpsX$101093[esp+48]
+	mov	ecx, DWORD PTR _nSrcMpsX$101091[esp+48]
 	sub	edx, ecx
 	test	edx, edx
-	jle	SHORT $L106111
-	mov	ecx, DWORD PTR _nRet$106084[esp+48]
+	jle	SHORT $L106112
+	mov	ecx, DWORD PTR _nRet$106085[esp+48]
 	mov	eax, 63					; 0000003fH
 	sub	eax, ecx
-	jmp	SHORT $L106083
-$L106111:
-	mov	eax, DWORD PTR _nRet$106084[esp+48]
-$L106083:
+	jmp	SHORT $L106084
+$L106112:
+	mov	eax, DWORD PTR _nRet$106085[esp+48]
+$L106084:
 
 ; 780  : 							int nXFactor = ((nDesMpsX - nSrcMpsX ) << 10) / nDistance;
 ; 781  : 							int nYFactor = ((nDesMpsY - nSrcMpsY ) << 10) / nDistance;
 ; 782  : 							m_nXFactor		 = nXFactor;
 
-	mov	edx, DWORD PTR _nSrcMpsX$101090[esp+48]
+	mov	edx, DWORD PTR _nSrcMpsX$101091[esp+48]
 	mov	DWORD PTR [esi+424], eax
-	mov	eax, DWORD PTR _nDesMpsX$101092[esp+48]
+	mov	eax, DWORD PTR _nDesMpsX$101093[esp+48]
 	sub	eax, edx
 	shl	eax, 10					; 0000000aH
 	cdq
@@ -6434,15 +6434,15 @@ $L106083:
 
 ; 783  : 							m_nYFactor		 = nYFactor;	
 
-	mov	edx, DWORD PTR _nSrcMpsY$101091[esp+48]
+	mov	edx, DWORD PTR _nSrcMpsY$101092[esp+48]
 	mov	DWORD PTR [esi+312], eax
-	mov	eax, DWORD PTR _nDesMpsY$101093[esp+48]
+	mov	eax, DWORD PTR _nDesMpsY$101094[esp+48]
 	sub	eax, edx
 	shl	eax, 10					; 0000000aH
 	cdq
 	idiv	ebx
 	mov	DWORD PTR [esi+316], eax
-$L101046:
+$L101047:
 
 ; 784  : 					}
 ; 785  : 					
@@ -6478,7 +6478,7 @@ $L101046:
 	mov	ecx, DWORD PTR [esi+316]
 	imul	eax, edx
 	imul	ecx, edx
-$L101105:
+$L101106:
 
 ; 810  : 			nDOffsetX	=  dx;//* m_nCurrentLife;
 ; 811  : 			nDOffsetY	=  dy;//* m_nCurrentLife;
@@ -6499,7 +6499,7 @@ $L101105:
 	mov	ecx, esi
 	call	?CheckBeyondRegion@KMissle@@AAEHHH@Z	; KMissle::CheckBeyondRegion
 	test	eax, eax
-	je	SHORT $L101107
+	je	SHORT $L101108
 
 ; 823  : 	{
 ; 824  : 		if (CheckCollision() == -1) 
@@ -6507,7 +6507,7 @@ $L101105:
 	mov	ecx, esi
 	call	?CheckCollision@KMissle@@AAEHXZ		; KMissle::CheckCollision
 	cmp	eax, -1
-	jne	SHORT $L101112
+	jne	SHORT $L101113
 
 ; 825  : 		{
 ; 826  : 			if (m_bAutoExplode)
@@ -6515,14 +6515,14 @@ $L101105:
 	mov	eax, DWORD PTR [esi+112]
 	xor	ebx, ebx
 	cmp	eax, ebx
-	je	SHORT $L101109
+	je	SHORT $L101110
 
 ; 827  : 			{
 ; 828  : 				ProcessCollision();//处理碰撞
 
 	mov	ecx, esi
 	call	?ProcessCollision@KMissle@@AAEHXZ	; KMissle::ProcessCollision
-$L101109:
+$L101110:
 
 ; 829  : 			}
 ; 830  : #ifndef _SERVER 
@@ -6531,8 +6531,8 @@ $L101109:
 ; 833  : 			SubWorld[0].Map2Mps(m_nRegionId, m_nCurrentMapX, m_nCurrentMapY,m_nXOffset, m_nYOffset, &nSrcX4, &nSrcY4);
 
 	mov	edx, DWORD PTR [esi+232]
-	lea	eax, DWORD PTR _nSrcY4$101111[esp+48]
-	lea	ecx, DWORD PTR _nSrcX4$101110[esp+48]
+	lea	eax, DWORD PTR _nSrcY4$101112[esp+48]
+	lea	ecx, DWORD PTR _nSrcX4$101111[esp+48]
 	push	eax
 	mov	eax, DWORD PTR [esi+228]
 	push	ecx
@@ -6545,25 +6545,25 @@ $L101109:
 	push	edx
 	push	eax
 	mov	ecx, OFFSET FLAT:?SubWorld@@3PAVKSubWorld@@A
-	mov	DWORD PTR _nSrcX4$101110[esp+76], ebx
-	mov	DWORD PTR _nSrcY4$101111[esp+76], ebx
+	mov	DWORD PTR _nSrcX4$101111[esp+76], ebx
+	mov	DWORD PTR _nSrcY4$101112[esp+76], ebx
 	call	?Map2Mps@KSubWorld@@QAEXHHHHHPAH0@Z	; KSubWorld::Map2Mps
 
 ; 834  : 			CreateSpecialEffect(MS_DoVanish, nSrcX4, nSrcY4, m_nCurrentMapZ);
 
 	mov	ecx, DWORD PTR [esi+224]
-	mov	edx, DWORD PTR _nSrcY4$101111[esp+48]
-	mov	eax, DWORD PTR _nSrcX4$101110[esp+48]
+	mov	edx, DWORD PTR _nSrcY4$101112[esp+48]
+	mov	eax, DWORD PTR _nSrcX4$101111[esp+48]
 	push	ebx
 	push	ecx
 	push	edx
-$L106115:
+$L106116:
 	push	eax
-$L106114:
+$L106115:
 	push	2
 	mov	ecx, esi
 	call	?CreateSpecialEffect@KMissle@@QAEHW4eMissleStatus@@HHHH@Z ; KMissle::CreateSpecialEffect
-$L101107:
+$L101108:
 
 ; 835  : #endif
 ; 836  : 			DoVanish();
@@ -6576,7 +6576,7 @@ $L101107:
 
 	mov	ecx, esi
 	call	?DoVanish@KMissle@@AAEXXZ		; KMissle::DoVanish
-$L101112:
+$L101113:
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -6588,14 +6588,14 @@ $L101112:
 	add	esp, 32					; 00000020H
 	ret	0
 	npad	2
-$L106117:
-	DD	$L101046
-	DD	$L101052
-	DD	$L101074
-	DD	$L101088
+$L106118:
 	DD	$L101047
-	DD	$L101105
-$L106116:
+	DD	$L101053
+	DD	$L101075
+	DD	$L101089
+	DD	$L101048
+	DD	$L101106
+$L106117:
 	DB	0
 	DB	5
 	DB	1
@@ -6728,7 +6728,7 @@ _nParam3$ = 20
 	call	??2@YAPAXI@Z				; operator new
 	add	esp, 4
 	test	eax, eax
-	je	SHORT $L106149
+	je	SHORT $L106150
 
 ; 77   : 
 ; 78   : 	pNode->m_dwMsgType	= dwMsgType;
@@ -6760,13 +6760,13 @@ _nParam3$ = 20
 	mov	DWORD PTR [eax+24], edx
 	mov	edx, DWORD PTR [ecx+8]
 	test	edx, edx
-	je	SHORT $L106148
+	je	SHORT $L106149
 	mov	DWORD PTR [eax+8], edx
 	mov	DWORD PTR [eax+4], ecx
 	mov	edx, DWORD PTR [ecx+8]
 	mov	DWORD PTR [edx+4], eax
 	mov	DWORD PTR [ecx+8], eax
-$L106148:
+$L106149:
 
 ; 84   : 	return TRUE;
 
@@ -6776,7 +6776,7 @@ $L106148:
 ; 85   : }
 
 	ret	16					; 00000010H
-$L106149:
+$L106150:
 
 ; 75   : 	if (!pNode)
 ; 76   : 		return FALSE;
@@ -6798,11 +6798,11 @@ ___flags$ = 8
 	mov	esi, ecx
 	call	??1KWorldMsgNode@@UAE@XZ		; KWorldMsgNode::~KWorldMsgNode
 	test	BYTE PTR ___flags$[esp], 1
-	je	SHORT $L106153
+	je	SHORT $L106154
 	push	esi
 	call	??3@YAXPAX@Z				; operator delete
 	add	esp, 4
-$L106153:
+$L106154:
 	mov	eax, esi
 	pop	esi
 	ret	4
@@ -6829,8 +6829,8 @@ PUBLIC	?Paint@KMissle@@QAEXXZ				; KMissle::Paint
 EXTRN	?Draw@KMissleRes@@QAEHHHHHHHH@Z:NEAR		; KMissleRes::Draw
 ;	COMDAT ?Paint@KMissle@@QAEXXZ
 _TEXT	SEGMENT
-_fi$106215 = -8
-_tmp$106219 = -8
+_fi$106216 = -8
+_tmp$106220 = -8
 _nSrcX$ = -12
 _nSrcY$ = -16
 ?Paint@KMissle@@QAEXXZ PROC NEAR			; KMissle::Paint, COMDAT
@@ -6846,7 +6846,7 @@ _nSrcY$ = -16
 
 	mov	eax, DWORD PTR [esi+356]
 	test	eax, eax
-	jle	$L101126
+	jle	$L101127
 
 ; 861  : 	int nSrcX;
 ; 862  : 	int nSrcY;
@@ -6874,7 +6874,7 @@ _nSrcY$ = -16
 
 	mov	eax, DWORD PTR [esi+348]
 	test	eax, eax
-	jne	SHORT $L101122
+	jne	SHORT $L101123
 
 ; 866  : 	{
 ; 867  : 		m_MissleRes.Draw(m_eMissleStatus, nSrcX, nSrcY, m_nCurrentMapZ, m_nDir,m_nLifeTime - m_nStartLifeTime,  m_nCurrentLife - m_nStartLifeTime );
@@ -6903,8 +6903,8 @@ _nSrcY$ = -16
 ; 868  : 	}
 ; 869  : 	else
 
-	jmp	$L101123
-$L101122:
+	jmp	$L101124
+$L101123:
 
 ; 870  : 	{
 ; 871  : 		int nDirIndex = g_GetDirIndex(0,0,m_nXFactor, m_nYFactor);
@@ -6914,12 +6914,12 @@ $L101122:
 	mov	ebx, DWORD PTR [esi+312]
 	or	edi, -1
 	test	ebx, ebx
-	jne	SHORT $L106222
+	jne	SHORT $L106223
 	test	eax, eax
-	jne	SHORT $L106222
+	jne	SHORT $L106223
 	or	eax, -1
-	jmp	$L106220
-$L106222:
+	jmp	$L106221
+$L106223:
 	mov	edx, ebx
 	mov	ecx, eax
 	imul	edx, ebx
@@ -6928,55 +6928,55 @@ $L106222:
 	mov	DWORD PTR -8+[esp+28], edx
 	xor	edx, edx
 	fild	DWORD PTR -8+[esp+28]
-	fstp	DWORD PTR _fi$106215[esp+28]
-	mov	ecx, DWORD PTR _fi$106215[esp+28]
-	mov	dl, BYTE PTR _fi$106215[esp+30]
+	fstp	DWORD PTR _fi$106216[esp+28]
+	mov	ecx, DWORD PTR _fi$106216[esp+28]
+	mov	dl, BYTE PTR _fi$106216[esp+30]
 	shr	ecx, 1
 	mov	edx, DWORD PTR _sqrttable[edx*4]
 	and	ecx, 1065353216				; 3f800000H
 	add	edx, ecx
-	mov	DWORD PTR _fi$106215[esp+28], edx
+	mov	DWORD PTR _fi$106216[esp+28], edx
 	mov	edx, DWORD PTR _bias
-	fld	DWORD PTR _fi$106215[esp+28]
+	fld	DWORD PTR _fi$106216[esp+28]
 	fadd	DWORD PTR _bias
-	fstp	DWORD PTR _tmp$106219[esp+28]
-	mov	ecx, DWORD PTR _tmp$106219[esp+28]
+	fstp	DWORD PTR _tmp$106220[esp+28]
+	mov	ecx, DWORD PTR _tmp$106220[esp+28]
 	sub	ecx, edx
-	jne	SHORT $L106224
+	jne	SHORT $L106225
 	or	eax, -1
-	jmp	SHORT $L106220
-$L106224:
+	jmp	SHORT $L106221
+$L106225:
 	shl	eax, 10					; 0000000aH
 	cdq
 	idiv	ecx
 	cmp	eax, 1024				; 00000400H
-	jle	SHORT $L106227
+	jle	SHORT $L106228
 	mov	eax, 1024				; 00000400H
-	jmp	SHORT $L106229
-$L106227:
+	jmp	SHORT $L106230
+$L106228:
 	cmp	eax, -1024				; fffffc00H
-	jge	SHORT $L106229
+	jge	SHORT $L106230
 	mov	eax, -1024				; fffffc00H
-$L106229:
+$L106230:
 	mov	edx, DWORD PTR ?g_nSin@@3PAHA		; g_nSin
 	xor	ecx, ecx
-$L106231:
+$L106232:
 	cmp	eax, DWORD PTR [edx]
-	jg	SHORT $L106267
+	jg	SHORT $L106268
 	mov	edi, ecx
 	inc	ecx
 	add	edx, 4
 	cmp	ecx, 32					; 00000020H
-	jl	SHORT $L106231
-$L106267:
+	jl	SHORT $L106232
+$L106268:
 	test	ebx, ebx
-	jle	SHORT $L106235
+	jle	SHORT $L106236
 	mov	eax, 63					; 0000003fH
 	sub	eax, edi
 	mov	edi, eax
-$L106235:
+$L106236:
 	mov	eax, edi
-$L106220:
+$L106221:
 
 ; 872  : 		int nDir = g_DirIndex2Dir(nDirIndex, 64);
 ; 873  : 		m_MissleRes.Draw(m_eMissleStatus, nSrcX, nSrcY, m_nCurrentMapZ, nDir,m_nLifeTime - m_nStartLifeTime,  m_nCurrentLife - m_nStartLifeTime );
@@ -7003,7 +7003,7 @@ $L106220:
 	mov	ecx, edi
 	call	?Draw@KMissleRes@@QAEHHHHHHHH@Z		; KMissleRes::Draw
 	pop	ebx
-$L101123:
+$L101124:
 
 ; 874  : 	}
 ; 875  : 	
@@ -7012,14 +7012,14 @@ $L101123:
 
 	mov	eax, DWORD PTR [esi+496]
 	test	eax, eax
-	je	SHORT $L101126
+	je	SHORT $L101127
 	mov	edi, DWORD PTR [edi+4]
 	mov	eax, DWORD PTR [edi+4]
 	test	eax, eax
-	je	SHORT $L106263
+	je	SHORT $L106264
 	test	edi, edi
-	jne	SHORT $L101126
-$L106263:
+	jne	SHORT $L101127
+$L106264:
 
 ; 878  : 		SubWorld[m_nSubWorldId].m_WorldMessage.Send(GWM_MISSLE_DEL, m_nMissleId);
 
@@ -7034,7 +7034,7 @@ $L106263:
 	push	4001					; 00000fa1H
 	lea	ecx, DWORD PTR ?SubWorld@@3PAVKSubWorld@@A[edx*4+204]
 	call	?Send@KWorldMsg@@QAEHKHHH@Z		; KWorldMsg::Send
-$L101126:
+$L101127:
 	pop	edi
 	pop	esi
 
@@ -7066,7 +7066,7 @@ _nNewMapY$ = 8
 
 	mov	edi, DWORD PTR [esi+364]
 	test	edi, edi
-	jge	SHORT $L101132
+	jge	SHORT $L101133
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -7080,7 +7080,7 @@ _nNewMapY$ = 8
 
 	pop	ecx
 	ret	8
-$L101132:
+$L101133:
 
 ; 887  : 	//未动
 ; 888  : 	if (nDOffsetX == 0 && nDOffsetY == 0) return TRUE;
@@ -7088,10 +7088,10 @@ $L101132:
 	mov	ecx, DWORD PTR _nDOffsetX$[esp+16]
 	mov	ebp, DWORD PTR _nDOffsetY$[esp+16]
 	test	ecx, ecx
-	jne	SHORT $L101133
+	jne	SHORT $L101134
 	test	ebp, ebp
-	je	$L101163
-$L101133:
+	je	$L101164
+$L101134:
 
 ; 889  : 
 ; 890  : 	if (abs(nDOffsetX) > CellWidth) 
@@ -7101,7 +7101,7 @@ $L101133:
 	xor	eax, edx
 	sub	eax, edx
 	cmp	eax, 32768				; 00008000H
-	jle	SHORT $L101134
+	jle	SHORT $L101135
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -7116,7 +7116,7 @@ $L101133:
 
 	pop	ecx
 	ret	8
-$L101134:
+$L101135:
 
 ; 893  : 	}
 ; 894  : 
@@ -7127,7 +7127,7 @@ $L101134:
 	xor	eax, edx
 	sub	eax, edx
 	cmp	eax, 32768				; 00008000H
-	jle	SHORT $L101135
+	jle	SHORT $L101136
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -7142,7 +7142,7 @@ $L101134:
 
 	pop	ecx
 	ret	8
-$L101135:
+$L101136:
 
 ; 898  : 	}
 ; 899  : 
@@ -7180,7 +7180,7 @@ $L101135:
 	mov	DWORD PTR _nOldRegion$[esp+20], edi
 	mov	DWORD PTR _nNewYOffset$[esp+16], eax
 	mov	DWORD PTR _nNewMapY$[esp+16], ecx
-	jge	SHORT $L101146
+	jge	SHORT $L101147
 
 ; 917  : 	{
 ; 918  : 		nNewMapX--;
@@ -7194,10 +7194,10 @@ $L101135:
 ; 920  : 	}
 ; 921  : 	else if (nNewXOffset > CellWidth)
 
-	jmp	SHORT $L101148
-$L101146:
+	jmp	SHORT $L101149
+$L101147:
 	cmp	ebx, 32768				; 00008000H
-	jle	SHORT $L101148
+	jle	SHORT $L101149
 
 ; 922  : 	{
 ; 923  : 		nNewMapX++;
@@ -7207,14 +7207,14 @@ $L101146:
 ; 924  : 		nNewXOffset -= CellWidth;
 
 	sub	ebx, 32768				; 00008000H
-$L101148:
+$L101149:
 
 ; 925  : 	}
 ; 926  : 	
 ; 927  : 	if (nNewYOffset < 0)
 
 	test	eax, eax
-	jge	SHORT $L101149
+	jge	SHORT $L101150
 
 ; 928  : 	{
 ; 929  : 		nNewMapY--;
@@ -7229,10 +7229,10 @@ $L101148:
 ; 931  : 	}
 ; 932  : 	else if (nNewYOffset > CellHeight)
 
-	jmp	SHORT $L106274
-$L101149:
+	jmp	SHORT $L106275
+$L101150:
 	cmp	eax, 32768				; 00008000H
-	jle	SHORT $L101151
+	jle	SHORT $L101152
 
 ; 933  : 	{
 ; 934  : 		nNewMapY++;
@@ -7243,16 +7243,16 @@ $L101149:
 
 	sub	eax, 32768				; 00008000H
 	mov	DWORD PTR _nNewMapY$[esp+16], ecx
-$L106274:
+$L106275:
 	mov	DWORD PTR _nNewYOffset$[esp+16], eax
-$L101151:
+$L101152:
 
 ; 936  : 	}
 ; 937  : 	
 ; 938  : 	if (nNewMapX < 0)
 
 	test	ebp, ebp
-	jge	SHORT $L101152
+	jge	SHORT $L101153
 
 ; 939  : 	{
 ; 940  : 		nNewRegion = LeftRegion(m_nRegionId);
@@ -7275,10 +7275,10 @@ $L101151:
 ; 942  : 	}
 ; 943  : 	else if ((DWORD)nNewMapX >= nRegionWidth)
 
-	jmp	SHORT $L101155
-$L101152:
+	jmp	SHORT $L101156
+$L101153:
 	cmp	ebp, 16					; 00000010H
-	jb	SHORT $L101155
+	jb	SHORT $L101156
 
 ; 944  : 	{
 ; 945  : 		nNewRegion = RightRegion(m_nRegionId);
@@ -7297,14 +7297,14 @@ $L101152:
 
 	sub	ebp, 16					; 00000010H
 	mov	edi, DWORD PTR [edx+eax+128]
-$L101155:
+$L101156:
 
 ; 947  : 	}
 ; 948  : 
 ; 949  : 	if (nNewRegion < 0) 
 
 	test	edi, edi
-	jge	SHORT $L101156
+	jge	SHORT $L101157
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -7319,14 +7319,14 @@ $L101155:
 
 	pop	ecx
 	ret	8
-$L101156:
+$L101157:
 
 ; 952  : 	}
 ; 953  : 	
 ; 954  : 	if (nNewMapY < 0)
 
 	test	ecx, ecx
-	jge	SHORT $L101157
+	jge	SHORT $L101158
 
 ; 955  : 	{
 ; 956  : 		nNewRegion = UpRegion(nNewRegion);
@@ -7348,10 +7348,10 @@ $L101156:
 ; 958  : 	}
 ; 959  : 	else if (nNewMapY >= RegionHeight)
 
-	jmp	SHORT $L106275
-$L101157:
+	jmp	SHORT $L106276
+$L101158:
 	cmp	ecx, 32					; 00000020H
-	jl	SHORT $L101159
+	jl	SHORT $L101160
 
 ; 960  : 	{
 ; 961  : 		nNewRegion = DownRegion(nNewRegion);
@@ -7369,9 +7369,9 @@ $L101157:
 
 	sub	ecx, 32					; 00000020H
 	mov	edi, DWORD PTR [edx+eax+104]
-$L106275:
+$L106276:
 	mov	DWORD PTR _nNewMapY$[esp+16], ecx
-$L101159:
+$L101160:
 
 ; 963  : 	}
 ; 964  : 	
@@ -7379,7 +7379,7 @@ $L101159:
 ; 966  : 	if (nNewRegion < 0) 
 
 	test	edi, edi
-	jge	SHORT $L101160
+	jge	SHORT $L101161
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -7394,7 +7394,7 @@ $L101159:
 
 	pop	ecx
 	ret	8
-$L101160:
+$L101161:
 
 ; 969  : 	}
 ; 970  : 	else
@@ -7456,7 +7456,7 @@ $L101160:
 	mov	eax, DWORD PTR [esi+364]
 	mov	ecx, DWORD PTR _nOldRegion$[esp+20]
 	cmp	ecx, eax
-	je	SHORT $L101163
+	je	SHORT $L101164
 
 ; 983  : 		{
 ; 984  : 			SubWorld[m_nSubWorldId].m_WorldMessage.Send(GWM_MISSLE_CHANGE_REGION, nOldRegion, m_nRegionId, m_nMissleId);
@@ -7472,7 +7472,7 @@ $L101160:
 	push	4002					; 00000fa2H
 	lea	ecx, DWORD PTR ?SubWorld@@3PAVKSubWorld@@A[eax*4+204]
 	call	?Send@KWorldMsg@@QAEHKHHH@Z		; KWorldMsg::Send
-$L101163:
+$L101164:
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -7686,7 +7686,7 @@ _Missle$ = 8
 	mov	ecx, DWORD PTR [ebp+448]
 	xor	eax, eax
 	cmp	ecx, edx
-	je	SHORT $L101170
+	je	SHORT $L101171
 
 ; 1041 : 	{
 ; 1042 : 		if (g_Random(2) == 0)
@@ -7697,7 +7697,7 @@ _Missle$ = 8
 	neg	eax
 	sbb	eax, eax
 	and	eax, 4
-$L101170:
+$L101171:
 
 ; 1043 : 		{
 ; 1044 : 			nOffset = 0;
@@ -7716,7 +7716,7 @@ $L101170:
 	shl	edx, 1
 	sub	edx, eax
 	lea	edx, DWORD PTR [ebp+edx*4+604]
-$L101173:
+$L101174:
 
 ; 1051 : 	{
 ; 1052 : 		strcpy(Missle.m_MissleRes.m_MissleRes[t].AnimFileName,m_MissleRes.m_MissleRes[t + nOffset].AnimFileName);
@@ -7778,7 +7778,7 @@ $L101173:
 	dec	eax
 	mov	DWORD PTR 8+[esp+20], ecx
 	mov	DWORD PTR -8+[esp+24], eax
-	jne	$L101173
+	jne	$L101174
 
 ; 1059 : 	}
 ; 1060 : 	Missle.m_MissleRes.m_bSubLoop = m_MissleRes.m_bSubLoop;
@@ -7989,7 +7989,7 @@ _TEXT	SEGMENT
 ; 1232 : 	if (m_eMissleStatus == MS_DoVanish) return ;
 
 	cmp	DWORD PTR [esi+352], 2
-	je	$L101189
+	je	$L101190
 
 ; 1233 : 	
 ; 1234 : #ifndef _SERVER
@@ -8005,7 +8005,7 @@ _TEXT	SEGMENT
 
 	mov	eax, DWORD PTR [esi+192]
 	test	eax, eax
-	je	SHORT $L101188
+	je	SHORT $L101189
 
 ; 1239 : 	{
 ; 1240 : 		_ASSERT(m_nSkillId < MAX_SKILL && m_nLevel < MAX_SKILLLEVEL);
@@ -8014,32 +8014,32 @@ _TEXT	SEGMENT
 	mov	eax, DWORD PTR [esi+100]
 	mov	ecx, DWORD PTR [esi+320]
 	cmp	eax, 2000				; 000007d0H
-	jg	SHORT $L101188
+	jg	SHORT $L101189
 	test	eax, eax
-	jle	SHORT $L101188
+	jle	SHORT $L101189
 	test	ecx, ecx
-	jle	SHORT $L101188
+	jle	SHORT $L101189
 	cmp	ecx, 64					; 00000040H
-	jg	SHORT $L101188
+	jg	SHORT $L101189
 	mov	edx, eax
 	shl	edx, 6
 	add	edx, ecx
 	mov	edx, DWORD PTR ?g_SkillManager@@3VKSkillManager@@A[edx*4+31740]
 	test	edx, edx
-	je	SHORT $L106294
+	je	SHORT $L106295
 	mov	eax, edx
-	jmp	SHORT $L106289
-$L106294:
+	jmp	SHORT $L106290
+$L106295:
 	push	ecx
 	push	eax
 	mov	ecx, OFFSET FLAT:?g_SkillManager@@3VKSkillManager@@A
 	call	?InstanceSkill@KSkillManager@@AAEPAVISkill@@KK@Z ; KSkillManager::InstanceSkill
-$L106289:
+$L106290:
 
 ; 1242 : 		if (pOrdinSkill)
 
 	test	eax, eax
-	je	SHORT $L101188
+	je	SHORT $L101189
 
 ; 1243 :         {
 ; 1244 : 			pOrdinSkill->Vanish(this);
@@ -8047,7 +8047,7 @@ $L106289:
 	push	esi
 	mov	ecx, eax
 	call	?Vanish@KSkill@@ABEXPAVKMissle@@@Z	; KSkill::Vanish
-$L101188:
+$L101189:
 
 ; 1245 :         }
 ; 1246 : 	}
@@ -8063,14 +8063,14 @@ $L101188:
 	mov	eax, DWORD PTR [esi+364]
 	mov	DWORD PTR [esi+352], 2
 	test	eax, eax
-	jge	SHORT $L101189
+	jge	SHORT $L101190
 
 ; 1255 : 	{
 ; 1256 : 		_ASSERT(0);
 ; 1257 : 		m_bRemoving = TRUE;
 
 	mov	DWORD PTR [esi+68], 1
-$L101189:
+$L101190:
 	pop	esi
 
 ; 1258 : 		return ;
@@ -8085,8 +8085,8 @@ _TEXT	ENDS
 _TEXT	SEGMENT
 _nSrcX$ = -4
 _nSrcY$ = -8
-_nSrcX5$101203 = -12
-_nSrcY5$101204 = -16
+_nSrcX5$101204 = -12
+_nSrcY5$101205 = -16
 ?DoCollision@KMissle@@AAEXXZ PROC NEAR			; KMissle::DoCollision, COMDAT
 
 ; 1264 : {
@@ -8099,7 +8099,7 @@ _nSrcY5$101204 = -16
 ; 1265 : 	if (m_eMissleStatus == MS_DoCollision) return;
 
 	cmp	DWORD PTR [esi+352], 3
-	je	$L101205
+	je	$L101206
 
 ; 1266 : 	
 ; 1267 : #ifndef _SERVER
@@ -8132,7 +8132,7 @@ _nSrcY5$101204 = -16
 ; 1273 : 	if (m_bCollideEvent)	
 
 	cmp	DWORD PTR [esi+188], edi
-	je	SHORT $L101201
+	je	SHORT $L101202
 
 ; 1274 : 	{
 ; 1275 : 		_ASSERT(m_nSkillId < MAX_SKILL && m_nLevel < MAX_SKILLLEVEL);
@@ -8141,32 +8141,32 @@ _nSrcY5$101204 = -16
 	mov	eax, DWORD PTR [esi+100]
 	mov	ecx, DWORD PTR [esi+320]
 	cmp	eax, 2000				; 000007d0H
-	jg	SHORT $L101201
+	jg	SHORT $L101202
 	cmp	eax, edi
-	jle	SHORT $L101201
+	jle	SHORT $L101202
 	cmp	ecx, edi
-	jle	SHORT $L101201
+	jle	SHORT $L101202
 	cmp	ecx, 64					; 00000040H
-	jg	SHORT $L101201
+	jg	SHORT $L101202
 	mov	edx, eax
 	shl	edx, 6
 	add	edx, ecx
 	mov	edx, DWORD PTR ?g_SkillManager@@3VKSkillManager@@A[edx*4+31740]
 	cmp	edx, edi
-	je	SHORT $L106307
+	je	SHORT $L106308
 	mov	eax, edx
-	jmp	SHORT $L106302
-$L106307:
+	jmp	SHORT $L106303
+$L106308:
 	push	ecx
 	push	eax
 	mov	ecx, OFFSET FLAT:?g_SkillManager@@3VKSkillManager@@A
 	call	?InstanceSkill@KSkillManager@@AAEPAVISkill@@KK@Z ; KSkillManager::InstanceSkill
-$L106302:
+$L106303:
 
 ; 1277 : 		if (pOrdinSkill)
 
 	cmp	eax, edi
-	je	SHORT $L101201
+	je	SHORT $L101202
 
 ; 1278 :         {
 ; 1279 : 			pOrdinSkill->Collidsion(this);
@@ -8174,7 +8174,7 @@ $L106302:
 	push	esi
 	mov	ecx, eax
 	call	?Collidsion@KSkill@@ABEXPAVKMissle@@@Z	; KSkill::Collidsion
-$L101201:
+$L101202:
 
 ; 1280 :         }
 ; 1281 : 	}
@@ -8182,7 +8182,7 @@ $L101201:
 ; 1283 : 	if (m_bCollideVanish)
 
 	cmp	DWORD PTR [esi+152], edi
-	je	SHORT $L101202
+	je	SHORT $L101203
 
 ; 1284 : 	{
 ; 1285 : #ifndef _SERVER
@@ -8195,8 +8195,8 @@ $L101201:
 ; 1292 : 		SubWorld[0].Map2Mps(m_nRegionId, m_nCurrentMapX, m_nCurrentMapY,m_nXOffset, m_nYOffset, &nSrcX5, &nSrcY5);
 
 	mov	edx, DWORD PTR [esi+232]
-	lea	eax, DWORD PTR _nSrcY5$101204[esp+24]
-	lea	ecx, DWORD PTR _nSrcX5$101203[esp+24]
+	lea	eax, DWORD PTR _nSrcY5$101205[esp+24]
+	lea	ecx, DWORD PTR _nSrcX5$101204[esp+24]
 	push	eax
 	mov	eax, DWORD PTR [esi+228]
 	push	ecx
@@ -8210,15 +8210,15 @@ $L101201:
 	push	eax
 	mov	ecx, OFFSET FLAT:?SubWorld@@3PAVKSubWorld@@A
 	mov	DWORD PTR [esi+496], 1
-	mov	DWORD PTR _nSrcX5$101203[esp+52], edi
-	mov	DWORD PTR _nSrcY5$101204[esp+52], edi
+	mov	DWORD PTR _nSrcX5$101204[esp+52], edi
+	mov	DWORD PTR _nSrcY5$101205[esp+52], edi
 	call	?Map2Mps@KSubWorld@@QAEXHHHHHPAH0@Z	; KSubWorld::Map2Mps
 
 ; 1293 : 		CreateSpecialEffect(MS_DoVanish, nSrcX5, nSrcY5, m_nCurrentMapZ);
 
 	mov	ecx, DWORD PTR [esi+224]
-	mov	edx, DWORD PTR _nSrcY5$101204[esp+24]
-	mov	eax, DWORD PTR _nSrcX5$101203[esp+24]
+	mov	edx, DWORD PTR _nSrcY5$101205[esp+24]
+	mov	eax, DWORD PTR _nSrcX5$101204[esp+24]
 	push	edi
 	push	ecx
 	push	edx
@@ -8241,7 +8241,7 @@ $L101201:
 
 	add	esp, 16					; 00000010H
 	ret	0
-$L101202:
+$L101203:
 
 ; 1297 : 	}
 ; 1298 : 	else 
@@ -8252,10 +8252,10 @@ $L101202:
 
 	mov	eax, DWORD PTR [esi+476]
 	cmp	DWORD PTR [eax+4], edi
-	je	SHORT $L106324
+	je	SHORT $L106325
 	cmp	eax, edi
-	jne	SHORT $L101206
-$L106324:
+	jne	SHORT $L101207
+$L106325:
 
 ; 1303 : 			CreateSpecialEffect(MS_DoCollision, nSrcX, nSrcY, m_nCurrentMapZ);
 
@@ -8269,13 +8269,13 @@ $L106324:
 	push	3
 	mov	ecx, esi
 	call	?CreateSpecialEffect@KMissle@@QAEHW4eMissleStatus@@HHHH@Z ; KMissle::CreateSpecialEffect
-$L101206:
+$L101207:
 
 ; 1304 : #endif
 ; 1305 : 		m_eMissleStatus = MS_DoFly;
 
 	mov	DWORD PTR [esi+352], 1
-$L101205:
+$L101206:
 	pop	edi
 	pop	esi
 
@@ -8295,13 +8295,13 @@ _TEXT	SEGMENT
 	mov	edx, DWORD PTR [ecx+352]
 	mov	eax, 1
 	cmp	edx, eax
-	je	SHORT $L101209
+	je	SHORT $L101210
 
 ; 1312 : 	//初始化贴图
 ; 1313 : 	m_eMissleStatus = MS_DoFly;
 
 	mov	DWORD PTR [ecx+352], eax
-$L101209:
+$L101210:
 
 ; 1314 : }
 
@@ -8351,7 +8351,7 @@ _nDesMapY$ = 40
 
 	mov	ecx, DWORD PTR _nSrcRegionId$[esp+8]
 	test	ecx, ecx
-	jge	SHORT $L101222
+	jge	SHORT $L101223
 	pop	edi
 	pop	esi
 
@@ -8365,7 +8365,7 @@ _nDesMapY$ = 40
 ; 1359 : }
 
 	ret	0
-$L101222:
+$L101223:
 
 ; 1327 : 
 ; 1328 : 	int nSearchRegion = nSrcRegionId;
@@ -8379,7 +8379,7 @@ $L101222:
 	mov	edi, DWORD PTR _nSubWorld$[esp+8]
 	test	edx, edx
 	mov	eax, edi
-	jge	SHORT $L101224
+	jge	SHORT $L101225
 	shl	eax, 6
 	sub	eax, edi
 	lea	edi, DWORD PTR [ecx+ecx*2]
@@ -8398,14 +8398,14 @@ $L101222:
 ; 1333 : 	}
 ; 1334 : 	else if (nDesMapX >= SubWorld[nSubWorld].m_nRegionWidth)
 
-	jmp	SHORT $L101226
-$L101224:
+	jmp	SHORT $L101227
+$L101225:
 	shl	eax, 6
 	sub	eax, edi
 	shl	eax, 2
 	mov	edi, DWORD PTR ?SubWorld@@3PAVKSubWorld@@A[eax+172]
 	cmp	edx, edi
-	jl	SHORT $L101226
+	jl	SHORT $L101227
 	push	ebp
 
 ; 1335 : 	{
@@ -8422,13 +8422,13 @@ $L101224:
 	mov	ecx, DWORD PTR [ecx+ebp+128]
 	mov	DWORD PTR [esi], edx
 	pop	ebp
-$L101226:
+$L101227:
 
 ; 1338 : 	}
 ; 1339 : 	if (nSearchRegion < 0) 
 
 	test	ecx, ecx
-	jge	SHORT $L101227
+	jge	SHORT $L101228
 	pop	edi
 	pop	esi
 
@@ -8442,14 +8442,14 @@ $L101226:
 ; 1359 : }
 
 	ret	0
-$L101227:
+$L101228:
 
 ; 1341 : 	
 ; 1342 : 	if (nDesMapY < 0)
 
 	mov	edx, DWORD PTR [ebx]
 	test	edx, edx
-	jge	SHORT $L101228
+	jge	SHORT $L101229
 
 ; 1343 : 	{
 ; 1344 : 		nSearchRegion = SubWorld[nSubWorld].m_Region[nSearchRegion].m_nConnectRegion[4];
@@ -8469,11 +8469,11 @@ $L101227:
 ; 1346 : 	}
 ; 1347 : 	else if (nDesMapY >= SubWorld[nSubWorld].m_nRegionHeight)
 
-	jmp	SHORT $L101230
-$L101228:
+	jmp	SHORT $L101231
+$L101229:
 	mov	esi, DWORD PTR ?SubWorld@@3PAVKSubWorld@@A[eax+176]
 	cmp	edx, esi
-	jl	SHORT $L101230
+	jl	SHORT $L101231
 
 ; 1348 : 	{
 ; 1349 : 		nSearchRegion = SubWorld[nSubWorld].m_Region[nSearchRegion].m_nConnectRegion[0];
@@ -8488,14 +8488,14 @@ $L101228:
 	sub	edx, esi
 	mov	ecx, DWORD PTR [eax+ecx+104]
 	mov	DWORD PTR [ebx], edx
-$L101230:
+$L101231:
 
 ; 1351 : 	}	
 ; 1352 : 
 ; 1353 : 	if (nSearchRegion < 0) 
 
 	test	ecx, ecx
-	jge	SHORT $L101231
+	jge	SHORT $L101232
 	pop	edi
 	pop	esi
 
@@ -8509,7 +8509,7 @@ $L101230:
 ; 1359 : }
 
 	ret	0
-$L101231:
+$L101232:
 
 ; 1355 : 	nDesRegionId = nSearchRegion;
 
@@ -8544,9 +8544,9 @@ _nRMx$ = -12
 _nRMy$ = -16
 _nSearchRegion$ = -24
 _i$ = -32
-_j$101257 = -20
-_nSrcX$101265 = 24
-_nSrcY$101266 = 8
+_j$101258 = -20
+_nSrcX$101266 = 24
+_nSrcY$101267 = 8
 ?ProcessCollision@KMissle@@AAEHHHHHHH@Z PROC NEAR	; KMissle::ProcessCollision, COMDAT
 
 ; 1375 : {
@@ -8576,7 +8576,7 @@ _nSrcY$101266 = 8
 	mov	ebp, DWORD PTR _nLauncherIdx$[esp+36]
 	mov	ebx, ecx
 	test	ebp, ebp
-	jg	SHORT $L101241
+	jg	SHORT $L101242
 	pop	ebp
 
 ; 1393 : 		return 0;
@@ -8588,13 +8588,13 @@ _nSrcY$101266 = 8
 
 	add	esp, 32					; 00000020H
 	ret	24					; 00000018H
-$L101241:
+$L101242:
 
 ; 1394 : 	if (nRange <= 0) 
 
 	mov	eax, DWORD PTR _nRange$[esp+36]
 	test	eax, eax
-	jg	SHORT $L101242
+	jg	SHORT $L101243
 	pop	ebp
 
 ; 1395 : 		return 0;
@@ -8606,7 +8606,7 @@ $L101241:
 
 	add	esp, 32					; 00000020H
 	ret	24					; 00000018H
-$L101242:
+$L101243:
 
 ; 1396 : 	
 ; 1397 : 	int nRangeX = nRange / 2;
@@ -8649,20 +8649,20 @@ $L101242:
 	cmp	edx, ecx
 	mov	DWORD PTR -4+[esp+44], eax
 	mov	DWORD PTR _i$[esp+44], edx
-	jg	$L101256
+	jg	$L101257
 	push	esi
-$L101254:
+$L101255:
 
 ; 1409 : 	{
 ; 1410 : 		for (int j = -nRangeY; j <= nRangeY; j++)
 
 	cmp	eax, ecx
-	mov	DWORD PTR _j$101257[esp+48], eax
-	jg	$L101255
-	jmp	SHORT $L101258
-$L106348:
+	mov	DWORD PTR _j$101258[esp+48], eax
+	jg	$L101256
+	jmp	SHORT $L101259
+$L106349:
 	mov	edx, DWORD PTR _i$[esp+48]
-$L101258:
+$L101259:
 
 ; 1411 : 		{
 ; 1412 : 			if (!GetOffsetAxis(nSubWorld, nRegionId, nMapX, nMapY, i , j , nSearchRegion, nRMx, nRMy))
@@ -8685,7 +8685,7 @@ $L101258:
 	call	?GetOffsetAxis@KMissle@@SAHHHHHHHAAH00@Z ; KMissle::GetOffsetAxis
 	add	esp, 36					; 00000024H
 	test	eax, eax
-	je	$L101259
+	je	$L101260
 
 ; 1413 : 				continue;
 ; 1414 : 
@@ -8715,7 +8715,7 @@ $L101258:
 ; 1418 : 			if (nNpcIdx > 0)	
 
 	test	esi, esi
-	jle	$L101259
+	jle	$L101260
 
 ; 1419 : 			{	
 ; 1420 : 
@@ -8728,20 +8728,20 @@ $L101258:
 ; 1424 : 				int nSrcY = 0;
 ; 1425 : 				SubWorld[0].Map2Mps(nSearchRegion, Npc[nNpcIdx].m_MapX,Npc[nNpcIdx].m_MapY, Npc[nNpcIdx].m_OffX, Npc[nNpcIdx].m_OffY,  &nSrcX, &nSrcY);
 
-	lea	edx, DWORD PTR _nSrcY$101266[esp+44]
+	lea	edx, DWORD PTR _nSrcY$101267[esp+44]
 	inc	eax
 	push	edx
 	mov	DWORD PTR _nRet$[esp+52], eax
 	xor	eax, eax
-	mov	DWORD PTR _nSrcX$101265[esp+48], eax
-	mov	DWORD PTR _nSrcY$101266[esp+48], eax
+	mov	DWORD PTR _nSrcX$101266[esp+48], eax
+	mov	DWORD PTR _nSrcY$101267[esp+48], eax
 	lea	eax, DWORD PTR [esi+esi*2]
 	shl	eax, 3
 	sub	eax, esi
 	lea	eax, DWORD PTR [eax+eax*2]
 	lea	ecx, DWORD PTR [eax+eax*8]
 	lea	eax, DWORD PTR [esi+ecx*2]
-	lea	ecx, DWORD PTR _nSrcX$101265[esp+48]
+	lea	ecx, DWORD PTR _nSrcX$101266[esp+48]
 	shl	eax, 5
 	push	ecx
 	mov	edx, DWORD PTR ?Npc@@3PAVKNpc@@A[eax+3128]
@@ -8762,7 +8762,7 @@ $L101258:
 
 	mov	eax, DWORD PTR [ebx+452]
 	test	eax, eax
-	je	SHORT $L101267
+	je	SHORT $L101268
 
 ; 1428 : 					CreateSpecialEffect(MS_DoCollision, nSrcX, nSrcY, m_nCurrentMapZ, nNpcIdx);
 
@@ -8770,38 +8770,38 @@ $L101258:
 
 ; 1429 : 				else 
 
-	jmp	SHORT $L106350
-$L101267:
+	jmp	SHORT $L106351
+$L101268:
 
 ; 1430 : 					CreateSpecialEffect(MS_DoCollision, nSrcX, nSrcY, m_nCurrentMapZ);
 
 	push	0
-$L106350:
+$L106351:
 	mov	edx, DWORD PTR [ebx+224]
-	mov	eax, DWORD PTR _nSrcY$101266[esp+48]
-	mov	ecx, DWORD PTR _nSrcX$101265[esp+48]
+	mov	eax, DWORD PTR _nSrcY$101267[esp+48]
+	mov	ecx, DWORD PTR _nSrcX$101266[esp+48]
 	push	edx
 	push	eax
 	push	ecx
 	push	3
 	mov	ecx, ebx
 	call	?CreateSpecialEffect@KMissle@@QAEHW4eMissleStatus@@HHHH@Z ; KMissle::CreateSpecialEffect
-$L101259:
-	mov	eax, DWORD PTR _j$101257[esp+48]
+$L101260:
+	mov	eax, DWORD PTR _j$101258[esp+48]
 	mov	ecx, DWORD PTR _nRangeX$[esp+48]
 	inc	eax
 	cmp	eax, ecx
-	mov	DWORD PTR _j$101257[esp+48], eax
-	jle	$L106348
+	mov	DWORD PTR _j$101258[esp+48], eax
+	jle	$L106349
 	mov	eax, DWORD PTR -4+[esp+48]
 	mov	edx, DWORD PTR _i$[esp+48]
-$L101255:
+$L101256:
 	inc	edx
 	cmp	edx, ecx
 	mov	DWORD PTR _i$[esp+48], edx
-	jle	$L101254
+	jle	$L101255
 	pop	esi
-$L101256:
+$L101257:
 
 ; 1431 : #else
 ; 1432 : 				ProcessDamage(nNpcIdx);	
@@ -8839,13 +8839,13 @@ _TEXT	SEGMENT
 
 	mov	eax, DWORD PTR [ecx+64]
 	test	eax, eax
-	je	SHORT $L101272
+	je	SHORT $L101273
 	xor	eax, eax
 
 ; 1454 : }
 
 	ret	0
-$L101272:
+$L101273:
 
 ; 1453 : 	return ProcessCollision(m_nLauncher, m_nRegionId, m_nCurrentMapX, m_nCurrentMapY, m_nDamageRange , m_eRelation);
 
@@ -8881,18 +8881,18 @@ CONST	SEGMENT
 CONST	ENDS
 ;	COMDAT xdata$x
 xdata$x	SEGMENT
-$T106419 DD	019930520H
+$T106420 DD	019930520H
 	DD	01H
-	DD	FLAT:$T106424
+	DD	FLAT:$T106425
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	ORG $+4
-$T106424 DD	0ffffffffH
-	DD	FLAT:$L106366
+$T106425 DD	0ffffffffH
+	DD	FLAT:$L106367
 xdata$x	ENDS
 ;	COMDAT ?CreateSpecialEffect@KMissle@@QAEHW4eMissleStatus@@HHHH@Z
 _TEXT	SEGMENT
-$T106362 = 24
+$T106363 = 24
 _eStatus$ = 8
 _nPX$ = 12
 _nPY$ = 16
@@ -8905,7 +8905,7 @@ __$EHRec$ = -12
 ; 1460 : {
 
 	push	-1
-	push	$L106423
+	push	$L106424
 	mov	eax, DWORD PTR fs:__except_list
 	push	eax
 	mov	DWORD PTR fs:__except_list, esp
@@ -8925,7 +8925,7 @@ __$EHRec$ = -12
 	cmp	esi, ebp
 	push	edi
 	mov	DWORD PTR _this$[esp+32], ebx
-	jle	SHORT $L101287
+	jle	SHORT $L101288
 
 ; 1465 : 	{
 ; 1466 : 		pNode = (KSkillSpecialNode*)m_MissleRes.m_SkillSpecialList.GetHead();
@@ -8939,7 +8939,7 @@ __$EHRec$ = -12
 ; 1467 : 		while(pNode)
 
 	cmp	eax, ebp
-	je	SHORT $L101287
+	je	SHORT $L101288
 
 ; 1468 : 		{
 ; 1469 : 			if (pNode->m_pSkillSpecial->m_dwMatchID == Npc[nNpcIndex].m_dwID) return FALSE;
@@ -8952,22 +8952,22 @@ __$EHRec$ = -12
 	lea	edx, DWORD PTR [esi+ecx*2]
 	shl	edx, 5
 	mov	ecx, DWORD PTR ?Npc@@3PAVKNpc@@A[edx]
-$L101286:
+$L101287:
 	mov	edx, DWORD PTR [eax+12]
 	cmp	DWORD PTR [edx+44], ecx
-	je	SHORT $L106421
+	je	SHORT $L106422
 
 ; 1470 : 			pNode = (KSkillSpecialNode*)pNode->GetNext();
 
 	mov	eax, DWORD PTR [eax+4]
 	cmp	DWORD PTR [eax+4], ebp
-	je	SHORT $L101287
+	je	SHORT $L101288
 
 ; 1467 : 		while(pNode)
 
 	cmp	eax, ebp
-	jne	SHORT $L101286
-$L101287:
+	jne	SHORT $L101287
+$L101288:
 
 ; 1471 : 		}
 ; 1472 : 	}
@@ -8993,11 +8993,11 @@ $L101287:
 	mov	al, BYTE PTR [ebx+504]
 	lea	edi, DWORD PTR [ebx+504]
 	test	al, al
-	jne	SHORT $L101290
-$L106421:
+	jne	SHORT $L101291
+$L106422:
 	xor	eax, eax
-	jmp	$L101281
-$L101290:
+	jmp	$L101282
+$L101291:
 
 ; 1475 : 	pNode = new KSkillSpecialNode;
 
@@ -9005,28 +9005,28 @@ $L101290:
 	call	??2@YAPAXI@Z				; operator new
 	add	esp, 4
 	cmp	eax, ebp
-	je	SHORT $L106360
+	je	SHORT $L106361
 	mov	DWORD PTR [eax+4], ebp
 	mov	DWORD PTR [eax+8], ebp
 	mov	DWORD PTR [eax+12], ebp
 	mov	DWORD PTR [eax], OFFSET FLAT:??_7KSkillSpecialNode@@6B@ ; KSkillSpecialNode::`vftable'
 	mov	ebp, eax
-$L106360:
+$L106361:
 
 ; 1476 : 	KSkillSpecial * pSkillSpecial = new KSkillSpecial;
 
 	push	240					; 000000f0H
 	call	??2@YAPAXI@Z				; operator new
 	add	esp, 4
-	mov	DWORD PTR $T106362[esp+28], eax
+	mov	DWORD PTR $T106363[esp+28], eax
 	xor	ecx, ecx
 	cmp	eax, ecx
 	mov	DWORD PTR __$EHRec$[esp+40], ecx
-	je	SHORT $L106364
+	je	SHORT $L106365
 	mov	ecx, eax
 	call	??0KSkillSpecial@@QAE@XZ		; KSkillSpecial::KSkillSpecial
 	mov	ecx, eax
-$L106364:
+$L106365:
 
 ; 1477 : 	pNode->m_pSkillSpecial = pSkillSpecial;
 ; 1478 : 	
@@ -9085,15 +9085,15 @@ $L106364:
 
 	mov	eax, DWORD PTR [ebx+612]
 	test	eax, eax
-	jg	SHORT $L106402
+	jg	SHORT $L106403
 	or	edx, -1
-	jmp	SHORT $L106400
-$L106402:
+	jmp	SHORT $L106401
+$L106403:
 	mov	edx, DWORD PTR _this$[esp+32]
 	mov	edx, DWORD PTR [edx+420]
 	imul	edx, eax
 	sar	edx, 6
-$L106400:
+$L106401:
 	mov	DWORD PTR [ecx+36], edx
 
 ; 1491 : 	pSkillSpecial->Init();
@@ -9105,22 +9105,22 @@ $L106400:
 	mov	eax, DWORD PTR _this$[esp+32]
 	add	eax, 484				; 000001e4H
 	test	ebp, ebp
-	je	SHORT $L106417
+	je	SHORT $L106418
 	mov	ecx, DWORD PTR [eax+8]
 	test	ecx, ecx
-	je	SHORT $L106417
+	je	SHORT $L106418
 	mov	DWORD PTR [ebp+8], ecx
 	mov	DWORD PTR [ebp+4], eax
 	mov	ecx, DWORD PTR [eax+8]
 	mov	DWORD PTR [ecx+4], ebp
 	mov	DWORD PTR [eax+8], ebp
-$L106417:
+$L106418:
 
 ; 1493 : 	
 ; 1494 : 	return TRUE;
 
 	mov	eax, 1
-$L101281:
+$L101282:
 
 ; 1495 : }
 
@@ -9135,14 +9135,14 @@ $L101281:
 _TEXT	ENDS
 ;	COMDAT text$x
 text$x	SEGMENT
-$L106366:
-	mov	eax, DWORD PTR $T106362[ebp-4]
+$L106367:
+	mov	eax, DWORD PTR $T106363[ebp-4]
 	push	eax
 	call	??3@YAXPAX@Z				; operator delete
 	pop	ecx
 	ret	0
-$L106423:
-	mov	eax, OFFSET FLAT:$T106419
+$L106424:
+	mov	eax, OFFSET FLAT:$T106420
 	jmp	___CxxFrameHandler
 text$x	ENDS
 ?CreateSpecialEffect@KMissle@@QAEHW4eMissleStatus@@HHHH@Z ENDP ; KMissle::CreateSpecialEffect
@@ -9155,11 +9155,11 @@ ___flags$ = 8
 	mov	esi, ecx
 	call	??1KSkillSpecialNode@@UAE@XZ		; KSkillSpecialNode::~KSkillSpecialNode
 	test	BYTE PTR ___flags$[esp], 1
-	je	SHORT $L106430
+	je	SHORT $L106431
 	push	esi
 	call	??3@YAXPAX@Z				; operator delete
 	add	esp, 4
-$L106430:
+$L106431:
 	mov	eax, esi
 	pop	esi
 	ret	4
@@ -9211,12 +9211,12 @@ _pcszTemp$ = 20
 	xor	ebx, ebx
 	cmp	ebp, ebx
 	push	edi
-	je	$L101309
+	je	$L101310
 	mov	eax, DWORD PTR _szMovie$[esp+16]
 	cmp	eax, ebx
-	je	$L101309
+	je	$L101310
 	cmp	BYTE PTR [eax], bl
-	je	$L101309
+	je	$L101310
 
 ; 1501 : 	int nPX = 0;
 ; 1502 : 	int nPY = 0;
@@ -9228,7 +9228,7 @@ _pcszTemp$ = 20
 	mov	DWORD PTR _nPX$[esp+20], ebx
 	cmp	ecx, ebx
 	mov	DWORD PTR _nPY$[esp+20], ebx
-	jle	SHORT $L101313
+	jle	SHORT $L101314
 
 ; 1506 : 	{
 ; 1507 : 		Npc[pShowParam->nNpcIndex].GetMpsPos(&nPX, &nPY);
@@ -9250,8 +9250,8 @@ _pcszTemp$ = 20
 ; 1508 : 	}
 ; 1509 : 	else
 
-	jmp	SHORT $L101314
-$L101313:
+	jmp	SHORT $L101315
+$L101314:
 
 ; 1510 : 	{
 ; 1511 : 		nPX = pShowParam->nPX;
@@ -9263,7 +9263,7 @@ $L101313:
 	mov	edx, DWORD PTR [ebp+4]
 	mov	DWORD PTR _nPX$[esp+20], ecx
 	mov	DWORD PTR _nPY$[esp+20], edx
-$L101314:
+$L101315:
 
 ; 1513 : 	}
 ; 1514 : 
@@ -9295,7 +9295,7 @@ $L101314:
 
 ; 1518 : 		return FALSE;
 
-	jl	$L101309
+	jl	$L101310
 
 ; 1519 : 	
 ; 1520 : 	Missle[nMissleIndex].m_nDir				= Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Dir;
@@ -9455,7 +9455,7 @@ $L101314:
 
 	add	esp, 8
 	ret	0
-$L101309:
+$L101310:
 	pop	edi
 	pop	ebp
 
@@ -9490,7 +9490,7 @@ _nPY$ = -4
 	mov	edi, DWORD PTR _pLightInfo$[esp+8]
 	mov	esi, ecx
 	test	edi, edi
-	je	SHORT $L101322
+	je	SHORT $L101323
 
 ; 1552 : 	{
 ; 1553 : 		return ;
@@ -9542,7 +9542,7 @@ _nPY$ = -4
 	mov	DWORD PTR [edi+12], edx
 	mov	ax, WORD PTR [esi+468]
 	mov	DWORD PTR [edi+16], eax
-$L101322:
+$L101323:
 	pop	edi
 	pop	esi
 
@@ -9616,17 +9616,17 @@ _nSrcY$ = -8
 _TEXT	ENDS
 ;	COMDAT ?PrePareFly@KMissle@@AAEHXZ
 _TEXT	SEGMENT
-_nPX$101337 = -16
-_nPY$101338 = -12
-_nParentPX$101347 = -16
-_nParentPY$101348 = -4
-_nSrcPX$101349 = -12
-_nSrcPY$101350 = -8
-_nParentPX$101353 = -8
-_nParentPY$101354 = -16
-_nSrcPX$101355 = -4
-_nSrcPY$101356 = -12
-_nOldRegion$101357 = -4
+_nPX$101338 = -16
+_nPY$101339 = -12
+_nParentPX$101348 = -16
+_nParentPY$101349 = -4
+_nSrcPX$101350 = -12
+_nSrcPY$101351 = -8
+_nParentPX$101354 = -8
+_nParentPY$101355 = -16
+_nSrcPX$101356 = -4
+_nSrcPY$101357 = -12
+_nOldRegion$101358 = -4
 ?PrePareFly@KMissle@@AAEHXZ PROC NEAR			; KMissle::PrePareFly, COMDAT
 
 ; 1582 : {
@@ -9641,7 +9641,7 @@ _nOldRegion$101357 = -4
 ; 1583 : 	if (m_eMoveKind == MISSLE_MMK_RollBack)
 
 	cmp	DWORD PTR [esi+76], 100			; 00000064H
-	jne	SHORT $L101335
+	jne	SHORT $L101336
 
 ; 1584 : 		m_nTempParam2 =  m_nStartLifeTime + (m_nLifeTime - m_nStartLifeTime ) / 2;
 
@@ -9653,21 +9653,21 @@ _nOldRegion$101357 = -4
 	sar	eax, 1
 	add	eax, ecx
 	mov	DWORD PTR [esi+416], eax
-$L101335:
+$L101336:
 
 ; 1585 : 
 ; 1586 : 	if (m_nInteruptTypeWhenMove)
 
 	mov	eax, DWORD PTR [esi+128]
 	test	eax, eax
-	je	SHORT $L101339
+	je	SHORT $L101340
 
 ; 1587 : 	{
 ; 1588 : 		int nPX, nPY;
 ; 1589 : 		Npc[m_nLauncher].GetMpsPos(&nPX, &nPY);
 
-	lea	eax, DWORD PTR _nPY$101338[esp+32]
-	lea	ecx, DWORD PTR _nPX$101337[esp+32]
+	lea	eax, DWORD PTR _nPY$101339[esp+32]
+	lea	ecx, DWORD PTR _nPX$101338[esp+32]
 	push	eax
 	push	ecx
 	mov	ecx, DWORD PTR [esi+332]
@@ -9683,15 +9683,15 @@ $L101335:
 
 ; 1590 : 		if (nPX != m_nLauncherSrcPX || nPY != m_nLauncherSrcPY)
 
-	mov	eax, DWORD PTR _nPX$101337[esp+32]
+	mov	eax, DWORD PTR _nPX$101338[esp+32]
 	mov	ecx, DWORD PTR [esi+136]
 	cmp	eax, ecx
-	jne	SHORT $L101340
-	mov	ecx, DWORD PTR _nPY$101338[esp+32]
+	jne	SHORT $L101341
+	mov	ecx, DWORD PTR _nPY$101339[esp+32]
 	mov	eax, DWORD PTR [esi+140]
 	cmp	ecx, eax
-	je	SHORT $L101339
-$L101340:
+	je	SHORT $L101340
+$L101341:
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -9707,7 +9707,7 @@ $L101340:
 
 	add	esp, 16					; 00000010H
 	ret	0
-$L101339:
+$L101340:
 
 ; 1593 : 		}
 ; 1594 : 	}
@@ -9716,7 +9716,7 @@ $L101339:
 
 	mov	eax, DWORD PTR [esi+132]
 	test	eax, eax
-	je	$L101358
+	je	$L101359
 
 ; 1597 : 	{
 ; 1598 : 		int nNewPX = 0;
@@ -9726,7 +9726,7 @@ $L101339:
 
 	mov	ecx, DWORD PTR [esi+340]
 	test	ecx, ecx
-	je	SHORT $L101344
+	je	SHORT $L101345
 
 ; 1602 : 		{
 ; 1603 : 			if (Missle[m_nParentMissleIndex].m_dwLauncherId != m_dwLauncherId)
@@ -9738,7 +9738,7 @@ $L101339:
 	shl	eax, 7
 	mov	edx, DWORD PTR ?Missle@@3PAVKMissle@@A[eax+336]
 	cmp	edx, ecx
-	je	SHORT $L101345
+	je	SHORT $L101346
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -9754,7 +9754,7 @@ $L101339:
 
 	add	esp, 16					; 00000010H
 	ret	0
-$L101345:
+$L101346:
 
 ; 1606 : 			}
 ; 1607 : 			else
@@ -9763,8 +9763,8 @@ $L101345:
 ; 1610 : 				int nSrcPX, nSrcPY;
 ; 1611 : 				Missle[m_nParentMissleIndex].GetMpsPos(&nParentPX, &nParentPY);
 
-	lea	ecx, DWORD PTR _nParentPY$101348[esp+32]
-	lea	edx, DWORD PTR _nParentPX$101347[esp+32]
+	lea	ecx, DWORD PTR _nParentPY$101349[esp+32]
+	lea	edx, DWORD PTR _nParentPX$101348[esp+32]
 	push	ecx
 	push	edx
 	lea	ecx, DWORD PTR ?Missle@@3PAVKMissle@@A[eax]
@@ -9772,8 +9772,8 @@ $L101345:
 
 ; 1612 : 				GetMpsPos(&nSrcPX, &nSrcPY);
 
-	lea	eax, DWORD PTR _nSrcPY$101350[esp+32]
-	lea	ecx, DWORD PTR _nSrcPX$101349[esp+32]
+	lea	eax, DWORD PTR _nSrcPY$101351[esp+32]
+	lea	ecx, DWORD PTR _nSrcPX$101350[esp+32]
 	push	eax
 	push	ecx
 	mov	ecx, esi
@@ -9781,15 +9781,15 @@ $L101345:
 
 ; 1613 : 				nNewPX = nSrcPX + (nParentPX - m_nRefPX);
 
-	mov	ebx, DWORD PTR _nSrcPX$101349[esp+32]
+	mov	ebx, DWORD PTR _nSrcPX$101350[esp+32]
 	mov	edi, DWORD PTR [esi+236]
-	mov	edx, DWORD PTR _nParentPX$101347[esp+32]
+	mov	edx, DWORD PTR _nParentPX$101348[esp+32]
 
 ; 1614 : 				nNewPY = nSrcPY + (nParentPY - m_nRefPY);
 
-	mov	ebp, DWORD PTR _nSrcPY$101350[esp+32]
+	mov	ebp, DWORD PTR _nSrcPY$101351[esp+32]
 	mov	ecx, DWORD PTR [esi+240]
-	mov	eax, DWORD PTR _nParentPY$101348[esp+32]
+	mov	eax, DWORD PTR _nParentPY$101349[esp+32]
 	sub	ebx, edi
 	add	ebx, edx
 	sub	ebp, ecx
@@ -9798,8 +9798,8 @@ $L101345:
 ; 1616 : 		}
 ; 1617 : 		else
 
-	jmp	SHORT $L106472
-$L101344:
+	jmp	SHORT $L106473
+$L101345:
 
 ; 1618 : 		{
 ; 1619 : 			_ASSERT(m_nLauncher > 0);
@@ -9809,8 +9809,8 @@ $L101344:
 ; 1623 : 			Npc[m_nLauncher].GetMpsPos(&nParentPX, &nParentPY);
 
 	mov	ecx, DWORD PTR [esi+332]
-	lea	edx, DWORD PTR _nParentPY$101354[esp+32]
-	lea	eax, DWORD PTR _nParentPX$101353[esp+32]
+	lea	edx, DWORD PTR _nParentPY$101355[esp+32]
+	lea	eax, DWORD PTR _nParentPX$101354[esp+32]
 	push	edx
 	push	eax
 	lea	eax, DWORD PTR [ecx+ecx*2]
@@ -9825,8 +9825,8 @@ $L101344:
 
 ; 1624 : 			GetMpsPos(&nSrcPX, &nSrcPY);
 
-	lea	eax, DWORD PTR _nSrcPY$101356[esp+32]
-	lea	ecx, DWORD PTR _nSrcPX$101355[esp+32]
+	lea	eax, DWORD PTR _nSrcPY$101357[esp+32]
+	lea	ecx, DWORD PTR _nSrcPX$101356[esp+32]
 	push	eax
 	push	ecx
 	mov	ecx, esi
@@ -9835,19 +9835,19 @@ $L101344:
 ; 1625 : 			
 ; 1626 : 			nNewPX = nSrcPX + (nParentPX - m_nRefPX);
 
-	mov	ebx, DWORD PTR _nSrcPX$101355[esp+32]
+	mov	ebx, DWORD PTR _nSrcPX$101356[esp+32]
 	mov	edi, DWORD PTR [esi+236]
-	mov	edx, DWORD PTR _nParentPX$101353[esp+32]
+	mov	edx, DWORD PTR _nParentPX$101354[esp+32]
 
 ; 1627 : 			nNewPY = nSrcPY + (nParentPY - m_nRefPY);
 
-	mov	ebp, DWORD PTR _nSrcPY$101356[esp+32]
+	mov	ebp, DWORD PTR _nSrcPY$101357[esp+32]
 	mov	ecx, DWORD PTR [esi+240]
-	mov	eax, DWORD PTR _nParentPY$101354[esp+32]
+	mov	eax, DWORD PTR _nParentPY$101355[esp+32]
 	sub	ebx, edi
 	add	ebx, edx
 	sub	ebp, ecx
-$L106472:
+$L106473:
 
 ; 1628 : 		}
 ; 1629 : 		
@@ -9867,7 +9867,7 @@ $L106472:
 	shl	edx, 6
 	sub	edx, ecx
 	lea	ecx, DWORD PTR [eax+eax*2]
-	mov	DWORD PTR _nOldRegion$101357[esp+44], eax
+	mov	DWORD PTR _nOldRegion$101358[esp+44], eax
 	lea	eax, DWORD PTR [eax+ecx*4]
 	mov	ecx, DWORD PTR ?SubWorld@@3PAVKSubWorld@@A[edx*4+40]
 	shl	eax, 4
@@ -9917,9 +9917,9 @@ $L106472:
 ; 1635 : 		if (nOldRegion != m_nRegionId)
 
 	mov	edi, DWORD PTR [edi]
-	mov	eax, DWORD PTR _nOldRegion$101357[esp+32]
+	mov	eax, DWORD PTR _nOldRegion$101358[esp+32]
 	cmp	eax, edi
-	je	SHORT $L101358
+	je	SHORT $L101359
 
 ; 1636 : 		{
 ; 1637 : 			SubWorld[m_nSubWorldId].m_WorldMessage.Send(GWM_MISSLE_CHANGE_REGION, nOldRegion, m_nRegionId, m_nMissleId);
@@ -9935,7 +9935,7 @@ $L106472:
 	push	4002					; 00000fa2H
 	lea	ecx, DWORD PTR ?SubWorld@@3PAVKSubWorld@@A[edx*4+204]
 	call	?Send@KWorldMsg@@QAEHKHHH@Z		; KWorldMsg::Send
-$L101358:
+$L101359:
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -9960,7 +9960,7 @@ PUBLIC	?CheckNearestCollision@KMissle@@AAEHXZ		; KMissle::CheckNearestCollision
 ;	COMDAT ?CheckNearestCollision@KMissle@@AAEHXZ
 _TEXT	SEGMENT
 _i$ = -28
-_j$101380 = -4
+_j$101381 = -4
 _nSearchRegion$ = -16
 _nRMx$ = -20
 _nRMy$ = -24
@@ -10005,13 +10005,13 @@ _nNpcOffsetY$ = -8
 ; 1663 : 	for (int i = -1; i <= 1; i ++)
 
 	mov	DWORD PTR _i$[esp+44], -1
-$L101377:
+$L101378:
 
 ; 1664 : 		for (int j = -1; j <= 1; j ++)
 
 	or	eax, -1
-	mov	DWORD PTR _j$101380[esp+44], eax
-$L101381:
+	mov	DWORD PTR _j$101381[esp+44], eax
+$L101382:
 
 ; 1665 : 		{
 ; 1666 : 			if (!KMissle::GetOffsetAxis(
@@ -10046,7 +10046,7 @@ $L101381:
 	call	?GetOffsetAxis@KMissle@@SAHHHHHHHAAH00@Z ; KMissle::GetOffsetAxis
 	add	esp, 36					; 00000024H
 	test	eax, eax
-	je	$L101382
+	je	$L101383
 
 ; 1677 : 				continue;
 ; 1678 : 			
@@ -10079,7 +10079,7 @@ $L101381:
 ; 1683 : 			if (nNpcIdx > 0)
 
 	test	edi, edi
-	jle	$L101382
+	jle	$L101383
 
 ; 1684 : 			{
 ; 1685 : 				bCollision = TRUE;
@@ -10128,13 +10128,13 @@ $L101381:
 ; 1692 : 				
 ; 1693 : 				if (nAbsX)
 
-	je	SHORT $L101394
+	je	SHORT $L101395
 
 ; 1694 : 				{
 ; 1695 : 					if (nDX < 0)
 
 	test	ecx, ecx
-	jge	SHORT $L106486
+	jge	SHORT $L106487
 
 ; 1696 : 					{
 ; 1697 : 						if (nCellWidth - m_nXOffset + nNpcOffsetX > nCellWidth)
@@ -10147,7 +10147,7 @@ $L101381:
 
 ; 1741 : }
 
-	jg	SHORT $L101382
+	jg	SHORT $L101383
 
 ; 1698 : 						{
 ; 1699 : 							bCollision = FALSE;
@@ -10156,9 +10156,9 @@ $L101381:
 ; 1702 : 					}
 ; 1703 : 					else if (nDX > 0)
 
-	jmp	SHORT $L101394
-$L106486:
-	jle	SHORT $L101394
+	jmp	SHORT $L101395
+$L106487:
+	jle	SHORT $L101395
 
 ; 1704 : 					{
 ; 1705 : 						if (nCellWidth - nNpcOffsetX + m_nXOffset > nCellWidth)
@@ -10171,8 +10171,8 @@ $L106486:
 
 ; 1741 : }
 
-	jg	SHORT $L101382
-$L101394:
+	jg	SHORT $L101383
+$L101395:
 
 ; 1706 : 						{
 ; 1707 : 							bCollision = FALSE;
@@ -10184,13 +10184,13 @@ $L101394:
 ; 1713 : 				if (nAbsY)
 
 	test	ebp, ebp
-	je	SHORT $L106478
+	je	SHORT $L106479
 
 ; 1714 : 				{
 ; 1715 : 					if (nDY <0)
 
 	test	ebx, ebx
-	jge	SHORT $L106487
+	jge	SHORT $L106488
 
 ; 1716 : 					{
 ; 1717 : 						if (nCellHeight - m_nYOffset + nNpcOffsetY > nCellHeight)
@@ -10200,12 +10200,12 @@ $L101394:
 	sub	eax, ebx
 	add	eax, 32768				; 00008000H
 	cmp	eax, 32768				; 00008000H
-	jle	SHORT $L106478
+	jle	SHORT $L106479
 
 ; 1741 : }
 
-	jmp	SHORT $L101382
-$L106487:
+	jmp	SHORT $L101383
+$L106488:
 
 ; 1718 : 						{
 ; 1719 : 							bCollision = FALSE;
@@ -10214,7 +10214,7 @@ $L106487:
 ; 1722 : 					}
 ; 1723 : 					else if (nDY >0)
 
-	jle	SHORT $L106478
+	jle	SHORT $L106479
 
 ; 1724 : 					{
 ; 1725 : 						if (nCellHeight - nNpcOffsetY + m_nYOffset > nCellHeight)
@@ -10224,21 +10224,21 @@ $L106487:
 	sub	edx, ebx
 	add	edx, 32768				; 00008000H
 	cmp	edx, 32768				; 00008000H
-	jle	SHORT $L106478
-$L101382:
+	jle	SHORT $L106479
+$L101383:
 
 ; 1664 : 		for (int j = -1; j <= 1; j ++)
 
-	mov	eax, DWORD PTR _j$101380[esp+44]
+	mov	eax, DWORD PTR _j$101381[esp+44]
 	inc	eax
 	cmp	eax, 1
-	mov	DWORD PTR _j$101380[esp+44], eax
-	jle	$L101381
+	mov	DWORD PTR _j$101381[esp+44], eax
+	jle	$L101382
 	mov	eax, DWORD PTR _i$[esp+44]
 	inc	eax
 	cmp	eax, 1
 	mov	DWORD PTR _i$[esp+44], eax
-	jle	$L101377
+	jle	$L101378
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -10255,7 +10255,7 @@ $L101382:
 
 	add	esp, 28					; 0000001cH
 	ret	0
-$L106478:
+$L106479:
 
 ; 1726 : 						{
 ; 1727 : 							bCollision = FALSE;
@@ -10320,7 +10320,7 @@ _i$ = -16
 	mov	DWORD PTR _nRMx$[esp+32], eax
 	mov	DWORD PTR _nRMy$[esp+32], eax
 	mov	DWORD PTR _i$[esp+32], -1
-$L101415:
+$L101416:
 
 ; 1746 : 	int nSearchRegion = 0;
 ; 1747 : 	int nRMx = 0;
@@ -10332,7 +10332,7 @@ $L101415:
 ; 1753 : 		for (int j = -1; j <= 1; j ++)
 
 	or	edi, -1
-$L101419:
+$L101420:
 
 ; 1754 : 		{
 ; 1755 : 			if (!KMissle::GetOffsetAxis(
@@ -10367,7 +10367,7 @@ $L101419:
 	call	?GetOffsetAxis@KMissle@@SAHHHHHHHAAH00@Z ; KMissle::GetOffsetAxis
 	add	esp, 36					; 00000024H
 	test	eax, eax
-	je	SHORT $L101420
+	je	SHORT $L101421
 
 ; 1766 : 				continue;
 ; 1767 : 			
@@ -10397,8 +10397,8 @@ $L101419:
 ; 1772 : 			if (nNpcIdx > 0)
 
 	test	eax, eax
-	jg	SHORT $L101409
-$L101420:
+	jg	SHORT $L101410
+$L101421:
 
 ; 1746 : 	int nSearchRegion = 0;
 ; 1747 : 	int nRMx = 0;
@@ -10411,12 +10411,12 @@ $L101420:
 
 	inc	edi
 	cmp	edi, 1
-	jle	SHORT $L101419
+	jle	SHORT $L101420
 	mov	eax, DWORD PTR _i$[esp+32]
 	inc	eax
 	cmp	eax, 1
 	mov	DWORD PTR _i$[esp+32], eax
-	jle	$L101415
+	jle	$L101416
 
 ; 1773 : 				return nNpcIdx;
 ; 1774 : 		}
@@ -10424,7 +10424,7 @@ $L101420:
 ; 1776 : 	return 0;
 
 	xor	eax, eax
-$L101409:
+$L101410:
 	pop	edi
 	pop	esi
 	pop	ebp
