@@ -8,7 +8,7 @@
 
 int	g_nProtocolSize[MAX_PROTOCOL_NUM] = 
 {
-#ifndef _SERVER				// ¿Í»§¶Ë½ÓÊÕµ½µÄ·þÎñÆ÷µ½¿Í»§¶ËµÄÐ­Òé³¤¶È
+#ifndef _SERVER				// ï¿½Í»ï¿½ï¿½Ë½ï¿½ï¿½Õµï¿½ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ëµï¿½Ð­ï¿½é³¤ï¿½ï¿½
 	-1,							// s2c_login,
 	-1,							// s2c_logout,
 	sizeof(BYTE),				// s2c_syncend,
@@ -232,7 +232,8 @@ int	g_nProtocolSize[MAX_PROTOCOL_NUM] =
 	sizeof(OPEN_TOPBATTLE),						// c2s_topbattle //Report Battle by kinnox; ID: 158
 	sizeof(AVATAR_PLAYER),						// c2s_avatarplayer //Player Avatar by kinnox; ID: 159
 	sizeof(RECOVERY_BOX_CMD),					// c2s_recoverybox //TrembleItem by kinnox; ID: 160
-	sizeof(ITEM_RIGHT_AUTO_MOVE_REQ),			// c2s_
+	sizeof(ITEM_RIGHT_AUTO_MOVE_REQ),			// c2s_rightitemautomove
+	sizeof(BYTE),								// c2s_autosortequipment ID: 161
 #endif
 };
 
