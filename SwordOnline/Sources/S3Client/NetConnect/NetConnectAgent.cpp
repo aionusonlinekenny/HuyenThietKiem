@@ -1,5 +1,5 @@
 /*****************************************************************************************
-//	ÍøÂçÁ¬½Ó£¬»ã¼¯Óû·¢ËÍ°üÓëÅÉËÍµÖ´ï°üµÄ´úÀíÖÐÐÄ
+//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó£ï¿½ï¿½ã¼¯ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍµÖ´ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //	Copyright : Kingsoft 2002
 //	Author	:   Wooy(Wu yue)
 //	CreateTime:	2002-10-6
@@ -32,7 +32,7 @@ static int g_snBugLog;
 #endif
 
 //--------------------------------------------------------------------------
-//	¹¦ÄÜ£º¹¹Ôìº¯Êý
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½
 //--------------------------------------------------------------------------
 KNetConnectAgent::KNetConnectAgent()
 {
@@ -50,7 +50,7 @@ KNetConnectAgent::KNetConnectAgent()
 }
 
 //--------------------------------------------------------------------------
-//	¹¦ÄÜ£ºÎö¹¹º¯Êý
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //--------------------------------------------------------------------------
 KNetConnectAgent::~KNetConnectAgent()
 {
@@ -58,7 +58,7 @@ KNetConnectAgent::~KNetConnectAgent()
 }
 
 //--------------------------------------------------------------------------
-//	¹¦ÄÜ£º³õÊ¼»¯
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
 //--------------------------------------------------------------------------
 int KNetConnectAgent::Initialize()
 {
@@ -84,7 +84,7 @@ int KNetConnectAgent::Initialize()
 }
 
 //--------------------------------------------------------------------------
-//	¹¦ÄÜ£ºÍË³ö
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½Ë³ï¿½
 //--------------------------------------------------------------------------
 void KNetConnectAgent::Exit()
 {
@@ -109,7 +109,7 @@ void KNetConnectAgent::Exit()
 }
 
 //--------------------------------------------------------------------------
-//	¹¦ÄÜ£º½¨Á¢Á¬½Ó
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //--------------------------------------------------------------------------
 int	KNetConnectAgent::ClientConnectByNumericIp(const unsigned char* pIpAddress, unsigned short nPort)
 {	
@@ -147,7 +147,7 @@ int	KNetConnectAgent::ClientConnectByNumericIp(const unsigned char* pIpAddress, 
 }
 
 //--------------------------------------------------------------------------
-//	¹¦ÄÜ£º¹Ø±ÕÁ¬½Ó
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½
 //--------------------------------------------------------------------------
 void KNetConnectAgent::DisconnectClient()
 {
@@ -235,7 +235,7 @@ void KNetConnectAgent::DisconnectGameSvr()
 }
 
 //--------------------------------------------------------------------------
-//	¹¦ÄÜ£º·¢ËÍÏûÏ¢
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 //--------------------------------------------------------------------------
 int KNetConnectAgent::SendMsg(const void *pBuffer, int nSize)
 {
@@ -248,11 +248,11 @@ int KNetConnectAgent::SendMsg(const void *pBuffer, int nSize)
 }
 
 //--------------------------------------------------------------------------
-//	¹¦ÄÜ£º³ÖÐøÐÔÐÐÎª
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª
 //--------------------------------------------------------------------------
 void KNetConnectAgent::Breathe()
 {
-	//----³¬Ê±ÅÐ¶Ï----
+	//----ï¿½ï¿½Ê±ï¿½Ð¶ï¿½----
 	if (m_uClientRequestTime &&
 		GetTickCount() - m_uClientRequestTime >= m_uClientTimeoutLimit)
 	{
@@ -260,7 +260,7 @@ void KNetConnectAgent::Breathe()
 		m_bTobeDisconnect = true;
 	}
 
-	//----¶ÏÏßÅÐ¶Ï----
+	//----ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½----
 	if (m_bTobeDisconnect)
 	{
 		m_bTobeDisconnect = false;
@@ -274,7 +274,7 @@ void KNetConnectAgent::Breathe()
 	unsigned int nSize;
 	const char* pBuffer = NULL;
 
-	//----´¦ÀíÀ´×ÔÍø¹ØµÄÊý¾Ý----
+	//----ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½----
 	if (m_bIsClientConnecting)
 	{
 		while (true)
@@ -295,7 +295,7 @@ void KNetConnectAgent::Breathe()
 				(m_MsgTargetObjs[Msg])->AcceptNetMsg(pMsg);
 		}
 	}
-	//----´¦ÀíÀ´×ÔÓÎÏ··þÎñÆ÷µÄÊý¾Ý----
+	//----ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½----
 	if (m_bIsGameServConnecting && m_pGameSvrClient)
 	{
 		while (true)
@@ -315,7 +315,7 @@ void KNetConnectAgent::Breathe()
 				PROTOCOL_MSG_TYPE	Msg = *pMsg;			
 
 
-				// ¿ç·þÎñÆ÷µÄÐ­Òé
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½
 				if (Msg == s2c_notifyplayerexchange)
 				{
 					ProcessSwitchGameSvrMsg(pMsg);
@@ -338,7 +338,7 @@ void KNetConnectAgent::Breathe()
 }
 
 //--------------------------------------------------------------------------
-//	¹¦ÄÜ£º×¢²áµÖ´ïÏûÏ¢ÏìÓ¦º¯Êý
+//	ï¿½ï¿½ï¿½Ü£ï¿½×¢ï¿½ï¿½Ö´ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
 //--------------------------------------------------------------------------
 void KNetConnectAgent::RegisterMsgTargetObject(PROTOCOL_MSG_TYPE Msg, iKNetMsgTargetObject* pObject)
 {
@@ -394,7 +394,7 @@ void __stdcall ClientCallBack(LPVOID lpParam, const unsigned long &ulnEventType)
 	}
 }
 
-//´¦ÀíÓÎÏ·ÊÀ½ç·þÎñÆ÷µÄÍøÂçÏûÏ¢
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 bool KNetConnectAgent::ProcessSwitchGameSvrMsg(void* pMsgData)
 {
 	tagNotifyPlayerExchange* pInfo = (tagNotifyPlayerExchange*)pMsgData;
@@ -407,7 +407,7 @@ bool KNetConnectAgent::ProcessSwitchGameSvrMsg(void* pMsgData)
 
 	if (dwIp && nPort)
 	{
-		// ¿ªÊ¼ÓëGameSvr½øÐÐÁ¬½Ó
+		// ï¿½ï¿½Ê¼ï¿½ï¿½GameSvrï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		g_pCoreShell->OperationRequest(GOI_EXIT_GAME, 0, 0);
 		if (ConnectToGameSvr((const unsigned char*)&dwIp, nPort, &guid))
 		{
@@ -425,10 +425,10 @@ bool KNetConnectAgent::ProcessSwitchGameSvrMsg(void* pMsgData)
 	}
 	else
 	{
-		// ¿ç·þÎñÆ÷Ê§°Ü
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
 //		MessageBox(NULL, "", "", MB_OK);
 
-#define	MSG_EXCHANGE_FAIL	"Ç°·½Â·Í¾²»Ì«Í¨³©£¬»¹ÊÇ¹ý»áÔÙÀ´°É¡£"
+#define	MSG_EXCHANGE_FAIL	"Ç°ï¿½ï¿½Â·Í¾ï¿½ï¿½Ì«Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½"
 		KSystemMessage	Msg;
 		Msg.byConfirmType = SMCT_NONE;
 		Msg.byParamSize = 0;
@@ -441,7 +441,9 @@ bool KNetConnectAgent::ProcessSwitchGameSvrMsg(void* pMsgData)
 		return false;
 		
 	}
-	g_bDisconnect = true;
-	g_NetConnectAgent.TobeDisconnect();
+	// FIX: Don't force disconnect on connection failure
+	// Allow player to retry or manually reconnect
+	g_bDisconnect = false;  // Changed from true
+	// g_NetConnectAgent.TobeDisconnect();  // Commented out - don't force disconnect
 	return false;	
 }
