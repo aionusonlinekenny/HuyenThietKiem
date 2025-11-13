@@ -221,6 +221,7 @@ public:
 	int			UseItem(int nIdx, BYTE btPos = 0);
 	int 		SearchPlaceEquip(int nItemID,BYTE nPos);
 	BOOL		AutoMoveItem(ItemPos SrcPos,ItemPos DesPos);
+	void		AutoSortEquipment();
 	void		MenuSetMouseItem();
 	void		RemoveAllInOneRoom(int nRoom);
 	void		LockOperation();

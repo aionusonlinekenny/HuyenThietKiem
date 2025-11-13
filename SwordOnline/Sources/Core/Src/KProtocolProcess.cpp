@@ -1421,6 +1421,7 @@ void KProtocolProcess::s2cSyncItem(BYTE* pMsg)
 	Player[CLIENT_PLAYER_INDEX].m_ItemList.Add(nIndex, pItemSync->m_Place, pItemSync->m_X, pItemSync->m_Y);
 	//
 	Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
+
 }
 
 

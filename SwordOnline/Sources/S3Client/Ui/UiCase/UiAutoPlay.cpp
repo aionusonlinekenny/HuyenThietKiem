@@ -894,6 +894,8 @@ void KUiPick::Initialize()
 	AddChild(&m_PickAllEdit);//m_PickTypeTxt
 	AddChild(&m_PickAllPopup);// m_PickAllPopup
 	AddChild(&m_PickFilterCK); // m_PickFilterCK
+	AddChild(&m_PickAutoSortCK); // m_PickAutoSortCK
+	AddChild(&t_PickAutoSortTxt); // Auto-sort label
 	//AddChild(&m_PickFollowTargetCK);
 	//AddChild(&m_PickFollowTargetEdit);
 	AddChild(&m_PickChooseFilterTxt); //m_FilterEdit
@@ -932,6 +934,8 @@ void KUiPick::LoadScheme(KIniFile* pIni)
 	m_PickAllEdit.Init(pIni,"PickAllEdit");
 	m_PickAllPopup.Init(pIni,"PickAllPopup");
 	m_PickFilterCK.Init(pIni,"PickFilterCK");
+	m_PickAutoSortCK.Init(pIni,"PickAutoSortCK");
+	t_PickAutoSortTxt.Init(pIni,"PickAutoSortTxt");
 	//m_PickFollowTargetCK.Init(pIni,"PickFollowTargetCK");
 	//m_PickFollowTargetEdit.Init(pIni,"PickFollowTargetEdit");
 	m_PickChooseFilterTxt.Init(pIni,"PickChooseFilterTxt");
@@ -962,6 +966,8 @@ int KUiPick::WndProc(unsigned int uMsg, unsigned int uParam, int nParam)
 			OnGiveItem();
 		else if (uParam == (unsigned int)(KWndWindow*)&m_PickFilterCK)
 			OnFillterItem();
+		else if (uParam == (unsigned int)(KWndWindow*)&m_PickAutoSortCK)
+			OnAutoSortItem();
 		else if (uParam == (unsigned int)(KWndWindow*)&m_PickAllPopup)
 			OnSelectPickType(MENU_SELECT_PICK_TYPE);
 		else if (uParam == (unsigned int)(KWndWindow*)&m_PickChooseFilterPopup)
@@ -1056,6 +1062,22 @@ void KUiPick::OnFillterItem()
 	else
 		btFlag = 0;
 	g_pCoreShell->PAIOperation(GPI_P_FILTEQUIP,btFlag,NULL,NULL);
+}
+void KUiPick::OnAutoSortItem()
+{
+	// Toggle auto-sort mode on/off (timer-based implementation)
+	// When enabled, inventory will automatically sort using MoveItem() approach
+	BYTE btFlag = 0;
+	if (m_PickAutoSortCK.IsButtonChecked() > 0)
+		btFlag = 1;
+	else
+		btFlag = 0;
+	g_pCoreShell->PAIOperation(GPI_P_AUTOSORT, btFlag, NULL, NULL);
+}
+
+BOOL KUiPick::IsAutoSortEnabled()
+{
+	return m_PickAutoSortCK.IsButtonChecked();
 }
 
 void KUiPick::OnGiveItem() 
@@ -1221,8 +1243,22 @@ void KUiPick::LoadPickSetting()
 		
 		pConfigFile->GetInteger(PTitle, "F6", 0, (int*)(&m_nValue));
 		m_PickFilterCK.CheckButton(m_nValue > 0);
-		g_pCoreShell->PAIOperation(GPI_P_FILTEQUIP,m_nValue,NULL,NULL);		
-		
+		g_pCoreShell->PAIOperation(GPI_P_FILTEQUIP,m_nValue,NULL,NULL);
+
+		// Auto-sort is now a manual button, no need to load state
+
+		// Load auto-sort checkbox state
+
+
+
+		pConfigFile->GetInteger(PTitle, "F13", 0, (int*)(&m_nValue));
+
+
+		m_PickAutoSortCK.CheckButton(m_nValue > 0);
+
+
+		g_pCoreShell->PAIOperation(GPI_P_AUTOSORT, m_nValue, NULL, NULL);
+
 		pConfigFile->GetInteger(PTitle, "F7", 0, &m_CurrentPickKind);
 		m_PickAllEdit.SetText(Data_Pick[m_CurrentPickKind]);
 		g_pCoreShell->PAIOperation(GPI_P_PICKUPK,m_CurrentPickKind,NULL,NULL);
@@ -1275,6 +1311,7 @@ void KUiPick::LoadPickSetting()
 	g_UiBase.CloseAutoSettingFile(true);
 }
 
+
 void KUiPick::SavePickSetting()
 {
 	KIniFile* pConfigFile = NULL;
@@ -1286,6 +1323,7 @@ void KUiPick::SavePickSetting()
 		pConfigFile->WriteInteger(PTitle, "F4", m_PickAllCK.IsButtonChecked());
 		//pConfigFile->WriteInteger(PTitle, "F5", m_PickFollowTargetEdit.GetIntNumber());
 		pConfigFile->WriteInteger(PTitle, "F6", m_PickFilterCK.IsButtonChecked());
+		pConfigFile->WriteInteger(PTitle, "F13", m_PickAutoSortCK.IsButtonChecked());
 		pConfigFile->WriteInteger(PTitle, "F2", m_PickChooseFilterEdit.GetIntNumber());
 		pConfigFile->WriteInteger(PTitle, "F9", m_PickPriceItemsCK.IsButtonChecked());
 		pConfigFile->WriteInteger(PTitle, "F10", m_PickPriceItemsEdit.GetIntNumber());

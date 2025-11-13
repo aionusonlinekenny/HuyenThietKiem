@@ -1202,11 +1202,11 @@ _TEXT	SEGMENT
 	fadd	ST(0), ST(0)
 	fadd	DWORD PTR [esi+36]
 	fst	DWORD PTR [esi+36]
-	jne	SHORT $L92121
+	jne	SHORT $L92122
 	fcom	DWORD PTR [esi+32]
 	fnstsw	ax
 	test	ah, 65					; 00000041H
-	jne	SHORT $L92121
+	jne	SHORT $L92122
 
 ; 36   : 	{
 ; 37   : 		nDir = -1;
@@ -1234,17 +1234,17 @@ _TEXT	SEGMENT
 
 	add	esp, 12					; 0000000cH
 	ret	0
-$L92121:
+$L92122:
 
 ; 39   : 	}
 ; 40   : 	else if(nDir == -1 && fRadius < fMinRange)
 
 	cmp	ecx, -1
-	jne	SHORT $L93930
+	jne	SHORT $L93931
 	fcomp	DWORD PTR [esi+28]
 	fnstsw	ax
 	test	ah, 1
-	je	SHORT $L92123
+	je	SHORT $L92124
 
 ; 41   : 	{
 ; 42   : 		nDir = 1;
@@ -1271,14 +1271,14 @@ $L92121:
 
 	add	esp, 12					; 0000000cH
 	ret	0
-$L93930:
+$L93931:
 
 ; 41   : 	{
 ; 42   : 		nDir = 1;
 ; 43   : 		fRadius = fMinRange;
 
 	fstp	ST(0)
-$L92123:
+$L92124:
 
 ; 44   : 	}
 ; 45   : 	m_nRadius = (int)fRadius;
@@ -1309,20 +1309,20 @@ EXTRN	___CxxFrameHandler:NEAR
 ;	COMDAT xdata$x
 ; File C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\list
 xdata$x	SEGMENT
-$T94004	DD	019930520H
+$T94005	DD	019930520H
 	DD	02H
-	DD	FLAT:$T94007
+	DD	FLAT:$T94008
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	ORG $+4
-$T94007	DD	0ffffffffH
-	DD	FLAT:$L93938
-	DD	00H
+$T94008	DD	0ffffffffH
 	DD	FLAT:$L93939
+	DD	00H
+	DD	FLAT:$L93940
 xdata$x	ENDS
 ;	COMDAT ??0KIpoTree@@QAE@XZ
 _TEXT	SEGMENT
-$T93935 = -17
+$T93936 = -17
 __$EHRec$ = -12
 _this$ = -16
 ??0KIpoTree@@QAE@XZ PROC NEAR				; KIpoTree::KIpoTree, COMDAT
@@ -1330,7 +1330,7 @@ _this$ = -16
 ; 51   : {
 
 	push	-1
-	push	$L94005
+	push	$L94006
 	mov	eax, DWORD PTR fs:__except_list
 	push	eax
 	mov	DWORD PTR fs:__except_list, esp
@@ -1342,7 +1342,7 @@ _this$ = -16
 	mov	DWORD PTR _this$[esp+32], esi
 	lea	ecx, DWORD PTR [esi+4]
 	call	??0KIpotBranch@@QAE@XZ			; KIpotBranch::KIpotBranch
-	mov	al, BYTE PTR $T93935[esp+32]
+	mov	al, BYTE PTR $T93936[esp+32]
 	xor	ebx, ebx
 	push	12					; 0000000cH
 	mov	DWORD PTR __$EHRec$[esp+44], ebx
@@ -1430,16 +1430,16 @@ _this$ = -16
 _TEXT	ENDS
 ;	COMDAT text$x
 text$x	SEGMENT
-$L93938:
+$L93939:
 	mov	ecx, DWORD PTR _this$[ebp]
 	add	ecx, 4
 	jmp	??1KIpotBranch@@QAE@XZ			; KIpotBranch::~KIpotBranch
-$L93939:
+$L93940:
 	mov	ecx, DWORD PTR _this$[ebp]
 	add	ecx, 92272				; 00016870H
 	jmp	??1?$list@PAVKLightBase@@V?$allocator@PAVKLightBase@@@std@@@std@@QAE@XZ ; std::list<KLightBase *,std::allocator<KLightBase *> >::~list<KLightBase *,std::allocator<KLightBase *> >
-$L94005:
-	mov	eax, OFFSET FLAT:$T94004
+$L94006:
+	mov	eax, OFFSET FLAT:$T94005
 	jmp	___CxxFrameHandler
 text$x	ENDS
 ??0KIpoTree@@QAE@XZ ENDP				; KIpoTree::KIpoTree
@@ -1449,16 +1449,16 @@ EXTRN	??3@YAXPAX@Z:NEAR				; operator delete
 ;	COMDAT xdata$x
 ; File C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\xmemory
 xdata$x	SEGMENT
-$T94328	DD	019930520H
+$T94329	DD	019930520H
 	DD	02H
-	DD	FLAT:$T94331
+	DD	FLAT:$T94332
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	ORG $+4
-$T94331	DD	0ffffffffH
-	DD	FLAT:$L94016
-	DD	00H
+$T94332	DD	0ffffffffH
 	DD	FLAT:$L94017
+	DD	00H
+	DD	FLAT:$L94018
 xdata$x	ENDS
 ;	COMDAT ??1KIpoTree@@QAE@XZ
 _TEXT	SEGMENT
@@ -1469,7 +1469,7 @@ _this$ = -16
 ; 77   : {
 
 	push	-1
-	push	$L94330
+	push	$L94331
 	mov	eax, DWORD PTR fs:__except_list
 	push	eax
 	mov	DWORD PTR fs:__except_list, esp
@@ -1492,7 +1492,7 @@ _this$ = -16
 	mov	eax, DWORD PTR [esi+73836]
 	xor	ebp, ebp
 	cmp	eax, ebp
-	je	SHORT $L92146
+	je	SHORT $L92147
 
 ; 81   :     {
 ; 82   :         delete []m_pby_ptpBase;
@@ -1508,7 +1508,7 @@ _this$ = -16
 ; 84   :         ptp = NULL;
 
 	mov	DWORD PTR [esi+73832], ebp
-$L92146:
+$L92147:
 
 ; 85   :     }
 ; 86   : 
@@ -1516,7 +1516,7 @@ $L92146:
 
 	mov	eax, DWORD PTR [esi+73828]
 	cmp	eax, ebp
-	je	SHORT $L92148
+	je	SHORT $L92149
 
 ; 88   :     {
 ; 89   :         delete []m_pbyLColorBase;
@@ -1533,7 +1533,7 @@ $L92146:
 ; 92   :         pLColor = NULL;
 
 	mov	DWORD PTR [esi+73824], ebp
-$L92148:
+$L92149:
 
 ; 93   :     }
 ; 94   : }
@@ -1541,8 +1541,8 @@ $L92148:
 	mov	ebx, DWORD PTR [esi+92276]
 	mov	edi, DWORD PTR [ebx]
 	cmp	edi, ebx
-	je	SHORT $L94306
-$L94305:
+	je	SHORT $L94308
+$L94307:
 	mov	eax, edi
 	mov	edi, DWORD PTR [edi]
 	push	eax
@@ -1558,8 +1558,8 @@ $L94305:
 	dec	ecx
 	cmp	edi, ebx
 	mov	DWORD PTR [esi+92280], ecx
-	jne	SHORT $L94305
-$L94306:
+	jne	SHORT $L94307
+$L94308:
 	mov	eax, DWORD PTR [esi+92276]
 	push	eax
 	call	??3@YAXPAX@Z				; operator delete
@@ -1580,16 +1580,16 @@ $L94306:
 _TEXT	ENDS
 ;	COMDAT text$x
 text$x	SEGMENT
-$L94016:
+$L94017:
 	mov	ecx, DWORD PTR _this$[ebp]
 	add	ecx, 4
 	jmp	??1KIpotBranch@@QAE@XZ			; KIpotBranch::~KIpotBranch
-$L94017:
+$L94018:
 	mov	ecx, DWORD PTR _this$[ebp]
 	add	ecx, 92272				; 00016870H
 	jmp	??1?$list@PAVKLightBase@@V?$allocator@PAVKLightBase@@@std@@@std@@QAE@XZ ; std::list<KLightBase *,std::allocator<KLightBase *> >::~list<KLightBase *,std::allocator<KLightBase *> >
-$L94330:
-	mov	eax, OFFSET FLAT:$T94328
+$L94331:
+	mov	eax, OFFSET FLAT:$T94329
 	jmp	___CxxFrameHandler
 text$x	ENDS
 ??1KIpoTree@@QAE@XZ ENDP				; KIpoTree::~KIpoTree
@@ -1614,10 +1614,10 @@ _eLayer$ = 12
 	mov	edi, DWORD PTR _eLayer$[esp+4]
 	mov	esi, ecx
 	cmp	edi, 1
-	jne	SHORT $L92155
+	jne	SHORT $L92156
 	mov	al, BYTE PTR [esi+90]
 	test	al, al
-	je	SHORT $L92157
+	je	SHORT $L92158
 
 ; 100  : 	{
 ; 101  : 		// 渲染光照图
@@ -1637,7 +1637,7 @@ _eLayer$ = 12
 	mov	edx, DWORD PTR [esi+76]
 	push	edx
 	call	DWORD PTR [eax+104]
-$L92157:
+$L92158:
 
 ; 113  : 	}
 ; 114  : 	else if (m_pMainBranch)
@@ -1648,7 +1648,7 @@ $L92157:
 
 	push	edi
 	test	ecx, ecx
-	je	SHORT $L92161
+	je	SHORT $L92162
 	mov	edx, DWORD PTR _pRepresentArea$[esp+8]
 	push	edx
 
@@ -1662,21 +1662,21 @@ $L92157:
 ; 118  : }
 
 	ret	8
-$L92155:
+$L92156:
 
 ; 105  : 	}
 ; 106  : 	
 ; 107  : 	if (eLayer == IPOT_RL_OBJECT)
 
 	cmp	edi, 2
-	jne	SHORT $L92157
+	jne	SHORT $L92158
 
 ; 108  : 	{
 ; 109  : 		if (m_pMainBranch)
 
 	mov	ecx, DWORD PTR [esi]
 	test	ecx, ecx
-	je	SHORT $L92158
+	je	SHORT $L92159
 
 ; 110  : 			m_pMainBranch->PaintObjectLayer(pRepresentArea);
 
@@ -1689,7 +1689,7 @@ $L92155:
 ; 118  : }
 
 	ret	8
-$L92158:
+$L92159:
 
 ; 111  : 		else
 ; 112  : 			m_DefaultBranch.PaintObjectLayer(pRepresentArea);
@@ -1704,7 +1704,7 @@ $L92158:
 ; 118  : }
 
 	ret	8
-$L92161:
+$L92162:
 
 ; 116  : 	else
 ; 117  : 		m_DefaultBranch.PaintNoneObjectLayer(pRepresentArea, eLayer);
@@ -1738,8 +1738,8 @@ _TEXT	SEGMENT
 	mov	eax, DWORD PTR [edi+92276]
 	mov	esi, DWORD PTR [eax]
 	cmp	esi, eax
-	je	SHORT $L92172
-$L94382:
+	je	SHORT $L92173
+$L94383:
 
 ; 124  : 	{
 ; 125  : 		if((*i)->m_pParent == NULL)
@@ -1747,18 +1747,18 @@ $L94382:
 	mov	ecx, DWORD PTR [esi+8]
 	mov	eax, DWORD PTR [ecx+4]
 	test	eax, eax
-	jne	SHORT $L92171
+	jne	SHORT $L92172
 
 ; 126  : 			(*i)->Breath();
 
 	mov	eax, DWORD PTR [ecx]
 	call	DWORD PTR [eax]
-$L92171:
+$L92172:
 	mov	esi, DWORD PTR [esi]
 	mov	eax, DWORD PTR [edi+92276]
 	cmp	esi, eax
-	jne	SHORT $L94382
-$L92172:
+	jne	SHORT $L94383
+$L92173:
 	pop	edi
 	pop	esi
 
@@ -1785,7 +1785,7 @@ _TEXT	SEGMENT
 
 	mov	edi, DWORD PTR [esi]
 	test	edi, edi
-	je	SHORT $L92177
+	je	SHORT $L92178
 
 ; 134  : 	{
 ; 135  : 		delete (m_pMainBranch);
@@ -1799,7 +1799,7 @@ _TEXT	SEGMENT
 ; 136  : 		m_pMainBranch = NULL;
 
 	mov	DWORD PTR [esi], 0
-$L92177:
+$L92178:
 
 ; 137  : 	}
 ; 138  : 	m_DefaultBranch.Clear();
@@ -1820,8 +1820,8 @@ $L92177:
 	mov	eax, DWORD PTR [esi+92276]
 	mov	edi, DWORD PTR [eax]
 	cmp	edi, eax
-	je	SHORT $L92186
-$L94480:
+	je	SHORT $L92187
+$L94481:
 
 ; 144  : 	{
 ; 145  : 		delete (*i);
@@ -1833,8 +1833,8 @@ $L94480:
 	mov	eax, DWORD PTR [esi+92276]
 	add	esp, 4
 	cmp	edi, eax
-	jne	SHORT $L94480
-$L92186:
+	jne	SHORT $L94481
+$L92187:
 
 ; 146  : 	}
 ; 147  : 	m_LightList.clear();
@@ -1842,8 +1842,8 @@ $L92186:
 	mov	ebx, DWORD PTR [esi+92276]
 	mov	edi, DWORD PTR [ebx]
 	cmp	edi, ebx
-	je	SHORT $L94808
-$L94807:
+	je	SHORT $L94809
+$L94808:
 	mov	eax, edi
 	mov	edi, DWORD PTR [edi]
 	push	eax
@@ -1859,8 +1859,8 @@ $L94807:
 	dec	ecx
 	cmp	edi, ebx
 	mov	DWORD PTR [esi+92280], ecx
-	jne	SHORT $L94807
-$L94808:
+	jne	SHORT $L94808
+$L94809:
 	pop	edi
 	pop	esi
 	pop	ebx
@@ -1880,9 +1880,9 @@ _TEXT	SEGMENT
 	mov	eax, DWORD PTR [ecx+56]
 	xor	edx, edx
 	cmp	eax, edx
-	je	SHORT $L92198
+	je	SHORT $L92199
 	push	esi
-$L92197:
+$L92198:
 
 ; 154  : 	{
 ; 155  : 		m_PermanentLeaf.pBrother = pRto->pBrother;
@@ -1899,9 +1899,9 @@ $L92197:
 	mov	DWORD PTR [eax+4], edx
 	mov	eax, DWORD PTR [ecx+56]
 	cmp	eax, edx
-	jne	SHORT $L92197
+	jne	SHORT $L92198
 	pop	esi
-$L92198:
+$L92199:
 
 ; 158  : 	}
 ; 159  : }
@@ -1915,19 +1915,19 @@ EXTRN	?AddAObject@KIpotBranch@@QAEXPAUKIpotBuildinObj@@@Z:NEAR ; KIpotBranch::Ad
 ;	COMDAT xdata$x
 ; File D:\HuyenThietKiem\SwordOnline\Sources\Core\Src\Scene\KIpoTree.cpp
 xdata$x	SEGMENT
-$T94828	DD	019930520H
+$T94829	DD	019930520H
 	DD	01H
-	DD	FLAT:$T94830
+	DD	FLAT:$T94831
 	DD	2 DUP(00H)
 	DD	2 DUP(00H)
 	ORG $+4
-$T94830	DD	0ffffffffH
-	DD	FLAT:$L94826
+$T94831	DD	0ffffffffH
+	DD	FLAT:$L94827
 xdata$x	ENDS
 ;	COMDAT ?AddBranch@KIpoTree@@QAEXPAUKIpotBuildinObj@@@Z
 _TEXT	SEGMENT
 _pBranchObj$ = 8
-$T94823 = 8
+$T94824 = 8
 __$EHRec$ = -12
 ?AddBranch@KIpoTree@@QAEXPAUKIpotBuildinObj@@@Z PROC NEAR ; KIpoTree::AddBranch, COMDAT
 
@@ -1935,7 +1935,7 @@ __$EHRec$ = -12
 
 	mov	eax, DWORD PTR fs:__except_list
 	push	-1
-	push	$L94829
+	push	$L94830
 	push	eax
 	mov	DWORD PTR fs:__except_list, esp
 	push	esi
@@ -1946,7 +1946,7 @@ __$EHRec$ = -12
 
 	mov	ecx, DWORD PTR [esi]
 	test	ecx, ecx
-	je	SHORT $L92204
+	je	SHORT $L92205
 
 ; 174  : 		m_pMainBranch->AddBranch(pBranchObj);
 
@@ -1963,13 +1963,13 @@ __$EHRec$ = -12
 	pop	esi
 	add	esp, 12					; 0000000cH
 	ret	4
-$L92204:
+$L92205:
 
 ; 175  : 	else if (pBranchObj)
 
 	mov	edi, DWORD PTR _pBranchObj$[esp+16]
 	test	edi, edi
-	je	SHORT $L92206
+	je	SHORT $L92207
 
 ; 176  : 	{
 ; 177  : 		m_pMainBranch = new KIpotBranch;
@@ -1977,16 +1977,16 @@ $L92204:
 	push	48					; 00000030H
 	call	??2@YAPAXI@Z				; operator new
 	add	esp, 4
-	mov	DWORD PTR $T94823[esp+16], eax
+	mov	DWORD PTR $T94824[esp+16], eax
 	test	eax, eax
 	mov	DWORD PTR __$EHRec$[esp+28], 0
-	je	SHORT $L94824
+	je	SHORT $L94825
 	mov	ecx, eax
 	call	??0KIpotBranch@@QAE@XZ			; KIpotBranch::KIpotBranch
-	jmp	SHORT $L94825
-$L94824:
-	xor	eax, eax
+	jmp	SHORT $L94826
 $L94825:
+	xor	eax, eax
+$L94826:
 
 ; 178  : 		m_pMainBranch->AddAObject(pBranchObj);
 
@@ -1995,7 +1995,7 @@ $L94825:
 	mov	DWORD PTR __$EHRec$[esp+32], -1
 	mov	DWORD PTR [esi], eax
 	call	?AddAObject@KIpotBranch@@QAEXPAUKIpotBuildinObj@@@Z ; KIpotBranch::AddAObject
-$L92206:
+$L92207:
 
 ; 179  : 	}
 ; 180  : }
@@ -2009,14 +2009,14 @@ $L92206:
 _TEXT	ENDS
 ;	COMDAT text$x
 text$x	SEGMENT
-$L94826:
-	mov	eax, DWORD PTR $T94823[ebp-4]
+$L94827:
+	mov	eax, DWORD PTR $T94824[ebp-4]
 	push	eax
 	call	??3@YAXPAX@Z				; operator delete
 	pop	ecx
 	ret	0
-$L94829:
-	mov	eax, OFFSET FLAT:$T94828
+$L94830:
+	mov	eax, OFFSET FLAT:$T94829
 	jmp	___CxxFrameHandler
 text$x	ENDS
 ?AddBranch@KIpoTree@@QAEXPAUKIpotBuildinObj@@@Z ENDP	; KIpoTree::AddBranch
@@ -2036,7 +2036,7 @@ _TEXT	SEGMENT
 
 	mov	ecx, DWORD PTR [edi]
 	test	ecx, ecx
-	je	SHORT $L92214
+	je	SHORT $L92215
 
 ; 186  : 	{
 ; 187  : 		m_pMainBranch->RemoveAllRtoLeafs(&m_PermanentLeaf);
@@ -2049,18 +2049,18 @@ _TEXT	SEGMENT
 
 	mov	esi, DWORD PTR [edi]
 	test	esi, esi
-	je	SHORT $L94838
+	je	SHORT $L94839
 	mov	ecx, esi
 	call	??1KIpotBranch@@QAE@XZ			; KIpotBranch::~KIpotBranch
 	push	esi
 	call	??3@YAXPAX@Z				; operator delete
 	add	esp, 4
-$L94838:
+$L94839:
 
 ; 189  : 		m_pMainBranch = NULL;
 
 	mov	DWORD PTR [edi], 0
-$L92214:
+$L92215:
 
 ; 190  : 	}
 ; 191  : 	m_DefaultBranch.RemoveAllRtoLeafs(&m_PermanentLeaf);
@@ -2084,9 +2084,9 @@ $L92214:
 	mov	eax, DWORD PTR [edi+92276]
 	mov	esi, DWORD PTR [eax]
 	cmp	esi, eax
-	je	SHORT $L92223
+	je	SHORT $L92224
 	push	ebx
-$L92222:
+$L92223:
 
 ; 197  : 	{
 ; 198  : 		if((*i)->m_pParent == NULL)
@@ -2094,7 +2094,7 @@ $L92222:
 	mov	eax, DWORD PTR [esi+8]
 	mov	ecx, DWORD PTR [eax+4]
 	test	ecx, ecx
-	jne	SHORT $L92224
+	jne	SHORT $L92225
 
 ; 199  : 		{
 ; 200  : 			delete (*i);
@@ -2120,18 +2120,18 @@ $L92222:
 
 ; 202  : 			continue;
 
-	jmp	SHORT $L95022
-$L92224:
+	jmp	SHORT $L95023
+$L92225:
 
 ; 203  : 		}
 ; 204  : 		++i;
 
 	mov	esi, DWORD PTR [esi]
-$L95022:
+$L95023:
 	cmp	esi, DWORD PTR [edi+92276]
-	jne	SHORT $L92222
+	jne	SHORT $L92223
 	pop	ebx
-$L92223:
+$L92224:
 	pop	edi
 	pop	esi
 
@@ -2156,7 +2156,7 @@ _pLeaf$ = 8
 
 	mov	ecx, DWORD PTR [eax]
 	test	ecx, ecx
-	je	SHORT $L92231
+	je	SHORT $L92232
 
 ; 223  : 		m_pMainBranch->AddLeafLine(pLeaf);
 
@@ -2171,7 +2171,7 @@ _pLeaf$ = 8
 ; 226  : }
 
 	ret	4
-$L92231:
+$L92232:
 
 ; 224  : 	else
 ; 225  : 		m_DefaultBranch.AddLeafLine(pLeaf);
@@ -2211,9 +2211,9 @@ CONST	ENDS
 ;	COMDAT ?AddLeafPoint@KIpoTree@@QAEXPAUKIpotLeaf@@@Z
 _TEXT	SEGMENT
 _pLeaf$ = 8
-_lightInfo$92249 = -20
-_n$92255 = 8
-_color$92262 = -28
+_lightInfo$92250 = -20
+_n$92256 = 8
+_color$92263 = -28
 ?AddLeafPoint@KIpoTree@@QAEXPAUKIpotLeaf@@@Z PROC NEAR	; KIpoTree::AddLeafPoint, COMDAT
 
 ; 230  : {
@@ -2236,26 +2236,26 @@ _color$92262 = -28
 
 ; 233  : 	else
 
-	jne	SHORT $L95281
+	jne	SHORT $L95282
 
 ; 234  : 		m_DefaultBranch.AddLeafPoint(pLeaf);
 
 	lea	ecx, DWORD PTR [ebx+4]
-$L95281:
+$L95282:
 	call	?AddLeafPoint@KIpotBranch@@QAEXPAUKIpotLeaf@@@Z ; KIpotBranch::AddLeafPoint
 
 ; 235  : 	// 
 ; 236  : 	if (pLeaf->eLeafType == KIpotLeaf::IPOTL_T_RUNTIME_OBJ)
 
 	cmp	DWORD PTR [edi], 1
-	jne	$L92264
+	jne	$L92265
 
 ; 237  : 	{
 ; 238  : 		KIpotRuntimeObj* pRtoLeaf = (KIpotRuntimeObj*)pLeaf;
 ; 239  : 		if (pRtoLeaf->eLayerParam & IPOT_RL_LIGHT_PROP)
 
 	test	BYTE PTR [edi+36], 8
-	je	$L92264
+	je	$L92265
 
 ; 240  : 		{
 ; 241  : 			// 增加一个光源
@@ -2266,7 +2266,7 @@ $L95281:
 	mov	esi, eax
 	add	esp, 4
 	test	esi, esi
-	je	$L92264
+	je	$L92265
 	mov	DWORD PTR [esi], OFFSET FLAT:??_7KLightBase@@6B@ ; KLightBase::`vftable'
 
 ; 243  : 			if(pLight)
@@ -2276,7 +2276,7 @@ $L95281:
 
 	mov	ecx, DWORD PTR [edi+28]
 	mov	edx, DWORD PTR [edi+24]
-	lea	eax, DWORD PTR _lightInfo$92249[esp+40]
+	lea	eax, DWORD PTR _lightInfo$92250[esp+40]
 	push	ebp
 	push	eax
 	push	ecx
@@ -2285,21 +2285,21 @@ $L95281:
 
 ; 247  : 				pLight->m_dwColor = lightInfo.dwColor;
 
-	mov	eax, DWORD PTR _lightInfo$92249[esp+68]
+	mov	eax, DWORD PTR _lightInfo$92250[esp+68]
 
 ; 248  : 				pLight->m_oPosition = lightInfo.oPosition;
 
-	mov	edx, DWORD PTR _lightInfo$92249[esp+56]
+	mov	edx, DWORD PTR _lightInfo$92250[esp+56]
 	lea	ecx, DWORD PTR [esi+8]
 	mov	DWORD PTR [esi+20], eax
-	mov	eax, DWORD PTR _lightInfo$92249[esp+60]
+	mov	eax, DWORD PTR _lightInfo$92250[esp+60]
 
 ; 249  : 				pLight->m_nRadius = lightInfo.nRadius;
 ; 250  : 				pLight->m_pParent = pLeaf;
 
 	mov	DWORD PTR [esi+4], edi
 	mov	DWORD PTR [ecx], edx
-	mov	edx, DWORD PTR _lightInfo$92249[esp+64]
+	mov	edx, DWORD PTR _lightInfo$92250[esp+64]
 	add	esp, 12					; 0000000cH
 
 ; 251  : 				
@@ -2307,12 +2307,12 @@ $L95281:
 
 	mov	ebp, 320				; 00000140H
 	mov	DWORD PTR [ecx+4], eax
-	mov	eax, DWORD PTR _lightInfo$92249[esp+60]
+	mov	eax, DWORD PTR _lightInfo$92250[esp+60]
 	mov	DWORD PTR [esi+24], eax
 	mov	DWORD PTR [ecx+8], edx
 	mov	eax, DWORD PTR [edi+24]
 	cmp	eax, 6
-	jne	$L92254
+	jne	$L92255
 	mov	edi, DWORD PTR [edi+28]
 	lea	eax, DWORD PTR [edi+edi*2]
 	shl	eax, 3
@@ -2324,7 +2324,7 @@ $L95281:
 	add	ecx, OFFSET FLAT:?Npc@@3PAVKNpc@@A	; Npc
 	call	?IsPlayer@KNpc@@QAEHXZ			; KNpc::IsPlayer
 	test	eax, eax
-	je	$L92254
+	je	$L92255
 
 ; 253  : 				{
 ; 254  : 					pLight->m_dwColor = 0xffffffff;
@@ -2335,7 +2335,7 @@ $L95281:
 
 	mov	al, BYTE PTR [ebx+88]
 	test	al, al
-	je	SHORT $L92251
+	je	SHORT $L92252
 
 ; 256  : 					{
 ; 257  : 						if(m_dwAmbient == 0xff404040)
@@ -2353,8 +2353,8 @@ $L95281:
 ; 261  : 					}
 ; 262  : 					else
 
-	jmp	$L92254
-$L92251:
+	jmp	$L92255
+$L92252:
 
 ; 263  : 					{
 ; 264  : 						// 是主角，按时间调整光源亮度
@@ -2364,10 +2364,10 @@ $L92251:
 	mov	ecx, DWORD PTR [ebx+84]
 	xor	eax, eax
 	cmp	ecx, 480				; 000001e0H
-	mov	DWORD PTR _n$92255[esp+40], eax
-	jl	SHORT $L95283
+	mov	DWORD PTR _n$92256[esp+40], eax
+	jl	SHORT $L95284
 	cmp	ecx, 960				; 000003c0H
-	jg	SHORT $L92256
+	jg	SHORT $L92257
 
 ; 267  : 							pLight->m_nRadius = 0;
 
@@ -2375,11 +2375,11 @@ $L92251:
 
 ; 268  : 						else if(m_nCurrentTime < 480)
 
-	jmp	SHORT $L92260
-$L92256:
+	jmp	SHORT $L92261
+$L92257:
 	cmp	ecx, 480				; 000001e0H
-	jge	SHORT $L92258
-$L95283:
+	jge	SHORT $L92259
+$L95284:
 
 ; 269  : 						{
 ; 270  : 							n = 480 - m_nCurrentTime;
@@ -2391,14 +2391,14 @@ $L95283:
 ; 272  : 						}
 ; 273  : 						else
 
-	jmp	SHORT $L95284
-$L92258:
+	jmp	SHORT $L95285
+$L92259:
 
 ; 274  : 						{
 ; 275  : 							n = m_nCurrentTime - 960;
 
 	lea	eax, DWORD PTR [ecx-960]
-$L95284:
+$L95285:
 
 ; 276  : 							pLight->m_nRadius = MAIN_PLAYER_LIGHT_RADIUS;
 ; 277  : 						}
@@ -2406,18 +2406,18 @@ $L95284:
 ; 279  : 						if(n > 360)
 
 	cmp	eax, 360				; 00000168H
-	mov	DWORD PTR _n$92255[esp+40], eax
+	mov	DWORD PTR _n$92256[esp+40], eax
 	mov	DWORD PTR [esi+24], ebp
-	jle	SHORT $L92260
+	jle	SHORT $L92261
 
 ; 280  : 							n = 360;
 
-	mov	DWORD PTR _n$92255[esp+40], 360		; 00000168H
-$L92260:
+	mov	DWORD PTR _n$92256[esp+40], 360		; 00000168H
+$L92261:
 
 ; 281  : 						float f = n / 360.0f;
 
-	fild	DWORD PTR _n$92255[esp+40]
+	fild	DWORD PTR _n$92256[esp+40]
 	fmul	DWORD PTR __real@4@3ff6b60b60b60b60b800
 
 ; 282  : 						f = f * f;
@@ -2431,15 +2431,15 @@ $L92260:
 
 	fmul	DWORD PTR __real@4@4006ff00000000000000
 	call	__ftol
-	mov	WORD PTR _color$92262[esp+44], ax
-	mov	WORD PTR _color$92262[esp+46], ax
-	mov	WORD PTR _color$92262[esp+48], ax
+	mov	WORD PTR _color$92263[esp+44], ax
+	mov	WORD PTR _color$92263[esp+46], ax
+	mov	WORD PTR _color$92263[esp+48], ax
 
 ; 286  : 						pLight->m_dwColor = color.GetColor();
 
-	mov	eax, DWORD PTR _color$92262[esp+44]
-	mov	ecx, DWORD PTR _color$92262[esp+46]
-	mov	edx, DWORD PTR _color$92262[esp+48]
+	mov	eax, DWORD PTR _color$92263[esp+44]
+	mov	ecx, DWORD PTR _color$92263[esp+46]
+	mov	edx, DWORD PTR _color$92263[esp+48]
 	and	eax, 65535				; 0000ffffH
 	and	ecx, 65535				; 0000ffffH
 	or	eax, -256				; ffffff00H
@@ -2449,7 +2449,7 @@ $L92260:
 	shl	eax, 8
 	or	eax, edx
 	mov	DWORD PTR [esi+20], eax
-$L92254:
+$L92255:
 
 ; 287  : 					}
 ; 288  : 				}
@@ -2474,14 +2474,14 @@ $L92254:
 	add	esp, 4
 	mov	ecx, edi
 	test	edi, edi
-	jne	SHORT $L95241
+	jne	SHORT $L95242
 	mov	ecx, eax
-$L95241:
+$L95242:
 	test	ebp, ebp
 	mov	DWORD PTR [eax], ecx
-	jne	SHORT $L95243
+	jne	SHORT $L95244
 	mov	ebp, eax
-$L95243:
+$L95244:
 	mov	DWORD PTR [eax+4], ebp
 	mov	DWORD PTR [edi+4], eax
 	mov	ecx, DWORD PTR [eax+4]
@@ -2489,11 +2489,11 @@ $L95243:
 	mov	DWORD PTR [ecx], eax
 	add	eax, 8
 	test	eax, eax
-	je	SHORT $L95268
+	je	SHORT $L95269
 	mov	DWORD PTR [eax], esi
-$L95268:
+$L95269:
 	inc	DWORD PTR [ebx+92280]
-$L92264:
+$L92265:
 	pop	edi
 	pop	esi
 	pop	ebx
@@ -2548,18 +2548,18 @@ _pLeaf$ = 8
 	mov	eax, DWORD PTR [edi+92276]
 	mov	esi, DWORD PTR [eax]
 	cmp	esi, eax
-	je	SHORT $L95469
-$L95334:
+	je	SHORT $L95470
+$L95335:
 
 ; 312  : 	{
 ; 313  : 		if((*i)->m_pParent == pLeaf)
 
 	mov	ecx, DWORD PTR [esi+8]
 	cmp	DWORD PTR [ecx+4], ebx
-	je	SHORT $L95474
+	je	SHORT $L95475
 	mov	esi, DWORD PTR [esi]
 	cmp	esi, eax
-	jne	SHORT $L95334
+	jne	SHORT $L95335
 	pop	edi
 	pop	esi
 	pop	ebx
@@ -2570,7 +2570,7 @@ $L95334:
 ; 320  : }
 
 	ret	4
-$L95474:
+$L95475:
 
 ; 314  : 		{
 ; 315  : 			delete (*i);
@@ -2593,7 +2593,7 @@ $L95474:
 	add	esp, 8
 	dec	eax
 	mov	DWORD PTR [edi+92280], eax
-$L95469:
+$L95470:
 	pop	edi
 	pop	esi
 	pop	ebx
@@ -2624,7 +2624,7 @@ _p2$ = -16
 	mov	edx, DWORD PTR _nRightX$[esp-4]
 	sub	esp, 16					; 00000010H
 	cmp	eax, edx
-	jge	SHORT $L95479
+	jge	SHORT $L95480
 
 ; 326  : 	{
 ; 327  : 		p1.x = nLeftX;
@@ -2635,9 +2635,9 @@ _p2$ = -16
 ; 329  : 	}
 ; 330  : 	else if (nLeftX > nRightX)
 
-	jmp	SHORT $L95480
-$L95479:
-	jle	SHORT $L92290
+	jmp	SHORT $L95481
+$L95480:
+	jle	SHORT $L92291
 
 ; 331  : 	{
 ; 332  : 		p2.x = nLeftX;
@@ -2651,8 +2651,8 @@ $L95479:
 ; 334  : 	}
 ; 335  : 	else
 
-	jmp	SHORT $L92291
-$L92290:
+	jmp	SHORT $L92292
+$L92291:
 
 ; 336  : 	{
 ; 337  : 		p1.x = nLeftX;
@@ -2662,9 +2662,9 @@ $L92290:
 ; 338  : 		p2.x = nRightX + 2048;
 
 	add	edx, 2048				; 00000800H
-$L95480:
+$L95481:
 	mov	DWORD PTR _p2$[esp+16], edx
-$L92291:
+$L92292:
 
 ; 339  : 	}
 ; 340  : 	p2.y = p1.y = y;
@@ -2713,13 +2713,13 @@ _KeepRtoArea$ = 8
 ; 348  : 		pBranch = m_pMainBranch;
 
 	mov	ebp, eax
-	jne	SHORT $L95484
+	jne	SHORT $L95485
 
 ; 349  : 	else
 ; 350  : 		pBranch = &m_DefaultBranch;
 
 	lea	ebp, DWORD PTR [esi+4]
-$L95484:
+$L95485:
 
 ; 351  : 
 ; 352  : 	KIpotRuntimeObj* pRto;
@@ -2727,10 +2727,10 @@ $L95484:
 
 	mov	eax, DWORD PTR [esi+56]
 	cmp	eax, ebx
-	je	SHORT $L92302
+	je	SHORT $L92303
 	push	edi
 	mov	edi, DWORD PTR _KeepRtoArea$[esp+12]
-$L92301:
+$L92302:
 
 ; 354  : 	{
 ; 355  : 		m_PermanentLeaf.pBrother = pRto->pBrother;
@@ -2750,15 +2750,15 @@ $L92301:
 	mov	DWORD PTR [eax+48], ebx
 	mov	DWORD PTR [eax+4], ebx
 	cmp	ecx, DWORD PTR [edi]
-	jge	SHORT $L92305
+	jge	SHORT $L92306
 	cmp	ecx, DWORD PTR [edi+8]
-	jl	SHORT $L92305
+	jl	SHORT $L92306
 	mov	ecx, DWORD PTR [eax+20]
 	mov	edx, DWORD PTR [edi+4]
 	cmp	ecx, edx
-	jge	SHORT $L92305
+	jge	SHORT $L92306
 	cmp	ecx, DWORD PTR [edi+12]
-	jl	SHORT $L92305
+	jl	SHORT $L92306
 
 ; 365  : 		}
 ; 366  : 		else
@@ -2768,8 +2768,8 @@ $L92301:
 	push	eax
 	mov	ecx, esi
 	call	?PluckRto@KIpoTree@@QAEXPAUKIpotRuntimeObj@@@Z ; KIpoTree::PluckRto
-	jmp	SHORT $L92306
-$L92305:
+	jmp	SHORT $L92307
+$L92306:
 
 ; 363  : 		{
 ; 364  : 			pBranch->AddLeafPoint(pRto);
@@ -2777,12 +2777,12 @@ $L92305:
 	push	eax
 	mov	ecx, ebp
 	call	?AddLeafPoint@KIpotBranch@@QAEXPAUKIpotLeaf@@@Z ; KIpotBranch::AddLeafPoint
-$L92306:
+$L92307:
 	mov	eax, DWORD PTR [esi+56]
 	cmp	eax, ebx
-	jne	SHORT $L92301
+	jne	SHORT $L92302
 	pop	edi
-$L92302:
+$L92303:
 
 ; 369  : 		}
 ; 370  : 	}
@@ -2790,7 +2790,7 @@ $L92302:
 ; 372  : 	if(m_bDynamicLighting)
 
 	cmp	BYTE PTR [esi+90], bl
-	je	SHORT $L92313
+	je	SHORT $L92314
 
 ; 373  : 	{
 ; 374  : 		// 清空遮挡信息
@@ -2798,7 +2798,7 @@ $L92302:
 
 	lea	eax, DWORD PTR [esi+96]
 	mov	ecx, 4608				; 00001200H
-$L92309:
+$L92310:
 
 ; 376  : 		{
 ; 377  : 			pObstacle[j].nObstacle = 0;
@@ -2806,7 +2806,7 @@ $L92309:
 	mov	DWORD PTR [eax], ebx
 	add	eax, 16					; 00000010H
 	dec	ecx
-	jne	SHORT $L92309
+	jne	SHORT $L92310
 
 ; 378  : 		}
 ; 379  : 
@@ -2823,14 +2823,14 @@ $L92309:
 
 ; 383  : 		else
 
-	jne	SHORT $L95487
+	jne	SHORT $L95488
 
 ; 384  : 			m_DefaultBranch.EnumerateObjects(this, ObjectsCallback);
 
 	lea	ecx, DWORD PTR [esi+4]
-$L95487:
+$L95488:
 	call	?EnumerateObjects@KIpotBranch@@QAEXPAXP6AX0PAUKIpotLeaf@@@Z@Z ; KIpotBranch::EnumerateObjects
-$L92313:
+$L92314:
 	pop	esi
 	pop	ebp
 	pop	ebx
@@ -2865,7 +2865,7 @@ _pLeaf$ = 12
 	mov	ecx, DWORD PTR [eax]
 	cmp	ecx, 1
 	push	edi
-	je	$L92337
+	je	$L92338
 
 ; 397  : 		return;
 ; 398  : 
@@ -2879,14 +2879,14 @@ _pLeaf$ = 12
 
 	mov	ecx, DWORD PTR [ecx]
 	and	ecx, 48					; 00000030H
-	je	$L92337
+	je	$L92338
 
 ; 403  : 		return;
 ; 404  : 
 ; 405  : 	if((pBio->Props & SPBIO_P_BLOCK_LIGHT_MASK) == SPBIO_P_BLOCK_LIGHT_BOTTOM)
 
 	cmp	ecx, 16					; 00000010H
-	jne	SHORT $L92330
+	jne	SHORT $L92331
 
 ; 406  : 	{
 ; 407  : 		// 按线段处理遮挡
@@ -2920,13 +2920,13 @@ _pLeaf$ = 12
 ; 430  : }
 
 	ret	0
-$L92330:
+$L92331:
 
 ; 410  : 	}
 ; 411  : 	else if((pBio->Props & SPBIO_P_BLOCK_LIGHT_MASK) == SPBIO_P_BLOCK_LIGHT_CIRCLE)
 
 	cmp	ecx, 32					; 00000020H
-	jne	SHORT $L92337
+	jne	SHORT $L92338
 
 ; 412  : 	{
 ; 413  : 		// 按圆处理光线遮挡，忽略半径，都按一个格子处理
@@ -2941,16 +2941,16 @@ $L92330:
 	mov	eax, DWORD PTR [eax+20]
 	mov	ebx, DWORD PTR [esi+76]
 	cmp	edi, ebx
-	jl	SHORT $L92337
+	jl	SHORT $L92338
 	mov	ecx, DWORD PTR [esi+80]
 	cmp	eax, ecx
-	jl	SHORT $L92337
+	jl	SHORT $L92338
 	lea	edx, DWORD PTR [ebx+1536]
 	cmp	edi, edx
-	jge	SHORT $L92337
+	jge	SHORT $L92338
 	lea	edx, DWORD PTR [ecx+3072]
 	cmp	eax, edx
-	jge	SHORT $L92337
+	jge	SHORT $L92338
 
 ; 419  : 			return;
 ; 420  : 		else
@@ -2987,7 +2987,7 @@ $L92330:
 	shl	ecx, 4
 	mov	DWORD PTR [eax+esi], ebp
 	mov	DWORD PTR [ecx+esi+100], 0
-$L92337:
+$L92338:
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -3045,7 +3045,7 @@ _fFlope1$ = -24
 	cmp	ebp, ebx
 	push	edi
 	mov	esi, ecx
-	jge	$L92415
+	jge	$L92416
 
 ; 435  : 		return;
 ; 436  : 
@@ -3130,13 +3130,13 @@ _fFlope1$ = -24
 	mov	DWORD PTR _fFlope1$[esp+52], eax
 	fnstsw	ax
 	test	ah, 1
-	jne	$L92374
+	jne	$L92375
 
 ; 455  : 	{
 ; 456  : 		if(gx1 == gx2)
 
 	cmp	edi, ebx
-	je	$L95506
+	je	$L95507
 
 ; 457  : 			return;
 ; 458  : 
@@ -3146,7 +3146,7 @@ _fFlope1$ = -24
 	or	eax, -1
 	cmp	edx, ebp
 	mov	ecx, 1
-	jle	SHORT $L92376
+	jle	SHORT $L92377
 
 ; 460  : 		{
 ; 461  : 			gStepX = 1;
@@ -3158,8 +3158,8 @@ _fFlope1$ = -24
 ; 463  : 		}
 ; 464  : 		else
 
-	jmp	SHORT $L92377
-$L92376:
+	jmp	SHORT $L92378
+$L92377:
 
 ; 465  : 		{
 ; 466  : 			gStepX = -1;
@@ -3167,7 +3167,7 @@ $L92376:
 
 	fld	DWORD PTR __real@4@c0048000000000000000
 	mov	DWORD PTR _gStepX$[esp+48], eax
-$L92377:
+$L92378:
 
 ; 468  : 		}
 ; 469  : 		if(y2 > y1)
@@ -3175,7 +3175,7 @@ $L92377:
 	mov	edx, DWORD PTR _y1$[esp+48]
 	mov	edi, DWORD PTR _y2$[esp+48]
 	cmp	edi, edx
-	jle	SHORT $L92378
+	jle	SHORT $L92379
 
 ; 470  : 		{
 ; 471  : 			gStepY = 1;
@@ -3188,8 +3188,8 @@ $L92377:
 ; 473  : 		}
 ; 474  : 		else
 
-	jmp	SHORT $L95504
-$L92378:
+	jmp	SHORT $L95505
+$L92379:
 
 ; 475  : 		{
 ; 476  : 			gStepY = -1;
@@ -3198,10 +3198,10 @@ $L92378:
 	fld	DWORD PTR -32+[esp+52]
 	fmul	DWORD PTR __real@4@c0048000000000000000
 	mov	DWORD PTR _gStepY$[esp+48], eax
-$L95504:
+$L95505:
 	mov	ebx, DWORD PTR _nObstacleID$[esp+48]
 	mov	ebp, DWORD PTR _vDir$[esp+52]
-$L92381:
+$L92382:
 
 ; 478  : 		}
 ; 479  : 		while(1)
@@ -3232,13 +3232,13 @@ $L92381:
 ; 487  : 			if(gx >0 && gx < LIGHTING_GRID_WIDTH - 1 && gy >0 && gy < LIGHTING_GRID_HEIGHT - 1)
 
 	test	edi, edi
-	jle	$L92390
+	jle	$L92391
 	cmp	edi, 47					; 0000002fH
-	jge	$L92390
+	jge	$L92391
 	test	eax, eax
-	jle	$L92390
+	jle	$L92391
 	cmp	eax, 95					; 0000005fH
-	jge	$L92390
+	jge	$L92391
 
 ; 488  : 			{
 ; 489  : 				nIdx = gy * LIGHTING_GRID_WIDTH + gx;
@@ -3285,7 +3285,7 @@ $L92381:
 	fcomp	DWORD PTR _fFlope1$[esp+52]
 	fnstsw	ax
 	test	ah, 65					; 00000041H
-	jne	SHORT $L92389
+	jne	SHORT $L92390
 
 ; 495  : 				{
 ; 496  : 					nIdx = (gy + gStepY) * LIGHTING_GRID_WIDTH + gx;
@@ -3299,14 +3299,14 @@ $L92381:
 ; 499  : 				}
 ; 500  : 				else
 
-	jmp	SHORT $L95510
-$L92389:
+	jmp	SHORT $L95511
+$L92390:
 
 ; 501  : 				{
 ; 502  : 					nIdx = gy * LIGHTING_GRID_WIDTH + gx + gStepX;
 
 	lea	eax, DWORD PTR [ecx+ebp]
-$L95510:
+$L95511:
 
 ; 503  : 					pObstacle[nIdx].nObstacle = nObstacleID;
 ; 504  : 					pObstacle[nIdx].vDir = vDir;
@@ -3319,7 +3319,7 @@ $L95510:
 	mov	DWORD PTR [ecx+esi], ebx
 	mov	DWORD PTR [eax+esi+100], ebp
 	mov	DWORD PTR [eax+esi+104], edx
-$L92390:
+$L92391:
 
 ; 510  : 			gx1 += gStepX;
 
@@ -3336,7 +3336,7 @@ $L92390:
 	mov	DWORD PTR _gx1$[esp+52], eax
 	fld	ST(0)
 	faddp	ST(3), ST(0)
-	jne	$L92381
+	jne	$L92382
 
 ; 515  : 				if(gx >0 && gx < LIGHTING_GRID_WIDTH - 1 && gy >0 && gy < LIGHTING_GRID_HEIGHT - 1)
 ; 516  : 				{
@@ -3346,8 +3346,8 @@ $L92390:
 ; 520  : 				}
 ; 521  : 				return;
 
-	jmp	$L95512
-$L92374:
+	jmp	$L95513
+$L92375:
 
 ; 522  : 			}
 ; 523  : 		}
@@ -3358,7 +3358,7 @@ $L92374:
 ; 528  : 		if(gy1 == gy2)
 
 	cmp	ecx, edx
-	je	$L95506
+	je	$L95507
 
 ; 529  : 			return;
 ; 530  : 
@@ -3369,7 +3369,7 @@ $L92374:
 	or	eax, -1
 	cmp	edi, edx
 	mov	ecx, 1
-	jle	SHORT $L92397
+	jle	SHORT $L92398
 
 ; 532  : 		{
 ; 533  : 			gStepY = 1;
@@ -3381,8 +3381,8 @@ $L92374:
 ; 535  : 		}
 ; 536  : 		else
 
-	jmp	SHORT $L92398
-$L92397:
+	jmp	SHORT $L92399
+$L92398:
 
 ; 537  : 		{
 ; 538  : 			gStepY = -1;
@@ -3390,13 +3390,13 @@ $L92397:
 
 	fld	DWORD PTR __real@4@c0048000000000000000
 	mov	DWORD PTR _gStepY$[esp+48], eax
-$L92398:
+$L92399:
 
 ; 540  : 		}
 ; 541  : 		if(x2 > x1)
 
 	cmp	DWORD PTR _x2$[esp+48], ebp
-	jle	SHORT $L92399
+	jle	SHORT $L92400
 
 ; 542  : 		{
 ; 543  : 			gStepX = 1;
@@ -3410,8 +3410,8 @@ $L92398:
 ; 545  : 		}
 ; 546  : 		else
 
-	jmp	SHORT $L95505
-$L92399:
+	jmp	SHORT $L95506
+$L92400:
 
 ; 547  : 		{
 ; 548  : 			gStepX = -1;
@@ -3421,10 +3421,10 @@ $L92399:
 	fdiv	DWORD PTR _fdy$[esp+52]
 	mov	DWORD PTR _gStepX$[esp+48], eax
 	fmul	DWORD PTR __real@4@c0048000000000000000
-$L95505:
+$L95506:
 	mov	ebx, DWORD PTR _nObstacleID$[esp+48]
 	mov	ebp, DWORD PTR _vDir$[esp+52]
-$L92402:
+$L92403:
 
 ; 550  : 		}
 ; 551  : 		while(1)
@@ -3455,13 +3455,13 @@ $L92402:
 ; 559  : 			if(gx >0 && gx < LIGHTING_GRID_WIDTH - 1 && gy >0 && gy < LIGHTING_GRID_HEIGHT - 1)
 
 	test	edi, edi
-	jle	$L92411
+	jle	$L92412
 	cmp	edi, 47					; 0000002fH
-	jge	$L92411
+	jge	$L92412
 	test	eax, eax
-	jle	$L92411
+	jle	$L92412
 	cmp	eax, 95					; 0000005fH
-	jge	$L92411
+	jge	$L92412
 
 ; 560  : 			{
 ; 561  : 				nIdx = gy * LIGHTING_GRID_WIDTH + gx;
@@ -3508,7 +3508,7 @@ $L92402:
 	fcomp	DWORD PTR _fFlope1$[esp+52]
 	fnstsw	ax
 	test	ah, 65					; 00000041H
-	jne	SHORT $L92410
+	jne	SHORT $L92411
 
 ; 567  : 				{
 ; 568  : 					nIdx = (gy + gStepY) * LIGHTING_GRID_WIDTH + gx;
@@ -3522,14 +3522,14 @@ $L92402:
 ; 571  : 				}
 ; 572  : 				else
 
-	jmp	SHORT $L95511
-$L92410:
+	jmp	SHORT $L95512
+$L92411:
 
 ; 573  : 				{
 ; 574  : 					nIdx = gy * LIGHTING_GRID_WIDTH + gx + gStepX;
 
 	lea	eax, DWORD PTR [ecx+ebp]
-$L95511:
+$L95512:
 
 ; 575  : 					pObstacle[nIdx].nObstacle = nObstacleID;
 ; 576  : 					pObstacle[nIdx].vDir = vDir;
@@ -3542,7 +3542,7 @@ $L95511:
 	mov	DWORD PTR [ecx+esi], ebx
 	mov	DWORD PTR [eax+esi+100], ebp
 	mov	DWORD PTR [eax+esi+104], edx
-$L92411:
+$L92412:
 
 ; 582  : 			gy1 += gStepY;
 
@@ -3559,8 +3559,8 @@ $L92411:
 	cmp	eax, ecx
 	mov	DWORD PTR _gy1$[esp+52], eax
 	faddp	ST(3), ST(0)
-	jne	$L92402
-$L95512:
+	jne	$L92403
+$L95513:
 
 ; 577  : 				}
 ; 578  : 			}
@@ -3594,13 +3594,13 @@ $L95512:
 ; 587  : 				if(gx >0 && gx < LIGHTING_GRID_WIDTH - 1 && gy >0 && gy < LIGHTING_GRID_HEIGHT - 1)
 
 	test	edi, edi
-	jle	SHORT $L92415
+	jle	SHORT $L92416
 	cmp	edi, 47					; 0000002fH
-	jge	SHORT $L92415
+	jge	SHORT $L92416
 	test	eax, eax
-	jle	SHORT $L92415
+	jle	SHORT $L92416
 	cmp	eax, 95					; 0000005fH
-	jge	SHORT $L92415
+	jge	SHORT $L92416
 
 ; 588  : 				{
 ; 589  : 					nIdx = gy * LIGHTING_GRID_WIDTH + gx;
@@ -3633,7 +3633,7 @@ $L95512:
 
 	add	esp, 36					; 00000024H
 	ret	20					; 00000014H
-$L95506:
+$L95507:
 
 ; 505  : 				}
 ; 506  : 			}
@@ -3648,7 +3648,7 @@ $L95506:
 ; 514  : 				gy = ((int)fy1) / LIGHTING_GRID_SIZEX;
 
 	fstp	ST(0)
-$L92415:
+$L92416:
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -3681,16 +3681,16 @@ CONST	ENDS
 _TEXT	SEGMENT
 _this$ = -92
 _i$ = -24
-_nLightPosX$92437 = -32
-_nLightPosY$92438 = -36
-_ur$92445 = -52
-_ug$92446 = -48
-_ub$92447 = -44
-_j$92448 = -96
-_y$92450 = -20
-_gx$92451 = -68
-_gy$92452 = -68
-_fLightRadiusDenom$92454 = -56
+_nLightPosX$92438 = -32
+_nLightPosY$92439 = -36
+_ur$92446 = -52
+_ug$92447 = -48
+_ub$92448 = -44
+_j$92449 = -96
+_y$92451 = -20
+_gx$92452 = -68
+_gy$92453 = -68
+_fLightRadiusDenom$92455 = -56
 _pdwLight$ = -32
 ?RenderLightMap@KIpoTree@@QAEXXZ PROC NEAR		; KIpoTree::RenderLightMap, COMDAT
 
@@ -3719,7 +3719,7 @@ _pdwLight$ = -32
 	mov	DWORD PTR _this$[esp+112], ebx
 	mov	DWORD PTR [ebx+92], -15724528		; ff101010H
 	mov	edx, 1152				; 00000480H
-$L92426:
+$L92427:
 
 ; 946  :     
 ; 947  :     // 如果每一个颜色分量是2个字节,可以考虑多一个项,然后用一个MMX的寄存器存放
@@ -3783,7 +3783,7 @@ $L92426:
 
 	add	eax, 32					; 00000020H
 	dec	edx
-	jne	SHORT $L92426
+	jne	SHORT $L92427
 
 ; 968  : 	}
 ; 969  : 
@@ -3795,11 +3795,11 @@ $L92426:
 	mov	esi, DWORD PTR [eax]
 	cmp	esi, eax
 	mov	DWORD PTR _i$[esp+112], esi
-	je	$L92435
-	jmp	SHORT $L95567
-$L95637:
+	je	$L92436
+	jmp	SHORT $L95568
+$L95638:
 	mov	esi, DWORD PTR _i$[esp+112]
-$L95567:
+$L95568:
 
 ; 973  : 	{
 ; 974  : 		nLightID++;
@@ -3819,8 +3819,8 @@ $L95567:
 	mov	ecx, DWORD PTR [ebp+12]
 	sub	eax, edi
 	sub	ecx, edx
-	mov	DWORD PTR _nLightPosX$92437[esp+112], eax
-	mov	DWORD PTR _nLightPosY$92438[esp+112], ecx
+	mov	DWORD PTR _nLightPosX$92438[esp+112], eax
+	mov	DWORD PTR _nLightPosY$92439[esp+112], ecx
 
 ; 979  : 		// 光源的格子坐标
 ; 980  : 		int nLightGridX = nLightPosX / LIGHTING_GRID_SIZEX;
@@ -3844,13 +3844,13 @@ $L95567:
 ; 983  : 			nLightGridY < 0 || nLightGridY >= LIGHTING_GRID_HEIGHT)
 
 	test	edi, edi
-	jl	$L92434
+	jl	$L92435
 	cmp	edi, 48					; 00000030H
-	jge	$L92434
+	jge	$L92435
 	test	ecx, ecx
-	jl	$L92434
+	jl	$L92435
 	cmp	ecx, 96					; 00000060H
-	jge	$L92434
+	jge	$L92435
 
 ; 984  : 			continue;
 ; 985  : 
@@ -3884,15 +3884,15 @@ $L95567:
 	and	edx, 63					; 0000003fH
 	mov	esi, edi
 	fdivr	QWORD PTR __real@8@3fff8000000000000000
-	mov	DWORD PTR _ur$92445[esp+112], edx
+	mov	DWORD PTR _ur$92446[esp+112], edx
 	mov	edx, eax
 	shr	eax, 2
 	shr	edx, 10					; 0000000aH
 	and	eax, 63					; 0000003fH
 	and	edx, 63					; 0000003fH
-	mov	DWORD PTR _ub$92447[esp+112], eax
+	mov	DWORD PTR _ub$92448[esp+112], eax
 	mov	eax, ebp
-	mov	DWORD PTR _ug$92446[esp+112], edx
+	mov	DWORD PTR _ug$92447[esp+112], edx
 	mov	ebx, ecx
 	cdq
 	and	edx, 31					; 0000001fH
@@ -3913,8 +3913,8 @@ $L95567:
 ; 1009 : 		for(int r = 0; r < nGridRadius; r++)
 
 	test	eax, eax
-	fstp	DWORD PTR _fLightRadiusDenom$92454[esp+112]
-	jle	$L95643
+	fstp	DWORD PTR _fLightRadiusDenom$92455[esp+112]
+	jle	$L95644
 	lea	ebp, DWORD PTR [ecx+ecx*2]
 	or	edx, -1
 	shl	ebp, 4
@@ -3936,7 +3936,7 @@ $L95567:
 	mov	DWORD PTR -8+[esp+112], ebx
 	mov	DWORD PTR -12+[esp+112], ecx
 	mov	DWORD PTR -16+[esp+112], eax
-$L92459:
+$L92460:
 
 ; 1010 : 		{
 ; 1011 : 			gx = nLightGridX - r;
@@ -3949,12 +3949,12 @@ $L92459:
 ; 1015 : 			)
 
 	test	eax, eax
-	mov	DWORD PTR _gx$92451[esp+112], eax
-	jl	$L95640
+	mov	DWORD PTR _gx$92452[esp+112], eax
+	jl	$L95641
 	mov	ecx, DWORD PTR -80+[esp+112]
 	dec	ecx
 	test	ecx, ecx
-	jl	$L95640
+	jl	$L95641
 
 ; 1016 : 			{
 ; 1017 : 				x = nLightGridCenterX - r * LIGHTING_GRID_SIZEX;
@@ -3969,19 +3969,19 @@ $L92459:
 
 ; 1020 : 				for(j=0; j<(r * 2 + 1); j++)
 
-	mov	DWORD PTR _j$92448[esp+112], 0
+	mov	DWORD PTR _j$92449[esp+112], 0
 	lea	esi, DWORD PTR [esi+ecx*8-384]
 	lea	ecx, DWORD PTR [edx+2]
 	test	ecx, ecx
-	jle	$L95640
-$L92463:
+	jle	$L95641
+$L92464:
 
 ; 1021 : 				{
 ; 1022 : 					if(CanLighting(x, y, nLightPosX, nLightPosY))
 
 	mov	edx, DWORD PTR -72+[esp+112]
-	mov	ebp, DWORD PTR _nLightPosY$92438[esp+112]
-	mov	ebx, DWORD PTR _nLightPosX$92437[esp+112]
+	mov	ebp, DWORD PTR _nLightPosY$92439[esp+112]
+	mov	ebx, DWORD PTR _nLightPosX$92438[esp+112]
 	mov	ecx, DWORD PTR _this$[esp+112]
 	push	ebp
 	lea	eax, DWORD PTR [edx-32]
@@ -3990,7 +3990,7 @@ $L92463:
 	push	edi
 	call	?CanLighting@KIpoTree@@AAE_NHHHH@Z	; KIpoTree::CanLighting
 	test	al, al
-	je	SHORT $L92471
+	je	SHORT $L92472
 
 ; 1023 : 					{
 ; 1024 : 						//float f = 65536.0 - ((float)(
@@ -4027,7 +4027,7 @@ $L92463:
 	mov	DWORD PTR -20+[esp+112], edx
 	fild	DWORD PTR -20+[esp+112]
 	fsqrt
-	fmul	DWORD PTR _fLightRadiusDenom$92454[esp+112]
+	fmul	DWORD PTR _fLightRadiusDenom$92455[esp+112]
 	fmul	QWORD PTR __real@8@400f8000000000000000
 	fsubr	QWORD PTR __real@8@400f8000000000000000
 	call	__ftol
@@ -4036,7 +4036,7 @@ $L92463:
 ; 1043 : 						if (((int)uDistance65536) > 0)
 
 	test	eax, eax
-	jle	SHORT $L92471
+	jle	SHORT $L92472
 
 ; 1044 : 						{
 ; 1045 : 							pCurPos->r += (ur * uDistance65536 / 65536);
@@ -4046,35 +4046,35 @@ $L92463:
 ; 1046 : 							pCurPos->g += (ug * uDistance65536 / 65536);
 
 	mov	ecx, eax
-	imul	edx, DWORD PTR _ur$92445[esp+112]
-	imul	ecx, DWORD PTR _ug$92446[esp+112]
+	imul	edx, DWORD PTR _ur$92446[esp+112]
+	imul	ecx, DWORD PTR _ug$92447[esp+112]
 
 ; 1047 : 							pCurPos->b += (ub * uDistance65536 / 65536);
 
-	imul	eax, DWORD PTR _ub$92447[esp+112]
+	imul	eax, DWORD PTR _ub$92448[esp+112]
 	shr	edx, 16					; 00000010H
 	add	WORD PTR [esi], dx
 	shr	ecx, 16					; 00000010H
 	add	WORD PTR [esi+2], cx
 	shr	eax, 16					; 00000010H
 	add	WORD PTR [esi+4], ax
-$L92471:
+$L92472:
 
 ; 1048 : 						}
 ; 1049 : 					}
 ; 1050 : 
 ; 1051 : 					gx++;
 
-	mov	eax, DWORD PTR _gx$92451[esp+112]
+	mov	eax, DWORD PTR _gx$92452[esp+112]
 	inc	eax
 
 ; 1052 :                     if (gx >= LIGHTING_GRID_WIDTH)
 
 	cmp	eax, 48					; 00000030H
-	mov	DWORD PTR _gx$92451[esp+112], eax
-	jge	SHORT $L95632
+	mov	DWORD PTR _gx$92452[esp+112], eax
+	jge	SHORT $L95633
 	mov	edx, DWORD PTR -88+[esp+112]
-	mov	eax, DWORD PTR _j$92448[esp+112]
+	mov	eax, DWORD PTR _j$92449[esp+112]
 
 ; 1053 :                         break;
 ; 1054 : 
@@ -4088,19 +4088,19 @@ $L92471:
 	inc	eax
 	lea	ecx, DWORD PTR [edx+2]
 	cmp	eax, ecx
-	mov	DWORD PTR _j$92448[esp+112], eax
-	jl	$L92463
-$L95632:
+	mov	DWORD PTR _j$92449[esp+112], eax
+	jl	$L92464
+$L95633:
 
 ; 1020 : 				for(j=0; j<(r * 2 + 1); j++)
 
 	mov	edx, DWORD PTR -88+[esp+112]
 	mov	eax, DWORD PTR -84+[esp+112]
-	jmp	SHORT $L95613
-$L95640:
-	mov	ebp, DWORD PTR _nLightPosY$92438[esp+112]
-	mov	ebx, DWORD PTR _nLightPosX$92437[esp+112]
-$L95613:
+	jmp	SHORT $L95614
+$L95641:
+	mov	ebp, DWORD PTR _nLightPosY$92439[esp+112]
+	mov	ebx, DWORD PTR _nLightPosX$92438[esp+112]
+$L95614:
 
 ; 1057 : 				}
 ; 1058 : 			}
@@ -4108,7 +4108,7 @@ $L95613:
 ; 1060 : 			if(r == 0)
 
 	cmp	edx, -1
-	je	$L92460
+	je	$L92461
 
 ; 1061 : 				continue;
 ; 1062 : 
@@ -4119,13 +4119,13 @@ $L95613:
 ; 1067 : 			)
 
 	test	eax, eax
-	mov	DWORD PTR _gx$92451[esp+112], eax
-	jl	$L95614
+	mov	DWORD PTR _gx$92452[esp+112], eax
+	jl	$L95615
 	mov	ecx, DWORD PTR -12+[esp+112]
 	mov	esi, DWORD PTR -40+[esp+112]
 	add	ecx, esi
 	cmp	ecx, 96					; 00000060H
-	jge	$L95614
+	jge	$L95615
 
 ; 1068 : 			{
 ; 1069 : 				x = nLightGridCenterX - r * LIGHTING_GRID_SIZEX;
@@ -4138,7 +4138,7 @@ $L95613:
 ; 1071 : 				pCurPos = &pLColor[gy * LIGHTING_GRID_WIDTH + gx];
 
 	mov	esi, DWORD PTR _this$[esp+112]
-	mov	DWORD PTR _y$92450[esp+112], ecx
+	mov	DWORD PTR _y$92451[esp+112], ecx
 	mov	ecx, DWORD PTR -28+[esp+112]
 	mov	esi, DWORD PTR [esi+73824]
 	mov	edi, DWORD PTR -76+[esp+112]
@@ -4146,17 +4146,17 @@ $L95613:
 
 ; 1072 : 				for(j=0; j<(r * 2 + 1); j++)
 
-	mov	DWORD PTR _j$92448[esp+112], 0
+	mov	DWORD PTR _j$92449[esp+112], 0
 	lea	esi, DWORD PTR [esi+ecx*8]
 	lea	ecx, DWORD PTR [edx+2]
 	test	ecx, ecx
-	jle	$L95614
-$L92475:
+	jle	$L95615
+$L92476:
 
 ; 1073 : 				{
 ; 1074 : 					if(CanLighting(x, y, nLightPosX, nLightPosY))
 
-	mov	edx, DWORD PTR _y$92450[esp+112]
+	mov	edx, DWORD PTR _y$92451[esp+112]
 	mov	ecx, DWORD PTR _this$[esp+112]
 	push	ebp
 	push	ebx
@@ -4164,7 +4164,7 @@ $L92475:
 	push	edi
 	call	?CanLighting@KIpoTree@@AAE_NHHHH@Z	; KIpoTree::CanLighting
 	test	al, al
-	je	SHORT $L92483
+	je	SHORT $L92484
 
 ; 1075 : 					{
 ; 1076 : 						//float f = 65536.0 - ((float)(
@@ -4184,7 +4184,7 @@ $L92475:
 ; 1090 : 							65536.0
 ; 1091 : 						));
 
-	mov	eax, DWORD PTR _y$92450[esp+112]
+	mov	eax, DWORD PTR _y$92451[esp+112]
 	mov	ecx, edi
 	sub	ecx, ebx
 	sub	eax, ebp
@@ -4200,7 +4200,7 @@ $L92475:
 	mov	DWORD PTR -4+[esp+112], edx
 	fild	DWORD PTR -4+[esp+112]
 	fsqrt
-	fmul	DWORD PTR _fLightRadiusDenom$92454[esp+112]
+	fmul	DWORD PTR _fLightRadiusDenom$92455[esp+112]
 	fmul	QWORD PTR __real@8@400f8000000000000000
 	fsubr	QWORD PTR __real@8@400f8000000000000000
 	call	__ftol
@@ -4209,7 +4209,7 @@ $L92475:
 ; 1095 : 						if (((int)uDistance65536) > 0)
 
 	test	eax, eax
-	jle	SHORT $L92483
+	jle	SHORT $L92484
 
 ; 1096 : 						{
 ; 1097 : 							pCurPos->r += (ur * uDistance65536 / 65536);
@@ -4219,35 +4219,35 @@ $L92475:
 ; 1098 : 							pCurPos->g += (ug * uDistance65536 / 65536);
 
 	mov	ecx, eax
-	imul	edx, DWORD PTR _ur$92445[esp+112]
-	imul	ecx, DWORD PTR _ug$92446[esp+112]
+	imul	edx, DWORD PTR _ur$92446[esp+112]
+	imul	ecx, DWORD PTR _ug$92447[esp+112]
 
 ; 1099 : 							pCurPos->b += (ub * uDistance65536 / 65536);
 
-	imul	eax, DWORD PTR _ub$92447[esp+112]
+	imul	eax, DWORD PTR _ub$92448[esp+112]
 	shr	edx, 16					; 00000010H
 	add	WORD PTR [esi], dx
 	shr	ecx, 16					; 00000010H
 	add	WORD PTR [esi+2], cx
 	shr	eax, 16					; 00000010H
 	add	WORD PTR [esi+4], ax
-$L92483:
+$L92484:
 
 ; 1100 : 						}
 ; 1101 : 					}
 ; 1102 : 
 ; 1103 : 					gx++;
 
-	mov	eax, DWORD PTR _gx$92451[esp+112]
+	mov	eax, DWORD PTR _gx$92452[esp+112]
 	inc	eax
 
 ; 1104 :                     if (gx >= LIGHTING_GRID_WIDTH)
 
 	cmp	eax, 48					; 00000030H
-	mov	DWORD PTR _gx$92451[esp+112], eax
-	jge	SHORT $L95633
+	mov	DWORD PTR _gx$92452[esp+112], eax
+	jge	SHORT $L95634
 	mov	edx, DWORD PTR -88+[esp+112]
-	mov	eax, DWORD PTR _j$92448[esp+112]
+	mov	eax, DWORD PTR _j$92449[esp+112]
 
 ; 1105 :                         break;
 ; 1106 : 
@@ -4261,15 +4261,15 @@ $L92483:
 	inc	eax
 	lea	ecx, DWORD PTR [edx+2]
 	cmp	eax, ecx
-	mov	DWORD PTR _j$92448[esp+112], eax
-	jl	$L92475
-$L95633:
+	mov	DWORD PTR _j$92449[esp+112], eax
+	jl	$L92476
+$L95634:
 
 ; 1072 : 				for(j=0; j<(r * 2 + 1); j++)
 
 	mov	edx, DWORD PTR -88+[esp+112]
 	mov	eax, DWORD PTR -84+[esp+112]
-$L95614:
+$L95615:
 
 ; 1109 : 				}
 ; 1110 : 			}
@@ -4284,10 +4284,10 @@ $L95614:
 ; 1116 : 			)
 
 	test	eax, eax
-	mov	DWORD PTR _gy$92452[esp+112], ecx
-	jl	$L95615
+	mov	DWORD PTR _gy$92453[esp+112], ecx
+	jl	$L95616
 	test	ecx, ecx
-	jl	$L95615
+	jl	$L95616
 
 ; 1117 : 			{
 ; 1118 : 				x = nLightGridCenterX - r * LIGHTING_GRID_SIZEX;
@@ -4302,11 +4302,11 @@ $L95614:
 
 ; 1121 : 				for(j=0; j<(r * 2 - 1); j++)
 
-	mov	DWORD PTR _j$92448[esp+112], 0
+	mov	DWORD PTR _j$92449[esp+112], 0
 	test	edx, edx
 	lea	esi, DWORD PTR [esi+ecx*8]
-	jle	$L95615
-$L92486:
+	jle	$L95616
+$L92487:
 
 ; 1122 : 				{
 ; 1123 : 					if(CanLighting(x, y, nLightPosX, nLightPosY))
@@ -4319,7 +4319,7 @@ $L92486:
 	push	edx
 	call	?CanLighting@KIpoTree@@AAE_NHHHH@Z	; KIpoTree::CanLighting
 	test	al, al
-	je	SHORT $L92494
+	je	SHORT $L92495
 
 ; 1124 : 					{
 ; 1125 : 						//float f = 65536.0 - ((float)(
@@ -4355,7 +4355,7 @@ $L92486:
 	mov	DWORD PTR -4+[esp+112], edx
 	fild	DWORD PTR -4+[esp+112]
 	fsqrt
-	fmul	DWORD PTR _fLightRadiusDenom$92454[esp+112]
+	fmul	DWORD PTR _fLightRadiusDenom$92455[esp+112]
 	fmul	QWORD PTR __real@8@400f8000000000000000
 	fsubr	QWORD PTR __real@8@400f8000000000000000
 	call	__ftol
@@ -4364,7 +4364,7 @@ $L92486:
 ; 1144 : 						if (((int)uDistance65536) > 0)
 
 	test	eax, eax
-	jle	SHORT $L92494
+	jle	SHORT $L92495
 
 ; 1145 : 						{
 ; 1146 : 							pCurPos->r += (ur * uDistance65536 / 65536);
@@ -4374,34 +4374,34 @@ $L92486:
 ; 1147 : 							pCurPos->g += (ug * uDistance65536 / 65536);
 
 	mov	ecx, eax
-	imul	edx, DWORD PTR _ur$92445[esp+112]
-	imul	ecx, DWORD PTR _ug$92446[esp+112]
+	imul	edx, DWORD PTR _ur$92446[esp+112]
+	imul	ecx, DWORD PTR _ug$92447[esp+112]
 
 ; 1148 : 							pCurPos->b += (ub * uDistance65536 / 65536);
 
-	imul	eax, DWORD PTR _ub$92447[esp+112]
+	imul	eax, DWORD PTR _ub$92448[esp+112]
 	shr	edx, 16					; 00000010H
 	add	WORD PTR [esi], dx
 	shr	ecx, 16					; 00000010H
 	add	WORD PTR [esi+2], cx
 	shr	eax, 16					; 00000010H
 	add	WORD PTR [esi+4], ax
-$L92494:
+$L92495:
 
 ; 1149 : 						}
 ; 1150 : 					}
 ; 1151 : 
 ; 1152 : 					gy++;
 
-	mov	eax, DWORD PTR _gy$92452[esp+112]
+	mov	eax, DWORD PTR _gy$92453[esp+112]
 	inc	eax
 
 ; 1153 :                     if (gy >= LIGHTING_GRID_HEIGHT)
 
 	cmp	eax, 96					; 00000060H
-	mov	DWORD PTR _gy$92452[esp+112], eax
-	jge	SHORT $L95634
-	mov	eax, DWORD PTR _j$92448[esp+112]
+	mov	DWORD PTR _gy$92453[esp+112], eax
+	jge	SHORT $L95635
+	mov	eax, DWORD PTR _j$92449[esp+112]
 	mov	ecx, DWORD PTR -88+[esp+112]
 
 ; 1154 :                         break;
@@ -4415,15 +4415,15 @@ $L92494:
 	add	esi, 384				; 00000180H
 	inc	eax
 	cmp	eax, ecx
-	mov	DWORD PTR _j$92448[esp+112], eax
-	jl	$L92486
-$L95634:
+	mov	DWORD PTR _j$92449[esp+112], eax
+	jl	$L92487
+$L95635:
 
 ; 1121 : 				for(j=0; j<(r * 2 - 1); j++)
 
 	mov	edx, DWORD PTR -88+[esp+112]
 	mov	eax, DWORD PTR -84+[esp+112]
-$L95615:
+$L95616:
 
 ; 1158 : 				}
 ; 1159 : 			}
@@ -4438,10 +4438,10 @@ $L95615:
 	mov	ecx, DWORD PTR -40+[esp+112]
 	mov	esi, DWORD PTR -80+[esp+112]
 	cmp	ecx, 48					; 00000030H
-	mov	DWORD PTR _gy$92452[esp+112], esi
-	jge	$L92460
+	mov	DWORD PTR _gy$92453[esp+112], esi
+	jge	$L92461
 	test	esi, esi
-	jl	$L92460
+	jl	$L92461
 
 ; 1167 : 			{
 ; 1168 : 				x = nLightGridCenterX + r * LIGHTING_GRID_SIZEX;
@@ -4457,10 +4457,10 @@ $L95615:
 
 	test	edx, edx
 	mov	ecx, DWORD PTR [ecx+73824]
-	mov	DWORD PTR _j$92448[esp+112], 0
+	mov	DWORD PTR _j$92449[esp+112], 0
 	lea	esi, DWORD PTR [ecx+esi*8]
-	jle	$L92460
-$L92497:
+	jle	$L92461
+$L92498:
 
 ; 1172 : 				{
 ; 1173 : 					if(CanLighting(x, y, nLightPosX, nLightPosY))
@@ -4473,7 +4473,7 @@ $L92497:
 	push	edx
 	call	?CanLighting@KIpoTree@@AAE_NHHHH@Z	; KIpoTree::CanLighting
 	test	al, al
-	je	SHORT $L92505
+	je	SHORT $L92506
 
 ; 1174 : 					{
 ; 1175 : 						//float f = 65536.0 - ((float)(
@@ -4509,7 +4509,7 @@ $L92497:
 	mov	DWORD PTR -4+[esp+112], edx
 	fild	DWORD PTR -4+[esp+112]
 	fsqrt
-	fmul	DWORD PTR _fLightRadiusDenom$92454[esp+112]
+	fmul	DWORD PTR _fLightRadiusDenom$92455[esp+112]
 	fmul	QWORD PTR __real@8@400f8000000000000000
 	fsubr	QWORD PTR __real@8@400f8000000000000000
 	call	__ftol
@@ -4518,7 +4518,7 @@ $L92497:
 ; 1194 : 						if (((int)uDistance65536) > 0)
 
 	test	eax, eax
-	jle	SHORT $L92505
+	jle	SHORT $L92506
 
 ; 1195 : 						{
 ; 1196 : 							pCurPos->r += (ur * uDistance65536 / 65536);
@@ -4528,34 +4528,34 @@ $L92497:
 ; 1197 : 							pCurPos->g += (ug * uDistance65536 / 65536);
 
 	mov	ecx, eax
-	imul	edx, DWORD PTR _ur$92445[esp+112]
-	imul	ecx, DWORD PTR _ug$92446[esp+112]
+	imul	edx, DWORD PTR _ur$92446[esp+112]
+	imul	ecx, DWORD PTR _ug$92447[esp+112]
 
 ; 1198 : 							pCurPos->b += (ub * uDistance65536 / 65536);
 
-	imul	eax, DWORD PTR _ub$92447[esp+112]
+	imul	eax, DWORD PTR _ub$92448[esp+112]
 	shr	edx, 16					; 00000010H
 	add	WORD PTR [esi], dx
 	shr	ecx, 16					; 00000010H
 	add	WORD PTR [esi+2], cx
 	shr	eax, 16					; 00000010H
 	add	WORD PTR [esi+4], ax
-$L92505:
+$L92506:
 
 ; 1199 : 						}
 ; 1200 : 					}
 ; 1201 : 
 ; 1202 : 					gy++;
 
-	mov	eax, DWORD PTR _gy$92452[esp+112]
+	mov	eax, DWORD PTR _gy$92453[esp+112]
 	inc	eax
 
 ; 1203 :                     if (gy >= LIGHTING_GRID_HEIGHT)
 
 	cmp	eax, 96					; 00000060H
-	mov	DWORD PTR _gy$92452[esp+112], eax
-	jge	SHORT $L95635
-	mov	eax, DWORD PTR _j$92448[esp+112]
+	mov	DWORD PTR _gy$92453[esp+112], eax
+	jge	SHORT $L95636
+	mov	eax, DWORD PTR _j$92449[esp+112]
 	mov	ecx, DWORD PTR -88+[esp+112]
 
 ; 1204 :                         break;
@@ -4569,15 +4569,15 @@ $L92505:
 	add	esi, 384				; 00000180H
 	inc	eax
 	cmp	eax, ecx
-	mov	DWORD PTR _j$92448[esp+112], eax
-	jl	$L92497
-$L95635:
+	mov	DWORD PTR _j$92449[esp+112], eax
+	jl	$L92498
+$L95636:
 
 ; 1171 : 				for(j=0; j<(r * 2 - 1); j++)
 
 	mov	edx, DWORD PTR -88+[esp+112]
 	mov	eax, DWORD PTR -84+[esp+112]
-$L92460:
+$L92461:
 	mov	ebx, DWORD PTR -28+[esp+112]
 	mov	edi, DWORD PTR -40+[esp+112]
 	mov	ecx, 48					; 00000030H
@@ -4608,8 +4608,8 @@ $L92460:
 	mov	DWORD PTR -72+[esp+112], esi
 	mov	DWORD PTR -88+[esp+112], edx
 	mov	DWORD PTR -16+[esp+112], eax
-	jne	$L92459
-$L95643:
+	jne	$L92460
+$L95644:
 
 ; 1002 :         //fLightRadiusDenom *= fLightRadiusDenom;
 ; 1003 :         unsigned int uDistance65536 = 0;
@@ -4622,13 +4622,13 @@ $L95643:
 
 	mov	esi, DWORD PTR _i$[esp+112]
 	mov	ebx, DWORD PTR _this$[esp+112]
-$L92434:
+$L92435:
 	mov	esi, DWORD PTR [esi]
 	mov	eax, DWORD PTR [ebx+92276]
 	cmp	esi, eax
 	mov	DWORD PTR _i$[esp+112], esi
-	jne	$L95637
-$L92435:
+	jne	$L95638
+$L92436:
 
 ; 1208 : 				}
 ; 1209 : 			}
@@ -4652,11 +4652,11 @@ $L92435:
 	mov	DWORD PTR -28+[esp+112], esi
 	mov	DWORD PTR -24+[esp+112], edx
 	mov	DWORD PTR -40+[esp+112], 94		; 0000005eH
-	jmp	SHORT $L92517
-$L95636:
+	jmp	SHORT $L92518
+$L95637:
 	mov	esi, DWORD PTR -28+[esp+112]
 	mov	ebx, DWORD PTR _this$[esp+112]
-$L92517:
+$L92518:
 
 ; 1224 : 	for(m=1; m<LIGHTING_GRID_HEIGHT-1;m++)
 ; 1225 : 	{
@@ -4687,7 +4687,7 @@ $L92517:
 ; 1232 : 		pD = pO + LIGHTING_GRID_WIDTH;
 
 	lea	ebp, DWORD PTR [esi+384]
-$L92520:
+$L92521:
 
 ; 1233 : 		for(n=1; n<LIGHTING_GRID_WIDTH-1;n++)
 ; 1234 : 		{
@@ -4765,31 +4765,31 @@ $L92520:
 
 	cmp	WORD PTR [ecx], 255			; 000000ffH
 	mov	WORD PTR [ecx+4], ax
-	jbe	SHORT $L95518
+	jbe	SHORT $L95519
 	mov	eax, 255				; 000000ffH
-	jmp	SHORT $L95519
-$L95518:
+	jmp	SHORT $L95520
+$L95519:
 	xor	eax, eax
 	mov	ax, WORD PTR [ecx]
-$L95519:
+$L95520:
 	mov	dx, WORD PTR [ecx+2]
 	cmp	dx, 255					; 000000ffH
-	jbe	SHORT $L95520
+	jbe	SHORT $L95521
 	mov	DWORD PTR -16+[esp+112], 255		; 000000ffH
-	jmp	SHORT $L95521
-$L95520:
+	jmp	SHORT $L95522
+$L95521:
 	and	edx, 65535				; 0000ffffH
 	mov	DWORD PTR -16+[esp+112], edx
-$L95521:
+$L95522:
 	mov	dx, WORD PTR [ecx+4]
 	cmp	dx, 255					; 000000ffH
-	jbe	SHORT $L95522
+	jbe	SHORT $L95523
 	mov	DWORD PTR -20+[esp+112], 255		; 000000ffH
-	jmp	SHORT $L95523
-$L95522:
+	jmp	SHORT $L95524
+$L95523:
 	and	edx, 65535				; 0000ffffH
 	mov	DWORD PTR -20+[esp+112], edx
-$L95523:
+$L95524:
 	mov	edx, DWORD PTR -16+[esp+112]
 	or	eax, -256				; ffffff00H
 	shl	eax, 8
@@ -4818,7 +4818,7 @@ $L95523:
 	dec	eax
 	mov	DWORD PTR _pdwLight$[esp+112], edx
 	mov	DWORD PTR -36+[esp+112], eax
-	jne	$L92520
+	jne	$L92521
 
 ; 1260 : 		}
 ; 1261 : 		nIdx += LIGHTING_GRID_WIDTH;
@@ -4832,7 +4832,7 @@ $L95523:
 	mov	DWORD PTR -24+[esp+112], edx
 	mov	DWORD PTR -28+[esp+112], ecx
 	mov	DWORD PTR -40+[esp+112], eax
-	jne	$L95636
+	jne	$L95637
 
 ; 1262 : 	}
 ; 1263 :     
@@ -4865,7 +4865,7 @@ $L95523:
 	mov	eax, DWORD PTR _this$[esp+112]
 	mov	edx, 96					; 00000060H
 	lea	ecx, DWORD PTR [eax+74028]
-$L92523:
+$L92524:
 
 ; 1289 :     {
 ; 1290 :         pLightingArray[m * LIGHTING_GRID_WIDTH + 0] = m_dwAmbient | 0xff000000;
@@ -4881,7 +4881,7 @@ $L92523:
 	or	esi, -16777216				; ff000000H
 	dec	edx
 	mov	DWORD PTR [ecx-192], esi
-	jne	SHORT $L92523
+	jne	SHORT $L92524
 
 ; 1292 :     }
 ; 1293 : 
@@ -4889,7 +4889,7 @@ $L92523:
 
 	lea	ecx, DWORD PTR [eax+92080]
 	mov	edx, 48					; 00000030H
-$L92526:
+$L92527:
 
 ; 1295 :     {
 ; 1296 :         pLightingArray[n] = m_dwAmbient | 0xff000000;
@@ -4905,7 +4905,7 @@ $L92526:
 	or	esi, -16777216				; ff000000H
 	dec	edx
 	mov	DWORD PTR [ecx-4], esi
-	jne	SHORT $L92526
+	jne	SHORT $L92527
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -4990,9 +4990,9 @@ _fdy$ = 20
 	cmp	ebx, ecx
 	mov	DWORD PTR _nGridLightPosX$[esp+48], ecx
 	mov	DWORD PTR _nGridLightPosY$[esp+48], edx
-	jne	SHORT $L92544
+	jne	SHORT $L92545
 	cmp	edi, edx
-	jne	SHORT $L92544
+	jne	SHORT $L92545
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -5008,7 +5008,7 @@ _fdy$ = 20
 
 	add	esp, 32					; 00000020H
 	ret	16					; 00000010H
-$L92544:
+$L92545:
 
 ; 1312 : 
 ; 1313 : 	int nObstacle = pObstacle[nGridY * LIGHTING_GRID_WIDTH + nGridX].nObstacle;
@@ -5076,7 +5076,7 @@ $L92544:
 	fcomp	DWORD PTR _fdy$[esp+44]
 	fnstsw	ax
 	test	ah, 1
-	jne	$L92564
+	jne	$L92565
 
 ; 1326 : 	{
 ; 1327 : 		// 计算线段前进累加值
@@ -5085,7 +5085,7 @@ $L92544:
 	mov	edx, DWORD PTR _x$[esp+44]
 	mov	eax, DWORD PTR _nLightPosX$[esp+44]
 	cmp	eax, edx
-	jle	SHORT $L92565
+	jle	SHORT $L92566
 
 ; 1329 : 		{
 ; 1330 : 			nGridStep = 1;
@@ -5097,8 +5097,8 @@ $L92544:
 ; 1332 : 		}
 ; 1333 : 		else
 
-	jmp	SHORT $L92566
-$L92565:
+	jmp	SHORT $L92567
+$L92566:
 
 ; 1334 : 		{
 ; 1335 : 			nGridStep = -1;
@@ -5106,7 +5106,7 @@ $L92565:
 
 	fld	DWORD PTR __real@4@c0048000000000000000
 	or	edi, -1
-$L92566:
+$L92567:
 
 ; 1337 : 		}
 ; 1338 : 		if(nLightPosY > y)
@@ -5118,13 +5118,13 @@ $L92566:
 	fld	DWORD PTR _fdy$[esp+44]
 	fdiv	DWORD PTR _fdx$[esp+48]
 	cmp	esi, eax
-	jle	SHORT $L92567
+	jle	SHORT $L92568
 	fmul	DWORD PTR __real@4@40048000000000000000
 
 ; 1340 : 		else
 
-	jmp	SHORT $L92570
-$L92567:
+	jmp	SHORT $L92571
+$L92568:
 
 ; 1341 : 			fStepY = -fdy / fdx * LIGHTING_GRID_SIZEX;
 
@@ -5133,10 +5133,10 @@ $L92567:
 ; 1342 : 
 ; 1343 : 		while(1)
 
-	jmp	SHORT $L92570
-$L95671:
+	jmp	SHORT $L92571
+$L95672:
 	mov	ecx, DWORD PTR _nGridLightPosX$[esp+48]
-$L92570:
+$L92571:
 
 ; 1344 : 		{
 ; 1345 : 			fx += fStepX;
@@ -5154,7 +5154,7 @@ $L92570:
 	cmp	ebx, ecx
 	fld	ST(0)
 	faddp	ST(3), ST(0)
-	je	SHORT $L95663
+	je	SHORT $L95664
 
 ; 1355 : 					else
 ; 1356 : 						return false;
@@ -5190,15 +5190,15 @@ $L92570:
 	shl	esi, 4
 	mov	eax, DWORD PTR [esi+ebp]
 	test	eax, eax
-	je	SHORT $L95671
+	je	SHORT $L95672
 	cmp	eax, DWORD PTR _nObstacle$[esp+48]
-	jne	$L95662
+	jne	$L95663
 
 ; 1342 : 
 ; 1343 : 		while(1)
 
-	jmp	SHORT $L95671
-$L95663:
+	jmp	SHORT $L95672
+$L95664:
 
 ; 1349 : 			{
 ; 1350 : 				// 没有碰到障碍，根据这点本身是否障碍和障碍方向判断是否受光
@@ -5210,12 +5210,12 @@ $L95663:
 	fstp	ST(0)
 	test	eax, eax
 	fstp	ST(0)
-	je	SHORT $L92573
+	je	SHORT $L92574
 	fld	DWORD PTR _vDir$[esp+48]
 	fcomp	DWORD PTR __real@4@00000000000000000000
 	fnstsw	ax
 	test	ah, 64					; 00000040H
-	jne	SHORT $L92573
+	jne	SHORT $L92574
 
 ; 1352 : 				{
 ; 1353 : 					if(vDir.fX * vLight.fY - vDir.fY * vLight.fX < 0.0f)
@@ -5228,8 +5228,8 @@ $L95663:
 	fcomp	DWORD PTR __real@4@00000000000000000000
 	fnstsw	ax
 	test	ah, 1
-	je	$L92590
-$L92573:
+	je	$L92591
+$L92574:
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -5245,7 +5245,7 @@ $L92573:
 
 	add	esp, 32					; 00000020H
 	ret	16					; 00000010H
-$L92564:
+$L92565:
 
 ; 1367 : 				return false;
 ; 1368 : 		}
@@ -5256,7 +5256,7 @@ $L92564:
 ; 1373 : 		if(nLightPosY > y)
 
 	cmp	esi, DWORD PTR _y$[esp+44]
-	jle	SHORT $L92581
+	jle	SHORT $L92582
 
 ; 1374 : 		{
 ; 1375 : 			nGridStep = 1;
@@ -5268,8 +5268,8 @@ $L92564:
 ; 1377 : 		}
 ; 1378 : 		else
 
-	jmp	SHORT $L92582
-$L92581:
+	jmp	SHORT $L92583
+$L92582:
 
 ; 1379 : 		{
 ; 1380 : 			nGridStep = -1;
@@ -5277,7 +5277,7 @@ $L92581:
 
 	fld	DWORD PTR __real@4@c0048000000000000000
 	or	ebx, -1
-$L92582:
+$L92583:
 
 ; 1382 : 		}
 ; 1383 : 		if(nLightPosX > x)
@@ -5290,13 +5290,13 @@ $L92582:
 	fld	DWORD PTR _fdx$[esp+48]
 	fdiv	DWORD PTR _fdy$[esp+44]
 	cmp	ecx, eax
-	jle	SHORT $L92583
+	jle	SHORT $L92584
 	fmul	DWORD PTR __real@4@40048000000000000000
 
 ; 1385 : 		else
 
-	jmp	SHORT $L92586
-$L92583:
+	jmp	SHORT $L92587
+$L92584:
 
 ; 1386 : 			fStepX = -fdx / fdy * LIGHTING_GRID_SIZEX;
 
@@ -5304,10 +5304,10 @@ $L92583:
 
 ; 1387 : 		while(1)
 
-	jmp	SHORT $L92586
-$L95672:
+	jmp	SHORT $L92587
+$L95673:
 	mov	edx, DWORD PTR _nGridLightPosY$[esp+48]
-$L92586:
+$L92587:
 
 ; 1388 : 		{
 ; 1389 : 			fx += fStepX;
@@ -5325,7 +5325,7 @@ $L92586:
 
 	cmp	edi, edx
 	faddp	ST(3), ST(0)
-	je	$L95663
+	je	$L95664
 
 ; 1393 : 			{
 ; 1394 : 				// 没有碰到障碍，根据这点本身是否障碍和障碍方向判断是否受光
@@ -5367,10 +5367,10 @@ $L92586:
 	shl	esi, 4
 	mov	eax, DWORD PTR [esi+ebp]
 	test	eax, eax
-	je	SHORT $L95672
+	je	SHORT $L95673
 	cmp	eax, DWORD PTR _nObstacle$[esp+48]
-	je	SHORT $L95672
-$L95662:
+	je	SHORT $L95673
+$L95663:
 
 ; 1393 : 			{
 ; 1394 : 				// 没有碰到障碍，根据这点本身是否障碍和障碍方向判断是否受光
@@ -5393,7 +5393,7 @@ $L95662:
 	fstp	ST(0)
 	fstp	ST(0)
 	fstp	ST(0)
-$L92590:
+$L92591:
 	pop	edi
 	pop	esi
 	pop	ebp
@@ -5437,7 +5437,7 @@ _nMaxRange$ = 12
 	mov	al, BYTE PTR [ecx+89]
 	mov	DWORD PTR _this$[esp+20], ecx
 	test	al, al
-	je	$L92607
+	je	$L92608
 
 ; 1533 : 		return;
 ; 1534 : 
@@ -5447,7 +5447,7 @@ _nMaxRange$ = 12
 
 	mov	eax, DWORD PTR _nCount$[esp+16]
 	test	eax, eax
-	jle	$L92607
+	jle	$L92608
 	mov	ecx, DWORD PTR _pLights$[esp+16]
 	push	ebx
 	push	ebp
@@ -5455,7 +5455,7 @@ _nMaxRange$ = 12
 	push	edi
 	lea	edi, DWORD PTR [ecx+20]
 	mov	DWORD PTR 8+[esp+32], eax
-$L92605:
+$L92606:
 
 ; 1538 : 	{
 ; 1539 : 		// 增加一个光源
@@ -5465,7 +5465,7 @@ $L92605:
 	call	??2@YAPAXI@Z				; operator new
 	add	esp, 4
 	test	eax, eax
-	je	$L92606
+	je	$L92607
 	mov	ecx, eax
 	call	??0KSelfBreathLight@@QAE@XZ		; KSelfBreathLight::KSelfBreathLight
 	mov	esi, eax
@@ -5473,7 +5473,7 @@ $L92605:
 ; 1541 : 		if(pLight)
 
 	test	esi, esi
-	je	$L92606
+	je	$L92607
 
 ; 1542 : 		{
 ; 1543 : 			// 保证nMaxRange大于nMinRange
@@ -5482,7 +5482,7 @@ $L92605:
 	mov	ecx, DWORD PTR [edi]
 	mov	edx, DWORD PTR [edi-4]
 	cmp	ecx, edx
-	jl	SHORT $L92614
+	jl	SHORT $L92615
 
 ; 1545 : 				nMaxRange = pLights[i].nMaxRange, nMinRange = pLights[i].nMinRange;
 
@@ -5492,20 +5492,20 @@ $L92605:
 
 ; 1546 : 			else
 
-	jmp	SHORT $L92615
-$L92614:
+	jmp	SHORT $L92616
+$L92615:
 
 ; 1547 : 				nMaxRange = pLights[i].nMinRange, nMinRange = pLights[i].nMaxRange;
 
 	mov	eax, edx
 	mov	DWORD PTR _nMaxRange$[esp+32], eax
-$L92615:
+$L92616:
 
 ; 1548 : 			// 半径为负值，忽略这个光源
 ; 1549 : 			if(nMinRange < 0)
 
 	test	ecx, ecx
-	jl	$L92606
+	jl	$L92607
 
 ; 1550 : 			{
 ; 1551 : 				_ASSERT(0);
@@ -5574,36 +5574,36 @@ $L92615:
 	add	esp, 12					; 0000000cH
 	mov	ecx, ebp
 	test	ebp, ebp
-	jne	SHORT $L95868
+	jne	SHORT $L95869
 	mov	ecx, eax
-$L95868:
+$L95869:
 	test	ebx, ebx
 	mov	DWORD PTR [eax], ecx
-	jne	SHORT $L95870
+	jne	SHORT $L95871
 	mov	ebx, eax
-$L95870:
+$L95871:
 	mov	DWORD PTR [eax+4], ebx
 	mov	DWORD PTR [ebp+4], eax
 	mov	ecx, DWORD PTR [eax+4]
 	mov	DWORD PTR [ecx], eax
 	add	eax, 8
 	test	eax, eax
-	je	SHORT $L95896
+	je	SHORT $L95897
 	mov	DWORD PTR [eax], esi
-$L95896:
+$L95897:
 	mov	eax, DWORD PTR _this$[esp+36]
 	inc	DWORD PTR [eax+92280]
-$L92606:
+$L92607:
 	mov	eax, DWORD PTR 8+[esp+32]
 	add	edi, 28					; 0000001cH
 	dec	eax
 	mov	DWORD PTR 8+[esp+32], eax
-	jne	$L92605
+	jne	$L92606
 	pop	edi
 	pop	esi
 	pop	ebp
 	pop	ebx
-$L92607:
+$L92608:
 
 ; 1568 : 		}
 ; 1569 : 	}
@@ -5631,7 +5631,7 @@ _bEnable$ = 8
 
 	test	al, al
 	mov	BYTE PTR [edi+89], al
-	jne	SHORT $L92633
+	jne	SHORT $L92634
 
 ; 1577 : 	{
 ; 1578 : 		//清除所有内建对象的光源
@@ -5641,9 +5641,9 @@ _bEnable$ = 8
 	mov	eax, DWORD PTR [edi+92276]
 	mov	esi, DWORD PTR [eax]
 	cmp	esi, eax
-	je	SHORT $L92633
+	je	SHORT $L92634
 	push	ebx
-$L92632:
+$L92633:
 
 ; 1581 : 		{
 ; 1582 : 			if((*i)->m_pParent == NULL)
@@ -5651,7 +5651,7 @@ $L92632:
 	mov	eax, DWORD PTR [esi+8]
 	mov	ecx, DWORD PTR [eax+4]
 	test	ecx, ecx
-	jne	SHORT $L92634
+	jne	SHORT $L92635
 
 ; 1583 : 			{
 ; 1584 : 				delete (*i);
@@ -5677,18 +5677,18 @@ $L92632:
 
 ; 1586 : 				continue;
 
-	jmp	SHORT $L96095
-$L92634:
+	jmp	SHORT $L96096
+$L92635:
 
 ; 1587 : 			}
 ; 1588 : 			++i;
 
 	mov	esi, DWORD PTR [esi]
-$L96095:
+$L96096:
 	cmp	esi, DWORD PTR [edi+92276]
-	jne	SHORT $L92632
+	jne	SHORT $L92633
 	pop	ebx
-$L92633:
+$L92634:
 	pop	edi
 	pop	esi
 
@@ -5728,8 +5728,8 @@ _TEXT	SEGMENT
 	mov	ebx, DWORD PTR [edi+4]
 	mov	esi, DWORD PTR [ebx]
 	cmp	esi, ebx
-	je	SHORT $L96291
-$L96290:
+	je	SHORT $L96293
+$L96292:
 	mov	eax, esi
 	mov	esi, DWORD PTR [esi]
 	push	eax
@@ -5745,8 +5745,8 @@ $L96290:
 	dec	ecx
 	cmp	esi, ebx
 	mov	DWORD PTR [edi+8], ecx
-	jne	SHORT $L96290
-$L96291:
+	jne	SHORT $L96292
+$L96293:
 
 ; 152  : 		_Freenode(_Head);
 

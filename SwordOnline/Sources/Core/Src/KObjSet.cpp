@@ -287,12 +287,17 @@ int		KObjSet::Add(int nDataID, KMapPos MapPos, KObjItemInfo sItemInfo)
 		{
 			// Kiểm tra TẤT CẢ magic attributes [0-5], không chỉ [0]
 			BOOL bHasMagic = FALSE;
-			for(int i = 0; i < 6; i++)
+			int nAttribIdx;
+			KItemGeneratorParam* pGenParam = Item[sItemInfo.m_nItemID].GetGeneratorParam();
+			if(pGenParam)
 			{
-				if(Item[sItemInfo.m_nItemID].GetAttribType(i) > 0)
+				for(nAttribIdx = 0; nAttribIdx < 6; nAttribIdx++)
 				{
-					bHasMagic = TRUE;
-					break;
+					if(pGenParam->nGeneratorLevel[nAttribIdx] > 0)
+					{
+						bHasMagic = TRUE;
+						break;
+					}
 				}
 			}
 			if(bHasMagic)
@@ -303,6 +308,17 @@ int		KObjSet::Add(int nDataID, KMapPos MapPos, KObjItemInfo sItemInfo)
 			{
 				sItemInfo.m_nColorID = 0;
 			}
+			printf("[ITEM_COLOR_FIX] %s | Genre:%d ColorID:%d HasMagic:%d | GenLevel:[%d,%d,%d,%d,%d,%d]\n",
+				Item[sItemInfo.m_nItemID].GetName(),
+				Item[sItemInfo.m_nItemID].GetGenre(),
+				sItemInfo.m_nColorID,
+				bHasMagic,
+				pGenParam ? pGenParam->nGeneratorLevel[0] : -1,
+				pGenParam ? pGenParam->nGeneratorLevel[1] : -1,
+				pGenParam ? pGenParam->nGeneratorLevel[2] : -1,
+				pGenParam ? pGenParam->nGeneratorLevel[3] : -1,
+				pGenParam ? pGenParam->nGeneratorLevel[4] : -1,
+				pGenParam ? pGenParam->nGeneratorLevel[5] : -1);
 		}
 		else if(Item[sItemInfo.m_nItemID].GetGenre() == item_task || 
 				Item[sItemInfo.m_nItemID].GetGenre() == item_script)

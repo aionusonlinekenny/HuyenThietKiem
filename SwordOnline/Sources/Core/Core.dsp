@@ -153,7 +153,7 @@ LINK32=link.exe
 # SUBTRACT LINK32 /pdb:none
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
-PostBuild_Cmds=md ..\..\..\bin\Client\release	md ..\..\lib\release	copy ClientRelease\CoreClient.pdb ..\..\..\bin\Client\CoreClient.pdb	copy ClientRelease\CoreClient.map ..\..\..\bin\Client\CoreClient.map	copy ClientRelease\CoreClient.dll ..\..\..\bin\Client\CoreClient.dll	copy ClientRelease\CoreClient.dll ..\..\..\bin\Client\release\CoreClient.dll	copy ClientRelease\CoreClient.lib ..\..\lib\release\CoreClient.lib
+PostBuild_Cmds=md ..\..\..\bin\Client\release	md ..\..\lib\release	copy ClientRelease\CoreClient.pdb ..\..\..\bin\Client\CoreClient.pdb	copy ClientRelease\CoreClient.map ..\..\..\bin\Client\CoreClient.map	copy ClientRelease\CoreClient.dll ..\..\..\bin\Client\CoreClient.dll	copy ClientRelease\CoreClient.dll ..\..\..\bin\Client\release\CoreClient.dll	copy ClientRelease\CoreClient.lib ..\..\lib\release\CoreClient.lib	copy ClientRelease\CoreClient.map ..\..\..\bin\Client\release\CoreClient.map	copy ClientRelease\CoreClient.pdb ..\..\..\bin\Client\release\CoreClient.pdb
 # End Special Build Tool
 
 !ENDIF 

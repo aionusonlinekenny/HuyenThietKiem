@@ -5024,6 +5024,13 @@ int KCoreShell::PAIOperation(unsigned int uOper, unsigned int uParam, int nParam
 			Player[CLIENT_PLAYER_INDEX].m_cAI.m_bFilterEquipment = uParam;
 		}
 		break;
+		case GPI_P_AUTOSORT:
+		{
+#ifndef _SERVER
+			Player[CLIENT_PLAYER_INDEX].m_bSortEquipment_Active = uParam;
+#endif
+		}
+		break;
 		case GPI_P_SAVERAP:
 		{
 			Player[CLIENT_PLAYER_INDEX].m_cAI.m_SaveRAP = uParam;
@@ -5039,6 +5046,14 @@ int KCoreShell::PAIOperation(unsigned int uOper, unsigned int uParam, int nParam
 			Player[CLIENT_PLAYER_INDEX].m_cAI.m_nPiceItem = uParam;
 		}
 		break;
+#ifndef _SERVER
+		case GPI_S_SORTEQUIPMENT_ID:
+		{
+			// Auto-sort inventory - compact items from left to right
+			Player[CLIENT_PLAYER_INDEX].m_ItemList.AutoSortEquipment();
+		}
+		break;
+#endif
 		case GPI_S_LEVELITEMCK:
 		{
 			Player[CLIENT_PLAYER_INDEX].m_cAI.m_bLevelItem = uParam;

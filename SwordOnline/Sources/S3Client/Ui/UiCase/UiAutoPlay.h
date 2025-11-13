@@ -90,6 +90,7 @@ public:
 	void	LoadScheme(KIniFile* pFile);
 	void 	LoadPickSetting();
 	void	SavePickSetting();
+	BOOL	IsAutoSortEnabled();
 private:
 	static KUiPick* m_pSelf;
 	int		WndProc(unsigned int uMsg, unsigned int uParam, int nParam);
@@ -99,6 +100,7 @@ private:
 	void	OnCheckInput();
 	void	OnCheckLevel();
 	void	OnFillterItem();
+	void	OnAutoSortItem();
 	void	OnSelectPickType(int nIndex);
 	void	OnSelectReturnPlace();	
 	void 	SetPick(int nIndex, int nSel);
@@ -116,6 +118,8 @@ private:
 	KWndText32	m_PickAllEdit;
 	KWndButton	m_PickAllPopup;
 	KWndButton	m_PickFilterCK;
+	KWndButton	m_PickAutoSortCK;
+	KWndText32	t_PickAutoSortTxt;
 	KWndButton	m_PickFollowTargetCK;
 	KWndEdit32	m_PickFollowTargetEdit;
 	KWndText32	m_PickChooseFilterTxt;

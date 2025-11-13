@@ -8506,12 +8506,28 @@ void KNpc::LoseSingleItem(int nBelongPlayer)
 			pnMagicLevel[j] = 0;
 		}
 	}
-
+// Debug: Check pnMagicLevel before creating item
+	printf("[NPC_DROP_DEBUG] Before ItemSet.Add | Genre:%d Level:%d Luck:%d | MagicLevel:[%d,%d,%d,%d,%d,%d]\n",
+		nGenre, nLevel, nLuck,
+		pnMagicLevel[0], pnMagicLevel[1], pnMagicLevel[2],
+		pnMagicLevel[3], pnMagicLevel[4], pnMagicLevel[5]);
+		
 	const int nItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParticular, pnMagicLevel, g_SubWorldSet.GetGameVersion());
 
 	if( (nItemIdx <= 0) || (nItemIdx >= MAX_ITEM) )
 		return;
-
+	
+	// Debug: Check magic attributes right after item creation
+	printf("[NPC_DROP_DEBUG] Item created: %s | Genre:%d | Attrib:[%d,%d,%d,%d,%d,%d]\n",
+		Item[nItemIdx].GetName(),
+		Item[nItemIdx].GetGenre(),
+		Item[nItemIdx].GetAttribType(0),
+		Item[nItemIdx].GetAttribType(1),
+		Item[nItemIdx].GetAttribType(2),
+		Item[nItemIdx].GetAttribType(3),
+		Item[nItemIdx].GetAttribType(4),
+		Item[nItemIdx].GetAttribType(5));
+		
 	int		nX, nY;
 	POINT	ptLocal;
 	KMapPos	Pos;

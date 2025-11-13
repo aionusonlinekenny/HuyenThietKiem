@@ -138,6 +138,7 @@ public:
 	BYTE			m_btPickUpKind;
 	BOOL			m_SaveRAP;
 	BOOL			m_bFilterEquipment;
+	BOOL			m_bAutoSortEquipment;
 	BOOL			m_bObject;
 	int				m_nObject;
 	BOOL 			m_bPiceItem;
