@@ -1077,7 +1077,7 @@ void KUiPick::OnAutoSortClick()
 		};
 
 		AUTO_SORT_EQUIPMENT_REQ req;
-		req.ProtocolType = 161; // c2s_autosortequipment
+		req.ProtocolType = c2s_autosortequipment;
 		g_pClient->SendPackToServer((BYTE*)&req, sizeof(req));
 	}
 }

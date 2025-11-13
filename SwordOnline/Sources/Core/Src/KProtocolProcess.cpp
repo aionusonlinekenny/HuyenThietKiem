@@ -264,7 +264,7 @@ KProtocolProcess::KProtocolProcess()
 	ProcessFunc[c2s_avatarplayer] = &KProtocolProcess::c2sAvatarPlayer; //Player Avatar by kinnox;	
 	ProcessFunc[c2s_recoverybox] = &KProtocolProcess::RecoveryBoxCmd; //TrembleItem by kinnox;
 	ProcessFunc[c2s_rightitemautomove] = &KProtocolProcess::PlayerRightAutoMove;//AutoRightClick
-	ProcessFunc[161] = &KProtocolProcess::PlayerAutoSortEquipment; // c2s_autosortequipment - Auto Sort Inventory
+	ProcessFunc[c2s_autosortequipment] = &KProtocolProcess::PlayerAutoSortEquipment; //Auto Sort Inventory
 #endif
 }
 

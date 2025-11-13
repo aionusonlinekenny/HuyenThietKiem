@@ -36,8 +36,8 @@ enum s2c_PROTOCOL
 	s2c_accountlogin,
 	s2c_gamelogin,
 	s2c_accountlogout,
-	s2c_gatewayverify,		//ÓÃÓÚÁ¬½ÓºóµÚÒ»¸ö°ü
-	s2c_gatewayverifyagain,		//ÓÃÓÚÖØÁ¬ºóµÚÒ»¸ö°ü
+	s2c_gatewayverify,		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óºï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½
+	s2c_gatewayverifyagain,		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½
 	s2c_gatewayinfo,
 
 	s2c_multiserverbegin = 48,
@@ -326,7 +326,8 @@ enum c2s_PROTOCOL
 	c2s_topbattle,//Report Battle by kinnox;
 	c2s_avatarplayer,//Player Avatar by kinnox;
 	c2s_recoverybox,//TrembleItem by kinnox;
-	
+	c2s_rightitemautomove, //AutoMoveRightClick
+	c2s_autosortequipment, //Auto Sort Inventory
 	_c2s_begin_relay = 250,
 	c2s_extend = _c2s_begin_relay,
 	c2s_extendchat,
@@ -352,13 +353,13 @@ enum c2c_PROTOCOL
 	c2c_end,
 };
 
-//ÒÔÏÂĞ­ÒéÎªc2s_extendĞ­ÒéµÄÅÉÉúĞ­Òé£¬²Î¼ûKRelayProtocol.h
-//À©Õ¹Ğ­Òé±ØĞëÒÔEXTEND_HEADER´òÍ·
+//ï¿½ï¿½ï¿½ï¿½Ğ­ï¿½ï¿½Îªc2s_extendĞ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ­ï¿½é£¬ï¿½Î¼ï¿½KRelayProtocol.h
+//ï¿½ï¿½Õ¹Ğ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½EXTEND_HEADERï¿½ï¿½Í·
 
-enum gm_PROTOCOL		//¸ÃĞ­Òé×å½öÓÃÓÚgmºÍserverÖ®¼ä
+enum gm_PROTOCOL		//ï¿½ï¿½Ğ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gmï¿½ï¿½serverÖ®ï¿½ï¿½
 {
 	gm_begin = 32,
-	gm_c2s_execute,				//ÒÔÏÂĞ­ÒéÓÉGM¿Í»§¶ËÒÔrelay_c2c_askwaydata×ª·¢¸øÓÎÏ·ÊÀ½ç
+	gm_c2s_execute,				//ï¿½ï¿½ï¿½ï¿½Ğ­ï¿½ï¿½ï¿½ï¿½GMï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½relay_c2c_askwaydata×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½
 	gm_c2s_disable,
 	gm_c2s_enable,
 	gm_c2s_tracking,
@@ -369,7 +370,7 @@ enum gm_PROTOCOL		//¸ÃĞ­Òé×å½öÓÃÓÚgmºÍserverÖ®¼ä
 	gm_c2s_getrolelist,
 	gm_c2s_broadcast_chat,
 
-	gm_s2c_tracking,			//ÒÔÏÂĞ­ÒéÓÉÓÎÏ·ÊÀ½çÒÔrelay_c2c_data×ª·¢¸øGM¿Í»§¶Ë
+	gm_s2c_tracking,			//ï¿½ï¿½ï¿½ï¿½Ğ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½relay_c2c_data×ªï¿½ï¿½ï¿½ï¿½GMï¿½Í»ï¿½ï¿½ï¿½
 	gm_s2c_getrole,
 	gm_s2c_findplayer,
 	gm_s2c_getrolelist,
@@ -378,7 +379,7 @@ enum gm_PROTOCOL		//¸ÃĞ­Òé×å½öÓÃÓÚgmºÍserverÖ®¼ä
 };
 
 
-enum relay_PROTOCOL		//¸ÃĞ­Òé×å½öÓÃÓÚserverºÍrelayÖ®¼ä
+enum relay_PROTOCOL		//ï¿½ï¿½Ğ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½serverï¿½ï¿½relayÖ®ï¿½ï¿½
 {
 	relay_begin = 32,
 
@@ -408,7 +409,7 @@ enum chat_PROTOCOL
 	chat_filterplayer,
 };
 
-enum playercomm_PROTOCOL		//¸ÃĞ­Òé×å½öÓÃÓÚserverºÍclientÖ®¼ä,µ«ÊÇserver¿ÉÒÔ×ª·¢¸ørelay´¦Àí£¬ÒòÎªrelay³Ğµ£ÁË²¿·ÖserverµÄ¹¦ÄÜ
+enum playercomm_PROTOCOL		//ï¿½ï¿½Ğ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½serverï¿½ï¿½clientÖ®ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½serverï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½relayï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªrelayï¿½Ğµï¿½ï¿½Ë²ï¿½ï¿½ï¿½serverï¿½Ä¹ï¿½ï¿½ï¿½
 {
 	playercomm_begin = 32,
 
@@ -432,7 +433,7 @@ enum playercomm_PROTOCOL		//¸ÃĞ­Òé×å½öÓÃÓÚserverºÍclientÖ®¼ä,µ«ÊÇserver¿ÉÒÔ×ª·¢¸
 	playercomm_channelchat,
 };
 
-// game server ·¢¸ø s3client °ï»áÀ©Õ¹Ğ­Òé id
+// game server ï¿½ï¿½ï¿½ï¿½ s3client ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹Ğ­ï¿½ï¿½ id
 enum
 {
 	enumTONG_SYNC_ID_CREATE_FAIL = 0,
