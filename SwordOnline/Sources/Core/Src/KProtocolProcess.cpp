@@ -4448,7 +4448,7 @@ void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
     SortItem sortedItems[MAX_EQUIPMENT_ITEM];
     int nItemCount = 0;
 
-    // Gather all items in equipment room
+    // Gather all items in equipment room and remove them temporarily
     PlayerItem* pItem = Player[nIndex].m_ItemList.GetFirstItem();
     while (pItem && nItemCount < MAX_EQUIPMENT_ITEM)
     {
@@ -4458,15 +4458,15 @@ void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
             sortedItems[nItemCount].nWidth = Item[pItem->nIdx].GetWidth();
             sortedItems[nItemCount].nHeight = Item[pItem->nIdx].GetHeight();
             sortedItems[nItemCount].nArea = sortedItems[nItemCount].nWidth * sortedItems[nItemCount].nHeight;
-
-            // Remove from inventory grid (pickup)
-            Player[nIndex].m_ItemList.m_Room[room_equipment].PickUpItem(
-                pItem->nIdx, pItem->nX, pItem->nY,
-                sortedItems[nItemCount].nWidth, sortedItems[nItemCount].nHeight);
-
             nItemCount++;
         }
         pItem = Player[nIndex].m_ItemList.GetNextItem();
+    }
+
+    // Remove all items from ItemList and inventory grid
+    for (int i = 0; i < nItemCount; i++)
+    {
+        Player[nIndex].m_ItemList.Remove(sortedItems[i].nIdx);
     }
 
     // Sort by area (larger items first for better packing)
@@ -4483,28 +4483,15 @@ void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
         }
     }
 
-    // Re-place items from top-left
+    // Re-add items in sorted order from top-left
     for (int i = 0; i < nItemCount; i++)
     {
         POINT ptPos;
         if (Player[nIndex].m_ItemList.m_Room[room_equipment].FindRoom(
             sortedItems[i].nWidth, sortedItems[i].nHeight, &ptPos))
         {
-            // Place item at new position
-            Player[nIndex].m_ItemList.m_Room[room_equipment].PlaceItem(
-                ptPos.x, ptPos.y, sortedItems[i].nIdx,
-                sortedItems[i].nWidth, sortedItems[i].nHeight);
-
-            // Update item position in m_Items array
-            int nItemListIdx = Player[nIndex].m_ItemList.SearchID(sortedItems[i].nIdx);
-            if (nItemListIdx >= 0)
-            {
-                Player[nIndex].m_ItemList.m_Items[nItemListIdx].nX = ptPos.x;
-                Player[nIndex].m_ItemList.m_Items[nItemListIdx].nY = ptPos.y;
-
-                // Sync to client
-                Player[nIndex].m_ItemList.SyncItem(nItemListIdx, FALSE, pos_equiproom, ptPos.x, ptPos.y, nIndex);
-            }
+            // Add item back at new position
+            Player[nIndex].m_ItemList.Add(sortedItems[i].nIdx, pos_equiproom, ptPos.x, ptPos.y);
         }
     }
 
