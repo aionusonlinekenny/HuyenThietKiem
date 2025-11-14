@@ -1066,12 +1066,23 @@ void KUiPick::OnFillterItem()
 }
 void KUiPick::OnAutoSortClick()
 {
-	// Send simple protocol to server to trigger auto-sort
-	// Server will handle all sorting logic and send back item move packets
+	// Send auto-sort toggle state to server
+	// Server will enable/disable automatic sorting on item pickup
+	BYTE btFlag = 0;
+	if (m_PickAutoSortCK.IsButtonChecked() > 0)
+		btFlag = 1;
+	else
+		btFlag = 0;
+
 	if (g_pClient)
 	{
-		BYTE protocol = c2s_autosortequipment; // c2s_autosortequipment - temporary ID, will define properly
-		g_pClient->SendPackToServer(&protocol, sizeof(protocol));
+		struct {
+			BYTE protocol;
+			BYTE mode;
+		} packet;
+		packet.protocol = c2s_autosortequipment;
+		packet.mode = btFlag;
+		g_pClient->SendPackToServer(&packet, sizeof(packet));
 	}
 }
 void KUiPick::OnGiveItem() 
