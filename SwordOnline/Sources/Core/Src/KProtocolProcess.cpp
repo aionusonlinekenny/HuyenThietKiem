@@ -4451,24 +4451,28 @@ void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
 
     // Check if this is a toggle command (2 bytes) or manual sort trigger (1 byte)
     // Packet structure: [protocol_byte] [optional: mode_byte]
-    // Mode 0 = disable auto-sort, Mode 1 = enable auto-sort, No mode byte = manual trigger
+    // Mode 0 = disable auto-sort, Mode 1 = enable auto-sort + sort immediately
     if (pProtocol && pProtocol[0] == c2s_autosortequipment)
     {
-        // Assume packet has mode byte if we want to support toggle
-        // For now, check if player flag exists and use it
         BYTE mode = pProtocol[1]; // Second byte is mode
 
-        if (mode == 0 || mode == 1)
+        if (mode == 0)
         {
-            // Toggle auto-sort on/off
-            Player[nIndex].m_cAI.m_bAutoSortEquipment = (mode == 1);
-            g_DebugLog("[SERVER] PlayerAutoSortEquipment: player=%d set auto-sort %s",
-                nIndex, mode ? "ON" : "OFF");
-            return; // Don't sort immediately, just set the flag
+            // Disable auto-sort, don't sort
+            Player[nIndex].m_cAI.m_bAutoSortEquipment = FALSE;
+            g_DebugLog("[SERVER] PlayerAutoSortEquipment: player=%d set auto-sort OFF", nIndex);
+            return;
+        }
+        else if (mode == 1)
+        {
+            // Enable auto-sort AND sort immediately (so user sees the effect)
+            Player[nIndex].m_cAI.m_bAutoSortEquipment = TRUE;
+            g_DebugLog("[SERVER] PlayerAutoSortEquipment: player=%d set auto-sort ON + sorting now", nIndex);
+            // Continue to sort below (don't return)
         }
     }
 
-    // Manual sort trigger or called from pickup handler
+    // Manual sort trigger or called from pickup handler or mode==1 (enable+sort)
     // Compact items to top-left
 
     // Collect all items from equiproom
