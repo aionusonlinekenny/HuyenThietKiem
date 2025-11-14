@@ -2956,6 +2956,39 @@ void KSwordOnLineSever::PlayerExchangeServer()
 				break;
 			case enumExchangeWaitForGameSvrRespone:
 				{
+					// FIX: Add timeout for waiting GameServer response
+					// If target GS doesn't respond within 30 seconds, cancel transfer
+					#define defMAX_EXCHANGE_TIMEOUT (30 * GAME_FPS)  // 30 seconds
+
+					int elapsed = m_nGameLoop - m_pGameStatus[i].nReplyPingTime;
+					if (elapsed > defMAX_EXCHANGE_TIMEOUT)
+					{
+						printf("[EXCHANGE-TIMEOUT] Player %d stuck waiting for GS response (%d loops) - cancelling transfer\n",
+							   nIndex, elapsed);
+
+						// Send cancel notification to client
+						tagNotifyPlayerExchange npe;
+						npe.cProtocol = s2c_notifyplayerexchange;
+						memset(&npe.guid, 0, sizeof(GUID));
+						npe.nIPAddr = 0;
+						npe.nPort = 0;
+						m_pServer->SendData(i, &npe, sizeof(tagNotifyPlayerExchange));
+
+						// Recover player state
+						m_pCoreServerShell->RecoverPlayerExchange(nIndex);
+
+						// Re-lock character in RoleServer
+						tagRoleEnterGame reg;
+						reg.ProtocolType = c2s_roleserver_lock;
+						reg.bLock = true;
+						m_pCoreServerShell->GetGameData(SGDI_CHARACTER_NAME, (unsigned int)reg.Name, nIndex);
+						if (m_pDatabaseClient)
+							m_pDatabaseClient->SendPackToServer((const void *)&reg, sizeof(tagRoleEnterGame));
+
+						// Return to normal playing state
+						m_pGameStatus[i].nGameStatus = enumPlayerPlaying;
+						m_pGameStatus[i].nExchangeStatus = enumExchangeBegin;
+					}
 				}
 				break;
 			case enumExchangeCleaning:
