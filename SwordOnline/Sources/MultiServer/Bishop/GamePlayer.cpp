@@ -424,44 +424,50 @@ bool CGamePlayer::Inactive()
         }
 
         // Detach from GameServer (GS will receive logout message)
+        // FIX: Loop through ALL GameServers to ensure complete cleanup
         if (!m_sAccountName.empty())
         {
             int nDetachCount = 0;
 
-            // Method 1: Detach from primary GameServer
-            CGameServer *pGS = static_cast<CGameServer*>(pGServer);
-            if (pGS)
+            // Detach from ALL GameServers (GS1-5) - simple, fast, no search
+            // This ensures account is cleaned up even if m_nAttachServerID is invalid
+            for (int gsId = 1; gsId <= 5; gsId++)
             {
-                if (pGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
+                IGServer *pServer = CGameServer::GetServer(gsId);
+                if (pServer)
                 {
-                    nDetachCount++;
-                    LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (primary)",
-                             m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID);
-                }
-            }
-
-            // Method 2: Detach from ALL other GameServers (fast loop, no search)
-            // FIX: Use direct iteration instead of FindServerByAccount() to avoid 15-second blocking delay
-            for (int gsId = 1; gsId <= 5; gsId++)  // Assuming 5 GameServers
-            {
-                if (gsId == m_nAttachServerID)
-                    continue;  // Skip primary (already handled above)
-
-                IGServer *pOtherServer = CGameServer::GetServer(gsId);
-                if (pOtherServer)
-                {
-                    CGameServer *pOtherGS = static_cast<CGameServer*>(pOtherServer);
-                    if (pOtherGS && pOtherGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
+                    CGameServer *pGS = static_cast<CGameServer*>(pServer);
+                    if (pGS)
                     {
-                        nDetachCount++;
-                        LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (stuck account cleanup)",
-                                 m_lnIdentityID, m_sAccountName.c_str(), gsId);
+                        bool bDetached = pGS->DetachAccountFromGameServer(m_sAccountName.c_str());
+                        if (bDetached)
+                        {
+                            nDetachCount++;
+                            if (gsId == m_nAttachServerID)
+                            {
+                                LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (primary)",
+                                         m_lnIdentityID, m_sAccountName.c_str(), gsId);
+                            }
+                            else
+                            {
+                                LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (cleanup stuck account)",
+                                         m_lnIdentityID, m_sAccountName.c_str(), gsId);
+                            }
+                        }
                     }
                 }
             }
 
-            LoginLog("[Inactive][ID=%ld] Total detached \"%s\" from %d GameServer(s)",
-                     m_lnIdentityID, m_sAccountName.c_str(), nDetachCount);
+            if (nDetachCount > 0)
+            {
+                LoginLog("[Inactive][ID=%ld] Total detached \"%s\" from %d GameServer(s)",
+                         m_lnIdentityID, m_sAccountName.c_str(), nDetachCount);
+            }
+            else
+            {
+                LoginLog("[Inactive][ID=%ld] WARNING: Account \"%s\" not found on any GameServer! (m_nAttachServerID=%d)",
+                         m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID);
+            }
         }
 
         // Cleanup local Bishop state
@@ -518,44 +524,50 @@ bool CGamePlayer::Inactive()
         // CRITICAL FIX: Detach account from GameServer on logout
         // Without this, account remains in m_theAccountInThisServer forever
         // causing "account already online" error on next login
+        // FIX: Loop through ALL GameServers to ensure complete cleanup
         if (!m_sAccountName.empty())
         {
             int nDetachCount = 0;
 
-            // Method 1: Detach from primary GameServer
-            CGameServer *pGS = static_cast<CGameServer*>(pGServer);
-            if (pGS)
+            // Detach from ALL GameServers (GS1-5) - simple, fast, no search
+            // This ensures account is cleaned up even if m_nAttachServerID is invalid
+            for (int gsId = 1; gsId <= 5; gsId++)
             {
-                if (pGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
+                IGServer *pServer = CGameServer::GetServer(gsId);
+                if (pServer)
                 {
-                    nDetachCount++;
-                    LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (primary)",
-                             m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID);
-                }
-            }
-
-            // Method 2: Detach from ALL other GameServers (fast loop, no search)
-            // FIX: Use direct iteration instead of FindServerByAccount() to avoid 15-second blocking delay
-            for (int gsId = 1; gsId <= 5; gsId++)  // Assuming 5 GameServers
-            {
-                if (gsId == m_nAttachServerID)
-                    continue;  // Skip primary (already handled above)
-
-                IGServer *pOtherServer = CGameServer::GetServer(gsId);
-                if (pOtherServer)
-                {
-                    CGameServer *pOtherGS = static_cast<CGameServer*>(pOtherServer);
-                    if (pOtherGS && pOtherGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
+                    CGameServer *pGS = static_cast<CGameServer*>(pServer);
+                    if (pGS)
                     {
-                        nDetachCount++;
-                        LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (stuck account cleanup)",
-                                 m_lnIdentityID, m_sAccountName.c_str(), gsId);
+                        bool bDetached = pGS->DetachAccountFromGameServer(m_sAccountName.c_str());
+                        if (bDetached)
+                        {
+                            nDetachCount++;
+                            if (gsId == m_nAttachServerID)
+                            {
+                                LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (primary)",
+                                         m_lnIdentityID, m_sAccountName.c_str(), gsId);
+                            }
+                            else
+                            {
+                                LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (cleanup stuck account)",
+                                         m_lnIdentityID, m_sAccountName.c_str(), gsId);
+                            }
+                        }
                     }
                 }
             }
 
-            LoginLog("[Inactive][ID=%ld] Total detached \"%s\" from %d GameServer(s) (not on GS path)",
-                     m_lnIdentityID, m_sAccountName.c_str(), nDetachCount);
+            if (nDetachCount > 0)
+            {
+                LoginLog("[Inactive][ID=%ld] Total detached \"%s\" from %d GameServer(s) (not on GS path)",
+                         m_lnIdentityID, m_sAccountName.c_str(), nDetachCount);
+            }
+            else
+            {
+                LoginLog("[Inactive][ID=%ld] WARNING: Account \"%s\" not found on any GameServer! (m_nAttachServerID=%d, not on GS path)",
+                         m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID);
+            }
         }
     }
     if (!m_sAccountName.empty())
