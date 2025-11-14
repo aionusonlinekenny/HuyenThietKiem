@@ -656,13 +656,15 @@ void KLogin::ProcessToLoginGameServResponse(tagNotifyPlayerLogin* pResponse)
 			{
 				ReturnToIdle();
 				m_Result = LL_R_CONNECT_FAILED;
+				g_NetConnectAgent.DisconnectClient();
 			}
-			g_NetConnectAgent.DisconnectClient();
+			
 		}
 		else
 		{
 			ReturnToIdle();
 			m_Result = LL_R_SERVER_SHUTDOWN;
+			g_NetConnectAgent.DisconnectClient();
 		}
 	}
 }

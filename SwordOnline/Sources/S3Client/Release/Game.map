@@ -1,12 +1,12 @@
  Game
 
- Timestamp is 69163efa (Thu Nov 13 15:26:34 2025)
+ Timestamp is 69166351 (Thu Nov 13 18:01:37 2025)
 
  Preferred load address is 00400000
 
  Start         Length     Name                   Class
- 0001:00000000 0008e09aH .text                   CODE
- 0001:0008e0a0 0000bcacH .text$x                 CODE
+ 0001:00000000 0008e06aH .text                   CODE
+ 0001:0008e070 0000bcacH .text$x                 CODE
  0002:00000000 00000434H .idata$5                DATA
  0002:00000438 00002684H .rdata                  DATA
  0002:00002ac0 0000a208H .xdata$x                DATA
@@ -2911,385 +2911,385 @@
  0001:00087f60       ?IsConnecting@KNetConnectAgent@@QAEHH@Z 00488f60 f   NetConnectAgent.obj
  0001:00087f80       ?ClientCallBack@@YGXPAXABK@Z 00488f80 f   NetConnectAgent.obj
  0001:00087fc0       ?ProcessSwitchGameSvrMsg@KNetConnectAgent@@AAE_NPAX@Z 00488fc0 f   NetConnectAgent.obj
- 0001:00088140       ?GetIpAddress@@YA_NPBDPAE@Z 00489140 f   Login.obj
- 0001:00088200       ?RandMemSet@@YAXHPAE@Z     00489200 f   Login.obj
- 0001:00088230       ??0KLogin@@QAE@XZ          00489230 f   Login.obj
- 0001:00088270       ?ClearAccountPassword@KLogin@@AAEX_N0@Z 00489270 f   Login.obj
- 0001:000882b0       ??1KLogin@@QAE@XZ          004892b0 f   Login.obj
- 0001:000882c0       ?CreateConnection@KLogin@@QAEHPBE@Z 004892c0 f   Login.obj
- 0001:00088350       ?AccountLogin@KLogin@@QAEHPBDABUtagKSG_PASSWORD@@_N@Z 00489350 f   Login.obj
- 0001:000883c0       ?SelectRole@KLogin@@QAEHH@Z 004893c0 f   Login.obj
- 0001:000884a0       ?CreateRole@KLogin@@QAEHPAUKRoleChiefInfo@@@Z 004894a0 f   Login.obj
- 0001:000885b0       ?DeleteRole@KLogin@@QAEHHABUtagKSG_PASSWORD@@@Z 004895b0 f   Login.obj
- 0001:000886d0       ?NotifyTimeout@KLogin@@QAEXXZ 004896d0 f   Login.obj
- 0001:000886f0       ?NotifyDisconnect@KLogin@@QAEXXZ 004896f0 f   Login.obj
- 0001:00088710       ?NotifyToStartGame@KLogin@@QAEXXZ 00489710 f   Login.obj
- 0001:00088780       ?ReturnToIdle@KLogin@@QAEXXZ 00489780 f   Login.obj
- 0001:000887c0       ?ReturnToIdleLixian@KLogin@@QAEXXZ 004897c0 f   Login.obj
- 0001:00088800       ?AutoLogin@KLogin@@QAEXXZ  00489800 f   Login.obj
- 0001:00088880       ?IsAutoLoginEnable@KLogin@@QAEHXZ 00489880 f   Login.obj
- 0001:000888c0       ?SetRememberAccountFlag@KLogin@@QAEX_N@Z 004898c0 f   Login.obj
- 0001:000888e0       ?SetRememberAllFlag@KLogin@@QAEX_N@Z 004898e0 f   Login.obj
- 0001:00088900       ?SetVirtualKeyboardFlag@KLogin@@QAEX_N@Z 00489900 f   Login.obj
- 0001:00088910       ?GetRoleInfo@KLogin@@QAEHHPAUKRoleChiefInfo@@@Z 00489910 f   Login.obj
- 0001:00088950       ?ProcessAccountLoginResponse@KLogin@@AAEXPAUKLoginStructHead@@@Z 00489950 f   Login.obj
- 0001:00088b00       ?ProcessRoleListResponse@KLogin@@AAEXPAUTProcessData@@@Z 00489b00 f   Login.obj
- 0001:00088c00       ?ProcessCreateRoleResponse@KLogin@@AAEXPAUtagNewDelRoleResponse@@@Z 00489c00 f   Login.obj
- 0001:00088c60       ?ProcessDeleteRoleResponse@KLogin@@AAEXPAUtagNewDelRoleResponse@@@Z 00489c60 f   Login.obj
- 0001:00088db0       ?ProcessAccountExtPointResponse@KLogin@@AAEXPAUKLoginStructHead@@@Z 00489db0 f   Login.obj
- 0001:00088ef0       ?ProcessToLoginGameServResponse@KLogin@@AAEXPAUtagNotifyPlayerLogin@@@Z 00489ef0 f   Login.obj
- 0001:00088fc0       ?AcceptNetMsg@KLogin@@UAEXPAX@Z 00489fc0 f   Login.obj
- 0001:00089030       ?GetResult@KLogin@@QAE?AW4LOGIN_LOGIC_RESULT_INFO@@XZ 0048a030 f   Login.obj
- 0001:00089040       ?GetRoleCount@KLogin@@QAEHAAH@Z 0048a040 f   Login.obj
- 0001:000890d0       ?GetLoginAccount@KLogin@@QAE_NPAD@Z 0048a0d0 f   Login.obj
- 0001:000890f0       ?LoadLoginChoice@KLogin@@QAEXXZ 0048a0f0 f   Login.obj
- 0001:000892c0       ?SaveLoginChoice@KLogin@@QAEXXZ 0048a2c0 f   Login.obj
- 0001:00089570       ?GetServerRegionList@KLogin@@QAEPAUKLoginServer@@AAH0@Z 0048a570 f   Login.obj
- 0001:000896e0       ?GetServerList@KLogin@@QAEPAUKLoginServer@@HAAH0@Z 0048a6e0 f   Login.obj
- 0001:00089c00       ?SetAccountServer@KLogin@@QAEHABUKLoginServer@@@Z 0048ac00 f   Login.obj
- 0001:00089c20       ?GetVirtualKeyboard@KLogin@@QAE_NXZ 0048ac20 f   Login.obj
- 0001:00089c30       ?Request@KLogin@@AAEHPBDPBUtagKSG_PASSWORD@@H@Z 0048ac30 f   Login.obj
- 0001:00089d20       ?ConnectAccountServer@KLogin@@AAEHPBE@Z 0048ad20 f   Login.obj
- 0001:00089d40       ?RegistNetAgent@KLogin@@AAEXXZ 0048ad40 f   Login.obj
- 0001:00089d80       ?UnRegistNetAgent@KLogin@@AAEXXZ 0048ad80 f   Login.obj
- 0001:00089dc0       ?SetAccountPassword@KLogin@@AAEXPBDPBUtagKSG_PASSWORD@@@Z 0048adc0 f   Login.obj
- 0001:00089e30       ?GetAccountPassword@KLogin@@AAEXPADPAUtagKSG_PASSWORD@@@Z 0048ae30 f   Login.obj
- 0001:00089e90       ?TextMsgFilter@@YAHPBDH@Z  0048ae90 f   TextCtrlCmd.obj
- 0001:00089ec0       ?Error_SetErrorCode@@YAXI@Z 0048aec0 f   ErrorCode.obj
- 0001:00089ed0       ?Error_SetErrorString@@YAXPBD@Z 0048aed0 f   ErrorCode.obj
- 0001:00089ef0       ?Error_Box@@YAXXZ          0048aef0 f   ErrorCode.obj
- 0001:0008a120       _GetTickCount@0            0048b120 f   kernel32:KERNEL32.dll
- 0001:0008a126       _DeleteFileA@4             0048b126 f   kernel32:KERNEL32.dll
- 0001:0008a12c       _GetTempFileNameA@16       0048b12c f   kernel32:KERNEL32.dll
- 0001:0008a132       _GetTempPathA@8            0048b132 f   kernel32:KERNEL32.dll
- 0001:0008a138       _GlobalUnlock@4            0048b138 f   kernel32:KERNEL32.dll
- 0001:0008a13e       _GlobalLock@4              0048b13e f   kernel32:KERNEL32.dll
- 0001:0008a144       _GlobalAlloc@8             0048b144 f   kernel32:KERNEL32.dll
- 0001:0008a14a       _MulDiv@12                 0048b14a f   kernel32:KERNEL32.dll
- 0001:0008a150       _FreeLibrary@4             0048b150 f   kernel32:KERNEL32.dll
- 0001:0008a156       _GetProcAddress@8          0048b156 f   kernel32:KERNEL32.dll
- 0001:0008a15c       _LoadLibraryA@4            0048b15c f   kernel32:KERNEL32.dll
- 0001:0008a162       _SystemTimeToTzSpecificLocalTime@12 0048b162 f   kernel32:KERNEL32.dll
- 0001:0008a168       _RemoveDirectoryA@4        0048b168 f   kernel32:KERNEL32.dll
- 0001:0008a16e       _FindClose@4               0048b16e f   kernel32:KERNEL32.dll
- 0001:0008a174       _FindNextFileA@8           0048b174 f   kernel32:KERNEL32.dll
- 0001:0008a17a       _SetFileAttributesA@8      0048b17a f   kernel32:KERNEL32.dll
- 0001:0008a180       _FindFirstFileA@8          0048b180 f   kernel32:KERNEL32.dll
- 0001:0008a186       _GetVersion@0              0048b186 f   kernel32:KERNEL32.dll
- 0001:0008a18c       _FreeConsole@0             0048b18c f   kernel32:KERNEL32.dll
- 0001:0008a192       _AllocConsole@0            0048b192 f   kernel32:KERNEL32.dll
- 0001:0008a198       _Sleep@4                   0048b198 f   kernel32:KERNEL32.dll
- 0001:0008a19e       _lstrcpyA@8                0048b19e f   kernel32:KERNEL32.dll
- 0001:0008a1a4       _lstrcpynA@12              0048b1a4 f   kernel32:KERNEL32.dll
- 0001:0008a1aa       _SetCursor@4               0048b1aa f   user32:USER32.dll
- 0001:0008a1b0       _LoadCursorA@8             0048b1b0 f   user32:USER32.dll
- 0001:0008a1b6       _LoadCursorFromFileA@4     0048b1b6 f   user32:USER32.dll
- 0001:0008a1bc       _ShowCursor@4              0048b1bc f   user32:USER32.dll
- 0001:0008a1c2       _SetCaretPos@8             0048b1c2 f   user32:USER32.dll
- 0001:0008a1c8       _CloseClipboard@0          0048b1c8 f   user32:USER32.dll
- 0001:0008a1ce       _SetClipboardData@8        0048b1ce f   user32:USER32.dll
- 0001:0008a1d4       _EmptyClipboard@0          0048b1d4 f   user32:USER32.dll
- 0001:0008a1da       _OpenClipboard@4           0048b1da f   user32:USER32.dll
- 0001:0008a1e0       _GetClipboardData@4        0048b1e0 f   user32:USER32.dll
- 0001:0008a1e6       _GetKeyState@4             0048b1e6 f   user32:USER32.dll
- 0001:0008a1ec       _SetCursorPos@8            0048b1ec f   user32:USER32.dll
- 0001:0008a1f2       _ClientToScreen@8          0048b1f2 f   user32:USER32.dll
- 0001:0008a1f8       _MessageBoxA@16            0048b1f8 f   user32:USER32.dll
- 0001:0008a1fe       _ShowWindow@8              0048b1fe f   user32:USER32.dll
- 0001:0008a204       _UpdateWindow@4            0048b204 f   user32:USER32.dll
- 0001:0008a20a       _LoadImageA@24             0048b20a f   user32:USER32.dll
- 0001:0008a210       _DefWindowProcA@16         0048b210 f   user32:USER32.dll
- 0001:0008a216       _SendMessageA@16           0048b216 f   user32:USER32.dll
- 0001:0008a21c       _SetWindowTextA@8          0048b21c f   user32:USER32.dll
- 0001:0008a222       _wsprintfA                 0048b222 f   user32:USER32.dll
- 0001:0008a228       _DeleteObject@4            0048b228 f   gdi32:GDI32.dll
- 0001:0008a22e       _SHGetSpecialFolderPathA@16 0048b22e f   shell32:SHELL32.dll
- 0001:0008a234       _ShellExecuteA@24          0048b234 f   shell32:SHELL32.dll
- 0001:0008a23a       _Shell_NotifyIconA@8       0048b23a f   shell32:SHELL32.dll
- 0001:0008a240       _lua_tostring              0048b240 f   lualibdll:LuaLibDll.dll
- 0001:0008a246       _lua_gettop                0048b246 f   lualibdll:LuaLibDll.dll
- 0001:0008a24c       _lua_tonumber              0048b24c f   lualibdll:LuaLibDll.dll
- 0001:0008a252       _lua_type                  0048b252 f   lualibdll:LuaLibDll.dll
- 0001:0008a258       _lua_pushnumber            0048b258 f   lualibdll:LuaLibDll.dll
- 0001:0008a25e       _lua_pushstring            0048b25e f   lualibdll:LuaLibDll.dll
- 0001:0008a264       _lua_isnumber              0048b264 f   lualibdll:LuaLibDll.dll
- 0001:0008a26a       _TEncodeText               0048b26a f   engine:Engine.dll
- 0001:0008a270       _TGetEncodedTextLineCount  0048b270 f   engine:Engine.dll
- 0001:0008a276       ??1KIniFile@@QAE@XZ        0048b276 f   engine:Engine.dll
- 0001:0008a27c       ?GetString@KIniFile@@QAEHPBD00PADK@Z 0048b27c f   engine:Engine.dll
- 0001:0008a282       ?GetInteger@KIniFile@@QAEHPBD0HPAH@Z 0048b282 f   engine:Engine.dll
- 0001:0008a288       ?GetShort@KIniFile@@QAEHPBD0FPAF@Z 0048b288 f   engine:Engine.dll
- 0001:0008a28e       ?Load@KIniFile@@QAEHPBD@Z  0048b28e f   engine:Engine.dll
- 0001:0008a294       ??0KIniFile@@QAE@XZ        0048b294 f   engine:Engine.dll
- 0001:0008a29a       _TFindSpecialCtrlInEncodedText 0048b29a f   engine:Engine.dll
- 0001:0008a2a0       ?g_CreatePath@@YAXPAD@Z    0048b2a0 f   engine:Engine.dll
- 0001:0008a2a6       _AdviseEngine              0048b2a6 f   engine:Engine.dll
- 0001:0008a2ac       _UnAdviseEngine            0048b2ac f   engine:Engine.dll
- 0001:0008a2b2       ??1KPakFile@@QAE@XZ        0048b2b2 f   engine:Engine.dll
- 0001:0008a2b8       ??1KFile@@QAE@XZ           0048b2b8 f   engine:Engine.dll
- 0001:0008a2be       ?Close@KFile@@QAEXXZ       0048b2be f   engine:Engine.dll
- 0001:0008a2c4       ?Close@KPakFile@@QAEXXZ    0048b2c4 f   engine:Engine.dll
- 0001:0008a2ca       ?Read@KPakFile@@QAEKPAXI@Z 0048b2ca f   engine:Engine.dll
- 0001:0008a2d0       ?Write@KFile@@QAEKPAXK@Z   0048b2d0 f   engine:Engine.dll
- 0001:0008a2d6       ?Size@KPakFile@@QAEKXZ     0048b2d6 f   engine:Engine.dll
- 0001:0008a2dc       ?Open@KPakFile@@QAEHPBD@Z  0048b2dc f   engine:Engine.dll
- 0001:0008a2e2       ?Create@KFile@@QAEHPAD@Z   0048b2e2 f   engine:Engine.dll
- 0001:0008a2e8       ??0KFile@@QAE@XZ           0048b2e8 f   engine:Engine.dll
- 0001:0008a2ee       ??0KPakFile@@QAE@XZ        0048b2ee f   engine:Engine.dll
- 0001:0008a2f4       ??0KIme@@QAE@XZ            0048b2f4 f   engine:Engine.dll
- 0001:0008a2fa       ??1KIme@@QAE@XZ            0048b2fa f   engine:Engine.dll
- 0001:0008a300       ?CloseIME@KIme@@QAEXXZ     0048b300 f   engine:Engine.dll
- 0001:0008a306       ?DisableLanguageChange@KIme@@QAEXXZ 0048b306 f   engine:Engine.dll
- 0001:0008a30c       ?IsIme@KIme@@QAEHXZ        0048b30c f   engine:Engine.dll
- 0001:0008a312       ?SetCaretPos@KIme@@QAEXHH@Z 0048b312 f   engine:Engine.dll
- 0001:0008a318       ?OpenIME@KIme@@QAEXXZ      0048b318 f   engine:Engine.dll
- 0001:0008a31e       ?EnableLanguageChange@KIme@@QAEXXZ 0048b31e f   engine:Engine.dll
- 0001:0008a324       _TSplitString              0048b324 f   engine:Engine.dll
- 0001:0008a32a       _TGetLimitLenString        0048b32a f   engine:Engine.dll
- 0001:0008a330       _TRemoveCtrlInEncodedText  0048b330 f   engine:Engine.dll
- 0001:0008a336       ?GetInteger2@KIniFile@@QAEXPBD0PAH1@Z 0048b336 f   engine:Engine.dll
- 0001:0008a33c       ?g_GetMainHWnd@@YAPAUHWND__@@XZ 0048b33c f   engine:Engine.dll
- 0001:0008a342       ?KSG_StringToMD5String@@YAHQADQBD@Z 0048b342 f   engine:Engine.dll
- 0001:0008a348       ?GetStruct@KIniFile@@QAEXPBD0PAXK@Z 0048b348 f   engine:Engine.dll
- 0001:0008a34e       ?EraseKey@KIniFile@@QAEXPBD0@Z 0048b34e f   engine:Engine.dll
- 0001:0008a354       ?WriteStruct@KIniFile@@QAEXPBD0PAXK@Z 0048b354 f   engine:Engine.dll
- 0001:0008a35a       ?WriteInteger@KIniFile@@QAEXPBD0H@Z 0048b35a f   engine:Engine.dll
- 0001:0008a360       ?WriteString@KIniFile@@QAEXPBD00@Z 0048b360 f   engine:Engine.dll
- 0001:0008a366       _TGetChatItemLineCount     0048b366 f   engine:Engine.dll
- 0001:0008a36c       ?g_FileName2Id@@YAKPAD@Z   0048b36c f   engine:Engine.dll
- 0001:0008a372       ?GetShort2@KIniFile@@QAEXPBD0PAF1@Z 0048b372 f   engine:Engine.dll
- 0001:0008a378       _TClearSpecialCtrlInEncodedText 0048b378 f   engine:Engine.dll
- 0001:0008a37e       ?Read@KFile@@QAEKPAXK@Z    0048b37e f   engine:Engine.dll
- 0001:0008a384       ?Open@KFile@@QAEHPAD@Z     0048b384 f   engine:Engine.dll
- 0001:0008a38a       ?g_GetFullPath@@YAXPAD0@Z  0048b38a f   engine:Engine.dll
- 0001:0008a390       ?Clear@KIniFile@@QAEXXZ    0048b390 f   engine:Engine.dll
- 0001:0008a396       _TGetEncodedTextEffectCtrls 0048b396 f   engine:Engine.dll
- 0001:0008a39c       _TSplitEncodedString       0048b39c f   engine:Engine.dll
- 0001:0008a3a2       _TGetEncodedTextOutputLenPos 0048b3a2 f   engine:Engine.dll
- 0001:0008a3a8       ?IsSectionExist@KIniFile@@QAEHPBD@Z 0048b3a8 f   engine:Engine.dll
- 0001:0008a3ae       ?Save@KIniFile@@QAEHPBD@Z  0048b3ae f   engine:Engine.dll
- 0001:0008a3b4       ?EraseSection@KIniFile@@QAEXPBD@Z 0048b3b4 f   engine:Engine.dll
- 0001:0008a3ba       ??0KLuaScript@@QAE@XZ      0048b3ba f   engine:Engine.dll
- 0001:0008a3c0       ??1KLuaScript@@UAE@XZ      0048b3c0 f   engine:Engine.dll
- 0001:0008a3c6       ?g_GetRootPath@@YAXPAD@Z   0048b3c6 f   engine:Engine.dll
- 0001:0008a3cc       ?RegisterFunctions@KLuaScript@@QAEHQAUTLua_Funcs@@H@Z 0048b3cc f   engine:Engine.dll
- 0001:0008a3d2       ?Init@KLuaScript@@UAEHXZ   0048b3d2 f   engine:Engine.dll
- 0001:0008a3d8       ?Load@KLuaScript@@UAEHPAD@Z 0048b3d8 f   engine:Engine.dll
- 0001:0008a3de       ?ExecuteCode@KLuaScript@@QAEHXZ 0048b3de f   engine:Engine.dll
- 0001:0008a3e4       ?LoadBuffer@KLuaScript@@QAEHPAEK@Z 0048b3e4 f   engine:Engine.dll
- 0001:0008a3ea       ?TurnOn@KIme@@QAEXXZ       0048b3ea f   engine:Engine.dll
- 0001:0008a3f0       ??0KTimer@@QAE@XZ          0048b3f0 f   engine:Engine.dll
- 0001:0008a3f6       ?GetFPS@KTimer@@QAEHPAH@Z  0048b3f6 f   engine:Engine.dll
- 0001:0008a3fc       ?Start@KTimer@@QAEXXZ      0048b3fc f   engine:Engine.dll
- 0001:0008a402       ?GetElapse@KTimer@@QAEKXZ  0048b402 f   engine:Engine.dll
- 0001:0008a408       _EDOneTimePad_Decipher     0048b408 f   engine:Engine.dll
- 0001:0008a40e       ??1KMp3Music@@UAE@XZ       0048b40e f   engine:Engine.dll
- 0001:0008a414       ??1KMusic@@UAE@XZ          0048b414 f   engine:Engine.dll
- 0001:0008a41a       ??1KMemClass@@QAE@XZ       0048b41a f   engine:Engine.dll
- 0001:0008a420       ??1KDirectSound@@QAE@XZ    0048b420 f   engine:Engine.dll
- 0001:0008a426       ??0KPakList@@QAE@XZ        0048b426 f   engine:Engine.dll
- 0001:0008a42c       ??1KPakList@@QAE@XZ        0048b42c f   engine:Engine.dll
- 0001:0008a432       ?Run@KWin32App@@UAEXXZ     0048b432 f   engine:Engine.dll
- 0001:0008a438       ?Init@KWin32App@@UAEHPAUHINSTANCE__@@PAD@Z 0048b438 f   engine:Engine.dll
- 0001:0008a43e       ?MsgProc@KWin32App@@UAEJPAUHWND__@@IIJ@Z 0048b43e f   engine:Engine.dll
- 0001:0008a444       ?SetMultiGame@KWin32App@@UAEXH@Z 0048b444 f   engine:Engine.dll
- 0001:0008a44a       ?ShowMouse@KWin32App@@UAEXH@Z 0048b44a f   engine:Engine.dll
- 0001:0008a450       ?InitWindow@KWin32App@@MAEHPAUHINSTANCE__@@@Z 0048b450 f   engine:Engine.dll
- 0001:0008a456       ?InitClass@KWin32App@@MAEHPAUHINSTANCE__@@@Z 0048b456 f   engine:Engine.dll
- 0001:0008a45c       ??0KDirectSound@@QAE@XZ    0048b45c f   engine:Engine.dll
- 0001:0008a462       ??0KMemClass@@QAE@XZ       0048b462 f   engine:Engine.dll
- 0001:0008a468       ??0KMusic@@QAE@XZ          0048b468 f   engine:Engine.dll
- 0001:0008a46e       ??0KWin32App@@QAE@XZ       0048b46e f   engine:Engine.dll
- 0001:0008a474       ?SetMouseHoverTime@KWin32App@@QAEXI@Z 0048b474 f   engine:Engine.dll
- 0001:0008a47a       ?Init@KDirectSound@@QAEHXZ 0048b47a f   engine:Engine.dll
- 0001:0008a480       ?Open@KPakList@@QAE_NPBD@Z 0048b480 f   engine:Engine.dll
- 0001:0008a486       ?g_SetFilePath@@YAXPAD@Z   0048b486 f   engine:Engine.dll
- 0001:0008a48c       ?g_SetRootPath@@YAXPAD@Z   0048b48c f   engine:Engine.dll
- 0001:0008a492       ?Exit@KDirectSound@@QAEXXZ 0048b492 f   engine:Engine.dll
- 0001:0008a498       _EDOneTimePad_Encipher     0048b498 f   engine:Engine.dll
- 0001:0008a49e       ?g_pClientLic@@YAXPAD@Z    0048b49e f   engine:Engine.dll
- 0001:0008a4a4       _CoreGetShell              0048b4a4 f   CoreClient:CoreClient.dll
- 0001:0008a4aa       _floor                     0048b4aa f   MSVCRT:MSVCRT.dll
- 0001:0008a4b0       __ftol                     0048b4b0 f   MSVCRT:MSVCRT.dll
- 0001:0008a4c0       __chkstk                   0048b4c0 f   MSVCRT:chkstk.obj
- 0001:0008a4c0       __alloca_probe             0048b4c0 f   MSVCRT:chkstk.obj
- 0001:0008a4f0       _sprintf                   0048b4f0 f   MSVCRT:MSVCRT.dll
- 0001:0008a4f6       ___CxxFrameHandler         0048b4f6 f   MSVCRT:MSVCRT.dll
- 0001:0008a4fc       _free                      0048b4fc f   MSVCRT:MSVCRT.dll
- 0001:0008a502       _strftime                  0048b502 f   MSVCRT:MSVCRT.dll
- 0001:0008a508       _localtime                 0048b508 f   MSVCRT:MSVCRT.dll
- 0001:0008a50e       _time                      0048b50e f   MSVCRT:MSVCRT.dll
- 0001:0008a514       ??3@YAXPAX@Z               0048b514 f   MSVCRT:MSVCRT.dll
- 0001:0008a51a       ??2@YAPAXI@Z               0048b51a f   MSVCRT:MSVCRT.dll
- 0001:0008a520       _strncpy                   0048b520 f   MSVCRT:MSVCRT.dll
- 0001:0008a526       __onexit                   0048b526 f   MSVCRT:atonexit.obj
- 0001:0008a552       _atexit                    0048b552 f   MSVCRT:atonexit.obj
- 0001:0008a564       _memmove                   0048b564 f   MSVCRT:MSVCRT.dll
- 0001:0008a56a       _atoi                      0048b56a f   MSVCRT:MSVCRT.dll
- 0001:0008a570       _malloc                    0048b570 f   MSVCRT:MSVCRT.dll
- 0001:0008a576       _realloc                   0048b576 f   MSVCRT:MSVCRT.dll
- 0001:0008a57c       __itoa                     0048b57c f   MSVCRT:MSVCRT.dll
- 0001:0008a582       ??_L@YGXPAXIHP6EX0@Z1@Z    0048b582 f   MSVCRT:ehvecctr.obj
- 0001:0008a604       ??_M@YGXPAXIHP6EX0@Z@Z     0048b604 f   MSVCRT:ehvecdtr.obj
- 0001:0008a684       ?__ArrayUnwind@@YGXPAXIHP6EX0@Z@Z 0048b684 f   MSVCRT:ehvecdtr.obj
- 0001:0008a6f8       _rand                      0048b6f8 f   MSVCRT:MSVCRT.dll
- 0001:0008a6fe       __strcmpi                  0048b6fe f   MSVCRT:MSVCRT.dll
- 0001:0008a704       _strstr                    0048b704 f   MSVCRT:MSVCRT.dll
- 0001:0008a70a       __mbsicmp                  0048b70a f   MSVCRT:MSVCRT.dll
- 0001:0008a710       _srand                     0048b710 f   MSVCRT:MSVCRT.dll
- 0001:0008a716       _strtok                    0048b716 f   MSVCRT:MSVCRT.dll
- 0001:0008a71c       __access                   0048b71c f   MSVCRT:MSVCRT.dll
- 0001:0008a722       _mktime                    0048b722 f   MSVCRT:MSVCRT.dll
- 0001:0008a728       _fclose                    0048b728 f   MSVCRT:MSVCRT.dll
- 0001:0008a72e       _fopen                     0048b72e f   MSVCRT:MSVCRT.dll
- 0001:0008a734       _remove                    0048b734 f   MSVCRT:MSVCRT.dll
- 0001:0008a73a       __strlwr                   0048b73a f   MSVCRT:MSVCRT.dll
- 0001:0008a740       _isgraph                   0048b740 f   MSVCRT:MSVCRT.dll
- 0001:0008a746       _strchr                    0048b746 f   MSVCRT:MSVCRT.dll
- 0001:0008a750       __alldiv                   0048b750 f   MSVCRT:lldiv.obj
- 0001:0008a800       __allmul                   0048b800 f   MSVCRT:llmul.obj
- 0001:0008a834       _sscanf                    0048b834 f   MSVCRT:MSVCRT.dll
- 0001:0008a83a       _WinMainCRTStartup         0048b83a f   MSVCRT:crtexew.obj
- 0001:0008a998       ___dllonexit               0048b998 f   MSVCRT:MSVCRT.dll
- 0001:0008a99e       __except_handler3          0048b99e f   MSVCRT:MSVCRT.dll
- 0001:0008a9a4       ?terminate@@YAXXZ          0048b9a4 f   MSVCRT:MSVCRT.dll
- 0001:0008a9aa       __exit                     0048b9aa f   MSVCRT:MSVCRT.dll
- 0001:0008a9b0       __XcptFilter               0048b9b0 f   MSVCRT:MSVCRT.dll
- 0001:0008a9b6       _exit                      0048b9b6 f   MSVCRT:MSVCRT.dll
- 0001:0008a9bc       ___getmainargs             0048b9bc f   MSVCRT:MSVCRT.dll
- 0001:0008a9c2       __initterm                 0048b9c2 f   MSVCRT:MSVCRT.dll
- 0001:0008a9c8       __setdefaultprecision      0048b9c8 f   MSVCRT:fp8.obj
- 0001:0008a9da       ___setusermatherr          0048b9da f   MSVCRT:MSVCRT.dll
- 0001:0008a9e0       __matherr                  0048b9e0 f   MSVCRT:merr.obj
- 0001:0008a9e3       __setargv                  0048b9e3 f   MSVCRT:dllargv.obj
- 0001:0008a9e4       ___p__commode              0048b9e4 f   MSVCRT:MSVCRT.dll
- 0001:0008a9ea       ___p__fmode                0048b9ea f   MSVCRT:MSVCRT.dll
- 0001:0008a9f0       ___set_app_type            0048b9f0 f   MSVCRT:MSVCRT.dll
- 0001:0008a9f6       __controlfp                0048b9f6 f   MSVCRT:MSVCRT.dll
- 0001:0008aa00       ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ 0048ba00 f   msvcprt:MSVCP60.dll
- 0001:0008aa06       ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z 0048ba06 f   msvcprt:MSVCP60.dll
- 0001:0008aa0c       ??1_Lockit@std@@QAE@XZ     0048ba0c f   msvcprt:MSVCP60.dll
- 0001:0008aa12       ??0_Lockit@std@@QAE@XZ     0048ba12 f   msvcprt:MSVCP60.dll
- 0001:0008aa18       ??0Init@ios_base@std@@QAE@XZ 0048ba18 f   msvcprt:MSVCP60.dll
- 0001:0008aa1e       ??1Init@ios_base@std@@QAE@XZ 0048ba1e f   msvcprt:MSVCP60.dll
- 0001:0008aa24       ??0_Winit@std@@QAE@XZ      0048ba24 f   msvcprt:MSVCP60.dll
- 0001:0008aa2a       ??1_Winit@std@@QAE@XZ      0048ba2a f   msvcprt:MSVCP60.dll
- 0001:0008aa30       ??_D?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEXXZ 0048ba30 f   msvcprt:MSVCP60.dll
- 0001:0008aa36       ??1?$basic_streambuf@DU?$char_traits@D@std@@@std@@UAE@XZ 0048ba36 f   msvcprt:MSVCP60.dll
- 0001:0008aa3c       ??1?$basic_ios@DU?$char_traits@D@std@@@std@@UAE@XZ 0048ba3c f   msvcprt:MSVCP60.dll
- 0001:0008aa42       ??1ios_base@std@@UAE@XZ    0048ba42 f   msvcprt:MSVCP60.dll
- 0001:0008aa48       ??1?$basic_iostream@DU?$char_traits@D@std@@@std@@UAE@XZ 0048ba48 f   msvcprt:MSVCP60.dll
- 0001:0008aa4e       ??1?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UAE@XZ 0048ba4e f   msvcprt:MSVCP60.dll
- 0001:0008aa54       ??5?$basic_istream@DU?$char_traits@D@std@@@std@@QAEAAV01@AAH@Z 0048ba54 f   msvcprt:MSVCP60.dll
- 0001:0008aa5a       ?_Init@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IAEXPBDIH@Z 0048ba5a f   msvcprt:MSVCP60.dll
- 0001:0008aa60       ?_Mode@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEHH@Z 0048ba60 f   msvcprt:MSVCP60.dll
- 0001:0008aa66       ??0?$basic_streambuf@DU?$char_traits@D@std@@@std@@IAE@XZ 0048ba66 f   msvcprt:MSVCP60.dll
- 0001:0008aa6c       ??0?$basic_iostream@DU?$char_traits@D@std@@@std@@QAE@PAV?$basic_streambuf@DU?$char_traits@D@std@@@1@@Z 0048ba6c f   msvcprt:MSVCP60.dll
- 0001:0008aa72       ??0ios_base@std@@IAE@XZ    0048ba72 f   msvcprt:MSVCP60.dll
- 0001:0008aa78       ?_Eos@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEXI@Z 0048ba78 f   msvcprt:MSVCP60.dll
- 0001:0008aa7e       ?_Grow@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAE_NI_N@Z 0048ba7e f   msvcprt:MSVCP60.dll
- 0001:0008aa84       ?_Tidy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEX_N@Z 0048ba84 f   msvcprt:MSVCP60.dll
- 0001:0008aa8a       ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ABV12@II@Z 0048ba8a f   msvcprt:MSVCP60.dll
- 0001:0008aa90       ?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ABV12@II@Z 0048ba90 f   msvcprt:MSVCP60.dll
- 0001:0008aa96       ?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z 0048ba96 f   msvcprt:MSVCP60.dll
- 0001:0008aa9c       ?_Copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEXI@Z 0048ba9c f   msvcprt:MSVCP60.dll
- 0001:0008aaa2       ?_Xlen@std@@YAXXZ          0048baa2 f   msvcprt:MSVCP60.dll
- 0001:0008aaa8       ??Mstd@@YA_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 0048baa8 f   msvcprt:MSVCP60.dll
- 0001:0008aaae       ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@ABV01@@Z 0048baae f   msvcprt:MSVCP60.dll
- 0001:0008aab4       ??8std@@YA_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 0048bab4 f   msvcprt:MSVCP60.dll
- 0001:0008aaba       ?max_size@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIXZ 0048baba f   msvcprt:MSVCP60.dll
- 0001:0008aac0       ??8std@@YA_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PBD@Z 0048bac0 f   msvcprt:MSVCP60.dll
- 0001:0008aac6       ?erase@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@II@Z 0048bac6 f   msvcprt:MSVCP60.dll
- 0001:0008aacc       ?_Split@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEXXZ 0048bacc f   msvcprt:MSVCP60.dll
- 0001:0008aad2       ?_Xran@std@@YAXXZ          0048bad2 f   msvcprt:MSVCP60.dll
- 0001:0008aad8       ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ID@Z 0048bad8 f   msvcprt:MSVCP60.dll
- 0001:0008aae0       ?AddExpression@CTextFilter@@MAEHPBD@Z 0048bae0 f   FilterText_StaticLib:FilterText.obj
- 0001:0008ae20       ?Clearup@CTextFilter@@MAEHXZ 0048be20 f   FilterText_StaticLib:FilterText.obj
- 0001:0008af30       ?IsTextPass@CTextFilter@@MAEHPBD@Z 0048bf30 f   FilterText_StaticLib:FilterText.obj
- 0001:0008b110       _CreateTextFilter          0048c110 f   FilterText_StaticLib:FilterText.obj
- 0001:0008b140       ?CreateInstance@CTextFilter@@SAPAV1@XZ 0048c140 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b1f0       ?AddRef@CTextFilter@@MAGKXZ 0048c1f0 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b200       ?Release@CTextFilter@@MAGKXZ 0048c200 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b230       ??1CTextFilter@@IAE@XZ     0048c230 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b2d0       ?QueryInterface@CTextFilter@@MAGJABU_GUID@@PAPAX@Z 0048c2d0 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b2e0       ??_F?$vector@VRegexp@@V?$allocator@VRegexp@@@std@@@std@@QAEXXZ 0048c2e0 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b300       ??1?$vector@VRegexp@@V?$allocator@VRegexp@@@std@@@std@@QAE@XZ 0048c300 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b340       ?size@?$vector@VRegexp@@V?$allocator@VRegexp@@@std@@@std@@QBEIXZ 0048c340 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b370       ?_Destroy@?$vector@VRegexp@@V?$allocator@VRegexp@@@std@@@std@@IAEXPAVRegexp@@0@Z 0048c370 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b3a0       ?insert@?$vector@VRegexp@@V?$allocator@VRegexp@@@std@@@std@@QAEXPAVRegexp@@IABV3@@Z 0048c3a0 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b680       ?_Ucopy@?$vector@VRegexp@@V?$allocator@VRegexp@@@std@@@std@@IAEPAVRegexp@@PBV3@0PAV3@@Z 0048c680 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b6c0       ?_Ufill@?$vector@VRegexp@@V?$allocator@VRegexp@@@std@@@std@@IAEXPAVRegexp@@IABV3@@Z 0048c6c0 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b6f0       ?fill@std@@YAXPAVRegexp@@0ABV2@@Z 0048c6f0 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b720       ?copy_backward@std@@YAPAVRegexp@@PAV2@00@Z 0048c720 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b760       ?_Construct@std@@YAXPAVRegexp@@ABV2@@Z 0048c760 f i FilterText_StaticLib:FilterText.obj
- 0001:0008b7b0       ?regerror@CRegErrorHandler@@IBEXPBD@Z 0048c7b0 f   FilterText_StaticLib:Regexp.obj
- 0001:0008b860       ?regerror@CRegErrorHandler@@IBEXH@Z 0048c860 f   FilterText_StaticLib:Regexp.obj
- 0001:0008b880       ?GetErrorString@CRegErrorHandler@@QBEABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ 0048c880 f   FilterText_StaticLib:Regexp.obj
- 0001:0008b890       ?ClearErrorString@CRegErrorHandler@@IBEXXZ 0048c890 f   FilterText_StaticLib:Regexp.obj
- 0001:0008b940       ?FindErr@CRegErrorHandler@@CAPBDH@Z 0048c940 f   FilterText_StaticLib:Regexp.obj
- 0001:0008b970       ?regnode@CRegCompiler@@MAEPADH@Z 0048c970 f   FilterText_StaticLib:Regexp.obj
- 0001:0008b990       ?reginsert@CRegCompiler@@MAEXDPAD@Z 0048c990 f   FilterText_StaticLib:Regexp.obj
- 0001:0008b9d0       ?regtail@CRegCompiler@@MAEXPAD0@Z 0048c9d0 f   FilterText_StaticLib:Regexp.obj
- 0001:0008ba20       ?regoptail@CRegCompiler@@MAEXPAD0@Z 0048ca20 f   FilterText_StaticLib:Regexp.obj
- 0001:0008ba40       ??0CRegCompilerBase@@QAE@PBD@Z 0048ca40 f   FilterText_StaticLib:Regexp.obj
- 0001:0008ba70       ??0CRegValidator@@QAE@PBD@Z 0048ca70 f   FilterText_StaticLib:Regexp.obj
- 0001:0008baa0       ?regnode@CRegValidator@@MAEPADH@Z 0048caa0 f i FilterText_StaticLib:Regexp.obj
- 0001:0008bab0       ?regc@CRegValidator@@MAEXH@Z 0048cab0 f i FilterText_StaticLib:Regexp.obj
- 0001:0008bac0       ?reginsert@CRegValidator@@MAEXDPAD@Z 0048cac0 f i FilterText_StaticLib:Regexp.obj
- 0001:0008bad0       ?regtail@CRegValidator@@MAEXPAD0@Z 0048cad0 f i FilterText_StaticLib:Regexp.obj
- 0001:0008bae0       ?regoptail@CRegValidator@@MAEXPAD0@Z 0048cae0 f i FilterText_StaticLib:Regexp.obj
- 0001:0008baf0       ??0CRegCompiler@@QAE@PBDPAD@Z 0048caf0 f   FilterText_StaticLib:Regexp.obj
- 0001:0008bb20       ?regc@CRegCompiler@@MAEXH@Z 0048cb20 f i FilterText_StaticLib:Regexp.obj
- 0001:0008bb40       ??0regexp@@QAE@PBDH@Z      0048cb40 f   FilterText_StaticLib:Regexp.obj
- 0001:0008bc00       ??1CRegProgramAccessor@@QAE@XZ 0048cc00 f i FilterText_StaticLib:Regexp.obj
- 0001:0008bc40       ??0regexp@@QAE@ABV0@@Z     0048cc40 f   FilterText_StaticLib:Regexp.obj
- 0001:0008bd20       ??1regexp@@QAE@XZ          0048cd20 f   FilterText_StaticLib:Regexp.obj
- 0001:0008bd70       ?regcomp@regexp@@QAE_NPBD@Z 0048cd70 f   FilterText_StaticLib:Regexp.obj
- 0001:0008bfe0       ??1CRegValidator@@QAE@XZ   0048cfe0 f i FilterText_StaticLib:Regexp.obj
- 0001:0008c030       ??1CRegCompiler@@QAE@XZ    0048d030 f i FilterText_StaticLib:Regexp.obj
- 0001:0008c080       ?getCopy@regexp@@QAEPAV1@XZ 0048d080 f   FilterText_StaticLib:Regexp.obj
- 0001:0008c0e0       ?reg@CRegCompilerBase@@QAEPADHPAH@Z 0048d0e0 f   FilterText_StaticLib:Regexp.obj
- 0001:0008c270       ?regbranch@CRegCompilerBase@@IAEPADPAH@Z 0048d270 f   FilterText_StaticLib:Regexp.obj
- 0001:0008c310       ?regpiece@CRegCompilerBase@@IAEPADPAH@Z 0048d310 f   FilterText_StaticLib:Regexp.obj
- 0001:0008c4d0       ?regatom@CRegCompilerBase@@IAEPADPAH@Z 0048d4d0 f   FilterText_StaticLib:Regexp.obj
- 0001:0008c8c0       ??0CRegExecutor@@QAE@PAVregexp@@PAD@Z 0048d8c0 f   FilterText_StaticLib:Regexp.obj
- 0001:0008c8f0       ?regexec@regexp@@QAE_NPBD@Z 0048d8f0 f   FilterText_StaticLib:Regexp.obj
- 0001:0008cac0       ??1CRegExecutor@@QAE@XZ    0048dac0 f i FilterText_StaticLib:Regexp.obj
- 0001:0008cb00       ?regtry@CRegExecutor@@IAE_NPAD@Z 0048db00 f   FilterText_StaticLib:Regexp.obj
- 0001:0008cb60       ?regmatch@CRegExecutor@@IAE_NPAD@Z 0048db60 f   FilterText_StaticLib:Regexp.obj
- 0001:0008ceb0       ?regrepeat@CRegExecutor@@IAEIPAD@Z 0048deb0 f   FilterText_StaticLib:Regexp.obj
- 0001:0008cf40       ??0Regexp@@QAE@XZ          0048df40 f   FilterText_StaticLib:Regexp.obj
- 0001:0008cf60       ??0Regexp@@QAE@PBDH@Z      0048df60 f   FilterText_StaticLib:Regexp.obj
- 0001:0008cfe0       ??0Regexp@@QAE@ABV0@@Z     0048dfe0 f   FilterText_StaticLib:Regexp.obj
- 0001:0008d130       ??4Regexp@@QAEABV0@ABV0@@Z 0048e130 f   FilterText_StaticLib:Regexp.obj
- 0001:0008d2d0       ??1Regexp@@QAE@XZ          0048e2d0 f   FilterText_StaticLib:Regexp.obj
- 0001:0008d340       ?Match@Regexp@@QAE_NPBD@Z  0048e340 f   FilterText_StaticLib:Regexp.obj
- 0001:0008d460       ?GetReplaceString@Regexp@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBD@Z 0048e460 f   FilterText_StaticLib:Regexp.obj
- 0001:0008d5a0       ?SubStrings@Regexp@@QBEHXZ 0048e5a0 f   FilterText_StaticLib:Regexp.obj
- 0001:0008d670       ?SubStart@Regexp@@QBEHI@Z  0048e670 f   FilterText_StaticLib:Regexp.obj
- 0001:0008d760       ?SubLength@Regexp@@QBEHI@Z 0048e760 f   FilterText_StaticLib:Regexp.obj
- 0001:0008d850       ?CompiledOK@Regexp@@QBE_NXZ 0048e850 f   FilterText_StaticLib:Regexp.obj
- 0001:0008d860       ?safeIndex@Regexp@@ABEHI@Z 0048e860 f   FilterText_StaticLib:Regexp.obj
- 0001:0008d880       ??ARegexp@@QBE?BV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@Z 0048e880 f   FilterText_StaticLib:Regexp.obj
- 0001:0008d9f0       ?ignoreCase@regexp@@QAEXPBDPAD@Z 0048e9f0 f   FilterText_StaticLib:Regexp.obj
- 0001:0008da80       ?GetReplaceString@regexp@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBD@Z 0048ea80 f   FilterText_StaticLib:Regexp.obj
- 0001:0008de30       ?GetErrorString@Regexp@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ 0048ee30 f   FilterText_StaticLib:Regexp.obj
- 0001:0008df80       ?ClearErrorString@Regexp@@ABEXXZ 0048ef80 f   FilterText_StaticLib:Regexp.obj
- 0001:0008e040       _GetModuleHandleA@4        0048f040 f   kernel32:KERNEL32.dll
- 0001:0008e046       _GetStartupInfoA@4         0048f046 f   kernel32:KERNEL32.dll
- 0001:0008e04c       __ismbcalpha               0048f04c f   MSVCRT:MSVCRT.dll
- 0001:0008e052       __purecall                 0048f052 f   MSVCRT:MSVCRT.dll
- 0001:0008e058       __mbschr                   0048f058 f   MSVCRT:MSVCRT.dll
- 0001:0008e05e       __mbsstr                   0048f05e f   MSVCRT:MSVCRT.dll
- 0001:0008e064       __mbsnbcmp                 0048f064 f   MSVCRT:MSVCRT.dll
- 0001:0008e06a       _isalnum                   0048f06a f   MSVCRT:MSVCRT.dll
- 0001:0008e070       __mbscspn                  0048f070 f   MSVCRT:MSVCRT.dll
- 0001:0008e076       __mbsspn                   0048f076 f   MSVCRT:MSVCRT.dll
- 0001:0008e07c       _tolower                   0048f07c f   MSVCRT:MSVCRT.dll
- 0001:0008e082       _isalpha                   0048f082 f   MSVCRT:MSVCRT.dll
- 0001:0008e088       _toupper                   0048f088 f   MSVCRT:MSVCRT.dll
- 0001:0008e08e       __mbsnbcpy                 0048f08e f   MSVCRT:MSVCRT.dll
- 0001:0008e094       _isdigit                   0048f094 f   MSVCRT:MSVCRT.dll
+ 0001:00088110       ?GetIpAddress@@YA_NPBDPAE@Z 00489110 f   Login.obj
+ 0001:000881d0       ?RandMemSet@@YAXHPAE@Z     004891d0 f   Login.obj
+ 0001:00088200       ??0KLogin@@QAE@XZ          00489200 f   Login.obj
+ 0001:00088240       ?ClearAccountPassword@KLogin@@AAEX_N0@Z 00489240 f   Login.obj
+ 0001:00088280       ??1KLogin@@QAE@XZ          00489280 f   Login.obj
+ 0001:00088290       ?CreateConnection@KLogin@@QAEHPBE@Z 00489290 f   Login.obj
+ 0001:00088320       ?AccountLogin@KLogin@@QAEHPBDABUtagKSG_PASSWORD@@_N@Z 00489320 f   Login.obj
+ 0001:00088390       ?SelectRole@KLogin@@QAEHH@Z 00489390 f   Login.obj
+ 0001:00088470       ?CreateRole@KLogin@@QAEHPAUKRoleChiefInfo@@@Z 00489470 f   Login.obj
+ 0001:00088580       ?DeleteRole@KLogin@@QAEHHABUtagKSG_PASSWORD@@@Z 00489580 f   Login.obj
+ 0001:000886a0       ?NotifyTimeout@KLogin@@QAEXXZ 004896a0 f   Login.obj
+ 0001:000886c0       ?NotifyDisconnect@KLogin@@QAEXXZ 004896c0 f   Login.obj
+ 0001:000886e0       ?NotifyToStartGame@KLogin@@QAEXXZ 004896e0 f   Login.obj
+ 0001:00088750       ?ReturnToIdle@KLogin@@QAEXXZ 00489750 f   Login.obj
+ 0001:00088790       ?ReturnToIdleLixian@KLogin@@QAEXXZ 00489790 f   Login.obj
+ 0001:000887d0       ?AutoLogin@KLogin@@QAEXXZ  004897d0 f   Login.obj
+ 0001:00088850       ?IsAutoLoginEnable@KLogin@@QAEHXZ 00489850 f   Login.obj
+ 0001:00088890       ?SetRememberAccountFlag@KLogin@@QAEX_N@Z 00489890 f   Login.obj
+ 0001:000888b0       ?SetRememberAllFlag@KLogin@@QAEX_N@Z 004898b0 f   Login.obj
+ 0001:000888d0       ?SetVirtualKeyboardFlag@KLogin@@QAEX_N@Z 004898d0 f   Login.obj
+ 0001:000888e0       ?GetRoleInfo@KLogin@@QAEHHPAUKRoleChiefInfo@@@Z 004898e0 f   Login.obj
+ 0001:00088920       ?ProcessAccountLoginResponse@KLogin@@AAEXPAUKLoginStructHead@@@Z 00489920 f   Login.obj
+ 0001:00088ad0       ?ProcessRoleListResponse@KLogin@@AAEXPAUTProcessData@@@Z 00489ad0 f   Login.obj
+ 0001:00088bd0       ?ProcessCreateRoleResponse@KLogin@@AAEXPAUtagNewDelRoleResponse@@@Z 00489bd0 f   Login.obj
+ 0001:00088c30       ?ProcessDeleteRoleResponse@KLogin@@AAEXPAUtagNewDelRoleResponse@@@Z 00489c30 f   Login.obj
+ 0001:00088d80       ?ProcessAccountExtPointResponse@KLogin@@AAEXPAUKLoginStructHead@@@Z 00489d80 f   Login.obj
+ 0001:00088ec0       ?ProcessToLoginGameServResponse@KLogin@@AAEXPAUtagNotifyPlayerLogin@@@Z 00489ec0 f   Login.obj
+ 0001:00088f90       ?AcceptNetMsg@KLogin@@UAEXPAX@Z 00489f90 f   Login.obj
+ 0001:00089000       ?GetResult@KLogin@@QAE?AW4LOGIN_LOGIC_RESULT_INFO@@XZ 0048a000 f   Login.obj
+ 0001:00089010       ?GetRoleCount@KLogin@@QAEHAAH@Z 0048a010 f   Login.obj
+ 0001:000890a0       ?GetLoginAccount@KLogin@@QAE_NPAD@Z 0048a0a0 f   Login.obj
+ 0001:000890c0       ?LoadLoginChoice@KLogin@@QAEXXZ 0048a0c0 f   Login.obj
+ 0001:00089290       ?SaveLoginChoice@KLogin@@QAEXXZ 0048a290 f   Login.obj
+ 0001:00089540       ?GetServerRegionList@KLogin@@QAEPAUKLoginServer@@AAH0@Z 0048a540 f   Login.obj
+ 0001:000896b0       ?GetServerList@KLogin@@QAEPAUKLoginServer@@HAAH0@Z 0048a6b0 f   Login.obj
+ 0001:00089bd0       ?SetAccountServer@KLogin@@QAEHABUKLoginServer@@@Z 0048abd0 f   Login.obj
+ 0001:00089bf0       ?GetVirtualKeyboard@KLogin@@QAE_NXZ 0048abf0 f   Login.obj
+ 0001:00089c00       ?Request@KLogin@@AAEHPBDPBUtagKSG_PASSWORD@@H@Z 0048ac00 f   Login.obj
+ 0001:00089cf0       ?ConnectAccountServer@KLogin@@AAEHPBE@Z 0048acf0 f   Login.obj
+ 0001:00089d10       ?RegistNetAgent@KLogin@@AAEXXZ 0048ad10 f   Login.obj
+ 0001:00089d50       ?UnRegistNetAgent@KLogin@@AAEXXZ 0048ad50 f   Login.obj
+ 0001:00089d90       ?SetAccountPassword@KLogin@@AAEXPBDPBUtagKSG_PASSWORD@@@Z 0048ad90 f   Login.obj
+ 0001:00089e00       ?GetAccountPassword@KLogin@@AAEXPADPAUtagKSG_PASSWORD@@@Z 0048ae00 f   Login.obj
+ 0001:00089e60       ?TextMsgFilter@@YAHPBDH@Z  0048ae60 f   TextCtrlCmd.obj
+ 0001:00089e90       ?Error_SetErrorCode@@YAXI@Z 0048ae90 f   ErrorCode.obj
+ 0001:00089ea0       ?Error_SetErrorString@@YAXPBD@Z 0048aea0 f   ErrorCode.obj
+ 0001:00089ec0       ?Error_Box@@YAXXZ          0048aec0 f   ErrorCode.obj
+ 0001:0008a0f0       _GetTickCount@0            0048b0f0 f   kernel32:KERNEL32.dll
+ 0001:0008a0f6       _DeleteFileA@4             0048b0f6 f   kernel32:KERNEL32.dll
+ 0001:0008a0fc       _GetTempFileNameA@16       0048b0fc f   kernel32:KERNEL32.dll
+ 0001:0008a102       _GetTempPathA@8            0048b102 f   kernel32:KERNEL32.dll
+ 0001:0008a108       _GlobalUnlock@4            0048b108 f   kernel32:KERNEL32.dll
+ 0001:0008a10e       _GlobalLock@4              0048b10e f   kernel32:KERNEL32.dll
+ 0001:0008a114       _GlobalAlloc@8             0048b114 f   kernel32:KERNEL32.dll
+ 0001:0008a11a       _MulDiv@12                 0048b11a f   kernel32:KERNEL32.dll
+ 0001:0008a120       _FreeLibrary@4             0048b120 f   kernel32:KERNEL32.dll
+ 0001:0008a126       _GetProcAddress@8          0048b126 f   kernel32:KERNEL32.dll
+ 0001:0008a12c       _LoadLibraryA@4            0048b12c f   kernel32:KERNEL32.dll
+ 0001:0008a132       _SystemTimeToTzSpecificLocalTime@12 0048b132 f   kernel32:KERNEL32.dll
+ 0001:0008a138       _RemoveDirectoryA@4        0048b138 f   kernel32:KERNEL32.dll
+ 0001:0008a13e       _FindClose@4               0048b13e f   kernel32:KERNEL32.dll
+ 0001:0008a144       _FindNextFileA@8           0048b144 f   kernel32:KERNEL32.dll
+ 0001:0008a14a       _SetFileAttributesA@8      0048b14a f   kernel32:KERNEL32.dll
+ 0001:0008a150       _FindFirstFileA@8          0048b150 f   kernel32:KERNEL32.dll
+ 0001:0008a156       _GetVersion@0              0048b156 f   kernel32:KERNEL32.dll
+ 0001:0008a15c       _FreeConsole@0             0048b15c f   kernel32:KERNEL32.dll
+ 0001:0008a162       _AllocConsole@0            0048b162 f   kernel32:KERNEL32.dll
+ 0001:0008a168       _Sleep@4                   0048b168 f   kernel32:KERNEL32.dll
+ 0001:0008a16e       _lstrcpyA@8                0048b16e f   kernel32:KERNEL32.dll
+ 0001:0008a174       _lstrcpynA@12              0048b174 f   kernel32:KERNEL32.dll
+ 0001:0008a17a       _SetCursor@4               0048b17a f   user32:USER32.dll
+ 0001:0008a180       _LoadCursorA@8             0048b180 f   user32:USER32.dll
+ 0001:0008a186       _LoadCursorFromFileA@4     0048b186 f   user32:USER32.dll
+ 0001:0008a18c       _ShowCursor@4              0048b18c f   user32:USER32.dll
+ 0001:0008a192       _SetCaretPos@8             0048b192 f   user32:USER32.dll
+ 0001:0008a198       _CloseClipboard@0          0048b198 f   user32:USER32.dll
+ 0001:0008a19e       _SetClipboardData@8        0048b19e f   user32:USER32.dll
+ 0001:0008a1a4       _EmptyClipboard@0          0048b1a4 f   user32:USER32.dll
+ 0001:0008a1aa       _OpenClipboard@4           0048b1aa f   user32:USER32.dll
+ 0001:0008a1b0       _GetClipboardData@4        0048b1b0 f   user32:USER32.dll
+ 0001:0008a1b6       _GetKeyState@4             0048b1b6 f   user32:USER32.dll
+ 0001:0008a1bc       _SetCursorPos@8            0048b1bc f   user32:USER32.dll
+ 0001:0008a1c2       _ClientToScreen@8          0048b1c2 f   user32:USER32.dll
+ 0001:0008a1c8       _MessageBoxA@16            0048b1c8 f   user32:USER32.dll
+ 0001:0008a1ce       _ShowWindow@8              0048b1ce f   user32:USER32.dll
+ 0001:0008a1d4       _UpdateWindow@4            0048b1d4 f   user32:USER32.dll
+ 0001:0008a1da       _LoadImageA@24             0048b1da f   user32:USER32.dll
+ 0001:0008a1e0       _DefWindowProcA@16         0048b1e0 f   user32:USER32.dll
+ 0001:0008a1e6       _SendMessageA@16           0048b1e6 f   user32:USER32.dll
+ 0001:0008a1ec       _SetWindowTextA@8          0048b1ec f   user32:USER32.dll
+ 0001:0008a1f2       _wsprintfA                 0048b1f2 f   user32:USER32.dll
+ 0001:0008a1f8       _DeleteObject@4            0048b1f8 f   gdi32:GDI32.dll
+ 0001:0008a1fe       _SHGetSpecialFolderPathA@16 0048b1fe f   shell32:SHELL32.dll
+ 0001:0008a204       _ShellExecuteA@24          0048b204 f   shell32:SHELL32.dll
+ 0001:0008a20a       _Shell_NotifyIconA@8       0048b20a f   shell32:SHELL32.dll
+ 0001:0008a210       _lua_tostring              0048b210 f   lualibdll:LuaLibDll.dll
+ 0001:0008a216       _lua_gettop                0048b216 f   lualibdll:LuaLibDll.dll
+ 0001:0008a21c       _lua_tonumber              0048b21c f   lualibdll:LuaLibDll.dll
+ 0001:0008a222       _lua_type                  0048b222 f   lualibdll:LuaLibDll.dll
+ 0001:0008a228       _lua_pushnumber            0048b228 f   lualibdll:LuaLibDll.dll
+ 0001:0008a22e       _lua_pushstring            0048b22e f   lualibdll:LuaLibDll.dll
+ 0001:0008a234       _lua_isnumber              0048b234 f   lualibdll:LuaLibDll.dll
+ 0001:0008a23a       _TEncodeText               0048b23a f   engine:Engine.dll
+ 0001:0008a240       _TGetEncodedTextLineCount  0048b240 f   engine:Engine.dll
+ 0001:0008a246       ??1KIniFile@@QAE@XZ        0048b246 f   engine:Engine.dll
+ 0001:0008a24c       ?GetString@KIniFile@@QAEHPBD00PADK@Z 0048b24c f   engine:Engine.dll
+ 0001:0008a252       ?GetInteger@KIniFile@@QAEHPBD0HPAH@Z 0048b252 f   engine:Engine.dll
+ 0001:0008a258       ?GetShort@KIniFile@@QAEHPBD0FPAF@Z 0048b258 f   engine:Engine.dll
+ 0001:0008a25e       ?Load@KIniFile@@QAEHPBD@Z  0048b25e f   engine:Engine.dll
+ 0001:0008a264       ??0KIniFile@@QAE@XZ        0048b264 f   engine:Engine.dll
+ 0001:0008a26a       _TFindSpecialCtrlInEncodedText 0048b26a f   engine:Engine.dll
+ 0001:0008a270       ?g_CreatePath@@YAXPAD@Z    0048b270 f   engine:Engine.dll
+ 0001:0008a276       _AdviseEngine              0048b276 f   engine:Engine.dll
+ 0001:0008a27c       _UnAdviseEngine            0048b27c f   engine:Engine.dll
+ 0001:0008a282       ??1KPakFile@@QAE@XZ        0048b282 f   engine:Engine.dll
+ 0001:0008a288       ??1KFile@@QAE@XZ           0048b288 f   engine:Engine.dll
+ 0001:0008a28e       ?Close@KFile@@QAEXXZ       0048b28e f   engine:Engine.dll
+ 0001:0008a294       ?Close@KPakFile@@QAEXXZ    0048b294 f   engine:Engine.dll
+ 0001:0008a29a       ?Read@KPakFile@@QAEKPAXI@Z 0048b29a f   engine:Engine.dll
+ 0001:0008a2a0       ?Write@KFile@@QAEKPAXK@Z   0048b2a0 f   engine:Engine.dll
+ 0001:0008a2a6       ?Size@KPakFile@@QAEKXZ     0048b2a6 f   engine:Engine.dll
+ 0001:0008a2ac       ?Open@KPakFile@@QAEHPBD@Z  0048b2ac f   engine:Engine.dll
+ 0001:0008a2b2       ?Create@KFile@@QAEHPAD@Z   0048b2b2 f   engine:Engine.dll
+ 0001:0008a2b8       ??0KFile@@QAE@XZ           0048b2b8 f   engine:Engine.dll
+ 0001:0008a2be       ??0KPakFile@@QAE@XZ        0048b2be f   engine:Engine.dll
+ 0001:0008a2c4       ??0KIme@@QAE@XZ            0048b2c4 f   engine:Engine.dll
+ 0001:0008a2ca       ??1KIme@@QAE@XZ            0048b2ca f   engine:Engine.dll
+ 0001:0008a2d0       ?CloseIME@KIme@@QAEXXZ     0048b2d0 f   engine:Engine.dll
+ 0001:0008a2d6       ?DisableLanguageChange@KIme@@QAEXXZ 0048b2d6 f   engine:Engine.dll
+ 0001:0008a2dc       ?IsIme@KIme@@QAEHXZ        0048b2dc f   engine:Engine.dll
+ 0001:0008a2e2       ?SetCaretPos@KIme@@QAEXHH@Z 0048b2e2 f   engine:Engine.dll
+ 0001:0008a2e8       ?OpenIME@KIme@@QAEXXZ      0048b2e8 f   engine:Engine.dll
+ 0001:0008a2ee       ?EnableLanguageChange@KIme@@QAEXXZ 0048b2ee f   engine:Engine.dll
+ 0001:0008a2f4       _TSplitString              0048b2f4 f   engine:Engine.dll
+ 0001:0008a2fa       _TGetLimitLenString        0048b2fa f   engine:Engine.dll
+ 0001:0008a300       _TRemoveCtrlInEncodedText  0048b300 f   engine:Engine.dll
+ 0001:0008a306       ?GetInteger2@KIniFile@@QAEXPBD0PAH1@Z 0048b306 f   engine:Engine.dll
+ 0001:0008a30c       ?g_GetMainHWnd@@YAPAUHWND__@@XZ 0048b30c f   engine:Engine.dll
+ 0001:0008a312       ?KSG_StringToMD5String@@YAHQADQBD@Z 0048b312 f   engine:Engine.dll
+ 0001:0008a318       ?GetStruct@KIniFile@@QAEXPBD0PAXK@Z 0048b318 f   engine:Engine.dll
+ 0001:0008a31e       ?EraseKey@KIniFile@@QAEXPBD0@Z 0048b31e f   engine:Engine.dll
+ 0001:0008a324       ?WriteStruct@KIniFile@@QAEXPBD0PAXK@Z 0048b324 f   engine:Engine.dll
+ 0001:0008a32a       ?WriteInteger@KIniFile@@QAEXPBD0H@Z 0048b32a f   engine:Engine.dll
+ 0001:0008a330       ?WriteString@KIniFile@@QAEXPBD00@Z 0048b330 f   engine:Engine.dll
+ 0001:0008a336       _TGetChatItemLineCount     0048b336 f   engine:Engine.dll
+ 0001:0008a33c       ?g_FileName2Id@@YAKPAD@Z   0048b33c f   engine:Engine.dll
+ 0001:0008a342       ?GetShort2@KIniFile@@QAEXPBD0PAF1@Z 0048b342 f   engine:Engine.dll
+ 0001:0008a348       _TClearSpecialCtrlInEncodedText 0048b348 f   engine:Engine.dll
+ 0001:0008a34e       ?Read@KFile@@QAEKPAXK@Z    0048b34e f   engine:Engine.dll
+ 0001:0008a354       ?Open@KFile@@QAEHPAD@Z     0048b354 f   engine:Engine.dll
+ 0001:0008a35a       ?g_GetFullPath@@YAXPAD0@Z  0048b35a f   engine:Engine.dll
+ 0001:0008a360       ?Clear@KIniFile@@QAEXXZ    0048b360 f   engine:Engine.dll
+ 0001:0008a366       _TGetEncodedTextEffectCtrls 0048b366 f   engine:Engine.dll
+ 0001:0008a36c       _TSplitEncodedString       0048b36c f   engine:Engine.dll
+ 0001:0008a372       _TGetEncodedTextOutputLenPos 0048b372 f   engine:Engine.dll
+ 0001:0008a378       ?IsSectionExist@KIniFile@@QAEHPBD@Z 0048b378 f   engine:Engine.dll
+ 0001:0008a37e       ?Save@KIniFile@@QAEHPBD@Z  0048b37e f   engine:Engine.dll
+ 0001:0008a384       ?EraseSection@KIniFile@@QAEXPBD@Z 0048b384 f   engine:Engine.dll
+ 0001:0008a38a       ??0KLuaScript@@QAE@XZ      0048b38a f   engine:Engine.dll
+ 0001:0008a390       ??1KLuaScript@@UAE@XZ      0048b390 f   engine:Engine.dll
+ 0001:0008a396       ?g_GetRootPath@@YAXPAD@Z   0048b396 f   engine:Engine.dll
+ 0001:0008a39c       ?RegisterFunctions@KLuaScript@@QAEHQAUTLua_Funcs@@H@Z 0048b39c f   engine:Engine.dll
+ 0001:0008a3a2       ?Init@KLuaScript@@UAEHXZ   0048b3a2 f   engine:Engine.dll
+ 0001:0008a3a8       ?Load@KLuaScript@@UAEHPAD@Z 0048b3a8 f   engine:Engine.dll
+ 0001:0008a3ae       ?ExecuteCode@KLuaScript@@QAEHXZ 0048b3ae f   engine:Engine.dll
+ 0001:0008a3b4       ?LoadBuffer@KLuaScript@@QAEHPAEK@Z 0048b3b4 f   engine:Engine.dll
+ 0001:0008a3ba       ?TurnOn@KIme@@QAEXXZ       0048b3ba f   engine:Engine.dll
+ 0001:0008a3c0       ??0KTimer@@QAE@XZ          0048b3c0 f   engine:Engine.dll
+ 0001:0008a3c6       ?GetFPS@KTimer@@QAEHPAH@Z  0048b3c6 f   engine:Engine.dll
+ 0001:0008a3cc       ?Start@KTimer@@QAEXXZ      0048b3cc f   engine:Engine.dll
+ 0001:0008a3d2       ?GetElapse@KTimer@@QAEKXZ  0048b3d2 f   engine:Engine.dll
+ 0001:0008a3d8       _EDOneTimePad_Decipher     0048b3d8 f   engine:Engine.dll
+ 0001:0008a3de       ??1KMp3Music@@UAE@XZ       0048b3de f   engine:Engine.dll
+ 0001:0008a3e4       ??1KMusic@@UAE@XZ          0048b3e4 f   engine:Engine.dll
+ 0001:0008a3ea       ??1KMemClass@@QAE@XZ       0048b3ea f   engine:Engine.dll
+ 0001:0008a3f0       ??1KDirectSound@@QAE@XZ    0048b3f0 f   engine:Engine.dll
+ 0001:0008a3f6       ??0KPakList@@QAE@XZ        0048b3f6 f   engine:Engine.dll
+ 0001:0008a3fc       ??1KPakList@@QAE@XZ        0048b3fc f   engine:Engine.dll
+ 0001:0008a402       ?Run@KWin32App@@UAEXXZ     0048b402 f   engine:Engine.dll
+ 0001:0008a408       ?Init@KWin32App@@UAEHPAUHINSTANCE__@@PAD@Z 0048b408 f   engine:Engine.dll
+ 0001:0008a40e       ?MsgProc@KWin32App@@UAEJPAUHWND__@@IIJ@Z 0048b40e f   engine:Engine.dll
+ 0001:0008a414       ?SetMultiGame@KWin32App@@UAEXH@Z 0048b414 f   engine:Engine.dll
+ 0001:0008a41a       ?ShowMouse@KWin32App@@UAEXH@Z 0048b41a f   engine:Engine.dll
+ 0001:0008a420       ?InitWindow@KWin32App@@MAEHPAUHINSTANCE__@@@Z 0048b420 f   engine:Engine.dll
+ 0001:0008a426       ?InitClass@KWin32App@@MAEHPAUHINSTANCE__@@@Z 0048b426 f   engine:Engine.dll
+ 0001:0008a42c       ??0KDirectSound@@QAE@XZ    0048b42c f   engine:Engine.dll
+ 0001:0008a432       ??0KMemClass@@QAE@XZ       0048b432 f   engine:Engine.dll
+ 0001:0008a438       ??0KMusic@@QAE@XZ          0048b438 f   engine:Engine.dll
+ 0001:0008a43e       ??0KWin32App@@QAE@XZ       0048b43e f   engine:Engine.dll
+ 0001:0008a444       ?SetMouseHoverTime@KWin32App@@QAEXI@Z 0048b444 f   engine:Engine.dll
+ 0001:0008a44a       ?Init@KDirectSound@@QAEHXZ 0048b44a f   engine:Engine.dll
+ 0001:0008a450       ?Open@KPakList@@QAE_NPBD@Z 0048b450 f   engine:Engine.dll
+ 0001:0008a456       ?g_SetFilePath@@YAXPAD@Z   0048b456 f   engine:Engine.dll
+ 0001:0008a45c       ?g_SetRootPath@@YAXPAD@Z   0048b45c f   engine:Engine.dll
+ 0001:0008a462       ?Exit@KDirectSound@@QAEXXZ 0048b462 f   engine:Engine.dll
+ 0001:0008a468       _EDOneTimePad_Encipher     0048b468 f   engine:Engine.dll
+ 0001:0008a46e       ?g_pClientLic@@YAXPAD@Z    0048b46e f   engine:Engine.dll
+ 0001:0008a474       _CoreGetShell              0048b474 f   CoreClient:CoreClient.dll
+ 0001:0008a47a       _floor                     0048b47a f   MSVCRT:MSVCRT.dll
+ 0001:0008a480       __ftol                     0048b480 f   MSVCRT:MSVCRT.dll
+ 0001:0008a490       __chkstk                   0048b490 f   MSVCRT:chkstk.obj
+ 0001:0008a490       __alloca_probe             0048b490 f   MSVCRT:chkstk.obj
+ 0001:0008a4c0       _sprintf                   0048b4c0 f   MSVCRT:MSVCRT.dll
+ 0001:0008a4c6       ___CxxFrameHandler         0048b4c6 f   MSVCRT:MSVCRT.dll
+ 0001:0008a4cc       _free                      0048b4cc f   MSVCRT:MSVCRT.dll
+ 0001:0008a4d2       _strftime                  0048b4d2 f   MSVCRT:MSVCRT.dll
+ 0001:0008a4d8       _localtime                 0048b4d8 f   MSVCRT:MSVCRT.dll
+ 0001:0008a4de       _time                      0048b4de f   MSVCRT:MSVCRT.dll
+ 0001:0008a4e4       ??3@YAXPAX@Z               0048b4e4 f   MSVCRT:MSVCRT.dll
+ 0001:0008a4ea       ??2@YAPAXI@Z               0048b4ea f   MSVCRT:MSVCRT.dll
+ 0001:0008a4f0       _strncpy                   0048b4f0 f   MSVCRT:MSVCRT.dll
+ 0001:0008a4f6       __onexit                   0048b4f6 f   MSVCRT:atonexit.obj
+ 0001:0008a522       _atexit                    0048b522 f   MSVCRT:atonexit.obj
+ 0001:0008a534       _memmove                   0048b534 f   MSVCRT:MSVCRT.dll
+ 0001:0008a53a       _atoi                      0048b53a f   MSVCRT:MSVCRT.dll
+ 0001:0008a540       _malloc                    0048b540 f   MSVCRT:MSVCRT.dll
+ 0001:0008a546       _realloc                   0048b546 f   MSVCRT:MSVCRT.dll
+ 0001:0008a54c       __itoa                     0048b54c f   MSVCRT:MSVCRT.dll
+ 0001:0008a552       ??_L@YGXPAXIHP6EX0@Z1@Z    0048b552 f   MSVCRT:ehvecctr.obj
+ 0001:0008a5d4       ??_M@YGXPAXIHP6EX0@Z@Z     0048b5d4 f   MSVCRT:ehvecdtr.obj
+ 0001:0008a654       ?__ArrayUnwind@@YGXPAXIHP6EX0@Z@Z 0048b654 f   MSVCRT:ehvecdtr.obj
+ 0001:0008a6c8       _rand                      0048b6c8 f   MSVCRT:MSVCRT.dll
+ 0001:0008a6ce       __strcmpi                  0048b6ce f   MSVCRT:MSVCRT.dll
+ 0001:0008a6d4       _strstr                    0048b6d4 f   MSVCRT:MSVCRT.dll
+ 0001:0008a6da       __mbsicmp                  0048b6da f   MSVCRT:MSVCRT.dll
+ 0001:0008a6e0       _srand                     0048b6e0 f   MSVCRT:MSVCRT.dll
+ 0001:0008a6e6       _strtok                    0048b6e6 f   MSVCRT:MSVCRT.dll
+ 0001:0008a6ec       __access                   0048b6ec f   MSVCRT:MSVCRT.dll
+ 0001:0008a6f2       _mktime                    0048b6f2 f   MSVCRT:MSVCRT.dll
+ 0001:0008a6f8       _fclose                    0048b6f8 f   MSVCRT:MSVCRT.dll
+ 0001:0008a6fe       _fopen                     0048b6fe f   MSVCRT:MSVCRT.dll
+ 0001:0008a704       _remove                    0048b704 f   MSVCRT:MSVCRT.dll
+ 0001:0008a70a       __strlwr                   0048b70a f   MSVCRT:MSVCRT.dll
+ 0001:0008a710       _isgraph                   0048b710 f   MSVCRT:MSVCRT.dll
+ 0001:0008a716       _strchr                    0048b716 f   MSVCRT:MSVCRT.dll
+ 0001:0008a720       __alldiv                   0048b720 f   MSVCRT:lldiv.obj
+ 0001:0008a7d0       __allmul                   0048b7d0 f   MSVCRT:llmul.obj
+ 0001:0008a804       _sscanf                    0048b804 f   MSVCRT:MSVCRT.dll
+ 0001:0008a80a       _WinMainCRTStartup         0048b80a f   MSVCRT:crtexew.obj
+ 0001:0008a968       ___dllonexit               0048b968 f   MSVCRT:MSVCRT.dll
+ 0001:0008a96e       __except_handler3          0048b96e f   MSVCRT:MSVCRT.dll
+ 0001:0008a974       ?terminate@@YAXXZ          0048b974 f   MSVCRT:MSVCRT.dll
+ 0001:0008a97a       __exit                     0048b97a f   MSVCRT:MSVCRT.dll
+ 0001:0008a980       __XcptFilter               0048b980 f   MSVCRT:MSVCRT.dll
+ 0001:0008a986       _exit                      0048b986 f   MSVCRT:MSVCRT.dll
+ 0001:0008a98c       ___getmainargs             0048b98c f   MSVCRT:MSVCRT.dll
+ 0001:0008a992       __initterm                 0048b992 f   MSVCRT:MSVCRT.dll
+ 0001:0008a998       __setdefaultprecision      0048b998 f   MSVCRT:fp8.obj
+ 0001:0008a9aa       ___setusermatherr          0048b9aa f   MSVCRT:MSVCRT.dll
+ 0001:0008a9b0       __matherr                  0048b9b0 f   MSVCRT:merr.obj
+ 0001:0008a9b3       __setargv                  0048b9b3 f   MSVCRT:dllargv.obj
+ 0001:0008a9b4       ___p__commode              0048b9b4 f   MSVCRT:MSVCRT.dll
+ 0001:0008a9ba       ___p__fmode                0048b9ba f   MSVCRT:MSVCRT.dll
+ 0001:0008a9c0       ___set_app_type            0048b9c0 f   MSVCRT:MSVCRT.dll
+ 0001:0008a9c6       __controlfp                0048b9c6 f   MSVCRT:MSVCRT.dll
+ 0001:0008a9d0       ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ 0048b9d0 f   msvcprt:MSVCP60.dll
+ 0001:0008a9d6       ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z 0048b9d6 f   msvcprt:MSVCP60.dll
+ 0001:0008a9dc       ??1_Lockit@std@@QAE@XZ     0048b9dc f   msvcprt:MSVCP60.dll
+ 0001:0008a9e2       ??0_Lockit@std@@QAE@XZ     0048b9e2 f   msvcprt:MSVCP60.dll
+ 0001:0008a9e8       ??0Init@ios_base@std@@QAE@XZ 0048b9e8 f   msvcprt:MSVCP60.dll
+ 0001:0008a9ee       ??1Init@ios_base@std@@QAE@XZ 0048b9ee f   msvcprt:MSVCP60.dll
+ 0001:0008a9f4       ??0_Winit@std@@QAE@XZ      0048b9f4 f   msvcprt:MSVCP60.dll
+ 0001:0008a9fa       ??1_Winit@std@@QAE@XZ      0048b9fa f   msvcprt:MSVCP60.dll
+ 0001:0008aa00       ??_D?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEXXZ 0048ba00 f   msvcprt:MSVCP60.dll
+ 0001:0008aa06       ??1?$basic_streambuf@DU?$char_traits@D@std@@@std@@UAE@XZ 0048ba06 f   msvcprt:MSVCP60.dll
+ 0001:0008aa0c       ??1?$basic_ios@DU?$char_traits@D@std@@@std@@UAE@XZ 0048ba0c f   msvcprt:MSVCP60.dll
+ 0001:0008aa12       ??1ios_base@std@@UAE@XZ    0048ba12 f   msvcprt:MSVCP60.dll
+ 0001:0008aa18       ??1?$basic_iostream@DU?$char_traits@D@std@@@std@@UAE@XZ 0048ba18 f   msvcprt:MSVCP60.dll
+ 0001:0008aa1e       ??1?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UAE@XZ 0048ba1e f   msvcprt:MSVCP60.dll
+ 0001:0008aa24       ??5?$basic_istream@DU?$char_traits@D@std@@@std@@QAEAAV01@AAH@Z 0048ba24 f   msvcprt:MSVCP60.dll
+ 0001:0008aa2a       ?_Init@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IAEXPBDIH@Z 0048ba2a f   msvcprt:MSVCP60.dll
+ 0001:0008aa30       ?_Mode@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEHH@Z 0048ba30 f   msvcprt:MSVCP60.dll
+ 0001:0008aa36       ??0?$basic_streambuf@DU?$char_traits@D@std@@@std@@IAE@XZ 0048ba36 f   msvcprt:MSVCP60.dll
+ 0001:0008aa3c       ??0?$basic_iostream@DU?$char_traits@D@std@@@std@@QAE@PAV?$basic_streambuf@DU?$char_traits@D@std@@@1@@Z 0048ba3c f   msvcprt:MSVCP60.dll
+ 0001:0008aa42       ??0ios_base@std@@IAE@XZ    0048ba42 f   msvcprt:MSVCP60.dll
+ 0001:0008aa48       ?_Eos@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEXI@Z 0048ba48 f   msvcprt:MSVCP60.dll
+ 0001:0008aa4e       ?_Grow@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAE_NI_N@Z 0048ba4e f   msvcprt:MSVCP60.dll
+ 0001:0008aa54       ?_Tidy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEX_N@Z 0048ba54 f   msvcprt:MSVCP60.dll
+ 0001:0008aa5a       ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ABV12@II@Z 0048ba5a f   msvcprt:MSVCP60.dll
+ 0001:0008aa60       ?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ABV12@II@Z 0048ba60 f   msvcprt:MSVCP60.dll
+ 0001:0008aa66       ?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z 0048ba66 f   msvcprt:MSVCP60.dll
+ 0001:0008aa6c       ?_Copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEXI@Z 0048ba6c f   msvcprt:MSVCP60.dll
+ 0001:0008aa72       ?_Xlen@std@@YAXXZ          0048ba72 f   msvcprt:MSVCP60.dll
+ 0001:0008aa78       ??Mstd@@YA_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 0048ba78 f   msvcprt:MSVCP60.dll
+ 0001:0008aa7e       ??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@ABV01@@Z 0048ba7e f   msvcprt:MSVCP60.dll
+ 0001:0008aa84       ??8std@@YA_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z 0048ba84 f   msvcprt:MSVCP60.dll
+ 0001:0008aa8a       ?max_size@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIXZ 0048ba8a f   msvcprt:MSVCP60.dll
+ 0001:0008aa90       ??8std@@YA_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PBD@Z 0048ba90 f   msvcprt:MSVCP60.dll
+ 0001:0008aa96       ?erase@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@II@Z 0048ba96 f   msvcprt:MSVCP60.dll
+ 0001:0008aa9c       ?_Split@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEXXZ 0048ba9c f   msvcprt:MSVCP60.dll
+ 0001:0008aaa2       ?_Xran@std@@YAXXZ          0048baa2 f   msvcprt:MSVCP60.dll
+ 0001:0008aaa8       ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ID@Z 0048baa8 f   msvcprt:MSVCP60.dll
+ 0001:0008aab0       ?AddExpression@CTextFilter@@MAEHPBD@Z 0048bab0 f   FilterText_StaticLib:FilterText.obj
+ 0001:0008adf0       ?Clearup@CTextFilter@@MAEHXZ 0048bdf0 f   FilterText_StaticLib:FilterText.obj
+ 0001:0008af00       ?IsTextPass@CTextFilter@@MAEHPBD@Z 0048bf00 f   FilterText_StaticLib:FilterText.obj
+ 0001:0008b0e0       _CreateTextFilter          0048c0e0 f   FilterText_StaticLib:FilterText.obj
+ 0001:0008b110       ?CreateInstance@CTextFilter@@SAPAV1@XZ 0048c110 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b1c0       ?AddRef@CTextFilter@@MAGKXZ 0048c1c0 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b1d0       ?Release@CTextFilter@@MAGKXZ 0048c1d0 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b200       ??1CTextFilter@@IAE@XZ     0048c200 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b2a0       ?QueryInterface@CTextFilter@@MAGJABU_GUID@@PAPAX@Z 0048c2a0 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b2b0       ??_F?$vector@VRegexp@@V?$allocator@VRegexp@@@std@@@std@@QAEXXZ 0048c2b0 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b2d0       ??1?$vector@VRegexp@@V?$allocator@VRegexp@@@std@@@std@@QAE@XZ 0048c2d0 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b310       ?size@?$vector@VRegexp@@V?$allocator@VRegexp@@@std@@@std@@QBEIXZ 0048c310 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b340       ?_Destroy@?$vector@VRegexp@@V?$allocator@VRegexp@@@std@@@std@@IAEXPAVRegexp@@0@Z 0048c340 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b370       ?insert@?$vector@VRegexp@@V?$allocator@VRegexp@@@std@@@std@@QAEXPAVRegexp@@IABV3@@Z 0048c370 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b650       ?_Ucopy@?$vector@VRegexp@@V?$allocator@VRegexp@@@std@@@std@@IAEPAVRegexp@@PBV3@0PAV3@@Z 0048c650 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b690       ?_Ufill@?$vector@VRegexp@@V?$allocator@VRegexp@@@std@@@std@@IAEXPAVRegexp@@IABV3@@Z 0048c690 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b6c0       ?fill@std@@YAXPAVRegexp@@0ABV2@@Z 0048c6c0 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b6f0       ?copy_backward@std@@YAPAVRegexp@@PAV2@00@Z 0048c6f0 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b730       ?_Construct@std@@YAXPAVRegexp@@ABV2@@Z 0048c730 f i FilterText_StaticLib:FilterText.obj
+ 0001:0008b780       ?regerror@CRegErrorHandler@@IBEXPBD@Z 0048c780 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008b830       ?regerror@CRegErrorHandler@@IBEXH@Z 0048c830 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008b850       ?GetErrorString@CRegErrorHandler@@QBEABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ 0048c850 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008b860       ?ClearErrorString@CRegErrorHandler@@IBEXXZ 0048c860 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008b910       ?FindErr@CRegErrorHandler@@CAPBDH@Z 0048c910 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008b940       ?regnode@CRegCompiler@@MAEPADH@Z 0048c940 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008b960       ?reginsert@CRegCompiler@@MAEXDPAD@Z 0048c960 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008b9a0       ?regtail@CRegCompiler@@MAEXPAD0@Z 0048c9a0 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008b9f0       ?regoptail@CRegCompiler@@MAEXPAD0@Z 0048c9f0 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008ba10       ??0CRegCompilerBase@@QAE@PBD@Z 0048ca10 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008ba40       ??0CRegValidator@@QAE@PBD@Z 0048ca40 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008ba70       ?regnode@CRegValidator@@MAEPADH@Z 0048ca70 f i FilterText_StaticLib:Regexp.obj
+ 0001:0008ba80       ?regc@CRegValidator@@MAEXH@Z 0048ca80 f i FilterText_StaticLib:Regexp.obj
+ 0001:0008ba90       ?reginsert@CRegValidator@@MAEXDPAD@Z 0048ca90 f i FilterText_StaticLib:Regexp.obj
+ 0001:0008baa0       ?regtail@CRegValidator@@MAEXPAD0@Z 0048caa0 f i FilterText_StaticLib:Regexp.obj
+ 0001:0008bab0       ?regoptail@CRegValidator@@MAEXPAD0@Z 0048cab0 f i FilterText_StaticLib:Regexp.obj
+ 0001:0008bac0       ??0CRegCompiler@@QAE@PBDPAD@Z 0048cac0 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008baf0       ?regc@CRegCompiler@@MAEXH@Z 0048caf0 f i FilterText_StaticLib:Regexp.obj
+ 0001:0008bb10       ??0regexp@@QAE@PBDH@Z      0048cb10 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008bbd0       ??1CRegProgramAccessor@@QAE@XZ 0048cbd0 f i FilterText_StaticLib:Regexp.obj
+ 0001:0008bc10       ??0regexp@@QAE@ABV0@@Z     0048cc10 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008bcf0       ??1regexp@@QAE@XZ          0048ccf0 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008bd40       ?regcomp@regexp@@QAE_NPBD@Z 0048cd40 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008bfb0       ??1CRegValidator@@QAE@XZ   0048cfb0 f i FilterText_StaticLib:Regexp.obj
+ 0001:0008c000       ??1CRegCompiler@@QAE@XZ    0048d000 f i FilterText_StaticLib:Regexp.obj
+ 0001:0008c050       ?getCopy@regexp@@QAEPAV1@XZ 0048d050 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008c0b0       ?reg@CRegCompilerBase@@QAEPADHPAH@Z 0048d0b0 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008c240       ?regbranch@CRegCompilerBase@@IAEPADPAH@Z 0048d240 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008c2e0       ?regpiece@CRegCompilerBase@@IAEPADPAH@Z 0048d2e0 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008c4a0       ?regatom@CRegCompilerBase@@IAEPADPAH@Z 0048d4a0 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008c890       ??0CRegExecutor@@QAE@PAVregexp@@PAD@Z 0048d890 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008c8c0       ?regexec@regexp@@QAE_NPBD@Z 0048d8c0 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008ca90       ??1CRegExecutor@@QAE@XZ    0048da90 f i FilterText_StaticLib:Regexp.obj
+ 0001:0008cad0       ?regtry@CRegExecutor@@IAE_NPAD@Z 0048dad0 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008cb30       ?regmatch@CRegExecutor@@IAE_NPAD@Z 0048db30 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008ce80       ?regrepeat@CRegExecutor@@IAEIPAD@Z 0048de80 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008cf10       ??0Regexp@@QAE@XZ          0048df10 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008cf30       ??0Regexp@@QAE@PBDH@Z      0048df30 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008cfb0       ??0Regexp@@QAE@ABV0@@Z     0048dfb0 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008d100       ??4Regexp@@QAEABV0@ABV0@@Z 0048e100 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008d2a0       ??1Regexp@@QAE@XZ          0048e2a0 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008d310       ?Match@Regexp@@QAE_NPBD@Z  0048e310 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008d430       ?GetReplaceString@Regexp@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBD@Z 0048e430 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008d570       ?SubStrings@Regexp@@QBEHXZ 0048e570 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008d640       ?SubStart@Regexp@@QBEHI@Z  0048e640 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008d730       ?SubLength@Regexp@@QBEHI@Z 0048e730 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008d820       ?CompiledOK@Regexp@@QBE_NXZ 0048e820 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008d830       ?safeIndex@Regexp@@ABEHI@Z 0048e830 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008d850       ??ARegexp@@QBE?BV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@Z 0048e850 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008d9c0       ?ignoreCase@regexp@@QAEXPBDPAD@Z 0048e9c0 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008da50       ?GetReplaceString@regexp@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBD@Z 0048ea50 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008de00       ?GetErrorString@Regexp@@QBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ 0048ee00 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008df50       ?ClearErrorString@Regexp@@ABEXXZ 0048ef50 f   FilterText_StaticLib:Regexp.obj
+ 0001:0008e010       _GetModuleHandleA@4        0048f010 f   kernel32:KERNEL32.dll
+ 0001:0008e016       _GetStartupInfoA@4         0048f016 f   kernel32:KERNEL32.dll
+ 0001:0008e01c       __ismbcalpha               0048f01c f   MSVCRT:MSVCRT.dll
+ 0001:0008e022       __purecall                 0048f022 f   MSVCRT:MSVCRT.dll
+ 0001:0008e028       __mbschr                   0048f028 f   MSVCRT:MSVCRT.dll
+ 0001:0008e02e       __mbsstr                   0048f02e f   MSVCRT:MSVCRT.dll
+ 0001:0008e034       __mbsnbcmp                 0048f034 f   MSVCRT:MSVCRT.dll
+ 0001:0008e03a       _isalnum                   0048f03a f   MSVCRT:MSVCRT.dll
+ 0001:0008e040       __mbscspn                  0048f040 f   MSVCRT:MSVCRT.dll
+ 0001:0008e046       __mbsspn                   0048f046 f   MSVCRT:MSVCRT.dll
+ 0001:0008e04c       _tolower                   0048f04c f   MSVCRT:MSVCRT.dll
+ 0001:0008e052       _isalpha                   0048f052 f   MSVCRT:MSVCRT.dll
+ 0001:0008e058       _toupper                   0048f058 f   MSVCRT:MSVCRT.dll
+ 0001:0008e05e       __mbsnbcpy                 0048f05e f   MSVCRT:MSVCRT.dll
+ 0001:0008e064       _isdigit                   0048f064 f   MSVCRT:MSVCRT.dll
  0002:00000000       __imp_?g_pClient@@3PAUIClient@@A 0049b000     CoreClient:CoreClient.dll
  0002:00000004       __imp__CoreGetShell        0049b004     CoreClient:CoreClient.dll
  0002:00000008       \177CoreClient_NULL_THUNK_DATA 0049b008     CoreClient:CoreClient.dll
@@ -6125,19 +6125,19 @@
  0003:0000f4f0       ___onexitend               004b94f0     <common>
  0003:0000f4f4       ___onexitbegin             004b94f4     <common>
 
- entry point at        0001:0008a83a
+ entry point at        0001:0008a80a
 
  Static symbols
 
- 0001:00088100       _$E56                      00489100 f   Login.obj
- 0001:00088110       _$E53                      00489110 f   Login.obj
- 0001:00088120       _$E55                      00489120 f   Login.obj
- 0001:00088130       _$E54                      00489130 f   Login.obj
- 0001:000881d0       _$E59                      004891d0 f   Login.obj
- 0001:000881e0       _$E58                      004891e0 f   Login.obj
- 0001:00089a50       ?DecodeAddressField@@YAHPBDPADH@Z 0048aa50 f   Login.obj
- 0001:00089b20       ?HexToBytes@@YAHPBDPAEH@Z  0048ab20 f   Login.obj
- 0001:00089bc0       ?HexToNibble@@YAHD@Z       0048abc0 f   Login.obj
+ 0001:000880d0       _$E56                      004890d0 f   Login.obj
+ 0001:000880e0       _$E53                      004890e0 f   Login.obj
+ 0001:000880f0       _$E55                      004890f0 f   Login.obj
+ 0001:00088100       _$E54                      00489100 f   Login.obj
+ 0001:000881a0       _$E59                      004891a0 f   Login.obj
+ 0001:000881b0       _$E58                      004891b0 f   Login.obj
+ 0001:00089a20       ?DecodeAddressField@@YAHPBDPADH@Z 0048aa20 f   Login.obj
+ 0001:00089af0       ?HexToBytes@@YAHPBDPAEH@Z  0048aaf0 f   Login.obj
+ 0001:00089b90       ?HexToNibble@@YAHD@Z       0048ab90 f   Login.obj
  0001:000878d0       _$E37                      004888d0 f   NetConnectAgent.obj
  0001:000878e0       _$E34                      004888e0 f   NetConnectAgent.obj
  0001:000878f0       _$E36                      004888f0 f   NetConnectAgent.obj
@@ -6242,4 +6242,4 @@
  0001:00000ff0       _$E27                      00401ff0 f   MouseHover.obj
  0001:000000b0       _$E2                       004010b0 f   ComWindow.obj
  0001:000000c0       _$E1                       004010c0 f   ComWindow.obj
- 0001:0008a6e2       ?ArrayUnwindFilter@@YAHPAU_EXCEPTION_POINTERS@@@Z 0048b6e2 f   MSVCRT:ehvecdtr.obj
+ 0001:0008a6b2       ?ArrayUnwindFilter@@YAHPAU_EXCEPTION_POINTERS@@@Z 0048b6b2 f   MSVCRT:ehvecdtr.obj

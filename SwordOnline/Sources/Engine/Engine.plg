@@ -6,6 +6,56 @@
 --------------------Configuration: Bishop - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP7043.tmp" with contents
+[
+/nologo /MT /W3 /GX /O2 /I "..\Common" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\..\lib" /I "..\..\..\Headers" /I "..\..\Sword3PaySys\S3AccServer" /I "..\..\s3client\login" /I "..\..\RoleDBManager" /I "..\..\Core\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Bishop.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\GamePlayer.cpp"
+]
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP7043.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP7054.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Bishop.pdb" /map:"Release/Bishop.map" /debug /machine:I386 /out:"Release/Bishop.exe" 
+.\Release\Application.obj
+.\Release\Bishop.obj
+.\Release\Event.obj
+.\Release\GamePlayer.obj
+.\Release\GameServer.obj
+.\Release\Intercessor.obj
+.\Release\Network.obj
+.\Release\PlayerCreator.obj
+.\Release\SmartClient.obj
+.\Release\StdAfx.obj
+.\Release\Bishop.res
+..\..\..\Lib\release\common.lib
+..\..\..\Lib\release\engine.lib
+]
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP7054.tmp"
+<h3>Output Window</h3>
+Compiling...
+GamePlayer.cpp
+Linking...
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP72D6.bat" with contents
+[
+@echo off
+md ..\..\..\..\bin\Server
+copy release\Bishop.exe ..\..\..\..\bin\Server\Bishop.exe
+copy release\Bishop.map ..\..\..\..\bin\Server\Bishop.map
+copy release\Bishop.pdb ..\..\..\..\bin\Server\Bishop.pdb
+md ..\..\..\..\bin\Server\release\
+copy release\Bishop.exe ..\..\..\..\bin\Server\release\Bishop.exe
+copy release\Bishop.map ..\..\..\..\bin\Server\release\Bishop.map
+copy release\Bishop.pdb ..\..\..\..\bin\Server\release\Bishop.pdb
+]
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP72D6.bat"
+
+A subdirectory or file ..\..\..\..\bin\Server already exists.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+A subdirectory or file ..\..\..\..\bin\Server\release\ already exists.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
 
 
 
@@ -15,271 +65,15 @@ Bishop.exe - 0 error(s), 0 warning(s)
 --------------------Configuration: Core - Win32 Server Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3CAE.tmp" with contents
-[
-/nologo /MT /W2 /GX /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /D "NDEBUG" /D "_SERVER" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FR"ServerRelease/" /Fp"ServerRelease/Core.pch" /Yu"KCore.h" /Fo"ServerRelease/" /Fd"ServerRelease/" /FD /c 
-"D:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KObjSet.cpp"
-]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP3CAE.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3CBE.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib lualibdll.lib Ws2_32.lib Winmm.lib Shlwapi.lib /nologo /dll /incremental:no /pdb:"ServerRelease/CoreServer.pdb" /map:"ServerRelease/CoreServer.map" /debug /machine:I386 /out:"ServerRelease\CoreServer.dll" /implib:"ServerRelease/CoreServer.lib" 
-.\ServerRelease\KPartnerSkill.obj
-.\ServerRelease\KPlayerPartner.obj
-.\ServerRelease\KThiefSkill.obj
-.\ServerRelease\KMissle.obj
-.\ServerRelease\KMissleRes.obj
-.\ServerRelease\KMissleSet.obj
-.\ServerRelease\KSkillList.obj
-.\ServerRelease\KSkillManager.obj
-.\ServerRelease\KSkills.obj
-.\ServerRelease\KSkillSpecial.obj
-.\ServerRelease\Skill.obj
-.\ServerRelease\KFaction.obj
-.\ServerRelease\KNpc.obj
-.\ServerRelease\KNpcAI.obj
-.\ServerRelease\KNpcAttribModify.obj
-.\ServerRelease\KNpcDeathCalcExp.obj
-.\ServerRelease\KNpcFindPath.obj
-.\ServerRelease\KNpcGold.obj
-.\ServerRelease\KNpcRes.obj
-.\ServerRelease\KNpcResList.obj
-.\ServerRelease\KNpcResNode.obj
-.\ServerRelease\KNpcSet.obj
-.\ServerRelease\KNpcTemplate.obj
-.\ServerRelease\KPlayer.obj
-.\ServerRelease\KPlayerAI.obj
-.\ServerRelease\KPlayerChat.obj
-.\ServerRelease\KPlayerDBFuns.obj
-.\ServerRelease\KPlayerFaction.obj
-.\ServerRelease\KPlayerMenuState.obj
-.\ServerRelease\KPlayerMove.obj
-.\ServerRelease\KPlayerPK.obj
-.\ServerRelease\KPlayerSet.obj
-.\ServerRelease\KPlayerShop.obj
-.\ServerRelease\KPlayerTask.obj
-.\ServerRelease\KPlayerTeam.obj
-.\ServerRelease\KPlayerTong.obj
-.\ServerRelease\KPlayerTrade.obj
-.\ServerRelease\KSprControl.obj
-.\ServerRelease\KBasPropTbl.obj
-.\ServerRelease\KBuySell.obj
-.\ServerRelease\KInventory.obj
-.\ServerRelease\KItem.obj
-.\ServerRelease\KItemChangeRes.obj
-.\ServerRelease\KItemGenerator.obj
-.\ServerRelease\KItemList.obj
-.\ServerRelease\KItemSet.obj
-.\ServerRelease\KObj.obj
-.\ServerRelease\KObjSet.obj
-.\ServerRelease\KViewItem.obj
-.\ServerRelease\KCore.obj
-.\ServerRelease\KSubWorld.obj
-.\ServerRelease\KSubWorldSet.obj
-.\ServerRelease\KWeatherMgr.obj
-.\ServerRelease\KRegion.obj
-.\ServerRelease\KMath.obj
-.\ServerRelease\KGMProcess.obj
-.\ServerRelease\KNewProtocolProcess.obj
-.\ServerRelease\KProtocol.obj
-.\ServerRelease\KProtocolProcess.obj
-.\ServerRelease\ScriptFuns.obj
-.\ServerRelease\KScriptValueSet.obj
-.\ServerRelease\KSortScript.obj
-.\ServerRelease\CoreServerShell.obj
-.\ServerRelease\KWeather.obj
-.\ServerRelease\KMagicDesc.obj
-.\ServerRelease\KMission.obj
-.\ServerRelease\KTaskFuns.obj
-.\ServerRelease\KOption.obj
-.\ServerRelease\KMapMusic.obj
-.\ServerRelease\KLadder.obj
-.\ServerRelease\ZLoadFile.obj
-.\ServerRelease\KWorldMsg.obj
-.\ServerRelease\KB_MSSQL.obj
-.\ServerRelease\ZEG_MSSQLServer_Connection.obj
-.\ServerRelease\ZEG_MSSQLServer_Result.obj
-.\ServerRelease\Kautoai.obj
-.\ServerRelease\KJXPathFinder.obj
-.\ServerRelease\KLittleMap.obj
-.\ServerRelease\stdafx.obj
-..\..\Lib\release\engine.lib
-..\..\Lib\release\common.lib
-.\Src\USBKey\EP1KDL20.LIB
-.\Src\USBKey\EpsForJoLib.lib
-]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP3CBE.tmp"
-<h3>Output Window</h3>
-Compiling...
-KObjSet.cpp
-Linking...
-   Creating library ServerRelease/CoreServer.lib and object ServerRelease/CoreServer.exp
-ServerRelease\CoreServer.dll : warning LNK4084: total image size 673771520 exceeds max (268435456); image may not run
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3DE8.bat" with contents
-[
-@echo off
-md ..\..\lib\release
-copy ServerRelease\CoreServer.lib ..\..\lib\release\CoreServer.lib
-md ..\..\..\bin\Server
-copy ServerRelease\CoreServer.map ..\..\..\bin\Server\Coreserver.map
-copy ServerRelease\CoreServer.pdb ..\..\..\bin\Server\Coreserver.pdb
-copy ServerRelease\CoreServer.dll ..\..\..\bin\Server\Coreserver.dll
-md ..\..\..\bin\Server\release
-copy ServerRelease\CoreServer.map ..\..\..\bin\Server\release\Coreserver.map
-copy ServerRelease\CoreServer.pdb ..\..\..\bin\Server\release\Coreserver.pdb
-copy ServerRelease\CoreServer.dll ..\..\..\bin\Server\release\Coreserver.dll
-]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3DE8.bat"
-
-A subdirectory or file ..\..\lib\release already exists.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\Server already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\Server\release already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
 
 
 
 <h3>Results</h3>
-CoreServer.dll - 0 error(s), 1 warning(s)
+CoreServer.dll - 0 error(s), 0 warning(s)
 <h3>
 --------------------Configuration: Core - Win32 Client Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3E66.tmp" with contents
-[
-/nologo /MD /W2 /GX /Zi /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /I "src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FR"ClientRelease/" /Fp"ClientRelease/Core.pch" /Yu"KCore.h" /Fo"ClientRelease/" /Fd"ClientRelease/" /FD /c 
-"D:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KObjSet.cpp"
-]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP3E66.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3E67.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib lualibdll.lib Shlwapi.lib Winmm.lib /nologo /dll /incremental:no /pdb:"ClientRelease/CoreClient.pdb" /map:"ClientRelease/CoreClient.map" /debug /machine:I386 /out:"ClientRelease\CoreClient.dll" /implib:"ClientRelease/CoreClient.lib" /libpath:"../../lib/" 
-.\ClientRelease\KPartnerSkill.obj
-.\ClientRelease\KPlayerPartner.obj
-.\ClientRelease\KThiefSkill.obj
-.\ClientRelease\KMissle.obj
-.\ClientRelease\KMissleRes.obj
-.\ClientRelease\KMissleSet.obj
-.\ClientRelease\KSkillList.obj
-.\ClientRelease\KSkillManager.obj
-.\ClientRelease\KSkills.obj
-.\ClientRelease\KSkillSpecial.obj
-.\ClientRelease\Skill.obj
-.\ClientRelease\KFaction.obj
-.\ClientRelease\KNpc.obj
-.\ClientRelease\KNpcAI.obj
-.\ClientRelease\KNpcAttribModify.obj
-.\ClientRelease\KNpcDeathCalcExp.obj
-.\ClientRelease\KNpcFindPath.obj
-.\ClientRelease\KNpcGold.obj
-.\ClientRelease\KNpcRes.obj
-.\ClientRelease\KNpcResList.obj
-.\ClientRelease\KNpcResNode.obj
-.\ClientRelease\KNpcSet.obj
-.\ClientRelease\KNpcTemplate.obj
-.\ClientRelease\KPlayer.obj
-.\ClientRelease\KPlayerAI.obj
-.\ClientRelease\KPlayerChat.obj
-.\ClientRelease\KPlayerDBFuns.obj
-.\ClientRelease\KPlayerFaction.obj
-.\ClientRelease\KPlayerMenuState.obj
-.\ClientRelease\KPlayerMove.obj
-.\ClientRelease\KPlayerPK.obj
-.\ClientRelease\KPlayerSet.obj
-.\ClientRelease\KPlayerShop.obj
-.\ClientRelease\KPlayerTask.obj
-.\ClientRelease\KPlayerTeam.obj
-.\ClientRelease\KPlayerTong.obj
-.\ClientRelease\KPlayerTrade.obj
-.\ClientRelease\KSprControl.obj
-.\ClientRelease\KBasPropTbl.obj
-.\ClientRelease\KBuySell.obj
-.\ClientRelease\KInventory.obj
-.\ClientRelease\KItem.obj
-.\ClientRelease\KItemChangeRes.obj
-.\ClientRelease\KItemGenerator.obj
-.\ClientRelease\KItemList.obj
-.\ClientRelease\KItemSet.obj
-.\ClientRelease\KObj.obj
-.\ClientRelease\KObjSet.obj
-.\ClientRelease\KViewItem.obj
-.\ClientRelease\KCore.obj
-.\ClientRelease\KSubWorld.obj
-.\ClientRelease\KSubWorldSet.obj
-.\ClientRelease\KWeatherMgr.obj
-.\ClientRelease\KRegion.obj
-.\ClientRelease\KMath.obj
-.\ClientRelease\KProtocol.obj
-.\ClientRelease\KProtocolProcess.obj
-.\ClientRelease\ScriptFuns.obj
-.\ClientRelease\KScriptValueSet.obj
-.\ClientRelease\KSortScript.obj
-.\ClientRelease\CoreShell.obj
-.\ClientRelease\KIpotBranch.obj
-.\ClientRelease\KIpotLeaf.obj
-.\ClientRelease\KIpoTree.obj
-.\ClientRelease\KScenePlaceC.obj
-.\ClientRelease\KScenePlaceRegionC.obj
-.\ClientRelease\KWeather.obj
-.\ClientRelease\SceneMath.obj
-.\ClientRelease\ScenePlaceMapC.obj
-.\ClientRelease\CoreDrawGameObj.obj
-.\ClientRelease\ImgRef.obj
-.\ClientRelease\KMagicDesc.obj
-.\ClientRelease\KTaskFuns.obj
-.\ClientRelease\KOption.obj
-.\ClientRelease\KMapMusic.obj
-.\ClientRelease\KLadder.obj
-.\ClientRelease\ZLoadFile.obj
-.\ClientRelease\KWorldMsg.obj
-.\ClientRelease\KB_MSSQL.obj
-.\ClientRelease\ZEG_MSSQLServer_Connection.obj
-.\ClientRelease\ZEG_MSSQLServer_Result.obj
-.\ClientRelease\Kautoai.obj
-.\ClientRelease\KJXPathFinder.obj
-.\ClientRelease\KLittleMap.obj
-.\ClientRelease\stdafx.obj
-..\..\Lib\release\engine.lib
-..\..\Lib\release\common.lib
-.\Src\USBKey\EP1KDL20.LIB
-.\Src\USBKey\EpsForJoLib.lib
-]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP3E67.tmp"
-<h3>Output Window</h3>
-Compiling...
-KObjSet.cpp
-Linking...
-   Creating library ClientRelease/CoreClient.lib and object ClientRelease/CoreClient.exp
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3F72.bat" with contents
-[
-@echo off
-md ..\..\..\bin\Client\release
-md ..\..\lib\release
-copy ClientRelease\CoreClient.pdb ..\..\..\bin\Client\CoreClient.pdb
-copy ClientRelease\CoreClient.map ..\..\..\bin\Client\CoreClient.map
-copy ClientRelease\CoreClient.dll ..\..\..\bin\Client\CoreClient.dll
-copy ClientRelease\CoreClient.dll ..\..\..\bin\Client\release\CoreClient.dll
-copy ClientRelease\CoreClient.lib ..\..\lib\release\CoreClient.lib
-copy ClientRelease\CoreClient.map ..\..\..\bin\Client\release\CoreClient.map
-copy ClientRelease\CoreClient.pdb ..\..\..\bin\Client\release\CoreClient.pdb
-]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3F72.bat"
-
-A subdirectory or file ..\..\..\bin\Client\release already exists.
-A subdirectory or file ..\..\lib\release already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-The process cannot access the file because it is being used by another process.
-        0 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
 
 
 
@@ -325,7 +119,7 @@ FilterText.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: GameServer - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3FE0.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP7354.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/GameServer.pdb" /map:"Release/GameServer.map" /debug /machine:I386 /out:"Release/GameServer.exe" 
 .\Release\GameServer.obj
@@ -337,10 +131,10 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 ..\..\..\Lib\release\CoreServer.lib
 ..\..\..\Lib\release\common.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP3FE0.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP7354.tmp"
 <h3>Output Window</h3>
 Linking...
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP404E.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP73B2.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\Server
@@ -358,7 +152,7 @@ copy Release\GameServer.exe ..\..\..\..\bin\Server\release\GS2.exe
 copy Release\GameServer.exe ..\..\..\..\bin\Server\release\GS3.exe
 copy Release\GameServer.exe ..\..\..\..\bin\Server\release\GS4.exe
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP404E.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP73B2.bat"
 
 A subdirectory or file ..\..\..\..\bin\Server already exists.
         1 file(s) copied.

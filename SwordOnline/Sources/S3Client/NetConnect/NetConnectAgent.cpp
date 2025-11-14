@@ -441,7 +441,8 @@ bool KNetConnectAgent::ProcessSwitchGameSvrMsg(void* pMsgData)
 		return false;
 		
 	}
-	g_bDisconnect = true;
-	g_NetConnectAgent.TobeDisconnect();
+	//g_bDisconnect = true;
+	//g_NetConnectAgent.TobeDisconnect();
+	g_bDisconnect = false;  // Changed from true
 	return false;	
 }

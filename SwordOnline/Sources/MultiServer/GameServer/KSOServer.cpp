@@ -1974,7 +1974,7 @@ void KSwordOnLineSever::TransferSmallPackProcess(const void *pData, size_t dataL
 					tagLeaveGame2 lg2;
 					lg2.ProtocolFamily = pf_normal;
 					lg2.ProtocolID     = c2s_leavegame;
-					lg2.cCmdType       = NORMAL_LEAVEGAME;
+					lg2.cCmdType       = HOLDACC_LEAVEGAME;  // Changed from NORMAL_LEAVEGAME
 					strncpy((char *)lg2.szAccountName, (const char *)szName, sizeof(lg2.szAccountName)-1);
 					lg2.szAccountName[sizeof(lg2.szAccountName)-1] = '\0';
 

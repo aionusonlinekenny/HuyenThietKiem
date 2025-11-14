@@ -423,16 +423,48 @@ bool CGamePlayer::Inactive()
                                     (int)(m_sRoleName.size() + 1) );
         }
 
-        // Detach from GameServer (GS will receive logout message)
+                // FIX: Detach account from ALL GameServers, not just m_nAttachServerID
+        // During cross-GS transfer, account may be stuck on multiple servers
+        // Must cleanup from all servers to prevent "account already online"
         if (!m_sAccountName.empty())
         {
+            int nDetachCount = 0;
+ 
+            // Method 1: Detach from m_nAttachServerID first
             CGameServer *pGS = static_cast<CGameServer*>(pGServer);
-            if (pGS)
+                        if (pGS)
             {
-                pGS->DetachAccountFromGameServer(m_sAccountName.c_str());
-                LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d",
-                         m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID);
+                // DetachAccountFromGameServer() has internal validation
+                if (pGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
+                {
+                    nDetachCount++;
+                    LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (primary)",
+                             m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID);
+                }
             }
+ 
+            // Method 2: Check ALL other GameServers for stuck accounts
+            int nMaxLoops = 10;  // Safety limit to prevent infinite loop
+            int nStuckGS = CGameServer::FindServerByAccount(m_sAccountName.c_str());
+            while (nStuckGS != -1 && nStuckGS != m_nAttachServerID && nMaxLoops-- > 0)
+            {
+                IGServer *pStuckServer = CGameServer::GetServer(nStuckGS);
+                if (pStuckServer)
+                {
+                    CGameServer *pStuckGS = static_cast<CGameServer*>(pStuckServer);
+                    if (pStuckGS && pStuckGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
+                    {
+                        nDetachCount++;
+                        LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (stuck account)",
+                                 m_lnIdentityID, m_sAccountName.c_str(), nStuckGS);
+                    }
+                }
+                // Check again for more stuck servers
+                nStuckGS = CGameServer::FindServerByAccount(m_sAccountName.c_str());
+            }
+ 
+            LoginLog("[Inactive][ID=%ld] Detached \"%s\" from %d GameServer(s)",
+                     m_lnIdentityID, m_sAccountName.c_str(), nDetachCount);
         }
 
         // Cleanup local Bishop state

@@ -262,22 +262,25 @@ void KSelSavedCharacter::AcceptNetMsg(void* pMsgData)
 					{
 						g_NetConnectAgent.UpdateClientRequestTime(false);
 						m_nLastOperResult = SSC_R_IN_PROGRESS;
+						g_NetConnectAgent.UpdateClientRequestTime(true);
 					}
 					else
 					{
 						m_nLastOperResult = SSC_R_FAILED;
 						m_Status = SSC_S_STANDBY;
+						g_NetConnectAgent.DisconnectClient();
+						g_NetConnectAgent.UpdateClientRequestTime(true);
 					}
 
 					// 断开与网关的连接
-					g_NetConnectAgent.DisconnectClient();
-					g_NetConnectAgent.UpdateClientRequestTime(true);
+
 
 				}
 				else
 				{
 						m_nLastOperResult = SSC_R_SVR_DOWN;
 						m_Status = SSC_S_STANDBY;
+						g_NetConnectAgent.DisconnectClient();
 				}
 			}
 			break;
