@@ -169,6 +169,7 @@ KProtocolProcess::KProtocolProcess()
 	ProcessFunc[s2c_extendfriend] = &KProtocolProcess::s2cExtendFriend;
 	ProcessFunc[s2c_extendtong] = &KProtocolProcess::s2cExtendTong;
 	ProcessFunc[s2c_rightitemautomove] = &KProtocolProcess::s2cRightItemAutoMove;
+	ProcessFunc[s2c_autosortequipment] = &KProtocolProcess::s2cAutoSortEquipment;
 
 #else
 	ProcessFunc[c2s_login] = NULL;
@@ -1287,6 +1288,23 @@ void KProtocolProcess::s2cRightItemAutoMove(BYTE* pMsg)
         sprintf(msg.szMessage, "�� chuy�n <color=yellow>%s<color> v�o %s th�nh c�ng", szName, whereBuf);
         CoreDataChanged(GDCNI_SYSTEM_MESSAGE, (unsigned int)&msg, 0);
     }
+}
+
+void KProtocolProcess::s2cAutoSortEquipment(BYTE* pMsg)
+{
+    AUTO_SORT_SYNC* pAutoSort = (AUTO_SORT_SYNC*)pMsg;
+
+    // Log the notification
+    g_DebugLog("[CLIENT] s2cAutoSortEquipment: Received auto-sort complete, itemcount=%d", pAutoSort->m_ItemCount);
+
+    // Show success message to user
+    KSystemMessage msg;
+    msg.eType = SMT_NORMAL;
+    msg.byConfirmType = SMCT_NONE;
+    msg.byPriority = 0;
+    msg.byParamSize = 0;
+    sprintf(msg.szMessage, "Đã xếp %d vật phẩm thành công", pAutoSort->m_ItemCount);
+    CoreDataChanged(GDCNI_SYSTEM_MESSAGE, (unsigned int)&msg, 0);
 }
 
 
@@ -4551,6 +4569,13 @@ void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
     }
 
     g_DebugLog("[SERVER] PlayerAutoSortEquipment: player=%d sorted %d items", nIndex, nItemCount);
+
+    // Send s2c notification to client that sorting is complete
+    AUTO_SORT_SYNC sAutoSort;
+    sAutoSort.ProtocolType = s2c_autosortequipment;
+    sAutoSort.m_ItemCount = nItemCount;
+    g_pServer->PackDataToClient(Player[nIndex].m_nNetConnectIdx, (BYTE*)&sAutoSort, sizeof(AUTO_SORT_SYNC));
+    g_DebugLog("[SERVER] PlayerAutoSortEquipment: Sent s2c_autosortequipment to client, itemcount=%d", nItemCount);
 }
 void KProtocolProcess::PlayerMoveItem(int nIndex, BYTE* pProtocol)
 {
