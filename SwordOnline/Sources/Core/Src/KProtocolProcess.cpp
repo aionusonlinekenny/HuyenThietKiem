@@ -4403,8 +4403,11 @@ void KProtocolProcess::PlayerPickUpItem(int nIndex, BYTE* pProtocol)
 	Player[nIndex].ServerPickUpItem(pProtocol);
 
 	// Auto-sort if enabled
+	g_DebugLog("[SERVER] PlayerPickUpItem: player=%d, AutoSort flag=%d",
+		nIndex, Player[nIndex].m_cAI.m_bAutoSortEquipment);
 	if (Player[nIndex].m_cAI.m_bAutoSortEquipment)
 	{
+		g_DebugLog("[SERVER] PlayerPickUpItem: Triggering auto-sort for player=%d", nIndex);
 		PlayerAutoSortEquipment(nIndex, NULL);
 	}
 }
