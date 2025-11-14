@@ -564,7 +564,7 @@ bool CGameServer::_NotifyLeaveGame(const void *pData, size_t datalength)
         return result;
     }
 
-	// FIX: If HOLDACC_LEAVEGAME received, this is a cross-GS transfer
+    // FIX: If HOLDACC_LEAVEGAME received, this is a cross-GS transfer
     // Must call BeginTransfer() to track account in transfer state
     // This allows EndTransfer() to work correctly when player enters new GS
     if (hold)
@@ -575,6 +575,7 @@ bool CGameServer::_NotifyLeaveGame(const void *pData, size_t datalength)
                pAccountName, result ? 1 : 0);
         return result;
     }
+
     // Normal logout - unlock account
     bool result = PopAccount(pAccountName, true);
     printf("[BISHOP] LeaveGame (normal logout): %s detached=%d, unlocked=%d\n",
@@ -621,16 +622,29 @@ bool CGameServer::Attach(const char *pAccountName, bool bCheck)
     
     int nExistingGS = FindServerByAccount(pAccountName);
     int nThisGS = (int)GetID();
-    
+
     if (nExistingGS != -1 && nExistingGS != nThisGS)
     {
         bool isTransferring = IsInTransfer(pAccountName);
         printf("[BISHOP] Attach: %s from GS%d to GS%d, Transfer=%d\n", pAccountName, nExistingGS, nThisGS, isTransferring);
         if (!isTransferring)
             BeginTransfer(pAccountName);
+
+        // FIX: Do NOT call DispatchTask(enumPlayerLogicLogout) to old GS
+        // This is a BLOCKING synchronous call that can take 20+ seconds if old GS is busy!
+        // Old GS will detect player disconnect and cleanup automatically.
+        // Just detach account from old GS locally without waiting for response.
         IGServer *pOld = GetServer(nExistingGS);
         if (pOld)
-            pOld->DispatchTask(CGameServer::enumPlayerLogicLogout, pAccountName, (int)strlen(pAccountName) + 1);
+        {
+            CGameServer *pOldGS = static_cast<CGameServer*>(pOld);
+            if (pOldGS)
+            {
+                pOldGS->DetachAccountFromGameServer(pAccountName);
+                printf("[BISHOP] Attach: Detached \"%s\" from old GS%d (no logout signal)\n",
+                       pAccountName, nExistingGS);
+            }
+        }
     }
     return AttatchAccountToGameServer(pAccountName, bCheck);
 }

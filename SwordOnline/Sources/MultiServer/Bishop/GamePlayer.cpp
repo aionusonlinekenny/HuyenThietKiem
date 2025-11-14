@@ -423,18 +423,16 @@ bool CGamePlayer::Inactive()
                                     (int)(m_sRoleName.size() + 1) );
         }
 
-                // FIX: Detach account from ALL GameServers, not just m_nAttachServerID
-        // During cross-GS transfer, account may be stuck on multiple servers
-        // Must cleanup from all servers to prevent "account already online"
+        // Detach from GameServer (GS will receive logout message)
         if (!m_sAccountName.empty())
         {
             int nDetachCount = 0;
- 
-            // Method 1: Detach from m_nAttachServerID first
+
+            // Method 1: Detach from primary GameServer
             CGameServer *pGS = static_cast<CGameServer*>(pGServer);
-                        if (pGS)
+            if (pGS)
             {
-                // DetachAccountFromGameServer() has internal validation
+																		
                 if (pGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
                 {
                     nDetachCount++;
@@ -442,28 +440,31 @@ bool CGamePlayer::Inactive()
                              m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID);
                 }
             }
- 
-            // Method 2: Check ALL other GameServers for stuck accounts
-            int nMaxLoops = 10;  // Safety limit to prevent infinite loop
-            int nStuckGS = CGameServer::FindServerByAccount(m_sAccountName.c_str());
-            while (nStuckGS != -1 && nStuckGS != m_nAttachServerID && nMaxLoops-- > 0)
+
+            // Method 2: Detach from ALL other GameServers (fast loop, no search)
+            // FIX: Use direct iteration instead of FindServerByAccount() to avoid 15-second blocking delay
+            for (int gsId = 1; gsId <= 5; gsId++)  // Assuming 5 GameServers
+																					  
             {
-                IGServer *pStuckServer = CGameServer::GetServer(nStuckGS);
-                if (pStuckServer)
+                if (gsId == m_nAttachServerID)
+                    continue;  // Skip primary (already handled above)
+
+                IGServer *pOtherServer = CGameServer::GetServer(gsId);
+                if (pOtherServer)
                 {
-                    CGameServer *pStuckGS = static_cast<CGameServer*>(pStuckServer);
-                    if (pStuckGS && pStuckGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
+                    CGameServer *pOtherGS = static_cast<CGameServer*>(pOtherServer);
+                    if (pOtherGS && pOtherGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
                     {
                         nDetachCount++;
-                        LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (stuck account)",
-                                 m_lnIdentityID, m_sAccountName.c_str(), nStuckGS);
+                        LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (stuck account cleanup)",
+                                 m_lnIdentityID, m_sAccountName.c_str(), gsId);
                     }
                 }
-                // Check again for more stuck servers
-                nStuckGS = CGameServer::FindServerByAccount(m_sAccountName.c_str());
+													 
+																					
             }
- 
-            LoginLog("[Inactive][ID=%ld] Detached \"%s\" from %d GameServer(s)",
+
+            LoginLog("[Inactive][ID=%ld] Total detached \"%s\" from %d GameServer(s)",
                      m_lnIdentityID, m_sAccountName.c_str(), nDetachCount);
         }
 
@@ -523,20 +524,49 @@ bool CGamePlayer::Inactive()
         // causing "account already online" error on next login
         if (!m_sAccountName.empty())
         {
-            // IGServer* is always CGameServer* in this context, use static_cast (no RTTI needed)
+            int nDetachCount = 0;
+
+            // Method 1: Detach from primary GameServer
             CGameServer *pGS = static_cast<CGameServer*>(pGServer);
             if (pGS)
             {
-                pGS->DetachAccountFromGameServer(m_sAccountName.c_str());
-                LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d",
-                         m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID);
+                if (pGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
+                {
+                    nDetachCount++;
+                    LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (primary)",
+                             m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID);
+			 
+                }
             }
+
+            // Method 2: Detach from ALL other GameServers (fast loop, no search)
+            // FIX: Use direct iteration instead of FindServerByAccount() to avoid 15-second blocking delay
+            for (int gsId = 1; gsId <= 5; gsId++)  // Assuming 5 GameServers
+            {
+                if (gsId == m_nAttachServerID)
+                    continue;  // Skip primary (already handled above)
+
+                IGServer *pOtherServer = CGameServer::GetServer(gsId);
+                if (pOtherServer)
+                {
+                    CGameServer *pOtherGS = static_cast<CGameServer*>(pOtherServer);
+                    if (pOtherGS && pOtherGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
+                    {
+                        nDetachCount++;
+                        LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (stuck account cleanup)",
+                                 m_lnIdentityID, m_sAccountName.c_str(), gsId);
+                    }
+                }
+            }
+
+            LoginLog("[Inactive][ID=%ld] Total detached \"%s\" from %d GameServer(s) (not on GS path)",
+                     m_lnIdentityID, m_sAccountName.c_str(), nDetachCount);
         }
     }
     if (!m_sAccountName.empty())
     {
         _UnlockAccount();                    // g?i c2s_accountlogout
-       m_bAutoUnlockAccount = false;        // không ?? Run/timeout g?i trùng
+       m_bAutoUnlockAccount = false;        // kh?ng ?? Run/timeout g?i tr?ng
         LoginLog("[Inactive][ID=%ld] Sent AccountLogout for \"%s\"",
                  m_lnIdentityID, m_sAccountName.c_str());
     }
@@ -559,7 +589,7 @@ bool CGamePlayer::Inactive()
 
     ::InterlockedExchangeAdd( &m_lnWorkingCounts, -1 );
 
-    // ACTIVE-LOCK: ch? owner m?i du?c xoá
+    // ACTIVE-LOCK: ch? owner m?i du?c xo?
     {
         OnlineGameLib::Win32::CCriticalSection::Owner lk(g_csActiveAccounts);
         if (m_bOwnsActiveLock)
@@ -574,7 +604,7 @@ bool CGamePlayer::Inactive()
         }
     }
 
-    // TEMP-LOCK: n?u còn (client t?t gi?a handshake)
+    // TEMP-LOCK: n?u c?n (client t?t gi?a handshake)
     if (m_bHasTempLock)
     {
         ReleaseTempLock(m_sAccountName);
@@ -591,8 +621,6 @@ bool CGamePlayer::Inactive()
 
     return true;
 }
-
-
 UINT CGamePlayer::SafeClose()
 {
 	ASSERT( FALSE );
