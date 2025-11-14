@@ -4449,6 +4449,9 @@ void KProtocolProcess::PlayerRightAutoMove(int nIndex, BYTE* pProtocol)
 
 void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
 {
+    g_DebugLog("[SERVER] PlayerAutoSortEquipment CALLED: player=%d, pProtocol=%p",
+        nIndex, pProtocol);
+
     if (nIndex <= 0 || nIndex >= MAX_PLAYER)
         return;
 
@@ -4458,6 +4461,8 @@ void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
     if (pProtocol && pProtocol[0] == c2s_autosortequipment)
     {
         BYTE mode = pProtocol[1]; // Second byte is mode
+        g_DebugLog("[SERVER] PlayerAutoSortEquipment: protocol byte=%d, mode byte=%d",
+            pProtocol[0], mode);
 
         if (mode == 0)
         {

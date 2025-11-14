@@ -1083,6 +1083,17 @@ void KUiPick::OnAutoSortClick()
 		packet.protocol = c2s_autosortequipment;
 		packet.mode = btFlag;
 		g_pClient->SendPackToServer(&packet, sizeof(packet));
+
+		// Debug: Show message to user
+		KSystemMessage Msg;
+		Msg.byConfirmType = SMCT_NONE;
+		Msg.byParamSize = 0;
+		Msg.byPriority = 0;
+		Msg.eType = SMT_NORMAL;
+		Msg.uReservedForUi = 0;
+		sprintf(Msg.szMessage, "[DEBUG] Auto-sort %s - Sent packet: protocol=%d, mode=%d",
+			btFlag ? "ON" : "OFF", packet.protocol, packet.mode);
+		KUiSysMsgCentre::AMessageArrival(&Msg, NULL);
 	}
 }
 void KUiPick::OnGiveItem() 
