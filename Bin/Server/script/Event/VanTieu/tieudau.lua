@@ -8,14 +8,14 @@ Include("\\script\\Event\\VanTieu\\lib.lua")
 -- Helper functions to replace missing ones
 function GetNpcValue(nNpcIdx)
 	-- Workaround: Use NpcParam instead of NpcValue
-	if nNpcIdx <= 0 or nNpcIdx >= MAX_NPC then
+	if nNpcIdx <= 0 then
 		return 0
 	end
 	return GetNpcParam(nNpcIdx, 1) -- Use param slot 1 for UUID storage
 end
 
 function SetNpcValue(nNpcIdx, nValue)
-	if nNpcIdx <= 0 or nNpcIdx >= MAX_NPC then
+	if nNpcIdx <= 0 then
 		return
 	end
 	SetNpcParam(nNpcIdx, 1, nValue)
@@ -44,7 +44,7 @@ function SetNpcOwner(nNpcIdx, szOwnerName, nMode)
 	-- Workaround: Store owner name in NpcParam
 	-- Real implementation would make NPC follow player
 	-- For now, just store the owner info
-	if nNpcIdx <= 0 or nNpcIdx >= MAX_NPC then
+	if nNpcIdx <= 0 then
 		return
 	end
 	SetNpcParam(nNpcIdx, 2, 1) -- Mark as having owner
@@ -55,7 +55,7 @@ function SetNpcTimeout(nNpcIdx, nSeconds)
 	-- Workaround: Use timer to delete NPC after timeout
 	-- Real implementation would be in C++ NPC class
 	-- For now, just mark it (will need manual cleanup)
-	if nNpcIdx <= 0 or nNpcIdx >= MAX_NPC then
+	if nNpcIdx <= 0 then
 		return
 	end
 	SetNpcParam(nNpcIdx, 3, nSeconds) -- Store timeout
@@ -73,7 +73,7 @@ end
 
 function GetNpcIDFromIndex(nNpcIdx)
 	-- Get NPC's m_dwID
-	if nNpcIdx <= 0 or nNpcIdx >= MAX_NPC then
+	if nNpcIdx <= 0 then
 		return 0
 	end
 	return GetNpcID(2, nNpcIdx) -- Type 2 = m_dwID
