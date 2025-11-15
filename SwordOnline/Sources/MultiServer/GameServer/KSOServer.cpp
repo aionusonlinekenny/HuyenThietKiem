@@ -2602,6 +2602,12 @@ void KSwordOnLineSever::PingClient(const unsigned long lnID)
 	{
 		printf("[WARNING] PingClient: Player lnID=%lu not active (nPlayerIndex=%d), ignoring\n",
 			lnID, m_pGameStatus[lnID].nPlayerIndex);
+
+		// FIX: Reset ping timers to stop PING-RETRY spam for dead connections
+		// Without this, MainLoop keeps calling PingClient() → return early → elapsed stays same → PING-RETRY forever
+		m_pGameStatus[lnID].nSendPingTime = 0;
+		m_pGameStatus[lnID].nReplyPingTime = 1;  // Mark as inactive (non-zero = not waiting for reply)
+
 		return;
 	}
 
