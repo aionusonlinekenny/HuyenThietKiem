@@ -2,10 +2,10 @@
 -- Ported from ThienDieuOnline to HuyenThietKiem
 
 Include("\\script\\lib\\TaskLib.lua");
-Include("\\script\\Event\\VanTieu\\lib.lua");
+Include("\\script\\event\\VanTieu\\lib.lua");
 
 function main(NpcIndex)
-	dofile("script/Event/VanTieu/tieusu.lua")
+	dofile("script/event/VanTieu/tieusu.lua")
 
 	Say("Ta là người của Long Môn tiêu cục. Ta tiếp nhận trung chuyển những chuyến tiêu ở nơi này! Ngươi có việc gì?",2,
 	"Giao tiêu/giaotieu",

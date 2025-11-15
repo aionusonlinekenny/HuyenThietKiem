@@ -3,7 +3,7 @@
 -- Adapted by Claude AI Assistant
 
 Include("\\script\\lib\\TaskLib.lua");
-Include("\\script\\Event\\VanTieu\\lib.lua");
+Include("\\script\\event\\VanTieu\\lib.lua");
 
 -- Helper functions to replace missing ones
 function GetNpcValue(nNpcIdx)
@@ -81,7 +81,7 @@ end
 
 -- Main dialog
 function main(NpcIndex)
-	dofile("script/Event/VanTieu/tieudau.lua")
+	dofile("script/event/VanTieu/tieudau.lua")
 
 	local SubWorld = SubWorldID2Idx(SUBWORLD_START)
 	if (SubWorld < 0) then
