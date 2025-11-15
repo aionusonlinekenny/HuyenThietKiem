@@ -18,14 +18,15 @@ TIEUXA_RATE = {
 	{20,20,10},
 }
 
--- Item IDs (cần tạo trong item database)
-ITEM_TIEUKY = 4771			-- Tiêu Kỳ (dropped when robbed)
-ITEM_UNLOCK_VANTIEU = 4772	-- Vé mở khóa vận tiêu thêm
-ITEM_HO_TIEU_LENH = 4774	-- Hồ Tiêu Lệnh (currency/reward)
-ITEM_TANGTO = 4775			-- Tăng tốc
-ITEM_HOIMAU = 4776			-- Hồi máu
-ITEM_DICHCHUYEN = 4778		-- Dịch chuyển
-ITEM_RUONG_VANTIEU = 4838	-- Rương Vận Tiêu (reward)
+-- Item IDs (DetailType in Genre 6 = questkey)
+-- ✅ ĐÃ TẠO trong questkey.txt (DetailType 68-74)
+ITEM_TIEUKY = 68			-- Tiêu Kỳ (dropped when robbed)
+ITEM_UNLOCK_VANTIEU = 69	-- Vé mở khóa vận tiêu thêm
+ITEM_HO_TIEU_LENH = 70		-- Hồ Tiêu Lệnh (currency/reward)
+ITEM_TANGTO = 71			-- Tăng tốc
+ITEM_HOIMAU = 72			-- Hồi máu
+ITEM_DICHCHUYEN = 73		-- Dịch chuyển
+ITEM_RUONG_VANTIEU = 74		-- Rương Vận Tiêu (reward)
 
 -- NPC Template IDs
 NPC_DONG_TIEUXA = 2084		-- Đồng Tiêu Xa

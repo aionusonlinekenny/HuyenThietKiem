@@ -67,3 +67,10 @@ Hoa Qu�c Kh�nh	6	64	1	\spr\item\script\hongse_meiguihua.spr	41	1	1	V�t Ph�m S� K
 Gi�y G�i Hoa	6	65	1	\spr\item\script\zhongqiu_jieri\200909\wusezhizhang.spr	41	1	1	V�t Ph�m S� Ki�n Qu�c Kh�nh<enter><color=blue>X�p ch�ng t�i �a:500 c�i<color>	500
 D�y Bu�c Hoa	6	66	1	\spr\vng\item\womenday2011\ribbon.spr	41	1	1	V�t Ph�m S� Ki�n Qu�c Kh�nh<enter><color=blue>X�p ch�ng t�i �a:500 c�i<color>	500
 Gi� ��ng Hoa	6	67	1	\spr\item\script\basket.spr	41	1	1	V�t Ph�m S� Ki�n Qu�c Kh�nh<enter><color=blue>X�p ch�ng t�i �a:500 c�i<color>	500
+Tiêu Kỳ	6	68	1	\spr\item\questkey\taskobj033.spr	41	1	1	Tiêu Kỳ được rơi khi tiêu xa bị cướp. Mang về cho Tiêu Đầu để nhận thưởng.	0
+Vé Mở Khóa Vận Tiêu	6	69	1	\spr\item\questkey\taskobj092.spr	41	1	1	Dùng để mở khóa giới hạn vận tiêu hàng ngày. Cho phép chạy thêm 1 lần nữa.	0
+Hồ Tiêu Lệnh	6	70	1	\spr\item\questkey\card_xnk.spr	385	1	1	Phần thưởng từ event Vận Tiêu. Có thể đổi lấy các vật phẩm hỗ trợ.	999
+Tăng Tốc	6	71	1	\spr\item\questkey\taskobj105.spr	41	1	1	Tăng tốc độ di chuyển trong thời gian ngắn. Dành cho event Vận Tiêu.	50
+Hồi Máu	6	72	1	\spr\item\questkey\huihuangzhiguo.spr	380	1	1	Hồi phục sinh lực nhanh chóng. Dành cho event Vận Tiêu.	50
+Dịch Chuyển	6	73	1	\spr\item\questkey\006.spr	385	1	1	Dịch chuyển đến vị trí an toàn. Dành cho event Vận Tiêu.	50
+Rương Vận Tiêu	6	74	1	\spr\item\script\songjinmibao.spr	41	1	1	Phần thưởng từ event Vận Tiêu. Mở ra để nhận vật phẩm quý giá.	999
