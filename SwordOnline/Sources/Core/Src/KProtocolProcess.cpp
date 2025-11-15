@@ -266,6 +266,8 @@ KProtocolProcess::KProtocolProcess()
 	ProcessFunc[c2s_recoverybox] = &KProtocolProcess::RecoveryBoxCmd; //TrembleItem by kinnox;
 	ProcessFunc[c2s_rightitemautomove] = &KProtocolProcess::PlayerRightAutoMove;//AutoRightClick
 	ProcessFunc[c2s_autosortequipment] = &KProtocolProcess::PlayerAutoSortEquipment;
+	g_DebugLog("[SERVER] KProtocolProcess Constructor: Registered c2s_autosortequipment=%d, handler=%p",
+		(int)c2s_autosortequipment, ProcessFunc[c2s_autosortequipment]);
 #endif
 }
 
@@ -291,9 +293,18 @@ void KProtocolProcess::ProcessNetMsg(BYTE* pMsg)
 
 void KProtocolProcess::ProcessNetMsg(int nIndex, BYTE* pMsg)
 {
+	// Early debug log BEFORE assertions
+	BYTE byProtocol = pMsg ? pMsg[0] : 0;
+
+	// Log all protocols in the range around auto-sort
+	if (byProtocol >= 145 && byProtocol <= 155)
+	{
+		g_DebugLog("[SERVER] ProcessNetMsg EARLY: protocol=%d, player=%d, c2s_autosortequipment enum=%d",
+			byProtocol, nIndex, (int)c2s_autosortequipment);
+	}
+
 	_ASSERT(pMsg && pMsg[0] > c2s_gameserverbegin && pMsg[0] < c2s_end);
 
-	BYTE	byProtocol = pMsg[0];
 	_ASSERT(nIndex > 0 && nIndex < MAX_PLAYER);
 
 	// Debug log for auto-sort protocol
