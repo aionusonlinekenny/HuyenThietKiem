@@ -1066,6 +1066,10 @@ void KUiPick::OnFillterItem()
 }
 void KUiPick::OnAutoSortClick()
 {
+	// Debug log to file to verify function is called
+	g_DebugLog("[CLIENT] OnAutoSortClick CALLED, IsButtonChecked=%d, g_pClient=%p",
+		m_PickAutoSortCK.IsButtonChecked(), g_pClient);
+
 	// Send auto-sort toggle state to server
 	// Server will enable/disable automatic sorting on item pickup
 	BYTE btFlag = 0;
@@ -1082,6 +1086,10 @@ void KUiPick::OnAutoSortClick()
 		} packet;
 		packet.protocol = c2s_autosortequipment;
 		packet.mode = btFlag;
+
+		g_DebugLog("[CLIENT] OnAutoSortClick: Sending packet protocol=%d, mode=%d, sizeof=%d",
+			packet.protocol, packet.mode, sizeof(packet));
+
 		g_pClient->SendPackToServer(&packet, sizeof(packet));
 
 		// Debug: Show message to user
@@ -1094,6 +1102,10 @@ void KUiPick::OnAutoSortClick()
 		sprintf(Msg.szMessage, "[DEBUG] Auto-sort %s - Sent packet: protocol=%d, mode=%d",
 			btFlag ? "ON" : "OFF", packet.protocol, packet.mode);
 		KUiSysMsgCentre::AMessageArrival(&Msg, NULL);
+	}
+	else
+	{
+		g_DebugLog("[CLIENT] OnAutoSortClick: g_pClient is NULL!");
 	}
 }
 void KUiPick::OnGiveItem() 
