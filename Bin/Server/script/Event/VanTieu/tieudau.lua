@@ -80,8 +80,8 @@ function GetNpcIDFromIndex(nNpcIdx)
 end
 
 -- Main dialog
-function main(nIndex)
-	SubWorld = SubWorldID2Idx(SUBWORLD_START)
+function main(nNpcIdx)
+	local SubWorld = SubWorldID2Idx(SUBWORLD_START)
 	if (SubWorld < 0) then
 		Talk(1,"","Ai cũng tưởng nghề Bảo tiêu là sung sướng! Thật sự mỗi lần ra đi đều không dám hứa hẹn trước ngày về!")
 		return
@@ -241,7 +241,7 @@ function hoanthanh()
 end
 
 function bicuop()
-	SubWorld = SubWorldID2Idx(SUBWORLD_START)
+	local SubWorld = SubWorldID2Idx(SUBWORLD_START)
 	if (SubWorld < 0) then
 		return
 	end
@@ -265,7 +265,7 @@ function bicuop()
 end
 
 function huybo()
-	SubWorld = SubWorldID2Idx(SUBWORLD_START)
+	local SubWorld = SubWorldID2Idx(SUBWORLD_START)
 	if (SubWorld < 0) then
 		return
 	end
