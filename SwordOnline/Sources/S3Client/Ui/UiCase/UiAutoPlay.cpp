@@ -1067,9 +1067,7 @@ void KUiPick::OnFillterItem()
 }
 void KUiPick::OnAutoSortClick()
 {
-	// Send simple protocol to server to trigger auto-sort
-	// Server will handle all sorting logic and send back item move packets
-
+	
 	if (g_pClient)
 	{
 		BYTE protocol = c2s_autosortequipment; // c2s_autosortequipment - temporary ID, will define properly

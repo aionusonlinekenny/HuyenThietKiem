@@ -291,10 +291,8 @@ void KProtocolProcess::ProcessNetMsg(BYTE* pMsg)
 void KProtocolProcess::ProcessNetMsg(int nIndex, BYTE* pMsg)
 {
 	_ASSERT(pMsg && pMsg[0] > c2s_gameserverbegin && pMsg[0] < c2s_end);
-
-	BYTE	byProtocol = pMsg[0];
 	_ASSERT(nIndex > 0 && nIndex < MAX_PLAYER);
-	
+
 	if (   (pMsg[0] >= c2s_requestnpc && pMsg[0] <= c2s_buyplayershop)
 		&& (pMsg[0] != c2s_npctalk)
 		&& (pMsg[0] != c2s_npchurt)
@@ -318,7 +316,9 @@ void KProtocolProcess::ProcessNetMsg(int nIndex, BYTE* pMsg)
 	{
 		(this->*ProcessFunc[byProtocol])(nIndex, pMsg);
 		Player[nIndex].SetLastNetOperationTime(g_SubWorldSet.GetGameTime());
+		
 	}
+
 }
 #endif
 
@@ -1288,7 +1288,6 @@ void KProtocolProcess::s2cRightItemAutoMove(BYTE* pMsg)
         CoreDataChanged(GDCNI_SYSTEM_MESSAGE, (unsigned int)&msg, 0);
     }
 }
-
 
 void KProtocolProcess::s2cRemoveItem(BYTE* pMsg)
 {
@@ -4401,6 +4400,7 @@ void KProtocolProcess::PlayerPickUpItem(int nIndex, BYTE* pProtocol)
 	if (Player[nIndex].CheckTrading())
 		return;
 	Player[nIndex].ServerPickUpItem(pProtocol);
+		
 }
 
 void KProtocolProcess::PlayerRightAutoMove(int nIndex, BYTE* pProtocol)
@@ -4434,7 +4434,8 @@ void KProtocolProcess::PlayerRightAutoMove(int nIndex, BYTE* pProtocol)
 
 void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
 {
-    // Auto-sort equipment inventory - compact items to top-left
+    
+
     if (nIndex <= 0 || nIndex >= MAX_PLAYER)
         return;
 
@@ -4504,7 +4505,6 @@ void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
             }
         }
     }
-
     g_DebugLog("[SERVER] PlayerAutoSortEquipment: player=%d sorted %d items", nIndex, nItemCount);
 }
 void KProtocolProcess::PlayerMoveItem(int nIndex, BYTE* pProtocol)

@@ -33,7 +33,7 @@ struct PingInfo {
 };
 static PingInfo g_pingInfo = {0, 0, 0, false};
 static OnlineGameLib::Win32::CCriticalSection g_csPingInfo;
-static const DWORD PING_INTERVAL = 30000;      // 30 seconds (increased from 10s for DDoS protection)
+static const DWORD PING_INTERVAL = 15000;      // 30 seconds (increased from 10s for DDoS protection)
 static const DWORD PING_TIMEOUT = 90000;       // 90 seconds (increased from 30s for DDoS protection)
 static const int MAX_MISSED_PINGS = 5;         // Increased from 3 for better tolerance
 
