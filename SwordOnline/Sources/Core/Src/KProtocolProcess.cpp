@@ -299,8 +299,15 @@ void KProtocolProcess::ProcessNetMsg(int nIndex, BYTE* pMsg)
 	// Log all protocols in the range around auto-sort (155-160 covers protocol 157)
 	if (byProtocol >= 155 && byProtocol <= 160)
 	{
-		g_DebugLog("[SERVER] ProcessNetMsg EARLY: protocol=%d, player=%d, c2s_autosortequipment enum=%d",
-			byProtocol, nIndex, (int)c2s_autosortequipment);
+		g_DebugLog("[SERVER] ProcessNetMsg EARLY: protocol=%d, player=%d, c2s_autosortequipment enum=%d, c2s_gameserverbegin=%d, c2s_end=%d",
+			byProtocol, nIndex, (int)c2s_autosortequipment, (int)c2s_gameserverbegin, (int)c2s_end);
+
+		// Check assertion condition
+		if (!(pMsg && pMsg[0] > c2s_gameserverbegin && pMsg[0] < c2s_end))
+		{
+			g_DebugLog("[SERVER] ProcessNetMsg: ASSERTION WILL FAIL! pMsg=%p, protocol=%d, c2s_gameserverbegin=%d, c2s_end=%d",
+				pMsg, byProtocol, (int)c2s_gameserverbegin, (int)c2s_end);
+		}
 	}
 
 	_ASSERT(pMsg && pMsg[0] > c2s_gameserverbegin && pMsg[0] < c2s_end);
