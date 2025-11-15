@@ -35,17 +35,18 @@ NPC_VANG_TIEUXA = 2086		-- Vàng Tiêu Xa
 NPC_HONG_TIEUXA = 1185		-- Tiêu Xa Hồng (robbed)
 NPC_RUONG_CUOP = 844		-- Rương cướp
 
--- SubWorld IDs (adjust cho HuyenThiet server)
--- ThienDieu dùng SubWorld 21 = Thành Đô
--- HuyenThiet cần check SubWorld ID tương ứng
-SUBWORLD_START = 21			-- Map bắt đầu (Thành Đô hoặc tương đương)
+-- SubWorld IDs (HuyenThiet server)
+-- Map 11 = Dương Châu (major city)
+SUBWORLD_START = 11			-- Map bắt đầu (Dương Châu)
 
--- Coordinates (cần adjust cho HuyenThiet)
-POS_START_X = 2623			-- Vị trí spawn tiêu xa
-POS_START_Y = 4503
+-- Coordinates (HuyenThiet - map 11)
+-- Tiêu Đầu location: 100500, 163500
+-- Tiêu Sư location: 103200, 166500
+POS_START_X = 100500 / 32		-- Vị trí spawn tiêu xa (near Tiêu Đầu)
+POS_START_Y = 163500 / 32
 
-POS_END_X = 243				-- Vị trí giao tiêu (Thanh Thành Sơn)
-POS_END_Y = 219
+POS_END_X = 103200 / 32			-- Vị trí giao tiêu (near Tiêu Sư)
+POS_END_Y = 166500 / 32
 
 -- Costs & Limits
 COST_START_QUEST = 150000		-- 15 vạn lượng để bắt đầu

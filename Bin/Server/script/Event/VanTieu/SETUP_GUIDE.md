@@ -21,6 +21,11 @@ Tất cả scripts đã sẵn sàng tại `/Bin/Server/script/Event/VanTieu/`
 - TASK_NPCVANTIEU = 751
 - TASK_RESET_VANTIEU = 752
 
+### 4. Quest NPCs (2/2) ✅ DONE
+Đã thêm vào `/Bin/Server/library/maps/dialoger/11.txt`:
+- **Tiêu Đầu**: NPC 377 tại map 11 (Dương Châu) - Tọa độ: 100500, 163500
+- **Tiêu Sư**: NPC 377 tại map 11 (Dương Châu) - Tọa độ: 103200, 166500
+
 ---
 
 ## ⚠️ CÒN PHẢI LÀM
@@ -38,56 +43,24 @@ File: `/Bin/Server/Settings/Npcs.txt`
 - Format cực kỳ phức tạp với 100+ fields
 - Khuyến nghị: Dùng in-game GM tools để tạo
 
-### 2. Quest NPCs (0/2) - REQUIRED
-
-**Tiêu Đầu (Quest Giver)**
-- Vị trí đề xuất: Thành Đô hoặc major city
-- Script: `\script\Event\VanTieu\tieudau.lua`
-- Tạo bằng GM command hoặc map editor
-
-**Tiêu Sư (Quest Receiver)**
-- Vị trí: Thanh Thành Sơn (243, 219) - hoặc điều chỉnh trong lib.lua
-- Script: `\script\Event\VanTieu\tieusu.lua`
-- Tạo bằng GM command hoặc map editor
-
----
-
-## 🎮 CÁCH TẠO NPCs IN-GAME
-
-### Option A: GM Commands (nếu có)
-```
-/addnpc <template_id> <name> <script_path>
-```
-
-### Option B: Map Editor
-1. Mở map editor tool
-2. Place NPC tại vị trí mong muốn
-3. Set script path
-4. Save map
-
-### Option C: Database (nếu NPCs lưu trong DB)
-Thêm vào NPC table:
-```sql
-INSERT INTO npcs (name, template_id, map_id, pos_x, pos_y, script_path, ...)
-VALUES ('Tiêu Đầu', ..., 'MAPID', 100, 200, '\script\Event\VanTieu\tieudau.lua', ...);
-```
-
 ---
 
 ## 📋 TESTING CHECKLIST
 
-### Minimum Test (Chỉ cần 2 NPCs)
+### Minimum Test - ✅ READY TO TEST!
 
-1. [ ] Tạo NPC "Tiêu Đầu" với script `tieudau.lua`
-2. [ ] Tạo NPC "Tiêu Sư" với script `tieusu.lua`
-3. [ ] Restart server để load items mới
-4. [ ] Talk to Tiêu Đầu
-5. [ ] Select "Vận tiêu"
-6. [ ] Select "Bắt đầu" (cần 15 vạn lượng + level 120)
-7. [ ] Observe: Cart should spawn (or error if NPC template missing)
-8. [ ] Go to Tiêu Sư location
-9. [ ] Talk to Tiêu Sư -> Giao tiêu
-10. [ ] Return to Tiêu Đầu -> Hoàn thành
+1. [✅] Tạo NPC "Tiêu Đầu" với script `tieudau.lua` - DONE
+2. [✅] Tạo NPC "Tiêu Sư" với script `tieusu.lua` - DONE
+3. [ ] Restart server để load items và NPCs mới
+4. [ ] Vào game, đến map 11 (Dương Châu)
+5. [ ] Tìm NPC "Tiêu Đầu" (tọa độ: 100500, 163500 hoặc ~3140, 5109 in-game)
+6. [ ] Talk to Tiêu Đầu
+7. [ ] Select "Vận tiêu"
+8. [ ] Select "Bắt đầu" (cần 15 vạn lượng + level 120)
+9. [ ] Observe: Cart should spawn (or error if NPC template 2084 missing)
+10. [ ] Đi đến NPC "Tiêu Sư" (tọa độ: 103200, 166500 hoặc ~3225, 5203)
+11. [ ] Talk to Tiêu Sư -> Giao tiêu
+12. [ ] Return to Tiêu Đầu -> Hoàn thành
 
 ### Expected Behaviors
 
@@ -128,26 +101,27 @@ NPC_VANG_TIEUXA = 2086  -- 102
 
 ---
 
-## 🚀 QUICK START (1 phút)
+## 🚀 QUICK START - ✅ READY!
 
-**Minimum viable test:**
+**Tất cả đã setup xong! Chỉ cần restart server:**
 
 ```bash
-# 1. Đã có: Items & Scripts ✅
+# ✅ DONE: Items created in questkey.txt
+# ✅ DONE: Scripts created in /Event/VanTieu/
+# ✅ DONE: Task IDs added to TaskLib.lua
+# ✅ DONE: NPCs added to map 11 dialoger
 
-# 2. Place 2 NPCs in-game:
-# - Tiêu Đầu: Any city, script=tieudau.lua
-# - Tiêu Sư: Any location, script=tieusu.lua
+# 1. Restart server để load NPCs và items mới
+systemctl restart jxserver  # hoặc lệnh restart server của bạn
 
-# 3. Update coordinates nếu cần:
-# Edit: /Bin/Server/script/Event/VanTieu/lib.lua
-# - SUBWORLD_START
-# - POS_START_X/Y
-# - POS_END_X/Y
+# 2. Login và test event:
+# - Map 11 (Dương Châu)
+# - NPC "Tiêu Đầu" at ~(3140, 5109)
+# - NPC "Tiêu Sư" at ~(3225, 5203)
 
-# 4. Restart server
-
-# 5. Test!
+# 3. Requirements:
+# - Level ≥ 120
+# - Money ≥ 150,000 lượng
 ```
 
 ---
@@ -174,6 +148,7 @@ NPC_VANG_TIEUXA = 2086  -- 102
 ✅ Bin/Server/Settings/Item/questkey.txt (+7 items)
 ✅ Bin/Server/script/lib/TaskLib.lua (+3 task IDs)
 ✅ Bin/Server/script/Event/VanTieu/*.lua (9 files)
+✅ Bin/Server/library/maps/dialoger/11.txt (+2 NPCs)
 ```
 
-## ⏭️ NEXT: Place NPCs & Test!
+## ⏭️ NEXT: Restart server & Test!
