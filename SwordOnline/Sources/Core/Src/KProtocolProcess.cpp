@@ -295,7 +295,13 @@ void KProtocolProcess::ProcessNetMsg(int nIndex, BYTE* pMsg)
 
 	BYTE	byProtocol = pMsg[0];
 	_ASSERT(nIndex > 0 && nIndex < MAX_PLAYER);
-	
+
+	// Debug log for auto-sort protocol
+	if (byProtocol == c2s_autosortequipment)
+	{
+		g_DebugLog("[SERVER] ProcessNetMsg: Received c2s_autosortequipment, protocol=%d, player=%d", byProtocol, nIndex);
+	}
+
 	if (   (pMsg[0] >= c2s_requestnpc && pMsg[0] <= c2s_buyplayershop)
 		&& (pMsg[0] != c2s_npctalk)
 		&& (pMsg[0] != c2s_npchurt)
@@ -319,6 +325,10 @@ void KProtocolProcess::ProcessNetMsg(int nIndex, BYTE* pMsg)
 	{
 		(this->*ProcessFunc[byProtocol])(nIndex, pMsg);
 		Player[nIndex].SetLastNetOperationTime(g_SubWorldSet.GetGameTime());
+	}
+	else if (byProtocol == c2s_autosortequipment)
+	{
+		g_DebugLog("[SERVER] ProcessNetMsg: ProcessFunc[c2s_autosortequipment] is NULL! protocol=%d", byProtocol);
 	}
 }
 #endif
