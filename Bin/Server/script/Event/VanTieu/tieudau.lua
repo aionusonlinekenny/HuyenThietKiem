@@ -2,8 +2,8 @@
 -- Ported from ThienDieuOnline to HuyenThietKiem
 -- Adapted by Claude AI Assistant
 
-Include("\\script\\lib\\TaskLib.lua")
-Include("\\script\\Event\\VanTieu\\lib.lua")
+Include("\\script\\lib\\TaskLib.lua");
+Include("\\script\\Event\\VanTieu\\lib.lua");
 
 -- Helper functions to replace missing ones
 function GetNpcValue(nNpcIdx)
@@ -80,7 +80,9 @@ function GetNpcIDFromIndex(nNpcIdx)
 end
 
 -- Main dialog
-function main(nNpcIdx)
+function main(NpcIndex)
+	dofile("script/Event/VanTieu/tieudau.lua")
+
 	local SubWorld = SubWorldID2Idx(SUBWORLD_START)
 	if (SubWorld < 0) then
 		Talk(1,"","Ai cũng tưởng nghề Bảo tiêu là sung sướng! Thật sự mỗi lần ra đi đều không dám hứa hẹn trước ngày về!")
