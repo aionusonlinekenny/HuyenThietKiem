@@ -290,6 +290,7 @@ void KProtocolProcess::ProcessNetMsg(BYTE* pMsg)
 
 void KProtocolProcess::ProcessNetMsg(int nIndex, BYTE* pMsg)
 {
+	// IMPORTANT: byProtocol is declared on next line
 	_ASSERT(pMsg && pMsg[0] > c2s_gameserverbegin && pMsg[0] < c2s_end);
 
 	BYTE	byProtocol = pMsg[0];
