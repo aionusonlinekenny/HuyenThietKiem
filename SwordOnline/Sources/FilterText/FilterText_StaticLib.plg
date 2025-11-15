@@ -6,20 +6,20 @@
 --------------------Configuration: FilterText_StaticLib - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPBFB1.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8602.tmp" with contents
 [
 /nologo /MD /W3 /GX /Zi /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "FILTERTEXT_STATICLIB" /FR"FilterText_StaticLib___Win32_Release/" /Fp"FilterText_StaticLib___Win32_Release/FilterText_StaticLib.pch" /YX /Fo"FilterText_StaticLib___Win32_Release/" /Fd"FilterText_StaticLib___Win32_Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\FilterText\FilterText.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\FilterText\Regexp.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPBFB1.tmp" 
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP8602.tmp" 
 Creating command line "link.exe -lib /nologo /out:"FilterText_StaticLib___Win32_Release\FilterText_StaticLib.lib"  .\FilterText_StaticLib___Win32_Release\FilterText.obj .\FilterText_StaticLib___Win32_Release\Regexp.obj "
 <h3>Output Window</h3>
 Compiling...
 FilterText.cpp
 Regexp.cpp
 Creating library...
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPC214.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8817.bat" with contents
 [
 @echo off
 md ..\..\lib\release
@@ -27,7 +27,7 @@ copy FilterText_StaticLib___Win32_Release\FilterText_StaticLib.lib ..\..\lib\rel
 md ..\..\lib
 copy FilterText_StaticLib___Win32_Release\FilterText_StaticLib.lib ..\..\lib\FilterText_StaticLib.lib
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPC214.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8817.bat"
 
 A subdirectory or file ..\..\lib\release already exists.
         1 file(s) copied.

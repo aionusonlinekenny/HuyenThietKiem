@@ -291,6 +291,7 @@ void KProtocolProcess::ProcessNetMsg(BYTE* pMsg)
 void KProtocolProcess::ProcessNetMsg(int nIndex, BYTE* pMsg)
 {
 	_ASSERT(pMsg && pMsg[0] > c2s_gameserverbegin && pMsg[0] < c2s_end);
+	BYTE	byProtocol = pMsg[0];  // <-- THI?U DÒNG NÀY!
 	_ASSERT(nIndex > 0 && nIndex < MAX_PLAYER);
 
 	if (   (pMsg[0] >= c2s_requestnpc && pMsg[0] <= c2s_buyplayershop)
