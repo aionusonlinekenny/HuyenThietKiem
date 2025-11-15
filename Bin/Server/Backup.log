@@ -1,7 +1,7 @@
 [Backup] Bat dau backup...
-Backup Log File Open Time:2025.10.25 17:36:21
-[Backup] Thu muc dich: D:\HuyenThietKiem\Bin\Server\database\20251025_173621532
-[Backup] Mo file dump: D:\HuyenThietKiem\Bin\Server\database\20251025_173621532\roledb.bak
+Backup Log File Open Time:2025.11.15 19:37:43
+[Backup] Thu muc dich: D:\HuyenThietKiem\Bin\Server\database\20251115_193743232
+[Backup] Mo file dump: D:\HuyenThietKiem\Bin\Server\database\20251115_193743232\roledb.bak
 RunTable cursor Opened. Backup begin.
 [Backup] RunTable cursor opened. Bat dau dump...
 DB Dump Finished.

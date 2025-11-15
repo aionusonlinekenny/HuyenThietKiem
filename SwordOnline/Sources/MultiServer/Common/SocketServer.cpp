@@ -478,7 +478,7 @@ CSocketServer::Socket::Socket( CSocketServer &server,
 		reinterpret_cast<const char*>(&flag), sizeof(flag) ) )
 	{
 		// Non-fatal error - log but continue
-		OnError( _T("CSocketServer::Socket::Socket() - setsockopt(TCP_NODELAY) failed - ") +
+		m_server.OnError( _T("CSocketServer::Socket::Socket() - setsockopt(TCP_NODELAY) failed - ") +
 			GetLastErrorMessage( ::WSAGetLastError() ) );
 	}
 	if ( useSequenceNumbers )
@@ -515,7 +515,7 @@ void CSocketServer::Socket::Attach( SOCKET theSocket )
 		reinterpret_cast<const char*>(&flag), sizeof(flag) ) )
 	{
 		// Non-fatal error - log but continue
-		OnError( _T("CSocketServer::Socket::Attach() - setsockopt(TCP_NODELAY) failed - ") +
+		m_server.OnError( _T("CSocketServer::Socket::Attach() - setsockopt(TCP_NODELAY) failed - ") +
 			GetLastErrorMessage( ::WSAGetLastError() ) );
 	}
 	SetUserData( 0 );

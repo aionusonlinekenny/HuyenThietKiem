@@ -67,3 +67,10 @@ Hoa Quèc Kh¸nh	6	64	1	\spr\item\script\hongse_meiguihua.spr	41	1	1	VËt PhÈm Sù K
 GiÊy Gãi Hoa	6	65	1	\spr\item\script\zhongqiu_jieri\200909\wusezhizhang.spr	41	1	1	VËt PhÈm Sù KiÖn Quèc Kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	500
 D©y Buéc Hoa	6	66	1	\spr\vng\item\womenday2011\ribbon.spr	41	1	1	VËt PhÈm Sù KiÖn Quèc Kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	500
 Giá §ùng Hoa	6	67	1	\spr\item\script\basket.spr	41	1	1	VËt PhÈm Sù KiÖn Quèc Kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	500
+Tiªu Kú	6	68	1	\spr\item\questkey\taskobj033.spr	41	1	1	Tiêu K? ???c r?i khi tiêu xa b? c??p. Mang v? cho Tiêu ??u ?? nh?n th??ng.	0
+VÐ Më Khãa VËn Tiªu	6	69	1	\spr\item\questkey\taskobj092.spr	41	1	1	Dùng ?? m? khóa gi?i h?n v?n tiêu hàng ngày. Cho phép ch?y thêm 1 l?n n?a.	0
+Hå Tiªu LÖnh	6	70	1	\spr\item\questkey\card_xnk.spr	385	1	1	Ph?n th??ng t? event V?n Tiêu. Có th? ??i l?y các v?t ph?m h? tr?.	999
+T¨ng Tèc	6	71	1	\spr\item\questkey\taskobj105.spr	41	1	1	T?ng t?c ?? di chuy?n trong th?i gian ng?n. Dành cho event V?n Tiêu.	50
+Håi M¸u	6	72	1	\spr\item\questkey\huihuangzhiguo.spr	380	1	1	Håi phôc sinh lùc nhanh chãng. Dµng riªng cho VËn Tiªu.	50
+DÞch ChuyÓn	6	73	1	\spr\item\questkey\006.spr	385	1	1	DÞch chuyÓn ®Õn vÞ trÝ an toµn. Dµnh riªng cho VËn Tiªu.	50
+R­¬ng VËn Tiªu	6	74	1	\spr\item\script\songjinmibao.spr	41	1	1	PhÇn th­ëng cho VËn Tiªu. Më ra ®Ó nhËn ®­îc vËt phÈm quý gi¸.	999

@@ -722,13 +722,16 @@ bool CGamePlayer::Run()
 
             m_pPlayerServer->ShutdownClient( m_lnIdentityID );
 
-            if ( !m_sAccountName.empty() )
+            // FIX: Only send logout ONCE - check flag before calling _UnlockAccount()
+            if ( !m_sAccountName.empty() && m_bAutoUnlockAccount )
             {
                 _UnlockAccount();
                 m_bAutoUnlockAccount = false;
+				LoginLog("[Run-Timeout][ID=%ld] Sent AccountLogout for \"%s\"", m_lnIdentityID, m_sAccountName.c_str());
             }
-
-            // ACTIVE-LOCK: ch? owner m?i xoá
+			// FIX: Reset timer to prevent spam - this timeout block should only run ONCE
+            m_dwTaskBeginTimer = 0;
+            // ACTIVE-LOCK:
             {
                 OnlineGameLib::Win32::CCriticalSection::Owner lk(g_csActiveAccounts);
                 if (m_bOwnsActiveLock)
