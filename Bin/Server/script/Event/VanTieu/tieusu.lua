@@ -1,17 +1,19 @@
 -- Tiêu Sư - Vận Tiêu Quest Receiver NPC
 -- Ported from ThienDieuOnline to HuyenThietKiem
 
-Include("\\script\\lib\\TaskLib.lua")
-Include("\\script\\Event\\VanTieu\\lib.lua")
+Include("\\script\\lib\\TaskLib.lua");
+Include("\\script\\Event\\VanTieu\\lib.lua");
 
-function main(nIndex)
+function main(NpcIndex)
+	dofile("script/Event/VanTieu/tieusu.lua")
+
 	Say("Ta là người của Long Môn tiêu cục. Ta tiếp nhận trung chuyển những chuyến tiêu ở nơi này! Ngươi có việc gì?",2,
 	"Giao tiêu/giaotieu",
 	"Hỏi thăm thôi/no")
 end
 
 function giaotieu()
-	SubWorld = SubWorldID2Idx(SUBWORLD_START)
+	local SubWorld = SubWorldID2Idx(SUBWORLD_START)
 	if (SubWorld < 0) then
 		return
 	end
