@@ -169,7 +169,6 @@ KProtocolProcess::KProtocolProcess()
 	ProcessFunc[s2c_extendfriend] = &KProtocolProcess::s2cExtendFriend;
 	ProcessFunc[s2c_extendtong] = &KProtocolProcess::s2cExtendTong;
 	ProcessFunc[s2c_rightitemautomove] = &KProtocolProcess::s2cRightItemAutoMove;
-	ProcessFunc[s2c_autosortequipment] = &KProtocolProcess::s2cAutoSortEquipment;
 
 #else
 	ProcessFunc[c2s_login] = NULL;
@@ -266,8 +265,6 @@ KProtocolProcess::KProtocolProcess()
 	ProcessFunc[c2s_recoverybox] = &KProtocolProcess::RecoveryBoxCmd; //TrembleItem by kinnox;
 	ProcessFunc[c2s_rightitemautomove] = &KProtocolProcess::PlayerRightAutoMove;//AutoRightClick
 	ProcessFunc[c2s_autosortequipment] = &KProtocolProcess::PlayerAutoSortEquipment;
-	g_DebugLog("[SERVER] KProtocolProcess Constructor: Registered c2s_autosortequipment=%d, handler=%p",
-		(int)c2s_autosortequipment, ProcessFunc[c2s_autosortequipment]);
 #endif
 }
 
@@ -293,33 +290,11 @@ void KProtocolProcess::ProcessNetMsg(BYTE* pMsg)
 
 void KProtocolProcess::ProcessNetMsg(int nIndex, BYTE* pMsg)
 {
-	// Early debug log BEFORE assertions
-	BYTE byProtocol = pMsg ? pMsg[0] : 0;
-
-	// Log all protocols in the range around auto-sort (155-160 covers protocol 157)
-	if (byProtocol >= 155 && byProtocol <= 160)
-	{
-		g_DebugLog("[SERVER] ProcessNetMsg EARLY: protocol=%d, player=%d, c2s_autosortequipment enum=%d, c2s_gameserverbegin=%d, c2s_end=%d",
-			byProtocol, nIndex, (int)c2s_autosortequipment, (int)c2s_gameserverbegin, (int)c2s_end);
-
-		// Check assertion condition
-		if (!(pMsg && pMsg[0] > c2s_gameserverbegin && pMsg[0] < c2s_end))
-		{
-			g_DebugLog("[SERVER] ProcessNetMsg: ASSERTION WILL FAIL! pMsg=%p, protocol=%d, c2s_gameserverbegin=%d, c2s_end=%d",
-				pMsg, byProtocol, (int)c2s_gameserverbegin, (int)c2s_end);
-		}
-	}
-
 	_ASSERT(pMsg && pMsg[0] > c2s_gameserverbegin && pMsg[0] < c2s_end);
 
+	BYTE	byProtocol = pMsg[0];
 	_ASSERT(nIndex > 0 && nIndex < MAX_PLAYER);
-
-	// Debug log for auto-sort protocol
-	if (byProtocol == c2s_autosortequipment)
-	{
-		g_DebugLog("[SERVER] ProcessNetMsg: Received c2s_autosortequipment, protocol=%d, player=%d", byProtocol, nIndex);
-	}
-
+	
 	if (   (pMsg[0] >= c2s_requestnpc && pMsg[0] <= c2s_buyplayershop)
 		&& (pMsg[0] != c2s_npctalk)
 		&& (pMsg[0] != c2s_npchurt)
@@ -343,10 +318,6 @@ void KProtocolProcess::ProcessNetMsg(int nIndex, BYTE* pMsg)
 	{
 		(this->*ProcessFunc[byProtocol])(nIndex, pMsg);
 		Player[nIndex].SetLastNetOperationTime(g_SubWorldSet.GetGameTime());
-	}
-	else if (byProtocol == c2s_autosortequipment)
-	{
-		g_DebugLog("[SERVER] ProcessNetMsg: ProcessFunc[c2s_autosortequipment] is NULL! protocol=%d", byProtocol);
 	}
 }
 #endif
@@ -1316,23 +1287,6 @@ void KProtocolProcess::s2cRightItemAutoMove(BYTE* pMsg)
         sprintf(msg.szMessage, "�� chuy�n <color=yellow>%s<color> v�o %s th�nh c�ng", szName, whereBuf);
         CoreDataChanged(GDCNI_SYSTEM_MESSAGE, (unsigned int)&msg, 0);
     }
-}
-
-void KProtocolProcess::s2cAutoSortEquipment(BYTE* pMsg)
-{
-    AUTO_SORT_SYNC* pAutoSort = (AUTO_SORT_SYNC*)pMsg;
-
-    // Log the notification
-    g_DebugLog("[CLIENT] s2cAutoSortEquipment: Received auto-sort complete, itemcount=%d", pAutoSort->m_ItemCount);
-
-    // Show success message to user
-    KSystemMessage msg;
-    msg.eType = SMT_NORMAL;
-    msg.byConfirmType = SMCT_NONE;
-    msg.byPriority = 0;
-    msg.byParamSize = 0;
-    sprintf(msg.szMessage, "Đã xếp %d vật phẩm thành công", pAutoSort->m_ItemCount);
-    CoreDataChanged(GDCNI_SYSTEM_MESSAGE, (unsigned int)&msg, 0);
 }
 
 
@@ -4447,15 +4401,6 @@ void KProtocolProcess::PlayerPickUpItem(int nIndex, BYTE* pProtocol)
 	if (Player[nIndex].CheckTrading())
 		return;
 	Player[nIndex].ServerPickUpItem(pProtocol);
-
-	// Auto-sort if enabled
-	g_DebugLog("[SERVER] PlayerPickUpItem: player=%d, AutoSort flag=%d",
-		nIndex, Player[nIndex].m_cAI.m_bAutoSortEquipment);
-	if (Player[nIndex].m_cAI.m_bAutoSortEquipment)
-	{
-		g_DebugLog("[SERVER] PlayerPickUpItem: Triggering auto-sort for player=%d", nIndex);
-		PlayerAutoSortEquipment(nIndex, NULL);
-	}
 }
 
 void KProtocolProcess::PlayerRightAutoMove(int nIndex, BYTE* pProtocol)
@@ -4479,12 +4424,6 @@ void KProtocolProcess::PlayerRightAutoMove(int nIndex, BYTE* pProtocol)
     else if ((src >= pos_repositoryroom && src <= pos_repositoryroom5) && dst == pos_equiproom)
     {
         bResult = itemList.AutoMoveToInventory(0, p->m_btSrcX, p->m_btSrcY, p->m_btSrcPos, p->m_btDestPos);
-
-        // Auto-sort if enabled and move was successful
-        if (bResult && Player[nIndex].m_cAI.m_bAutoSortEquipment)
-        {
-            PlayerAutoSortEquipment(nIndex, NULL);
-        }
     }
 
     if (!bResult)
@@ -4495,39 +4434,9 @@ void KProtocolProcess::PlayerRightAutoMove(int nIndex, BYTE* pProtocol)
 
 void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
 {
-    g_DebugLog("[SERVER] PlayerAutoSortEquipment CALLED: player=%d, pProtocol=%p",
-        nIndex, pProtocol);
-
+    // Auto-sort equipment inventory - compact items to top-left
     if (nIndex <= 0 || nIndex >= MAX_PLAYER)
         return;
-
-    // Check if this is a toggle command (2 bytes) or manual sort trigger (1 byte)
-    // Packet structure: [protocol_byte] [optional: mode_byte]
-    // Mode 0 = disable auto-sort, Mode 1 = enable auto-sort + sort immediately
-    if (pProtocol && pProtocol[0] == c2s_autosortequipment)
-    {
-        BYTE mode = pProtocol[1]; // Second byte is mode
-        g_DebugLog("[SERVER] PlayerAutoSortEquipment: protocol byte=%d, mode byte=%d",
-            pProtocol[0], mode);
-
-        if (mode == 0)
-        {
-            // Disable auto-sort, don't sort
-            Player[nIndex].m_cAI.m_bAutoSortEquipment = FALSE;
-            g_DebugLog("[SERVER] PlayerAutoSortEquipment: player=%d set auto-sort OFF", nIndex);
-            return;
-        }
-        else if (mode == 1)
-        {
-            // Enable auto-sort AND sort immediately (so user sees the effect)
-            Player[nIndex].m_cAI.m_bAutoSortEquipment = TRUE;
-            g_DebugLog("[SERVER] PlayerAutoSortEquipment: player=%d set auto-sort ON + sorting now", nIndex);
-            // Continue to sort below (don't return)
-        }
-    }
-
-    // Manual sort trigger or called from pickup handler or mode==1 (enable+sort)
-    // Compact items to top-left
 
     // Collect all items from equiproom
     struct SortItem {
@@ -4597,13 +4506,6 @@ void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
     }
 
     g_DebugLog("[SERVER] PlayerAutoSortEquipment: player=%d sorted %d items", nIndex, nItemCount);
-
-    // Send s2c notification to client that sorting is complete
-    AUTO_SORT_SYNC sAutoSort;
-    sAutoSort.ProtocolType = s2c_autosortequipment;
-    sAutoSort.m_ItemCount = nItemCount;
-    g_pServer->PackDataToClient(Player[nIndex].m_nNetConnectIdx, (BYTE*)&sAutoSort, sizeof(AUTO_SORT_SYNC));
-    g_DebugLog("[SERVER] PlayerAutoSortEquipment: Sent s2c_autosortequipment to client, itemcount=%d", nItemCount);
 }
 void KProtocolProcess::PlayerMoveItem(int nIndex, BYTE* pProtocol)
 {

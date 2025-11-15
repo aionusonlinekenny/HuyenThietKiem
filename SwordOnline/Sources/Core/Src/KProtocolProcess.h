@@ -145,7 +145,6 @@ public:
 	void	s2cPlayerPointSync(BYTE* pMsg);//SyncPoint by kinnox;
 	void	PlayerSendTopTKNew(BYTE* pMsg);//Report Battle by kinnox;
 	void 	s2cRightItemAutoMove(BYTE* pMsg);
-	void 	s2cAutoSortEquipment(BYTE* pMsg);
 	void 	GetPlaceName(int place, char* out, size_t outsz);
 	void 	ShowLienTram(BYTE* pMsg);
 #else

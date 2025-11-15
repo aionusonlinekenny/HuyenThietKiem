@@ -191,7 +191,6 @@ enum s2c_PROTOCOL
 	s2c_notification,//Notification by kinnox;
 	//s2c_show_lien_tram,
 	s2c_rightitemautomove,
-	s2c_autosortequipment, //Auto Sort Inventory Complete
 	s2c_extend = 250,
 	s2c_extendchat = 251,
 	s2c_extendfriend = 252,

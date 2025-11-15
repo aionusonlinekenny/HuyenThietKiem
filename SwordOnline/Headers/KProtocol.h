@@ -669,12 +669,6 @@ typedef struct
 typedef struct
 {
 	BYTE	ProtocolType;
-	BYTE	m_ItemCount;
-} AUTO_SORT_SYNC;
-
-typedef struct
-{
-	BYTE	ProtocolType;
 	DWORD	dwID;
 	DWORD	dwTimePacker;
 	int		m_ID;
