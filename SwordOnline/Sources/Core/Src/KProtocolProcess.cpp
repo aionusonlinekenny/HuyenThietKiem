@@ -296,8 +296,8 @@ void KProtocolProcess::ProcessNetMsg(int nIndex, BYTE* pMsg)
 	// Early debug log BEFORE assertions
 	BYTE byProtocol = pMsg ? pMsg[0] : 0;
 
-	// Log all protocols in the range around auto-sort
-	if (byProtocol >= 145 && byProtocol <= 155)
+	// Log all protocols in the range around auto-sort (155-160 covers protocol 157)
+	if (byProtocol >= 155 && byProtocol <= 160)
 	{
 		g_DebugLog("[SERVER] ProcessNetMsg EARLY: protocol=%d, player=%d, c2s_autosortequipment enum=%d",
 			byProtocol, nIndex, (int)c2s_autosortequipment);
