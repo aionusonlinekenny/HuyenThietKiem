@@ -23,8 +23,8 @@ Tất cả scripts đã sẵn sàng tại `/Bin/Server/script/Event/VanTieu/`
 
 ### 4. Quest NPCs (2/2) ✅ DONE
 Đã thêm vào `/Bin/Server/library/maps/dialoger/11.txt`:
-- **Tiêu Đầu**: NPC 377 tại map 11 (Dương Châu) - Tọa độ: 100500, 163500
-- **Tiêu Sư**: NPC 377 tại map 11 (Dương Châu) - Tọa độ: 103200, 166500
+- **Tiêu Đầu**: NPC 377 tại map 11 (Dương Châu) - Tọa độ: 98432, 164864 (~3076, 5152)
+- **Tiêu Sư**: NPC 377 tại map 11 (Dương Châu) - Tọa độ: 103200, 166500 (~3225, 5203)
 
 ---
 
@@ -53,12 +53,12 @@ File: `/Bin/Server/Settings/Npcs.txt`
 2. [✅] Tạo NPC "Tiêu Sư" với script `tieusu.lua` - DONE
 3. [ ] Restart server để load items và NPCs mới
 4. [ ] Vào game, đến map 11 (Dương Châu)
-5. [ ] Tìm NPC "Tiêu Đầu" (tọa độ: 100500, 163500 hoặc ~3140, 5109 in-game)
+5. [ ] Tìm NPC "Tiêu Đầu" (tọa độ: 98432, 164864 hoặc ~3076, 5152 in-game)
 6. [ ] Talk to Tiêu Đầu
 7. [ ] Select "Vận tiêu"
 8. [ ] Select "Bắt đầu" (cần 15 vạn lượng + level 120)
 9. [ ] Observe: Cart should spawn (or error if NPC template 2084 missing)
-10. [ ] Đi đến NPC "Tiêu Sư" (tọa độ: 103200, 166500 hoặc ~3225, 5203)
+10. [ ] Đi đến NPC "Tiêu Sư" (tọa độ: 103200, 166500 hoặc ~3225, 5203 in-game)
 11. [ ] Talk to Tiêu Sư -> Giao tiêu
 12. [ ] Return to Tiêu Đầu -> Hoàn thành
 
@@ -116,7 +116,7 @@ systemctl restart jxserver  # hoặc lệnh restart server của bạn
 
 # 2. Login và test event:
 # - Map 11 (Dương Châu)
-# - NPC "Tiêu Đầu" at ~(3140, 5109)
+# - NPC "Tiêu Đầu" at ~(3076, 5152)
 # - NPC "Tiêu Sư" at ~(3225, 5203)
 
 # 3. Requirements:

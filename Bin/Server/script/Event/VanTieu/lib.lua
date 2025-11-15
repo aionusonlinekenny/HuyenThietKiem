@@ -40,10 +40,10 @@ NPC_RUONG_CUOP = 844		-- Rương cướp
 SUBWORLD_START = 11			-- Map bắt đầu (Dương Châu)
 
 -- Coordinates (HuyenThiet - map 11)
--- Tiêu Đầu location: 100500, 163500
+-- Tiêu Đầu location: 98432, 164864
 -- Tiêu Sư location: 103200, 166500
-POS_START_X = 100500 / 32		-- Vị trí spawn tiêu xa (near Tiêu Đầu)
-POS_START_Y = 163500 / 32
+POS_START_X = 98432 / 32		-- Vị trí spawn tiêu xa (near Tiêu Đầu)
+POS_START_Y = 164864 / 32
 
 POS_END_X = 103200 / 32			-- Vị trí giao tiêu (near Tiêu Sư)
 POS_END_Y = 166500 / 32
