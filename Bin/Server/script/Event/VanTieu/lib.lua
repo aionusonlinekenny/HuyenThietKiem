@@ -7,9 +7,9 @@ Include("\\script\\lib\\TaskLib.lua")
 
 -- NPC Template IDs cho tiêu xa
 TIEUXA_TEMPLET = {
-	{2084, " - Tiêu Xa [Đồng] "},
-	{2085, " - Tiêu Xa [Bạc] "},
-	{2086, " - Tiêu Xa [Vàng] "},
+	{2085, " - Tiêu Xa [Đồng] "},
+	{2086, " - Tiêu Xa [Bạc] "},
+	{2087, " - Tiêu Xa [Vàng] "},
 }
 
 -- Tỷ lệ spawn các loại tiêu xa (hiện tại chưa dùng)
@@ -29,9 +29,9 @@ ITEM_DICHCHUYEN = 73		-- Dịch chuyển
 ITEM_RUONG_VANTIEU = 74		-- Rương Vận Tiêu (reward)
 
 -- NPC Template IDs
-NPC_DONG_TIEUXA = 2084		-- Đồng Tiêu Xa
-NPC_BAC_TIEUXA = 2085		-- Bạc Tiêu Xa
-NPC_VANG_TIEUXA = 2086		-- Vàng Tiêu Xa
+NPC_DONG_TIEUXA = 2085		-- Đồng Tiêu Xa
+NPC_BAC_TIEUXA = 2086		-- Bạc Tiêu Xa
+NPC_VANG_TIEUXA = 2087		-- Vàng Tiêu Xa
 NPC_HONG_TIEUXA = 1185		-- Tiêu Xa Hồng (robbed)
 NPC_RUONG_CUOP = 844		-- Rương cướp
 
