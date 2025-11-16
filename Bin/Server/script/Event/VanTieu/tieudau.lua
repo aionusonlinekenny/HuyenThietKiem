@@ -159,17 +159,32 @@ function batdau()
 	local n = random(0, 2)
 	local nRand = n + 1
 
+	-- Debug info
+	local nTemplateID = TIEUXA_TEMPLET[nRand][1]
+	local nSubWorldIdx = SubWorldID2Idx(SUBWORLD_START)
+	local nPosX = floor(POS_START_X * 32)
+	local nPosY = floor(POS_START_Y * 32)
+
+	Msg2Player("Debug: Attempting spawn - Template="..nTemplateID.." SubWorld="..nSubWorldIdx.." X="..nPosX.." Y="..nPosY)
+
 	-- Spawn escort cart
-	local nId = AddNpcWithScript(
-		TIEUXA_TEMPLET[nRand][1],  -- Template ID
+	local nId = AddNpc(
+		nTemplateID,				-- Template ID
 		1,							-- Level
-		SUBWORLD_START,				-- SubWorld
-		POS_START_X * 32,			-- X
-		POS_START_Y * 32,			-- Y
-		"\\script\\event\\VanTieu\\tieuxa.lua", -- Script
+		nSubWorldIdx,				-- SubWorld Index
+		nPosX,						-- X
+		nPosY,						-- Y
 		1,							-- Remove on death
-		""							-- Name (will be set below)
+		"",							-- Name (will be set below)
+		0,							-- Param 8
+		0							-- Param 9
 	)
+
+	Msg2Player("Debug: AddNpc returned nId="..tostring(nId))
+
+	if nId > 0 then
+		SetNpcScript(nId, "\\script\\event\\VanTieu\\tieuxa.lua")
+	end
 
 	if nId <= 0 then
 		Talk(1,"","Lỗi: Không thể tạo tiêu xa!")
