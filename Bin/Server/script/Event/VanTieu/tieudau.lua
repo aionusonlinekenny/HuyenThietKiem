@@ -521,12 +521,32 @@ function testserverbuild()
 		"it means server needs rebuild.\n\n"..
 		"Check server console for detailed messages.")
 
+	-- Check if lib.lua loaded correctly
+	if SUBWORLD_START == nil then
+		Msg2Player("ERROR: SUBWORLD_START is nil! lib.lua not loaded?")
+		return
+	end
+
 	-- Spawn a test cart to check SetNpcOwner
 	local nSubWorldIdx = SubWorldID2Idx(SUBWORLD_START)
 	local w, x, y = GetWorldPos()
 
 	Msg2Player("=== SPAWN TEST CART ===")
+	Msg2Player("Debug: SUBWORLD_START="..tostring(SUBWORLD_START))
+	Msg2Player("Debug: SubWorldIdx="..tostring(nSubWorldIdx))
+	Msg2Player("Debug: GetWorldPos returned: w="..tostring(w)..", x="..tostring(x)..", y="..tostring(y))
+
+	if nSubWorldIdx < 0 then
+		Msg2Player("ERROR: Invalid SubWorld Index (< 0)!")
+		Msg2Player("ERROR: SubWorldID2Idx("..SUBWORLD_START..") returned "..nSubWorldIdx)
+		return
+	end
+
+	Msg2Player("Debug: Calling AddNpc(2085, 1, "..nSubWorldIdx..", "..x..", "..y..", 1, 'Test Cart', 0, 0)")
+
 	local nId = AddNpc(2085, 1, nSubWorldIdx, x, y, 1, "Test Cart", 0, 0)
+
+	Msg2Player("Debug: AddNpc returned nId="..tostring(nId))
 
 	if nId > 0 then
 		Msg2Player("Test cart spawned with Index="..nId)
