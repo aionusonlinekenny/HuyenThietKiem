@@ -284,6 +284,25 @@ function batdau()
 			Msg2Player("Debug: Called SetNpcAIMode(8)")
 		end
 
+		-- DEBUG: Verify that C++ code actually set the params
+		if GetNpcParam then
+			local nParam8 = GetNpcParam(nId, 8)  -- Should be player index
+			local nParam9 = GetNpcParam(nId, 9)  -- Should be 1 (follow mode)
+			Msg2Player("Debug: m_AiParam[8] = "..tostring(nParam8).." (player index)")
+			Msg2Player("Debug: m_AiParam[9] = "..tostring(nParam9).." (follow mode, should be 1)")
+
+			-- Also check player index for comparison
+			local nMyPlayerIdx = GetPlayerIndex()
+			if nMyPlayerIdx then
+				Msg2Player("Debug: My player index = "..tostring(nMyPlayerIdx))
+				if nParam8 == nMyPlayerIdx then
+					Msg2Player("✓ GOOD: m_AiParam[8] matches player index!")
+				else
+					Msg2Player("✗ ERROR: m_AiParam[8] doesn't match! Expected "..tostring(nMyPlayerIdx)..", got "..tostring(nParam8))
+				end
+			end
+		end
+
 		Msg2Player("SUCCESS: SetNpcOwner called! Cart should follow you now.")
 	else
 		Msg2Player("ERROR: C++ SetNpcOwner NOT FOUND!")
