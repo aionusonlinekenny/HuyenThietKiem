@@ -4402,6 +4402,13 @@ void KProtocolProcess::PlayerPickUpItem(int nIndex, BYTE* pProtocol)
 	if (Player[nIndex].CheckTrading())
 		return;
 	Player[nIndex].ServerPickUpItem(pProtocol);
+
+	// Auto-sort equipment if enabled
+	if (Player[nIndex].m_cAI.m_bAutoSortEquipment)
+	{
+		g_DebugLog("[SERVER] PlayerPickUpItem: Triggering auto-sort for player=%d", nIndex);
+		PlayerAutoSortEquipment(nIndex, NULL); // NULL = don't change flag, just sort
+	}
 }
 
 void KProtocolProcess::PlayerRightAutoMove(int nIndex, BYTE* pProtocol)
@@ -4435,10 +4442,33 @@ void KProtocolProcess::PlayerRightAutoMove(int nIndex, BYTE* pProtocol)
 
 void KProtocolProcess::PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol)
 {
-    // Auto-sort equipment inventory - compact items to top-left
     if (nIndex <= 0 || nIndex >= MAX_PLAYER)
         return;
 
+    // If called from client (checkbox click), handle mode byte
+    if (pProtocol != NULL)
+    {
+        // Packet structure: [protocol_byte] [mode_byte]
+        // mode_byte: 0 = disable auto-sort, 1 = enable auto-sort + sort now
+        BYTE mode = pProtocol[1];
+
+        if (mode == 0)
+        {
+            // Disable auto-sort on pickup
+            Player[nIndex].m_cAI.m_bAutoSortEquipment = FALSE;
+            g_DebugLog("[SERVER] PlayerAutoSortEquipment: player=%d disabled auto-sort", nIndex);
+            return; // Don't sort
+        }
+        else if (mode == 1)
+        {
+            // Enable auto-sort on pickup AND sort immediately (so user sees result)
+            Player[nIndex].m_cAI.m_bAutoSortEquipment = TRUE;
+            g_DebugLog("[SERVER] PlayerAutoSortEquipment: player=%d enabled auto-sort", nIndex);
+            // Continue to sort below
+        }
+    }
+
+    // Sort equipment inventory - compact items to top-left
     // Collect all items from equiproom
     struct SortItem {
         int nIdx;

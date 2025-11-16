@@ -127,6 +127,7 @@ void KPlayerAI::Release()
 	m_bObject 				= FALSE;
 	m_nObject 				= 0;
 	m_bFilterEquipment 		= FALSE;
+	m_bAutoSortEquipment	= FALSE;
 	m_bPiceItem				= FALSE;
 	m_nPiceItem				= 0;
 	m_bLevelItem			= FALSE;
