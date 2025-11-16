@@ -184,6 +184,22 @@ function batdau()
 
 	if nId > 0 then
 		SetNpcScript(nId, "\\script\\event\\VanTieu\\tieuxa.lua")
+
+		-- Set NPC to friendly/neutral camp so it won't attack player
+		if SetNpcCamp ~= nil then
+			SetNpcCamp(nId, 0)  -- Camp 0 = neutral
+		end
+		if SetNpcCurCamp ~= nil then
+			SetNpcCurCamp(nId, 0)
+		end
+
+		-- Set NPC series to match player
+		local nPlayerSeries = GetPlayerSeries()
+		if nPlayerSeries and SetNpcSeries ~= nil then
+			SetNpcSeries(nId, nPlayerSeries)
+		end
+
+		Msg2Player("Debug: Set NPC Camp=0, Series="..tostring(nPlayerSeries))
 	end
 
 	if nId <= 0 then
