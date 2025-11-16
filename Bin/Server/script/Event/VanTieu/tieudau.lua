@@ -177,21 +177,31 @@ function batdau()
 	local n = random(0, 2)
 	local nRand = n + 1
 
-	-- Debug info
+	-- IMPORTANT: Teleport player FIRST before spawning cart!
+	-- This prevents player and cart from spawning at the same position
+	Pay(COST_START_QUEST)
+	NewWorld(SUBWORLD_START, POS_START_X, POS_START_Y)
+	SetFightState(1)
+
+	-- Get player's current position after teleport
+	local w, x, y = GetWorldPos()
+
+	-- Spawn cart NEAR player, but offset by 2 tiles (64 pixels) to avoid overlap
 	local nTemplateID = TIEUXA_TEMPLET[nRand][1]
 	local nSubWorldIdx = SubWorldID2Idx(SUBWORLD_START)
-	local nPosX = floor(POS_START_X * 32)
-	local nPosY = floor(POS_START_Y * 32)
+	local nPosX = x + 64  -- Offset +2 tiles East of player
+	local nPosY = y       -- Same Y coordinate
 
-	Msg2Player("Debug: Attempting spawn - Template="..nTemplateID.." SubWorld="..nSubWorldIdx.." X="..nPosX.." Y="..nPosY)
+	Msg2Player("Debug: Player at X="..x.." Y="..y)
+	Msg2Player("Debug: Spawning cart at X="..nPosX.." Y="..nPosY.." (offset +64 pixels)")
 
 	-- Spawn escort cart
 	local nId = AddNpc(
 		nTemplateID,				-- Template ID
 		1,							-- Level
 		nSubWorldIdx,				-- SubWorld Index
-		nPosX,						-- X
-		nPosY,						-- Y
+		nPosX,						-- X (player X + 64)
+		nPosY,						-- Y (player Y)
 		1,							-- Remove on death
 		"",							-- Name (will be set below)
 		0,							-- Param 8
@@ -265,10 +275,8 @@ function batdau()
 	-- Notify player
 	Msg2Player("Hãy mau hộ tống tiêu xa đến Long Môn tiêu sư ở Thanh Thành Sơn ("..POS_END_X.."/"..POS_END_Y..")")
 
-	-- Pay and teleport
-	Pay(COST_START_QUEST)
-	NewWorld(SUBWORLD_START, POS_START_X, POS_START_Y)
-	SetFightState(1)
+	-- Payment and teleport already done above (before spawning cart)
+	-- This prevents player and cart from spawning at the same position
 end
 
 function cuahang()
@@ -553,27 +561,32 @@ function testserverbuild()
 		Msg2Player("Using fallback position: x="..x..", y="..y)
 	end
 
+	-- Spawn cart offset from player to avoid overlap
+	local nCartX = x + 64  -- Offset +2 tiles East
+	local nCartY = y
+	Msg2Player("Spawning at offset position: x="..nCartX..", y="..nCartY.." (+64 pixels from player)")
+
 	-- Try multiple templates to see which one works
 	Msg2Player("Trying template 2085...")
-	local nId = AddNpc(2085, 1, nSubWorldIdx, x, y, 1, "", 0, 0)
+	local nId = AddNpc(2085, 1, nSubWorldIdx, nCartX, nCartY, 1, "", 0, 0)
 	Msg2Player("Template 2085 returned nId="..tostring(nId))
 
 	if nId <= 0 then
 		Msg2Player("Failed! Trying template 2086...")
-		nId = AddNpc(2086, 1, nSubWorldIdx, x, y, 1, "", 0, 0)
+		nId = AddNpc(2086, 1, nSubWorldIdx, nCartX, nCartY, 1, "", 0, 0)
 		Msg2Player("Template 2086 returned nId="..tostring(nId))
 	end
 
 	if nId <= 0 then
 		Msg2Player("Failed! Trying template 2087...")
-		nId = AddNpc(2087, 1, nSubWorldIdx, x, y, 1, "", 0, 0)
+		nId = AddNpc(2087, 1, nSubWorldIdx, nCartX, nCartY, 1, "", 0, 0)
 		Msg2Player("Template 2087 returned nId="..tostring(nId))
 	end
 
 	if nId <= 0 then
 		Msg2Player("All cart templates failed!")
 		Msg2Player("Trying simple NPC template 377 (Tiêu Đầu)...")
-		nId = AddNpc(377, 1, nSubWorldIdx, x, y, 1, "", 0, 0)
+		nId = AddNpc(377, 1, nSubWorldIdx, nCartX, nCartY, 1, "", 0, 0)
 		Msg2Player("Template 377 returned nId="..tostring(nId))
 	end
 
