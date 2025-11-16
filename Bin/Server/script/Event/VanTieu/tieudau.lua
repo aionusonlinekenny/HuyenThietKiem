@@ -40,15 +40,30 @@ function AddItemIDStack(nItemIdx, nStack)
 	return nItemIdx
 end
 
-function SetNpcOwner(nNpcIdx, szOwnerName, nMode)
-	-- Workaround: Store owner name in NpcParam
-	-- Real implementation would make NPC follow player
-	-- For now, just store the owner info
+function SetNpcOwner_Backup(nNpcIdx, szOwnerName, nMode)
+	-- This is the Lua workaround - try C++ implementation first!
+	-- If C++ SetNpcOwner exists, it will be used instead
+	-- This backup is only used if server not rebuilt yet
+
+	Msg2Player("WARN: Using Lua SetNpcOwner workaround - server needs rebuild!")
+
 	if nNpcIdx <= 0 then
 		return
 	end
-	SetNpcParam(nNpcIdx, 2, 1) -- Mark as having owner
-	-- TODO: Implement actual follow mechanism
+
+	-- Get current player index (HACK: assume owner is current player)
+	local nPlayerIdx = GetPlayerIndex()
+	if not nPlayerIdx or nPlayerIdx < 0 then
+		Msg2Player("ERROR: Cannot get player index for SetNpcOwner")
+		return
+	end
+
+	-- Store player index and follow mode in m_AiParam
+	-- NOTE: We can't directly set m_AiParam from Lua, so this won't work
+	-- Need C++ implementation!
+	SetNpcParam(nNpcIdx, 2, 1) -- Mark as having owner (legacy)
+
+	Msg2Player("ERROR: SetNpcOwner workaround incomplete - please rebuild server with C++ implementation")
 end
 
 function SetNpcTimeout(nNpcIdx, nSeconds)
@@ -210,7 +225,12 @@ function batdau()
 
 	-- Setup cart
 	local nName = GetName()
+
+	Msg2Player("Debug: Calling SetNpcOwner with NpcIdx="..nId..", Name="..nName)
 	SetNpcOwner(nId, nName, 1)
+
+	Msg2Player("Debug: After SetNpcOwner call")
+
 	SetNpcName(nId, nName .. TIEUXA_TEMPLET[nRand][2])
 	SetNpcTimeout(nId, CART_TIMEOUT)
 	SetNpcValue(nId, GetUUID())
