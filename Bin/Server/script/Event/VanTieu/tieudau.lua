@@ -193,19 +193,32 @@ function batdau()
 	Msg2Player("Debug: Will teleport player to X="..nPlayerX.." Y="..nPlayerY)
 	Msg2Player("Debug: Will spawn cart at X="..nCartX.." Y="..nCartY.." (offset +64)")
 
-	-- Pay and teleport player to start location
+	-- Pay player first
 	Pay(COST_START_QUEST)
 
-	-- Close any open dialogs before teleporting
-	-- This ensures player isn't stuck in dialog after NewWorld
-	if CloseSay then
-		CloseSay()
+	-- Teleport player to start location
+	-- IMPORTANT: Check return value! NewWorld() returns 1 on success
+	local nTeleportOK = NewWorld(SUBWORLD_START, POS_START_X, POS_START_Y)
+
+	if nTeleportOK ~= 1 then
+		Msg2Player("ERROR: Teleport failed! NewWorld returned: "..tostring(nTeleportOK))
+		Talk(1,"","Lỗi: Không thể di chuyển đến vị trí bắt đầu!")
+		return
 	end
 
-	NewWorld(SUBWORLD_START, POS_START_X, POS_START_Y)
-	-- NOTE: Don't call SetFightState yet! Wait until cart spawns successfully
+	Msg2Player("Debug: Teleport OK! Now spawning cart...")
+
+	-- Add teleport effect (18 frames * 3 = 54 frames ~= 2.7 seconds at 20fps)
+	-- This also ensures client/server position sync before spawning cart
+	AddSkillState(963, 1, 0, 18*3)
+
+	-- Reset fight state after teleport (like town portal does)
+	SetFightState(0)
+
+	Msg2Player("Debug: Added teleport effect, spawning cart now...")
 
 	-- Spawn escort cart at calculated position
+	-- NOTE: Cart spawns AFTER successful teleport
 	local nId = AddNpc(
 		nTemplateID,				-- Template ID
 		1,							-- Level
@@ -284,12 +297,7 @@ function batdau()
 
 	-- Notify player
 	Msg2Player("Hãy mau hộ tống tiêu xa đến Long Môn tiêu sư ở Thanh Thành Sơn ("..POS_END_X.."/"..POS_END_Y..")")
-
-	-- Payment and teleport already done above (before spawning cart)
-	-- NOTE: Temporarily disable SetFightState to test if it's blocking movement
-	-- SetFightState(1)
-	Msg2Player("Debug: Quest started! Try moving now.")
-	Msg2Player("Debug: If you can move, SetFightState was the problem!")
+	Msg2Player("Debug: Quest started! Cart should follow you when you move.")
 end
 
 function cuahang()
