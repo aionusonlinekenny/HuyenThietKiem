@@ -60,10 +60,10 @@ void KNpcAI::Activate(int nIndex)
 		case 7:
 			ProcessAIType07();
 			break;
-/*		case 8:
-			ProcessAIType8();
+		case 8:
+			ProcessAIType08(); // Follow owner player
 			break;
-		case 9:
+/*		case 9:
 			ProcessAIType9();
 			break;
 		case 10:
@@ -94,7 +94,7 @@ void KNpcAI::Activate(int nIndex)
 // flying add these functions
 // Run at client.
 #ifndef _SERVER
-// ½ö½öÓÐ»­ÃæÐ§¹ûµÄNPC
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½NPC
 int KNpcAI::ProcessShowNpc()
 {
     int nResult  = false;
@@ -102,43 +102,43 @@ int KNpcAI::ProcessShowNpc()
 
 	switch (Npc[m_nIndex].m_AiMode)
 	{
-	// ·ÉÄñÐÍ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	case 11:
 		nRetCode = ShowNpcType11();
         if (!nRetCode)
             goto Exit0;
 		break;
-	// òßòÑÐÍ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	case 12:
 		nRetCode = ShowNpcType12();
         if (!nRetCode)
             goto Exit0;
 		break;
-	// ÓãÀàÐÍ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	case 13:
 		nRetCode = ShowNpcType13();
         if (!nRetCode)
             goto Exit0;
 		break;
-	// ÀÏÊóÐÍ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	case 14:
 		nRetCode = ShowNpcType14();
         if (!nRetCode)
             goto Exit0;
 		break;
-	// ¼¦È®ÐÍ
+	// ï¿½ï¿½È®ï¿½ï¿½
 	case 15:
 		nRetCode = ShowNpcType15();
         if (!nRetCode)
             goto Exit0;
 		break;
-	// ÍÃ×ÓÐÍ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	case 16:
 		nRetCode = ShowNpcType16();
         if (!nRetCode)
             goto Exit0;
 		break;
-	// ºûµûÐÍ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	case 17:
 		nRetCode = ShowNpcType17();
         if (!nRetCode)
@@ -153,7 +153,7 @@ Exit0:
 	return nResult;
 }
 
-// ·ÉÄñÐÍ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 int KNpcAI::ShowNpcType11()
 {
     int nResult = false;
@@ -170,12 +170,12 @@ int KNpcAI::ShowNpcType11()
 	int nOffY = 0;
 	int nOffsetDir = 0;
 	
-	// Ð§¹û¼ÓÇ¿ Ëæ»úµ÷Õû¸ß¶È
+	// Ð§ï¿½ï¿½ï¿½ï¿½Ç¿ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½
 	aNpc.m_Height = GetRandomNumber(aNpc.m_AiParam[6] - 4, aNpc.m_AiParam[6]);
 
 	aNpc.GetMpsPos(&nCurX, &nCurY);
 
-	// ¼ÆËãÐÂ½Ç¶È ºÍ ¾àÀë
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Â½Ç¶ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (aNpc.m_AiParam[3] > 0)
 		nOffsetDir = GetRandomNumber(aNpc.m_AiParam[3], aNpc.m_AiParam[2]);
 	else
@@ -199,12 +199,12 @@ int KNpcAI::ShowNpcType11()
 	else
 		aNpc.m_Dir %= 64;
 	
-    // ¸ù¾ÝÈý½Çº¯Êý¼ÆËãÆ«ÒÆµÄX¡¢YÊýÖµ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Çºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æµï¿½Xï¿½ï¿½Yï¿½ï¿½Öµ
 	nRetCode = GetNpcMoveOffset(aNpc.m_Dir, nDistance, &nOffX, &nOffY);
     if (!nRetCode)
         goto Exit0;
 
-	// »ñÈ¡Ä¿±ê×ø±ê
+	// ï¿½ï¿½È¡Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	nDesX = nCurX + nOffX;
 	nDesY = nCurY + nOffY;
 	aNpc.SendCommand(do_walk, nDesX, nDesY);	
@@ -214,7 +214,7 @@ Exit0:
 	return nResult;
 }
 
-// òßòÑÐÍ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 // done
 int KNpcAI::ShowNpcType12()
 {
@@ -232,12 +232,12 @@ int KNpcAI::ShowNpcType12()
 	int nOffsetDir = 0;
 	KNpc& aNpc = Npc[m_nIndex];
 
-	// Ð§¹û¼ÓÇ¿ Ëæ»úµ÷Õû¸ß¶È
+	// Ð§ï¿½ï¿½ï¿½ï¿½Ç¿ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½
 	aNpc.m_Height = GetRandomNumber(aNpc.m_AiParam[6] - 4, aNpc.m_AiParam[6]);
 
 	aNpc.GetMpsPos(&nCurX, &nCurY);
 		
-	// ¼ÆËãÐÂ½Ç¶È ºÍ ¾àÀë
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Â½Ç¶ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (aNpc.m_AiParam[3] > 0)
 		nOffsetDir = GetRandomNumber(aNpc.m_AiParam[3], aNpc.m_AiParam[2]);
 	else
@@ -246,7 +246,7 @@ int KNpcAI::ShowNpcType12()
 		nOffsetDir = -nOffsetDir;
 	nDistance = GetRandomNumber(aNpc.m_AiParam[0] - aNpc.m_AiParam[1], aNpc.m_AiParam[0]);
 
-	// È¡µÃÔË¶¯ËùÐèµÄÊ±¼ä£¬±£´æÔÚ²ÎÊý±íÖÐ
+	// È¡ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (aNpc.m_CurrentWalkSpeed > 0)
 	{
 		aNpc.m_AiParam[4] = (int)(nDistance / aNpc.m_CurrentWalkSpeed);		//
@@ -263,11 +263,11 @@ int KNpcAI::ShowNpcType12()
 	else
 		aNpc.m_Dir %= 64;
 
-	// ¸ù¾ÝÈý½Çº¯Êý¼ÆËãÆ«ÒÆµÄX¡¢YÊýÖµ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Çºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æµï¿½Xï¿½ï¿½Yï¿½ï¿½Öµ
 	nRetCode = GetNpcMoveOffset(aNpc.m_Dir, nDistance, &nOffX, &nOffY);
 	if (!nRetCode)
 		goto Exit0;
-	// »ñÈ¡Ä¿±ê×ø±ê
+	// ï¿½ï¿½È¡Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	nDesX = nCurX + nOffX;
 	nDesY = nCurY + nOffY;
 	aNpc.SendCommand(do_walk, nDesX, nDesY);
@@ -277,7 +277,7 @@ Exit0:
 	return nResult;
 }
 
-// ÓãÀàÐÍ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 // done
 int KNpcAI::ShowNpcType13()
 {
@@ -297,7 +297,7 @@ int KNpcAI::ShowNpcType13()
 
 	aNpc.GetMpsPos(&nCurX, &nCurY);
 
-	// ¼ÆËãÐÂ½Ç¶È ºÍ ¾àÀë
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Â½Ç¶ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (aNpc.m_AiParam[3] > 0)
 		nOffsetDir = GetRandomNumber(aNpc.m_AiParam[3], aNpc.m_AiParam[2]);
 	else
@@ -306,7 +306,7 @@ int KNpcAI::ShowNpcType13()
 		nOffsetDir = -nOffsetDir;
 	nDistance = GetRandomNumber(aNpc.m_AiParam[0] - aNpc.m_AiParam[1], aNpc.m_AiParam[0]);
 
-	// È¡µÃÔË¶¯ËùÐèµÄÊ±¼ä£¬±£´æÔÚ²ÎÊý±íÖÐ
+	// È¡ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (aNpc.m_CurrentWalkSpeed > 0)
 	{
 		aNpc.m_AiParam[4] = (int)(nDistance / aNpc.m_CurrentWalkSpeed);		//
@@ -319,7 +319,7 @@ int KNpcAI::ShowNpcType13()
 	}
 	//if (KeepActiveShowRange())
 	//	aNpc.m_Dir += 32;
-	// ¸½½üÓÐÍæ¼Ò
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	nIndex = IsPlayerCome();
 	if (nIndex > 0)
 	{
@@ -327,9 +327,9 @@ int KNpcAI::ShowNpcType13()
 		DoShowFlee(nIndex);
 		goto Exit0;
 	}
-	// ¸ù¾ÝÈý½Çº¯Êý¼ÆËãÆ«ÒÆµÄX¡¢YÊýÖµ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Çºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æµï¿½Xï¿½ï¿½Yï¿½ï¿½Öµ
 	nRetCode = GetNpcMoveOffset(aNpc.m_Dir, nDistance, &nOffX, &nOffY);
-	// »ñÈ¡Ä¿±ê×ø±ê
+	// ï¿½ï¿½È¡Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	nDesX = nCurX + nOffX;
 	nDesY = nCurY + nOffY;
 	aNpc.SendCommand(do_walk, nDesX, nDesY);
@@ -339,7 +339,7 @@ Exit0:
 	return nResult;
 }
 
-// ÀÏÊóÐÍ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 // done
 int KNpcAI::ShowNpcType14()
 {
@@ -358,17 +358,17 @@ int KNpcAI::ShowNpcType14()
 	KNpc& aNpc = Npc[m_nIndex];
 
 	nRandom = GetRandomNumber(1, 10);
-	// µôÍ·¾ÍÅÜ
+	// ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½
 	if (nRandom < 4)
 		nDistance = -nDistance;
-	// à»à»·¢´ô
+	// ï¿½à»·ï¿½ï¿½ï¿½
 	else if (nRandom < 7)
 	{
 		aNpc.SendCommand(do_stand);
 		goto Exit0;
 	}
 	aNpc.GetMpsPos(&nCurX, &nCurY);
-	// ¼ÆËãÐÂ½Ç¶È ºÍ ¾àÀë
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Â½Ç¶ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (aNpc.m_AiParam[3] > 0)
 		nOffsetDir = GetRandomNumber(aNpc.m_AiParam[3], aNpc.m_AiParam[2]);
 	else
@@ -376,7 +376,7 @@ int KNpcAI::ShowNpcType14()
 	if (GetRandomNumber(0, 1))
 		nOffsetDir = -nOffsetDir;
 	nDistance = GetRandomNumber(aNpc.m_AiParam[0] - aNpc.m_AiParam[1], aNpc.m_AiParam[0]);
-	// È¡µÃÔË¶¯ËùÐèµÄÊ±¼ä£¬±£´æÔÚ²ÎÊý±íÖÐ
+	// È¡ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (aNpc.m_CurrentWalkSpeed > 0)
 	{
 		aNpc.m_AiParam[4] = (int)(nDistance / aNpc.m_CurrentWalkSpeed);		//
@@ -393,11 +393,11 @@ int KNpcAI::ShowNpcType14()
 		aNpc.m_Dir += 64;
 	else
 		aNpc.m_Dir %= 64;
-	// ¸ù¾ÝÈý½Çº¯Êý¼ÆËãÆ«ÒÆµÄX¡¢YÊýÖµ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Çºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æµï¿½Xï¿½ï¿½Yï¿½ï¿½Öµ
 	nRetCode = GetNpcMoveOffset(aNpc.m_Dir, nDistance, &nOffX, &nOffY);
 	if (!nRetCode)
 		goto Exit0;
-	// »ñÈ¡Ä¿±ê×ø±ê
+	// ï¿½ï¿½È¡Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	nDesX = nCurX + nOffX;
 	nDesY = nCurY + nOffY;
 	aNpc.SendCommand(do_walk, nDesX, nDesY);
@@ -407,7 +407,7 @@ Exit0:
 	return nResult;
 }
 
-// ¼¦È®ÐÍ
+// ï¿½ï¿½È®ï¿½ï¿½
 int KNpcAI::ShowNpcType15()
 {
 	int nResult  = false;
@@ -426,7 +426,7 @@ int KNpcAI::ShowNpcType15()
 
 	aNpc.GetMpsPos(&nCurX, &nCurY);
 
-	// ¼ÆËãÐÂ½Ç¶È ºÍ ¾àÀë
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Â½Ç¶ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (aNpc.m_AiParam[3] > 0)
 		nOffsetDir = GetRandomNumber(aNpc.m_AiParam[3], aNpc.m_AiParam[2]);
 	else
@@ -435,7 +435,7 @@ int KNpcAI::ShowNpcType15()
 		nOffsetDir = -nOffsetDir;
 	nDistance = GetRandomNumber(aNpc.m_AiParam[0] - aNpc.m_AiParam[1], aNpc.m_AiParam[0]);
 
-	// È¡µÃÔË¶¯ËùÐèµÄÊ±¼ä£¬±£´æÔÚ²ÎÊý±íÖÐ
+	// È¡ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (aNpc.m_CurrentWalkSpeed > 0)
 	{
 		aNpc.m_AiParam[4] = (int)(nDistance / aNpc.m_CurrentWalkSpeed);		//
@@ -448,7 +448,7 @@ int KNpcAI::ShowNpcType15()
 	}
 	//if (KeepActiveShowRange())
 	//	aNpc.m_Dir += 32;
-	// ¸½½üÓÐÍæ¼Ò
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	nIndex = IsPlayerCome();
 	if (nIndex > 0)
 	{
@@ -456,9 +456,9 @@ int KNpcAI::ShowNpcType15()
 		DoShowFlee(nIndex);
 		goto Exit0;
 	}
-	// ¸ù¾ÝÈý½Çº¯Êý¼ÆËãÆ«ÒÆµÄX¡¢YÊýÖµ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Çºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æµï¿½Xï¿½ï¿½Yï¿½ï¿½Öµ
 	nRetCode = GetNpcMoveOffset(aNpc.m_Dir, nDistance, &nOffX, &nOffY);
-	// »ñÈ¡Ä¿±ê×ø±ê
+	// ï¿½ï¿½È¡Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	nDesX = nCurX + nOffX;
 	nDesY = nCurY + nOffY;
 	aNpc.SendCommand(do_walk, nDesX, nDesY);
@@ -468,7 +468,7 @@ Exit0:
 	return nResult;
 }
 
-// ÍÃ×ÓÐÍ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 int KNpcAI::ShowNpcType16()
 {
 	int nResult  = false;
@@ -488,7 +488,7 @@ int KNpcAI::ShowNpcType16()
 
 	aNpc.GetMpsPos(&nCurX, &nCurY);
 
-	// ¼ÆËãÐÂ½Ç¶È ºÍ ¾àÀë
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Â½Ç¶ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (aNpc.m_AiParam[3] > 0)
 		nOffsetDir = GetRandomNumber(aNpc.m_AiParam[3], aNpc.m_AiParam[2]);
 	else
@@ -496,7 +496,7 @@ int KNpcAI::ShowNpcType16()
 	if (GetRandomNumber(0, 1))
 		nOffsetDir = -nOffsetDir;
 	nDistance = GetRandomNumber(aNpc.m_AiParam[0] - aNpc.m_AiParam[1], aNpc.m_AiParam[0]);
-	// ¸½½üÓÐÍæ¼Ò
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	nIndex = IsPlayerCome();
 	if (nIndex > 0)
 	{
@@ -507,7 +507,7 @@ int KNpcAI::ShowNpcType16()
 		goto Exit1;
 	}
 
-	// ¼ÆËã¾àÀë
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (aNpc.m_CurrentWalkSpeed > 0)
 	{
 		aNpc.m_AiParam[4] = (int)(nDistance / aNpc.m_CurrentWalkSpeed);		//
@@ -519,16 +519,16 @@ int KNpcAI::ShowNpcType16()
 		aNpc.m_AiParam[5] = 0;
 	}
 
-	// ¼ÆËãÐÂ½Ç¶È
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Â½Ç¶ï¿½
 	//if (KeepActiveShowRange())
 	//	aNpc.m_Dir += 32;
 	aNpc.m_Dir += GetRandomNumber(0, 6);
 	aNpc.m_Dir %= 64;
-	// ¸ù¾ÝÈý½Çº¯Êý¼ÆËãÆ«ÒÆµÄX¡¢YÊýÖµ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Çºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æµï¿½Xï¿½ï¿½Yï¿½ï¿½Öµ
 	nRetCode = GetNpcMoveOffset(aNpc.m_Dir, nDistance, &nOffX, &nOffY);
 	if (!nRetCode)
 		goto Exit0;
-	// »ñÈ¡Ä¿±ê×ø±ê
+	// ï¿½ï¿½È¡Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	nDesX = nCurX + nOffX;
 	nDesY = nCurY + nOffY;
 	aNpc.SendCommand(do_walk, nDesX, nDesY);
@@ -539,7 +539,7 @@ Exit0:
 	return nResult;
 }
 
-// ºûµûÐÍ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 int KNpcAI::ShowNpcType17()
 {
 	int nResult  = false;
@@ -556,12 +556,12 @@ int KNpcAI::ShowNpcType17()
 	int nOffsetDir = 0;
 	KNpc& aNpc = Npc[m_nIndex];
 
-	// Ð§¹û¼ÓÇ¿ Ëæ»úµ÷Õû¸ß¶È
+	// Ð§ï¿½ï¿½ï¿½ï¿½Ç¿ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½
 	aNpc.m_Height = GetRandomNumber(aNpc.m_AiParam[6] - 4, aNpc.m_AiParam[6]);
 
 	aNpc.GetMpsPos(&nCurX, &nCurY);
 		
-	// ¼ÆËãÐÂ½Ç¶È ºÍ ¾àÀë
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Â½Ç¶ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (aNpc.m_AiParam[3] > 0)
 		nOffsetDir = GetRandomNumber(aNpc.m_AiParam[3], aNpc.m_AiParam[2]);
 	else
@@ -570,7 +570,7 @@ int KNpcAI::ShowNpcType17()
 		nOffsetDir = -nOffsetDir;
 	nDistance = GetRandomNumber(aNpc.m_AiParam[0] - aNpc.m_AiParam[1], aNpc.m_AiParam[0]);	
 
-	// È¡µÃÔË¶¯ËùÐèµÄÊ±¼ä£¬±£´æÔÚ²ÎÊý±íÖÐ
+	// È¡ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (aNpc.m_CurrentWalkSpeed > 0)
 	{
 		aNpc.m_AiParam[4] = (int)(nDistance / aNpc.m_CurrentWalkSpeed);		//
@@ -593,11 +593,11 @@ int KNpcAI::ShowNpcType17()
 		aNpc.m_Dir += 64;
 	else
 		aNpc.m_Dir %= 64;
-	// ¸ù¾ÝÈý½Çº¯Êý¼ÆËãÆ«ÒÆµÄX¡¢YÊýÖµ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Çºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æµï¿½Xï¿½ï¿½Yï¿½ï¿½Öµ
 	nRetCode = GetNpcMoveOffset(aNpc.m_Dir, nDistance, &nOffX, &nOffY);
 	if (!nRetCode)
 		goto Exit0;
-	// »ñÈ¡Ä¿±ê×ø±ê
+	// ï¿½ï¿½È¡Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	nDesX = nCurX + nOffX;
 	nDesY = nCurY + nOffY;
 	aNpc.SendCommand(do_walk, nDesX, nDesY);
@@ -697,7 +697,7 @@ void KNpcAI::FollowPeople(int nIdx)
 			// Send to Server
 			SendClientCmdSkill(Npc[m_nIndex].m_ActiveSkillID, -1, Npc[nIdx].m_dwID);
 		}
-		// à»à»×·
+		// ï¿½ï¿½×·
 		else
 		{
 			int nDesX, nDesY;
@@ -720,7 +720,7 @@ void KNpcAI::FollowPeople(int nIdx)
 		}
 		return;
 	}
-	// ¸úËæ
+	// ï¿½ï¿½ï¿½ï¿½
 	if (Npc[nIdx].m_Kind == kind_player)
 	{
 		// flow
@@ -928,7 +928,7 @@ int KNpcAI::GetNearestNpc(int nRelation)
 
 #ifndef _SERVER
 // flying add this
-// ²éÕÒÀëÄ³¸öNPC×î½üµÄÍæ¼Ò
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½NPCï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 int KNpcAI::IsPlayerCome()
 {
 	int nResult = 0;
@@ -941,10 +941,10 @@ int KNpcAI::IsPlayerCome()
 
 	nPlayer = Player[CLIENT_PLAYER_INDEX].m_nIndex;
 	nDistance = NpcSet.GetDistance(nPlayer, m_nIndex);
-	// ¼¦¿´µÄµ½µÄÍæ¼Ò
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (nDistance < Npc[m_nIndex].m_VisionRadius)
 	{
-		// ·Ö±ð´¦Àí×ßºÍÅÜ
+		// ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ßºï¿½ï¿½ï¿½
 		if (Player[CLIENT_PLAYER_INDEX].m_RunStatus ||
 			Npc[m_nIndex].m_CurrentVisionRadius > nDistance * 4)
 		{
@@ -969,16 +969,16 @@ int KNpcAI::GetNpcNumber(int nRelation)
 	nRangeX = nRangeX / SubWorld[nSubWorld].m_nCellWidth;
 	nRangeY = nRangeY / SubWorld[nSubWorld].m_nCellHeight;
 
-	// ¼ì²éÊÓÒ°·¶Î§ÄÚµÄ¸ñ×ÓÀïµÄNPC
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ò°ï¿½ï¿½Î§ï¿½ÚµÄ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½NPC
 	for (int i = -nRangeX; i < nRangeX; i++)
 	{
 		for (int j = -nRangeY; j < nRangeY; j++)
 		{
-			// È¥µô±ß½Ç¼¸¸ö¸ñ×Ó£¬±£Ö¤ÊÓÒ°ÊÇÍÖÔ²ÐÎ
+			// È¥ï¿½ï¿½ï¿½ß½Ç¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó£ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½Ò°ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½
 			if ((i * i + j * j) > nRangeX * nRangeX)
 				continue;
 
-			// È·¶¨Ä¿±ê¸ñ×ÓÊµ¼ÊµÄREGIONºÍ×ø±êÈ·¶¨
+			// È·ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½Êµï¿½REGIONï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½
 			nRMx = nMapX + i;
 			nRMy = nMapY + j;
 			nSearchRegion = nRegion;
@@ -1006,7 +1006,7 @@ int KNpcAI::GetNpcNumber(int nRelation)
 			}
 			if (nSearchRegion == -1)
 				continue;
-			// ´ÓREGIONµÄNPCÁÐ±íÖÐ²éÕÒÂú×ãÌõ¼þµÄNPC			
+			// ï¿½ï¿½REGIONï¿½ï¿½NPCï¿½Ð±ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½NPC			
 			int nNpcIdx = SubWorld[nSubWorld].m_Region[nSearchRegion].FindNpc(nRMx, nRMy, m_nIndex, nRelation);
 			if (nNpcIdx > 0)
 				nRet++;
@@ -1105,19 +1105,19 @@ BOOL KNpcAI::KeepActiveRange()
 	Npc[m_nIndex].GetMpsPos(&x, &y);
 	int	nRange = g_GetDistance(Npc[m_nIndex].m_OriginX, Npc[m_nIndex].m_OriginY, x, y);
 
-	// ·¢ÏÖ³¬³ö»î¶¯·¶Î§£¬°Ñµ±Ç°»î¶¯·¶Î§ËõÐ¡£¬±ÜÃâÔÚ»î¶¯·¶Î§±ßÔµÀ´»Ø»Î¡£
+	// ï¿½ï¿½ï¿½Ö³ï¿½ï¿½ï¿½ï¿½î¶¯ï¿½ï¿½Î§ï¿½ï¿½ï¿½Ñµï¿½Ç°ï¿½î¶¯ï¿½ï¿½Î§ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú»î¶¯ï¿½ï¿½Î§ï¿½ï¿½Ôµï¿½ï¿½ï¿½Ø»Î¡ï¿½
 	if (Npc[m_nIndex].m_ActiveRadius < nRange)
 	{
 		Npc[m_nIndex].m_CurrentActiveRadius = Npc[m_nIndex].m_ActiveRadius / 2;
 	}
 
-	// ·¢ÏÖ³¬³öµ±Ç°»î¶¯·¶Î§£¬Íù»Ø×ß
+	// ï¿½ï¿½ï¿½Ö³ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½î¶¯ï¿½ï¿½Î§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (Npc[m_nIndex].m_CurrentActiveRadius < nRange)
 	{
 		Npc[m_nIndex].SendCommand(do_walk, Npc[m_nIndex].m_OriginX, Npc[m_nIndex].m_OriginY);
 		return TRUE;
 	}
-	else	// ÔÚµ±Ç°»î¶¯·¶Î§ÄÚ£¬»Ö¸´µ±Ç°»î¶¯·¶Î§´óÐ¡¡£
+	else	// ï¿½Úµï¿½Ç°ï¿½î¶¯ï¿½ï¿½Î§ï¿½Ú£ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç°ï¿½î¶¯ï¿½ï¿½Î§ï¿½ï¿½Ð¡ï¿½ï¿½
 	{
 		Npc[m_nIndex].m_CurrentActiveRadius = Npc[m_nIndex].m_ActiveRadius;
 		return FALSE;
@@ -1125,7 +1125,7 @@ BOOL KNpcAI::KeepActiveRange()
 }
 
 #ifndef _SERVER
-// 15/16 AiMode NPCµÄÌÓÒÝ¶¯×÷
+// 15/16 AiMode NPCï¿½ï¿½ï¿½ï¿½ï¿½Ý¶ï¿½ï¿½ï¿½
 int KNpcAI::DoShowFlee(int nIdx)
 {
 	int nResult  = false;
@@ -1151,7 +1151,7 @@ Exit0:
 
 #endif
 
-// ÌÓÀëNpc[nIdx]
+// ï¿½ï¿½ï¿½ï¿½Npc[nIdx]
 void KNpcAI::Flee(int nIdx)
 {
 	int x1, y1, x2, y2;
@@ -1168,46 +1168,46 @@ void KNpcAI::Flee(int nIdx)
 void	KNpcAI::ProcessAIType01()
 {
 	int *pAIParam = Npc[m_nIndex].m_AiParam;
-	// ÊÇ·ñÒÑ³¬¹ý»î¶¯°ë¾¶
+	// ï¿½Ç·ï¿½ï¿½Ñ³ï¿½ï¿½ï¿½ï¿½î¶¯ï¿½ë¾¶
 	if (KeepActiveRange())
 		return;
 
 	int nEnemyIdx = Npc[m_nIndex].m_nPeopleIdx;
-	// Èç¹ûÔ­±¾Ã»ÓÐËø¶¨µÐÈË»òÕßÕâ¸öµÐÈËÅÜÌ«Ô¶£¬ÖØÐÂËø¶¨µÐÈË
+	// ï¿½ï¿½ï¿½Ô­ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì«Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (nEnemyIdx <= 0 || Npc[nEnemyIdx].m_dwID <= 0 || !InEyeshot(nEnemyIdx) )
 	{
 		nEnemyIdx = GetNearestNpc(relation_enemy);
 		Npc[m_nIndex].m_nPeopleIdx = nEnemyIdx;
 	}
 
-	// ÖÜÎ§Ã»ÓÐµÐÈË£¬Ò»¶¨¸ÅÂÊ´ý»ú/Ñ²Âß
+	// ï¿½ï¿½Î§Ã»ï¿½Ðµï¿½ï¿½Ë£ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ê´ï¿½ï¿½ï¿½/Ñ²ï¿½ï¿½
 	if (nEnemyIdx <= 0)
 	{
-		// pAIParam[0]:Ñ²Âß¸ÅÂÊ
+		// pAIParam[0]:Ñ²ï¿½ß¸ï¿½ï¿½ï¿½
 		if (pAIParam[0] > 0 && g_RandPercent(pAIParam[0]))
-		{	// Ñ²Âß
+		{	// Ñ²ï¿½ï¿½
 			CommonAction();
 		}
 		return;
 	}
 
-	// Èç¹ûµÐÈËÔÚËùÓÐ¼¼ÄÜ¹¥»÷·¶Î§Ö®Íâ£¬Ò»¶¨¸ÅÂÊÑ¡Ôñ´ý»ú/Ñ²Âß/ÏòµÐÈË¿¿½ü
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½Î§Ö®ï¿½â£¬Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½/Ñ²ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½
 	if (KNpcSet::GetDistanceSquare(m_nIndex, nEnemyIdx) > pAIParam[MAX_AI_PARAM - 1])
 	{
 		int		nRand;
 		nRand = g_Random(100);
-		if (nRand < pAIParam[5])	// ´ý»ú
+		if (nRand < pAIParam[5])	// ï¿½ï¿½ï¿½ï¿½
 			return;
-		if (nRand < pAIParam[5] + pAIParam[6])	// Ñ²Âß
+		if (nRand < pAIParam[5] + pAIParam[6])	// Ñ²ï¿½ï¿½
 		{
 			CommonAction();
 			return;
 		}
-		FollowAttack(nEnemyIdx);	// ÏòµÐÈË¿¿½ü
+		FollowAttack(nEnemyIdx);	// ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½
 		return;
 	}
 
-	// µÐÈËÔÚ×î´ó¼¼ÄÜ¹¥»÷·¶Î§Ö®ÄÚ£¬Ñ¡ÔñÒ»ÖÖ¼¼ÄÜ¹¥»÷
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½Î§Ö®ï¿½Ú£ï¿½Ñ¡ï¿½ï¿½Ò»ï¿½Ö¼ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½
 	int		nRand;
 	nRand = g_Random(100);
 	if (nRand < pAIParam[1])
@@ -1242,7 +1242,7 @@ void	KNpcAI::ProcessAIType01()
 			return;
 		}
 	}
-	else	// ´ý»ú
+	else	// ï¿½ï¿½ï¿½ï¿½
 	{
 		return;
 	}
@@ -1253,12 +1253,12 @@ void	KNpcAI::ProcessAIType01()
 void	KNpcAI::ProcessAIType02()
 {
 	int *pAIParam = Npc[m_nIndex].m_AiParam;
-	// ÊÇ·ñÒÑ³¬¹ý»î¶¯°ë¾¶
+	// ï¿½Ç·ï¿½ï¿½Ñ³ï¿½ï¿½ï¿½ï¿½î¶¯ï¿½ë¾¶
 	if (KeepActiveRange())
 		return;
 
 	int nEnemyIdx = Npc[m_nIndex].m_nPeopleIdx;
-	// Èç¹ûÔ­±¾Ã»ÓÐËø¶¨µÐÈË»òÕßÕâ¸öµÐÈËÅÜÌ«Ô¶£¬ÖØÐÂËø¶¨µÐÈË
+	// ï¿½ï¿½ï¿½Ô­ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì«Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (nEnemyIdx <= 0 || Npc[nEnemyIdx].m_dwID <= 0 || !InEyeshot(nEnemyIdx) )
 	{
 		nEnemyIdx = GetNearestNpc(relation_enemy);
@@ -1285,7 +1285,7 @@ void	KNpcAI::ProcessAIType02()
 				Npc[m_nIndex].m_AiAddLifeTime++;
 				return;
 			}
-			else	// ÌÓÅÜ
+			else	// ï¿½ï¿½ï¿½ï¿½
 			{
 				Flee(nEnemyIdx);
 				return;
@@ -1293,23 +1293,23 @@ void	KNpcAI::ProcessAIType02()
 		}
 	}
 
-	// Èç¹ûµÐÈËÔÚËùÓÐ¼¼ÄÜ¹¥»÷·¶Î§Ö®Íâ£¬Ò»¶¨¸ÅÂÊÑ¡Ôñ´ý»ú/Ñ²Âß/ÏòµÐÈË¿¿½ü
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½Î§Ö®ï¿½â£¬Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½/Ñ²ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½
 	if (KNpcSet::GetDistanceSquare(m_nIndex, nEnemyIdx) > pAIParam[MAX_AI_PARAM - 1])
 	{
 		int		nRand;
 		nRand = g_Random(100);
-		if (nRand < pAIParam[7])	// ´ý»ú
+		if (nRand < pAIParam[7])	// ï¿½ï¿½ï¿½ï¿½
 			return;
-		if (nRand < pAIParam[7] + pAIParam[8])	// Ñ²Âß
+		if (nRand < pAIParam[7] + pAIParam[8])	// Ñ²ï¿½ï¿½
 		{
 			CommonAction();
 			return;
 		}
-		FollowAttack(nEnemyIdx);	// ÏòµÐÈË¿¿½ü
+		FollowAttack(nEnemyIdx);	// ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½
 		return;
 	}
 
-	// µÐÈËÔÚ×î´ó¼¼ÄÜ¹¥»÷·¶Î§Ö®ÄÚ£¬Ñ¡ÔñÒ»ÖÖ¼¼ÄÜ¹¥»÷
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½Î§Ö®ï¿½Ú£ï¿½Ñ¡ï¿½ï¿½Ò»ï¿½Ö¼ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½
 	int		nRand;
 	nRand = g_Random(100);
 	if (nRand < pAIParam[4])
@@ -1336,7 +1336,7 @@ void	KNpcAI::ProcessAIType02()
 			return;
 		}
 	}
-	else	// ´ý»ú
+	else	// ï¿½ï¿½ï¿½ï¿½
 	{
 		return;
 	}
@@ -1346,12 +1346,12 @@ void	KNpcAI::ProcessAIType02()
 void	KNpcAI::ProcessAIType03()
 {
 	int *pAIParam = Npc[m_nIndex].m_AiParam;
-	// ÊÇ·ñÒÑ³¬¹ý»î¶¯°ë¾¶
+	// ï¿½Ç·ï¿½ï¿½Ñ³ï¿½ï¿½ï¿½ï¿½î¶¯ï¿½ë¾¶
 	if (KeepActiveRange())
 		return;
 
 	int nEnemyIdx = Npc[m_nIndex].m_nPeopleIdx;
-	// Èç¹ûÔ­±¾Ã»ÓÐËø¶¨µÐÈË»òÕßÕâ¸öµÐÈËÅÜÌ«Ô¶£¬ÖØÐÂËø¶¨µÐÈË
+	// ï¿½ï¿½ï¿½Ô­ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì«Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (nEnemyIdx <= 0 || Npc[nEnemyIdx].m_dwID <= 0 || !InEyeshot(nEnemyIdx) )
 	{
 		nEnemyIdx = GetNearestNpc(relation_enemy);
@@ -1385,23 +1385,23 @@ void	KNpcAI::ProcessAIType03()
 		}
 	}
 
-	// Èç¹ûµÐÈËÔÚËùÓÐ¼¼ÄÜ¹¥»÷·¶Î§Ö®Íâ£¬Ò»¶¨¸ÅÂÊÑ¡Ôñ´ý»ú/Ñ²Âß/ÏòµÐÈË¿¿½ü
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½Î§Ö®ï¿½â£¬Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½/Ñ²ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½
 	if (KNpcSet::GetDistanceSquare(m_nIndex, nEnemyIdx) > pAIParam[MAX_AI_PARAM - 1])
 	{
 		int		nRand;
 		nRand = g_Random(100);
-		if (nRand < pAIParam[7])	// ´ý»ú
+		if (nRand < pAIParam[7])	// ï¿½ï¿½ï¿½ï¿½
 			return;
-		if (nRand < pAIParam[7] + pAIParam[8])	// Ñ²Âß
+		if (nRand < pAIParam[7] + pAIParam[8])	// Ñ²ï¿½ï¿½
 		{
 			CommonAction();
 			return;
 		}
-		FollowAttack(nEnemyIdx);	// ÏòµÐÈË¿¿½ü
+		FollowAttack(nEnemyIdx);	// ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½
 		return;
 	}
 
-	// µÐÈËÔÚ×î´ó¼¼ÄÜ¹¥»÷·¶Î§Ö®ÄÚ£¬Ñ¡ÔñÒ»ÖÖ¼¼ÄÜ¹¥»÷
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½Î§Ö®ï¿½Ú£ï¿½Ñ¡ï¿½ï¿½Ò»ï¿½Ö¼ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½
 	int		nRand;
 	nRand = g_Random(100);
 	if (nRand < pAIParam[4])
@@ -1428,7 +1428,7 @@ void	KNpcAI::ProcessAIType03()
 			return;
 		}
 	}
-	else	// ´ý»ú
+	else	// ï¿½ï¿½ï¿½ï¿½
 	{
 		return;
 	}
@@ -1440,38 +1440,38 @@ void	KNpcAI::ProcessAIType04()
 	int *pAIParam = Npc[m_nIndex].m_AiParam;
 
 	int nEnemyIdx = Npc[m_nIndex].m_nPeopleIdx;
-	// ÊÇ·ñÊÜµ½¹¥»÷£¬·ñ£¬Ò»¶¨¸ÅÂÊÑ¡Ôñ´ý»ú/Ñ²Âß
+	// ï¿½Ç·ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½/Ñ²ï¿½ï¿½
 	if (nEnemyIdx <= 0)
 	{
-		// pAIParam[0]:Ñ²Âß¸ÅÂÊ
+		// pAIParam[0]:Ñ²ï¿½ß¸ï¿½ï¿½ï¿½
 		if (pAIParam[0] > 0 && g_RandPercent(pAIParam[0]))
-		{	// Ñ²Âß
+		{	// Ñ²ï¿½ï¿½
 			CommonAction();
 		}
 		return;
 	}
 
-	// ÊÇ·ñÒÑ³¬¹ý»î¶¯°ë¾¶
+	// ï¿½Ç·ï¿½ï¿½Ñ³ï¿½ï¿½ï¿½ï¿½î¶¯ï¿½ë¾¶
 	if (KeepActiveRange())
 		return;
 
-	// Èç¹ûµÐÈËÔÚËùÓÐ¼¼ÄÜ¹¥»÷·¶Î§Ö®Íâ£¬Ò»¶¨¸ÅÂÊÑ¡Ôñ´ý»ú/Ñ²Âß/ÏòµÐÈË¿¿½ü
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½Î§Ö®ï¿½â£¬Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½/Ñ²ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½
 	if (KNpcSet::GetDistanceSquare(m_nIndex, nEnemyIdx) > pAIParam[MAX_AI_PARAM - 1])
 	{
 		int		nRand;
 		nRand = g_Random(100);
-		if (nRand < pAIParam[5])	// ´ý»ú
+		if (nRand < pAIParam[5])	// ï¿½ï¿½ï¿½ï¿½
 			return;
-		if (nRand < pAIParam[5] + pAIParam[6])	// Ñ²Âß
+		if (nRand < pAIParam[5] + pAIParam[6])	// Ñ²ï¿½ï¿½
 		{
 			CommonAction();
 			return;
 		}
-		FollowAttack(nEnemyIdx);	// ÏòµÐÈË¿¿½ü
+		FollowAttack(nEnemyIdx);	// ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½
 		return;
 	}
 
-	// µÐÈËÔÚ×î´ó¼¼ÄÜ¹¥»÷·¶Î§Ö®ÄÚ£¬Ñ¡ÔñÒ»ÖÖ¼¼ÄÜ¹¥»÷
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½Î§Ö®ï¿½Ú£ï¿½Ñ¡ï¿½ï¿½Ò»ï¿½Ö¼ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½
 	int		nRand;
 	nRand = g_Random(100);
 	if (nRand < pAIParam[1])
@@ -1506,7 +1506,7 @@ void	KNpcAI::ProcessAIType04()
 			return;
 		}
 	}
-	else	// ´ý»ú
+	else	// ï¿½ï¿½ï¿½ï¿½
 	{
 		return;
 	}
@@ -1518,12 +1518,12 @@ void	KNpcAI::ProcessAIType05()
 	int *pAIParam = Npc[m_nIndex].m_AiParam;
 
 	int nEnemyIdx = Npc[m_nIndex].m_nPeopleIdx;
-	// ÊÇ·ñÊÜµ½¹¥»÷£¬·ñ£¬Ò»¶¨¸ÅÂÊÑ¡Ôñ´ý»ú/Ñ²Âß
+	// ï¿½Ç·ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½/Ñ²ï¿½ï¿½
 	if (nEnemyIdx <= 0)
 	{
-		// pAIParam[0]:Ñ²Âß¸ÅÂÊ
+		// pAIParam[0]:Ñ²ï¿½ß¸ï¿½ï¿½ï¿½
 		if (pAIParam[0] > 0 && g_RandPercent(pAIParam[0]))
-		{	// Ñ²Âß
+		{	// Ñ²ï¿½ï¿½
 			CommonAction();
 		}
 		return;
@@ -1536,14 +1536,14 @@ void	KNpcAI::ProcessAIType05()
 	{
 		if (g_RandPercent(pAIParam[2]))
 		{
-			if (Npc[m_nIndex].m_AiAddLifeTime < pAIParam[9] && g_RandPercent(pAIParam[3]))	// Ê¹ÓÃ²¹Ñª¼¼ÄÜ
+			if (Npc[m_nIndex].m_AiAddLifeTime < pAIParam[9] && g_RandPercent(pAIParam[3]))	// Ê¹ï¿½Ã²ï¿½Ñªï¿½ï¿½ï¿½ï¿½
 			{
 				Npc[m_nIndex].m_AiAddLifeTime++;
 				Npc[m_nIndex].SetActiveSkill(1);
 				Npc[m_nIndex].SendCommand(do_skill, Npc[m_nIndex].m_ActiveSkillID, -1, m_nIndex);
 				return;
 			}
-			else	// ÌÓÅÜ
+			else	// ï¿½ï¿½ï¿½ï¿½
 			{
 				Flee(nEnemyIdx);
 				return;
@@ -1551,23 +1551,23 @@ void	KNpcAI::ProcessAIType05()
 		}
 	}
 
-	// Èç¹ûµÐÈËÔÚËùÓÐ¼¼ÄÜ¹¥»÷·¶Î§Ö®Íâ£¬Ò»¶¨¸ÅÂÊÑ¡Ôñ´ý»ú/Ñ²Âß/ÏòµÐÈË¿¿½ü
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½Î§Ö®ï¿½â£¬Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½/Ñ²ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½
 	if (KNpcSet::GetDistanceSquare(m_nIndex, nEnemyIdx) > pAIParam[MAX_AI_PARAM - 1])
 	{
 		int		nRand;
 		nRand = g_Random(100);
-		if (nRand < pAIParam[7])	// ´ý»ú
+		if (nRand < pAIParam[7])	// ï¿½ï¿½ï¿½ï¿½
 			return;
-		if (nRand < pAIParam[7] + pAIParam[8])	// Ñ²Âß
+		if (nRand < pAIParam[7] + pAIParam[8])	// Ñ²ï¿½ï¿½
 		{
 			CommonAction();
 			return;
 		}
-		FollowAttack(nEnemyIdx);	// ÏòµÐÈË¿¿½ü
+		FollowAttack(nEnemyIdx);	// ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½
 		return;
 	}
 
-	// µÐÈËÔÚ×î´ó¼¼ÄÜ¹¥»÷·¶Î§Ö®ÄÚ£¬Ñ¡ÔñÒ»ÖÖ¼¼ÄÜ¹¥»÷
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½Î§Ö®ï¿½Ú£ï¿½Ñ¡ï¿½ï¿½Ò»ï¿½Ö¼ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½
 	int		nRand;
 	nRand = g_Random(100);
 	if (nRand < pAIParam[4])
@@ -1594,7 +1594,7 @@ void	KNpcAI::ProcessAIType05()
 			return;
 		}
 	}
-	else	// ´ý»ú
+	else	// ï¿½ï¿½ï¿½ï¿½
 	{
 		return;
 	}
@@ -1641,18 +1641,18 @@ void	KNpcAI::ProcessAIType06()
 	{
 		int		nRand;
 		nRand = g_Random(100);
-		if (nRand < pAIParam[7])	// ´ý»ú
+		if (nRand < pAIParam[7])	// ï¿½ï¿½ï¿½ï¿½
 			return;
-		if (nRand < pAIParam[7] + pAIParam[8])	// Ñ²Âß
+		if (nRand < pAIParam[7] + pAIParam[8])	// Ñ²ï¿½ï¿½
 		{
 			CommonAction();
 			return;
 		}
-		FollowAttack(nEnemyIdx);	// ÏòµÐÈË¿¿½ü
+		FollowAttack(nEnemyIdx);	// ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½
 		return;
 	}
 
-	// µÐÈËÔÚ×î´ó¼¼ÄÜ¹¥»÷·¶Î§Ö®ÄÚ£¬Ñ¡ÔñÒ»ÖÖ¼¼ÄÜ¹¥»÷
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½Î§Ö®ï¿½Ú£ï¿½Ñ¡ï¿½ï¿½Ò»ï¿½Ö¼ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½
 	int		nRand;
 	nRand = g_Random(100);
 	if (nRand < pAIParam[4])
@@ -1679,7 +1679,7 @@ void	KNpcAI::ProcessAIType06()
 			return;
 		}
 	}
-	else	// ´ý»ú
+	else	// ï¿½ï¿½ï¿½ï¿½
 	{
 		return;
 	}
@@ -1717,7 +1717,7 @@ void	KNpcAI::ProcessAIType07()
 		return;
 	}
 
-		// ÊÇ·ñÒÑ³¬¹ý»î¶¯°ë¾¶
+		// ï¿½Ç·ï¿½ï¿½Ñ³ï¿½ï¿½ï¿½ï¿½î¶¯ï¿½ë¾¶
 	if (KeepActiveRange())
 		return;
 
@@ -1745,12 +1745,65 @@ void	KNpcAI::ProcessAIType07()
 	}
 }
 
+// AI Type 08: Follow owner player (for escort NPCs like carts)
+void KNpcAI::ProcessAIType08()
+{
+	// Check if NPC has an owner (stored in m_nParam[10])
+	int nOwnerPlayerIdx = Npc[m_nIndex].m_nParam[10];
+	int nFollowMode = Npc[m_nIndex].m_nParam[11];
+
+	// If no owner or follow disabled, just stand still
+	if (nOwnerPlayerIdx < 0 || nOwnerPlayerIdx >= MAX_PLAYER || nFollowMode == 0)
+	{
+		return;
+	}
+
+	// Check if owner player is still valid
+	if (Player[nOwnerPlayerIdx].m_nIndex <= 0)
+	{
+		return;
+	}
+
+	int nPlayerNpcIdx = Player[nOwnerPlayerIdx].m_nIndex;
+	if (nPlayerNpcIdx <= 0 || nPlayerNpcIdx >= MAX_NPC)
+	{
+		return;
+	}
+
+	// Check if player is on same subworld
+	if (Npc[m_nIndex].m_SubWorldIndex != Npc[nPlayerNpcIdx].m_SubWorldIndex)
+	{
+		return;
+	}
+
+	// Calculate distance to owner
+	int nDistanceSquare = KNpcSet::GetDistanceSquare(m_nIndex, nPlayerNpcIdx);
+
+	// If too far (> 10 tiles = 320 pixels), move closer
+	// Distance squared threshold: 320*320 = 102400
+	if (nDistanceSquare > 102400)
+	{
+		// Move towards player
+		Npc[m_nIndex].SendCommand(do_walk, Npc[nPlayerNpcIdx].m_MapX, Npc[nPlayerNpcIdx].m_MapY);
+	}
+	// If very close (< 2 tiles), stop moving
+	else if (nDistanceSquare < 4096) // 64*64 = 4096
+	{
+		Npc[m_nIndex].SendCommand(do_stand, 0, 0);
+	}
+	// Otherwise, keep following at walk speed
+	else
+	{
+		Npc[m_nIndex].SendCommand(do_walk, Npc[nPlayerNpcIdx].m_MapX, Npc[nPlayerNpcIdx].m_MapY);
+	}
+}
+
 /*
-// Ò»°ãÖ÷¶¯ÐÍ
+// Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void KNpcAI::ProcessAIType1()
 {
 	int *pAIParam = Npc[m_nIndex].m_AiParam;
-	// ÊÇ·ñÒÑ³¬¹ý»î¶¯°ë¾¶
+	// ï¿½Ç·ï¿½ï¿½Ñ³ï¿½ï¿½ï¿½ï¿½î¶¯ï¿½ë¾¶
 	if (KeepActiveRange())
 		return;
 
@@ -1828,7 +1881,7 @@ void KNpcAI::ProcessAIType1()
 */
 
 /*
-// Ò»°ã±»¶¯ÐÍ
+// Ò»ï¿½ã±»ï¿½ï¿½ï¿½ï¿½
 void KNpcAI::ProcessAIType2()
 {
 	int *pAIParam = Npc[m_nIndex].m_AiParam;
@@ -1902,7 +1955,7 @@ void KNpcAI::ProcessAIType2()
 */
 
 /*
-// Ò»°ãÌÓÅÜÐÍ
+// Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void KNpcAI::ProcessAIType3()
 {
 	int* pAIParam = Npc[m_nIndex].m_AiParam;
@@ -1984,7 +2037,7 @@ void KNpcAI::ProcessAIType3()
 */
 
 /*
-// ÌÓÅÜ¼ÓÇ¿ÐÍ
+// ï¿½ï¿½ï¿½Ü¼ï¿½Ç¿ï¿½ï¿½
 void KNpcAI::ProcessAIType4()
 {
 	int*	pAIParam = Npc[m_nIndex].m_AiParam;
@@ -2044,7 +2097,7 @@ void KNpcAI::ProcessAIType4()
 */
 
 /*
-//	ÈË¶à¾ÍÅÜÐÍ
+//	ï¿½Ë¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void KNpcAI::ProcessAIType5()
 {
 	int *pAIParam = Npc[m_nIndex].m_AiParam;
@@ -2096,7 +2149,7 @@ void KNpcAI::ProcessAIType5()
 */
 
 /*
-//	³ÉÈº½á¶ÓÐÍ
+//	ï¿½ï¿½Èºï¿½ï¿½ï¿½ï¿½ï¿½
 void KNpcAI::ProcessAIType6()
 {
 	int *pAIParam = Npc[m_nIndex].m_AiParam;
@@ -2147,7 +2200,7 @@ void KNpcAI::ProcessAIType6()
 */
 
 /*
-// °¤´ò¾Û¶ÑÐÍ
+// ï¿½ï¿½ï¿½ï¿½Û¶ï¿½ï¿½ï¿½
 void KNpcAI::ProcessAIType7()
 {
 	int *pAIParam = Npc[m_nIndex].m_AiParam;
@@ -2204,7 +2257,7 @@ void KNpcAI::ProcessAIType7()
 */
 
 /*
-//	Ö÷¶¯ËÍËÀÐÍ
+//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void KNpcAI::ProcessAIType8()
 {
 	int *pAIParam = Npc[m_nIndex].m_AiParam;
@@ -2256,7 +2309,7 @@ void KNpcAI::ProcessAIType8()
 */
 
 /*
-//	Ô½Õ½Ô½ÓÂÐÍ
+//	Ô½Õ½Ô½ï¿½ï¿½ï¿½ï¿½
 void KNpcAI::ProcessAIType9()
 {
 	int *pAIParam = Npc[m_nIndex].m_AiParam;
@@ -2303,7 +2356,7 @@ void KNpcAI::ProcessAIType9()
 */
 
 /*
-//	ÌÓÅÜ²»µôÐÍ
+//	ï¿½ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ï¿½
 void KNpcAI::ProcessAIType10()
 {
 	int *pAIParam = Npc[m_nIndex].m_AiParam;

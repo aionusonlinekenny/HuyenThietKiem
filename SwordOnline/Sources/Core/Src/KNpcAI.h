@@ -29,13 +29,14 @@ private:
 	void			ProcessAIType8();
 	void			ProcessAIType9();
 	void			ProcessAIType10();*/
-	void			ProcessAIType01();		// ÆÕÍ¨Ö÷¶¯Àà1
-	void			ProcessAIType02();		// ÆÕÍ¨Ö÷¶¯Àà2
-	void			ProcessAIType03();		// ÆÕÍ¨Ö÷¶¯Àà3
-	void			ProcessAIType04();		// ÆÕÍ¨±»¶¯Àà1
-	void			ProcessAIType05();		// ÆÕÍ¨±»¶¯Àà2
-	void			ProcessAIType06();		// ÆÕÍ¨±»¶¯Àà3
-	void			ProcessAIType07();		// ÆÕÍ¨±»¶¯Àà3
+	void			ProcessAIType01();		// ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1
+	void			ProcessAIType02();		// ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2
+	void			ProcessAIType03();		// ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3
+	void			ProcessAIType04();		// ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1
+	void			ProcessAIType05();		// ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2
+	void			ProcessAIType06();		// ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3
+	void			ProcessAIType07();		// ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3
+	void			ProcessAIType08();		// Follow owner player (escort)
 	void			TriggerObjectTrap();
 	void			TriggerMapTrap();
 	void			FollowAttack(int nIdx);
@@ -50,9 +51,9 @@ private:
 #endif
 	friend class KNpc;
 #ifndef _SERVER
-	// ×°ÊÎÐÔÖÊNPCÔË¶¯º¯ÊýÏµÁÐ 
+	// ×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½NPCï¿½Ë¶ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ 
 	// flying add these on Jun.4.2003
-	// ËùÓÐ×°ÊÎÐÔNPCÔË¶¯´¦ÀíÈë¿Ú£¬ÓÉActivate(int)ÄÚ²¿µ÷ÓÃ
+	// ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½NPCï¿½Ë¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½Activate(int)ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½
 	int				ProcessShowNpc();
 	int  			ShowNpcType11();
 	int				ShowNpcType12();
@@ -63,12 +64,12 @@ private:
 	int				ShowNpcType17();
 	int             GetNpcMoveOffset(int nDir, int nDistance, int *pnX, int *pnY);
 
-	// ÅÐ¶ÏÊÇ·ñ³¬³ö·¶Î§
+	// ï¿½Ð¶ï¿½ï¿½Ç·ñ³¬³ï¿½ï¿½ï¿½Î§
 	//BOOL KeepActiveShowRange();
-	// 16/17 AiMode NPCµÄÌÓÒÝ¶¯×÷
+	// 16/17 AiMode NPCï¿½ï¿½ï¿½ï¿½ï¿½Ý¶ï¿½ï¿½ï¿½
 	int				DoShowFlee(int nIdx);
 
-	// ÅÐ¶ÏÊÇ·ñÕâ¸öÖ¡ÄÚ¿ÉÒÔ¸ø¸ÃNPCÏÂÖ¸Áî
+	// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½Ú¿ï¿½ï¿½Ô¸ï¿½ï¿½ï¿½NPCï¿½ï¿½Ö¸ï¿½ï¿½
 	BOOL			CanShowNpc();
 #endif
 	// flying add the function to get nearest player.

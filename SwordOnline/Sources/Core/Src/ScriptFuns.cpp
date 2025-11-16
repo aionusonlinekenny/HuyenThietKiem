@@ -2,7 +2,7 @@
 // FileName			:	ScriptFuns.cpp
 // FileAuthor		:	RomanDou
 // FileCreateDate	:	2002-11-19 15:58:20
-// FileDescription	:	½Å±¾Ö¸Áî¼¯
+// FileDescription	:	ï¿½Å±ï¿½Ö¸ï¿½î¼¯
 // Revision Count	:	
 *******************************************************************************/
 #ifndef WIN32
@@ -205,13 +205,13 @@ int LuaModifyRepute(Lua_State *L)
 	if (nValue < 0)
 	{
 		char szMsg[100];
-		sprintf(szMsg, "Danh väng b¹n gi¶m <color=green>%d ®iÓm<color>!", -nValue);		
+		sprintf(szMsg, "Danh vï¿½ng bï¿½n giï¿½m <color=green>%d ï¿½iï¿½m<color>!", -nValue);		
 		KPlayerChat::SendSystemInfo(1, nPlayerIndex, MESSAGE_SYSTEM_ANNOUCE_HEAD, (char *) szMsg, strlen(szMsg) );
 	}
 	else
 	{
 		char szMsg[100];
-		sprintf(szMsg, "Danh väng b¹n t¨ng <color=green>%d ®iÓm<color>!", nValue);		
+		sprintf(szMsg, "Danh vï¿½ng bï¿½n tï¿½ng <color=green>%d ï¿½iï¿½m<color>!", nValue);		
 		KPlayerChat::SendSystemInfo(1, nPlayerIndex, MESSAGE_SYSTEM_ANNOUCE_HEAD, (char *) szMsg, strlen(szMsg) );
 	}
 	
@@ -246,13 +246,13 @@ int LuaModifyFuyuan(Lua_State *L)
 	if (nValue < 0)
 	{
 		char szMsg[100];
-		sprintf(szMsg, "Phóc duyªn b¹n gi¶m <color=green>%d ®iÓm<color>!", -nValue);		
+		sprintf(szMsg, "Phï¿½c duyï¿½n bï¿½n giï¿½m <color=green>%d ï¿½iï¿½m<color>!", -nValue);		
 		KPlayerChat::SendSystemInfo(1, nPlayerIndex, MESSAGE_SYSTEM_ANNOUCE_HEAD, (char *) szMsg, strlen(szMsg) );
 	}
 	else
 	{
 		char szMsg[100];
-		sprintf(szMsg, "Phóc duyªn b¹n t¨ng <color=green>%d ®iÓm<color>!", nValue);		
+		sprintf(szMsg, "Phï¿½c duyï¿½n bï¿½n tï¿½ng <color=green>%d ï¿½iï¿½m<color>!", nValue);		
 		KPlayerChat::SendSystemInfo(1, nPlayerIndex, MESSAGE_SYSTEM_ANNOUCE_HEAD, (char *) szMsg, strlen(szMsg) );
 	}
 	
@@ -327,14 +327,14 @@ lab_subworldidx2id:
 Say(sMainInfo, nSelCount, sSel1, sSel2, sSel3, .....,sSeln) 
 Say(nMainInfo, nSelCount, sSel1, sSel2, sSel3, .....,sSeln) 
 Say(nMainInfo, nSelCount, SelTab)
-Èç¹ûÊÇ¿Í»§¶ËµÄÔò²»»áÏò·þÎñÆ÷¶Ë·¢ËÍÈÎºÎ²Ù×÷
+ï¿½ï¿½ï¿½ï¿½Ç¿Í»ï¿½ï¿½Ëµï¿½ï¿½ò²»»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë·ï¿½ï¿½ï¿½ï¿½ÎºÎ²ï¿½ï¿½ï¿½
 
   Say(100, 3, 10, 23,43)
-  Say("Ñ¡ÔñÊ²Ã´£¿", 2, "ÊÇ/yes", "·ñ/no");
+  Say("Ñ¡ï¿½ï¿½Ê²Ã´ï¿½ï¿½", 2, "ï¿½ï¿½/yes", "ï¿½ï¿½/no");
   Say("Ñ¡Ê²Ã´Ñ½", 2, SelTab);
 */
 //**************************************************************************************************************************************************************
-//												½çÃæ½Å±¾
+//												ï¿½ï¿½ï¿½ï¿½Å±ï¿½
 //**************************************************************************************************************************************************************
 int LuaSelectUI(Lua_State * L)
 {
@@ -366,7 +366,7 @@ int LuaSelectUI(Lua_State * L)
 		nMainInfo = (int)Lua_ValueToNumber(L,1);
 		nDataType = 1 ;
 	}
-	else if (Lua_IsString(L, 1)) 	//¼ì²éÖ÷ÐÅÏ¢ÊÇ×Ö·û´®»¹ÊÇ×Ö·û´®±êÊ¶ºÅ
+	else if (Lua_IsString(L, 1)) 	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½
 	{
 		strMain = (char *)Lua_ValueToString(L, 1);
 		nDataType = 0 ;
@@ -374,7 +374,7 @@ int LuaSelectUI(Lua_State * L)
 	else
 		return 0;
 	
-	BOOL bStringTab = FALSE;//±êÊ¶´«½øÀ´µÄÑ¡ÏîÊý¾Ý´æ·ÅÔÚÒ»¸öÊý×éÖÐ£¬»¹ÊÇÐí¶à×Ö·û´®Àï
+	BOOL bStringTab = FALSE;//ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½
 	
 	if (Lua_IsString(L,3))
 		bStringTab = FALSE;
@@ -388,7 +388,7 @@ int LuaSelectUI(Lua_State * L)
 	
 	if (bStringTab == FALSE)
 	{
-		//»ñµÃÊµ¼Ê´«ÈëµÄÑ¡ÏîµÄ¸öÊý
+		//ï¿½ï¿½ï¿½Êµï¿½Ê´ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½
 		if (nOptionNum > nParamNum - 2) nOptionNum = nParamNum - 2;
 	}
 	
@@ -396,18 +396,18 @@ int LuaSelectUI(Lua_State * L)
 	
 	PLAYER_SCRIPTACTION_SYNC UiInfo;
 	UiInfo.m_bUIId = UI_SELECTDIALOG;
-	UiInfo.m_bParam1 = nDataType;//Ö÷ÐÅÏ¢µÄÀàÐÍ£¬×Ö·û´®(0)»òÊý×Ö(1)
+	UiInfo.m_bParam1 = nDataType;//ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½Ö·ï¿½ï¿½ï¿½(0)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(1)
 	UiInfo.m_bOptionNum = nOptionNum;
 	UiInfo.m_nOperateType = SCRIPTACTION_UISHOW;
 	
-	//Ö÷ÐÅÏ¢Îª×Ö·û´®
+	//ï¿½ï¿½ï¿½ï¿½Ï¢Îªï¿½Ö·ï¿½ï¿½ï¿½
 	if (nDataType == 0)
 	{
 		if (strMain)
 			sprintf(UiInfo.m_pContent, "%s", strMain);
 		pContent = UiInfo.m_pContent;
 	}
-	else if (nDataType == 1) //Ö÷ÐÅÏ¢ÎªÊý×Ö±êÊ¶
+	else if (nDataType == 1) //ï¿½ï¿½ï¿½ï¿½Ï¢Îªï¿½ï¿½ï¿½Ö±ï¿½Ê¶
 	{
 		*(int *)UiInfo.m_pContent = nMainInfo;
 		pContent = UiInfo.m_pContent + sizeof(int);
@@ -1824,7 +1824,7 @@ if (Lua_GetTopIndex(L) <= 0) return 0;
 		}
 		else
 		{
-			KPlayerChat::SendSystemInfo(1, nPlayerIndex, "Lçi Bug", "Bug hµm LuaMsgToPlayer vui lßng b¸o BQT", 48);
+			KPlayerChat::SendSystemInfo(1, nPlayerIndex, "Lï¿½i Bug", "Bug hï¿½m LuaMsgToPlayer vui lï¿½ng bï¿½o BQT", 48);
 		}
 	}
 	return 0;
@@ -1846,7 +1846,7 @@ int LuaMsgToTeam(Lua_State * L)
 		const char* szMsg = Lua_ValueToString(L,1);
 		int nTeamLeaderId = g_Team[Player[nPlayerIndex].m_cTeam.m_nID].m_nCaptain;
 		if (nTeamLeaderId > 0)
-			KPlayerChat::SendSystemInfo(1, nTeamLeaderId, "Tin tøc tæ ®éi",(char *) szMsg, strlen(szMsg) );
+			KPlayerChat::SendSystemInfo(1, nTeamLeaderId, "Tin tï¿½c tï¿½ ï¿½ï¿½i",(char *) szMsg, strlen(szMsg) );
 		
 		for (int i = 0; i < MAX_TEAM_MEMBER; i ++)
 		{
@@ -1854,7 +1854,7 @@ int LuaMsgToTeam(Lua_State * L)
 			if (nMemberId > 0)
 			{
 				if (szMsg)
-					KPlayerChat::SendSystemInfo(1, nMemberId, "Tin tøc tæ ®éi", (char *)szMsg, strlen(szMsg) );
+					KPlayerChat::SendSystemInfo(1, nMemberId, "Tin tï¿½c tï¿½ ï¿½ï¿½i", (char *)szMsg, strlen(szMsg) );
 			}
 		}
 	}
@@ -2501,7 +2501,7 @@ int LuaAddItem(Lua_State * L)
 	if (nParamNum < 7)
 	{
 #ifdef _DEBUG
-		//g_DebugLog("[Script]Ê¹ÓÃAddItem²ÎÊýÊýÁ¿²»·û!");
+		//g_DebugLog("[Script]Ê¹ï¿½ï¿½AddItemï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!");
 #endif
 		Lua_PushNumber(L,0);
 		return 1;
@@ -4847,6 +4847,63 @@ int LuaSetNpcSeries(Lua_State * L)
 	return 0;
 }
 // --
+// SetNpcOwner - Make NPC follow player
+// Parameters: (npcIndex, playerName, followMode)
+// --
+int LuaSetNpcOwner(Lua_State * L)
+{
+	if (Lua_GetTopIndex(L) < 2)
+		return 0;
+
+	int nNpcIndex = (int)Lua_ValueToNumber(L, 1);
+	if (nNpcIndex <= 0 || nNpcIndex >= MAX_NPC)
+		return 0;
+
+	const char* szPlayerName = Lua_ValueToString(L, 2);
+	if (!szPlayerName || szPlayerName[0] == 0)
+		return 0;
+
+	int nFollowMode = 1; // Default: follow enabled
+	if (Lua_GetTopIndex(L) >= 3)
+		nFollowMode = (int)Lua_ValueToNumber(L, 3);
+
+#ifdef _SERVER
+	// Find player by name
+	int nPlayerIdx = -1;
+	for (int i = 0; i < MAX_PLAYER; i++)
+	{
+		if (Player[i].m_nIndex > 0 && strcmp(Player[i].m_PlayerName, szPlayerName) == 0)
+		{
+			nPlayerIdx = i;
+			break;
+		}
+	}
+
+	if (nPlayerIdx >= 0)
+	{
+		// Store owner player index in param[10]
+		Npc[nNpcIndex].m_nParam[10] = nPlayerIdx;
+
+		// Store follow mode in param[11] (1=follow, 0=don't follow)
+		Npc[nNpcIndex].m_nParam[11] = nFollowMode;
+
+		// Set m_nPeopleIdx to link NPC to player
+		Npc[nNpcIndex].m_nPeopleIdx = Player[nPlayerIdx].m_nIndex;
+
+		// Set AI mode to 8 (Follow owner)
+		if (nFollowMode == 1)
+		{
+			Npc[nNpcIndex].m_AiMode = 8;
+		}
+
+		// Make NPC peaceful/neutral
+		Npc[nNpcIndex].m_Kind = 0; // Kind 0 = neutral
+	}
+#endif
+
+	return 0;
+}
+// --
 //
 // --
 int LuaRestorePlayerCamp(Lua_State * L)
@@ -6470,7 +6527,7 @@ int LuaGetStationName(Lua_State * L)
 	}
 	int nStationId = (int)Lua_ValueToNumber(L,1);
 	char szName[50];
-	g_StationTabFile.GetString(nStationId + 1, "DESC", "ÎÞÃû³Ç",  szName, 50 );
+	g_StationTabFile.GetString(nStationId + 1, "DESC", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",  szName, 50 );
 	Lua_PushString(L, szName);
 	return 1;
 }
@@ -6489,7 +6546,7 @@ int LuaGetWayPointName(Lua_State * L)
 	}
 	int nWayPointId = (int)Lua_ValueToNumber(L,1);
 	char szName[50];
-	g_WayPointTabFile.GetString(nWayPointId + 1, "DESC", "Î´¼ÇÂ¼",  szName, 50 );
+	g_WayPointTabFile.GetString(nWayPointId + 1, "DESC", "Î´ï¿½ï¿½Â¼",  szName, 50 );
 	Lua_PushString(L, szName);
 	return 1;
 }
@@ -6763,11 +6820,11 @@ int LuaGetDockName(Lua_State * L)
 	
 	if (nDock > g_DockPriceTabFile.GetHeight() - 1)
 	{
-		strcpy(szName, "Î´ÖªÂëÍ·");
+		strcpy(szName, "Î´Öªï¿½ï¿½Í·");
 		goto DockName;
 	}
 	
-	g_DockTabFile.GetString(nDock + 1, "DESC", "Î´ÖªÂëÍ·", szName, 100);
+	g_DockTabFile.GetString(nDock + 1, "DESC", "Î´Öªï¿½ï¿½Í·", szName, 100);
 	
 DockName:
 	Lua_PushString (L, szName);
@@ -10254,6 +10311,7 @@ TLua_Funcs GameScriptFuns[] =
 	{"GetNpcGold",			LuaGetNpcGold},
 	{"SetNpcSeries",		LuaSetNpcSeries},
 	{"GetNpcSeries",		LuaGetNpcSeries},
+	{"SetNpcOwner",			LuaSetNpcOwner},
 	{"SetNpcParam",			LuaSetNpcParam},
 	{"GetNpcParam",			LuaGetNpcParam},
 	{"SetNpcCurCamp",		LuaSetNpcCurCamp},
