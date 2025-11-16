@@ -228,10 +228,23 @@ function batdau()
 	-- Setup cart
 	local nName = GetName()
 
+	Msg2Player("=== DEBUG SetNpcOwner ===")
 	Msg2Player("Debug: Calling SetNpcOwner with NpcIdx="..nId..", Name="..nName)
-	SetNpcOwner(nId, nName, 1)
 
-	Msg2Player("Debug: After SetNpcOwner call")
+	-- Check if C++ SetNpcOwner exists
+	if SetNpcOwner ~= nil then
+		Msg2Player("GOOD: C++ SetNpcOwner found - calling it...")
+		SetNpcOwner(nId, nName, 1)
+		Msg2Player("SUCCESS: SetNpcOwner called! Cart should follow you now.")
+	else
+		Msg2Player("ERROR: C++ SetNpcOwner NOT FOUND!")
+		Msg2Player("ERROR: Server needs rebuild with C++ code!")
+		Msg2Player("ERROR: Cart will NOT follow until server rebuilt.")
+		-- Use backup (won't make cart follow, but won't crash)
+		SetNpcOwner_Backup(nId, nName, 1)
+	end
+
+	Msg2Player("=== END DEBUG ===")
 
 	SetNpcName(nId, nName .. TIEUXA_TEMPLET[nRand][2])
 	SetNpcTimeout(nId, CART_TIMEOUT)
@@ -427,7 +440,16 @@ function resettieuxatest()
 
 		-- Setup cart
 		local nName = GetName()
-		SetNpcOwner(nId, nName, 1)
+
+		-- Check if C++ SetNpcOwner exists
+		if SetNpcOwner ~= nil then
+			SetNpcOwner(nId, nName, 1)
+			Msg2Player("Reset: SetNpcOwner called successfully")
+		else
+			Msg2Player("ERROR: SetNpcOwner NOT FOUND - server needs rebuild")
+			SetNpcOwner_Backup(nId, nName, 1)
+		end
+
 		SetNpcName(nId, nName .. TIEUXA_TEMPLET[nRand][2])
 		SetNpcTimeout(nId, CART_TIMEOUT)
 		SetNpcValue(nId, GetUUID())
@@ -509,17 +531,28 @@ function testserverbuild()
 	if nId > 0 then
 		Msg2Player("Test cart spawned with Index="..nId)
 
-		-- Try to call SetNpcOwner
-		Msg2Player("Calling SetNpcOwner...")
+		-- Check if SetNpcOwner exists
 		local nName = GetName()
-		SetNpcOwner(nId, nName, 1)
 
-		Msg2Player("SetNpcOwner call finished")
-		Msg2Player("Check if cart follows you when you move!")
-		Msg2Player("If cart stands still = server NOT rebuilt yet")
-		Msg2Player("If cart follows = server rebuilt successfully!")
+		if SetNpcOwner ~= nil then
+			Msg2Player("✓ GOOD: C++ SetNpcOwner function EXISTS!")
+			Msg2Player("Calling SetNpcOwner...")
+			SetNpcOwner(nId, nName, 1)
+			Msg2Player("✓ SetNpcOwner called!")
+			Msg2Player("")
+			Msg2Player("Now WALK AWAY and check if cart follows you:")
+			Msg2Player("  • Cart follows = SUCCESS! Server rebuilt correctly")
+			Msg2Player("  • Cart stands still = AI Mode not working")
+		else
+			Msg2Player("✗ ERROR: C++ SetNpcOwner function NOT FOUND!")
+			Msg2Player("✗ Server has NOT been rebuilt with C++ code!")
+			Msg2Player("✗ Cart will NOT follow until you rebuild GameServer.exe")
+			Msg2Player("")
+			Msg2Player("See BUILD_INSTRUCTIONS.md for build steps")
+			SetNpcOwner_Backup(nId, nName, 1)
+		end
 
-		-- Also check SetNpcCamp to make it friendly
+		-- Make cart friendly
 		if SetNpcCamp ~= nil then
 			SetNpcCamp(nId, 0)
 		end
