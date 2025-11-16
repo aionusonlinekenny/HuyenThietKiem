@@ -1,55 +1,9 @@
 -- Tiêu Xa - Escort Cart NPC Script
 -- Ported from ThienDieuOnline to HuyenThietKiem
+-- Follow mechanism implemented in C++ (AI Mode 8)
 
 Include("\\script\\lib\\TaskLib.lua")
 Include("\\script\\Event\\VanTieu\\lib.lua")
-
-function OnTimer(NpcIndex, nTimerID)
-	if nTimerID == 1 then -- FOLLOW_TIMER_ID
-		FollowOwner(NpcIndex)
-	end
-end
-
-function FollowOwner(NpcIndex)
-	-- Get owner UUID from NpcParam
-	local dwOwnerUUID = GetNpcParam(NpcIndex, 1)
-	if not dwOwnerUUID or dwOwnerUUID == 0 then
-		return
-	end
-
-	-- Find owner player
-	local nPlayerIdx = GetPlayer(dwOwnerUUID)
-	if not nPlayerIdx or nPlayerIdx <= 0 then
-		return
-	end
-
-	-- Get player position
-	PlayerIndex = nPlayerIdx
-	local pWorld, pX, pY = GetWorldPos()
-
-	-- Get NPC position
-	local nWorld, nX, nY = GetNpcPos(NpcIndex)
-
-	-- Check if on same map
-	if nWorld ~= pWorld then
-		return
-	end
-
-	-- Calculate distance (in pixels)
-	local distX = pX - (nX * 32)
-	local distY = pY - (nY * 32)
-	local distPixels = sqrt(distX * distX + distY * distY)
-
-	-- If too far (>10 tiles = 320 pixels), move closer
-	if distPixels > 320 then
-		-- Convert player pixel position to tiles
-		local pTileX = floor(pX / 32)
-		local pTileY = floor(pY / 32)
-
-		-- Move NPC towards player
-		SetPos(pTileX, pTileY, NpcIndex)
-	end
-end
 
 function LastDamage(NpcIndex)
 	-- When cart is killed (robbed)
@@ -103,11 +57,8 @@ function Timeout(nIndex)
 end
 
 function Revive(NpcIndex)
-	-- Cart initialization - start follow timer
-	-- Timer ID=1, Interval=18 frames (~1 second)
-	if SetNpcTimer ~= nil then
-		SetNpcTimer(NpcIndex, 18, 1)
-	end
+	-- Cart initialization
+	-- Follow mechanism handled by C++ AI Mode 8
 end
 
 function DeathSelf(NpcIndex)
