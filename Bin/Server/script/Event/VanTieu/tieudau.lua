@@ -195,7 +195,7 @@ function batdau()
 		end
 
 		-- Set NPC series to match player
-		local nPlayerSeries = GetPlayerSeries()
+		local nPlayerSeries = GetSeries()
 		if nPlayerSeries and SetNpcSeries ~= nil then
 			SetNpcSeries(nId, nPlayerSeries)
 		end
@@ -398,7 +398,7 @@ function resettieuxatest()
 		end
 
 		-- Set series
-		local nPlayerSeries = GetPlayerSeries()
+		local nPlayerSeries = GetSeries()
 		if nPlayerSeries and SetNpcSeries ~= nil then
 			SetNpcSeries(nId, nPlayerSeries)
 		end
