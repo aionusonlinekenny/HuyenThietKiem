@@ -264,10 +264,26 @@ function batdau()
 	Msg2Player("=== DEBUG SetNpcOwner ===")
 	Msg2Player("Debug: Calling SetNpcOwner with NpcIdx="..nId..", Name="..nName)
 
+	-- IMPORTANT: Set NPC life/HP so AI will activate
+	-- AI won't run if m_CurrentLifeMax = 0 (check in KNpcAI.cpp line 34)
+	if SetNpcLifeMax then
+		SetNpcLifeMax(nId, 10000)  -- 10k HP
+		SetNpcLife(nId, 10000)
+		Msg2Player("Debug: Set NPC life = 10000")
+	end
+
 	-- Check if C++ SetNpcOwner exists
 	if SetNpcOwner ~= nil then
 		Msg2Player("GOOD: C++ SetNpcOwner found - calling it...")
 		SetNpcOwner(nId, nName, 1)
+
+		-- CRITICAL: Also set AI mode via Lua API
+		-- SetNpcOwner sets m_AiMode in C++, but need to set via Lua API too
+		if SetNpcAIMode then
+			SetNpcAIMode(nId, 8)  -- AI Mode 8 = Follow owner
+			Msg2Player("Debug: Called SetNpcAIMode(8)")
+		end
+
 		Msg2Player("SUCCESS: SetNpcOwner called! Cart should follow you now.")
 	else
 		Msg2Player("ERROR: C++ SetNpcOwner NOT FOUND!")
