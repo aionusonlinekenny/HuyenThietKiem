@@ -106,7 +106,7 @@ function vantieu()
 		"Ta đang rất bận/no")
 	elseif(nTask < 4) then
 		-- Check if player was robbed
-		if(GetItemCountInBag(0,6,ITEM_TIEUKY) > 0) then
+		if(GetItemCountInBag(6, ITEM_TIEUKY, 1, -1, 0) > 0) then
 			bicuop()
 			return
 		end
@@ -136,7 +136,7 @@ function batdau()
 	local nLan = GetByte(nResetTask, 6)
 
 	if(nLan >= MAX_DAILY_RUNS) then
-		if(GetItemCountInBag(0,6,ITEM_UNLOCK_VANTIEU) < 1) then
+		if(GetItemCountInBag(6, ITEM_UNLOCK_VANTIEU, 1, -1, 0) < 1) then
 			Talk(1,"","Hôm nay ngươi đã áp tiêu nhiều lần rồi. Hãy nghỉ ngơi mai lại đến gặp ta.")
 			return
 		end
@@ -149,7 +149,7 @@ function batdau()
 
 	-- Consume unlock item or increment daily counter
 	if(nLan >= MAX_DAILY_RUNS) then
-		ConsumeItemInBag(1, 0, 6, ITEM_UNLOCK_VANTIEU)
+		DelTaskItem(ITEM_UNLOCK_VANTIEU, 1)
 	else
 		SetTask(TASK_RESET_VANTIEU, SetByte(nResetTask, 6, nLan + 1))
 	end
@@ -204,7 +204,7 @@ function batdau()
 end
 
 function cuahang()
-	local nCount = GetItemCountInBag(0, 6, ITEM_HO_TIEU_LENH)
+	local nCount = GetItemCountInBag(6, ITEM_HO_TIEU_LENH, 1, -1, 0) or 0
 	Say("Ngươi hiện có: <color=red>"..nCount.."<color> Hồ Tiêu Lệnh. Hãy lựa chọn vật phẩm cần thiết cho tiêu xa:",4,
 	"Tăng tốc (4 Hồ Tiêu Lệnh)/buy_item("..ITEM_TANGTO..",4)",
 	"Hồi máu (3 Hồ Tiêu Lệnh)/buy_item("..ITEM_HOIMAU..",3)",
@@ -218,15 +218,15 @@ function buy_item(nItemID, nCost)
 		return
 	end
 
-	local nHave = GetItemCountInBag(0, 6, ITEM_HO_TIEU_LENH)
+	local nHave = GetItemCountInBag(6, ITEM_HO_TIEU_LENH, 1, -1, 0) or 0
 
 	if(nCost > nHave) then
 		Talk(1,"","Ngươi không mang đủ Hồ Tiêu Lệnh rồi")
 		return
 	end
 
-	AddItem(0, 6, nItemID, 0, 0, 5, 0, 0)
-	ConsumeItemInBag(nCost, 0, 6, ITEM_HO_TIEU_LENH)
+	AddTaskItem(nItemID)
+	DelTaskItem(ITEM_HO_TIEU_LENH, nCost)
 
 	Talk(1,"","Giao dịch thành công!")
 end
@@ -261,7 +261,7 @@ function bicuop()
 
 	SetTask(TASK_VANTIEU, 0)
 	SetTask(TASK_NPCVANTIEU, 0)
-	ConsumeItemInBag(1, 0, 6, ITEM_TIEUKY)
+	DelTaskItem(ITEM_TIEUKY, 1)
 
 	Talk(1,"","Ngươi bị cướp tiêu rồi sao? Cũng may ngươi đã đoạt lại Ti tiêu Kỳ danh dự của Thành Đô tiêu cục. Vất vả cho ngươi rồi! Đây là một nửa phần lao vụ")
 end
