@@ -542,11 +542,42 @@ function testserverbuild()
 		return
 	end
 
-	Msg2Player("Debug: Calling AddNpc(2085, 1, "..nSubWorldIdx..", "..x..", "..y..", 1, 'Test Cart', 0, 0)")
+	-- Validate coordinates
+	if x == nil or y == nil or x == 0 or y == 0 then
+		Msg2Player("ERROR: GetWorldPos returned invalid coordinates!")
+		Msg2Player("ERROR: Cannot spawn cart at nil/zero position")
+		Msg2Player("TRY: Use fixed position instead")
+		-- Use Tiêu Đầu position as fallback
+		x = floor(POS_START_X * 32)
+		y = floor(POS_START_Y * 32)
+		Msg2Player("Using fallback position: x="..x..", y="..y)
+	end
 
-	local nId = AddNpc(2085, 1, nSubWorldIdx, x, y, 1, "Test Cart", 0, 0)
+	-- Try multiple templates to see which one works
+	Msg2Player("Trying template 2085...")
+	local nId = AddNpc(2085, 1, nSubWorldIdx, x, y, 1, "", 0, 0)
+	Msg2Player("Template 2085 returned nId="..tostring(nId))
 
-	Msg2Player("Debug: AddNpc returned nId="..tostring(nId))
+	if nId <= 0 then
+		Msg2Player("Failed! Trying template 2086...")
+		nId = AddNpc(2086, 1, nSubWorldIdx, x, y, 1, "", 0, 0)
+		Msg2Player("Template 2086 returned nId="..tostring(nId))
+	end
+
+	if nId <= 0 then
+		Msg2Player("Failed! Trying template 2087...")
+		nId = AddNpc(2087, 1, nSubWorldIdx, x, y, 1, "", 0, 0)
+		Msg2Player("Template 2087 returned nId="..tostring(nId))
+	end
+
+	if nId <= 0 then
+		Msg2Player("All cart templates failed!")
+		Msg2Player("Trying simple NPC template 377 (Tiêu Đầu)...")
+		nId = AddNpc(377, 1, nSubWorldIdx, x, y, 1, "", 0, 0)
+		Msg2Player("Template 377 returned nId="..tostring(nId))
+	end
+
+	Msg2Player("Final nId="..tostring(nId))
 
 	if nId > 0 then
 		Msg2Player("Test cart spawned with Index="..nId)
