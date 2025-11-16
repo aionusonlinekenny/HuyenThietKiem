@@ -1776,23 +1776,22 @@ void	KNpcAI::ProcessAIType08()
 	// Calculate distance to owner
 	int nDistanceSquare = KNpcSet::GetDistanceSquare(m_nIndex, nPlayerNpcIdx);
 
-	// If too far (> 10 tiles = 320 pixels), move closer
-	// Distance squared threshold: 320*320 = 102400
-	if (nDistanceSquare > 102400)
+	// Follow behavior:
+	// - If distance > 5 tiles (160 pixels), walk to player
+	// - If distance 2-5 tiles, keep following at normal pace
+	// - Only stop if distance < 1.5 tiles (48 pixels) to avoid collision
+
+	if (nDistanceSquare > 25600)  // 160*160 = 25600 (> 5 tiles)
 	{
-		// Move towards player
+		// Far away - walk towards player
 		Npc[m_nIndex].SendCommand(do_walk, Npc[nPlayerNpcIdx].m_MapX, Npc[nPlayerNpcIdx].m_MapY);
 	}
-	// If very close (< 2 tiles), stop moving
-	else if (nDistanceSquare < 4096) // 64*64 = 4096
+	else if (nDistanceSquare > 2304)  // 48*48 = 2304 (> 1.5 tiles)
 	{
-		Npc[m_nIndex].SendCommand(do_stand, 0, 0);
-	}
-	// Otherwise, keep following at walk speed
-	else
-	{
+		// Medium distance - keep following
 		Npc[m_nIndex].SendCommand(do_walk, Npc[nPlayerNpcIdx].m_MapX, Npc[nPlayerNpcIdx].m_MapY);
 	}
+	// else: very close (< 1.5 tiles) - do nothing, let NPC idle naturally
 }
 
 /*
