@@ -195,6 +195,13 @@ function batdau()
 
 	-- Pay and teleport player to start location
 	Pay(COST_START_QUEST)
+
+	-- Close any open dialogs before teleporting
+	-- This ensures player isn't stuck in dialog after NewWorld
+	if CloseSay then
+		CloseSay()
+	end
+
 	NewWorld(SUBWORLD_START, POS_START_X, POS_START_Y)
 	-- NOTE: Don't call SetFightState yet! Wait until cart spawns successfully
 
@@ -279,10 +286,10 @@ function batdau()
 	Msg2Player("Hãy mau hộ tống tiêu xa đến Long Môn tiêu sư ở Thanh Thành Sơn ("..POS_END_X.."/"..POS_END_Y..")")
 
 	-- Payment and teleport already done above (before spawning cart)
-	-- Set fight state ONLY after cart spawned successfully
-	-- This prevents player freeze if cart spawn fails
-	SetFightState(1)
-	Msg2Player("Debug: SetFightState(1) - quest started!")
+	-- NOTE: Temporarily disable SetFightState to test if it's blocking movement
+	-- SetFightState(1)
+	Msg2Player("Debug: Quest started! Try moving now.")
+	Msg2Player("Debug: If you can move, SetFightState was the problem!")
 end
 
 function cuahang()
