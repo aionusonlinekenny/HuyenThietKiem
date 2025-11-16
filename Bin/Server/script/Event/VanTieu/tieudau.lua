@@ -177,31 +177,34 @@ function batdau()
 	local n = random(0, 2)
 	local nRand = n + 1
 
-	-- IMPORTANT: Teleport player FIRST before spawning cart!
-	-- This prevents player and cart from spawning at the same position
-	Pay(COST_START_QUEST)
-	NewWorld(SUBWORLD_START, POS_START_X, POS_START_Y)
-	SetFightState(1)
-
-	-- Get player's current position after teleport
-	local w, x, y = GetWorldPos()
-
-	-- Spawn cart NEAR player, but offset by 2 tiles (64 pixels) to avoid overlap
+	-- Calculate spawn positions BEFORE teleporting player
+	-- Use fixed coordinates, don't rely on GetWorldPos() after NewWorld()
 	local nTemplateID = TIEUXA_TEMPLET[nRand][1]
 	local nSubWorldIdx = SubWorldID2Idx(SUBWORLD_START)
-	local nPosX = x + 64  -- Offset +2 tiles East of player
-	local nPosY = y       -- Same Y coordinate
 
-	Msg2Player("Debug: Player at X="..x.." Y="..y)
-	Msg2Player("Debug: Spawning cart at X="..nPosX.." Y="..nPosY.." (offset +64 pixels)")
+	-- Player will be at POS_START_X/Y after teleport
+	local nPlayerX = floor(POS_START_X * 32)  -- Convert map coords to pixels
+	local nPlayerY = floor(POS_START_Y * 32)
 
-	-- Spawn escort cart
+	-- Spawn cart offset +2 tiles East of player position
+	local nCartX = nPlayerX + 64  -- +64 pixels = +2 tiles
+	local nCartY = nPlayerY
+
+	Msg2Player("Debug: Will teleport player to X="..nPlayerX.." Y="..nPlayerY)
+	Msg2Player("Debug: Will spawn cart at X="..nCartX.." Y="..nCartY.." (offset +64)")
+
+	-- Pay and teleport player to start location
+	Pay(COST_START_QUEST)
+	NewWorld(SUBWORLD_START, POS_START_X, POS_START_Y)
+	-- NOTE: Don't call SetFightState yet! Wait until cart spawns successfully
+
+	-- Spawn escort cart at calculated position
 	local nId = AddNpc(
 		nTemplateID,				-- Template ID
 		1,							-- Level
 		nSubWorldIdx,				-- SubWorld Index
-		nPosX,						-- X (player X + 64)
-		nPosY,						-- Y (player Y)
+		nCartX,						-- X (player X + 64)
+		nCartY,						-- Y (player Y)
 		1,							-- Remove on death
 		"",							-- Name (will be set below)
 		0,							-- Param 8
@@ -276,7 +279,10 @@ function batdau()
 	Msg2Player("Hãy mau hộ tống tiêu xa đến Long Môn tiêu sư ở Thanh Thành Sơn ("..POS_END_X.."/"..POS_END_Y..")")
 
 	-- Payment and teleport already done above (before spawning cart)
-	-- This prevents player and cart from spawning at the same position
+	-- Set fight state ONLY after cart spawned successfully
+	-- This prevents player freeze if cart spawn fails
+	SetFightState(1)
+	Msg2Player("Debug: SetFightState(1) - quest started!")
 end
 
 function cuahang()
