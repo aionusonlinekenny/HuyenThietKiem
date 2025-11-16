@@ -2611,8 +2611,12 @@ void KSwordOnLineSever::PingClient(const unsigned long lnID)
 
 		// FIX: Reset ping timers to stop PING-RETRY spam for dead connections
 		// Without this, MainLoop keeps calling PingClient() → return early → elapsed stays same → PING-RETRY forever
+		printf("[FIX-APPLIED] Resetting timers for lnID=%lu (OLD: send=%d reply=%d)\n",
+			   lnID, m_pGameStatus[lnID].nSendPingTime, m_pGameStatus[lnID].nReplyPingTime);
 		m_pGameStatus[lnID].nSendPingTime = 0;
 		m_pGameStatus[lnID].nReplyPingTime = 1;  // Mark as inactive (non-zero = not waiting for reply)
+		printf("[FIX-APPLIED] Timers reset for lnID=%lu (NEW: send=%d reply=%d)\n",
+			   lnID, m_pGameStatus[lnID].nSendPingTime, m_pGameStatus[lnID].nReplyPingTime);
 
 		return;
 	}
