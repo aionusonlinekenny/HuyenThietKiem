@@ -112,8 +112,9 @@ function vantieu()
 			return
 		end
 
-		Say("Không phải ngươi đang áp tiêu sao? Sao lại đến đây tìm ta?",3,
+		Say("Không phải ngươi đang áp tiêu sao? Sao lại đến đây tìm ta?",4,
 		"Ta bị thất lạc, giúp ta tìm tiêu xa/timxe",
+		"Reset tiêu xa (Test - Miễn phí)/resettieuxatest",
 		"Ta không muốn làm nữa/huybo",
 		"Ta chỉ ghé qua/no")
 	else
@@ -341,6 +342,81 @@ function timxe()
 		Talk(1,"","Đã có tin tức tiêu xa! Ta sẽ cho ngươi đưa ngươi đến đó!")
 	else
 		Talk(1,"","Không thấy tin tức! Tiêu xa của ngươi có lẽ đã mất!")
+	end
+end
+
+function resettieuxatest()
+	-- Test function to reset cart for easier testing (FREE)
+	local nTaskValue = GetTask(TASK_VANTIEU)
+	local nTask = GetByte(nTaskValue, 1)
+
+	if nTask == 0 or nTask >= 4 then
+		Talk(1,"","Ngươi không có nhiệm vụ vận tiêu đang thực hiện!")
+		return
+	end
+
+	-- Delete old cart if exists
+	local dwCartID = GetTask(TASK_NPCVANTIEU)
+	if dwCartID > 0 then
+		local nNpcIdx = FindAroundNpc(dwCartID)
+		if nNpcIdx > 0 then
+			DelNpc(nNpcIdx)
+			Msg2Player("Đã xóa tiêu xa cũ")
+		end
+	end
+
+	-- Get player position and subworld
+	local nSubWorldIdx = SubWorldID2Idx(SUBWORLD_START)
+	local w, x, y = GetWorldPos()
+
+	-- Determine cart type from task
+	local nRand = nTask -- Task value 1/2/3 = Đồng/Bạc/Vàng
+	local nTemplateID = TIEUXA_TEMPLET[nRand][1]
+
+	-- Spawn new cart at player position
+	local nId = AddNpc(
+		nTemplateID,
+		1,
+		nSubWorldIdx,
+		x,
+		y,
+		1,
+		"",
+		0,
+		0
+	)
+
+	if nId > 0 then
+		SetNpcScript(nId, "\\script\\event\\VanTieu\\tieuxa.lua")
+
+		-- Set friendly
+		if SetNpcCamp ~= nil then
+			SetNpcCamp(nId, 0)
+		end
+		if SetNpcCurCamp ~= nil then
+			SetNpcCurCamp(nId, 0)
+		end
+
+		-- Set series
+		local nPlayerSeries = GetPlayerSeries()
+		if nPlayerSeries and SetNpcSeries ~= nil then
+			SetNpcSeries(nId, nPlayerSeries)
+		end
+
+		-- Setup cart
+		local nName = GetName()
+		SetNpcOwner(nId, nName, 1)
+		SetNpcName(nId, nName .. TIEUXA_TEMPLET[nRand][2])
+		SetNpcTimeout(nId, CART_TIMEOUT)
+		SetNpcValue(nId, GetUUID())
+
+		-- Update task with new NPC ID
+		local dwNewCartID = GetNpcIDFromIndex(nId)
+		SetTask(TASK_NPCVANTIEU, dwNewCartID)
+
+		Msg2Player("Đã reset tiêu xa thành công! Xe mới xuất hiện tại vị trí của ngươi.")
+	else
+		Talk(1,"","Lỗi: Không thể tạo tiêu xa mới!")
 	end
 end
 
