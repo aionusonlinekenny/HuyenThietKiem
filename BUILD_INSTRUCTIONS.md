@@ -2,16 +2,32 @@
 
 ## Vấn đề hiện tại
 
-Tiêu xa spawn được nhưng **không di chuyển theo player** vì:
-- C++ code đã được viết nhưng **chưa compile vào GameServer.exe**
-- Server đang chạy với code cũ (không có SetNpcOwner C++ function)
+~~Tiêu xa spawn được nhưng **không di chuyển theo player**~~ ✅ FIXED
+
+**Update mới nhất (2025-11-16 - Commit 1fcfc2ce):**
+- ✅ SetNpcOwner C++ function đã được implement
+- ✅ ProcessAIType08() AI mode đã được viết
+- ✅ **BUG FIX**: Fixed cart freezing when spawned at player position
+  - **Triệu chứng**: Tiêu xa spawn nhưng kẹt dính với player, không di chuyển được
+  - **Nguyên nhân**: AI gửi lệnh `do_stand` khi distance = 0, làm NPC đứng yên mãi mãi
+  - **Sửa**: Loại bỏ lệnh `do_stand`, để NPC idle tự nhiên khi ở rất gần player
+
+**YÊU CẦU**: Server phải được rebuild với code C++ mới để fix hoạt động!
 
 ## Files đã thay đổi (cần rebuild)
 
 ### C++ Code (Core.dll / GameServer.exe):
 1. `SwordOnline/Sources/Core/Src/ScriptFuns.cpp` - Added LuaSetNpcOwner()
-2. `SwordOnline/Sources/Core/Src/KNpcAI.cpp` - Added ProcessAIType08()
+2. `SwordOnline/Sources/Core/Src/KNpcAI.cpp` - Added ProcessAIType08() + **FIXED stuck bug**
 3. `SwordOnline/Sources/Core/Src/KNpcAI.h` - Added ProcessAIType08() declaration
+
+**Chi tiết fix mới nhất (KNpcAI.cpp:1784-1795):**
+- Threshold cũ: 2 tiles (4096 pixels²) → Mới: 1.5 tiles (2304 pixels²)
+- Loại bỏ lệnh `SendCommand(do_stand)` khi ở gần
+- Logic mới:
+  - Distance > 5 tiles (25600): Walk to player
+  - Distance 1.5-5 tiles (2304-25600): Keep following
+  - Distance < 1.5 tiles: Idle naturally (không force stand)
 
 ## Cách Build (Windows)
 
@@ -70,6 +86,12 @@ Chọn option "Reset tiêu xa (Test - Miễn phí)" phải spawn xe mới ở v�
 → Kiểm tra file GameServer.exe có timestamp mới không
 → Stop server hoàn toàn trước khi copy file
 → Restart tất cả server processes
+
+### Lỗi: Xe spawn được nhưng kẹt dính với player (FIXED trong commit 1fcfc2ce)
+**Triệu chứng**: Tiêu xa xuất hiện nhưng player không thể di chuyển, NPC dính chặt
+**Nguyên nhân**: ProcessAIType08() gửi lệnh do_stand khi distance = 0
+**Fix**: Rebuild với code mới nhất (sau commit 1fcfc2ce)
+**Test**: Sau khi rebuild, thử nhận tiêu xa và đi xa → xe phải tự follow
 
 ## Alternative: Build trên Linux với Wine
 
