@@ -64,7 +64,8 @@ end
 
 function AddNpcWithScript(nTemplateID, nLevel, nSubWorldIdx, nMpsX, nMpsY, szScript, bRemoveDeath, szName)
 	-- Enhanced AddNpc with script support
-	local nNpcIdx = AddNpc(nTemplateID, nLevel, nSubWorldIdx, nMpsX, nMpsY, bRemoveDeath or 1, szName or "")
+	-- AddNpc signature: (templateID, level, subworld, x, y, removeOnDeath, name, param8, param9)
+	local nNpcIdx = AddNpc(nTemplateID, nLevel, nSubWorldIdx, nMpsX, nMpsY, bRemoveDeath or 1, szName or "", 0, 0)
 	if nNpcIdx > 0 and szScript and szScript ~= "" then
 		SetNpcScript(nNpcIdx, szScript)
 	end
@@ -165,7 +166,7 @@ function batdau()
 		SUBWORLD_START,				-- SubWorld
 		POS_START_X * 32,			-- X
 		POS_START_Y * 32,			-- Y
-		"\\script\\Event\\VanTieu\\tieuxa.lua", -- Script
+		"\\script\\event\\VanTieu\\tieuxa.lua", -- Script
 		1,							-- Remove on death
 		""							-- Name (will be set below)
 	)
