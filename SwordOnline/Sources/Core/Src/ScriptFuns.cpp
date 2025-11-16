@@ -4881,11 +4881,11 @@ int LuaSetNpcOwner(Lua_State * L)
 
 	if (nPlayerIdx >= 0)
 	{
-		// Store owner player index in param[10]
-		Npc[nNpcIndex].m_nParam[10] = nPlayerIdx;
+		// Store owner player index in m_AiParam[8]
+		Npc[nNpcIndex].m_AiParam[8] = nPlayerIdx;
 
-		// Store follow mode in param[11] (1=follow, 0=don't follow)
-		Npc[nNpcIndex].m_nParam[11] = nFollowMode;
+		// Store follow mode in m_AiParam[9] (1=follow, 0=don't follow)
+		Npc[nNpcIndex].m_AiParam[9] = nFollowMode;
 
 		// Set m_nPeopleIdx to link NPC to player
 		Npc[nNpcIndex].m_nPeopleIdx = Player[nPlayerIdx].m_nIndex;
