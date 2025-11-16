@@ -82,4 +82,4 @@ NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
 332	11	103478	167610		L�c H�nT� ��  	1
 769	11	102688	159136	\script\mission\vuotai\npc_talk.lua	Nhi�p Th� Tr�n	1
 377	11	98432	164864	\script\event\VanTieu\tieudau.lua	Tiªu §Çu	1
-377	11	103200	166500	\script\event\VanTieu\tieusu.lua	Tiêu Sư	1
+377	11	98784	164672	\script\event\VanTieu\tieusu.lua	Tiêu Sư	1

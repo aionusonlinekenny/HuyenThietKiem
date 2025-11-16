@@ -105,10 +105,11 @@ function main(NpcIndex)
 		return
 	end
 
-	Say("Thành Đô tiêu cục của chúng ta luôn được sự tín nhiệm của giang hồ",4,
+	Say("Thành Đô tiêu cục của chúng ta luôn được sự tín nhiệm của giang hồ",5,
 	"Vận tiêu/vantieu",
 	"Đổi Hồ Tiêu Lệnh/cuahang",
 	"Tìm hiểu vận tiêu/timhieu",
+	"[TEST] Kiểm tra server build/testserverbuild",
 	"Ta chỉ ghé qua/no")
 end
 
@@ -138,10 +139,11 @@ function vantieu()
 end
 
 function batdau()
-	if(GetFightState() == 1) then
-		Talk(1,"","Trạng thái chiến đấu không thể nhận nhiệm vụ")
-		return
-	end
+	-- Tạm thời disable fight state check để test
+	-- if(GetFightState() ~= 0) then
+	-- 	Talk(1,"","Trạng thái chiến đấu không thể nhận nhiệm vụ")
+	-- 	return
+	-- end
 
 	if(GetLevel() < 120) then
 		Talk(1,"","Hãy cố gắng luyện tập đạt cấp 120 rồi đến gặp ta")
@@ -487,6 +489,45 @@ function phanthuong(nFinish)
 		AddItem(0, 2, 34, 0, 0, 5, 0, 0)
 		AddOwnExp(2 * KINH_NGHIEM_BASE)
 		Msg2SubWorld("Đại Hiệp <color=yellow>"..tbName.."<color> bị cướp tiêu không hoàn thành nhiệm vụ!")
+	end
+end
+
+function testserverbuild()
+	Talk(1, "", "=== TEST SERVER BUILD ===\n\n"..
+		"Checking if server has C++ SetNpcOwner implementation...\n\n"..
+		"If you see 'ERROR: SetNpcOwner workaround incomplete' after spawning cart, "..
+		"it means server needs rebuild.\n\n"..
+		"Check server console for detailed messages.")
+
+	-- Spawn a test cart to check SetNpcOwner
+	local nSubWorldIdx = SubWorldID2Idx(SUBWORLD_START)
+	local w, x, y = GetWorldPos()
+
+	Msg2Player("=== SPAWN TEST CART ===")
+	local nId = AddNpc(2085, 1, nSubWorldIdx, x, y, 1, "Test Cart", 0, 0)
+
+	if nId > 0 then
+		Msg2Player("Test cart spawned with Index="..nId)
+
+		-- Try to call SetNpcOwner
+		Msg2Player("Calling SetNpcOwner...")
+		local nName = GetName()
+		SetNpcOwner(nId, nName, 1)
+
+		Msg2Player("SetNpcOwner call finished")
+		Msg2Player("Check if cart follows you when you move!")
+		Msg2Player("If cart stands still = server NOT rebuilt yet")
+		Msg2Player("If cart follows = server rebuilt successfully!")
+
+		-- Also check SetNpcCamp to make it friendly
+		if SetNpcCamp ~= nil then
+			SetNpcCamp(nId, 0)
+		end
+		if SetNpcCurCamp ~= nil then
+			SetNpcCurCamp(nId, 0)
+		end
+	else
+		Msg2Player("ERROR: Failed to spawn test cart!")
 	end
 end
 
