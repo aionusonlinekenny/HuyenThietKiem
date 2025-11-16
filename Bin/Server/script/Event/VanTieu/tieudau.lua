@@ -262,7 +262,7 @@ function batdau()
 	local nName = GetName()
 
 	Msg2Player("=== DEBUG SetNpcOwner ===")
-	Msg2Player("Debug: Calling SetNpcOwner with NpcIdx="..nId..", Name="..nName)
+	Msg2Player("Debug: Player name = '"..nName.."'")
 
 	-- IMPORTANT: Set NPC life/HP so AI will activate
 	-- AI won't run if m_CurrentLifeMax = 0 (check in KNpcAI.cpp line 34)
@@ -272,42 +272,58 @@ function batdau()
 		Msg2Player("Debug: Set NPC life = 10000")
 	end
 
+	-- Get player index BEFORE calling SetNpcOwner
+	local nMyPlayerIdx = GetPlayerIndex()
+	if nMyPlayerIdx then
+		Msg2Player("Debug: My player index = "..tostring(nMyPlayerIdx))
+	else
+		Msg2Player("ERROR: GetPlayerIndex() returned nil!")
+	end
+
 	-- Check if C++ SetNpcOwner exists
 	if SetNpcOwner ~= nil then
 		Msg2Player("GOOD: C++ SetNpcOwner found - calling it...")
 		SetNpcOwner(nId, nName, 1)
 
-		-- CRITICAL: Also set AI mode via Lua API
-		-- SetNpcOwner sets m_AiMode in C++, but need to set via Lua API too
+		-- DEBUG: Check if C++ code set params
+		if GetNpcParam then
+			local nParam8 = GetNpcParam(nId, 8)
+			local nParam9 = GetNpcParam(nId, 9)
+			Msg2Player("Debug: After SetNpcOwner: m_AiParam[8] = "..tostring(nParam8))
+			Msg2Player("Debug: After SetNpcOwner: m_AiParam[9] = "..tostring(nParam9))
+
+			-- If C++ didn't set params (find player failed), set manually via Lua
+			if (nParam8 == nil or nParam8 == 0) and nMyPlayerIdx then
+				Msg2Player("WARNING: C++ SetNpcOwner didn't set params! (find player by name failed)")
+				Msg2Player("WORKAROUND: Setting params manually via SetNpcParam...")
+
+				if SetNpcParam then
+					SetNpcParam(nId, 8, nMyPlayerIdx)  -- Set owner player index
+					SetNpcParam(nId, 9, 1)              -- Set follow mode = 1
+					Msg2Player("✓ Set m_AiParam[8] = "..nMyPlayerIdx.." (player index)")
+					Msg2Player("✓ Set m_AiParam[9] = 1 (follow mode)")
+
+					-- Verify
+					local nNewParam8 = GetNpcParam(nId, 8)
+					local nNewParam9 = GetNpcParam(nId, 9)
+					Msg2Player("✓ Verified: m_AiParam[8] = "..tostring(nNewParam8))
+					Msg2Player("✓ Verified: m_AiParam[9] = "..tostring(nNewParam9))
+				end
+			else
+				Msg2Player("✓ GOOD: C++ SetNpcOwner set params correctly!")
+			end
+		end
+
+		-- CRITICAL: Set AI mode
 		if SetNpcAIMode then
 			SetNpcAIMode(nId, 8)  -- AI Mode 8 = Follow owner
 			Msg2Player("Debug: Called SetNpcAIMode(8)")
 		end
 
-		-- DEBUG: Verify that C++ code actually set the params
-		if GetNpcParam then
-			local nParam8 = GetNpcParam(nId, 8)  -- Should be player index
-			local nParam9 = GetNpcParam(nId, 9)  -- Should be 1 (follow mode)
-			Msg2Player("Debug: m_AiParam[8] = "..tostring(nParam8).." (player index)")
-			Msg2Player("Debug: m_AiParam[9] = "..tostring(nParam9).." (follow mode, should be 1)")
-
-			-- Also check player index for comparison
-			local nMyPlayerIdx = GetPlayerIndex()
-			if nMyPlayerIdx then
-				Msg2Player("Debug: My player index = "..tostring(nMyPlayerIdx))
-				if nParam8 == nMyPlayerIdx then
-					Msg2Player("✓ GOOD: m_AiParam[8] matches player index!")
-				else
-					Msg2Player("✗ ERROR: m_AiParam[8] doesn't match! Expected "..tostring(nMyPlayerIdx)..", got "..tostring(nParam8))
-				end
-			end
-		end
-
-		Msg2Player("SUCCESS: SetNpcOwner called! Cart should follow you now.")
+		Msg2Player("SUCCESS: SetNpcOwner setup complete! Cart should follow you now.")
 	else
 		Msg2Player("ERROR: C++ SetNpcOwner NOT FOUND!")
 		Msg2Player("ERROR: Server needs rebuild with C++ code!")
-		Msg2Player("ERROR: Cart will NOT follow until server rebuilt.")
 		-- Use backup (won't make cart follow, but won't crash)
 		SetNpcOwner_Backup(nId, nName, 1)
 	end
