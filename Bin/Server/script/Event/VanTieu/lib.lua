@@ -7,9 +7,9 @@ Include("\\script\\lib\\TaskLib.lua")
 
 -- NPC Template IDs cho tiêu xa
 TIEUXA_TEMPLET = {
-	{2085, " - Tiêu Xa [Đồng] "},
-	{2086, " - Tiêu Xa [Bạc] "},
-	{2087, " - Tiêu Xa [Vàng] "},
+	{2085, "Đồng Tiêu Xa"},
+	{2086, "Bạc Tiêu Xa"},
+	{2087, "Vàng Tiêu Xa"},
 }
 
 -- Tỷ lệ spawn các loại tiêu xa (hiện tại chưa dùng)

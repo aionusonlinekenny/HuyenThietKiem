@@ -276,10 +276,10 @@ function batdau()
 	if SetNpcOwner ~= nil then
 		Msg2Player("GOOD: C++ SetNpcOwner found - calling it...")
 
-		-- Pass player NAME to SetNpcOwner
-		-- C++ will find player by name and set params
-		SetNpcOwner(nId, nName, 1)
-		Msg2Player("✓ Called SetNpcOwner with player name = '"..nName.."'")
+		-- IMPORTANT: C++ now gets player index from Lua context automatically!
+		-- No need to pass player name - just NPC index and follow mode
+		SetNpcOwner(nId, 1)  -- Param 1: NPC index, Param 2: follow mode (1=enabled)
+		Msg2Player("✓ Called SetNpcOwner (auto-detect player from context)")
 
 		-- CRITICAL: Set AI mode
 		if SetNpcAIMode then
@@ -297,7 +297,9 @@ function batdau()
 
 	Msg2Player("=== END DEBUG ===")
 
-	SetNpcName(nId, nName .. TIEUXA_TEMPLET[nRand][2])
+	-- Set NPC name with format: "PlayerName - Tiêu Xa Type"
+	-- Example: "DienBaQuan - Vàng Tiêu Xa"
+	SetNpcName(nId, nName .. " - " .. TIEUXA_TEMPLET[nRand][2])
 	SetNpcTimeout(nId, CART_TIMEOUT)
 	SetNpcValue(nId, GetUUID())
 

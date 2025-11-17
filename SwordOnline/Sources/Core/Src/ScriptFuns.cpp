@@ -4852,33 +4852,24 @@ int LuaSetNpcSeries(Lua_State * L)
 // --
 int LuaSetNpcOwner(Lua_State * L)
 {
-	if (Lua_GetTopIndex(L) < 2)
+	if (Lua_GetTopIndex(L) < 1)
 		return 0;
 
 	int nNpcIndex = (int)Lua_ValueToNumber(L, 1);
 	if (nNpcIndex <= 0 || nNpcIndex >= MAX_NPC)
 		return 0;
 
-	const char* szPlayerName = Lua_ValueToString(L, 2);
-	if (!szPlayerName || szPlayerName[0] == 0)
+	// Get player index from Lua context (the player who called this script)
+	// This is more reliable than finding by name!
+	int nPlayerIdx = GetPlayerIndex(L);
+	if (nPlayerIdx < 0)
 		return 0;
 
 	int nFollowMode = 1; // Default: follow enabled
-	if (Lua_GetTopIndex(L) >= 3)
-		nFollowMode = (int)Lua_ValueToNumber(L, 3);
+	if (Lua_GetTopIndex(L) >= 2)
+		nFollowMode = (int)Lua_ValueToNumber(L, 2);
 
 #ifdef _SERVER
-	// Find player by name
-	int nPlayerIdx = -1;
-	for (int i = 0; i < MAX_PLAYER; i++)
-	{
-		if (Player[i].m_nIndex > 0 && strcmp(Player[i].m_PlayerName, szPlayerName) == 0)
-		{
-			nPlayerIdx = i;
-			break;
-		}
-	}
-
 	if (nPlayerIdx >= 0 && nPlayerIdx < MAX_PLAYER)
 	{
 		// Use m_AiParam[] - universal array available everywhere (not #ifdef dependent)
