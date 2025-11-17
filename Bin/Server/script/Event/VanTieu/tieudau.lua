@@ -180,7 +180,13 @@ function batdau()
 	-- Calculate spawn positions BEFORE teleporting player
 	-- Use fixed coordinates, don't rely on GetWorldPos() after NewWorld()
 	local nTemplateID = TIEUXA_TEMPLET[nRand][1]
+
+	-- CRITICAL: Check if we should use SubWorld ID or Index
+	-- Try both approaches to see which works
 	local nSubWorldIdx = SubWorldID2Idx(SUBWORLD_START)
+
+	Msg2Player("Debug: SUBWORLD_START (ID) = "..SUBWORLD_START)
+	Msg2Player("Debug: nSubWorldIdx (Index) = "..tostring(nSubWorldIdx))
 
 	-- Player will be at POS_START_X/Y after teleport
 	local nPlayerX = floor(POS_START_X * 32)  -- Convert map coords to pixels
@@ -192,6 +198,7 @@ function batdau()
 
 	Msg2Player("Debug: Will teleport player to X="..nPlayerX.." Y="..nPlayerY)
 	Msg2Player("Debug: Will spawn cart at X="..nCartX.." Y="..nCartY.." (offset +64)")
+	Msg2Player("Debug: Template ID = "..nTemplateID)
 
 	-- Pay player first
 	Pay(COST_START_QUEST)
@@ -234,20 +241,31 @@ function batdau()
 	Msg2Player("Debug: AddNpc returned nId="..tostring(nId))
 
 	if nId > 0 then
+		Msg2Player("✓ Step 1: AddNpc SUCCESS, nId="..nId)
+
+		-- CRASH ISOLATION: Test SetNpcScript
+		Msg2Player("Testing SetNpcScript...")
 		SetNpcScript(nId, "\\script\\event\\VanTieu\\tieuxa.lua")
+		Msg2Player("✓ Step 2: SetNpcScript SUCCESS")
 
 		-- Set NPC to friendly/neutral camp so it won't attack player
 		if SetNpcCamp ~= nil then
+			Msg2Player("Testing SetNpcCamp...")
 			SetNpcCamp(nId, 0)  -- Camp 0 = neutral
+			Msg2Player("✓ Step 3: SetNpcCamp SUCCESS")
 		end
 		if SetNpcCurCamp ~= nil then
+			Msg2Player("Testing SetNpcCurCamp...")
 			SetNpcCurCamp(nId, 0)
+			Msg2Player("✓ Step 4: SetNpcCurCamp SUCCESS")
 		end
 
 		-- Set NPC series to match player
 		local nPlayerSeries = GetSeries()
 		if nPlayerSeries and SetNpcSeries ~= nil then
+			Msg2Player("Testing SetNpcSeries...")
 			SetNpcSeries(nId, nPlayerSeries)
+			Msg2Player("✓ Step 5: SetNpcSeries SUCCESS")
 		end
 
 		Msg2Player("Debug: Set NPC Camp=0, Series="..tostring(nPlayerSeries))
@@ -267,9 +285,13 @@ function batdau()
 	-- IMPORTANT: Set NPC life/HP so AI will activate
 	-- AI won't run if m_CurrentLifeMax = 0 (check in KNpcAI.cpp line 34)
 	if SetNpcLifeMax then
+		Msg2Player("Testing SetNpcLifeMax...")
 		SetNpcLifeMax(nId, 10000)  -- 10k HP
+		Msg2Player("✓ Step 6: SetNpcLifeMax SUCCESS")
+
+		Msg2Player("Testing SetNpcLife...")
 		SetNpcLife(nId, 10000)
-		Msg2Player("Debug: Set NPC life = 10000")
+		Msg2Player("✓ Step 7: SetNpcLife SUCCESS")
 	end
 
 	-- Check if C++ SetNpcOwner exists
@@ -290,23 +312,49 @@ function batdau()
 
 	-- Set NPC name with format: "PlayerName - Tiêu Xa Type"
 	-- Example: "DienBaQuan - Vàng Tiêu Xa"
-	SetNpcName(nId, nName .. " - " .. TIEUXA_TEMPLET[nRand][2])
+	Msg2Player("Testing SetNpcName...")
+	local sCartName = nName .. " - " .. TIEUXA_TEMPLET[nRand][2]
+	Msg2Player("Cart name will be: '"..sCartName.."'")
+	SetNpcName(nId, sCartName)
+	Msg2Player("✓ Step 8: SetNpcName SUCCESS")
+
+	Msg2Player("Testing SetNpcTimeout...")
 	SetNpcTimeout(nId, CART_TIMEOUT)
-	SetNpcValue(nId, GetUUID())
+	Msg2Player("✓ Step 9: SetNpcTimeout SUCCESS")
+
+	Msg2Player("Testing GetUUID...")
+	local nUUID = GetUUID()
+	Msg2Player("UUID = "..tostring(nUUID))
+
+	Msg2Player("Testing SetNpcValue...")
+	SetNpcValue(nId, nUUID)
+	Msg2Player("✓ Step 10: SetNpcValue SUCCESS")
 
 	-- Store cart NPC ID in task
+	Msg2Player("Testing GetNpcIDFromIndex...")
 	local dwCartID = GetNpcIDFromIndex(nId)
+	Msg2Player("✓ Step 11: GetNpcIDFromIndex SUCCESS, dwCartID="..tostring(dwCartID))
+
+	Msg2Player("Testing SetTask...")
 	SetTask(TASK_NPCVANTIEU, dwCartID)
+	Msg2Player("✓ Step 12: SetTask SUCCESS")
 
 	-- Debug messages
 	Msg2Player("Debug: NPC Index="..nId.." ID="..dwCartID)
 	Msg2Player("Debug: TASK_NPCVANTIEU="..GetTask(TASK_NPCVANTIEU))
 
 	-- Update quest state
+	Msg2Player("Testing SetTask for quest state...")
 	SetTask(TASK_VANTIEU, SetByte(GetTask(TASK_VANTIEU), 1, n + 1))
+	Msg2Player("✓ Step 13: SetTask TASK_VANTIEU byte 1 SUCCESS")
+
 	SetTask(TASK_VANTIEU, SetByte(GetTask(TASK_VANTIEU), 2, random(1, 3)))
+	Msg2Player("✓ Step 14: SetTask TASK_VANTIEU byte 2 SUCCESS")
 
 	-- Notify player
+	Msg2Player("===========================================")
+	Msg2Player("✓✓✓ ALL STEPS COMPLETED - NO CRASH! ✓✓✓")
+	Msg2Player("===========================================")
 	Msg2Player("Hãy mau hộ tống tiêu xa đến Long Môn tiêu sư ở Thanh Thành Sơn ("..POS_END_X.."/"..POS_END_Y..")")
 	Msg2Player("Debug: Quest started! Cart should follow you when you move.")
 end
