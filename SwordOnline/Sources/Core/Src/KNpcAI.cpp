@@ -1784,12 +1784,17 @@ void	KNpcAI::ProcessAIType08()
 	if (nDistanceSquare > 25600)  // 160*160 = 25600 (> 5 tiles)
 	{
 		// Far away - walk towards player
-		Npc[m_nIndex].SendCommand(do_walk, Npc[nPlayerNpcIdx].m_MapX, Npc[nPlayerNpcIdx].m_MapY);
+		// IMPORTANT: Use GetMpsPos() to get world coordinates, NOT MapX/MapY!
+		int nPlayerX, nPlayerY;
+		Npc[nPlayerNpcIdx].GetMpsPos(&nPlayerX, &nPlayerY);
+		Npc[m_nIndex].SendCommand(do_walk, nPlayerX, nPlayerY);
 	}
 	else if (nDistanceSquare > 2304)  // 48*48 = 2304 (> 1.5 tiles)
 	{
 		// Medium distance - keep following
-		Npc[m_nIndex].SendCommand(do_walk, Npc[nPlayerNpcIdx].m_MapX, Npc[nPlayerNpcIdx].m_MapY);
+		int nPlayerX, nPlayerY;
+		Npc[nPlayerNpcIdx].GetMpsPos(&nPlayerX, &nPlayerY);
+		Npc[m_nIndex].SendCommand(do_walk, nPlayerX, nPlayerY);
 	}
 	// else: very close (< 1.5 tiles) - do nothing, let NPC idle naturally
 }
