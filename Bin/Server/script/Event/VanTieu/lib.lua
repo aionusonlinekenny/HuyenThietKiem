@@ -6,10 +6,15 @@
 Include("\\script\\lib\\TaskLib.lua")
 
 -- NPC Template IDs cho tiêu xa
+-- CRITICAL FIX: Original IDs 2085/2086/2087 have NO NpcResType (3D model) -> CRASH!
+-- Using working NPC IDs with valid models instead:
+-- NPC 2159 = "Tiêu Xa bị phá hoại" (has passerby379 model)
+-- NPC 1185 = Building model (for robbed cart)
+-- For now, use same model for all 3 types (can differentiate by name)
 TIEUXA_TEMPLET = {
-	{2085, "Đồng Tiêu Xa"},
-	{2086, "Bạc Tiêu Xa"},
-	{2087, "Vàng Tiêu Xa"},
+	{2159, "Đồng Tiêu Xa"},  -- Changed from 2085
+	{2159, "Bạc Tiêu Xa"},   -- Changed from 2086
+	{2159, "Vàng Tiêu Xa"},  -- Changed from 2087
 }
 
 -- Tỷ lệ spawn các loại tiêu xa (hiện tại chưa dùng)
@@ -29,9 +34,10 @@ ITEM_DICHCHUYEN = 73		-- Dịch chuyển
 ITEM_RUONG_VANTIEU = 74		-- Rương Vận Tiêu (reward)
 
 -- NPC Template IDs
-NPC_DONG_TIEUXA = 2085		-- Đồng Tiêu Xa
-NPC_BAC_TIEUXA = 2086		-- Bạc Tiêu Xa
-NPC_VANG_TIEUXA = 2087		-- Vàng Tiêu Xa
+-- FIXED: Using NPC 2159 which has valid model (passerby379)
+NPC_DONG_TIEUXA = 2159		-- Đồng Tiêu Xa (using working model)
+NPC_BAC_TIEUXA = 2159		-- Bạc Tiêu Xa (using working model)
+NPC_VANG_TIEUXA = 2159		-- Vàng Tiêu Xa (using working model)
 NPC_HONG_TIEUXA = 1185		-- Tiêu Xa Hồng (robbed)
 NPC_RUONG_CUOP = 844		-- Rương cướp
 
