@@ -6,13 +6,12 @@
 Include("\\script\\lib\\TaskLib.lua")
 
 -- NPC Template IDs cho tiêu xa
--- OPTION 1: Use building models (objects) - may look better than passerby
--- Building NPCs 1153-1186 have building1-30 models
--- Test different building IDs to find one that looks like a cart
+-- CONFIRMED WORKING: NPCs 2085/2086/2087 work correctly!
+-- These spawn properly and follow player with AI Mode 8
 TIEUXA_TEMPLET = {
-	{1153, "Đồng Tiêu Xa"},  -- building1 - test this
-	{1154, "Bạc Tiêu Xa"},   -- building2 - test this
-	{1155, "Vàng Tiêu Xa"},  -- building3 - test this
+	{2085, "Đồng Tiêu Xa"},
+	{2086, "Bạc Tiêu Xa"},
+	{2087, "Vàng Tiêu Xa"},
 }
 
 -- Tỷ lệ spawn các loại tiêu xa (hiện tại chưa dùng)
@@ -32,11 +31,11 @@ ITEM_DICHCHUYEN = 73		-- Dịch chuyển
 ITEM_RUONG_VANTIEU = 74		-- Rương Vận Tiêu (reward)
 
 -- NPC Template IDs
--- Testing building models (may look more like objects/carts)
-NPC_DONG_TIEUXA = 1153		-- Đồng Tiêu Xa (building1)
-NPC_BAC_TIEUXA = 1154		-- Bạc Tiêu Xa (building2)
-NPC_VANG_TIEUXA = 1155		-- Vàng Tiêu Xa (building3)
-NPC_HONG_TIEUXA = 1185		-- Tiêu Xa Hồng (building29)
+-- CONFIRMED WORKING: Original IDs work perfectly
+NPC_DONG_TIEUXA = 2085		-- Đồng Tiêu Xa
+NPC_BAC_TIEUXA = 2086		-- Bạc Tiêu Xa
+NPC_VANG_TIEUXA = 2087		-- Vàng Tiêu Xa
+NPC_HONG_TIEUXA = 1185		-- Tiêu Xa Hồng (robbed)
 NPC_RUONG_CUOP = 844		-- Rương cướp
 
 -- SubWorld IDs (HuyenThiet server)
