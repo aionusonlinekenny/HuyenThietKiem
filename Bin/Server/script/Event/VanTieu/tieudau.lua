@@ -294,16 +294,11 @@ function batdau()
 		Msg2Player("✓ Step 7: SetNpcLife SUCCESS")
 	end
 
-	-- Check if C++ SetNpcOwner exists
+	-- Setup NPC owner and follow behavior
 	if SetNpcOwner ~= nil then
-		Msg2Player("GOOD: C++ SetNpcOwner found")
-		Msg2Player("⚠ WARNING: SetNpcOwner DISABLED for debugging crash!")
-
-		-- TEMPORARILY DISABLED to debug crash
-		-- SetNpcOwner(nId, 1)
-
-		Msg2Player("✓ SetNpcOwner call SKIPPED - testing if NPC spawns without crash")
-		Msg2Player("If no crash now, then SetNpcOwner C++ code has bug!")
+		Msg2Player("Setting up NPC owner and follow mode...")
+		SetNpcOwner(nId, 1)  -- 1 = enable follow
+		Msg2Player("✓ SetNpcOwner SUCCESS - NPC should now follow you!")
 	else
 		Msg2Player("ERROR: C++ SetNpcOwner NOT FOUND!")
 	end
