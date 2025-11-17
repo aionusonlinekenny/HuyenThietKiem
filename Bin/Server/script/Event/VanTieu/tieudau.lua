@@ -283,35 +283,16 @@ function batdau()
 	-- Check if C++ SetNpcOwner exists
 	if SetNpcOwner ~= nil then
 		Msg2Player("GOOD: C++ SetNpcOwner found - calling it...")
-		SetNpcOwner(nId, nName, 1)
 
-		-- DEBUG: Check if C++ code set params
-		if GetNpcParam then
-			local nParam8 = GetNpcParam(nId, 8)
-			local nParam9 = GetNpcParam(nId, 9)
-			Msg2Player("Debug: After SetNpcOwner: m_AiParam[8] = "..tostring(nParam8))
-			Msg2Player("Debug: After SetNpcOwner: m_AiParam[9] = "..tostring(nParam9))
-
-			-- If C++ didn't set params (find player failed), set manually via Lua
-			if (nParam8 == nil or nParam8 == 0) and nMyPlayerIdx then
-				Msg2Player("WARNING: C++ SetNpcOwner didn't set params! (find player by name failed)")
-				Msg2Player("WORKAROUND: Setting params manually via SetNpcParam...")
-
-				if SetNpcParam then
-					SetNpcParam(nId, 8, nMyPlayerIdx)  -- Set owner player index
-					SetNpcParam(nId, 9, 1)              -- Set follow mode = 1
-					Msg2Player("✓ Set m_AiParam[8] = "..nMyPlayerIdx.." (player index)")
-					Msg2Player("✓ Set m_AiParam[9] = 1 (follow mode)")
-
-					-- Verify
-					local nNewParam8 = GetNpcParam(nId, 8)
-					local nNewParam9 = GetNpcParam(nId, 9)
-					Msg2Player("✓ Verified: m_AiParam[8] = "..tostring(nNewParam8))
-					Msg2Player("✓ Verified: m_AiParam[9] = "..tostring(nNewParam9))
-				end
-			else
-				Msg2Player("✓ GOOD: C++ SetNpcOwner set params correctly!")
-			end
+		-- CRITICAL FIX: Pass PLAYER INDEX (number) instead of player name (string)!
+		-- This bypasses the "find player by name" issue in C++
+		if nMyPlayerIdx then
+			SetNpcOwner(nId, nMyPlayerIdx, 1)
+			Msg2Player("✓ Called SetNpcOwner with player index = "..nMyPlayerIdx)
+		else
+			-- Fallback: try with player name
+			SetNpcOwner(nId, nName, 1)
+			Msg2Player("⚠ Called SetNpcOwner with player name (fallback)")
 		end
 
 		-- CRITICAL: Set AI mode

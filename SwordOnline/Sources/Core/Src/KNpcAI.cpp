@@ -1751,12 +1751,11 @@ void	KNpcAI::ProcessAIType07()
 //------------------------------------------------------------------------------
 void	KNpcAI::ProcessAIType08()
 {
-	// Check if NPC has an owner (stored in m_nParam[7] and m_nParam[8])
-	// m_nParam[7] = owner player index (param 8 in Lua, 0-indexed in C++)
-	// m_nParam[8] = follow mode (param 9 in Lua, 1=follow, 0=disabled)
-	// NOTE: m_nParam is 0-indexed! SetNpcParam(nId, 8, value) -> m_nParam[7]
-	int nOwnerPlayerIdx = Npc[m_nIndex].m_nParam[7];
-	int nFollowMode = Npc[m_nIndex].m_nParam[8];
+	// Check if NPC has an owner (stored in m_AiParam[8] and m_AiParam[9])
+	// m_AiParam[8] = owner player index
+	// m_AiParam[9] = follow mode (1=follow, 0=disabled)
+	int nOwnerPlayerIdx = Npc[m_nIndex].m_AiParam[8];
+	int nFollowMode = Npc[m_nIndex].m_AiParam[9];
 
 	// If no owner or follow disabled, just stand still
 	if (nOwnerPlayerIdx < 0 || nOwnerPlayerIdx >= MAX_PLAYER || nFollowMode == 0)

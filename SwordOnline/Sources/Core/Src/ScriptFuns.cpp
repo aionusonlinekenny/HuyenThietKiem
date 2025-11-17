@@ -4879,16 +4879,11 @@ int LuaSetNpcOwner(Lua_State * L)
 		}
 	}
 
-	if (nPlayerIdx >= 0)
+	if (nPlayerIdx >= 0 && nPlayerIdx < MAX_PLAYER)
 	{
-		// IMPORTANT: Store in m_nParam[] (NOT m_AiParam[])
-		// m_nParam[] is what SetNpcParam/GetNpcParam use
-		// ProcessAIType08() will read from m_nParam[7] and m_nParam[8]
-		// (m_nParam is 0-indexed, so index 7 = param 8, index 8 = param 9)
-		Npc[nNpcIndex].m_nParam[7] = nPlayerIdx;     // Store owner player index
-		Npc[nNpcIndex].m_nParam[8] = nFollowMode;    // Store follow mode
-
-		// Also set m_AiParam for compatibility (if needed by other systems)
+		// Use m_AiParam[] - universal array available everywhere (not #ifdef dependent)
+		// m_AiParam[8] = owner player index
+		// m_AiParam[9] = follow mode (1=follow, 0=disabled)
 		Npc[nNpcIndex].m_AiParam[8] = nPlayerIdx;
 		Npc[nNpcIndex].m_AiParam[9] = nFollowMode;
 
