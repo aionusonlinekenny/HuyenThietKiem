@@ -274,25 +274,16 @@ function batdau()
 
 	-- Check if C++ SetNpcOwner exists
 	if SetNpcOwner ~= nil then
-		Msg2Player("GOOD: C++ SetNpcOwner found - calling it...")
+		Msg2Player("GOOD: C++ SetNpcOwner found")
+		Msg2Player("⚠ WARNING: SetNpcOwner DISABLED for debugging crash!")
 
-		-- IMPORTANT: C++ now gets player index from Lua context automatically!
-		-- No need to pass player name - just NPC index and follow mode
-		SetNpcOwner(nId, 1)  -- Param 1: NPC index, Param 2: follow mode (1=enabled)
-		Msg2Player("✓ Called SetNpcOwner (auto-detect player from context)")
+		-- TEMPORARILY DISABLED to debug crash
+		-- SetNpcOwner(nId, 1)
 
-		-- CRITICAL: Set AI mode
-		if SetNpcAIMode then
-			SetNpcAIMode(nId, 8)  -- AI Mode 8 = Follow owner
-			Msg2Player("Debug: Called SetNpcAIMode(8)")
-		end
-
-		Msg2Player("SUCCESS: SetNpcOwner setup complete! Cart should follow you now.")
+		Msg2Player("✓ SetNpcOwner call SKIPPED - testing if NPC spawns without crash")
+		Msg2Player("If no crash now, then SetNpcOwner C++ code has bug!")
 	else
 		Msg2Player("ERROR: C++ SetNpcOwner NOT FOUND!")
-		Msg2Player("ERROR: Server needs rebuild with C++ code!")
-		-- Use backup (won't make cart follow, but won't crash)
-		SetNpcOwner_Backup(nId, nName, 1)
 	end
 
 	Msg2Player("=== END DEBUG ===")
