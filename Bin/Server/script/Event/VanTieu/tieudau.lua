@@ -272,28 +272,14 @@ function batdau()
 		Msg2Player("Debug: Set NPC life = 10000")
 	end
 
-	-- Get player index BEFORE calling SetNpcOwner
-	local nMyPlayerIdx = GetPlayerIndex()
-	if nMyPlayerIdx then
-		Msg2Player("Debug: My player index = "..tostring(nMyPlayerIdx))
-	else
-		Msg2Player("ERROR: GetPlayerIndex() returned nil!")
-	end
-
 	-- Check if C++ SetNpcOwner exists
 	if SetNpcOwner ~= nil then
 		Msg2Player("GOOD: C++ SetNpcOwner found - calling it...")
 
-		-- CRITICAL FIX: Pass PLAYER INDEX (number) instead of player name (string)!
-		-- This bypasses the "find player by name" issue in C++
-		if nMyPlayerIdx then
-			SetNpcOwner(nId, nMyPlayerIdx, 1)
-			Msg2Player("✓ Called SetNpcOwner with player index = "..nMyPlayerIdx)
-		else
-			-- Fallback: try with player name
-			SetNpcOwner(nId, nName, 1)
-			Msg2Player("⚠ Called SetNpcOwner with player name (fallback)")
-		end
+		-- Pass player NAME to SetNpcOwner
+		-- C++ will find player by name and set params
+		SetNpcOwner(nId, nName, 1)
+		Msg2Player("✓ Called SetNpcOwner with player name = '"..nName.."'")
 
 		-- CRITICAL: Set AI mode
 		if SetNpcAIMode then
