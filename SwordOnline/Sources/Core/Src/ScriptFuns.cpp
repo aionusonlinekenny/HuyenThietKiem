@@ -4869,28 +4869,38 @@ int LuaSetNpcOwner(Lua_State * L)
 	if (Lua_GetTopIndex(L) >= 2)
 		nFollowMode = (int)Lua_ValueToNumber(L, 2);
 
+	// Validate player index
+	if (nPlayerIdx < 0 || nPlayerIdx >= MAX_PLAYER)
+		return 0;
+
+	// Check if player is valid and online
+	if (Player[nPlayerIdx].m_nIndex <= 0)
+		return 0;
+
+	// Check if NPC index is valid
+	if (Npc[nNpcIndex].m_Index <= 0)
+		return 0;
+
+	// All validations passed - safe to set params
+	// Use m_AiParam[] - universal array available everywhere (not #ifdef dependent)
+	// m_AiParam[8] = owner player index
+	// m_AiParam[9] = follow mode (1=follow, 0=disabled)
+	Npc[nNpcIndex].m_AiParam[8] = nPlayerIdx;
+	Npc[nNpcIndex].m_AiParam[9] = nFollowMode;
+
 #ifdef _SERVER
-	if (nPlayerIdx >= 0 && nPlayerIdx < MAX_PLAYER)
-	{
-		// Use m_AiParam[] - universal array available everywhere (not #ifdef dependent)
-		// m_AiParam[8] = owner player index
-		// m_AiParam[9] = follow mode (1=follow, 0=disabled)
-		Npc[nNpcIndex].m_AiParam[8] = nPlayerIdx;
-		Npc[nNpcIndex].m_AiParam[9] = nFollowMode;
-
-		// Set m_nPeopleIdx to link NPC to player
-		Npc[nNpcIndex].m_nPeopleIdx = Player[nPlayerIdx].m_nIndex;
-
-		// Set AI mode to 8 (Follow owner)
-		if (nFollowMode == 1)
-		{
-			Npc[nNpcIndex].m_AiMode = 8;
-		}
-
-		// Make NPC peaceful/neutral
-		Npc[nNpcIndex].m_Kind = 0; // Kind 0 = neutral
-	}
+	// Set m_nPeopleIdx to link NPC to player (only in server)
+	Npc[nNpcIndex].m_nPeopleIdx = Player[nPlayerIdx].m_nIndex;
 #endif
+
+	// Set AI mode to 8 (Follow owner)
+	if (nFollowMode == 1)
+	{
+		Npc[nNpcIndex].m_AiMode = 8;
+	}
+
+	// Make NPC peaceful/neutral
+	Npc[nNpcIndex].m_Kind = 0; // Kind 0 = neutral
 
 	return 0;
 }
