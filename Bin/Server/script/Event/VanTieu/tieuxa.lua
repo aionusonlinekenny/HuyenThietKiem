@@ -1,5 +1,6 @@
--- Tiêu Xa - Escort Cart NPC Script
+-- Ti�u Xa - Escort Cart NPC Script
 -- Ported from ThienDieuOnline to HuyenThietKiem
+-- Follow mechanism implemented in C++ (AI Mode 8)
 
 Include("\\script\\lib\\TaskLib.lua")
 Include("\\script\\Event\\VanTieu\\lib.lua")
@@ -11,13 +12,13 @@ function LastDamage(NpcIndex)
 
 	-- Spawn treasure chest
 	local nChestId = AddNpc(
-		NPC_RUONG_CUOP,		-- Rương cướp
+		NPC_RUONG_CUOP,		-- Ruong cu?p
 		1,					-- Level
 		w,					-- SubWorld
 		x * 32 - 64,		-- X
 		y * 32,				-- Y
 		1,					-- Remove on death
-		"Tàn lộc tiêu vật"	-- Name
+		"T�n l?c ti�u v?t"	-- Name
 	)
 
 	if nChestId > 0 then
@@ -27,7 +28,7 @@ function LastDamage(NpcIndex)
 
 	-- Spawn robbed cart (red cart)
 	local nRobbedId = AddNpc(
-		NPC_HONG_TIEUXA,	-- Tiêu Xa Hồng
+		NPC_HONG_TIEUXA,	-- Ti�u Xa H?ng
 		1,					-- Level
 		w,					-- SubWorld
 		x * 32,				-- X
@@ -56,7 +57,8 @@ function Timeout(nIndex)
 end
 
 function Revive(NpcIndex)
-	-- Cart initialization (if needed)
+	-- Cart initialization
+	-- Follow mechanism handled by C++ AI Mode 8
 end
 
 function DeathSelf(NpcIndex)

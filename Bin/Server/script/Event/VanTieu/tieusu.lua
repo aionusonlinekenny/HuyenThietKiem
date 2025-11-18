@@ -1,17 +1,25 @@
--- TiÃªu SÆ° - Váº­n TiÃªu Quest Receiver NPC
+-- Tiªu S­ - VËn Tiªu Quest Receiver NPC
 -- Ported from ThienDieuOnline to HuyenThietKiem
 
-Include("\\script\\lib\\TaskLib.lua")
-Include("\\script\\Event\\VanTieu\\lib.lua")
+Include("\\script\\lib\\TaskLib.lua");
+Include("\\script\\event\\VanTieu\\lib.lua");
 
-function main(nIndex)
-	Say("Ta lÃ  ngÆ°á»i cá»§a Long MÃ´n tiÃªu cá»¥c. Ta tiáº¿p nháº­n trung chuyá»ƒn nhá»¯ng chuyáº¿n tiÃªu á»Ÿ nÆ¡i nÃ y! NgÆ°Æ¡i cÃ³ viá»‡c gÃ¬?",2,
-	"Giao tiÃªu/giaotieu",
-	"Há»i thÄƒm thÃ´i/no")
+-- Workaround functions for compatibility
+function FindNearNpc(dwNpcID)
+	-- Workaround: Use FindAroundNpc since FindNearNpc may not exist
+	return FindAroundNpc(dwNpcID)
+end
+
+function main(NpcIndex)
+	dofile("script/event/VanTieu/tieusu.lua")
+
+	Say("Ta lµ ng­êi cña Long M«n tiªu côc. Ta tiÕp nhËn trung chuyÓn nh÷ng chuyÕn tiªu ë n¬i nµy! Ng­êi cÇn viÖc göi?",2,
+	"Giao tiªu/giaotieu",
+	"Hái th¨m th«i/no")
 end
 
 function giaotieu()
-	SubWorld = SubWorldID2Idx(SUBWORLD_START)
+	local SubWorld = SubWorldID2Idx(SUBWORLD_START)
 	if (SubWorld < 0) then
 		return
 	end
@@ -20,30 +28,24 @@ function giaotieu()
 	local nTask = GetByte(nTaskValue, 1)
 
 	if(nTask == 0) then
-		Talk(1,"","Há»­! NgÆ°Æ¡i Ä‘Ã¢u pháº£i lÃ  ngÆ°á»i do Long MÃ´n tiÃªu cá»¥c phÃ¡i tá»›i!")
+		Talk(1,"","Hõ! Ng­¬i ®©u ph¶i lµ ng­êi do Long M«n tiªu côc ph¸i tíi!")
 	elseif(nTask < TASK_STATE_DONG) then
 		local dwCartID = GetTask(TASK_NPCVANTIEU)
 		local nNpcIdx = FindAroundNpc(dwCartID)
+		if nNpcIdx == 1 then
+			nNpcIdx = FindNearNpc(dwCartID)
+		end
 
 		if(nNpcIdx > 0) then
-			-- Check if any monsters killed (bonus condition)
-			local nKilled = GetByte(nTaskValue, 2)
-
-			if (nKilled > 0) then
-				Talk(1,"","TrÃªn Ä‘Æ°á»ng ngÆ°Æ¡i khÃ´ng há» gáº·p chuyá»‡n gÃ¬ báº¥t tráº¯c sao?")
-				return
-			end
-
-			-- Success! Delete cart and mark quest as complete
 			DelNpc(nNpcIdx)
 			SetTask(TASK_VANTIEU, SetByte(nTaskValue, 1, nTask + 3))
-
-			Talk(1,"","Tá»‘t láº¯m! HÃ£y vá» gáº·p Ã´ng chá»§ Ä‘á»ƒ nháº­n lao phÃ¹ Ä‘i báº¡n tráº»!")
+			Talk(1,"","Tèt l¾m! H·y vÒ gÆp «ng chñ ®Ó nhËn lao phİ ®i b¹n trÎ!")
 		else
-			Talk(1,"","TiÃªu xa cá»§a ngÆ°Æ¡i Ä‘Ã¢u? Ta khÃ´ng nhÃ¬n tháº¥y!")
+
+			Talk(1,"","Tiªu xa cña ng­­¬i ®©u? Ta kh«ng nh×n thÊy!")
 		end
 	else	-- Already completed
-		Talk(1,"","HÃ£y vá» gáº·p Ã´ng chá»§ Ä‘á»ƒ nháº­n lao phÃ¹ Ä‘i báº¡n tráº»!")
+		Talk(1,"","H·y vÒ gÆp «ng chñ ®Ó nhËn lao phİ ®i b¹n trÎ!")
 	end
 end
 

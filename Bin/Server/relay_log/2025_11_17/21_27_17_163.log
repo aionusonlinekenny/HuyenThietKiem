@@ -1,0 +1,36 @@
+
+*
+***** S3Relay Start (@ 2025/11/17 21:27:17.163) >>>>>
+*
+
+[2025/11/17 21:27:17] 1-- Initializing ...
+[2025/11/17 21:27:17] 2-- Create Channel: [Stock, GM] <00000000> GM
+[2025/11/17 21:27:17] 3-- Create Channel: [Stock] <00000001> WORLD
+[2025/11/17 21:27:17] 4-- friend timing update db: start
+[2025/11/17 21:27:17] 5-- relay server startup
+[2025/11/17 21:27:17] 6-- root client create: 192.168.254.53
+[2025/11/17 21:27:17] 7-- DBRole client create: 192.168.254.53
+[2025/11/17 21:27:17] 8-- root client close: 192.168.254.53
+[2025/11/17 21:27:17] 9-- gateway client create: 192.168.254.53
+[2025/11/17 21:27:17] 10-- host server startup
+[2025/11/17 21:27:17] 11-- tong server startup
+[2025/11/17 21:27:17] 12-- chat server startup
+[2025/11/17 21:27:17] 13-- SockThread start success
+[2025/11/17 21:27:17] 14-- tong database open ok!
+[2025/11/17 21:27:17] 15-- tongset init ok !
+[2025/11/17 21:27:17] 16-- Initialize OK
+[2025/11/17 21:27:26] 17-- host connect create: 192.168.254.5
+[2025/11/17 21:27:26] 18-- chat connect create: 192.168.254.5
+[2025/11/17 21:27:26] 19-- tong connect create: 192.168.254.5
+[2025/11/17 21:27:29] 20-- host connect create: 192.168.254.53
+[2025/11/17 21:27:29] 21-- chat connect create: 192.168.254.53
+[2025/11/17 21:27:29] 22-- tong connect create: 192.168.254.53
+[2025/11/17 21:27:29] 23-- host connect create: 192.168.254.2
+[2025/11/17 21:27:29] 24-- chat connect create: 192.168.254.2
+[2025/11/17 21:27:29] 25-- tong connect create: 192.168.254.2
+[2025/11/17 21:27:29] 26-- host connect create: 192.168.254.3
+[2025/11/17 21:27:29] 27-- chat connect create: 192.168.254.3
+[2025/11/17 21:27:29] 28-- tong connect create: 192.168.254.3
+[2025/11/17 21:27:32] 29-- host connect create: 192.168.254.4
+[2025/11/17 21:27:32] 30-- chat connect create: 192.168.254.4
+[2025/11/17 21:27:32] 31-- tong connect create: 192.168.254.4

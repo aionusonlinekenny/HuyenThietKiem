@@ -1,0 +1,55 @@
+
+*
+***** S3Relay Start (@ 2025/11/17 21:37:22.914) >>>>>
+*
+
+[2025/11/17 21:37:23] 1-- Initializing ...
+[2025/11/17 21:37:23] 2-- Create Channel: [Stock, GM] <00000000> GM
+[2025/11/17 21:37:23] 3-- Create Channel: [Stock] <00000001> WORLD
+[2025/11/17 21:37:23] 4-- friend timing update db: start
+[2025/11/17 21:37:23] 5-- relay server startup
+[2025/11/17 21:37:23] 6-- root client create: 192.168.254.53
+[2025/11/17 21:37:23] 7-- DBRole client create: 192.168.254.53
+[2025/11/17 21:37:23] 8-- root client close: 192.168.254.53
+[2025/11/17 21:37:23] 9-- gateway client create: 192.168.254.53
+[2025/11/17 21:37:23] 10-- host server startup
+[2025/11/17 21:37:23] 11-- tong server startup
+[2025/11/17 21:37:23] 12-- chat server startup
+[2025/11/17 21:37:23] 13-- SockThread start success
+[2025/11/17 21:37:23] 14-- tong database open ok!
+[2025/11/17 21:37:23] 15-- tongset init ok !
+[2025/11/17 21:37:23] 16-- Initialize OK
+[2025/11/17 21:37:31] 17-- host connect create: 192.168.254.5
+[2025/11/17 21:37:31] 18-- chat connect create: 192.168.254.5
+[2025/11/17 21:37:31] 19-- tong connect create: 192.168.254.5
+[2025/11/17 21:37:34] 20-- host connect create: 192.168.254.53
+[2025/11/17 21:37:34] 21-- chat connect create: 192.168.254.53
+[2025/11/17 21:37:34] 22-- tong connect create: 192.168.254.53
+[2025/11/17 21:37:34] 23-- host connect create: 192.168.254.2
+[2025/11/17 21:37:34] 24-- chat connect create: 192.168.254.2
+[2025/11/17 21:37:34] 25-- tong connect create: 192.168.254.2
+[2025/11/17 21:37:34] 26-- host connect create: 192.168.254.3
+[2025/11/17 21:37:34] 27-- chat connect create: 192.168.254.3
+[2025/11/17 21:37:34] 28-- tong connect create: 192.168.254.3
+[2025/11/17 21:37:37] 29-- host connect create: 192.168.254.4
+[2025/11/17 21:37:37] 30-- chat connect create: 192.168.254.4
+[2025/11/17 21:37:37] 31-- tong connect create: 192.168.254.4
+[2025/11/17 21:37:40] 32-- load someone: DienBaQuan
+[2025/11/17 21:37:40] 33-- player login: 123456 [DienBaQuan] (02FEA8C0, 00000000)
+[2025/11/17 21:37:40] 34-- Query ChannelID: \S from (02FEA8C0, 00000000)
+[2025/11/17 21:37:40] 35-- Create Channel: <00000002> \S50243776
+[2025/11/17 21:37:40] 36-- Query ChannelID: WORLD from (02FEA8C0, 00000000)
+[2025/11/17 21:37:40] 37-- Query ChannelID: \F2 from (02FEA8C0, 00000000)
+[2025/11/17 21:37:40] 38-- Create Channel: <00000003> \F2
+[2025/11/17 21:37:40] 39-- Query ChannelID: GM from (02FEA8C0, 00000000)
+[2025/11/17 21:37:40] 40-- Query ChannelID: \B from (02FEA8C0, 00000000)
+[2025/11/17 21:37:40] 41-- Create Channel: <00000004> \B50243776
+[2025/11/17 21:37:40] 42-- sync friend list: DienBaQuan (full)
+[2025/11/17 21:37:40] 43-- Subscribe Channel: 00000002 by (02FEA8C0,00000000)
+[2025/11/17 21:37:40] 44-- Subscribe Channel: 00000001 by (02FEA8C0,00000000)
+[2025/11/17 21:37:40] 45-- Subscribe Channel: 00000003 by (02FEA8C0,00000000)
+[2025/11/17 21:37:40] 46-- Subscribe Channel: GM <00000000> by (02FEA8C0,00000000)
+[2025/11/17 21:37:40] 47-- Subscribe Channel: 00000004 by (02FEA8C0,00000000)
+[2025/11/17 21:42:26] 48-- update friend DB succeed
+[2025/11/17 21:47:26] 49-- update friend DB succeed
+[2025/11/17 21:52:26] 50-- update friend DB succeed

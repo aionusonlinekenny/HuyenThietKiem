@@ -227,9 +227,9 @@ void TongClientEventNotify(
 {
 	switch( ulnEventType )
 	{
-	case enumServerConnectCreate:	// Á¬½Ó½¨Á¢Ê±ºòµÄ´¦Àí
+	case enumServerConnectCreate:	// ??????????J???
 		break;
-	case enumServerConnectClose:	// Á¬½Ó¶Î¿ªÊ±ºòµÄ´¦Àí
+	case enumServerConnectClose:	// ?????????J???
 		printf("Tong disconnect\n");
 		break;
 	}
@@ -830,7 +830,7 @@ BOOL KSwordOnLineSever::Breathe()
 #endif
 
 #ifdef _STANDALONE
-			if (m_nGameLoop % (GAME_FPS * 60) == 0)	//Ò»·ÖÖÓÒ»´Î
+			if (m_nGameLoop % (GAME_FPS * 60) == 0)	//h????h??
 			{
 extern ZPerf g_sendPerf;
 extern ZPerf g_recvPerf;
@@ -1051,7 +1051,7 @@ void KSwordOnLineSever::TongMessageProcess(const char *pChar, size_t nSize)
 	}
 	else if (pHeader->ProtocolFamily == pf_tong)
 	{
-		// Ð­Òé³¤¶È¼ì²â
+		// ???????
 		if (nSize < sizeof(EXTEND_HEADER))
 			return;
 		if (pHeader->ProtocolID >= enumS2C_TONG_NUM)
@@ -1558,7 +1558,7 @@ void KSwordOnLineSever::ChatGroupMan(const void *pData, size_t dataLength)
 		tagPlusSrcInfo* pPlayers = (tagPlusSrcInfo*)pPlayersData;
 		for (int i = 0; i < playercount; i++)
 		{
-			//TODO: Òª¼Ó¼ìÑéNameIDºÍlnIDµÄÒ»ÖÂÐÔ
+			//TODO: ??????NameID??lnID??h????
 			if (CheckPlayerID(pPlayers[i].lnID, pPlayers[i].nameid))
 				m_pServer->PackDataToClient(pPlayers[i].lnID, pExHdr, pckgsize);
 		}
@@ -1568,7 +1568,7 @@ void KSwordOnLineSever::ChatGroupMan(const void *pData, size_t dataLength)
 		WORD* pPlayers = (WORD*)pPlayersData;
 		for (int i = 0; i < playercount; i++)
 		{
-			//TODO: ²»ÐèÒª¼Ó¼ìÑéNameIDºÍlnIDµÄÒ»ÖÂÐÔ
+			//TODO: ??????????NameID??lnID??h????
 			//if (pPlayers[i] >= 0)
 				m_pServer->PackDataToClient((unsigned long)pPlayers[i], pExHdr, pckgsize);
 		}
@@ -1609,7 +1609,7 @@ void KSwordOnLineSever::DatabaseMessageProcess(const char* pData, size_t dataLen
 	BYTE cProtocol = *(BYTE *)pData;
 #endif	
 
-	// ´ó°ü´¦Àí£¨ÓÃÓÚÅÅÃûµÄÊý¾Ý£©
+	// ????????????????????????
 	if ( cProtocol < s2c_micropackbegin )
 	{
 		DatabaseLargePackProcess(pData, dataLength);
@@ -1702,7 +1702,7 @@ void KSwordOnLineSever::TransferMessageProcess(const char* pChar, size_t nSize)
 	if (nSize < sizeof(EXTEND_HEADER))
 		return;
 
-	// ÊÇ·ñÑ°Â·°ü£¿
+	// ????·????
 	if (pEH->ProtocolID == relay_c2c_askwaydata && pEH->ProtocolFamily == pf_relay)
 	{
 		TransferAskWayMessageProcess(pChar, nSize);
@@ -1713,7 +1713,7 @@ void KSwordOnLineSever::TransferMessageProcess(const char* pChar, size_t nSize)
 	if (nSize <= sizeof(RELAY_DATA) || nSize != pRD->routeDateLength + sizeof(RELAY_DATA))
 		return;
 
-	// ÊÇ·ñÑ°Â·Ê§°Ü°ü
+	// ????·????
 	if (pEH->ProtocolID == relay_s2c_loseway && pEH->ProtocolFamily == pf_relay)
 	{
 		TransferLoseWayMessageProcess(pChar + sizeof(RELAY_DATA), nSize - sizeof(RELAY_DATA));
@@ -1956,14 +1956,17 @@ void KSwordOnLineSever::TransferSmallPackProcess(const void *pData, size_t dataL
 					npe.nPort   = pPermit->wPort;
 					m_pServer->SendData(lnID, &npe, sizeof(tagNotifyPlayerExchange));
 					m_pGameStatus[lnID].nReplyPingTime = m_nGameLoop;
-					
+
 				}
 
+				// FIX: For cross-GS transfer, ONLY send HOLDACC_LEAVEGAME
+				// Do NOT send NORMAL_LEAVEGAME to avoid race condition
+				// HOLDACC_LEAVEGAME tells Bishop to keep account locked during transfer
 				{
 					tagLeaveGame2 lg2;
 					lg2.ProtocolFamily = pf_normal;
 					lg2.ProtocolID     = c2s_leavegame;
-					lg2.cCmdType       = HOLDACC_LEAVEGAME;  // Changed from NORMAL_LEAVEGAME
+					lg2.cCmdType       = HOLDACC_LEAVEGAME;
 					strncpy((char *)lg2.szAccountName, (const char *)szName, sizeof(lg2.szAccountName)-1);
 					lg2.szAccountName[sizeof(lg2.szAccountName)-1] = '\0';
 
@@ -2113,7 +2116,7 @@ void KSwordOnLineSever::PlayerMessageProcess(const unsigned long lnID, const cha
 			if (protocoltype == c2s_extendchat)
 			{
 				CHAT_CHANNELCHAT_CMD* pEh = (CHAT_CHANNELCHAT_CMD*)pExPckg;
-				if (pEh->ProtocolType == chat_channelchat && pEh->channelid != 0)	//·ÇGMÆµµÀÒª¹ýÂËºÍ¸¶Ç®
+				if (pEh->ProtocolType == chat_channelchat && pEh->channelid != 0)	//??GM???????????
 				{
 					if (!m_pCoreServerShell->PayForSpeech(nIndex, pEh->cost))
 						return;
@@ -2197,7 +2200,7 @@ void KSwordOnLineSever::PlayerMessageProcess(const unsigned long lnID, const cha
 			if (m_pTransferClient)
 				m_pTransferClient->SendPackToServer( (const void *)&eg2, sizeof(tagEnterGame2) );
 
-			//Ëø¶¨½ÇÉ«Êý¾Ý¿â
+			//????????????
 			tagRoleEnterGame reg;
 			reg.ProtocolType = c2s_roleserver_lock;
 			reg.bLock = true;
@@ -2318,7 +2321,7 @@ void KSwordOnLineSever::GatewayLargePackProcess(const void *pData, size_t dataLe
 					BOOL	bCRCCheck = TRUE;
 					if (pRoleData->dwFriendOffset == pRoleData->dwDataLen - 4 && pRoleData->nFriendCount == 0)
 					{
-						// ËµÃ÷ÊÇ¼Ó¹ýÐ£ÑéµÄ£¬ËùÒÔºÃÓÑµÄÆ«ÒÆ±È³¤¶ÈÉÙÁË4¸ö×Ö½Ú
+						// ??????????g?????????t??????????4?????
 						DWORD	dwCRC = 0;
 						dwCRC = CRC32(dwCRC, pRoleData, pRoleData->dwDataLen - 4);
 						DWORD	dwCheck = *(DWORD *)(pGI->szData + pRoleData->dwDataLen - 4);
@@ -2514,11 +2517,11 @@ void KSwordOnLineSever::MainLoop()
 	SavePlayerData();
 	PlayerLogoutGateway();
 	PlayerExchangeServer();
-//	m_pServer->PreparePackSink();	¿Õº¯Êý£¬Ã»ÓÐµ÷ÓÃµÄ±ØÒª
+//	m_pServer->PreparePackSink();	???????û????õi??
 	m_pCoreServerShell->Breathe();
 
-// ¶¨ÆÚÏòÊý¾Ý¿â²éÑ¯ÅÅÃûÇé¿ö
-#define	defMAX_STAT_QUERY_TIME		18000 * 20		// 5Ð¡Ê±²éÑ¯
+// ????????????????????
+#define	defMAX_STAT_QUERY_TIME		18000 * 20		// 5?????
 
 	if ( 0 == ( m_nGameLoop % defMAX_STAT_QUERY_TIME ) )
 	{
@@ -2534,7 +2537,7 @@ void KSwordOnLineSever::MainLoop()
 		}
 	}
 
-// ¼ì²éÍæ¼ÒÊÇ·ñºÜ³¤Ê±¼äÃ»ÓÐ·¢PINGÖµÁË£¨1min£©
+// ??????????????û???PING????1min??
 	int lnID = m_nGameLoop % m_nMaxPlayer;
 	int nIndex = m_pGameStatus[lnID].nPlayerIndex;
 	if (nIndex > 0 && nIndex <= m_nMaxPlayer && m_pGameStatus[lnID].nGameStatus == enumPlayerPlaying)
@@ -2557,8 +2560,14 @@ void KSwordOnLineSever::MainLoop()
 				elapsed > defMAX_PING_INTERVAL &&
 				elapsed < defMAX_PING_TIMEOUT)
 			{
-				printf("[PING-RETRY] lnID=%d elapsed=%d -> resend ping\n", lnID, elapsed);
+				// DEBUG: Print detailed state before calling PingClient
+				printf("[PING-RETRY] lnID=%d elapsed=%d nPlayerIdx=%d sendTime=%d replyTime=%d -> resend ping\n",
+					   lnID, elapsed, m_pGameStatus[lnID].nPlayerIndex,
+					   m_pGameStatus[lnID].nSendPingTime, m_pGameStatus[lnID].nReplyPingTime);
 				PingClient(lnID);
+				// DEBUG: Print state AFTER PingClient to see if timers were reset
+				printf("[PING-RETRY-AFTER] lnID=%d sendTime=%d replyTime=%d\n",
+					   lnID, m_pGameStatus[lnID].nSendPingTime, m_pGameStatus[lnID].nReplyPingTime);
 			}
 			else if (m_pGameStatus[lnID].nSendPingTime  > 0 &&
 					 elapsed > defMAX_PING_TIMEOUT)
@@ -2594,13 +2603,24 @@ void KSwordOnLineSever::PingClient(const unsigned long lnID)
 		printf("[WARNING] PingClient: Invalid lnID=%lu (max=%d), ignoring\n", lnID, m_nMaxPlayer);
 		return;
 	}
+
 	if (m_pGameStatus[lnID].nPlayerIndex <= 0 || m_pGameStatus[lnID].nPlayerIndex > m_nMaxPlayer)
 	{
 		printf("[WARNING] PingClient: Player lnID=%lu not active (nPlayerIndex=%d), ignoring\n",
 			lnID, m_pGameStatus[lnID].nPlayerIndex);
+
+		// FIX: Reset ping timers to stop PING-RETRY spam for dead connections
+		// Without this, MainLoop keeps calling PingClient() ? return early ? elapsed stays same ? PING-RETRY forever
+		printf("[FIX-APPLIED] Resetting timers for lnID=%lu (OLD: send=%d reply=%d)\n",
+			   lnID, m_pGameStatus[lnID].nSendPingTime, m_pGameStatus[lnID].nReplyPingTime);
+		m_pGameStatus[lnID].nSendPingTime = 0;
+		m_pGameStatus[lnID].nReplyPingTime = 1;  // Mark as inactive (non-zero = not waiting for reply)
+		printf("[FIX-APPLIED] Timers reset for lnID=%lu (NEW: send=%d reply=%d)\n",
+			   lnID, m_pGameStatus[lnID].nSendPingTime, m_pGameStatus[lnID].nReplyPingTime);
+
 		return;
 	}
-	
+
 	//printf("PingClient(%d) called\n", lnID);
 	PING_COMMAND	pc;
 	pc.m_dwTime = m_nGameLoop;
@@ -2620,19 +2640,20 @@ void KSwordOnLineSever::PingClient(const unsigned long lnID)
 }
 void KSwordOnLineSever::ProcessPingReply(const unsigned long lnID, const char* pData, size_t dataLength)
 {
-	// FIX: Replace _ASSERT() with validation to prevent MessageBox crash
-	// When player disconnects but ping packet arrives late ? crash with "CIntercessor class" MessageBox
-	if (lnID >= m_nMaxPlayer)
-	{
-		printf("[WARNING] PingClient: Invalid lnID=%lu (max=%d), ignoring\n", lnID, m_nMaxPlayer);
-		return;
-	}
-	if (m_pGameStatus[lnID].nPlayerIndex <= 0 || m_pGameStatus[lnID].nPlayerIndex > m_nMaxPlayer)
-	{
-		printf("[WARNING] PingClient: Player lnID=%lu not active (nPlayerIndex=%d), ignoring\n",
-			lnID, m_pGameStatus[lnID].nPlayerIndex);
-		return;
-	}
+    // FIX: Replace _ASSERT() with validation to prevent MessageBox crash
+    // Race condition: player disconnects but delayed ping reply packet arrives ? crash
+    if (lnID >= m_nMaxPlayer)
+    {
+        printf("[WARNING] ProcessPingReply: Invalid lnID=%lu (max=%d), ignoring\n", lnID, m_nMaxPlayer);
+        return;
+    }
+
+    if (m_pGameStatus[lnID].nPlayerIndex <= 0 || m_pGameStatus[lnID].nPlayerIndex > m_nMaxPlayer)
+    {
+        printf("[WARNING] ProcessPingReply: Player lnID=%lu not active (nPlayerIndex=%d), ignoring delayed packet\n",
+            lnID, m_pGameStatus[lnID].nPlayerIndex);
+        return;
+    }
 
     if (dataLength != sizeof(PING_CLIENTREPLY_COMMAND))
     {
@@ -2682,7 +2703,68 @@ void KSwordOnLineSever::ProcessPingReply(const unsigned long lnID, const char* p
     m_pServer->PackDataToClient(lnID, &pc, sizeof(PING_COMMAND));
 }
 
-// ±£³ÖÁ¬½ÓµÄÍæ¼Ò×Ô¶¯´æÅÌ
+/* Kenny test
+void KSwordOnLineSever::ProcessPingReply(const unsigned long lnID, const char* pData, size_t dataLength)
+{
+	_ASSERT(lnID < m_nMaxPlayer);
+	_ASSERT(m_pGameStatus[lnID].nPlayerIndex > 0 && m_pGameStatus[lnID].nPlayerIndex <= m_nMaxPlayer);*/
+/*
+	//printf("receive ping from client...\n");
+	if (dataLength != sizeof(PING_CLIENTREPLY_COMMAND))
+	{
+		printf("ping cmd size not correct, may be Non-offical Client...\n");
+		m_pServer->ShutdownClient(lnID);
+		return;
+	}
+	
+	PING_CLIENTREPLY_COMMAND*	pPC = (PING_CLIENTREPLY_COMMAND *)pData;
+	if (pPC->m_dwReplyServerTime != m_pGameStatus[lnID].nSendPingTime)
+	{
+		printf("wrong time in ping cmd content, kill it...\n");
+		m_pServer->ShutdownClient(lnID);
+		return;
+	}
+	m_pGameStatus[lnID].nReplyPingTime = m_nGameLoop;*/
+	//Kenny fixed
+	/*if (dataLength != sizeof(PING_CLIENTREPLY_COMMAND))
+{
+    printf("ping cmd size not correct, ignore\n");
+    return;
+}
+
+PING_CLIENTREPLY_COMMAND* pPC = (PING_CLIENTREPLY_COMMAND *)pData;
+int expected = m_pGameStatus[lnID].nSendPingTime;
+int replied  = (int)pPC->m_dwReplyServerTime;
+
+if (replied != expected)
+{
+    const int grace = defMAX_PING_INTERVAL * 3;
+
+    if (replied < expected)
+    {
+
+        if (expected - replied <= grace)
+        {
+
+        }
+        else
+        {
+            return;
+        }
+    }
+    else
+    {
+        return;
+    }
+}
+	m_pGameStatus[lnID].nReplyPingTime = m_nGameLoop;
+	PING_COMMAND	pc;
+	pc.ProtocolType = s2c_replyclientping;
+	pc.m_dwTime = pPC->m_dwClientTime;
+	m_pServer->PackDataToClient(lnID, &pc, sizeof(PING_COMMAND));
+}
+*/
+// ???????????????????
 void KSwordOnLineSever::SavePlayerData()
 {
 	if (!m_pDatabaseClient)
@@ -2695,7 +2777,7 @@ void KSwordOnLineSever::SavePlayerData()
 	sProcessData.nProtoId = c2s_roleserver_saveroleinfo;
 	sProcessData.ulIdentity = -1;
 
-	// ±éÀúÍøÂçÁ¬½Ó
+	// ????????????
 	for (i = 0; i < m_nMaxPlayer; i++)
 	{
 		int nIndex = 0;
@@ -2821,7 +2903,7 @@ void KSwordOnLineSever::PlayerExchangeServer()
 	int i;
 
 	char	szChar[1024];
-	// ±éÀúÍøÂçÁ¬½Ó
+	// ????????????
 	for (i = 0; i < m_nMaxPlayer; i++)
 	{
 		int nIndex = m_pGameStatus[i].nPlayerIndex;
@@ -2867,7 +2949,7 @@ void KSwordOnLineSever::PlayerExchangeServer()
 					pRAD->nFromIP = 0;		// 0.0.0.0
 					pRAD->nFromRelayID = 0;
 					pRAD->seekRelayCount = 0;
-					// ÀûÓÃµØÍ¼IDÕÒSERVER
+					// ???õ??ID??SERVER
 					pRAD->seekMethod = rm_map_id;
 					pRAD->wMethodDataLength = 4;
 					pRAD->routeDateLength = sizeof(tagSearchWay);
@@ -2893,6 +2975,7 @@ void KSwordOnLineSever::PlayerExchangeServer()
 					// FIX: Add timeout for waiting GameServer response
 					// If target GS doesn't respond within 30 seconds, cancel transfer
 					#define defMAX_EXCHANGE_TIMEOUT (30 * GAME_FPS)  // 30 seconds
+
 					int elapsed = m_nGameLoop - m_pGameStatus[i].nReplyPingTime;
 					if (elapsed > defMAX_EXCHANGE_TIMEOUT)
 					{
@@ -2906,8 +2989,10 @@ void KSwordOnLineSever::PlayerExchangeServer()
 						npe.nIPAddr = 0;
 						npe.nPort = 0;
 						m_pServer->SendData(i, &npe, sizeof(tagNotifyPlayerExchange));
+
 						// Recover player state
 						m_pCoreServerShell->RecoverPlayerExchange(nIndex);
+
 						// Re-lock character in RoleServer
 						tagRoleEnterGame reg;
 						reg.ProtocolType = c2s_roleserver_lock;
@@ -3022,7 +3107,7 @@ void KSwordOnLineSever::SetNetStatus(const unsigned long lnID, NetStatus nStatus
 	{
 		if (m_pGameStatus[lnID].nGameStatus == enumPlayerPlaying
 			|| (m_pGameStatus[lnID].nGameStatus == enumPlayerExchangingServer 
-			&& m_pGameStatus[lnID].nExchangeStatus != enumExchangeCleaning))	// ¿ç·þÎñÆ÷Ê±×Ô¼º´¦Àí
+			&& m_pGameStatus[lnID].nExchangeStatus != enumExchangeCleaning))	// ???????????????
 		{
 			int nIndex = m_pGameStatus[lnID].nPlayerIndex;
 			m_pCoreServerShell->ClientDisconnect(nIndex);
@@ -3070,7 +3155,7 @@ int KSwordOnLineSever::ProcessLoginProtocol(const unsigned long lnID, const char
 		}
 		else
 		{
-			// ·Ç·¨µÄÍæ¼Ò£¬¸ÃÔõÃ´´¦ÀíÔõÃ´´¦Àí
+			// ?????????????ô??????ô????
 			return 0;
 		}
 	}
@@ -3218,7 +3303,7 @@ BOOL KSwordOnLineSever::ConformAskWay(const void* pData, int nSize, DWORD *lpnNe
 	BOOL	bRet = FALSE;
 	RELAY_ASKWAY_DATA*	pRAD = (RELAY_ASKWAY_DATA *)pData;
 
-	// TODO: ¼ì²éÊÇ·ñÑ°Â·ÕýÈ·
+	// TODO: ???????·???
 	int nMethod = pRAD->seekMethod;
 	switch(nMethod)
 	{

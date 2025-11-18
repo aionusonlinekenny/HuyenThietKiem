@@ -567,19 +567,19 @@ int	KCoreShell::GetGameData(unsigned int uDataId, unsigned int uParam, int nPara
 			switch(pNpc->m_Series)
 			{
 				case series_water:
-					strcpy(pInfo->StatusDesc, "H? Th?y");
+					strcpy(pInfo->StatusDesc, "HÖ Thñy");
 					break;
 				case series_wood:
-					strcpy(pInfo->StatusDesc, "H? M?c");
+					strcpy(pInfo->StatusDesc, "HÖ Méc");
 					break;
 				case series_metal:
-					strcpy(pInfo->StatusDesc, "H? Kim");
+					strcpy(pInfo->StatusDesc, "HÖ Kim");
 					break;
 				case series_fire:
-					strcpy(pInfo->StatusDesc, "H? H?a");
+					strcpy(pInfo->StatusDesc, "HÖ Háa");
 					break;
 				case series_earth:
-					strcpy(pInfo->StatusDesc, "H? Th? ");
+					strcpy(pInfo->StatusDesc, "HÖ Thæ ");
 					break;
 			}
 
@@ -4436,7 +4436,7 @@ int KCoreShell::SystemMessages(unsigned int uDataId, unsigned int uParam, int nP
 	switch(uDataId)
 	{	
 	case GSM_FIGHT_MODE_ON:
-		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "H? th?ng", MSG_FIGHT_MODE_ON, 
+		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "HÖ thèng", MSG_FIGHT_MODE_ON, 
 														strlen(MSG_FIGHT_MODE_ON), TRUE); 
 		break;
 	case GSM_FEATURE_BUIDING:
@@ -4477,16 +4477,16 @@ int KCoreShell::SystemMessages(unsigned int uDataId, unsigned int uParam, int nP
 				i++;
 			}
 #endif
-			l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "H? th?ng", MSG_FEATURE_BUIDING, 
+			l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "HÖ thèng", MSG_FEATURE_BUIDING, 
 															strlen(MSG_FEATURE_BUIDING), TRUE); 
 		}
 		break;
 	case GSM_PLAYER_RIDEHORSE:
-		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "H? th?ng", MSG_PLAYER_RIDEHORSE, 
+		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "HÖ thèng", MSG_PLAYER_RIDEHORSE, 
 															strlen(MSG_PLAYER_RIDEHORSE), TRUE); 
 		break;
 	case GSM_MAP_TYPE_ERROR:
-		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "H? th?ng", MSG_MAP_TYPE_ERROR, 
+		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "HÖ thèng", MSG_MAP_TYPE_ERROR, 
 															strlen(MSG_MAP_TYPE_ERROR), TRUE); 
 		break;
 	default:

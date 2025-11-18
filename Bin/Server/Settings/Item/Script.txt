@@ -144,3 +144,4 @@ LÖnh bµi TÝn sø	7	141	1	\spr\item\questkey\obj_item_lection02.spr	374	1	1	"T­¬ng
 Giá Hoa Quèc Kh¸nh	7	142	1	\spr\vng\item\womenday2011\bunchofroses.spr	41	1	1	VËt PhÈm Sù KiÖn Quèc Kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	\script\item\event\event0324.lua	500		
 Bã Hoa Quèc Kh¸nh	7	143	1	\spr\item\funvjie_jieri\200803\shumeigui.spr	41	1	2	VËt PhÈm Sù KiÖn Quèc Kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	\script\item\event\event0323.lua	500		
 Tói Mõng Quèc Kh¸nh	7	144	1	\spr\vng\item\120530_lua_nuoc\tuihuong.spr	387	1	1	Sù kiÖn mõng quèc kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	\script\Event\quockhanh\tuinguyenlieu.lua	500		
+R­¬ng VËn Tiªu	7	145	1	\spr\item\script\songjinmibao.spr	41	1	1	PhÇn th­ëng cho VËn Tiªu. Më ra ®Ó nhËn ®­îc vËt phÈm quý gi¸.	\script\item\luascript\ruongvantieu.lua	999		

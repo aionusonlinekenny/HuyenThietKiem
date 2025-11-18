@@ -2,7 +2,7 @@
 // FileName			:	ScriptFuns.cpp
 // FileAuthor		:	RomanDou
 // FileCreateDate	:	2002-11-19 15:58:20
-// FileDescription	:	½Å±¾Ö¸Áî¼¯
+// FileDescription	:	?u????
 // Revision Count	:	
 *******************************************************************************/
 #ifndef WIN32
@@ -327,14 +327,14 @@ lab_subworldidx2id:
 Say(sMainInfo, nSelCount, sSel1, sSel2, sSel3, .....,sSeln) 
 Say(nMainInfo, nSelCount, sSel1, sSel2, sSel3, .....,sSeln) 
 Say(nMainInfo, nSelCount, SelTab)
-Èç¹ûÊÇ¿Í»§¶ËµÄÔò²»»áÏò·þÎñÆ÷¶Ë·¢ËÍÈÎºÎ²Ù×÷
+????????????????????????????ß???
 
   Say(100, 3, 10, 23,43)
-  Say("Ñ¡ÔñÊ²Ã´£¿", 2, "ÊÇ/yes", "·ñ/no");
-  Say("Ñ¡Ê²Ã´Ñ½", 2, SelTab);
+  Say("????ô??", 2, "??/yes", "??/no");
+  Say("??ô?", 2, SelTab);
 */
 //**************************************************************************************************************************************************************
-//												½çÃæ½Å±¾
+//												????u?
 //**************************************************************************************************************************************************************
 int LuaSelectUI(Lua_State * L)
 {
@@ -366,7 +366,7 @@ int LuaSelectUI(Lua_State * L)
 		nMainInfo = (int)Lua_ValueToNumber(L,1);
 		nDataType = 1 ;
 	}
-	else if (Lua_IsString(L, 1)) 	//¼ì²éÖ÷ÐÅÏ¢ÊÇ×Ö·û´®»¹ÊÇ×Ö·û´®±êÊ¶ºÅ
+	else if (Lua_IsString(L, 1)) 	//?????????????????????????????
 	{
 		strMain = (char *)Lua_ValueToString(L, 1);
 		nDataType = 0 ;
@@ -374,7 +374,7 @@ int LuaSelectUI(Lua_State * L)
 	else
 		return 0;
 	
-	BOOL bStringTab = FALSE;//±êÊ¶´«½øÀ´µÄÑ¡ÏîÊý¾Ý´æ·ÅÔÚÒ»¸öÊý×éÖÐ£¬»¹ÊÇÐí¶à×Ö·û´®Àï
+	BOOL bStringTab = FALSE;//??????????????????????h????????????????????????
 	
 	if (Lua_IsString(L,3))
 		bStringTab = FALSE;
@@ -388,7 +388,7 @@ int LuaSelectUI(Lua_State * L)
 	
 	if (bStringTab == FALSE)
 	{
-		//»ñµÃÊµ¼Ê´«ÈëµÄÑ¡ÏîµÄ¸öÊý
+		//?????????????????
 		if (nOptionNum > nParamNum - 2) nOptionNum = nParamNum - 2;
 	}
 	
@@ -396,18 +396,18 @@ int LuaSelectUI(Lua_State * L)
 	
 	PLAYER_SCRIPTACTION_SYNC UiInfo;
 	UiInfo.m_bUIId = UI_SELECTDIALOG;
-	UiInfo.m_bParam1 = nDataType;//Ö÷ÐÅÏ¢µÄÀàÐÍ£¬×Ö·û´®(0)»òÊý×Ö(1)
+	UiInfo.m_bParam1 = nDataType;//?????????????????(0)??????(1)
 	UiInfo.m_bOptionNum = nOptionNum;
 	UiInfo.m_nOperateType = SCRIPTACTION_UISHOW;
 	
-	//Ö÷ÐÅÏ¢Îª×Ö·û´®
+	//???????????
 	if (nDataType == 0)
 	{
 		if (strMain)
 			sprintf(UiInfo.m_pContent, "%s", strMain);
 		pContent = UiInfo.m_pContent;
 	}
-	else if (nDataType == 1) //Ö÷ÐÅÏ¢ÎªÊý×Ö±êÊ¶
+	else if (nDataType == 1) //????????????
 	{
 		*(int *)UiInfo.m_pContent = nMainInfo;
 		pContent = UiInfo.m_pContent + sizeof(int);
@@ -2501,7 +2501,7 @@ int LuaAddItem(Lua_State * L)
 	if (nParamNum < 7)
 	{
 #ifdef _DEBUG
-		//g_DebugLog("[Script]Ê¹ÓÃAddItem²ÎÊýÊýÁ¿²»·û!");
+		//g_DebugLog("[Script]'??AddItem????????????!");
 #endif
 		Lua_PushNumber(L,0);
 		return 1;
@@ -4844,6 +4844,64 @@ int LuaSetNpcSeries(Lua_State * L)
 	if (nValue >= series_num) 
 		return 0;
 	Npc[nNpcIndex].SetSeries(nValue);
+	return 0;
+}
+// --
+// SetNpcOwner - Make NPC follow player
+// Parameters: (npcIndex, playerName, followMode)
+// --
+int LuaSetNpcOwner(Lua_State * L)
+{
+	if (Lua_GetTopIndex(L) < 1)
+		return 0;
+
+	int nNpcIndex = (int)Lua_ValueToNumber(L, 1);
+	if (nNpcIndex <= 0 || nNpcIndex >= MAX_NPC)
+		return 0;
+
+	// Get player index from Lua context (the player who called this script)
+	// This is more reliable than finding by name!
+	int nPlayerIdx = GetPlayerIndex(L);
+	if (nPlayerIdx < 0)
+		return 0;
+
+	int nFollowMode = 1; // Default: follow enabled
+	if (Lua_GetTopIndex(L) >= 2)
+		nFollowMode = (int)Lua_ValueToNumber(L, 2);
+
+	// Validate player index
+	if (nPlayerIdx < 0 || nPlayerIdx >= MAX_PLAYER)
+		return 0;
+
+	// Check if player is valid and online
+	if (Player[nPlayerIdx].m_nIndex <= 0)
+		return 0;
+
+	// Check if NPC index is valid
+	if (Npc[nNpcIndex].m_Index <= 0)
+		return 0;
+
+	// All validations passed - safe to set params
+	// Use m_AiParam[] - universal array available everywhere (not #ifdef dependent)
+	// m_AiParam[8] = owner player index
+	// m_AiParam[9] = follow mode (1=follow, 0=disabled)
+	Npc[nNpcIndex].m_AiParam[8] = nPlayerIdx;
+	Npc[nNpcIndex].m_AiParam[9] = nFollowMode;
+
+#ifdef _SERVER
+	// Set m_nPeopleIdx to link NPC to player (only in server)
+	Npc[nNpcIndex].m_nPeopleIdx = Player[nPlayerIdx].m_nIndex;
+#endif
+
+	// Set AI mode to 8 (Follow owner)
+	if (nFollowMode == 1)
+	{
+		Npc[nNpcIndex].m_AiMode = 8;
+	}
+
+	// Make NPC peaceful/neutral
+	Npc[nNpcIndex].m_Kind = 0; // Kind 0 = neutral
+
 	return 0;
 }
 // --
@@ -10254,6 +10312,7 @@ TLua_Funcs GameScriptFuns[] =
 	{"GetNpcGold",			LuaGetNpcGold},
 	{"SetNpcSeries",		LuaSetNpcSeries},
 	{"GetNpcSeries",		LuaGetNpcSeries},
+	{"SetNpcOwner",			LuaSetNpcOwner},
 	{"SetNpcParam",			LuaSetNpcParam},
 	{"GetNpcParam",			LuaGetNpcParam},
 	{"SetNpcCurCamp",		LuaSetNpcCurCamp},

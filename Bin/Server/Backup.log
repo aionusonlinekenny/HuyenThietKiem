@@ -1,17 +1,17 @@
 [Backup] Bat dau backup...
-Backup Log File Open Time:2025.11.15 19:37:43
-[Backup] Thu muc dich: D:\HuyenThietKiem\Bin\Server\database\20251115_193743232
-[Backup] Mo file dump: D:\HuyenThietKiem\Bin\Server\database\20251115_193743232\roledb.bak
+Backup Log File Open Time:2025.11.18 15:18:2
+[Backup] Thu muc dich: D:\HuyenThietKiem\Bin\Server\database\20251118_15182494
+[Backup] Mo file dump: D:\HuyenThietKiem\Bin\Server\database\20251118_15182494\roledb.bak
 RunTable cursor Opened. Backup begin.
 [Backup] RunTable cursor opened. Bat dau dump...
 DB Dump Finished.
 RunTable cursor closed.
-[Backup] Dump xong. Tong so player: 2; Tong tien: 2026987
+[Backup] Dump xong. Tong so player: 2; Tong tien: 7187380
 [Backup] Cap nhat va luu StatData.dat thanh cong
 DB Statistic Log:
 // --Level// --
-DienBaQuan	92	0	0
-NgaMyTieuNy	1	0	0
+DienBaQuan	150	0	0
+NgaMyTieuNy	150	0	0
 	0	1	0
 	0	1	0
 	0	1	0
@@ -21,8 +21,8 @@ NgaMyTieuNy	1	0	0
 	0	1	0
 	0	1	0
 // --Money// --
-DienBaQuan	2026987	0
-	0	1
+DienBaQuan	5434380	0
+NgaMyTieuNy	1753000	0
 	0	1
 	0	1
 	0	1
@@ -43,7 +43,7 @@ DienBaQuan	2026987	0
 	0	1
 	0	1
 // --Sect 0 Level// --
-NgaMyTieuNy	1	0	0
+	0	1	0
 	0	1	0
 	0	1	0
 	0	1	0
@@ -109,7 +109,7 @@ NgaMyTieuNy	1	0	0
 	0	1
 	0	1
 // --Sect 3 Level// --
-DienBaQuan	92	0	0
+DienBaQuan	150	0	0
 	0	1	0
 	0	1	0
 	0	1	0
@@ -120,7 +120,7 @@ DienBaQuan	92	0	0
 	0	1	0
 	0	1	0
 -Sect 3 Money// ---
-DienBaQuan	2026987	0
+DienBaQuan	5434380	0
 	0	1
 	0	1
 	0	1
@@ -153,7 +153,7 @@ DienBaQuan	2026987	0
 	0	1
 	0	1
 // --Sect 5 Level// --
-	0	1	0
+NgaMyTieuNy	150	0	0
 	0	1	0
 	0	1	0
 	0	1	0
@@ -164,7 +164,7 @@ DienBaQuan	2026987	0
 	0	1	0
 	0	1	0
 -Sect 5 Money// ---
-	0	1
+NgaMyTieuNy	1753000	0
 	0	1
 	0	1
 	0	1
@@ -285,36 +285,36 @@ DienBaQuan	2026987	0
 	0	1
 	0	1
 各个门派的玩家数
-Sect 0 ：1
+Sect 0 ：0
 Sect 1 ：0
 Sect 2 ：0
 Sect 3 ：1
 Sect 4 ：0
-Sect 5 ：0
+Sect 5 ：1
 Sect 6 ：0
 Sect 7 ：0
 Sect 8 ：0
 Sect 9 ：0
 Sect 10 ：0
 财富排名前 1000 玩家中各门派所占比例数
-Sect 0 ：999
+Sect 0 ：998
 Sect 1 ：0
 Sect 2 ：0
 Sect 3 ：1
 Sect 4 ：0
-Sect 5 ：0
+Sect 5 ：1
 Sect 6 ：0
 Sect 7 ：0
 Sect 8 ：0
 Sect 9 ：0
 Sect 10 ：0
 级别排名前 1000 玩家中各门派所占比例数
-Sect 0 ：4999
+Sect 0 ：4998
 Sect 1 ：0
 Sect 2 ：0
 Sect 3 ：1
 Sect 4 ：0
-Sect 5 ：0
+Sect 5 ：1
 Sect 6 ：0
 Sect 7 ：0
 Sect 8 ：0

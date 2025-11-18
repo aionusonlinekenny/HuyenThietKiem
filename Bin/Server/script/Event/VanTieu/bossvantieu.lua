@@ -15,7 +15,7 @@ function DropRate(NpcIndex)
 		SetTask(TASK_VANTIEU, SetByte(nTaskValue, 9, 1))
 	end
 
-	Msg2Player("ÄÃ£ háº¡ sÃ¡t má»™t tÃªn sÆ¡n táº·c!")
+	Msg2Player("§· h¹ s¸t mét tªn s¬n tÆc!")
 end
 
 function LastDamage(NpcIndex)

@@ -36,6 +36,7 @@ private:
 	void			ProcessAIType05();		// 普通被动类2
 	void			ProcessAIType06();		// 普通被动类3
 	void			ProcessAIType07();		// 普通被动类3
+	void			ProcessAIType08();		// Follow owner player (escort)
 	void			TriggerObjectTrap();
 	void			TriggerMapTrap();
 	void			FollowAttack(int nIdx);

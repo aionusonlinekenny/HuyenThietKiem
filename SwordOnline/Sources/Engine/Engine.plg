@@ -7,7 +7,7 @@
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x804 /fo"Release/Bishop.res" /d "NDEBUG" "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\Bishop.rc"" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPD383.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP1162.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /I "..\Common" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\..\lib" /I "..\..\..\Headers" /I "..\..\Sword3PaySys\S3AccServer" /I "..\..\s3client\login" /I "..\..\RoleDBManager" /I "..\..\Core\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Bishop.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\Application.cpp"
@@ -20,14 +20,14 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPD383.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\PlayerCreator.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\SmartClient.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPD383.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPD384.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP1162.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP1163.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /I "..\Common" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\..\lib" /I "..\..\..\Headers" /I "..\..\Sword3PaySys\S3AccServer" /I "..\..\s3client\login" /I "..\..\RoleDBManager" /I "..\..\Core\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Bishop.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPD384.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPD385.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP1163.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP1164.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Bishop.pdb" /map:"Release/Bishop.map" /debug /machine:I386 /out:"Release/Bishop.exe" 
 .\Release\Application.obj
@@ -44,7 +44,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 ..\..\..\Lib\release\common.lib
 ..\..\..\Lib\release\engine.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPD385.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP1164.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -61,7 +61,7 @@ PlayerCreator.cpp
 SmartClient.cpp
 Generating Code...
 Linking...
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE0F3.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP1CCF.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\Server
@@ -73,7 +73,7 @@ copy release\Bishop.exe ..\..\..\..\bin\Server\release\Bishop.exe
 copy release\Bishop.map ..\..\..\..\bin\Server\release\Bishop.map
 copy release\Bishop.pdb ..\..\..\..\bin\Server\release\Bishop.pdb
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE0F3.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP1CCF.bat"
 
 A subdirectory or file ..\..\..\..\bin\Server already exists.
         1 file(s) copied.
@@ -92,7 +92,7 @@ Bishop.exe - 0 error(s), 0 warning(s)
 --------------------Configuration: Core - Win32 Server Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE22D.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP1E18.tmp" with contents
 [
 /nologo /MT /W2 /GX /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /D "NDEBUG" /D "_SERVER" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FR"ServerRelease/" /Fp"ServerRelease/Core.pch" /Yu"KCore.h" /Fo"ServerRelease/" /Fd"ServerRelease/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KPartnerSkill.cpp"
@@ -174,14 +174,14 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE22D.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\Core\KJXPathFinder.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KLittleMap.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPE22D.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE22E.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP1E18.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP1E19.tmp" with contents
 [
 /nologo /MT /W2 /GX /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /D "NDEBUG" /D "_SERVER" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FR"ServerRelease/" /Fp"ServerRelease/Core.pch" /Yc"KCore.h" /Fo"ServerRelease/" /Fd"ServerRelease/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Core\Src\stdafx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPE22E.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE22F.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP1E19.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP1E1A.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib lualibdll.lib Ws2_32.lib Winmm.lib Shlwapi.lib /nologo /dll /incremental:no /pdb:"ServerRelease/CoreServer.pdb" /map:"ServerRelease/CoreServer.map" /debug /machine:I386 /out:"ServerRelease\CoreServer.dll" /implib:"ServerRelease/CoreServer.lib" 
 .\ServerRelease\KPartnerSkill.obj
@@ -268,7 +268,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Src\USBKey\EP1KDL20.LIB
 .\Src\USBKey\EpsForJoLib.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPE22F.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP1E1A.tmp"
 <h3>Output Window</h3>
 Compiling...
 stdafx.cpp
@@ -361,7 +361,7 @@ Generating Code...
 Linking...
    Creating library ServerRelease/CoreServer.lib and object ServerRelease/CoreServer.exp
 ServerRelease\CoreServer.dll : warning LNK4084: total image size 673771520 exceeds max (268435456); image may not run
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPF4DD.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3675.bat" with contents
 [
 @echo off
 md ..\..\lib\release
@@ -375,7 +375,7 @@ copy ServerRelease\CoreServer.map ..\..\..\bin\Server\release\Coreserver.map
 copy ServerRelease\CoreServer.pdb ..\..\..\bin\Server\release\Coreserver.pdb
 copy ServerRelease\CoreServer.dll ..\..\..\bin\Server\release\Coreserver.dll
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPF4DD.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3675.bat"
 
 A subdirectory or file ..\..\lib\release already exists.
         1 file(s) copied.
@@ -396,7 +396,7 @@ CoreServer.dll - 0 error(s), 1 warning(s)
 --------------------Configuration: Core - Win32 Client Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPF636.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP380C.tmp" with contents
 [
 /nologo /MD /W2 /GX /Zi /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /I "src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FR"ClientRelease/" /Fp"ClientRelease/Core.pch" /Yu"KCore.h" /Fo"ClientRelease/" /Fd"ClientRelease/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KPartnerSkill.cpp"
@@ -482,26 +482,26 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPF636.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\Core\KJXPathFinder.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KLittleMap.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPF636.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPF637.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP380C.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP380D.tmp" with contents
 [
 /nologo /MD /W2 /GX /Zi /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /I "src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FAs /Fa"ClientRelease/" /FR"ClientRelease/" /Fp"ClientRelease/Core.pch" /Yu"KCore.h" /Fo"ClientRelease/" /Fd"ClientRelease/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KMissle.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPF637.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPF638.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP380D.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP381E.tmp" with contents
 [
 /nologo /MD /W2 /GX /Zi /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /I "src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FAs /Fa"ClientRelease/" /FR"ClientRelease/" /Fo"ClientRelease/" /Fd"ClientRelease/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Core\Src\Scene\KIpoTree.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPF638.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPF639.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP381E.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP381F.tmp" with contents
 [
 /nologo /MD /W2 /GX /Zi /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /I "src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FR"ClientRelease/" /Fp"ClientRelease/Core.pch" /Yc"KCore.h" /Fo"ClientRelease/" /Fd"ClientRelease/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Core\Src\stdafx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPF639.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPF63A.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP381F.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3820.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib lualibdll.lib Shlwapi.lib Winmm.lib /nologo /dll /incremental:no /pdb:"ClientRelease/CoreClient.pdb" /map:"ClientRelease/CoreClient.map" /debug /machine:I386 /out:"ClientRelease\CoreClient.dll" /implib:"ClientRelease/CoreClient.lib" /libpath:"../../lib/" 
 .\ClientRelease\KPartnerSkill.obj
@@ -594,7 +594,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Src\USBKey\EP1KDL20.LIB
 .\Src\USBKey\EpsForJoLib.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPF63A.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP3820.tmp"
 <h3>Output Window</h3>
 Compiling...
 stdafx.cpp
@@ -696,7 +696,7 @@ Compiling...
 KIpoTree.cpp
 Linking...
    Creating library ClientRelease/CoreClient.lib and object ClientRelease/CoreClient.exp
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP1099.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP51C3.bat" with contents
 [
 @echo off
 md ..\..\..\bin\Client\release
@@ -709,7 +709,7 @@ copy ClientRelease\CoreClient.lib ..\..\lib\release\CoreClient.lib
 copy ClientRelease\CoreClient.map ..\..\..\bin\Client\release\CoreClient.map
 copy ClientRelease\CoreClient.pdb ..\..\..\bin\Client\release\CoreClient.pdb
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP1099.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP51C3.bat"
 
 A subdirectory or file ..\..\..\bin\Client\release already exists.
 A subdirectory or file ..\..\lib\release already exists.
@@ -730,7 +730,7 @@ CoreClient.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: Engine - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP13C6.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5445.tmp" with contents
 [
 /nologo /MD /W3 /GX /Zi /O2 /I "include" /I "..\Pack\ucl-1.01\include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ENGINE_EXPORTS" /D WINVER=0x0500 /Fp"Release/Engine.pch" /YX"KWin32.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\CLogFile.cpp"
@@ -852,14 +852,14 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP13C6.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\Cryptography\EDOneTimePad.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\Text.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP13C6.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP13C7.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP5445.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5446.tmp" with contents
 [
 /nologo /MD /W3 /GX /Zi /O2 /I "include" /I "..\Pack\ucl-1.01\include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ENGINE_EXPORTS" /D WINVER=0x0500 /Fp"Release/Engine.pch" /Yc"kwin32.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\stdafx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP13C7.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP13C8.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP5446.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5447.tmp" with contents
 [
 /nologo /MD /W3 /GX /Zi /O2 /I "include" /I "..\Pack\ucl-1.01\include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ENGINE_EXPORTS" /D WINVER=0x0500 /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\alloc.c"
@@ -883,8 +883,8 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP13C8.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_str.c"
 "D:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_util.c"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP13C8.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP13C9.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP5447.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5448.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib comdlg32.lib ddraw.lib dsound.lib dxguid.lib winmm.lib wsock32.lib dinput8.lib /nologo /dll /incremental:no /pdb:"Release/Engine.pdb" /map:"Release/Engine.map" /debug /machine:I386 /out:"Release/Engine.dll" /implib:"Release/Engine.lib" 
 .\Release\CLogFile.obj
@@ -1030,7 +1030,7 @@ kernel32.lib user32.lib gdi32.lib comdlg32.lib ddraw.lib dsound.lib dxguid.lib w
 ..\..\Lib\release\LuaLibDll.lib
 ..\..\Lib\release\mp3lib.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP13C9.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP5448.tmp"
 <h3>Output Window</h3>
 Compiling...
 stdafx.cpp
@@ -1227,7 +1227,7 @@ Generating Code...
 Linking...
    Creating library Release/Engine.lib and object Release/Engine.exp
 LINK : warning LNK4098: defaultlib "LIBC" conflicts with use of other libs; use /NODEFAULTLIB:library
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP26A6.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6679.bat" with contents
 [
 @echo off
 md ..\..\lib\release
@@ -1249,7 +1249,7 @@ copy release\engine.dll ..\..\..\bin\Server\release\engine.dll
 copy release\engine.pdb ..\..\..\bin\Server\release\engine.pdb
 copy release\engine.map ..\..\..\bin\Server\release\engine.map
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP26A6.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6679.bat"
 
 A subdirectory or file ..\..\lib\release already exists.
         1 file(s) copied.
@@ -1279,7 +1279,7 @@ Engine.dll - 0 error(s), 1 warning(s)
 --------------------Configuration: Engine - Win32 OuRead Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP285D.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP683F.tmp" with contents
 [
 /nologo /MD /W3 /GX /Zi /O2 /I "include" /I "..\Pack\ucl-1.01\include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ENGINE_EXPORTS" /D "USE_STANDALONE_SPR" /Fp"Engine___Win32_OuRead_Release/Engine.pch" /YX"KWin32.h" /Fo"Engine___Win32_OuRead_Release/" /Fd"Engine___Win32_OuRead_Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\CLogFile.cpp"
@@ -1401,14 +1401,14 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP285D.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\Cryptography\EDOneTimePad.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\Text.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP285D.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP285E.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP683F.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6840.tmp" with contents
 [
 /nologo /MD /W3 /GX /Zi /O2 /I "include" /I "..\Pack\ucl-1.01\include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ENGINE_EXPORTS" /D "USE_STANDALONE_SPR" /Fp"Engine___Win32_OuRead_Release/Engine.pch" /Yc"kwin32.h" /Fo"Engine___Win32_OuRead_Release/" /Fd"Engine___Win32_OuRead_Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\stdafx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP285E.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP285F.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP6840.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6841.tmp" with contents
 [
 /nologo /MD /W3 /GX /Zi /O2 /I "include" /I "..\Pack\ucl-1.01\include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ENGINE_EXPORTS" /D "USE_STANDALONE_SPR" /Fo"Engine___Win32_OuRead_Release/" /Fd"Engine___Win32_OuRead_Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\alloc.c"
@@ -1432,8 +1432,8 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP285F.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_str.c"
 "D:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_util.c"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP285F.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP2860.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP6841.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6842.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib comdlg32.lib ddraw.lib dsound.lib dxguid.lib winmm.lib wsock32.lib dinput8.lib /nologo /dll /incremental:no /pdb:"Engine___Win32_OuRead_Release/Engine.pdb" /map:"Engine___Win32_OuRead_Release/Engine.map" /debug /machine:I386 /nodefaultlib:"LIBC" /out:"Engine___Win32_OuRead_Release/Engine.dll" /implib:"Engine___Win32_OuRead_Release/Engine.lib" 
 .\Engine___Win32_OuRead_Release\CLogFile.obj
@@ -1579,7 +1579,7 @@ kernel32.lib user32.lib gdi32.lib comdlg32.lib ddraw.lib dsound.lib dxguid.lib w
 ..\..\Lib\release\LuaLibDll.lib
 ..\..\Lib\release\mp3lib.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP2860.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP6842.tmp"
 <h3>Output Window</h3>
 Compiling...
 stdafx.cpp
@@ -1727,7 +1727,7 @@ ucl_util.c
 Generating Code...
 Linking...
    Creating library Engine___Win32_OuRead_Release/Engine.lib and object Engine___Win32_OuRead_Release/Engine.exp
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3CC4.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP7AE1.bat" with contents
 [
 @echo off
 md ..\..\lib\release
@@ -1749,7 +1749,7 @@ copy Engine___Win32_OuRead_Release\Engine.dll ..\..\..\bin\Server\release\engine
 copy Engine___Win32_OuRead_Release\Engine.pdb ..\..\..\bin\Server\release\engine.pdb
 copy Engine___Win32_OuRead_Release\Engine.map ..\..\..\bin\Server\release\engine.map
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3CC4.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP7AE1.bat"
 
 A subdirectory or file ..\..\lib\release already exists.
         1 file(s) copied.
@@ -1779,7 +1779,7 @@ Engine.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: ExpandPackage - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3F07.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP7C88.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "EXPANDPACKAGE_EXPORTS" /Fp"Release/ExpandPackage.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\BlockSource.cpp"
@@ -1790,14 +1790,14 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3F07.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\Package.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\PackageFileHead.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP3F07.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3F08.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP7C88.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP7C89.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "EXPANDPACKAGE_EXPORTS" /Fp"Release/ExpandPackage.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP3F08.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3F09.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP7C89.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP7C8A.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"Release/ExpandPackage.pdb" /machine:I386 /def:".\ExpandPackage.def" /out:"Release/ExpandPackage.dll" /implib:"Release/ExpandPackage.lib" 
 .\Release\BlockSource.obj
@@ -1809,7 +1809,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Release\PackageFileHead.obj
 .\Release\StdAfx.obj
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP3F09.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP7C8A.tmp"
 <h3>Output Window</h3>
 Compiling...
 StdAfx.cpp
@@ -1824,7 +1824,7 @@ PackageFileHead.cpp
 Generating Code...
 Linking...
    Creating library Release/ExpandPackage.lib and object Release/ExpandPackage.exp
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP4236.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP7F3A.bat" with contents
 [
 @echo off
 md ..\..\..\bin\Client
@@ -1832,7 +1832,7 @@ copy release\ExpandPackage.dll ..\..\..\bin\Client\ExpandPackage.dll
 md ..\..\..\bin\Client\release
 copy release\ExpandPackage.dll ..\..\..\bin\Client\release\ExpandPackage.dll
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP4236.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP7F3A.bat"
 
 A subdirectory or file ..\..\..\bin\Client already exists.
         1 file(s) copied.
@@ -1847,27 +1847,27 @@ ExpandPackage.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: FilterText - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP4350.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8064.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FILTERTEXT_EXPORTS" /Fp"Release/FilterText.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\FilterText\FilterText.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\FilterText\Regexp.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP4350.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP4351.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP8064.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8065.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FILTERTEXT_EXPORTS" /Fp"Release/FilterText.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\FilterText\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP4351.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP4352.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP8065.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8066.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"Release/FilterText.pdb" /map:"Release/FilterText.map" /debug /machine:I386 /out:"Release/FilterText.dll" /implib:"Release/FilterText.lib" 
 .\Release\FilterText.obj
 .\Release\Regexp.obj
 .\Release\StdAfx.obj
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP4352.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP8066.tmp"
 <h3>Output Window</h3>
 Compiling...
 StdAfx.cpp
@@ -1877,7 +1877,7 @@ Regexp.cpp
 Generating Code...
 Linking...
    Creating library Release/FilterText.lib and object Release/FilterText.exp
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP45E4.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP822C.bat" with contents
 [
 @echo off
 md ..\..\..\bin\Client
@@ -1897,7 +1897,7 @@ copy Release\FilterText.dll ..\..\..\bin\Server\release\FilterText.dll
 copy Release\FilterText.map ..\..\..\bin\Server\release\FilterText.map
 copy Release\FilterText.pdb ..\..\..\bin\Server\release\FilterText.pdb
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP45E4.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP822C.bat"
 
 A subdirectory or file ..\..\..\bin\Client already exists.
         1 file(s) copied.
@@ -1925,21 +1925,21 @@ FilterText.dll - 0 error(s), 0 warning(s)
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x804 /fo"Release/Script1.res" /i "res" /d "NDEBUG" "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\GameServer\res\Script1.rc"" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP46EE.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8347.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /I "..\Common\\" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\roledbserver" /I "..\..\..\lib\\" /I "..\..\..\Headers\\" /I "..\..\..\Sources\Engine\src" /I "..\..\..\Sources\Engine\include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D _WIN32_WINNT=0x0400 /FR"Release/" /Fp"Release/GameServer.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\GameServer\GameServer.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\GameServer\KSOServer.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\GameServer\KTransferUnit.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP46EE.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP46FF.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP8347.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8348.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /I "..\Common\\" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\roledbserver" /I "..\..\..\lib\\" /I "..\..\..\Headers\\" /I "..\..\..\Sources\Engine\src" /I "..\..\..\Sources\Engine\include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D _WIN32_WINNT=0x0400 /FR"Release/" /Fp"Release/GameServer.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\GameServer\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP46FF.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP4700.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP8348.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8349.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/GameServer.pdb" /map:"Release/GameServer.map" /debug /machine:I386 /out:"Release/GameServer.exe" 
 .\Release\GameServer.obj
@@ -1951,7 +1951,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 ..\..\..\Lib\release\CoreServer.lib
 ..\..\..\Lib\release\common.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP4700.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP8349.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -1962,7 +1962,7 @@ KSOServer.cpp
 KTransferUnit.cpp
 Generating Code...
 Linking...
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP4BB4.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP884B.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\Server
@@ -1980,7 +1980,7 @@ copy Release\GameServer.exe ..\..\..\..\bin\Server\release\GS2.exe
 copy Release\GameServer.exe ..\..\..\..\bin\Server\release\GS3.exe
 copy Release\GameServer.exe ..\..\..\..\bin\Server\release\GS4.exe
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP4BB4.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP884B.bat"
 
 A subdirectory or file ..\..\..\..\bin\Server already exists.
         1 file(s) copied.
@@ -2006,7 +2006,7 @@ GameServer.exe - 0 error(s), 0 warning(s)
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x804 /fo"Release/Goddess.res" /d "NDEBUG" "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\Goddess.rc"" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP4CDE.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8975.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /I "..\Common\\" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\..\lib" /I "..\..\..\Headers" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Goddess.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\ClientNode.cpp"
@@ -2018,14 +2018,14 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP4CDE.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\IDBRoleServer.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\RoleNameFilter.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP4CDE.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP4CDF.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP8975.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8976.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /I "..\Common\\" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\..\lib" /I "..\..\..\Headers" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Goddess.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP4CDF.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP4CE0.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP8976.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8977.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib libcmtd.lib libcmt.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Goddess.pdb" /map:"Release/Goddess.map" /debug /machine:I386 /out:"Release/Goddess.exe" 
 .\Release\ClientNode.obj
@@ -2041,7 +2041,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 ..\..\..\Lib\release\common.lib
 ..\..\..\Lib\libdb41s.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP4CE0.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP8977.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -2057,7 +2057,7 @@ IDBRoleServer.cpp
 RoleNameFilter.cpp
 Generating Code...
 Linking...
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP526F.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8F35.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\Server
@@ -2069,7 +2069,7 @@ copy release\Goddess.exe ..\..\..\..\bin\Server\release\Goddess.exe
 copy release\Goddess.map ..\..\..\..\bin\Server\release\Goddess.map
 copy release\Goddess.pdb ..\..\..\..\bin\Server\release\Goddess.pdb
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP526F.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8F35.bat"
 
 A subdirectory or file ..\..\..\..\bin\Server already exists.
         1 file(s) copied.
@@ -2089,15 +2089,15 @@ Goddess.exe - 0 error(s), 0 warning(s)
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x804 /fo"Release/Script1.res" /i "res" /d "NDEBUG" "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Heaven\res\Script1.rc"" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5389.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP903F.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /I "..\Common" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "HEAVEN_EXPORTS" /Fp"Release/Heaven.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Heaven\Heaven.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Heaven\IServer.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Heaven\ServerStage.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP5389.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP538A.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP903F.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP9040.tmp" with contents
 [
 winspool.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib netapi32.lib /nologo /dll /incremental:no /pdb:"Release/Heaven.pdb" /map:"Release/Heaven.map" /debug /machine:I386 /def:".\Heaven.def" /out:"Release/Heaven.dll" /implib:"Release/Heaven.lib" 
 .\Release\Heaven.obj
@@ -2106,7 +2106,7 @@ winspool.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib
 .\Release\Script1.res
 ..\..\..\Lib\release\common.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP538A.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP9040.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -2116,7 +2116,7 @@ IServer.cpp
 ServerStage.cpp
 Linking...
    Creating library Release/Heaven.lib and object Release/Heaven.exp
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP56C7.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP939D.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\Client
@@ -2132,7 +2132,7 @@ md ..\..\..\..\bin\Server\release\
 copy release\heaven.dll   ..\..\..\..\bin\Server\Release\heaven.dll
 copy release\heaven.pdb ..\..\..\..\bin\Server\Release\heaven.pdb
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP56C7.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP939D.bat"
 
 A subdirectory or file ..\..\..\..\bin\Client already exists.
         1 file(s) copied.
@@ -2155,7 +2155,7 @@ Heaven.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: LuaLibDll - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5784.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP942A.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /I ".\LuaLibDll\src" /I ".\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "LUALIBDLL_EXPORTS" /Fp"Release/LuaLibDll.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lapi.c"
@@ -2185,8 +2185,8 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5784.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lmathlib.c"
 "D:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lstrlib.c"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP5784.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5785.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP942A.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP942B.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"Release/LuaLibDll.pdb" /machine:I386 /out:"Release/LuaLibDll.dll" /implib:"Release/LuaLibDll.lib" 
 .\Release\lapi.obj
@@ -2216,7 +2216,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Release\lmathlib.obj
 .\Release\lstrlib.obj
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP5785.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP942B.tmp"
 <h3>Output Window</h3>
 Compiling...
 lapi.c
@@ -2273,7 +2273,7 @@ lstrlib.c
 Create LUA dllexport
 Linking...
    Creating library Release/LuaLibDll.lib and object Release/LuaLibDll.exp
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5AC2.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP972A.bat" with contents
 [
 @echo off
 copy Release\lualibdll.lib ..\..\..\Lib\lualibdll.lib
@@ -2287,7 +2287,7 @@ copy Release\lualibdll.dll ..\..\..\..\bin\client\release\lualibdll.dll
 md ..\..\..\..\bin\Server\release\
 copy Release\lualibdll.dll ..\..\..\..\bin\\Server\release\lualibdll.dll
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5AC2.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP972A.bat"
 
         1 file(s) copied.
         1 file(s) copied.
@@ -2310,15 +2310,15 @@ LuaLibDll.dll - 0 error(s), 0 warning(s)
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x804 /fo"Release/Script1.res" /i "res" /d "NDEBUG" "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Rainbow\res\Script1.rc"" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5B6F.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP9834.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /I "..\Common" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "RAINBOW_EXPORTS" /Fp"Release/Rainbow.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Rainbow\IClient.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Rainbow\Rainbow.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Rainbow\ClientStage.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP5B6F.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5B70.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP9834.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP9835.tmp" with contents
 [
 winspool.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib netapi32.lib /nologo /dll /incremental:no /pdb:"Release/Rainbow.pdb" /map:"Release/Rainbow.map" /debug /machine:I386 /def:".\Rainbow.def" /out:"Release/Rainbow.dll" /implib:"Release/Rainbow.lib" 
 .\Release\IClient.obj
@@ -2327,7 +2327,7 @@ winspool.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib
 .\Release\Script1.res
 ..\..\..\Lib\release\common.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP5B70.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP9835.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -2337,7 +2337,7 @@ Rainbow.cpp
 ClientStage.cpp
 Linking...
    Creating library Release/Rainbow.lib and object Release/Rainbow.exp
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5E11.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP9AE6.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\Client\Release
@@ -2357,7 +2357,7 @@ copy release\Rainbow.dll ..\..\..\..\bin\Server\Rainbow.dll
 copy release\Rainbow.map ..\..\..\..\bin\Server\Rainbow.map
 copy release\Rainbow.pdb ..\..\..\..\bin\Server\Rainbow.pdb
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5E11.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP9AE6.bat"
 
 A subdirectory or file ..\..\..\..\bin\Client\Release already exists.
 The process cannot access the file because it is being used by another process.
@@ -2385,7 +2385,7 @@ Rainbow.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: Represent2 - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5F2B.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP9C00.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /I "..\..\engine\include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "REPRESENT2_EXPORTS" /Fp"Release/Represent2.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Represent\Represent2\KImageStore2.cpp"
@@ -2396,8 +2396,8 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5F2B.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\Represent\iRepresent\Text\TextProcess.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\Represent\iRepresent\Image\ImageOperation.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP5F2B.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP5F2C.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP9C00.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP9C01.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib GdiPlus.lib /nologo /dll /incremental:no /pdb:"Release/Represent2.pdb" /map:"Release/Represent2.map" /debug /machine:I386 /out:"Release/Represent2.dll" /implib:"Release/Represent2.lib" 
 .\Release\KImageStore2.obj
@@ -2409,7 +2409,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Release\ImageOperation.obj
 ..\..\..\Lib\release\engine.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP5F2C.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP9C01.tmp"
 <h3>Output Window</h3>
 Compiling...
 KImageStore2.cpp
@@ -2421,7 +2421,7 @@ TextProcess.cpp
 ImageOperation.cpp
 Linking...
    Creating library Release/Represent2.lib and object Release/Represent2.exp
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6363.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPA009.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\client
@@ -2433,7 +2433,7 @@ copy Release\Represent2.dll ..\..\..\..\bin\client\release\Represent2.dll
 copy Release\Represent2.pdb ..\..\..\..\bin\client\release\Represent2.pdb
 copy Release\Represent2.map ..\..\..\..\bin\client\release\Represent2.map
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6363.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPA009.bat"
 
 A subdirectory or file ..\..\..\..\bin\client already exists.
 The process cannot access the file because it is being used by another process.
@@ -2453,7 +2453,7 @@ Represent2.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: Represent3 - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP647D.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPA087.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /I "..\..\engine\include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "REPRESENT3_EXPORTS" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Represent\Represent3\D3D_Device.cpp"
@@ -2470,14 +2470,14 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP647D.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\Represent\Represent3\TextureRes.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\Represent\Represent3\TextureResMgr.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP647D.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP647E.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPA087.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPA088.tmp" with contents
 [
 /nologo /MD /W3 /GX /O2 /I "..\..\engine\include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "REPRESENT3_EXPORTS" /Fp"Release/Represent3.pch" /Yc"precompile.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Represent\Represent3\precompile.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP647E.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP647F.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPA088.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPA089.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib d3dx9dt.lib d3d9.lib winmm.lib dxguid.lib ddraw.lib GdiPlus.lib /nologo /dll /incremental:no /pdb:"Release/Represent3.pdb" /map:"Release/Represent3.map" /debug /machine:I386 /out:"Release/Represent3.dll" /implib:"Release/Represent3.lib" /libpath:"..\..\..\Lib" 
 .\Release\D3D_Device.obj
@@ -2496,7 +2496,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Release\TextureResMgr.obj
 ..\..\..\Lib\release\engine.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP647F.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPA089.tmp"
 <h3>Output Window</h3>
 Compiling...
 precompile.cpp
@@ -2517,7 +2517,7 @@ TextureResMgr.cpp
 Generating Code...
 Linking...
    Creating library Release/Represent3.lib and object Release/Represent3.exp
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6E35.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPAB0A.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\client
@@ -2529,7 +2529,7 @@ copy Release\Represent3.dll ..\..\..\..\bin\client\release\Represent3.dll
 copy Release\Represent3.map ..\..\..\..\bin\client\release\Represent3.map
 copy Release\Represent3.pdb ..\..\..\..\bin\client\release\Represent3.pdb
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6E35.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPAB0A.bat"
 
 A subdirectory or file ..\..\..\..\bin\client already exists.
         1 file(s) copied.
@@ -2549,7 +2549,7 @@ Represent3.dll - 0 error(s), 0 warning(s)
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x804 /fo"Release/Script1.res" /d "NDEBUG" "D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Script1.rc"" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6F3F.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPAC05.tmp" with contents
 [
 /nologo /MD /W3 /GX /Zi /O2 /I "../Engine/src" /I "../Core/src" /I "../Engine/include" /I "../../Headers" /D "WIN32" /D "NDEBUG_WINDOWS" /D "_MBCS" /D "SWORDONLINE_USE_MD5_PASSWORD" /Fp"Release/S3Client.pch" /Yu"KWin32.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\AutoLocateWnd.cpp"
@@ -2682,22 +2682,22 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6F3F.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\S3Client\TextCtrlCmd\TextCtrlCmd.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\S3Client\ErrorCode.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP6F3F.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6F40.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPAC05.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPAC06.tmp" with contents
 [
 /nologo /MD /W3 /GX /Zi /O2 /I "../Engine/src" /I "../Core/src" /I "../Engine/include" /I "../../Headers" /D "WIN32" /D "NDEBUG_WINDOWS" /D "_MBCS" /D "SWORDONLINE_USE_MD5_PASSWORD" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\S3Client\ui\uicase\UiPopupPasswordQuery.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\S3Client\ui\uicase\UiTongCreateSheet.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\S3Client\ui\uicase\UiTongManager.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP6F40.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6F41.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPAC06.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPAC07.tmp" with contents
 [
 /nologo /MD /W3 /GX /Zi /O2 /I "../Engine/src" /I "../Core/src" /I "../Engine/include" /I "../../Headers" /D "WIN32" /D "NDEBUG_WINDOWS" /D "_MBCS" /D "SWORDONLINE_USE_MD5_PASSWORD" /Fp"Release/S3Client.pch" /Yc"KWin32.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\S3Client\stdafx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP6F41.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP6F42.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPAC07.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPAC08.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib Winmm.lib shlwapi.lib lualibdll.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Game.pdb" /map:"Release/Game.map" /debug /machine:I386 /out:"Release/Game.exe" /libpath:"../../lib/" 
 .\Release\AutoLocateWnd.obj
@@ -2837,7 +2837,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 ..\..\Lib\release\engine.lib
 ..\..\Lib\release\CoreClient.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP6F42.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPAC08.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -2991,7 +2991,7 @@ UiTongCreateSheet.cpp
 UiTongManager.cpp
 Generating Code...
 Linking...
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP9E42.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE2C9.bat" with contents
 [
 @echo off
 md ..\..\..\bin\client
@@ -3003,7 +3003,7 @@ copy Release\Game.exe ..\..\..\bin\Client\release\Game.exe
 copy Release\Game.pdb ..\..\..\bin\Client\release\Game.pdb
 copy Release\Game.map ..\..\..\bin\Client\release\Game.map
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP9E42.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE2C9.bat"
 
 A subdirectory or file ..\..\..\bin\client already exists.
 The process cannot access the file because it is being used by another process.
@@ -3024,7 +3024,7 @@ Game.exe - 0 error(s), 0 warning(s)
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x804 /fo"Release/S3Relay.res" /d "NDEBUG" "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\S3Relay.rc"" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPA0E3.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE52B.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_WORKMODE_SINGLETHREAD" /D "_TESTING" /Fp"Release/S3Relay.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\ChannelMgr.cpp"
@@ -3065,14 +3065,14 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPA0E3.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\KTongSet.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\TONGDB.CPP"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPA0E3.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPA0E4.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPE52B.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE52C.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_WORKMODE_SINGLETHREAD" /D "_TESTING" /Fp"Release/S3Relay.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPA0E4.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPA0E5.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPE52C.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPE52D.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib Ws2_32.lib lualibdll.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/S3Relay.pdb" /map:"Release/S3Relay.map" /debug /machine:I386 /out:"Release/S3Relay.exe" 
 .\Release\ChannelMgr.obj
@@ -3117,7 +3117,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 ..\..\..\Lib\release\engine.lib
 .\libdb41s.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPA0E5.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPE52D.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -3164,7 +3164,7 @@ KTongSet.cpp
 TONGDB.CPP
 Generating Code...
 Linking...
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPB6FF.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPFD4A.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\Server
@@ -3176,7 +3176,7 @@ copy release\S3Relay.exe ..\..\..\..\bin\Server\release\S3Relay.exe
 copy release\S3Relay.map ..\..\..\..\bin\Server\release\S3Relay.map
 copy release\S3Relay.pdb ..\..\..\..\bin\Server\release\S3Relay.pdb
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPB6FF.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPFD4A.bat"
 
 A subdirectory or file ..\..\..\..\bin\Server already exists.
         1 file(s) copied.
@@ -3196,7 +3196,7 @@ S3Relay.exe - 0 error(s), 0 warning(s)
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x804 /fo"Release/Sword3RelaySys.res" /d "NDEBUG" "D:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\Sword3RelaySys.rc"" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPB848.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPFE64.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/S3RelayServer.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\GlobalFun.cpp"
@@ -3211,14 +3211,14 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPB848.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\S3PDBSocketPool.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\S3PResultVBC.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPB848.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPB849.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPFE64.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPFE65.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/S3RelayServer.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPB849.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPB84A.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPFE65.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPFE66.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib Ws2_32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/S3RelayServer.pdb" /map:"Release/S3RelayServer.map" /debug /machine:I386 /out:"Release/S3RelayServer.exe" 
 .\Release\GlobalFun.obj
@@ -3235,7 +3235,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Release\StdAfx.obj
 .\Release\Sword3RelaySys.res
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPB84A.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPFE66.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -3253,7 +3253,7 @@ S3PDBConVBC.cpp
 S3PDBSocketPool.cpp
 S3PResultVBC.cpp
 Linking...
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPC069.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP78F.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\Server
@@ -3265,7 +3265,7 @@ copy release\S3RelayServer.exe ..\..\..\..\bin\Server\release\S3RelayServer.exe
 copy release\S3RelayServer.map ..\..\..\..\bin\Server\release\S3RelayServer.map
 copy release\S3RelayServer.pdb ..\..\..\..\bin\Server\release\S3RelayServer.pdb
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPC069.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP78F.bat"
 
 A subdirectory or file ..\..\..\..\bin\Server already exists.
         1 file(s) copied.
@@ -3285,7 +3285,7 @@ S3RelayServer.exe - 0 error(s), 0 warning(s)
 </h3>
 <h3>Command Lines</h3>
 Creating command line "rc.exe /l 0x804 /fo"Release/Sword3PaySys.res" /d "NDEBUG" "D:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\Sword3PaySys.rc"" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPC193.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8C8.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /I "..\..\..\Headers" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Sword3PaySys.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\GlobalFun.cpp"
@@ -3300,14 +3300,14 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPC193.tmp" with 
 "D:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\S3PDBSocketPool.cpp"
 "D:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\S3PResultVBC.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPC193.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPC194.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP8C8.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8C9.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /I "..\..\..\Headers" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Sword3PaySys.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "D:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPC194.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPC195.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP8C9.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP8CA.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib Ws2_32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Sword3PaySys.pdb" /map:"Release/Sword3PaySys.map" /debug /machine:I386 /out:"Release/Sword3PaySys.exe" 
 .\Release\GlobalFun.obj
@@ -3324,7 +3324,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Release\StdAfx.obj
 .\Release\Sword3PaySys.res
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPC195.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP8CA.tmp"
 <h3>Output Window</h3>
 Compiling resources...
 Compiling...
@@ -3342,7 +3342,7 @@ S3PDBConVBC.cpp
 S3PDBSocketPool.cpp
 S3PResultVBC.cpp
 Linking...
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPC9F2.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP11A5.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\Server
@@ -3354,7 +3354,7 @@ copy release\Sword3PaySys.exe ..\..\..\..\bin\Server\release\Sword3PaySys.exe
 copy release\Sword3PaySys.map ..\..\..\..\bin\Server\release\Sword3PaySys.map
 copy release\Sword3PaySys.pdb ..\..\..\..\bin\Server\release\Sword3PaySys.pdb
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPC9F2.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP11A5.bat"
 
 A subdirectory or file ..\..\..\..\bin\Server already exists.
         1 file(s) copied.

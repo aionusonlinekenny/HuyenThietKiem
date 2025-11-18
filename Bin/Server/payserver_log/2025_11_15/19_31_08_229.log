@@ -1,0 +1,25 @@
+
+*
+***** Sword3PaySys Start (@ 2025/11/15 19:31:08.229) >>>>>
+*
+
+[2025/11/15 19:31:14] 1 >> DB Connect 0 is busy !
+[2025/11/15 19:31:14] 2 >> Add Gateway(192.168.254.53 : 57491) Client 0 ! // -- At 0
+[2025/11/15 19:31:14] 3 >> Gateway txjx(192.168.254.53)D89E-F301-B7E6: Verify OK !
+[2025/11/15 19:31:14] 4 >> Gateway unlock OK!
+[2025/11/15 19:31:14] 5 >> Gateway Connect OK!
+[2025/11/15 19:31:14] 6 >> Gateway txjx(192.168.254.53): Ping 0(s)
+[2025/11/15 19:31:17] 7 >> DB Connect 0 is free !
+[2025/11/15 19:31:26] 8 >> DB Connect 0 is busy !
+[2025/11/15 19:31:26] 9 >> Gateway txjx(192.168.254.53): User 123456 Login Success !
+[2025/11/15 19:31:26] 10 >> DB Connect 0 is free !
+[2025/11/15 19:31:29] 11 >> Gateway txjx(192.168.254.53): Ping 15(s)
+[2025/11/15 19:31:44] 12 >> Gateway txjx(192.168.254.53): Ping 15(s)
+[2025/11/15 19:31:59] 13 >> Gateway txjx(192.168.254.53): Ping 15(s)
+[2025/11/15 19:32:08] 14 >> Remove Gateway Client 0 ! // -- At 0
+[2025/11/15 19:32:10] Nomal exit !!!
+
+*
+***** Sword3PaySys Stop (@ 2025/11/15 19:32:10.069) <<<<<
+*
+
