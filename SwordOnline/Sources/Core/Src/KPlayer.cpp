@@ -6078,7 +6078,13 @@ void	KPlayer::LaunchPlayer()
 	}
 	
 
-	// Auto assign default title if player doesn't have one
+	// Auto assign default rank/title if player doesn't have one
+	if(m_nIndex > 0 && Npc[m_nIndex].m_btRankId == 0)
+	{
+		Npc[m_nIndex].m_btRankId = 1; // Default rank: "Tạo Đầu Tăng" (RankId=1)
+	}
+
+	// Also assign default title if needed
 	if(m_wTitleId == 0)
 	{
 		m_wTitleId = 1; // Default title: "Binh sĩ" (TitleId=1)
@@ -6088,7 +6094,7 @@ void	KPlayer::LaunchPlayer()
 	{
 		this->SetTitle(m_wTitleId, true);
 	}
-	
+
 }
 #endif
 
