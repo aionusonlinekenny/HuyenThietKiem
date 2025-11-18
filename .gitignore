@@ -35,6 +35,20 @@ Backup.log
 *.tmp
 *.temp
 ~*
+*.rar
+
+# Additional item files (may be user-specific)
+Bin/Client/Settings/Item/BuySell.txt
+Bin/Client/Settings/Item/Cloak.txt
+Bin/Client/Settings/Item/CloakRes.txt
+Bin/Client/Settings/Item/Goods.txt
+Bin/Client/Settings/Item/Hoods.txt
+Bin/Client/Settings/Item/HoodsRes.txt
+Bin/Client/Settings/Item/MaskRes.txt
+Bin/Client/Settings/Item/magicattriblevel.txt
+Bin/Client/Settings/Item/magicscript.txt
+Bin/Client/Settings/Item/platina*.txt
+Bin/Client/Settings/Item/platinaequip*.txt
 
 # IDE files
 .vs/
