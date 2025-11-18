@@ -111,15 +111,27 @@ function levatchung()
 		Msg2SubWorld("Đại Hiệp <color=yellow>"..szName.."<color> đã nhận được bí kíp 90 từ Bảo Rương Vận Tiêu!")
 
 	elseif (sel < 47 and sel > 40) then
-		-- 12% chance (6/50): Ngọc (replacing Thủy Tinh)
-		-- Genre 1, Detail 6 = Precious stones
-		local nNgocType = random(1, 10) -- Various gem types
-		local nItemIdx = AddItem(1, 6, nNgocType, 1, 0, 0, 0)
+		-- 12% chance (6/50): Thủy Tinh (Crystals)
+		-- Genre 6, Detail 15-18:
+		-- 15 = Tinh Hồng Bảo Thạch
+		-- 16 = Lam Thủy Tinh (change equipment element)
+		-- 17 = Tử Thủy Tinh (upgrade equipment)
+		-- 18 = Lục Thủy Tinh (change equipment stats)
+		local nCrystalType = random(15, 18)
+		local nItemIdx = AddItem(6, nCrystalType, 1, 0, 0, 0, 0)
 		if nItemIdx > 0 then
 			SetItemBindState(nItemIdx, 1)
 		end
-		Msg2Player("Bạn nhận được <color=yellow>Ngọc Quý<color> từ Bảo Rương Vận Tiêu!")
-		Msg2SubWorld("Đại Hiệp <color=yellow>"..szName.."<color> đã nhận được <color=cyan>Ngọc Quý<color> từ Bảo Rương Vận Tiêu!")
+
+		local sCrystalName = "Thủy Tinh"
+		if nCrystalType == 15 then sCrystalName = "Tinh Hồng Bảo Thạch"
+		elseif nCrystalType == 16 then sCrystalName = "Lam Thủy Tinh"
+		elseif nCrystalType == 17 then sCrystalName = "Tử Thủy Tinh"
+		elseif nCrystalType == 18 then sCrystalName = "Lục Thủy Tinh"
+		end
+
+		Msg2Player("Bạn nhận được <color=yellow>"..sCrystalName.."<color> từ Bảo Rương Vận Tiêu!")
+		Msg2SubWorld("Đại Hiệp <color=yellow>"..szName.."<color> đã nhận được <color=cyan>"..sCrystalName.."<color> từ Bảo Rương Vận Tiêu!")
 
 	elseif (sel <= 40 and sel > 20) then
 		-- 40% chance (20/50): Phúc Duyên Lộ
