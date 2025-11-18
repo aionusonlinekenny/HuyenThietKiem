@@ -205,7 +205,7 @@ void KUiStatus::LoadScheme(class KIniFile* pIni)
 	//
 	m_Name.Init(pIni, "Name");
 	m_Title.Init(pIni, "Title");
-	m_Luck.Init(pIni, "Luck");
+	m_Luck.Init(pIni, "FuYuan");
 	m_Prestige.Init(pIni, "Prestige");
 	m_Level.Init(pIni, "Level");
 	m_WorldRank.Init(pIni, "WorldRank");
