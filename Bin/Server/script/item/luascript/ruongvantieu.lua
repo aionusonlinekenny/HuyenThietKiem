@@ -52,7 +52,7 @@ function OpenVanTieuChest(nItemIdx)
 	local nRewardCount = 0
 
 	-- Always give common rewards
-	for i = 1, #REWARDS_COMMON do
+	for i = 1, getn(REWARDS_COMMON) do
 		local reward = REWARDS_COMMON[i]
 		local nIdx = AddItem(reward[1], reward[2], reward[3], reward[4], reward[5], reward[6], 0)
 		if nIdx > 0 then
@@ -63,7 +63,7 @@ function OpenVanTieuChest(nItemIdx)
 
 	-- 30% chance for rare reward
 	if random(1, 100) <= 30 then
-		local reward = REWARDS_RARE[random(1, #REWARDS_RARE)]
+		local reward = REWARDS_RARE[random(1, getn(REWARDS_RARE))]
 		local nIdx = AddItem(reward[1], reward[2], reward[3], reward[4], reward[5], reward[6], 0)
 		if nIdx > 0 then
 			SetItemBindState(nIdx, 1)
@@ -74,7 +74,7 @@ function OpenVanTieuChest(nItemIdx)
 
 	-- 10% chance for very rare reward
 	if random(1, 100) <= 10 then
-		local reward = REWARDS_VERY_RARE[random(1, #REWARDS_VERY_RARE)]
+		local reward = REWARDS_VERY_RARE[random(1, getn(REWARDS_VERY_RARE))]
 		local nIdx = AddItem(reward[1], reward[2], reward[3], reward[4], reward[5], reward[6], 0)
 		if nIdx > 0 then
 			SetItemBindState(nIdx, 1)
