@@ -1,0 +1,47 @@
+# Build artifacts
+*.dll
+*.exe
+*.pdb
+*.map
+*.obj
+*.lib
+*.exp
+*.ilk
+*.ncb
+*.suo
+*.user
+*.aps
+*.pch
+*.vspscc
+*.vssscc
+*.sdf
+*.opensdf
+*.db
+*.opendb
+*.VC.db
+
+# User data
+Bin/Client/UserData/
+Bin/Server/UserData/
+
+# Server backups
+Bin/Server/Backup/
+
+# Runtime logs
+*.log
+Backup.log
+
+# Temporary files
+*.tmp
+*.temp
+~*
+
+# IDE files
+.vs/
+.vscode/
+*.swp
+*~
+
+# OS files
+Thumbs.db
+.DS_Store
