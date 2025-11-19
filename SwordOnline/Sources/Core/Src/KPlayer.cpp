@@ -6077,7 +6077,6 @@ void	KPlayer::LaunchPlayer()
 		Npc[m_nIndex].ChangeWorld(m_sLoginRevivalPos.m_nSubWorldID, m_sLoginRevivalPos.m_nMpsX, m_sLoginRevivalPos.m_nMpsY);
 	}
 	
-
 	if(m_wTitleId > 0)
 	{
 		this->SetTitle(m_wTitleId, true);
