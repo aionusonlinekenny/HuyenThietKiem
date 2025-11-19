@@ -124,6 +124,10 @@ public:
 	
 #endif
 
+#ifndef _SERVER
+	char					m_szFortuneRankPic[MAX_ITEM_LEVEL+1][MAX_PATH];
+#endif
+
 public:
 	KPlayerSet();
 	~KPlayerSet();

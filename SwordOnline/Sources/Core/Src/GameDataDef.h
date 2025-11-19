@@ -36,6 +36,7 @@
 //// --
 #define		MAX_DEATH_PUNISH_PK_VALUE			10
 #define		MAX_TRANSLIFE_VALUE					5
+#define		MAX_ITEM_LEVEL						10
 #define		MAX_REUPTE_VALUE					10000
 #define		MAX_FUYUAN_VALUE					10000
 //// --

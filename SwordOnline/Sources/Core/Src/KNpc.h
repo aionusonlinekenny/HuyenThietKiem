@@ -786,6 +786,7 @@ public:
 	void				PaintHorseState(int nFontSize, int nHeightOff);
 	void				PaintRankInfo(int nHeightOffset, int nFontSize = 12, DWORD	dwBorderColor = 0xff000000);
 	void				PaintTransLifeInfo(int nFontSize, int nHeightOff);
+	int					PaintMantle(int nHeightOff, int nFontSize, int nMpsX, int nMpsY);
 	void				PaintShopInfo(int nFontSize, int nHeightOff);
 	
 	int					PaintChat(int nHeightOffset);
