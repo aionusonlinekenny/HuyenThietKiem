@@ -6103,8 +6103,8 @@ void	KPlayer::LaunchPlayer()
 		}
 		else
 		{
-			// No faction or unknown faction - use default
-			Npc[m_nIndex].m_btRankId = 1;
+			// No faction or unknown faction - keep rank empty
+			// Npc[m_nIndex].m_btRankId = 0;
 		}
 	}
 
