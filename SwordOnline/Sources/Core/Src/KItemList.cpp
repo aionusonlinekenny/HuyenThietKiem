@@ -1134,9 +1134,14 @@ BOOL KItemList::Equip(int nIdx, int nPlace /* = -1 */)
 			Npc[nNpcIdx].m_wMaskType = (WORD)Item[nIdx].GetBaseMagic();
 		break;
 	case itempart_mantle:
+		Npc[nNpcIdx].m_byMantleLevel = Item[nIdx].GetLevel();
 		if(Item[nIdx].GetGenre() == item_goldequip)
 		{
 			Npc[nNpcIdx].m_MantleType = g_ItemChangeRes.GetGoldEquipRes( Item[nIdx].GetRecord() );
+		}
+		else
+		{
+			Npc[nNpcIdx].m_MantleType = 0;
 		}
 		break;
 	default:
@@ -1281,6 +1286,7 @@ BOOL KItemList::UnEquip(int nIdx, int nPos/* = -1*/)
 			Npc[nNpcIdx].m_wMaskType = 0;
 		break;
 	case itempart_mantle:
+		Npc[nNpcIdx].m_byMantleLevel = 0;
 		Npc[nNpcIdx].m_MantleType = -1;
 		break;
 	default:
