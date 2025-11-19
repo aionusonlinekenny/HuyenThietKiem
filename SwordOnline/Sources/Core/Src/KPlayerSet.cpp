@@ -148,7 +148,7 @@ BOOL	KPlayerSet::Init()
 	for (i = 0; i < MAX_ITEM_LEVEL + 1; i++)
 	{
 		sprintf(Buff, "Spr_%d", i);
-		g_GameSetting.GetString("FortuneRank", Buff, "", m_szFortuneRankPic[i], sizeof(m_szFortuneRankPic[i]));
+		g_GameSettingFile.GetString("FortuneRank", Buff, "", m_szFortuneRankPic[i], sizeof(m_szFortuneRankPic[i]));
 	}
 #endif
 

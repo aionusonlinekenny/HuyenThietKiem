@@ -13,8 +13,8 @@
 #include "KNpcTemplate.h"
 #include "KItemSet.h"
 #include "KSortScript.h"
-#ifdef _SERVER
 #include "KPlayerSet.h"
+#ifdef _SERVER
 #include "KSkillManager.h"
 #include <iostream>
 #include "time.h"
