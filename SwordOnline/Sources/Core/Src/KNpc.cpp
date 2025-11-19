@@ -6133,9 +6133,15 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 			strcat(szString, ")");
 		}
 
-		// Calculate X position with offset for mantle icon
-		int nXX = nMpsX - nFontSize * g_StrLen(szString) / 4 + ((m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL) ? 40 : 0);
+		// Calculate X position - name stays centered
+		int nXX = nMpsX - nFontSize * g_StrLen(szString) / 4;
 		g_pRepresent->OutputText(nFontSize, szString, KRF_ZERO_END, nXX, nMpsY, dwColor, 0, nHeightOff, dwBorderColor);
+
+		// Draw mantle icon before name (to the left)
+		if(m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL)
+		{
+			PaintMantle(nHeightOff, nFontSize, nXX, nMpsY);
+		}
 
 		if(m_wMaskType > 0)
 		{
@@ -6148,11 +6154,6 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 			PaintTransLifeInfo(nFontSize, nHeightOff);
 		}
 
-		// Draw mantle icon before name
-		if(m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL)
-		{
-			nXX = PaintMantle(nHeightOff, nFontSize, nXX, nMpsY);
-		}
 		nHeightOffset += nFontSize + 1;
 
 	}
