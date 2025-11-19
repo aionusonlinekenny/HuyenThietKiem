@@ -6076,37 +6076,7 @@ void	KPlayer::LaunchPlayer()
 	{
 		Npc[m_nIndex].ChangeWorld(m_sLoginRevivalPos.m_nSubWorldID, m_sLoginRevivalPos.m_nMpsX, m_sLoginRevivalPos.m_nMpsY);
 	}
-	
 
-	// Auto assign default rank based on faction if player doesn't have one
-	if(m_nIndex > 0 && Npc[m_nIndex].m_btRankId == 0)
-	{
-		// Map faction ID to starting rank ID
-		// Each faction has 6 ranks (entry level = start rank)
-		int nFactionRankStart[] = {
-			1,   // Faction 0: Thiếu Lâm -> Rank 1 (Tạo Đầu Tăng)
-			7,   // Faction 1: Thiên Vương -> Rank 7 (Đạo Đồng)
-			19,  // Faction 2: Đường Môn -> Rank 19 (Phật Trần Đệ Tử)
-			49,  // Faction 3: Ngũ Độc -> Rank 49 (Ngũ Độc Đồng Tử)
-			13,  // Faction 4: Nga Mi -> Rank 13 (Bố Y Ni)
-			31,  // Faction 5: Thuỷ Yên -> Rank 31 (Hoa Tử)
-			25,  // Faction 6: Cái Bang -> Rank 25 (Tạp dịch)
-			55,  // Faction 7: Thiên Nhẫn -> Rank 55 (Sát Thủ)
-			37,  // Faction 8: Võ Đang -> Rank 37 (Vô Đại Đệ Tử)
-			43,  // Faction 9: Côn Lôn -> Rank 43 (Thử vũ)
-		};
-
-		int nFaction = m_cFaction.m_nCurFaction;
-		if(nFaction >= 0 && nFaction <= 9)
-		{
-			Npc[m_nIndex].m_btRankId = nFactionRankStart[nFaction];
-		}
-		else
-		{
-			// No faction or unknown faction - keep rank empty
-			// Npc[m_nIndex].m_btRankId = 0;
-		}
-	}
 
 	// Also assign default title if needed
 	if(m_wTitleId == 0)
