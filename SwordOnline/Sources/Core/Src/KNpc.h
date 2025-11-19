@@ -370,6 +370,7 @@ public:
 	
 	WORD				m_wMaskType;
 	WORD				m_wMaskMark;
+	BYTE				m_byMantleLevel;
 	short				m_MantleType;
 	
 

@@ -3,7 +3,7 @@
 //
 // File:	KNpcRes.cpp
 // Date:	2002.01.06
-// Code:	±ß³ÇÀË×Ó
+// Code:	ï¿½ß³ï¿½ï¿½ï¿½ï¿½ï¿½
 // Desc:	Obj Class
 // --
 
@@ -464,7 +464,7 @@ void	KNpcRes::GetShadowName(char *lpszShadow, char *lpszSprName)
 
 KNpcRes::~KNpcRes()
 {
-    // ÒòÎªNPCÖÐ»á×Ô¶¯µ÷ÓÃRemove
+    // ï¿½ï¿½ÎªNPCï¿½Ð»ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½Remove
     //if (m_SceneID)
     //{
 	//    //Remove(m_SceneID_NPCIdx);
@@ -473,7 +473,7 @@ KNpcRes::~KNpcRes()
 }
 
 // --
-//	¹¦ÄÜ£º	Éè¶¨Í·¿øÀàÐÍ
+//	ï¿½ï¿½ï¿½Ü£ï¿½	ï¿½è¶¨Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 // --
 BOOL	KNpcRes::SetHelm(int nHelmType)
 {
@@ -686,7 +686,7 @@ BOOL	KNpcRes::SetHorse(int nHorseType)
 
 // --
 BOOL	KNpcRes::SetMantle(short nMantleType)
-{	
+{
 	int		i;
 	if (nMantleType < -1)
 		return FALSE;
@@ -696,19 +696,31 @@ BOOL	KNpcRes::SetMantle(short nMantleType)
 	if (m_nMantleType == nMantleType)
 		return TRUE;
 	m_nMantleType = nMantleType;
-	
-	if(m_pcResNode->CheckPartExist(4) )
-	{
-		m_cNpcImage[4].Release();
-	}
 
 	char	szBuffer[80];
+
+	// Load mantle sprite for part 4 (mantle base)
+	// Only load if mantle is equipped, otherwise SetArmor handles part 4
+	if(m_pcResNode->CheckPartExist(4) && m_nMantleType >= 0)
+	{
+		m_pcResNode->GetFileName(4, m_nAction, m_nMantleType, "", szBuffer, sizeof(szBuffer));
+		m_cNpcImage[4].SetSprFile(szBuffer, m_pcResNode->GetTotalFrames(4, m_nAction, m_nMantleType, 16), m_pcResNode->GetTotalDirs(4, m_nAction, m_nMantleType, 16), m_pcResNode->GetInterval(4, m_nAction, m_nMantleType, 0));
+	}
+
+	// Load mantle overlay sprites for parts 16-19
 	for (i = MAX_BODY_PART_SECT * 4; i < MAX_BODY_PART_SECT * 4 + MAX_BODY_PART_SECT; i++)
 	{
 		if ( m_pcResNode->CheckPartExist(i) )
 		{
-			m_pcResNode->GetFileName(i, m_nAction, m_nMantleType, "", szBuffer, sizeof(szBuffer));
-			m_cNpcImage[i].SetSprFile(szBuffer, m_pcResNode->GetTotalFrames(i, m_nAction, m_nMantleType, 16), m_pcResNode->GetTotalDirs(i, m_nAction, m_nMantleType, 16), m_pcResNode->GetInterval(i, m_nAction, m_nMantleType, 0));
+			if (m_nMantleType >= 0)
+			{
+				m_pcResNode->GetFileName(i, m_nAction, m_nMantleType, "", szBuffer, sizeof(szBuffer));
+				m_cNpcImage[i].SetSprFile(szBuffer, m_pcResNode->GetTotalFrames(i, m_nAction, m_nMantleType, 16), m_pcResNode->GetTotalDirs(i, m_nAction, m_nMantleType, 16), m_pcResNode->GetInterval(i, m_nAction, m_nMantleType, 0));
+			}
+			else
+			{
+				m_cNpcImage[i].Release();
+			}
 		}
 		else
 		{
@@ -930,7 +942,7 @@ BOOL	KNpcRes::SetRideHorse(BOOL bRideHorse)
 }
 
 // --
-//	¹¦ÄÜ£º	Éè¶¨ npc Î»ÖÃ
+//	ï¿½ï¿½ï¿½Ü£ï¿½	ï¿½è¶¨ npc Î»ï¿½ï¿½
 // --
 void	KNpcRes::SetPos(int nNpcIdx, int x, int y, int z, BOOL bFocus, BOOL bMenu)
 {
@@ -1026,7 +1038,7 @@ WHILE_END:
 }
 
 // --
-//	¹¦ÄÜ£º	Éè¶¨ÌØÊâµÄÖ»²¥·ÅÒ»±éµÄËæÉísprÎÄ¼þ
+//	ï¿½ï¿½ï¿½Ü£ï¿½	ï¿½è¶¨ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sprï¿½Ä¼ï¿½
 // --
 void	KNpcRes::SetSpecialSpr(char *lpszSprName)
 {
@@ -1044,7 +1056,7 @@ void	KNpcRes::SetSpecialSpr(char *lpszSprName)
 }
 
 // --
-//	¹¦ÄÜ£ºset menu state spr
+//	ï¿½ï¿½ï¿½Ü£ï¿½set menu state spr
 // --
 void	KNpcRes::SetMenuStateSpr(int nMenuState)
 {
@@ -1096,7 +1108,7 @@ void	KNpcRes::SetBlur(BOOL bBlur)
 
 
 // --
-//	¹¦ÄÜ£º	»ñµÃµ±Ç°¶¯×÷µÄÒôÐ§ÎÄ¼þÃû
+//	ï¿½ï¿½ï¿½Ü£ï¿½	ï¿½ï¿½Ãµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½Ä¼ï¿½ï¿½ï¿½
 // --
 void	KNpcRes::GetSoundName()
 {
@@ -1105,7 +1117,7 @@ void	KNpcRes::GetSoundName()
 }
 
 // --
-//	¹¦ÄÜ£º	²¥·Åµ±Ç°¶¯×÷µÄÒôÐ§
+//	ï¿½ï¿½ï¿½Ü£ï¿½	ï¿½ï¿½ï¿½Åµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§
 // --
 void	KNpcRes::PlaySound(int nX, int nY)
 {
@@ -1114,7 +1126,7 @@ void	KNpcRes::PlaySound(int nX, int nY)
 
 	int		nCenterX = 0, nCenterY = 0, nCenterZ = 0;
 
-	// »ñµÃÆÁÄ»ÖÐÐÄµãµÄµØÍ¼×ø±ê not end
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½Äµï¿½Äµï¿½Í¼ï¿½ï¿½ï¿½ï¿½ not end
 	g_ScenePlace.GetFocusPosition(nCenterX, nCenterY, nCenterZ);
 
 	m_pSoundNode = (KCacheNode*) g_SoundCache.GetNode(m_szSoundName, (KCacheNode*)m_pSoundNode);
@@ -1143,7 +1155,7 @@ void	KNpcRes::StopSound()
 	}
 }
 // --
-//	¹¦ÄÜ£ºÉè¶¨Í·¶¥×´Ì¬
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½è¶¨Í·ï¿½ï¿½×´Ì¬
 // --
 void	KNpcRes::SetMenuState(int nState, char *lpszSentence, int nSentenceLength)
 {
@@ -1174,7 +1186,7 @@ void	KNpcRes::SetMenuState(int nState, char *lpszSentence, int nSentenceLength)
 }
 
 // --
-//	¹¦ÄÜ£º»ñµÃÍ·¶¥×´Ì¬
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½×´Ì¬
 // --
 int		KNpcRes::GetMenuState()
 {
@@ -1184,7 +1196,7 @@ int		KNpcRes::GetMenuState()
 }
 
 // --
-//	¹¦ÄÜ£ºÉè¶¨Ë¯Ãß×´Ì¬
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½è¶¨Ë¯ï¿½ï¿½×´Ì¬
 // --
 void	KNpcRes::SetSleepState(BOOL bFlag)
 {
@@ -1208,7 +1220,7 @@ void	KNpcRes::SetSleepState(BOOL bFlag)
 }
 
 // --
-//	¹¦ÄÜ£º»ñµÃË¯Ãß×´Ì¬
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½Ë¯ï¿½ï¿½×´Ì¬
 // --
 BOOL	KNpcRes::GetSleepState()
 {
@@ -1216,7 +1228,7 @@ BOOL	KNpcRes::GetSleepState()
 }
 
 // --
-//	¹¦ÄÜ£º»æÖÆnpcµÄ±ß¿ò(3DÄ£Ê½ÖÐ¸ÄÎª¼ÓÁÁ)
+//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½npcï¿½Ä±ß¿ï¿½(3DÄ£Ê½ï¿½Ð¸ï¿½Îªï¿½ï¿½ï¿½ï¿½)
 // --
 void	KNpcRes::DrawBorder()
 {
