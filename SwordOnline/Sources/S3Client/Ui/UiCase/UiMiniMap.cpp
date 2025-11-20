@@ -40,11 +40,11 @@ extern IInlinePicEngineSink *g_pIInlinePicSink;
 //--------------------------------------------------------------------------
 const char*	s_ModeName[MINIMAP_M_COUNT] = 
 {
-	"B¶n ®å nhá", 
-	"B¶n ®å lín",
-	"B¶n ®å thÕ giíi",
-	"B¶n ®å s¬n ®éng",
-	" §ãng b¶n ®å "
+	"Bï¿½n ï¿½ï¿½ nhï¿½", 
+	"Bï¿½n ï¿½ï¿½ lï¿½n",
+	"Bï¿½n ï¿½ï¿½ thï¿½ giï¿½i",
+	"Bï¿½n ï¿½ï¿½ sï¿½n ï¿½ï¿½ng",
+	" ï¿½ï¿½ng bï¿½n ï¿½ï¿½ "
 };
 
 KUiMiniMap*			KUiMiniMap::ms_pSelf = NULL;
@@ -60,6 +60,7 @@ KUiMiniMap::KUiMiniMap()
 	m_bFlagged		= false;
 	memset(&m_szFlagImage, 0, sizeof(m_szFlagImage));
 	m_bHavePicMap	= true;
+	m_uLastAutoMoveTime = 0;
 }
 
 //--------------------------------------------------------------------------
@@ -473,16 +474,23 @@ void KUiMiniMap::Breathe()
 	{
 		MapMoveBack();
 	}
-	int nCursorX, nCursorY;	
+	int nCursorX, nCursorY;
 	if (m_bCalcPosMode)
 	{
-		Wnd_GetCursorPos(&nCursorX, &nCursorY);	
-		g_pCoreShell->SceneMapFindPosOperation(GSMOI_PAINT_SCENE_FIND_POS, nCursorX, nCursorY, true, false);		
+		Wnd_GetCursorPos(&nCursorX, &nCursorY);
+		g_pCoreShell->SceneMapFindPosOperation(GSMOI_PAINT_SCENE_FIND_POS, nCursorX, nCursorY, true, false);
 	}
 
+	// Fix: Throttle AutoMove() to prevent lag
+	// Only call AutoMove() every 100ms instead of every frame (60-120 times/sec)
+	// This reduces CPU usage significantly while maintaining smooth pathfinding
 	if (!m_bFlagged && g_pCoreShell->GetPaintFindPos())
 	{
-		g_pCoreShell->AutoMove();// find way by kinnox;
+		if (IR_IsTimePassed(100, m_uLastAutoMoveTime))
+		{
+			g_pCoreShell->AutoMove();
+			m_uLastAutoMoveTime = IR_GetCurrentTime();
+		}
 	}
 }
 
@@ -497,7 +505,7 @@ void KUiMiniMap::UpdateSceneTimeInfo(KUiSceneTimeInfo* pInfo)
 	{
 		/*ms_pSelf->m_SceneName.SetText(pInfo->szSceneName);
 		char szBuffer[16];
-		sprintf(szBuffer, "%d/%d T×m", pInfo->nScenePos0 / 8, pInfo->nScenePos1 / 8);
+		sprintf(szBuffer, "%d/%d Tï¿½m", pInfo->nScenePos0 / 8, pInfo->nScenePos1 / 8);
 		ms_pSelf->m_ScenePos.SetText(szBuffer);*/
 		ms_pSelf->m_SceneName.SetText(pInfo->szSceneName);
 		if (!ms_pSelf->m_nIsStopUpdate)
@@ -507,10 +515,10 @@ void KUiMiniMap::UpdateSceneTimeInfo(KUiSceneTimeInfo* pInfo)
 			{
 				KUiSceneCalcPos	Spot;
 				g_pCoreShell->SceneMapOperation(GSMOI_SCENE_CALCFLAG, (unsigned int)&Spot, 0);
-				sprintf(sScenePos, "%d/%d T×m", pInfo->nScenePos0 / 8, pInfo->nScenePos1 / 8);
+				sprintf(sScenePos, "%d/%d Tï¿½m", pInfo->nScenePos0 / 8, pInfo->nScenePos1 / 8);
 			}
 			else
-				sprintf(sScenePos, "%d/%d T×m", pInfo->nScenePos0 / 8, pInfo->nScenePos1 / 8);
+				sprintf(sScenePos, "%d/%d Tï¿½m", pInfo->nScenePos0 / 8, pInfo->nScenePos1 / 8);
 			ms_pSelf->m_ScenePos.SetText(sScenePos);
 			ms_pSelf->nPosXCurrent = pInfo->nScenePos0 / 8;
 			ms_pSelf->nPosYCurrent = pInfo->nScenePos1 / 8;

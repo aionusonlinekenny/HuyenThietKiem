@@ -73,6 +73,7 @@ private:
 
 	POINT           m_OldPos;
 	unsigned int	m_uLastScrollTime;
+	unsigned int	m_uLastAutoMoveTime;
 	short           m_nOffsetX;
 	short           m_nOffsetY;
 	int				m_nIsStopUpdate;
