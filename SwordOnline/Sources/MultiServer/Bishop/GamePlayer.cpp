@@ -1074,13 +1074,32 @@ UINT CGamePlayer::WaitForAccPwd()
             std::string _acc(accBuf);
             if (!AcquireTempLock(_acc))
             {
-                // TEMP-LOCK failed - có thể là leaked lock từ session cũ
-                // Thử cleanup và retry một lần
-                LoginLog("[WaitForAccPwd][ID=%ld] TEMP-LOCK FAILED for \"%s\" - attempting recovery",
+                // TEMP-LOCK failed - có thể là leaked lock từ session cũ hoặc account stuck trên GameServer
+                // Thử FULL cleanup và retry một lần
+                LoginLog("[WaitForAccPwd][ID=%ld] TEMP-LOCK FAILED for \"%s\" - attempting FULL recovery",
                          m_lnIdentityID, accBuf);
 
-                // Force cleanup potential leaked TEMP lock
+                // Force cleanup potential leaked locks (BOTH TEMP and ACTIVE)
                 ReleaseTempLock(_acc);
+                ReleaseLoginLockSafe(_acc);  // Force cleanup ACTIVE lock
+
+                // Also detach from all GameServers (account might be stuck there)
+                for (int gsId = 1; gsId <= 5; gsId++)
+                {
+                    IGServer *pGS = CGameServer::GetServer(gsId);
+                    if (pGS)
+                    {
+                        CGameServer *pGameServer = static_cast<CGameServer*>(pGS);
+                        if (pGameServer && pGameServer->DetachAccountFromGameServer(_acc.c_str()))
+                        {
+                            LoginLog("[WaitForAccPwd][ID=%ld] Recovery: Detached \"%s\" from GS%d",
+                                     m_lnIdentityID, accBuf, gsId);
+                        }
+                    }
+                }
+
+                // Clear transfer flag if exists
+                CGameServer::EndTransfer(_acc.c_str());
 
                 // Retry acquire TEMP lock immediately (no sleep needed - locks use mutex)
                 if (AcquireTempLock(_acc))
