@@ -501,6 +501,16 @@ bool CGamePlayer::Inactive()
             LoginLog("[Inactive][ID=%ld] TEMP lock REMOVED for \"%s\"", m_lnIdentityID, m_sAccountName.c_str());
         }
 
+        // CRITICAL FIX: Send AccountLogout to AccServer when player disconnects from GameServer
+        // Without this, AccServer still thinks account is online and rejects next login with "already online"
+        if (!m_sAccountName.empty())
+        {
+            _UnlockAccount();  // Send c2s_accountlogout to AccServer
+            m_bAutoUnlockAccount = false;
+            LoginLog("[Inactive][ID=%ld] Sent AccountLogout for \"%s\"",
+                     m_lnIdentityID, m_sAccountName.c_str());
+        }
+
         CGameServer::EndTransfer(m_sAccountName.c_str());
         LoginLog("[Inactive][ID=%ld] Completed cleanup for \"%s\" (player was on GS)",
                  m_lnIdentityID, m_sAccountName.c_str());
