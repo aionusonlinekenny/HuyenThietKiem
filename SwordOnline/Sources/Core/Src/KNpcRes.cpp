@@ -686,7 +686,7 @@ BOOL	KNpcRes::SetHorse(int nHorseType)
 
 // --
 BOOL	KNpcRes::SetMantle(short nMantleType)
-{	
+{
 	int		i;
 	if (nMantleType < -1)
 		return FALSE;
@@ -696,19 +696,31 @@ BOOL	KNpcRes::SetMantle(short nMantleType)
 	if (m_nMantleType == nMantleType)
 		return TRUE;
 	m_nMantleType = nMantleType;
-	
-	if(m_pcResNode->CheckPartExist(4) )
-	{
-		m_cNpcImage[4].Release();
-	}
 
 	char	szBuffer[80];
+
+	// Load mantle sprite for part 4 (mantle base)
+	// Only load if mantle is equipped, otherwise SetArmor handles part 4
+	if(m_pcResNode->CheckPartExist(4) && m_nMantleType >= 0)
+	{
+		m_pcResNode->GetFileName(4, m_nAction, m_nMantleType, "", szBuffer, sizeof(szBuffer));
+		m_cNpcImage[4].SetSprFile(szBuffer, m_pcResNode->GetTotalFrames(4, m_nAction, m_nMantleType, 16), m_pcResNode->GetTotalDirs(4, m_nAction, m_nMantleType, 16), m_pcResNode->GetInterval(4, m_nAction, m_nMantleType, 0));
+	}
+
+	// Load mantle overlay sprites for parts 16-19
 	for (i = MAX_BODY_PART_SECT * 4; i < MAX_BODY_PART_SECT * 4 + MAX_BODY_PART_SECT; i++)
 	{
 		if ( m_pcResNode->CheckPartExist(i) )
 		{
-			m_pcResNode->GetFileName(i, m_nAction, m_nMantleType, "", szBuffer, sizeof(szBuffer));
-			m_cNpcImage[i].SetSprFile(szBuffer, m_pcResNode->GetTotalFrames(i, m_nAction, m_nMantleType, 16), m_pcResNode->GetTotalDirs(i, m_nAction, m_nMantleType, 16), m_pcResNode->GetInterval(i, m_nAction, m_nMantleType, 0));
+			if (m_nMantleType >= 0)
+			{
+				m_pcResNode->GetFileName(i, m_nAction, m_nMantleType, "", szBuffer, sizeof(szBuffer));
+				m_cNpcImage[i].SetSprFile(szBuffer, m_pcResNode->GetTotalFrames(i, m_nAction, m_nMantleType, 16), m_pcResNode->GetTotalDirs(i, m_nAction, m_nMantleType, 16), m_pcResNode->GetInterval(i, m_nAction, m_nMantleType, 0));
+			}
+			else
+			{
+				m_cNpcImage[i].Release();
+			}
 		}
 		else
 		{
@@ -717,7 +729,6 @@ BOOL	KNpcRes::SetMantle(short nMantleType)
 	}
 	return TRUE;
 }
-
 // --
 //
 // --

@@ -13,8 +13,8 @@
 #include "KNpcTemplate.h"
 #include "KItemSet.h"
 #include "KSortScript.h"
-#ifdef _SERVER
 #include "KPlayerSet.h"
+#ifdef _SERVER
 #include "KSkillManager.h"
 #include <iostream>
 #include "time.h"
@@ -6138,7 +6138,9 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 			strcat(szString, ")");
 		}
 	//Kenny hieu ung dinh don
-		g_pRepresent->OutputText(nFontSize, szString, KRF_ZERO_END, nMpsX - nFontSize * g_StrLen(Name) / 4, nMpsY, dwColor, 0, nHeightOff, dwBorderColor);
+		//g_pRepresent->OutputText(nFontSize, szString, KRF_ZERO_END, nMpsX - nFontSize * g_StrLen(Name) / 4, nMpsY, dwColor, 0, nHeightOff, dwBorderColor);
+		int nXX = nMpsX - nFontSize * g_StrLen(szString) / 4 + ((m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL) ? 40 : 0);
+		g_pRepresent->OutputText(nFontSize, szString, KRF_ZERO_END, nXX, nMpsY, dwColor, 0, nHeightOff, dwBorderColor);
 		
 		if(m_wMaskType > 0)
 		{
@@ -6149,6 +6151,11 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 		if(m_cTransLife > 0)
 		{
 			PaintTransLifeInfo(nFontSize, nHeightOff);
+		}
+		// Draw mantle icon before name
+		if(m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL)
+		{
+			nXX = PaintMantle(nHeightOff, nFontSize, nXX, nMpsY);
 		}
 		nHeightOffset += nFontSize + 1;
 
@@ -6261,6 +6268,30 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 	return nHeightOffset;
 }
 
+//
+// Draw mantle icon before player name
+//
+
+int KNpc::PaintMantle(int nHeightOff, int nFontSize, int nMpsX, int nMpsY)
+
+{
+	KRUImage RUIconImage;
+	RUIconImage.nType = ISI_T_SPR;
+	RUIconImage.Color.Color_b.a = 255;
+	RUIconImage.bRenderStyle = IMAGE_RENDER_STYLE_ALPHA;
+	RUIconImage.uImage = 0;
+	RUIconImage.nISPosition = IMAGE_IS_POSITION_INIT;
+	RUIconImage.bRenderFlag = RUIMAGE_RENDER_FLAG_REF_SPOT;
+	strcpy(RUIconImage.szImage, PlayerSet.m_szFortuneRankPic[m_byMantleLevel]);
+	KImageParam	Param;
+	g_pRepresent->GetImageParam(RUIconImage.szImage, &Param, ISI_T_SPR);
+	RUIconImage.oPosition.nX = nMpsX - Param.nWidth;
+	RUIconImage.oPosition.nY = nMpsY - Param.nHeight/2 - 4;
+	RUIconImage.oPosition.nZ = nHeightOff;
+	RUIconImage.nFrame = g_SubWorldSet.GetGameTime() % Param.nNumFrames;
+	g_pRepresent->DrawPrimitives(1, &RUIconImage, RU_T_IMAGE, 0);
+	return RUIconImage.oPosition.nX;
+}
 //
 void KNpc::PaintNpcAuto(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBorderColor)
 {
