@@ -179,38 +179,17 @@ void KUiFindPos::OnOk()
 	int nGameX = nDestX * 8;
 	int nGameY = nDestY * 8;
 
-	// Validate: Get current map info to check bounds
-	KSceneMapInfo MapInfo;
-	if(!g_pCoreShell->SceneMapOperation(GSMOI_SCENE_MAP_INFO, (unsigned int)&MapInfo, 0))
-	{
-		UIMessageBox("Không thể lấy thông tin bản đồ!", this);
-		return;
-	}
-
-	// Check if coordinates are within map bounds
-	// Map bounds are defined by Focus Min/Max values
-	int nMinX = MapInfo.nFocusMinH;
-	int nMaxX = MapInfo.nFocusMaxH;
-	int nMinY = MapInfo.nFocusMinV;
-	int nMaxY = MapInfo.nFocusMaxV;
-
-	if(nGameX < nMinX || nGameX > nMaxX || nGameY < nMinY || nGameY > nMaxY)
-	{
-		char szMsg[256];
-		sprintf(szMsg, "Tọa độ %d/%d nằm ngoài bản đồ!\nPhạm vi hợp lệ: %d-%d/%d-%d Tâm",
-			nDestX, nDestY,
-			nMinX/8, nMaxX/8, nMinY/8, nMaxY/8);
-		UIMessageBox(szMsg, this);
-		return;
-	}
-
 	// Check if destination has barrier/obstacle
+	// This also validates if coordinates are within valid map range
 	int nBarrier = g_pCoreShell->CheckPositionBarrier(nGameX, nGameY);
 
 	if(nBarrier < 0)
 	{
-		// Error checking barrier (invalid player/subworld)
-		UIMessageBox("Không thể kiểm tra tọa độ!", this);
+		// Error checking barrier - usually means coordinates are outside map
+		char szMsg[256];
+		sprintf(szMsg, "Tọa độ %d/%d Tâm nằm ngoài bản đồ!\nVui lòng nhập tọa độ hợp lệ.",
+			nDestX, nDestY);
+		UIMessageBox(szMsg, this);
 		return;
 	}
 	else if(nBarrier > 0)
