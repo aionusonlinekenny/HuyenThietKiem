@@ -873,6 +873,34 @@ IGServer *CGameServer::GetServer(size_t nID)
 }
 
 // ============================================
+// GetAllServers - Retrieve all GameServers with single lock acquisition
+// ============================================
+void CGameServer::GetAllServers(CGameServer **pOutServers, int nMaxServers)
+{
+    if (!pOutServers || nMaxServers <= 0)
+        return;
+
+    // Initialize output array
+    for (int i = 0; i < nMaxServers; i++)
+        pOutServers[i] = NULL;
+
+    // Acquire lock ONCE and get all servers
+    CCriticalSection::Owner locker(CGameServer::m_csGameSvrAction);
+    stdGameSvr::iterator it;
+    for (it = CGameServer::m_theGameServers.begin(); it != CGameServer::m_theGameServers.end(); ++it)
+    {
+        CGameServer *pGS = static_cast<CGameServer*>(it->second);
+        if (pGS)
+        {
+            size_t nID = pGS->GetID();
+            if (nID >= 1 && nID <= (size_t)nMaxServers)
+                pOutServers[nID - 1] = pGS;  // Store in 0-indexed array
+        }
+    }
+    // Lock automatically released here
+}
+
+// ============================================
 // Content Management
 // ============================================
 size_t CGameServer::GetContent()
