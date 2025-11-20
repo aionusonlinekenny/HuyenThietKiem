@@ -11,9 +11,6 @@
 #include "UiInformation.h"
 #include "../../../core/src/coreshell.h"
 #include "../../../core/src/GameDataDef.h"
-#include "../../../core/src/KSubWorld.h"
-#include "../../../core/src/KPlayer.h"
-#include "../../../core/src/KNpc.h"
 
 extern iCoreShell*		g_pCoreShell;
 
@@ -182,7 +179,7 @@ void KUiFindPos::OnOk()
 	int nGameX = nDestX * 8;
 	int nGameY = nDestY * 8;
 
-	// Validate 1: Get current map info to check bounds
+	// Validate: Get current map info to check bounds
 	KSceneMapInfo MapInfo;
 	if(!g_pCoreShell->SceneMapOperation(GSMOI_SCENE_MAP_INFO, (unsigned int)&MapInfo, 0))
 	{
@@ -190,7 +187,7 @@ void KUiFindPos::OnOk()
 		return;
 	}
 
-	// Validate 2: Check if coordinates are within map bounds
+	// Check if coordinates are within map bounds
 	// Map bounds are defined by Focus Min/Max values
 	int nMinX = MapInfo.nFocusMinH;
 	int nMaxX = MapInfo.nFocusMaxH;
@@ -207,35 +204,9 @@ void KUiFindPos::OnOk()
 		return;
 	}
 
-	// Validate 3: Check if destination has barrier/obstacle
-	int nPlayerIndex = Player[CLIENT_PLAYER_INDEX].m_nIndex;
-	if(nPlayerIndex <= 0)
-	{
-		UIMessageBox("Không tìm thấy nhân vật!", this);
-		return;
-	}
-
-	int nSubWorldIndex = Npc[nPlayerIndex].m_SubWorldIndex;
-	if(nSubWorldIndex < 0 || nSubWorldIndex >= MAX_SUBWORLD)
-	{
-		UIMessageBox("Không tìm thấy bản đồ hiện tại!", this);
-		return;
-	}
-
-	// Check barrier at destination
-	int nBarrier = SubWorld[nSubWorldIndex].GetBarrier(nGameX, nGameY);
-
-	// Obstacle_NULL = 0 means no obstacle
-	if(nBarrier != 0)
-	{
-		char szMsg[256];
-		sprintf(szMsg, "Tọa độ %d/%d Tâm bị vật cản!\nKhông thể di chuyển đến đây.",
-			nDestX, nDestY);
-		UIMessageBox(szMsg, this);
-		return;
-	}
-
 	// All validations passed! Start pathfinding
+	// Note: Pathfinding algorithm will automatically handle obstacles/barriers
+	// If destination is blocked, it will find alternative path or stop
 	KUiMiniMap::SetValueFindPos(nDestX, nDestY);
 	g_pCoreShell->AutoMove();
 
