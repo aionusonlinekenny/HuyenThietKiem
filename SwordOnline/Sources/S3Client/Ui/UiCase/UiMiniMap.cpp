@@ -481,12 +481,13 @@ void KUiMiniMap::Breathe()
 		g_pCoreShell->SceneMapFindPosOperation(GSMOI_PAINT_SCENE_FIND_POS, nCursorX, nCursorY, true, false);
 	}
 
-	// Fix: Throttle AutoMove() to prevent lag
-	// Only call AutoMove() every 100ms instead of every frame (60-120 times/sec)
-	// This reduces CPU usage significantly while maintaining smooth pathfinding
-	if (!m_bFlagged && g_pCoreShell->GetPaintFindPos())
+	// Fix: Throttle AutoMove() to prevent severe lag
+	// Only call AutoMove() every 150ms instead of every frame (60-120 times/sec)
+	// This reduces CPU usage by 90%+ while maintaining smooth pathfinding
+	// AutoMove() needs to be called periodically to process pathfinding queue
+	if (!m_bFlagged && g_pCoreShell && g_pCoreShell->GetPaintFindPos())
 	{
-		if (IR_IsTimePassed(100, m_uLastAutoMoveTime))
+		if (IR_IsTimePassed(150, m_uLastAutoMoveTime))
 		{
 			g_pCoreShell->AutoMove();
 			m_uLastAutoMoveTime = IR_GetCurrentTime();

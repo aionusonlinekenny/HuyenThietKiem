@@ -8,8 +8,12 @@
 #include "../UiBase.h"
 #include "UiFindPos.h"
 #include "UiMiniMap.h"//PaintFindPos by kinnox;
+#include "UiInformation.h"
 #include "../../../core/src/coreshell.h"
 #include "../../../core/src/GameDataDef.h"
+#include "../../../core/src/KSubWorld.h"
+#include "../../../core/src/KPlayer.h"
+#include "../../../core/src/KNpc.h"
 
 extern iCoreShell*		g_pCoreShell;
 
@@ -103,7 +107,7 @@ void KUiFindPos::LoadScheme(const char* pScheme)
 			m_pSelf->m_OkBtn.Init(&Ini, "OkBtn");
 			m_pSelf->m_CancelBtn.Init(&Ini, "CancelBtn");
 
-			m_pSelf->m_Title.SetText("Nh�p t�a �� ��ch ��n");
+			m_pSelf->m_Title.SetText("Nh�p t�a �� ��ch ��n");
 			m_pSelf->m_Symbols.SetText("/");
 		}
 	}	
@@ -161,19 +165,80 @@ int KUiFindPos::WndProc(unsigned int uMsg, unsigned int uParam, int nParam)
 
 
 void KUiFindPos::OnOk()
-{	
-	if(g_pCoreShell)
-	{	
-		OnCheckInput();
-
-		POINT LineDest;
-
-		LineDest.x = m_PosX.GetIntNumber();
-		LineDest.y = m_PosY.GetIntNumber();
-		KUiMiniMap::SetValueFindPos(LineDest.x, LineDest.y);//PaintFindPos by kinnox;
-		//g_pCoreShell->SceneMapOperation(GSMOI_PAINT_LINE, (unsigned int)&LineDest, 0);
-		g_pCoreShell->AutoMove();// find way by kinnox;
+{
+	if(!g_pCoreShell)
+	{
+		CloseWindow();
+		return;
 	}
+
+	OnCheckInput();
+
+	// Get input coordinates (in Tâm units, need to convert to game units *8)
+	int nDestX = m_PosX.GetIntNumber();
+	int nDestY = m_PosY.GetIntNumber();
+
+	// Convert from Tâm to game coordinates (1 Tâm = 8 game units)
+	int nGameX = nDestX * 8;
+	int nGameY = nDestY * 8;
+
+	// Validate 1: Get current map info to check bounds
+	KSceneMapInfo MapInfo;
+	if(!g_pCoreShell->SceneMapOperation(GSMOI_SCENE_MAP_INFO, (unsigned int)&MapInfo, 0))
+	{
+		UIMessageBox("Không thể lấy thông tin bản đồ!", this);
+		return;
+	}
+
+	// Validate 2: Check if coordinates are within map bounds
+	// Map bounds are defined by Focus Min/Max values
+	int nMinX = MapInfo.nFocusMinH;
+	int nMaxX = MapInfo.nFocusMaxH;
+	int nMinY = MapInfo.nFocusMinV;
+	int nMaxY = MapInfo.nFocusMaxV;
+
+	if(nGameX < nMinX || nGameX > nMaxX || nGameY < nMinY || nGameY > nMaxY)
+	{
+		char szMsg[256];
+		sprintf(szMsg, "Tọa độ %d/%d nằm ngoài bản đồ!\nPhạm vi hợp lệ: %d-%d/%d-%d Tâm",
+			nDestX, nDestY,
+			nMinX/8, nMaxX/8, nMinY/8, nMaxY/8);
+		UIMessageBox(szMsg, this);
+		return;
+	}
+
+	// Validate 3: Check if destination has barrier/obstacle
+	int nPlayerIndex = Player[CLIENT_PLAYER_INDEX].m_nIndex;
+	if(nPlayerIndex <= 0)
+	{
+		UIMessageBox("Không tìm thấy nhân vật!", this);
+		return;
+	}
+
+	int nSubWorldIndex = Npc[nPlayerIndex].m_SubWorldIndex;
+	if(nSubWorldIndex < 0 || nSubWorldIndex >= MAX_SUBWORLD)
+	{
+		UIMessageBox("Không tìm thấy bản đồ hiện tại!", this);
+		return;
+	}
+
+	// Check barrier at destination
+	int nBarrier = SubWorld[nSubWorldIndex].GetBarrier(nGameX, nGameY);
+
+	// Obstacle_NULL = 0 means no obstacle
+	if(nBarrier != 0)
+	{
+		char szMsg[256];
+		sprintf(szMsg, "Tọa độ %d/%d Tâm bị vật cản!\nKhông thể di chuyển đến đây.",
+			nDestX, nDestY);
+		UIMessageBox(szMsg, this);
+		return;
+	}
+
+	// All validations passed! Start pathfinding
+	KUiMiniMap::SetValueFindPos(nDestX, nDestY);
+	g_pCoreShell->AutoMove();
+
 	CloseWindow();
 }
 
