@@ -1082,10 +1082,7 @@ UINT CGamePlayer::WaitForAccPwd()
                 // Force cleanup potential leaked TEMP lock
                 ReleaseTempLock(_acc);
 
-                // Delay nhỏ để tránh race condition với login song song
-                ::Sleep(50);
-
-                // Retry acquire TEMP lock
+                // Retry acquire TEMP lock immediately (no sleep needed - locks use mutex)
                 if (AcquireTempLock(_acc))
                 {
                     // Recovery thành công - leak đã được cleanup!
