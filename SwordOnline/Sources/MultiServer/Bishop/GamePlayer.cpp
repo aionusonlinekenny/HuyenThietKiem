@@ -424,50 +424,48 @@ bool CGamePlayer::Inactive()
         }
 
         // Detach from GameServer (GS will receive logout message)
-        // FIX: Loop through ALL GameServers to ensure complete cleanup
         if (!m_sAccountName.empty())
         {
             int nDetachCount = 0;
 
-            // Detach from ALL GameServers (GS1-5) - simple, fast, no search
-            // This ensures account is cleaned up even if m_nAttachServerID is invalid
-            for (int gsId = 1; gsId <= 5; gsId++)
+            // Method 1: Detach from primary GameServer
+            CGameServer *pGS = static_cast<CGameServer*>(pGServer);
+            if (pGS)
             {
-                IGServer *pServer = CGameServer::GetServer(gsId);
-                if (pServer)
+																		
+                if (pGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
                 {
-                    CGameServer *pGS = static_cast<CGameServer*>(pServer);
-                    if (pGS)
-                    {
-                        bool bDetached = pGS->DetachAccountFromGameServer(m_sAccountName.c_str());
-                        if (bDetached)
-                        {
-                            nDetachCount++;
-                            if (gsId == m_nAttachServerID)
-                            {
-                                LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (primary)",
-                                         m_lnIdentityID, m_sAccountName.c_str(), gsId);
-                            }
-                            else
-                            {
-                                LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (cleanup stuck account)",
-                                         m_lnIdentityID, m_sAccountName.c_str(), gsId);
-                            }
-                        }
-                    }
+                    nDetachCount++;
+                    LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (primary)",
+                             m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID);
                 }
             }
 
-            if (nDetachCount > 0)
+            // Method 2: Detach from ALL other GameServers (fast loop, no search)
+            // FIX: Use direct iteration instead of FindServerByAccount() to avoid 15-second blocking delay
+            for (int gsId = 1; gsId <= 5; gsId++)  // Assuming 5 GameServers
+																					  
             {
-                LoginLog("[Inactive][ID=%ld] Total detached \"%s\" from %d GameServer(s)",
-                         m_lnIdentityID, m_sAccountName.c_str(), nDetachCount);
+                if (gsId == m_nAttachServerID)
+                    continue;  // Skip primary (already handled above)
+
+                IGServer *pOtherServer = CGameServer::GetServer(gsId);
+                if (pOtherServer)
+                {
+                    CGameServer *pOtherGS = static_cast<CGameServer*>(pOtherServer);
+                    if (pOtherGS && pOtherGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
+                    {
+                        nDetachCount++;
+                        LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (stuck account cleanup)",
+                                 m_lnIdentityID, m_sAccountName.c_str(), gsId);
+                    }
+                }
+													 
+																					
             }
-            else
-            {
-                LoginLog("[Inactive][ID=%ld] WARNING: Account \"%s\" not found on any GameServer! (m_nAttachServerID=%d)",
-                         m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID);
-            }
+
+            LoginLog("[Inactive][ID=%ld] Total detached \"%s\" from %d GameServer(s)",
+                     m_lnIdentityID, m_sAccountName.c_str(), nDetachCount);
         }
 
         // Cleanup local Bishop state
@@ -524,56 +522,51 @@ bool CGamePlayer::Inactive()
         // CRITICAL FIX: Detach account from GameServer on logout
         // Without this, account remains in m_theAccountInThisServer forever
         // causing "account already online" error on next login
-        // FIX: Loop through ALL GameServers to ensure complete cleanup
         if (!m_sAccountName.empty())
         {
             int nDetachCount = 0;
 
-            // Detach from ALL GameServers (GS1-5) - simple, fast, no search
-            // This ensures account is cleaned up even if m_nAttachServerID is invalid
-            for (int gsId = 1; gsId <= 5; gsId++)
+            // Method 1: Detach from primary GameServer
+            CGameServer *pGS = static_cast<CGameServer*>(pGServer);
+            if (pGS)
             {
-                IGServer *pServer = CGameServer::GetServer(gsId);
-                if (pServer)
+                if (pGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
                 {
-                    CGameServer *pGS = static_cast<CGameServer*>(pServer);
-                    if (pGS)
+                    nDetachCount++;
+                    LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (primary)",
+                             m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID);
+			 
+                }
+            }
+
+            // Method 2: Detach from ALL other GameServers (fast loop, no search)
+            // FIX: Use direct iteration instead of FindServerByAccount() to avoid 15-second blocking delay
+            for (int gsId = 1; gsId <= 5; gsId++)  // Assuming 5 GameServers
+            {
+                if (gsId == m_nAttachServerID)
+                    continue;  // Skip primary (already handled above)
+
+                IGServer *pOtherServer = CGameServer::GetServer(gsId);
+                if (pOtherServer)
+                {
+                    CGameServer *pOtherGS = static_cast<CGameServer*>(pOtherServer);
+                    if (pOtherGS && pOtherGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
                     {
-                        bool bDetached = pGS->DetachAccountFromGameServer(m_sAccountName.c_str());
-                        if (bDetached)
-                        {
-                            nDetachCount++;
-                            if (gsId == m_nAttachServerID)
-                            {
-                                LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (primary)",
-                                         m_lnIdentityID, m_sAccountName.c_str(), gsId);
-                            }
-                            else
-                            {
-                                LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (cleanup stuck account)",
-                                         m_lnIdentityID, m_sAccountName.c_str(), gsId);
-                            }
-                        }
+                        nDetachCount++;
+                        LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (stuck account cleanup)",
+                                 m_lnIdentityID, m_sAccountName.c_str(), gsId);
                     }
                 }
             }
 
-            if (nDetachCount > 0)
-            {
-                LoginLog("[Inactive][ID=%ld] Total detached \"%s\" from %d GameServer(s) (not on GS path)",
-                         m_lnIdentityID, m_sAccountName.c_str(), nDetachCount);
-            }
-            else
-            {
-                LoginLog("[Inactive][ID=%ld] WARNING: Account \"%s\" not found on any GameServer! (m_nAttachServerID=%d, not on GS path)",
-                         m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID);
-            }
+            LoginLog("[Inactive][ID=%ld] Total detached \"%s\" from %d GameServer(s) (not on GS path)",
+                     m_lnIdentityID, m_sAccountName.c_str(), nDetachCount);
         }
     }
     if (!m_sAccountName.empty())
     {
         _UnlockAccount();                    // g?i c2s_accountlogout
-       m_bAutoUnlockAccount = false;        // kh�ng ?? Run/timeout g?i tr�ng
+       m_bAutoUnlockAccount = false;        // kh?ng ?? Run/timeout g?i tr?ng
         LoginLog("[Inactive][ID=%ld] Sent AccountLogout for \"%s\"",
                  m_lnIdentityID, m_sAccountName.c_str());
     }
@@ -596,7 +589,7 @@ bool CGamePlayer::Inactive()
 
     ::InterlockedExchangeAdd( &m_lnWorkingCounts, -1 );
 
-    // ACTIVE-LOCK: ch? owner m?i du?c xo�
+    // ACTIVE-LOCK: ch? owner m?i du?c xo?
     {
         OnlineGameLib::Win32::CCriticalSection::Owner lk(g_csActiveAccounts);
         if (m_bOwnsActiveLock)
@@ -611,7 +604,7 @@ bool CGamePlayer::Inactive()
         }
     }
 
-    // TEMP-LOCK: n?u c�n (client t?t gi?a handshake)
+    // TEMP-LOCK: n?u c?n (client t?t gi?a handshake)
     if (m_bHasTempLock)
     {
         ReleaseTempLock(m_sAccountName);
@@ -628,8 +621,6 @@ bool CGamePlayer::Inactive()
 
     return true;
 }
-
-
 UINT CGamePlayer::SafeClose()
 {
 	ASSERT( FALSE );
@@ -736,13 +727,11 @@ bool CGamePlayer::Run()
             {
                 _UnlockAccount();
                 m_bAutoUnlockAccount = false;
-                LoginLog("[Run-Timeout][ID=%ld] Sent AccountLogout for \"%s\"", m_lnIdentityID, m_sAccountName.c_str());
+				LoginLog("[Run-Timeout][ID=%ld] Sent AccountLogout for \"%s\"", m_lnIdentityID, m_sAccountName.c_str());
             }
-
-            // FIX: Reset timer to prevent spam - this timeout block should only run ONCE
+			// FIX: Reset timer to prevent spam - this timeout block should only run ONCE
             m_dwTaskBeginTimer = 0;
-
-            // ACTIVE-LOCK: ch? owner m?i xo�
+            // ACTIVE-LOCK:
             {
                 OnlineGameLib::Win32::CCriticalSection::Owner lk(g_csActiveAccounts);
                 if (m_bOwnsActiveLock)
@@ -1085,26 +1074,52 @@ UINT CGamePlayer::WaitForAccPwd()
             std::string _acc(accBuf);
             if (!AcquireTempLock(_acc))
             {
-                LoginLog("[WaitForAccPwd][ID=%ld] TEMP-LOCK FAILED for \"%s\" -> duplicate/pending",
+                // TEMP-LOCK failed - có thể là leaked lock từ session cũ
+                // Thử cleanup và retry một lần
+                LoginLog("[WaitForAccPwd][ID=%ld] TEMP-LOCK FAILED for \"%s\" - attempting recovery",
                          m_lnIdentityID, accBuf);
 
-                // Kh�ng c� LOGIN_R_ACCOUNT_ERROR -> d�ng LOGIN_R_ACCOUNT_OR_PASSWORD_ERROR
-                _VerifyAccount_ToPlayer(LOGIN_A_LOGIN | LOGIN_R_ACCOUNT_OR_PASSWORD_ERROR, 0);
+                // Force cleanup potential leaked TEMP lock
+                ReleaseTempLock(_acc);
 
-                if (m_pPlayerServer)
+                // Delay nhỏ để tránh race condition với login song song
+                ::Sleep(50);
+
+                // Retry acquire TEMP lock
+                if (AcquireTempLock(_acc))
                 {
-                    m_pPlayerServer->ShutdownClient(m_lnIdentityID);
-                    LoginLog("[WaitForAccPwd][ID=%ld] Client shutdown - duplicate login attempt", m_lnIdentityID);
+                    // Recovery thành công - leak đã được cleanup!
+                    m_bHasTempLock = true;
+                    LoginLog("[WaitForAccPwd][ID=%ld] TEMP-LOCK recovered for \"%s\" - continuing login",
+                             m_lnIdentityID, accBuf);
+                    // Tiếp tục login flow bình thường (không return enumError)
                 }
+                else
+                {
+                    // Vẫn fail sau recovery → thực sự duplicate (account đang ACTIVE ở session khác)
+                    LoginLog("[WaitForAccPwd][ID=%ld] TEMP-LOCK FAILED for \"%s\" -> duplicate/pending (after recovery)",
+                             m_lnIdentityID, accBuf);
 
-                m_sAccountName = ""; // thay cho .clear() ?? t??ng th�ch VC6 STL
-                SAFE_RELEASE(pRetBuffer);
-                m_theDataQueue[enumOwnerPlayer].Detach(c2s_login);
-                return enumError;
+                    _VerifyAccount_ToPlayer(LOGIN_A_LOGIN | LOGIN_R_ACCOUNT_OR_PASSWORD_ERROR, 0);
+
+                    if (m_pPlayerServer)
+                    {
+                        m_pPlayerServer->ShutdownClient(m_lnIdentityID);
+                        LoginLog("[WaitForAccPwd][ID=%ld] Client shutdown - duplicate login attempt", m_lnIdentityID);
+                    }
+
+                    // KHÔNG xóa m_sAccountName để Inactive() có thể cleanup nếu cần
+                    SAFE_RELEASE(pRetBuffer);
+                    m_theDataQueue[enumOwnerPlayer].Detach(c2s_login);
+                    return enumError;
+                }
             }
-
-            m_bHasTempLock = true;
-            LoginLog("[WaitForAccPwd][ID=%ld] TEMP-LOCK OK for \"%s\"", m_lnIdentityID, accBuf);
+            else
+            {
+                // TEMP-LOCK thành công ngay lần đầu
+                m_bHasTempLock = true;
+                LoginLog("[WaitForAccPwd][ID=%ld] TEMP-LOCK OK for \"%s\"", m_lnIdentityID, accBuf);
+            }
 
             // Sang b??c k? ti?p: g?i AccServer ?? VerifyAccount
             nNextTask = enumToNextTask;
