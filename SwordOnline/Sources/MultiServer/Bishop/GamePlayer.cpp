@@ -415,36 +415,48 @@ bool CGamePlayer::Inactive()
 
         if ( !m_sRoleName.empty() )
         {
+            DWORD tStart = ::GetTickCount();
             LoginLog("[Inactive][ID=%ld] Sending logic logout to GS for role \"%s\"",
                      m_lnIdentityID, m_sRoleName.c_str());
 
             pGServer->DispatchTask( CGameServer::enumPlayerLogicLogout,
                                     m_sRoleName.c_str(),
                                     (int)(m_sRoleName.size() + 1) );
+
+            DWORD tDispatch = ::GetTickCount();
+            if (tDispatch - tStart > 1000)
+            {
+                LoginLog("[Inactive][ID=%ld] WARNING: DispatchTask took %dms",
+                         m_lnIdentityID, tDispatch - tStart);
+            }
         }
 
         // Detach from GameServer (GS will receive logout message)
         if (!m_sAccountName.empty())
         {
             int nDetachCount = 0;
+            DWORD tBeforeDetach = ::GetTickCount();
 
             // Method 1: Detach from primary GameServer
             CGameServer *pGS = static_cast<CGameServer*>(pGServer);
             if (pGS)
             {
-																		
+
                 if (pGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
                 {
                     nDetachCount++;
-                    LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (primary)",
-                             m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID);
+                    DWORD tAfterPrimary = ::GetTickCount();
+                    LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (primary) in %dms",
+                             m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID,
+                             tAfterPrimary - tBeforeDetach);
                 }
             }
 
             // Method 2: Detach from ALL other GameServers (fast loop, no search)
             // FIX: Use direct iteration instead of FindServerByAccount() to avoid 15-second blocking delay
+            DWORD tBeforeLoop = ::GetTickCount();
             for (int gsId = 1; gsId <= 5; gsId++)  // Assuming 5 GameServers
-																					  
+
             {
                 if (gsId == m_nAttachServerID)
                     continue;  // Skip primary (already handled above)
@@ -460,8 +472,14 @@ bool CGamePlayer::Inactive()
                                  m_lnIdentityID, m_sAccountName.c_str(), gsId);
                     }
                 }
-													 
-																					
+
+
+            }
+            DWORD tAfterLoop = ::GetTickCount();
+            if (tAfterLoop - tBeforeLoop > 1000)
+            {
+                LoginLog("[Inactive][ID=%ld] WARNING: Loop detach took %dms",
+                         m_lnIdentityID, tAfterLoop - tBeforeLoop);
             }
 
             LoginLog("[Inactive][ID=%ld] Total detached \"%s\" from %d GameServer(s)",
