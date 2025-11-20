@@ -441,22 +441,36 @@ bool CGamePlayer::Inactive()
             CGameServer *pGS = static_cast<CGameServer*>(pGServer);
             if (pGS)
             {
+                DWORD tPrimaryStart = ::GetTickCount();
+                bool bPrimaryDetached = pGS->DetachAccountFromGameServer(m_sAccountName.c_str());
+                DWORD tPrimaryEnd = ::GetTickCount();
 
-                if (pGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
+                if (bPrimaryDetached)
                 {
                     nDetachCount++;
-                    DWORD tAfterPrimary = ::GetTickCount();
                     LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (primary) in %dms",
                              m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID,
-                             tAfterPrimary - tBeforeDetach);
+                             tPrimaryEnd - tPrimaryStart);
+                }
+                else
+                {
+                    // Not found in primary - this is suspicious if we were attached
+                    LoginLog("[Inactive][ID=%ld] Account \"%s\" NOT FOUND in GS%d (primary) after %dms",
+                             m_lnIdentityID, m_sAccountName.c_str(), m_nAttachServerID,
+                             tPrimaryEnd - tPrimaryStart);
+
+                    if (tPrimaryEnd - tPrimaryStart > 1000)
+                    {
+                        LoginLog("[Inactive][ID=%ld] WARNING: Primary detach took %dms but found nothing!",
+                                 m_lnIdentityID, tPrimaryEnd - tPrimaryStart);
+                    }
                 }
             }
 
-            // Method 2: Detach from ALL other GameServers (fast loop, no search)
-            // FIX: Use direct iteration instead of FindServerByAccount() to avoid 15-second blocking delay
-            DWORD tBeforeLoop = ::GetTickCount();
-            for (int gsId = 1; gsId <= 5; gsId++)  // Assuming 5 GameServers
-
+            // Method 2: Detach from ALL other GameServers
+            // Enhanced diagnostics: measure EACH GameServer call individually
+            DWORD tLoopStart = ::GetTickCount();
+            for (int gsId = 1; gsId <= 5; gsId++)
             {
                 if (gsId == m_nAttachServerID)
                     continue;  // Skip primary (already handled above)
@@ -464,26 +478,52 @@ bool CGamePlayer::Inactive()
                 IGServer *pOtherServer = CGameServer::GetServer(gsId);
                 if (pOtherServer)
                 {
+                    DWORD tGSStart = ::GetTickCount();
                     CGameServer *pOtherGS = static_cast<CGameServer*>(pOtherServer);
-                    if (pOtherGS && pOtherGS->DetachAccountFromGameServer(m_sAccountName.c_str()))
+                    bool bDetached = false;
+
+                    if (pOtherGS)
+                    {
+                        bDetached = pOtherGS->DetachAccountFromGameServer(m_sAccountName.c_str());
+                    }
+
+                    DWORD tGSEnd = ::GetTickCount();
+                    DWORD duration = tGSEnd - tGSStart;
+
+                    if (bDetached)
                     {
                         nDetachCount++;
-                        LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (stuck account cleanup)",
-                                 m_lnIdentityID, m_sAccountName.c_str(), gsId);
+                        LoginLog("[Inactive][ID=%ld] Detached \"%s\" from GS%d (stuck cleanup) in %dms",
+                                 m_lnIdentityID, m_sAccountName.c_str(), gsId, duration);
+                    }
+                    else if (duration > 100)
+                    {
+                        // Took >100ms but found nothing - suspicious!
+                        LoginLog("[Inactive][ID=%ld] GS%d detach took %dms but account \"%s\" not found",
+                                 m_lnIdentityID, gsId, duration, m_sAccountName.c_str());
+                    }
+
+                    // Warn about SLOW individual GameServer calls
+                    if (duration > 1000)
+                    {
+                        LoginLog("[Inactive][ID=%ld] WARNING: GS%d DetachAccount() BLOCKED for %dms!",
+                                 m_lnIdentityID, gsId, duration);
                     }
                 }
-
-
             }
-            DWORD tAfterLoop = ::GetTickCount();
-            if (tAfterLoop - tBeforeLoop > 1000)
+
+            DWORD tLoopEnd = ::GetTickCount();
+            DWORD totalLoopTime = tLoopEnd - tLoopStart;
+
+            if (totalLoopTime > 1000)
             {
-                LoginLog("[Inactive][ID=%ld] WARNING: Loop detach took %dms",
-                         m_lnIdentityID, tAfterLoop - tBeforeLoop);
+                LoginLog("[Inactive][ID=%ld] WARNING: Total loop detach took %dms across all GameServers",
+                         m_lnIdentityID, totalLoopTime);
             }
 
-            LoginLog("[Inactive][ID=%ld] Total detached \"%s\" from %d GameServer(s)",
-                     m_lnIdentityID, m_sAccountName.c_str(), nDetachCount);
+            LoginLog("[Inactive][ID=%ld] Detach summary: \"%s\" removed from %d GameServer(s) in %dms total",
+                     m_lnIdentityID, m_sAccountName.c_str(), nDetachCount,
+                     ::GetTickCount() - tBeforeDetach);
         }
 
         // Cleanup local Bishop state
