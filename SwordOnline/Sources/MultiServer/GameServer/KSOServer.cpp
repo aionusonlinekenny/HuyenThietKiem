@@ -2560,23 +2560,19 @@ void KSwordOnLineSever::MainLoop()
 				elapsed > defMAX_PING_INTERVAL &&
 				elapsed < defMAX_PING_TIMEOUT)
 			{
-				// DEBUG: Print detailed state before calling PingClient
-				printf("[PING-RETRY] lnID=%d elapsed=%d nPlayerIdx=%d sendTime=%d replyTime=%d -> resend ping\n",
-					   lnID, elapsed, m_pGameStatus[lnID].nPlayerIndex,
-					   m_pGameStatus[lnID].nSendPingTime, m_pGameStatus[lnID].nReplyPingTime);
-				PingClient(lnID);
-				// DEBUG: Print state AFTER PingClient to see if timers were reset
-				printf("[PING-RETRY-AFTER] lnID=%d sendTime=%d replyTime=%d\n",
-					   lnID, m_pGameStatus[lnID].nSendPingTime, m_pGameStatus[lnID].nReplyPingTime);
+				if (elapsed % defMAX_PING_INTERVAL < 10)  // Allow small tolerance for frame timing
+				{
+					printf("[PING-RETRY] lnID=%d elapsed=%d nPlayerIdx=%d -> resending ping\n",
+						   lnID, elapsed, m_pGameStatus[lnID].nPlayerIndex);
+					PingClient(lnID);
+				}
 			}
 			else if (m_pGameStatus[lnID].nSendPingTime  > 0 &&
 					 elapsed > defMAX_PING_TIMEOUT)
 			{
 				int nPlayerIdx = m_pGameStatus[lnID].nPlayerIndex;
-				printf("[PING-TIMEOUT] lnID=%d playerIdx=%d sendPing=%d now=%d delta=%d -> kill\n",
-					   lnID, nPlayerIdx,
-					   m_pGameStatus[lnID].nSendPingTime,
-					   m_nGameLoop, elapsed);
+				printf("[PING-TIMEOUT] lnID=%d playerIdx=%d elapsed=%d -> disconnecting client\n",
+					   lnID, nPlayerIdx, elapsed);
 				m_pServer->ShutdownClient(lnID);
 				m_pGameStatus[lnID].nSendPingTime  = 0;
 				m_pGameStatus[lnID].nReplyPingTime = 1;

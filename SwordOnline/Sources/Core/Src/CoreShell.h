@@ -692,6 +692,7 @@ struct _declspec (novtable) iCoreShell
 	virtual int GetLevelItem(unsigned int uId ) = 0;
 	virtual int GetSeriesItem(unsigned int uId ) = 0;
 	virtual int GetNumStack(unsigned int uId ) = 0;
+	virtual int CheckPositionBarrier(int nMapX, int nMapY) = 0; // Check if position has barrier - returns 0 if no barrier
 };
 
 #ifndef CORE_EXPORTS

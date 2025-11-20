@@ -83,6 +83,7 @@ public:
 	
 	static IGServer *QueryServer( UINT nMapID );
 	static IGServer *GetServer( size_t nID );
+	static void GetAllServers( CGameServer **pOutServers, int nMaxServers );																									  
 
 	virtual size_t GetID() { return m_lnIdentityID; };
 	virtual size_t GetContent();

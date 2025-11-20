@@ -1,12 +1,12 @@
  CoreClient
 
- Timestamp is 691e0c38 (Wed Nov 19 13:28:08 2025)
+ Timestamp is 691f981d (Thu Nov 20 17:37:17 2025)
 
  Preferred load address is 10000000
 
  Start         Length     Name                   Class
- 0001:00000000 000770eeH .text                   CODE
- 0001:000770f0 000011b3H .text$x                 CODE
+ 0001:00000000 0007714eH .text                   CODE
+ 0001:00077150 000011b3H .text$x                 CODE
  0002:00000000 000002c0H .idata$5                DATA
  0002:000002c0 0000ac1cH .rdata                  DATA
  0002:0000aee0 000014f8H .xdata$x                DATA
@@ -44,8 +44,8 @@
  0001:00000180       ?IsTargetEnemy@KThiefSkill@@UBEHXZ 10001180 f i KThiefSkill.obj
  0001:00000190       ?IsTargetAlly@KThiefSkill@@UBEHXZ 10001190 f i KThiefSkill.obj
  0001:000001a0       ?IsTargetObj@KThiefSkill@@UBEHXZ 100011a0 f i KThiefSkill.obj
- 0001:000001b0       ??_EKThiefSkill@@UAEPAXI@Z 100011b0 f i KThiefSkill.obj
  0001:000001b0       ??_GKThiefSkill@@UAEPAXI@Z 100011b0 f i KThiefSkill.obj
+ 0001:000001b0       ??_EKThiefSkill@@UAEPAXI@Z 100011b0 f i KThiefSkill.obj
  0001:000001d0       ??1KThiefSkill@@UAE@XZ     100011d0 f   KThiefSkill.obj
  0001:000001e0       ?GetSkillId@KThiefSkill@@UAEHXZ 100011e0 f   KThiefSkill.obj
  0001:000001f0       ?GetSkillName@KThiefSkill@@UAEPBDXZ 100011f0 f   KThiefSkill.obj
@@ -81,12 +81,12 @@
  0001:00000d50       ??_GKMissle@@UAEPAXI@Z     10001d50 f i KMissle.obj
  0001:00000d70       ?Release@KMissle@@AAEXXZ   10001d70 f   KMissle.obj
  0001:00000dc0       ??1KMissle@@UAE@XZ         10001dc0 f   KMissle.obj
- 0001:00000e10       ??_GKNode@@UAEPAXI@Z       10001e10 f i KMissle.obj
  0001:00000e10       ??_EKNode@@UAEPAXI@Z       10001e10 f i KMissle.obj
+ 0001:00000e10       ??_GKNode@@UAEPAXI@Z       10001e10 f i KMissle.obj
  0001:00000e30       ?GetInfoFromTabFile@KMissle@@QAEHH@Z 10001e30 f   KMissle.obj
  0001:00000e50       ?GetInfoFromTabFile@KMissle@@QAEHPAVKITabFile@@H@Z 10001e50 f   KMissle.obj
- 0001:00001370       ??_GKIndexNode@@UAEPAXI@Z  10002370 f i KMissle.obj
  0001:00001370       ??_EKIndexNode@@UAEPAXI@Z  10002370 f i KMissle.obj
+ 0001:00001370       ??_GKIndexNode@@UAEPAXI@Z  10002370 f i KMissle.obj
  0001:00001390       ??1KIndexNode@@UAE@XZ      10002390 f i KMissle.obj
  0001:000013a0       ?Init@KMissle@@AAEHHHHHH@Z 100023a0 f   KMissle.obj
  0001:000013c0       ?Activate@KMissle@@QAEHXZ  100023c0 f   KMissle.obj
@@ -110,8 +110,8 @@
  0001:00002e40       ?ProcessCollision@KMissle@@AAEHHHHHHH@Z 10003e40 f   KMissle.obj
  0001:00002ff0       ?ProcessCollision@KMissle@@AAEHXZ 10003ff0 f   KMissle.obj
  0001:00003030       ?CreateSpecialEffect@KMissle@@QAEHW4eMissleStatus@@HHHH@Z 10004030 f   KMissle.obj
- 0001:000031f0       ??_GKSkillSpecialNode@@UAEPAXI@Z 100041f0 f i KMissle.obj
  0001:000031f0       ??_EKSkillSpecialNode@@UAEPAXI@Z 100041f0 f i KMissle.obj
+ 0001:000031f0       ??_GKSkillSpecialNode@@UAEPAXI@Z 100041f0 f i KMissle.obj
  0001:00003210       ??1KSkillSpecialNode@@UAE@XZ 10004210 f i KMissle.obj
  0001:00003230       ?CreateMissleForShow@KMissle@@SAHPAD00PAUTMissleForShow@@@Z 10004230 f   KMissle.obj
  0001:00003440       ?GetLightInfo@KMissle@@QAEXPAUKLightInfo@@@Z 10004440 f   KMissle.obj
@@ -833,8 +833,8 @@
  0001:0002ce10       ?ChatFriendOnLine@KPlayer@@QAEXKH@Z 1002de10 f   KPlayer.obj
  0001:0002cf20       ?GetFactionName@KPlayer@@QAEXPADH@Z 1002df20 f   KPlayer.obj
  0001:0002cf40       ?OnScriptAction@KPlayer@@QAEXPAUPLAYER_SCRIPTACTION_SYNC@@@Z 1002df40 f   KPlayer.obj
- 0001:0002ddb0       ??_EKLuaScript@@UAEPAXI@Z  1002edb0 f i KPlayer.obj
  0001:0002ddb0       ??_GKLuaScript@@UAEPAXI@Z  1002edb0 f i KPlayer.obj
+ 0001:0002ddb0       ??_EKLuaScript@@UAEPAXI@Z  1002edb0 f i KPlayer.obj
  0001:0002ddd0       ?s2cTradeChangeState@KPlayer@@QAEXPAE@Z 1002edd0 f   KPlayer.obj
  0001:0002e0d0       ?s2cLevelUp@KPlayer@@QAEXPAE@Z 1002f0d0 f   KPlayer.obj
  0001:0002e940       ?s2cGetCurAttribute@KPlayer@@QAEXPAE@Z 1002f940 f   KPlayer.obj
@@ -930,8 +930,8 @@
  0001:00037c90       ?CheckTeamNo@KPlayerChat@@QAEHPAD0@Z 10038c90 f   KPlayerChat.obj
  0001:00037f80       ?LoadTeamName@KPlayerChat@@QAEXPAD@Z 10038f80 f   KPlayerChat.obj
  0001:00038150       ?AddOne@KPlayerChat@@QAEXKHPADH@Z 10039150 f   KPlayerChat.obj
- 0001:00038230       ??_ECChatFriend@@UAEPAXI@Z 10039230 f i KPlayerChat.obj
  0001:00038230       ??_GCChatFriend@@UAEPAXI@Z 10039230 f i KPlayerChat.obj
+ 0001:00038230       ??_ECChatFriend@@UAEPAXI@Z 10039230 f i KPlayerChat.obj
  0001:00038250       ??1CChatFriend@@UAE@XZ     10039250 f i KPlayerChat.obj
  0001:00038260       ?CheckIsFriend@KPlayerChat@@QAEHH@Z 10039260 f   KPlayerChat.obj
  0001:000382c0       ?AddTeam@KPlayerChat@@QAEHPAD0@Z 100392c0 f   KPlayerChat.obj
@@ -1613,8 +1613,8 @@
  0001:00054de0       ?s2cChatBeRefusedAddFriend@KProtocolProcess@@AAEXPAE@Z 10055de0 f   KProtocolProcess.obj
  0001:00054e70       ?s2cChatFriendOnline@KProtocolProcess@@AAEXPAE@Z 10055e70 f   KProtocolProcess.obj
  0001:00054e90       ?s2cChatGetApplyAddFriend@KProtocolProcess@@AAEXPAE@Z 10055e90 f   KProtocolProcess.obj
- 0001:00054fe0       ??_ECChatApplyListNode@@UAEPAXI@Z 10055fe0 f i KProtocolProcess.obj
  0001:00054fe0       ??_GCChatApplyListNode@@UAEPAXI@Z 10055fe0 f i KProtocolProcess.obj
+ 0001:00054fe0       ??_ECChatApplyListNode@@UAEPAXI@Z 10055fe0 f i KProtocolProcess.obj
  0001:00055000       ??1CChatApplyListNode@@UAE@XZ 10056000 f i KProtocolProcess.obj
  0001:00055010       ?s2cChatLoginFriendName@KProtocolProcess@@AAEXPAE@Z 10056010 f   KProtocolProcess.obj
  0001:000550a0       ?s2cChatLoginFriendNoName@KProtocolProcess@@AAEXPAE@Z 100560a0 f   KProtocolProcess.obj
@@ -1752,8 +1752,8 @@
  0001:0005cd80       ??_ETStringValueNode@@UAEPAXI@Z 1005dd80 f i KScriptValueSet.obj
  0001:0005cd80       ??_GTStringValueNode@@UAEPAXI@Z 1005dd80 f i KScriptValueSet.obj
  0001:0005cda0       ??1TStringValueNode@@UAE@XZ 1005dda0 f i KScriptValueSet.obj
- 0001:0005cdb0       ??_GTIntegerValueNode@@UAEPAXI@Z 1005ddb0 f i KScriptValueSet.obj
  0001:0005cdb0       ??_ETIntegerValueNode@@UAEPAXI@Z 1005ddb0 f i KScriptValueSet.obj
+ 0001:0005cdb0       ??_GTIntegerValueNode@@UAEPAXI@Z 1005ddb0 f i KScriptValueSet.obj
  0001:0005cdd0       ??1TIntegerValueNode@@UAE@XZ 1005ddd0 f i KScriptValueSet.obj
  0001:0005cde0       ?Save@KScriptValueSet@@QAEHPAD@Z 1005dde0 f   KScriptValueSet.obj
  0001:0005ced0       ?SetValue@KScriptValueSet@@QAEHPAD0@Z 1005ded0 f   KScriptValueSet.obj
@@ -1837,475 +1837,476 @@
  0001:00065a90       ?GetLevelItem@KCoreShell@@UAEHI@Z 10066a90 f   CoreShell.obj
  0001:00065ab0       ?GetSeriesItem@KCoreShell@@UAEHI@Z 10066ab0 f   CoreShell.obj
  0001:00065ad0       ?GetNumStack@KCoreShell@@UAEHI@Z 10066ad0 f   CoreShell.obj
- 0001:00065af0       ??0KIpotBranch@@QAE@XZ     10066af0 f   KIpotBranch.obj
- 0001:00065b20       ??1KIpotBranch@@QAE@XZ     10066b20 f   KIpotBranch.obj
- 0001:00065b30       ?EnumerateObjects@KIpotBranch@@QAEXPAXP6AX0PAUKIpotLeaf@@@Z@Z 10066b30 f   KIpotBranch.obj
- 0001:00065bc0       ?PaintObjectLayer@KIpotBranch@@QAEXPAUtagRECT@@@Z 10066bc0 f   KIpotBranch.obj
- 0001:00065c40       ?PaintABranchObject@KIpotBranch@@ABEXPAUKIpotBuildinObj@@PAUtagRECT@@@Z 10066c40 f   KIpotBranch.obj
- 0001:00065f30       ?PaintNoneObjectLayer@KIpotBranch@@QAEXPAUtagRECT@@H@Z 10066f30 f   KIpotBranch.obj
- 0001:00065f90       ?RemoveAllRtoLeafs@KIpotBranch@@QAEXPAUKIpotLeaf@@@Z 10066f90 f   KIpotBranch.obj
- 0001:00065fe0       ?AddAObject@KIpotBranch@@QAEXPAUKIpotBuildinObj@@@Z 10066fe0 f   KIpotBranch.obj
- 0001:000660a0       ?AddBranch@KIpotBranch@@QAEXPAUKIpotBuildinObj@@@Z 100670a0 f   KIpotBranch.obj
- 0001:000661c0       ?AddSubBranch@KIpotBranch@@AAEXHPAUKIpotBuildinObj@@@Z 100671c0 f   KIpotBranch.obj
- 0001:00066240       ?Clear@KIpotBranch@@QAEXXZ 10067240 f   KIpotBranch.obj
- 0001:00066310       ?SetLine@KIpotBranch@@QAEXPAUtagPOINT@@0@Z 10067310 f   KIpotBranch.obj
- 0001:00066340       ?AddLeafLine@KIpotBranch@@QAEXPAUKIpotBuildinObj@@@Z 10067340 f   KIpotBranch.obj
- 0001:000663c0       ?AddLeafPoint@KIpotBranch@@QAEXPAUKIpotLeaf@@@Z 100673c0 f   KIpotBranch.obj
- 0001:00066430       ?AddPointLeafToList@KIpotBranch@@AAEXAAPAUKIpotLeaf@@PAU2@1@Z 10067430 f   KIpotBranch.obj
- 0001:00066640       ?AddLineLeafToList@KIpotBranch@@AAEXAAPAUKIpotLeaf@@PAUKIpotBuildinObj@@@Z 10067640 f   KIpotBranch.obj
- 0001:000667e0       ?Pluck@KIpotRuntimeObj@@QAEXXZ 100677e0 f   KIpotLeaf.obj
- 0001:00066850       ?KIpotLeaf_EnumerateObjects@@YAXPAUKIpotLeaf@@PAXP6AX10@Z@Z 10067850 f   KIpotLeaf.obj
- 0001:000668a0       ?KIpotLeaf_PaintObjectLayer@@YAXPAUKIpotLeaf@@PAUtagRECT@@@Z 100678a0 f   KIpotLeaf.obj
- 0001:00066930       ?KIpotLeaf_PaintNoneObjectLayer@@YAXPAUKIpotLeaf@@PAUtagRECT@@H@Z 10067930 f   KIpotLeaf.obj
- 0001:000669c0       ?PaintABuildinObject@KIpotBuildinObj@@QAEXPAUtagRECT@@@Z 100679c0 f   KIpotLeaf.obj
- 0001:00066be0       ?KIpotLeaf_RemoveAllRtoLeafs@@YAXPAUKIpotLeaf@@0@Z 10067be0 f   KIpotLeaf.obj
- 0001:00066c40       ?KIpotLeaf_Clear@@YAXPAUKIpotLeaf@@@Z 10067c40 f   KIpotLeaf.obj
- 0001:00066c90       ?Clone@KIpotBuildinObj@@QAEPAU1@PAUtagPOINT@@@Z 10067c90 f   KIpotLeaf.obj
- 0001:00066d20       ?BuildinObjNextFrame@@YAXPAUKBuildinObj@@@Z 10067d20 f   KIpotLeaf.obj
- 0001:00066df0       ??0KSelfBreathLight@@QAE@XZ 10067df0 f   KIpoTree.obj
- 0001:00066e10       ?Breath@KSelfBreathLight@@UAEXXZ 10067e10 f   KIpoTree.obj
- 0001:00066ed0       ??0KIpoTree@@QAE@XZ        10067ed0 f   KIpoTree.obj
- 0001:00066fc0       ??1KIpoTree@@QAE@XZ        10067fc0 f   KIpoTree.obj
- 0001:000670b0       ?Paint@KIpoTree@@QAEXPAUtagRECT@@W4IPOT_RENDER_LAYER@@@Z 100680b0 f   KIpoTree.obj
- 0001:00067140       ?Breathe@KIpoTree@@QAEXXZ  10068140 f   KIpoTree.obj
- 0001:00067170       ?Clear@KIpoTree@@QAEXXZ    10068170 f   KIpoTree.obj
- 0001:00067210       ?RemoveRtoGroupWithPermanentLeaf@KIpoTree@@AAEXXZ 10068210 f   KIpoTree.obj
- 0001:00067230       ?AddBranch@KIpoTree@@QAEXPAUKIpotBuildinObj@@@Z 10068230 f   KIpoTree.obj
- 0001:000672c0       ?Fell@KIpoTree@@QAEXXZ     100682c0 f   KIpoTree.obj
- 0001:00067360       ?AddLeafLine@KIpoTree@@QAEXPAUKIpotBuildinObj@@@Z 10068360 f   KIpoTree.obj
- 0001:00067390       ?AddLeafPoint@KIpoTree@@QAEXPAUKIpotLeaf@@@Z 10068390 f   KIpoTree.obj
- 0001:00067570       ?Breath@KLightBase@@UAEXXZ 10068570 f i KIpoTree.obj
- 0001:00067580       ?PluckRto@KIpoTree@@QAEXPAUKIpotRuntimeObj@@@Z 10068580 f   KIpoTree.obj
- 0001:000675f0       ?SetPermanentBranchPos@KIpoTree@@QAEXHHH@Z 100685f0 f   KIpoTree.obj
- 0001:00067650       ?StrewRtoLeafs@KIpoTree@@QAEXAAUtagRECT@@@Z 10068650 f   KIpoTree.obj
- 0001:000676e0       ?ObjectsCallback@KIpoTree@@CAXPAXPAUKIpotLeaf@@@Z 100686e0 f   KIpoTree.obj
- 0001:000677b0       ?FillLineObstacle@KIpoTree@@AAEXHHHHH@Z 100687b0 f   KIpoTree.obj
- 0001:00067b90       ?RenderLightMap@KIpoTree@@QAEXXZ 10068b90 f   KIpoTree.obj
- 0001:00068370       ?CanLighting@KIpoTree@@AAE_NHHHH@Z 10069370 f   KIpoTree.obj
- 0001:000685e0       ?AddBuildinLight@KIpoTree@@QAEXPAUKBuildInLightInfo@@H@Z 100695e0 f   KIpoTree.obj
- 0001:00068720       ?EnableBioLights@KIpoTree@@QAEX_N@Z 10069720 f   KIpoTree.obj
- 0001:00068790       ?EnableDynamicLights@KIpoTree@@QAEX_N@Z 10069790 f   KIpoTree.obj
- 0001:000687a0       ??1?$list@PAVKLightBase@@V?$allocator@PAVKLightBase@@@std@@@std@@QAE@XZ 100697a0 f i KIpoTree.obj
- 0001:00068830       ?ChaZhiColor@@YAKAAUKLColor@@0M@Z 10069830 f   KScenePlaceC.obj
- 0001:00068910       ??0EnvironmentLight@@QAE@XZ 10069910 f   KScenePlaceC.obj
- 0001:000689b0       ?SetLight@EnvironmentLight@@QAEXABUKLColor@@H@Z 100699b0 f   KScenePlaceC.obj
- 0001:000689d0       ?SetLight@EnvironmentLight@@QAEXEEEH@Z 100699d0 f   KScenePlaceC.obj
- 0001:00068a00       ?SetLight@EnvironmentLight@@QAEXPAUKLColor@@@Z 10069a00 f   KScenePlaceC.obj
- 0001:00068a30       ?GetEnvironmentLight@EnvironmentLight@@QAEKH@Z 10069a30 f   KScenePlaceC.obj
- 0001:00068c70       ??0KScenePlaceC@@QAE@XZ    10069c70 f   KScenePlaceC.obj
- 0001:00068e20       ??1KScenePlaceC@@QAE@XZ    10069e20 f   KScenePlaceC.obj
- 0001:00068ea0       ?ClosePlace@KScenePlaceC@@QAEXXZ 10069ea0 f   KScenePlaceC.obj
- 0001:00068fc0       ?Initialize@KScenePlaceC@@QAE_NXZ 10069fc0 f   KScenePlaceC.obj
- 0001:00069080       ?CalcFlagPos@KScenePlaceC@@QAEXHH_N0@Z 1006a080 f   KScenePlaceC.obj
- 0001:000690b0       ?OpenPlace@KScenePlaceC@@QAE_NH@Z 1006a0b0 f   KScenePlaceC.obj
- 0001:000697e0       ?SetFocusPosition@KScenePlaceC@@QAEXHHH@Z 1006a7e0 f   KScenePlaceC.obj
- 0001:00069ac0       ?SetRepresentAreaSize@KScenePlaceC@@QAEXHH@Z 1006aac0 f   KScenePlaceC.obj
- 0001:00069b20       ?GetFocusPosition@KScenePlaceC@@QAEXAAH00@Z 1006ab20 f   KScenePlaceC.obj
- 0001:00069b40       ?Terminate@KScenePlaceC@@QAEXXZ 1006ab40 f   KScenePlaceC.obj
- 0001:00069c40       ?PreLoadProcess@KScenePlaceC@@AAEXXZ 1006ac40 f   KScenePlaceC.obj
- 0001:00069e00       ?LoadProcess@KScenePlaceC@@AAEXXZ 1006ae00 f   KScenePlaceC.obj
- 0001:00069eb0       ?LoadThreadEntrance@KScenePlaceC@@CGKPAX@Z 1006aeb0 f   KScenePlaceC.obj
- 0001:00069ed0       ?SetRegionsToLoad@KScenePlaceC@@AAEXXZ 1006aed0 f   KScenePlaceC.obj
- 0001:0006a200       ?AddObject@KScenePlaceC@@QAEIIHHHHH@Z 1006b200 f   KScenePlaceC.obj
- 0001:0006a2d0       ?MoveObject@KScenePlaceC@@QAEIIHHHHAAIH@Z 1006b2d0 f   KScenePlaceC.obj
- 0001:0006a410       ?RemoveObject@KScenePlaceC@@QAEXIHAAI@Z 1006b410 f   KScenePlaceC.obj
- 0001:0006a460       ?Breathe@KScenePlaceC@@QAEXXZ 1006b460 f   KScenePlaceC.obj
- 0001:0006a520       ?Paint@KScenePlaceC@@QAEXXZ 1006b520 f   KScenePlaceC.obj
- 0001:0006a690       ?ChangeLoadArea@KScenePlaceC@@AAEXXZ 1006b690 f   KScenePlaceC.obj
- 0001:0006a6a0       ?ChangeProcessArea@KScenePlaceC@@AAEXXZ 1006b6a0 f   KScenePlaceC.obj
- 0001:0006a7e0       ?PrerenderGround@KScenePlaceC@@AAEX_N@Z 1006b7e0 f   KScenePlaceC.obj
- 0001:0006a830       ?Preprocess@KScenePlaceC@@AAEXXZ 1006b830 f   KScenePlaceC.obj
- 0001:0006af50       ??_ETreeObjSet@?BH@??Preprocess@KScenePlaceC@@AAEXXZ@UAEPAXI@Z 1006bf50 f i KScenePlaceC.obj
- 0001:0006afb0       ??1TreeObjSet@?BH@??Preprocess@KScenePlaceC@@AAEXXZ@UAE@XZ 1006bfb0 f i KScenePlaceC.obj
- 0001:0006afc0       ?ClearPreprocess@KScenePlaceC@@AAEXH@Z 1006bfc0 f   KScenePlaceC.obj
- 0001:0006b030       ?ProjectDistToSpaceDist@KScenePlaceC@@QAEXAAH0@Z 1006c030 f   KScenePlaceC.obj
- 0001:0006b040       ?ViewPortCoordToSpaceCoord@KScenePlaceC@@QAEXAAH0H@Z 1006c040 f   KScenePlaceC.obj
- 0001:0006b0b0       ?GetRegionLeftTopPos@KScenePlaceC@@QAEXHHAAH0@Z 1006c0b0 f   KScenePlaceC.obj
- 0001:0006b0d0       ?ARegionLoaded@KScenePlaceC@@AAEXPAVKScenePlaceRegionC@@@Z 1006c0d0 f   KScenePlaceC.obj
- 0001:0006b2b0       ?GetFreeGroundImage@KScenePlaceC@@AAEPAUKRUImage@@XZ 1006c2b0 f   KScenePlaceC.obj
- 0001:0006b2f0       ?GetObstacleInfo@KScenePlaceC@@QAEJHH@Z 1006c2f0 f   KScenePlaceC.obj
- 0001:0006b370       ?GetObstacleInfoMin@KScenePlaceC@@QAEJHHHH@Z 1006c370 f   KScenePlaceC.obj
- 0001:0006b3f0       ?RepresentShellReset@KScenePlaceC@@QAEXXZ 1006c3f0 f   KScenePlaceC.obj
- 0001:0006b430       ?SetRegionLoadedCallback@KScenePlaceC@@QAEXP6AXHH@Z@Z 1006c430 f   KScenePlaceC.obj
- 0001:0006b440       ?SetHightLightSpecialObject@KScenePlaceC@@QAEXHHH@Z 1006c440 f   KScenePlaceC.obj
- 0001:0006b500       ?UnsetHightLightSpecialObject@KScenePlaceC@@QAEXXZ 1006c500 f   KScenePlaceC.obj
- 0001:0006b570       ?GetLoadedRegion@KScenePlaceC@@AAEPAVKScenePlaceRegionC@@HH@Z 1006c570 f   KScenePlaceC.obj
- 0001:0006b610       ?GetSceneNameAndFocus@KScenePlaceC@@QAEXPADAAH11@Z 1006c610 f   KScenePlaceC.obj
- 0001:0006b670       ?GetSceneCalgFlagPos@KScenePlaceC@@QAEXAAH0@Z 1006c670 f   KScenePlaceC.obj
- 0001:0006b6a0       ?SetAmbient@KScenePlaceC@@QAEXK@Z 1006c6a0 f   KScenePlaceC.obj
- 0001:0006b6b0       ?SetCurrentTime@KScenePlaceC@@QAEXK@Z 1006c6b0 f   KScenePlaceC.obj
- 0001:0006b6e0       ?SetEnvironmentLight@KScenePlaceC@@QAEXHEEE@Z 1006c6e0 f   KScenePlaceC.obj
- 0001:0006b710       ?EnableBioLights@KScenePlaceC@@QAEX_N@Z 1006c710 f   KScenePlaceC.obj
- 0001:0006b730       ?EnableDynamicLights@KScenePlaceC@@QAEX_N@Z 1006c730 f   KScenePlaceC.obj
- 0001:0006b750       ?ChangeWeather@KScenePlaceC@@QAEXH@Z 1006c750 f   KScenePlaceC.obj
- 0001:0006b820       ?EnableWeather@KScenePlaceC@@QAEXH@Z 1006c820 f   KScenePlaceC.obj
- 0001:0006b860       ?SetLoadingStatus@KScenePlaceC@@AAEX_N@Z 1006c860 f   KScenePlaceC.obj
- 0001:0006b8b0       ?PaintMap@KScenePlaceC@@QAEXHH@Z 1006c8b0 f   KScenePlaceC.obj
- 0001:0006b8d0       ?SetMapParam@KScenePlaceC@@QAEXIH@Z 1006c8d0 f   KScenePlaceC.obj
- 0001:0006b910       ?SetMapFocusPositionOffset@KScenePlaceC@@QAEXHH@Z 1006c910 f   KScenePlaceC.obj
- 0001:0006b970       ?GetMapInfo@KScenePlaceC@@QAEHPAUKSceneMapInfo@@@Z 1006c970 f   KScenePlaceC.obj
- 0001:0006ba40       ?FollowMapMove@KScenePlaceC@@QAEXH@Z 1006ca40 f   KScenePlaceC.obj
- 0001:0006bac0       ?LoadIni@KScenePlaceC@@QAEXPAVKIniFile@@@Z 1006cac0 f   KScenePlaceC.obj
- 0001:0006bf60       ?PaintOverCloud@KScenePlaceC@@QAEXXZ 1006cf60 f   KScenePlaceC.obj
- 0001:0006c010       ?PaintBackGroundCloud@KScenePlaceC@@QAEXXZ 1006d010 f   KScenePlaceC.obj
- 0001:0006c0a0       ?GetLittleMap@KScenePlaceC@@QAEPAVKLittleMap@@XZ 1006d0a0 f   KScenePlaceC.obj
- 0001:0006c0b0       ?GetKScenePlaceMapC@KScenePlaceC@@QAEPAVKScenePlaceMapC@@XZ 1006d0b0 f   KScenePlaceC.obj
- 0001:0006c0c0       ?JxPathFinderClear@KScenePlaceC@@QAEXXZ 1006d0c0 f   KScenePlaceC.obj
- 0001:0006c0d0       ??0KScenePlaceRegionC@@QAE@XZ 1006d0d0 f   KScenePlaceRegionC.obj
- 0001:0006c120       ??1KScenePlaceRegionC@@QAE@XZ 1006d120 f   KScenePlaceRegionC.obj
- 0001:0006c130       ?GetRegionIndex@KScenePlaceRegionC@@QBEXAAH0@Z 1006d130 f   KScenePlaceRegionC.obj
- 0001:0006c150       ?ToLoad@KScenePlaceRegionC@@QAE_NHH@Z 1006d150 f   KScenePlaceRegionC.obj
- 0001:0006c180       ?Load@KScenePlaceRegionC@@QAE_NPBD@Z 1006d180 f   KScenePlaceRegionC.obj
- 0001:0006c4a0       ?Clear@KScenePlaceRegionC@@QAEXXZ 1006d4a0 f   KScenePlaceRegionC.obj
- 0001:0006c530       ?PrerenderGround@KScenePlaceRegionC@@QAE_N_N@Z 1006d530 f   KScenePlaceRegionC.obj
- 0001:0006c7d0       ?SetNestRegion@KScenePlaceRegionC@@QAEXPAV1@@Z 1006d7d0 f   KScenePlaceRegionC.obj
- 0001:0006c940       ?LoadGroundLayer@KScenePlaceRegionC@@AAE_NPAVKPakFile@@I@Z 1006d940 f   KScenePlaceRegionC.obj
- 0001:0006ca30       ?AddGrundCoverObj@KScenePlaceRegionC@@AAEXPAUKSPRCoverGroundObj@@@Z 1006da30 f   KScenePlaceRegionC.obj
- 0001:0006cb50       ?LoadObstacle@KScenePlaceRegionC@@AAEXPAVKPakFile@@I@Z 1006db50 f   KScenePlaceRegionC.obj
- 0001:0006cb90       ?LoadTrap@KScenePlaceRegionC@@AAEXPAVKPakFile@@I@Z 1006db90 f   KScenePlaceRegionC.obj
- 0001:0006cc60       ?LoadAboveGroundObjects@KScenePlaceRegionC@@AAE_NPAVKPakFile@@I@Z 1006dc60 f   KScenePlaceRegionC.obj
- 0001:0006cdd0       ?PaintGroundDirect@KScenePlaceRegionC@@QAEXXZ 1006ddd0 f   KScenePlaceRegionC.obj
- 0001:0006d1f0       ?PaintOverCloud@KScenePlaceRegionC@@QAEXXZ 1006e1f0 f   KScenePlaceRegionC.obj
- 0001:0006d540       ?PaintOverCloud_up@KScenePlaceRegionC@@QAEXXZ 1006e540 f   KScenePlaceRegionC.obj
- 0001:0006d630       ?PaintGround@KScenePlaceRegionC@@QAEX_N@Z 1006e630 f   KScenePlaceRegionC.obj
- 0001:0006d660       ?PaintAboveHeadObj@KScenePlaceRegionC@@SAXPAUKBuildinObj@@PAUtagRECT@@@Z 1006e660 f   KScenePlaceRegionC.obj
- 0001:0006d810       ?GetAboveHeadLayer@KScenePlaceRegionC@@QAEIAAPAUKBuildinObj@@@Z 1006e810 f   KScenePlaceRegionC.obj
- 0001:0006d850       ?GetBuildinLights@KScenePlaceRegionC@@QAEIAAPAUKBuildInLightInfo@@@Z 1006e850 f   KScenePlaceRegionC.obj
- 0001:0006d870       ?GetBuildinObjs@KScenePlaceRegionC@@QAEXAAPAUKIpotBuildinObj@@AAI0101@Z 1006e870 f   KScenePlaceRegionC.obj
- 0001:0006d920       ?GetBIOSBuildinObjs@KScenePlaceRegionC@@QAEXAAPAUKBuildinObj@@AAI@Z 1006e920 f   KScenePlaceRegionC.obj
- 0001:0006d950       ?LeaveProcessArea@KScenePlaceRegionC@@QAEXXZ 1006e950 f   KScenePlaceRegionC.obj
- 0001:0006d980       ?EnterProcessArea@KScenePlaceRegionC@@QAEXPAUKRUImage@@@Z 1006e980 f   KScenePlaceRegionC.obj
- 0001:0006db30       ?GetObstacleInfo@KScenePlaceRegionC@@QAEJHH@Z 1006eb30 f   KScenePlaceRegionC.obj
- 0001:0006dbd0       ?GetObstacleInfoMin@KScenePlaceRegionC@@QAEJHHHH@Z 1006ebd0 f   KScenePlaceRegionC.obj
- 0001:0006dc90       ?SetHightLightSpecialObject@KScenePlaceRegionC@@QAEXI@Z 1006ec90 f   KScenePlaceRegionC.obj
- 0001:0006dcc0       ?UnsetHightLightSpecialObject@KScenePlaceRegionC@@QAEXI@Z 1006ecc0 f   KScenePlaceRegionC.obj
- 0001:0006dcf0       ??0KWeather@@QAE@XZ        1006ecf0 f   KWeather.obj
- 0001:0006dd50       ?FilterAmbient@KWeather@@UAEXAAK@Z 1006ed50 f i KWeather.obj
- 0001:0006dd60       ??_GKWeather@@UAEPAXI@Z    1006ed60 f i KWeather.obj
- 0001:0006dd60       ??_EKWeather@@UAEPAXI@Z    1006ed60 f i KWeather.obj
- 0001:0006dd80       ??1KWeather@@UAE@XZ        1006ed80 f   KWeather.obj
- 0001:0006de30       ?Breath@KWeather@@UAEXXZ   1006ee30 f   KWeather.obj
- 0001:0006de50       ??0KWeatherRain@@QAE@XZ    1006ee50 f   KWeather.obj
- 0001:0006def0       ?IsShutDown@KWeatherRain@@UAE_NXZ 1006eef0 f i KWeather.obj
- 0001:0006df00       ??_GKWeatherRain@@UAEPAXI@Z 1006ef00 f i KWeather.obj
- 0001:0006df00       ??_EKWeatherRain@@UAEPAXI@Z 1006ef00 f i KWeather.obj
- 0001:0006df20       ??1KWeatherRain@@UAE@XZ    1006ef20 f   KWeather.obj
- 0001:0006df90       ?ReadInfoFromIniFile@KWeatherRain@@UAE_NH@Z 1006ef90 f   KWeather.obj
- 0001:0006e240       ?Breath@KWeatherRain@@UAEXXZ 1006f240 f   KWeather.obj
- 0001:0006e690       ?Render@KWeatherRain@@UAEXPAUiRepresentShell@@@Z 1006f690 f   KWeather.obj
- 0001:0006e7b0       ?FilterAmbient@KWeatherRain@@UAEXAAK@Z 1006f7b0 f   KWeather.obj
- 0001:0006e8b0       ?ReadInfoFromIniFile@KWeatherSnow@@UAE_NH@Z 1006f8b0 f   KWeather.obj
- 0001:0006ea10       ?Breath@KWeatherSnow@@UAEXXZ 1006fa10 f   KWeather.obj
- 0001:0006ebe0       ?Render@KWeatherSnow@@UAEXPAUiRepresentShell@@@Z 1006fbe0 f   KWeather.obj
- 0001:0006ecc0       ??Eiterator@?$list@UKParticle@@V?$allocator@UKParticle@@@std@@@std@@QAE?AV012@H@Z 1006fcc0 f i KWeather.obj
- 0001:0006ecd0       ?insert@?$list@UKParticle@@V?$allocator@UKParticle@@@std@@@std@@QAE?AViterator@12@V312@ABUKParticle@@@Z 1006fcd0 f i KWeather.obj
- 0001:0006ed30       ?SM_IsPointOnLine@@YAHAAUtagPOINT@@0U1@@Z 1006fd30 f   SceneMath.obj
- 0001:0006eda0       ?SM_Distance_PointLine@@YAHABUtagPOINT@@00@Z 1006fda0 f   SceneMath.obj
- 0001:0006ee10       ?SM_Relation_PointLine@@YA?AW4RELATION_ENUM@@ABUtagPOINT@@00@Z 1006fe10 f   SceneMath.obj
- 0001:0006eeb0       ?SM_Relation_PointLine_New@@YA?AW4RELATION_ENUM@@ABUtagPOINT@@00@Z 1006feb0 f   SceneMath.obj
- 0001:0006ef80       ?SM_Relation_LineLine_CheckCut@@YA?AW4RELATION_ENUM@@ABUtagPOINT@@000AAU2@@Z 1006ff80 f   SceneMath.obj
- 0001:0006f100       ?SM_GetPointFromFloatSting32@@YAXPADAAM11@Z 10070100 f   SceneMath.obj
- 0001:0006f1f0       ?ChangeFileName@@YAXPAD0@Z 100701f0 f   SceneMath.obj
- 0001:0006f250       ??0KScenePlaceMapC@@QAE@XZ 10070250 f   ScenePlaceMapC.obj
- 0001:0006f360       ??1KScenePlaceMapC@@QAE@XZ 10070360 f   ScenePlaceMapC.obj
- 0001:0006f430       ?Initialize@KScenePlaceMapC@@AAE_NXZ 10070430 f   ScenePlaceMapC.obj
- 0001:0006f5f0       ?Terminate@KScenePlaceMapC@@QAEXXZ 100705f0 f   ScenePlaceMapC.obj
- 0001:0006f650       ?SetShowElemsFlag@KScenePlaceMapC@@QAEXI@Z 10070650 f   ScenePlaceMapC.obj
- 0001:0006f680       ?Load@KScenePlaceMapC@@QAEHPAVKIniFile@@PBD@Z 10070680 f   ScenePlaceMapC.obj
- 0001:0006f870       ?SetFocusPosition@KScenePlaceMapC@@QAEXHH_N@Z 10070870 f   ScenePlaceMapC.obj
- 0001:0006f9c0       ?FillCellsPicInfo@KScenePlaceMapC@@AAEXXZ 100709c0 f   ScenePlaceMapC.obj
- 0001:0006fd80       ?CalcPicLayout@KScenePlaceMapC@@AAEXXZ 10070d80 f   ScenePlaceMapC.obj
- 0001:0006fe50       ?Free@KScenePlaceMapC@@QAEXXZ 10070e50 f   ScenePlaceMapC.obj
- 0001:0006fe80       ?PaintMap@KScenePlaceMapC@@QAEXHH@Z 10070e80 f   ScenePlaceMapC.obj
- 0001:000701b0       ?PaintAutoPath@KScenePlaceMapC@@AAEXHH@Z 100711b0 f   ScenePlaceMapC.obj
- 0001:000702f0       ?PaintCharacters@KScenePlaceMapC@@AAEXHH@Z 100712f0 f   ScenePlaceMapC.obj
- 0001:00070890       ?PaintMapPic@KScenePlaceMapC@@AAEXHH@Z 10071890 f   ScenePlaceMapC.obj
- 0001:00070a70       ?SetSize@KScenePlaceMapC@@QAEXHH@Z 10071a70 f   ScenePlaceMapC.obj
- 0001:00070b60       ?GetMapRect@KScenePlaceMapC@@QAEHPAUtagRECT@@@Z 10071b60 f   ScenePlaceMapC.obj
- 0001:00070bd0       ?PaintFindPos@KScenePlaceMapC@@QAEXHHHH@Z 10071bd0 f   ScenePlaceMapC.obj
- 0001:00070ea0       ?CalcFlagPos@KScenePlaceMapC@@QAEXHH_N0@Z 10071ea0 f   ScenePlaceMapC.obj
- 0001:00070f50       ?PaintMapPointNpc@KScenePlaceMapC@@AAEXHH@Z 10071f50 f   ScenePlaceMapC.obj
- 0001:00071310       ?AutoRunTo@KScenePlaceMapC@@QAEHHH@Z 10072310 f   ScenePlaceMapC.obj
- 0001:000714a0       ?GetbtBarrier@KScenePlaceMapC@@QAEPAEHH@Z 100724a0 f   ScenePlaceMapC.obj
- 0001:000714c0       ?JxPathFinderClear@KScenePlaceMapC@@QAEHXZ 100724c0 f   ScenePlaceMapC.obj
- 0001:00071560       ?insert@?$vector@UFindPathNode@@V?$allocator@UFindPathNode@@@std@@@std@@QAEXPAUFindPathNode@@IABU3@@Z 10072560 f i ScenePlaceMapC.obj
- 0001:000717b0       ?CoreDrawGameObj@@YAXIIHHHHH@Z 100727b0 f   CoreDrawGameObj.obj
- 0001:000720e0       ?CoreGetGameObjLightInfo@@YAXIIPAUKLightInfo@@@Z 100730e0 f   CoreDrawGameObj.obj
- 0001:000721f0       ?IR_GetCurrentTime@@YAIXZ  100731f0 f   ImgRef.obj
- 0001:00072200       ?IR_UpdateTime@@YAXXZ      10073200 f   ImgRef.obj
- 0001:00072210       ?IR_NextFrame@@YAXAAHHIAAI@Z 10073210 f   ImgRef.obj
- 0001:000722b0       ??0KMagicDesc@@QAE@XZ      100732b0 f   KMagicDesc.obj
- 0001:000722d0       ??1KMagicDesc@@QAE@XZ      100732d0 f   KMagicDesc.obj
- 0001:000722e0       ?Init@KMagicDesc@@QAEHXZ   100732e0 f   KMagicDesc.obj
- 0001:000722f0       ?GetDesc@KMagicDesc@@QAEPBDPAX@Z 100732f0 f   KMagicDesc.obj
- 0001:00072850       ?g_MagicID2String@@YAPBDH@Z 10073850 f   KMagicDesc.obj
- 0001:00072880       ?g_String2MagicID@@YAHPAD@Z 10073880 f   KMagicDesc.obj
- 0001:000728f0       ?String2MagicID@KMagicDesc@@QAEHPAD@Z 100738f0 f   KMagicDesc.obj
- 0001:000729a0       ?g_GetStringRes@@YAPADHPADH@Z 100739a0 f   KTaskFuns.obj
- 0001:000729f0       ?SetGamma@KOption@@QAEXH@Z 100739f0 f   KOption.obj
- 0001:00072a10       ?SetSndVolume@KOption@@QAEXH@Z 10073a10 f   KOption.obj
- 0001:00072a60       ?SetMusicVolume@KOption@@QAEXH@Z 10073a60 f   KOption.obj
- 0001:00072ae0       ??0KMapMusic@@QAE@XZ       10073ae0 f   KMapMusic.obj
- 0001:00072b50       ??1KMapMusic@@QAE@XZ       10073b50 f   KMapMusic.obj
- 0001:00072b60       ?Release@KMapMusic@@AAEXXZ 10073b60 f   KMapMusic.obj
- 0001:00072bb0       ?LoadSetFile@KMapMusic@@QAEXXZ 10073bb0 f   KMapMusic.obj
- 0001:00072f40       ?Init@KMapMusic@@QAEXXZ    10073f40 f   KMapMusic.obj
- 0001:00072f60       ?Play@KMapMusic@@QAEXHHH@Z 10073f60 f   KMapMusic.obj
- 0001:00073510       ?Stop@KMapMusic@@QAEXXZ    10074510 f   KMapMusic.obj
- 0001:00073530       ?SetGameVolume@KMapMusic@@QAEXH@Z 10074530 f   KMapMusic.obj
- 0001:000735b0       ?SetWeatherVolume@KMapMusic@@QAEXH@Z 100745b0 f   KMapMusic.obj
- 0001:00073630       ?Start@KMapMusic@@QAEXHHH@Z 10074630 f   KMapMusic.obj
- 0001:00073660       ?ScriptPlay@KMapMusic@@QAEXPAD@Z 10074660 f   KMapMusic.obj
- 0001:00073770       ??0KLadder@@QAE@XZ         10074770 f   KLadder.obj
- 0001:00073790       ??1KLadder@@QAE@XZ         10074790 f   KLadder.obj
- 0001:000737a0       ?Init@KLadder@@QAEHPAXI@Z  100747a0 f   KLadder.obj
- 0001:000737d0       ?TopTenFacMasterHand@KLadder@@QAEPBUTRoleList@@H@Z 100747d0 f   KLadder.obj
- 0001:00073800       ?TopTenFacRich@KLadder@@QAEPBUTRoleList@@H@Z 10074800 f   KLadder.obj
- 0001:00073830       ?TopTenKiller@KLadder@@QAEPBUTRoleList@@XZ 10074830 f   KLadder.obj
- 0001:00073840       ?TopTenMasterHand@KLadder@@QAEPBUTRoleList@@XZ 10074840 f   KLadder.obj
- 0001:00073850       ?TopTenRich@KLadder@@QAEPBUTRoleList@@XZ 10074850 f   KLadder.obj
- 0001:00073860       ?GetFacMasterHandPercent@KLadder@@QAEHH@Z 10074860 f   KLadder.obj
- 0001:00073880       ?GetFacMoneyPercent@KLadder@@QAEHH@Z 10074880 f   KLadder.obj
- 0001:000738a0       ?GetFacMemberCount@KLadder@@QAEHH@Z 100748a0 f   KLadder.obj
- 0001:000738c0       ?GetTopTen@KLadder@@QAEPBUTRoleList@@K@Z 100748c0 f   KLadder.obj
- 0001:00073960       ??0ZLoadFile@@QAE@XZ       10074960 f   ZLoadFile.obj
- 0001:000739d0       ??1ZLoadFile@@QAE@XZ       100749d0 f   ZLoadFile.obj
- 0001:00073a40       ?Init@ZLoadFile@@QAEHXZ    10074a40 f   ZLoadFile.obj
- 0001:00073a80       ?FindTabFree@ZLoadFile@@AAEHXZ 10074a80 f   ZLoadFile.obj
- 0001:00073ac0       ?SearchTabFile@ZLoadFile@@QAEHK@Z 10074ac0 f   ZLoadFile.obj
- 0001:00073b00       ?ReadTabFile@ZLoadFile@@QAEHPBD@Z 10074b00 f   ZLoadFile.obj
- 0001:00073b50       ?ClearTabFile@ZLoadFile@@QAEHPBD@Z 10074b50 f   ZLoadFile.obj
- 0001:00073b90       ?GetTabFileRow@ZLoadFile@@QAEHPBD@Z 10074b90 f   ZLoadFile.obj
- 0001:00073bd0       ?GetTabFileColum@ZLoadFile@@QAEHPBD@Z 10074bd0 f   ZLoadFile.obj
- 0001:00073c10       ?GetTabFileCell@ZLoadFile@@QAEXPBDHHPAD@Z 10074c10 f   ZLoadFile.obj
- 0001:00073c90       ?FindIniFree@ZLoadFile@@AAEHXZ 10074c90 f   ZLoadFile.obj
- 0001:00073cd0       ?SearchIniFile@ZLoadFile@@QAEHK@Z 10074cd0 f   ZLoadFile.obj
- 0001:00073d10       ?ReadIniFile@ZLoadFile@@QAEHPBD@Z 10074d10 f   ZLoadFile.obj
- 0001:00073d70       ?ClearIniFile@ZLoadFile@@QAEHPBD@Z 10074d70 f   ZLoadFile.obj
- 0001:00073dc0       ?GetIniFileData@ZLoadFile@@QAEHPBD00PAD@Z 10074dc0 f   ZLoadFile.obj
- 0001:00073e40       ?Get@KWorldMsg@@QAEHPAVKWorldMsgNode@@@Z 10074e40 f   KWorldMsg.obj
- 0001:00073eb0       ?Peek@KWorldMsg@@QAEHPAVKWorldMsgNode@@K@Z 10074eb0 f   KWorldMsg.obj
- 0001:00073f10       ?Clear@KWorldMsg@@QAEXXZ   10074f10 f   KWorldMsg.obj
- 0001:00074000       ?AutoMove@KAutoMove@@QAEHXZ 10075000 f   Kautoai.obj
- 0001:00074040       ?AutoMoveTo@KAutoMove@@QAEHHH@Z 10075040 f   Kautoai.obj
- 0001:00074210       ?FindPathAndMove@KAutoMove@@IAEHAAHH@Z 10075210 f   Kautoai.obj
- 0001:00074560       ??0KJXPathFinder@@QAE@H@Z  10075560 f   KJXPathFinder.obj
- 0001:00074590       ??1KJXPathFinder@@QAE@XZ   10075590 f   KJXPathFinder.obj
- 0001:000745f0       ?CreateMap@KJXPathFinder@@AAEHHH@Z 100755f0 f   KJXPathFinder.obj
- 0001:000746b0       ?ClearMap@KJXPathFinder@@AAEXXZ 100756b0 f   KJXPathFinder.obj
- 0001:00074730       ?Init@KJXPathFinder@@QAEHPAUtagRECT@@PAVKScenePlaceMapC@@@Z 10075730 f   KJXPathFinder.obj
- 0001:00074770       ?LoadMap@KJXPathFinder@@AAEHPAUtagRECT@@PAVKScenePlaceMapC@@@Z 10075770 f   KJXPathFinder.obj
- 0001:000748d0       ?CalcFactors@KJXPathFinder@@AAEXXZ 100758d0 f   KJXPathFinder.obj
- 0001:00074b80       ?FillNote@KJXPathFinder@@QAEXHHH@Z 10075b80 f   KJXPathFinder.obj
- 0001:00074bc0       ?FindPath@KJXPathFinder@@QAEHHHHH@Z 10075bc0 f   KJXPathFinder.obj
- 0001:00074c40       ?GetPath@KJXPathFinder@@QAEXHHAAV?$vector@UFindPathNode@@V?$allocator@UFindPathNode@@@std@@@std@@@Z 10075c40 f   KJXPathFinder.obj
- 0001:00074ec0       ?FindPath@KJXPathFinder@@QAEHAAUFindPathNode@@0H@Z 10075ec0 f   KJXPathFinder.obj
- 0001:00074fa0       ?GetNextStep@KJXPathFinder@@QAE?AW4KE_NEXTSTEP_RESULT@@ABUFindPathNode@@AAU3@H@Z 10075fa0 f   KJXPathFinder.obj
- 0001:00075080       ?GetNextStep@KJXPathFinder@@AAE?AW4KE_NEXTSTEP_RESULT@@ABUFindPathNode@@AAU3@@Z 10076080 f   KJXPathFinder.obj
- 0001:000752a0       ?ClearOpenTable@KJXPathFinder@@AAEXXZ 100762a0 f   KJXPathFinder.obj
- 0001:000752e0       ?ResetMap@KJXPathFinder@@AAEXXZ 100762e0 f   KJXPathFinder.obj
- 0001:00075340       ?AddOpenNode@KJXPathFinder@@AAEXHHGGHH@Z 10076340 f   KJXPathFinder.obj
- 0001:00075460       ?AddCloseNode@KJXPathFinder@@AAEXPAVOpenNode@@HH@Z 10076460 f   KJXPathFinder.obj
- 0001:00075870       ?FixOpenTable@KJXPathFinder@@AAEXABUFindPathNode@@@Z 10076870 f   KJXPathFinder.obj
- 0001:000759b0       ?GetPath@KJXPathFinder@@QAEHAAUFindPathNode@@AAPAU2@@Z 100769b0 f   KJXPathFinder.obj
- 0001:00075a70       ?_Destroy@?$vector@UFindPathNode@@V?$allocator@UFindPathNode@@@std@@@std@@IAEXPAUFindPathNode@@0@Z 10076a70 f i KJXPathFinder.obj
- 0001:00075a80       ?_Ucopy@?$vector@UFindPathNode@@V?$allocator@UFindPathNode@@@std@@@std@@IAEPAUFindPathNode@@PBU3@0PAU3@@Z 10076a80 f i KJXPathFinder.obj
- 0001:00075ac0       ?_Ufill@?$vector@UFindPathNode@@V?$allocator@UFindPathNode@@@std@@@std@@IAEXPAUFindPathNode@@IABU3@@Z 10076ac0 f i KJXPathFinder.obj
- 0001:00075af0       ?_Construct@std@@YAXPAUFindPathNode@@ABU2@@Z 10076af0 f i KJXPathFinder.obj
- 0001:00075b10       ??1OpenTable@@QAE@XZ       10076b10 f i KJXPathFinder.obj
- 0001:00075b40       ?Reset@OpenTable@@QAEXH@Z  10076b40 f i KJXPathFinder.obj
- 0001:00075bb0       ??0KLittleMap@@QAE@XZ      10076bb0 f   KLittleMap.obj
- 0001:00075c20       ??1KLittleMap@@QAE@XZ      10076c20 f   KLittleMap.obj
- 0001:00075c40       ?Release@KLittleMap@@QAEXXZ 10076c40 f   KLittleMap.obj
- 0001:00075cc0       ?Init@KLittleMap@@QAEXHHHH@Z 10076cc0 f   KLittleMap.obj
- 0001:00076150       ?GetBarrierBuf@KLittleMap@@QAEPAEHH@Z 10077150 f   KLittleMap.obj
- 0001:000761d0       ?GetRect@KLittleMap@@QAEPAUtagRECT@@XZ 100771d0 f   KLittleMap.obj
- 0001:000761e0       ?SetHaveLoad@KLittleMap@@QAEXHH@Z 100771e0 f   KLittleMap.obj
- 0001:00076220       ?Draw@KLittleMap@@QAEXHH@Z 10077220 f   KLittleMap.obj
- 0001:000768e0       ?SetTeammateShow@KLittleMap@@QAEXH@Z 100778e0 f   KLittleMap.obj
- 0001:000768f0       ?SetPlayerShow@KLittleMap@@QAEXH@Z 100778f0 f   KLittleMap.obj
- 0001:00076900       ?SetFightNpcShow@KLittleMap@@QAEXH@Z 10077900 f   KLittleMap.obj
- 0001:00076910       ?SetNormalNpcShow@KLittleMap@@QAEXH@Z 10077910 f   KLittleMap.obj
- 0001:00076920       ?SetScreenPos@KLittleMap@@QAEXHH@Z 10077920 f   KLittleMap.obj
- 0001:00076940       ?Show@KLittleMap@@QAEXH@Z  10077940 f   KLittleMap.obj
- 0001:00076950       ?SetShowSize@KLittleMap@@QAEXHH@Z 10077950 f   KLittleMap.obj
- 0001:000769a0       _GetTickCount@0            100779a0 f   kernel32:KERNEL32.dll
- 0001:000769a6       _MulDiv@12                 100779a6 f   kernel32:KERNEL32.dll
- 0001:000769ac       _GetLocalTime@4            100779ac f   kernel32:KERNEL32.dll
- 0001:000769b2       _FileTimeToSystemTime@8    100779b2 f   kernel32:KERNEL32.dll
- 0001:000769b8       _LocalFileTimeToFileTime@8 100779b8 f   kernel32:KERNEL32.dll
- 0001:000769be       _SystemTimeToFileTime@8    100779be f   kernel32:KERNEL32.dll
- 0001:000769c4       _LeaveCriticalSection@4    100779c4 f   kernel32:KERNEL32.dll
- 0001:000769ca       _EnterCriticalSection@4    100779ca f   kernel32:KERNEL32.dll
- 0001:000769d0       _ResetEvent@4              100779d0 f   kernel32:KERNEL32.dll
- 0001:000769d6       _CloseHandle@4             100779d6 f   kernel32:KERNEL32.dll
- 0001:000769dc       _DeleteCriticalSection@4   100779dc f   kernel32:KERNEL32.dll
- 0001:000769e2       _CreateThread@24           100779e2 f   kernel32:KERNEL32.dll
- 0001:000769e8       _InitializeCriticalSection@4 100779e8 f   kernel32:KERNEL32.dll
- 0001:000769ee       _CreateEventA@16           100779ee f   kernel32:KERNEL32.dll
- 0001:000769f4       _WaitForSingleObject@8     100779f4 f   kernel32:KERNEL32.dll
- 0001:000769fa       _GetExitCodeThread@8       100779fa f   kernel32:KERNEL32.dll
- 0001:00076a00       _SetEvent@4                10077a00 f   kernel32:KERNEL32.dll
- 0001:00076a06       _lua_tostring              10077a06 f   lualibdll:LuaLibDll.dll
- 0001:00076a0c       _lua_isstring              10077a0c f   lualibdll:LuaLibDll.dll
- 0001:00076a12       _lua_tonumber              10077a12 f   lualibdll:LuaLibDll.dll
- 0001:00076a18       _lua_isnumber              10077a18 f   lualibdll:LuaLibDll.dll
- 0001:00076a1e       _lua_typename              10077a1e f   lualibdll:LuaLibDll.dll
- 0001:00076a24       _lua_gettop                10077a24 f   lualibdll:LuaLibDll.dll
- 0001:00076a2a       _lua_pushnumber            10077a2a f   lualibdll:LuaLibDll.dll
- 0001:00076a30       _lua_type                  10077a30 f   lualibdll:LuaLibDll.dll
- 0001:00076a36       _lua_getglobal             10077a36 f   lualibdll:LuaLibDll.dll
- 0001:00076a3c       _lua_rawget                10077a3c f   lualibdll:LuaLibDll.dll
- 0001:00076a42       _lua_dofile                10077a42 f   lualibdll:LuaLibDll.dll
- 0001:00076a48       _lua_pushnil               10077a48 f   lualibdll:LuaLibDll.dll
- 0001:00076a4e       _timeGetTime@0             10077a4e f   Winmm:WINMM.dll
- 0001:00076a54       ?g_FileName2Id@@YAKPAD@Z   10077a54 f   engine:Engine.dll
- 0001:00076a5a       ?GetString@KTabFile@@UAEHHPAD00KH@Z 10077a5a f   engine:Engine.dll
- 0001:00076a60       ?GetInteger@KTabFile@@UAEHHPADHPAHH@Z 10077a60 f   engine:Engine.dll
- 0001:00076a66       ??1KTabFile@@UAE@XZ        10077a66 f   engine:Engine.dll
- 0001:00076a6c       ?Load@KTabFile@@UAEHPAD@Z  10077a6c f   engine:Engine.dll
- 0001:00076a72       ??0KTabFile@@QAE@XZ        10077a72 f   engine:Engine.dll
- 0001:00076a78       ??1KLinkArray@@QAE@XZ      10077a78 f   engine:Engine.dll
- 0001:00076a7e       ?KSG_StringSkipSymbol@@YA_NPAPBDH@Z 10077a7e f   engine:Engine.dll
- 0001:00076a84       ?KSG_StringGetInt@@YAHPAPBDH@Z 10077a84 f   engine:Engine.dll
- 0001:00076a8a       ?g_Random@@YAII@Z          10077a8a f   engine:Engine.dll
- 0001:00076a90       ?g_StrCpy@@YAXPADPBD@Z     10077a90 f   engine:Engine.dll
- 0001:00076a96       ?Play@KWavSound@@QAEXHHH@Z 10077a96 f   engine:Engine.dll
- 0001:00076a9c       ?GetNode@KCache@@UAEPAVKCacheNode@@PADPAV2@@Z 10077a9c f   engine:Engine.dll
- 0001:00076aa2       ?Stop@KWavSound@@QAEXXZ    10077aa2 f   engine:Engine.dll
- 0001:00076aa8       ?Insert@KLinkArray@@QAEXH@Z 10077aa8 f   engine:Engine.dll
- 0001:00076aae       ?Init@KLinkArray@@QAEXH@Z  10077aae f   engine:Engine.dll
- 0001:00076ab4       ?Remove@KLinkArray@@QAEXH@Z 10077ab4 f   engine:Engine.dll
- 0001:00076aba       ?SafeCallEnd@KLuaScript@@QAEXH@Z 10077aba f   engine:Engine.dll
- 0001:00076ac0       ?SafeCallBegin@KLuaScript@@QAEXPAH@Z 10077ac0 f   engine:Engine.dll
- 0001:00076ac6       ??1KLuaScript@@UAE@XZ      10077ac6 f   engine:Engine.dll
- 0001:00076acc       ?Load@KLuaScript@@UAEHPAD@Z 10077acc f   engine:Engine.dll
- 0001:00076ad2       ?RegisterFunctions@KLuaScript@@QAEHQAUTLua_Funcs@@H@Z 10077ad2 f   engine:Engine.dll
- 0001:00076ad8       ?Init@KLuaScript@@UAEHXZ   10077ad8 f   engine:Engine.dll
- 0001:00076ade       ??0KLuaScript@@QAE@XZ      10077ade f   engine:Engine.dll
- 0001:00076ae4       ?g_SetFilePath@@YAXPAD@Z   10077ae4 f   engine:Engine.dll
- 0001:00076aea       ?GetString@KIniFile@@QAEHPBD00PADK@Z 10077aea f   engine:Engine.dll
- 0001:00076af0       ??1KIniFile@@QAE@XZ        10077af0 f   engine:Engine.dll
- 0001:00076af6       ?Load@KIniFile@@QAEHPBD@Z  10077af6 f   engine:Engine.dll
- 0001:00076afc       ??0KIniFile@@QAE@XZ        10077afc f   engine:Engine.dll
- 0001:00076b02       ?g_StrCpyLen@@YAXPADPBDH@Z 10077b02 f   engine:Engine.dll
- 0001:00076b08       ?g_StrLen@@YAHPBD@Z        10077b08 f   engine:Engine.dll
- 0001:00076b0e       ?GetString@KTabFile@@UAEHHHPAD0K@Z 10077b0e f   engine:Engine.dll
- 0001:00076b14       ?FindRow@KTabFile@@UAEHPADH@Z 10077b14 f   engine:Engine.dll
- 0001:00076b1a       _TGetEncodedTextLineCount  10077b1a f   engine:Engine.dll
- 0001:00076b20       _TGetLimitLenEncodedString 10077b20 f   engine:Engine.dll
- 0001:00076b26       ?SetGlobalName@KLuaScript@@QAEXPAD@Z 10077b26 f   engine:Engine.dll
- 0001:00076b2c       ?GetInteger@KTabFile@@UAEHHHHPAH@Z 10077b2c f   engine:Engine.dll
- 0001:00076b32       ?IsPlaying@KWavSound@@QAEHXZ 10077b32 f   engine:Engine.dll
- 0001:00076b38       ?FindColumn@KTabFile@@UAEHPAD@Z 10077b38 f   engine:Engine.dll
- 0001:00076b3e       ?g_StrCat@@YAXPADPBD@Z     10077b3e f   engine:Engine.dll
- 0001:00076b44       ?g_UnitePathAndName@@YAXPAD00@Z 10077b44 f   engine:Engine.dll
- 0001:00076b4a       ?IsSectionExist@KIniFile@@QAEHPBD@Z 10077b4a f   engine:Engine.dll
- 0001:00076b50       ?Clear@KIniFile@@QAEXXZ    10077b50 f   engine:Engine.dll
- 0001:00076b56       ?GetInteger@KIniFile@@QAEHPBD0HPAH@Z 10077b56 f   engine:Engine.dll
- 0001:00076b5c       ?g_StrCmp@@YAHPBD0@Z       10077b5c f   engine:Engine.dll
- 0001:00076b62       ?SetScriptName@KLuaScript@@UAEXPAD@Z 10077b62 f   engine:Engine.dll
- 0001:00076b68       ?RegisterFunction@KLuaScript@@UAEHPADPAX@Z 10077b68 f   engine:Engine.dll
- 0001:00076b6e       ?CallFunction@KLuaScript@@UAAHPADH0ZZ 10077b6e f   engine:Engine.dll
- 0001:00076b74       ?Execute@KLuaScript@@UAEHXZ 10077b74 f   engine:Engine.dll
- 0001:00076b7a       ?Compile@KLuaScript@@UAEHPAD@Z 10077b7a f   engine:Engine.dll
- 0001:00076b80       ?Exit@KLuaScript@@UAEXXZ   10077b80 f   engine:Engine.dll
- 0001:00076b86       _TEncodeText               10077b86 f   engine:Engine.dll
- 0001:00076b8c       ?Save@KIniFile@@QAEHPBD@Z  10077b8c f   engine:Engine.dll
- 0001:00076b92       ?WriteInteger@KIniFile@@QAEXPBD0H@Z 10077b92 f   engine:Engine.dll
- 0001:00076b98       ?WriteString@KIniFile@@QAEXPBD00@Z 10077b98 f   engine:Engine.dll
- 0001:00076b9e       ?g_CreatePath@@YAXPAD@Z    10077b9e f   engine:Engine.dll
- 0001:00076ba4       ?GetShort@KIniFile@@QAEHPBD0FPAF@Z 10077ba4 f   engine:Engine.dll
- 0001:00076baa       ?g_SetRootPath@@YAXPAD@Z   10077baa f   engine:Engine.dll
- 0001:00076bb0       ?g_RandomSeed@@YAXI@Z      10077bb0 f   engine:Engine.dll
- 0001:00076bb6       ??0KPolygon@@QAE@XZ        10077bb6 f   engine:Engine.dll
- 0001:00076bbc       ?Clear@KPolygon@@QAEXXZ    10077bbc f   engine:Engine.dll
- 0001:00076bc2       ?g_StrLower@@YAXPAD@Z      10077bc2 f   engine:Engine.dll
- 0001:00076bc8       ?SetVolume@KWavSound@@QAEXH@Z 10077bc8 f   engine:Engine.dll
- 0001:00076bce       ?SetPan@KWavSound@@QAEXH@Z 10077bce f   engine:Engine.dll
- 0001:00076bd4       ?GetCenterPos@KPolygon@@QAEXPAUtagPOINT@@@Z 10077bd4 f   engine:Engine.dll
- 0001:00076bda       ?IsPointInPolygon@KPolygon@@QAEHUtagPOINT@@@Z 10077bda f   engine:Engine.dll
- 0001:00076be0       ?Read@KPakFile@@QAEKPAXI@Z 10077be0 f   engine:Engine.dll
- 0001:00076be6       ??1KPakFile@@QAE@XZ        10077be6 f   engine:Engine.dll
- 0001:00076bec       ?Close@KPakFile@@QAEXXZ    10077bec f   engine:Engine.dll
- 0001:00076bf2       ?Size@KPakFile@@QAEKXZ     10077bf2 f   engine:Engine.dll
- 0001:00076bf8       ?Open@KPakFile@@QAEHPBD@Z  10077bf8 f   engine:Engine.dll
- 0001:00076bfe       ??0KPakFile@@QAE@XZ        10077bfe f   engine:Engine.dll
- 0001:00076c04       ?Seek@KPakFile@@QAEKHI@Z   10077c04 f   engine:Engine.dll
- 0001:00076c0a       ??0KSoundCache@@QAE@XZ     10077c0a f   engine:Engine.dll
- 0001:00076c10       ??1KSoundCache@@QAE@XZ     10077c10 f   engine:Engine.dll
- 0001:00076c16       ?Init@KCache@@UAEXH@Z      10077c16 f   engine:Engine.dll
- 0001:00076c1c       ?g_FindDebugWindow@@YAPAUHWND__@@PAD0@Z 10077c1c f   engine:Engine.dll
- 0001:00076c22       ??0KScriptList@@QAE@XZ     10077c22 f   engine:Engine.dll
- 0001:00076c28       ??1KScriptList@@QAE@XZ     10077c28 f   engine:Engine.dll
- 0001:00076c2e       ?g_GetRootPath@@YAXPAD@Z   10077c2e f   engine:Engine.dll
- 0001:00076c34       ?GetNextKey@KIniFile@@QAEHPBD0PAD@Z 10077c34 f   engine:Engine.dll
- 0001:00076c3a       ?g_GetFullPath@@YAXPAD0@Z  10077c3a f   engine:Engine.dll
- 0001:00076c40       ?GetString@KTabFile@@UAEHPAD000K@Z 10077c40 f   engine:Engine.dll
- 0001:00076c46       ?GetRect@KIniFile@@QAEXPBD0PAUtagRECT@@@Z 10077c46 f   engine:Engine.dll
- 0001:00076c4c       ?GetInteger2@KIniFile@@QAEXPBD0PAH1@Z 10077c4c f   engine:Engine.dll
- 0001:00076c52       ?Tell@KPakFile@@QAEKXZ     10077c52 f   engine:Engine.dll
- 0001:00076c58       ??0KTimer@@QAE@XZ          10077c58 f   engine:Engine.dll
- 0001:00076c5e       ?g_FileExists@@YAHPAD@Z    10077c5e f   engine:Engine.dll
- 0001:00076c64       ?get_jpg_image@@YAPAUKSGImageContent@@QBDI@Z 10077c64 f   engine:Engine.dll
- 0001:00076c6a       ?release_image@@YAXPAUKSGImageContent@@@Z 10077c6a f   engine:Engine.dll
- 0001:00076c70       ??3@YAXPAX@Z               10077c70 f   msvcprt:delop_s.obj
- 0001:00076c7c       ??0Init@ios_base@std@@QAE@XZ 10077c7c f   msvcprt:MSVCP60.dll
- 0001:00076c82       ??1Init@ios_base@std@@QAE@XZ 10077c82 f   msvcprt:MSVCP60.dll
- 0001:00076c88       ??0_Winit@std@@QAE@XZ      10077c88 f   msvcprt:MSVCP60.dll
- 0001:00076c8e       ??1_Winit@std@@QAE@XZ      10077c8e f   msvcprt:MSVCP60.dll
- 0001:00076c94       ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ 10077c94 f   msvcprt:MSVCP60.dll
- 0001:00076c9a       ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z 10077c9a f   msvcprt:MSVCP60.dll
- 0001:00076ca0       ?_Eos@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEXI@Z 10077ca0 f   msvcprt:MSVCP60.dll
- 0001:00076ca6       ?_Grow@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAE_NI_N@Z 10077ca6 f   msvcprt:MSVCP60.dll
- 0001:00076cac       ?_Tidy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEX_N@Z 10077cac f   msvcprt:MSVCP60.dll
- 0001:00076cb2       ?replace@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@IIID@Z 10077cb2 f   msvcprt:MSVCP60.dll
- 0001:00076cb8       ?_Freeze@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEXXZ 10077cb8 f   msvcprt:MSVCP60.dll
- 0001:00076cbe       ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ABV12@II@Z 10077cbe f   msvcprt:MSVCP60.dll
- 0001:00076cc4       ?erase@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@II@Z 10077cc4 f   msvcprt:MSVCP60.dll
- 0001:00076cca       ?find@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIPBDII@Z 10077cca f   msvcprt:MSVCP60.dll
- 0001:00076cd0       __purecall                 10077cd0 f   MSVCRT:MSVCRT.dll
- 0001:00076cd6       ___CxxFrameHandler         10077cd6 f   MSVCRT:MSVCRT.dll
- 0001:00076ce0       __ftol                     10077ce0 f   MSVCRT:MSVCRT.dll
- 0001:00076ce6       ??_L@YGXPAXIHP6EX0@Z1@Z    10077ce6 f   MSVCRT:ehvecctr.obj
- 0001:00076d68       __onexit                   10077d68 f   MSVCRT:atonexit.obj
- 0001:00076d94       _atexit                    10077d94 f   MSVCRT:atonexit.obj
- 0001:00076da6       ??_M@YGXPAXIHP6EX0@Z@Z     10077da6 f   MSVCRT:ehvecdtr.obj
- 0001:00076e26       ?__ArrayUnwind@@YGXPAXIHP6EX0@Z@Z 10077e26 f   MSVCRT:ehvecdtr.obj
- 0001:00076e9a       _sprintf                   10077e9a f   MSVCRT:MSVCRT.dll
- 0001:00076ea0       ??2@YAPAXI@Z               10077ea0 f   MSVCRT:MSVCRT.dll
- 0001:00076ea6       _printf                    10077ea6 f   MSVCRT:MSVCRT.dll
- 0001:00076eac       _strncpy                   10077eac f   MSVCRT:MSVCRT.dll
- 0001:00076eb2       _atoi                      10077eb2 f   MSVCRT:MSVCRT.dll
- 0001:00076eb8       _strstr                    10077eb8 f   MSVCRT:MSVCRT.dll
- 0001:00076ebe       _free                      10077ebe f   MSVCRT:MSVCRT.dll
- 0001:00076ec4       _malloc                    10077ec4 f   MSVCRT:MSVCRT.dll
- 0001:00076eca       _memmove                   10077eca f   MSVCRT:MSVCRT.dll
- 0001:00076ed0       _rand                      10077ed0 f   MSVCRT:MSVCRT.dll
- 0001:00076ed6       _srand                     10077ed6 f   MSVCRT:MSVCRT.dll
- 0001:00076edc       _time                      10077edc f   MSVCRT:MSVCRT.dll
- 0001:00076ee2       __findclose                10077ee2 f   MSVCRT:MSVCRT.dll
- 0001:00076ee8       __findnext                 10077ee8 f   MSVCRT:MSVCRT.dll
- 0001:00076eee       __strupr                   10077eee f   MSVCRT:MSVCRT.dll
- 0001:00076ef4       __findfirst                10077ef4 f   MSVCRT:MSVCRT.dll
- 0001:00076f00       __alloca_probe             10077f00 f   MSVCRT:chkstk.obj
- 0001:00076f00       __chkstk                   10077f00 f   MSVCRT:chkstk.obj
- 0001:00076f30       __CIpow                    10077f30 f   MSVCRT:MSVCRT.dll
- 0001:00076f36       _realloc                   10077f36 f   MSVCRT:MSVCRT.dll
- 0001:00076f3c       _strchr                    10077f3c f   MSVCRT:MSVCRT.dll
- 0001:00076f42       _atof                      10077f42 f   MSVCRT:MSVCRT.dll
- 0001:00076f48       __CRT_INIT@12              10077f48 f   MSVCRT:crtdll.obj
- 0001:00076ff3       __DllMainCRTStartup@12     10077ff3 f   MSVCRT:crtdll.obj
- 0001:00077090       __except_handler3          10078090 f   MSVCRT:MSVCRT.dll
- 0001:00077096       ___dllonexit               10078096 f   MSVCRT:MSVCRT.dll
- 0001:0007709c       ?terminate@@YAXXZ          1007809c f   MSVCRT:MSVCRT.dll
- 0001:000770a2       __initterm                 100780a2 f   MSVCRT:MSVCRT.dll
- 0001:000770a8       _DllMain@12                100780a8 f   MSVCRT:dllmain.obj
- 0001:000770d0       _DisableThreadLibraryCalls@4 100780d0 f   kernel32:KERNEL32.dll
- 0001:000770d6       __strlwr                   100780d6 f   MSVCRT:MSVCRT.dll
- 0001:000770dc       __itoa                     100780dc f   MSVCRT:MSVCRT.dll
- 0001:000770e2       __getcwd                   100780e2 f   MSVCRT:MSVCRT.dll
- 0001:000770e8       __chdir                    100780e8 f   MSVCRT:MSVCRT.dll
+ 0001:00065af0       ?CheckPositionBarrier@KCoreShell@@UAEHHH@Z 10066af0 f   CoreShell.obj
+ 0001:00065b50       ??0KIpotBranch@@QAE@XZ     10066b50 f   KIpotBranch.obj
+ 0001:00065b80       ??1KIpotBranch@@QAE@XZ     10066b80 f   KIpotBranch.obj
+ 0001:00065b90       ?EnumerateObjects@KIpotBranch@@QAEXPAXP6AX0PAUKIpotLeaf@@@Z@Z 10066b90 f   KIpotBranch.obj
+ 0001:00065c20       ?PaintObjectLayer@KIpotBranch@@QAEXPAUtagRECT@@@Z 10066c20 f   KIpotBranch.obj
+ 0001:00065ca0       ?PaintABranchObject@KIpotBranch@@ABEXPAUKIpotBuildinObj@@PAUtagRECT@@@Z 10066ca0 f   KIpotBranch.obj
+ 0001:00065f90       ?PaintNoneObjectLayer@KIpotBranch@@QAEXPAUtagRECT@@H@Z 10066f90 f   KIpotBranch.obj
+ 0001:00065ff0       ?RemoveAllRtoLeafs@KIpotBranch@@QAEXPAUKIpotLeaf@@@Z 10066ff0 f   KIpotBranch.obj
+ 0001:00066040       ?AddAObject@KIpotBranch@@QAEXPAUKIpotBuildinObj@@@Z 10067040 f   KIpotBranch.obj
+ 0001:00066100       ?AddBranch@KIpotBranch@@QAEXPAUKIpotBuildinObj@@@Z 10067100 f   KIpotBranch.obj
+ 0001:00066220       ?AddSubBranch@KIpotBranch@@AAEXHPAUKIpotBuildinObj@@@Z 10067220 f   KIpotBranch.obj
+ 0001:000662a0       ?Clear@KIpotBranch@@QAEXXZ 100672a0 f   KIpotBranch.obj
+ 0001:00066370       ?SetLine@KIpotBranch@@QAEXPAUtagPOINT@@0@Z 10067370 f   KIpotBranch.obj
+ 0001:000663a0       ?AddLeafLine@KIpotBranch@@QAEXPAUKIpotBuildinObj@@@Z 100673a0 f   KIpotBranch.obj
+ 0001:00066420       ?AddLeafPoint@KIpotBranch@@QAEXPAUKIpotLeaf@@@Z 10067420 f   KIpotBranch.obj
+ 0001:00066490       ?AddPointLeafToList@KIpotBranch@@AAEXAAPAUKIpotLeaf@@PAU2@1@Z 10067490 f   KIpotBranch.obj
+ 0001:000666a0       ?AddLineLeafToList@KIpotBranch@@AAEXAAPAUKIpotLeaf@@PAUKIpotBuildinObj@@@Z 100676a0 f   KIpotBranch.obj
+ 0001:00066840       ?Pluck@KIpotRuntimeObj@@QAEXXZ 10067840 f   KIpotLeaf.obj
+ 0001:000668b0       ?KIpotLeaf_EnumerateObjects@@YAXPAUKIpotLeaf@@PAXP6AX10@Z@Z 100678b0 f   KIpotLeaf.obj
+ 0001:00066900       ?KIpotLeaf_PaintObjectLayer@@YAXPAUKIpotLeaf@@PAUtagRECT@@@Z 10067900 f   KIpotLeaf.obj
+ 0001:00066990       ?KIpotLeaf_PaintNoneObjectLayer@@YAXPAUKIpotLeaf@@PAUtagRECT@@H@Z 10067990 f   KIpotLeaf.obj
+ 0001:00066a20       ?PaintABuildinObject@KIpotBuildinObj@@QAEXPAUtagRECT@@@Z 10067a20 f   KIpotLeaf.obj
+ 0001:00066c40       ?KIpotLeaf_RemoveAllRtoLeafs@@YAXPAUKIpotLeaf@@0@Z 10067c40 f   KIpotLeaf.obj
+ 0001:00066ca0       ?KIpotLeaf_Clear@@YAXPAUKIpotLeaf@@@Z 10067ca0 f   KIpotLeaf.obj
+ 0001:00066cf0       ?Clone@KIpotBuildinObj@@QAEPAU1@PAUtagPOINT@@@Z 10067cf0 f   KIpotLeaf.obj
+ 0001:00066d80       ?BuildinObjNextFrame@@YAXPAUKBuildinObj@@@Z 10067d80 f   KIpotLeaf.obj
+ 0001:00066e50       ??0KSelfBreathLight@@QAE@XZ 10067e50 f   KIpoTree.obj
+ 0001:00066e70       ?Breath@KSelfBreathLight@@UAEXXZ 10067e70 f   KIpoTree.obj
+ 0001:00066f30       ??0KIpoTree@@QAE@XZ        10067f30 f   KIpoTree.obj
+ 0001:00067020       ??1KIpoTree@@QAE@XZ        10068020 f   KIpoTree.obj
+ 0001:00067110       ?Paint@KIpoTree@@QAEXPAUtagRECT@@W4IPOT_RENDER_LAYER@@@Z 10068110 f   KIpoTree.obj
+ 0001:000671a0       ?Breathe@KIpoTree@@QAEXXZ  100681a0 f   KIpoTree.obj
+ 0001:000671d0       ?Clear@KIpoTree@@QAEXXZ    100681d0 f   KIpoTree.obj
+ 0001:00067270       ?RemoveRtoGroupWithPermanentLeaf@KIpoTree@@AAEXXZ 10068270 f   KIpoTree.obj
+ 0001:00067290       ?AddBranch@KIpoTree@@QAEXPAUKIpotBuildinObj@@@Z 10068290 f   KIpoTree.obj
+ 0001:00067320       ?Fell@KIpoTree@@QAEXXZ     10068320 f   KIpoTree.obj
+ 0001:000673c0       ?AddLeafLine@KIpoTree@@QAEXPAUKIpotBuildinObj@@@Z 100683c0 f   KIpoTree.obj
+ 0001:000673f0       ?AddLeafPoint@KIpoTree@@QAEXPAUKIpotLeaf@@@Z 100683f0 f   KIpoTree.obj
+ 0001:000675d0       ?Breath@KLightBase@@UAEXXZ 100685d0 f i KIpoTree.obj
+ 0001:000675e0       ?PluckRto@KIpoTree@@QAEXPAUKIpotRuntimeObj@@@Z 100685e0 f   KIpoTree.obj
+ 0001:00067650       ?SetPermanentBranchPos@KIpoTree@@QAEXHHH@Z 10068650 f   KIpoTree.obj
+ 0001:000676b0       ?StrewRtoLeafs@KIpoTree@@QAEXAAUtagRECT@@@Z 100686b0 f   KIpoTree.obj
+ 0001:00067740       ?ObjectsCallback@KIpoTree@@CAXPAXPAUKIpotLeaf@@@Z 10068740 f   KIpoTree.obj
+ 0001:00067810       ?FillLineObstacle@KIpoTree@@AAEXHHHHH@Z 10068810 f   KIpoTree.obj
+ 0001:00067bf0       ?RenderLightMap@KIpoTree@@QAEXXZ 10068bf0 f   KIpoTree.obj
+ 0001:000683d0       ?CanLighting@KIpoTree@@AAE_NHHHH@Z 100693d0 f   KIpoTree.obj
+ 0001:00068640       ?AddBuildinLight@KIpoTree@@QAEXPAUKBuildInLightInfo@@H@Z 10069640 f   KIpoTree.obj
+ 0001:00068780       ?EnableBioLights@KIpoTree@@QAEX_N@Z 10069780 f   KIpoTree.obj
+ 0001:000687f0       ?EnableDynamicLights@KIpoTree@@QAEX_N@Z 100697f0 f   KIpoTree.obj
+ 0001:00068800       ??1?$list@PAVKLightBase@@V?$allocator@PAVKLightBase@@@std@@@std@@QAE@XZ 10069800 f i KIpoTree.obj
+ 0001:00068890       ?ChaZhiColor@@YAKAAUKLColor@@0M@Z 10069890 f   KScenePlaceC.obj
+ 0001:00068970       ??0EnvironmentLight@@QAE@XZ 10069970 f   KScenePlaceC.obj
+ 0001:00068a10       ?SetLight@EnvironmentLight@@QAEXABUKLColor@@H@Z 10069a10 f   KScenePlaceC.obj
+ 0001:00068a30       ?SetLight@EnvironmentLight@@QAEXEEEH@Z 10069a30 f   KScenePlaceC.obj
+ 0001:00068a60       ?SetLight@EnvironmentLight@@QAEXPAUKLColor@@@Z 10069a60 f   KScenePlaceC.obj
+ 0001:00068a90       ?GetEnvironmentLight@EnvironmentLight@@QAEKH@Z 10069a90 f   KScenePlaceC.obj
+ 0001:00068cd0       ??0KScenePlaceC@@QAE@XZ    10069cd0 f   KScenePlaceC.obj
+ 0001:00068e80       ??1KScenePlaceC@@QAE@XZ    10069e80 f   KScenePlaceC.obj
+ 0001:00068f00       ?ClosePlace@KScenePlaceC@@QAEXXZ 10069f00 f   KScenePlaceC.obj
+ 0001:00069020       ?Initialize@KScenePlaceC@@QAE_NXZ 1006a020 f   KScenePlaceC.obj
+ 0001:000690e0       ?CalcFlagPos@KScenePlaceC@@QAEXHH_N0@Z 1006a0e0 f   KScenePlaceC.obj
+ 0001:00069110       ?OpenPlace@KScenePlaceC@@QAE_NH@Z 1006a110 f   KScenePlaceC.obj
+ 0001:00069840       ?SetFocusPosition@KScenePlaceC@@QAEXHHH@Z 1006a840 f   KScenePlaceC.obj
+ 0001:00069b20       ?SetRepresentAreaSize@KScenePlaceC@@QAEXHH@Z 1006ab20 f   KScenePlaceC.obj
+ 0001:00069b80       ?GetFocusPosition@KScenePlaceC@@QAEXAAH00@Z 1006ab80 f   KScenePlaceC.obj
+ 0001:00069ba0       ?Terminate@KScenePlaceC@@QAEXXZ 1006aba0 f   KScenePlaceC.obj
+ 0001:00069ca0       ?PreLoadProcess@KScenePlaceC@@AAEXXZ 1006aca0 f   KScenePlaceC.obj
+ 0001:00069e60       ?LoadProcess@KScenePlaceC@@AAEXXZ 1006ae60 f   KScenePlaceC.obj
+ 0001:00069f10       ?LoadThreadEntrance@KScenePlaceC@@CGKPAX@Z 1006af10 f   KScenePlaceC.obj
+ 0001:00069f30       ?SetRegionsToLoad@KScenePlaceC@@AAEXXZ 1006af30 f   KScenePlaceC.obj
+ 0001:0006a260       ?AddObject@KScenePlaceC@@QAEIIHHHHH@Z 1006b260 f   KScenePlaceC.obj
+ 0001:0006a330       ?MoveObject@KScenePlaceC@@QAEIIHHHHAAIH@Z 1006b330 f   KScenePlaceC.obj
+ 0001:0006a470       ?RemoveObject@KScenePlaceC@@QAEXIHAAI@Z 1006b470 f   KScenePlaceC.obj
+ 0001:0006a4c0       ?Breathe@KScenePlaceC@@QAEXXZ 1006b4c0 f   KScenePlaceC.obj
+ 0001:0006a580       ?Paint@KScenePlaceC@@QAEXXZ 1006b580 f   KScenePlaceC.obj
+ 0001:0006a6f0       ?ChangeLoadArea@KScenePlaceC@@AAEXXZ 1006b6f0 f   KScenePlaceC.obj
+ 0001:0006a700       ?ChangeProcessArea@KScenePlaceC@@AAEXXZ 1006b700 f   KScenePlaceC.obj
+ 0001:0006a840       ?PrerenderGround@KScenePlaceC@@AAEX_N@Z 1006b840 f   KScenePlaceC.obj
+ 0001:0006a890       ?Preprocess@KScenePlaceC@@AAEXXZ 1006b890 f   KScenePlaceC.obj
+ 0001:0006afb0       ??_ETreeObjSet@?BH@??Preprocess@KScenePlaceC@@AAEXXZ@UAEPAXI@Z 1006bfb0 f i KScenePlaceC.obj
+ 0001:0006b010       ??1TreeObjSet@?BH@??Preprocess@KScenePlaceC@@AAEXXZ@UAE@XZ 1006c010 f i KScenePlaceC.obj
+ 0001:0006b020       ?ClearPreprocess@KScenePlaceC@@AAEXH@Z 1006c020 f   KScenePlaceC.obj
+ 0001:0006b090       ?ProjectDistToSpaceDist@KScenePlaceC@@QAEXAAH0@Z 1006c090 f   KScenePlaceC.obj
+ 0001:0006b0a0       ?ViewPortCoordToSpaceCoord@KScenePlaceC@@QAEXAAH0H@Z 1006c0a0 f   KScenePlaceC.obj
+ 0001:0006b110       ?GetRegionLeftTopPos@KScenePlaceC@@QAEXHHAAH0@Z 1006c110 f   KScenePlaceC.obj
+ 0001:0006b130       ?ARegionLoaded@KScenePlaceC@@AAEXPAVKScenePlaceRegionC@@@Z 1006c130 f   KScenePlaceC.obj
+ 0001:0006b310       ?GetFreeGroundImage@KScenePlaceC@@AAEPAUKRUImage@@XZ 1006c310 f   KScenePlaceC.obj
+ 0001:0006b350       ?GetObstacleInfo@KScenePlaceC@@QAEJHH@Z 1006c350 f   KScenePlaceC.obj
+ 0001:0006b3d0       ?GetObstacleInfoMin@KScenePlaceC@@QAEJHHHH@Z 1006c3d0 f   KScenePlaceC.obj
+ 0001:0006b450       ?RepresentShellReset@KScenePlaceC@@QAEXXZ 1006c450 f   KScenePlaceC.obj
+ 0001:0006b490       ?SetRegionLoadedCallback@KScenePlaceC@@QAEXP6AXHH@Z@Z 1006c490 f   KScenePlaceC.obj
+ 0001:0006b4a0       ?SetHightLightSpecialObject@KScenePlaceC@@QAEXHHH@Z 1006c4a0 f   KScenePlaceC.obj
+ 0001:0006b560       ?UnsetHightLightSpecialObject@KScenePlaceC@@QAEXXZ 1006c560 f   KScenePlaceC.obj
+ 0001:0006b5d0       ?GetLoadedRegion@KScenePlaceC@@AAEPAVKScenePlaceRegionC@@HH@Z 1006c5d0 f   KScenePlaceC.obj
+ 0001:0006b670       ?GetSceneNameAndFocus@KScenePlaceC@@QAEXPADAAH11@Z 1006c670 f   KScenePlaceC.obj
+ 0001:0006b6d0       ?GetSceneCalgFlagPos@KScenePlaceC@@QAEXAAH0@Z 1006c6d0 f   KScenePlaceC.obj
+ 0001:0006b700       ?SetAmbient@KScenePlaceC@@QAEXK@Z 1006c700 f   KScenePlaceC.obj
+ 0001:0006b710       ?SetCurrentTime@KScenePlaceC@@QAEXK@Z 1006c710 f   KScenePlaceC.obj
+ 0001:0006b740       ?SetEnvironmentLight@KScenePlaceC@@QAEXHEEE@Z 1006c740 f   KScenePlaceC.obj
+ 0001:0006b770       ?EnableBioLights@KScenePlaceC@@QAEX_N@Z 1006c770 f   KScenePlaceC.obj
+ 0001:0006b790       ?EnableDynamicLights@KScenePlaceC@@QAEX_N@Z 1006c790 f   KScenePlaceC.obj
+ 0001:0006b7b0       ?ChangeWeather@KScenePlaceC@@QAEXH@Z 1006c7b0 f   KScenePlaceC.obj
+ 0001:0006b880       ?EnableWeather@KScenePlaceC@@QAEXH@Z 1006c880 f   KScenePlaceC.obj
+ 0001:0006b8c0       ?SetLoadingStatus@KScenePlaceC@@AAEX_N@Z 1006c8c0 f   KScenePlaceC.obj
+ 0001:0006b910       ?PaintMap@KScenePlaceC@@QAEXHH@Z 1006c910 f   KScenePlaceC.obj
+ 0001:0006b930       ?SetMapParam@KScenePlaceC@@QAEXIH@Z 1006c930 f   KScenePlaceC.obj
+ 0001:0006b970       ?SetMapFocusPositionOffset@KScenePlaceC@@QAEXHH@Z 1006c970 f   KScenePlaceC.obj
+ 0001:0006b9d0       ?GetMapInfo@KScenePlaceC@@QAEHPAUKSceneMapInfo@@@Z 1006c9d0 f   KScenePlaceC.obj
+ 0001:0006baa0       ?FollowMapMove@KScenePlaceC@@QAEXH@Z 1006caa0 f   KScenePlaceC.obj
+ 0001:0006bb20       ?LoadIni@KScenePlaceC@@QAEXPAVKIniFile@@@Z 1006cb20 f   KScenePlaceC.obj
+ 0001:0006bfc0       ?PaintOverCloud@KScenePlaceC@@QAEXXZ 1006cfc0 f   KScenePlaceC.obj
+ 0001:0006c070       ?PaintBackGroundCloud@KScenePlaceC@@QAEXXZ 1006d070 f   KScenePlaceC.obj
+ 0001:0006c100       ?GetLittleMap@KScenePlaceC@@QAEPAVKLittleMap@@XZ 1006d100 f   KScenePlaceC.obj
+ 0001:0006c110       ?GetKScenePlaceMapC@KScenePlaceC@@QAEPAVKScenePlaceMapC@@XZ 1006d110 f   KScenePlaceC.obj
+ 0001:0006c120       ?JxPathFinderClear@KScenePlaceC@@QAEXXZ 1006d120 f   KScenePlaceC.obj
+ 0001:0006c130       ??0KScenePlaceRegionC@@QAE@XZ 1006d130 f   KScenePlaceRegionC.obj
+ 0001:0006c180       ??1KScenePlaceRegionC@@QAE@XZ 1006d180 f   KScenePlaceRegionC.obj
+ 0001:0006c190       ?GetRegionIndex@KScenePlaceRegionC@@QBEXAAH0@Z 1006d190 f   KScenePlaceRegionC.obj
+ 0001:0006c1b0       ?ToLoad@KScenePlaceRegionC@@QAE_NHH@Z 1006d1b0 f   KScenePlaceRegionC.obj
+ 0001:0006c1e0       ?Load@KScenePlaceRegionC@@QAE_NPBD@Z 1006d1e0 f   KScenePlaceRegionC.obj
+ 0001:0006c500       ?Clear@KScenePlaceRegionC@@QAEXXZ 1006d500 f   KScenePlaceRegionC.obj
+ 0001:0006c590       ?PrerenderGround@KScenePlaceRegionC@@QAE_N_N@Z 1006d590 f   KScenePlaceRegionC.obj
+ 0001:0006c830       ?SetNestRegion@KScenePlaceRegionC@@QAEXPAV1@@Z 1006d830 f   KScenePlaceRegionC.obj
+ 0001:0006c9a0       ?LoadGroundLayer@KScenePlaceRegionC@@AAE_NPAVKPakFile@@I@Z 1006d9a0 f   KScenePlaceRegionC.obj
+ 0001:0006ca90       ?AddGrundCoverObj@KScenePlaceRegionC@@AAEXPAUKSPRCoverGroundObj@@@Z 1006da90 f   KScenePlaceRegionC.obj
+ 0001:0006cbb0       ?LoadObstacle@KScenePlaceRegionC@@AAEXPAVKPakFile@@I@Z 1006dbb0 f   KScenePlaceRegionC.obj
+ 0001:0006cbf0       ?LoadTrap@KScenePlaceRegionC@@AAEXPAVKPakFile@@I@Z 1006dbf0 f   KScenePlaceRegionC.obj
+ 0001:0006ccc0       ?LoadAboveGroundObjects@KScenePlaceRegionC@@AAE_NPAVKPakFile@@I@Z 1006dcc0 f   KScenePlaceRegionC.obj
+ 0001:0006ce30       ?PaintGroundDirect@KScenePlaceRegionC@@QAEXXZ 1006de30 f   KScenePlaceRegionC.obj
+ 0001:0006d250       ?PaintOverCloud@KScenePlaceRegionC@@QAEXXZ 1006e250 f   KScenePlaceRegionC.obj
+ 0001:0006d5a0       ?PaintOverCloud_up@KScenePlaceRegionC@@QAEXXZ 1006e5a0 f   KScenePlaceRegionC.obj
+ 0001:0006d690       ?PaintGround@KScenePlaceRegionC@@QAEX_N@Z 1006e690 f   KScenePlaceRegionC.obj
+ 0001:0006d6c0       ?PaintAboveHeadObj@KScenePlaceRegionC@@SAXPAUKBuildinObj@@PAUtagRECT@@@Z 1006e6c0 f   KScenePlaceRegionC.obj
+ 0001:0006d870       ?GetAboveHeadLayer@KScenePlaceRegionC@@QAEIAAPAUKBuildinObj@@@Z 1006e870 f   KScenePlaceRegionC.obj
+ 0001:0006d8b0       ?GetBuildinLights@KScenePlaceRegionC@@QAEIAAPAUKBuildInLightInfo@@@Z 1006e8b0 f   KScenePlaceRegionC.obj
+ 0001:0006d8d0       ?GetBuildinObjs@KScenePlaceRegionC@@QAEXAAPAUKIpotBuildinObj@@AAI0101@Z 1006e8d0 f   KScenePlaceRegionC.obj
+ 0001:0006d980       ?GetBIOSBuildinObjs@KScenePlaceRegionC@@QAEXAAPAUKBuildinObj@@AAI@Z 1006e980 f   KScenePlaceRegionC.obj
+ 0001:0006d9b0       ?LeaveProcessArea@KScenePlaceRegionC@@QAEXXZ 1006e9b0 f   KScenePlaceRegionC.obj
+ 0001:0006d9e0       ?EnterProcessArea@KScenePlaceRegionC@@QAEXPAUKRUImage@@@Z 1006e9e0 f   KScenePlaceRegionC.obj
+ 0001:0006db90       ?GetObstacleInfo@KScenePlaceRegionC@@QAEJHH@Z 1006eb90 f   KScenePlaceRegionC.obj
+ 0001:0006dc30       ?GetObstacleInfoMin@KScenePlaceRegionC@@QAEJHHHH@Z 1006ec30 f   KScenePlaceRegionC.obj
+ 0001:0006dcf0       ?SetHightLightSpecialObject@KScenePlaceRegionC@@QAEXI@Z 1006ecf0 f   KScenePlaceRegionC.obj
+ 0001:0006dd20       ?UnsetHightLightSpecialObject@KScenePlaceRegionC@@QAEXI@Z 1006ed20 f   KScenePlaceRegionC.obj
+ 0001:0006dd50       ??0KWeather@@QAE@XZ        1006ed50 f   KWeather.obj
+ 0001:0006ddb0       ?FilterAmbient@KWeather@@UAEXAAK@Z 1006edb0 f i KWeather.obj
+ 0001:0006ddc0       ??_GKWeather@@UAEPAXI@Z    1006edc0 f i KWeather.obj
+ 0001:0006ddc0       ??_EKWeather@@UAEPAXI@Z    1006edc0 f i KWeather.obj
+ 0001:0006dde0       ??1KWeather@@UAE@XZ        1006ede0 f   KWeather.obj
+ 0001:0006de90       ?Breath@KWeather@@UAEXXZ   1006ee90 f   KWeather.obj
+ 0001:0006deb0       ??0KWeatherRain@@QAE@XZ    1006eeb0 f   KWeather.obj
+ 0001:0006df50       ?IsShutDown@KWeatherRain@@UAE_NXZ 1006ef50 f i KWeather.obj
+ 0001:0006df60       ??_EKWeatherRain@@UAEPAXI@Z 1006ef60 f i KWeather.obj
+ 0001:0006df60       ??_GKWeatherRain@@UAEPAXI@Z 1006ef60 f i KWeather.obj
+ 0001:0006df80       ??1KWeatherRain@@UAE@XZ    1006ef80 f   KWeather.obj
+ 0001:0006dff0       ?ReadInfoFromIniFile@KWeatherRain@@UAE_NH@Z 1006eff0 f   KWeather.obj
+ 0001:0006e2a0       ?Breath@KWeatherRain@@UAEXXZ 1006f2a0 f   KWeather.obj
+ 0001:0006e6f0       ?Render@KWeatherRain@@UAEXPAUiRepresentShell@@@Z 1006f6f0 f   KWeather.obj
+ 0001:0006e810       ?FilterAmbient@KWeatherRain@@UAEXAAK@Z 1006f810 f   KWeather.obj
+ 0001:0006e910       ?ReadInfoFromIniFile@KWeatherSnow@@UAE_NH@Z 1006f910 f   KWeather.obj
+ 0001:0006ea70       ?Breath@KWeatherSnow@@UAEXXZ 1006fa70 f   KWeather.obj
+ 0001:0006ec40       ?Render@KWeatherSnow@@UAEXPAUiRepresentShell@@@Z 1006fc40 f   KWeather.obj
+ 0001:0006ed20       ??Eiterator@?$list@UKParticle@@V?$allocator@UKParticle@@@std@@@std@@QAE?AV012@H@Z 1006fd20 f i KWeather.obj
+ 0001:0006ed30       ?insert@?$list@UKParticle@@V?$allocator@UKParticle@@@std@@@std@@QAE?AViterator@12@V312@ABUKParticle@@@Z 1006fd30 f i KWeather.obj
+ 0001:0006ed90       ?SM_IsPointOnLine@@YAHAAUtagPOINT@@0U1@@Z 1006fd90 f   SceneMath.obj
+ 0001:0006ee00       ?SM_Distance_PointLine@@YAHABUtagPOINT@@00@Z 1006fe00 f   SceneMath.obj
+ 0001:0006ee70       ?SM_Relation_PointLine@@YA?AW4RELATION_ENUM@@ABUtagPOINT@@00@Z 1006fe70 f   SceneMath.obj
+ 0001:0006ef10       ?SM_Relation_PointLine_New@@YA?AW4RELATION_ENUM@@ABUtagPOINT@@00@Z 1006ff10 f   SceneMath.obj
+ 0001:0006efe0       ?SM_Relation_LineLine_CheckCut@@YA?AW4RELATION_ENUM@@ABUtagPOINT@@000AAU2@@Z 1006ffe0 f   SceneMath.obj
+ 0001:0006f160       ?SM_GetPointFromFloatSting32@@YAXPADAAM11@Z 10070160 f   SceneMath.obj
+ 0001:0006f250       ?ChangeFileName@@YAXPAD0@Z 10070250 f   SceneMath.obj
+ 0001:0006f2b0       ??0KScenePlaceMapC@@QAE@XZ 100702b0 f   ScenePlaceMapC.obj
+ 0001:0006f3c0       ??1KScenePlaceMapC@@QAE@XZ 100703c0 f   ScenePlaceMapC.obj
+ 0001:0006f490       ?Initialize@KScenePlaceMapC@@AAE_NXZ 10070490 f   ScenePlaceMapC.obj
+ 0001:0006f650       ?Terminate@KScenePlaceMapC@@QAEXXZ 10070650 f   ScenePlaceMapC.obj
+ 0001:0006f6b0       ?SetShowElemsFlag@KScenePlaceMapC@@QAEXI@Z 100706b0 f   ScenePlaceMapC.obj
+ 0001:0006f6e0       ?Load@KScenePlaceMapC@@QAEHPAVKIniFile@@PBD@Z 100706e0 f   ScenePlaceMapC.obj
+ 0001:0006f8d0       ?SetFocusPosition@KScenePlaceMapC@@QAEXHH_N@Z 100708d0 f   ScenePlaceMapC.obj
+ 0001:0006fa20       ?FillCellsPicInfo@KScenePlaceMapC@@AAEXXZ 10070a20 f   ScenePlaceMapC.obj
+ 0001:0006fde0       ?CalcPicLayout@KScenePlaceMapC@@AAEXXZ 10070de0 f   ScenePlaceMapC.obj
+ 0001:0006feb0       ?Free@KScenePlaceMapC@@QAEXXZ 10070eb0 f   ScenePlaceMapC.obj
+ 0001:0006fee0       ?PaintMap@KScenePlaceMapC@@QAEXHH@Z 10070ee0 f   ScenePlaceMapC.obj
+ 0001:00070210       ?PaintAutoPath@KScenePlaceMapC@@AAEXHH@Z 10071210 f   ScenePlaceMapC.obj
+ 0001:00070350       ?PaintCharacters@KScenePlaceMapC@@AAEXHH@Z 10071350 f   ScenePlaceMapC.obj
+ 0001:000708f0       ?PaintMapPic@KScenePlaceMapC@@AAEXHH@Z 100718f0 f   ScenePlaceMapC.obj
+ 0001:00070ad0       ?SetSize@KScenePlaceMapC@@QAEXHH@Z 10071ad0 f   ScenePlaceMapC.obj
+ 0001:00070bc0       ?GetMapRect@KScenePlaceMapC@@QAEHPAUtagRECT@@@Z 10071bc0 f   ScenePlaceMapC.obj
+ 0001:00070c30       ?PaintFindPos@KScenePlaceMapC@@QAEXHHHH@Z 10071c30 f   ScenePlaceMapC.obj
+ 0001:00070f00       ?CalcFlagPos@KScenePlaceMapC@@QAEXHH_N0@Z 10071f00 f   ScenePlaceMapC.obj
+ 0001:00070fb0       ?PaintMapPointNpc@KScenePlaceMapC@@AAEXHH@Z 10071fb0 f   ScenePlaceMapC.obj
+ 0001:00071370       ?AutoRunTo@KScenePlaceMapC@@QAEHHH@Z 10072370 f   ScenePlaceMapC.obj
+ 0001:00071500       ?GetbtBarrier@KScenePlaceMapC@@QAEPAEHH@Z 10072500 f   ScenePlaceMapC.obj
+ 0001:00071520       ?JxPathFinderClear@KScenePlaceMapC@@QAEHXZ 10072520 f   ScenePlaceMapC.obj
+ 0001:000715c0       ?insert@?$vector@UFindPathNode@@V?$allocator@UFindPathNode@@@std@@@std@@QAEXPAUFindPathNode@@IABU3@@Z 100725c0 f i ScenePlaceMapC.obj
+ 0001:00071810       ?CoreDrawGameObj@@YAXIIHHHHH@Z 10072810 f   CoreDrawGameObj.obj
+ 0001:00072140       ?CoreGetGameObjLightInfo@@YAXIIPAUKLightInfo@@@Z 10073140 f   CoreDrawGameObj.obj
+ 0001:00072250       ?IR_GetCurrentTime@@YAIXZ  10073250 f   ImgRef.obj
+ 0001:00072260       ?IR_UpdateTime@@YAXXZ      10073260 f   ImgRef.obj
+ 0001:00072270       ?IR_NextFrame@@YAXAAHHIAAI@Z 10073270 f   ImgRef.obj
+ 0001:00072310       ??0KMagicDesc@@QAE@XZ      10073310 f   KMagicDesc.obj
+ 0001:00072330       ??1KMagicDesc@@QAE@XZ      10073330 f   KMagicDesc.obj
+ 0001:00072340       ?Init@KMagicDesc@@QAEHXZ   10073340 f   KMagicDesc.obj
+ 0001:00072350       ?GetDesc@KMagicDesc@@QAEPBDPAX@Z 10073350 f   KMagicDesc.obj
+ 0001:000728b0       ?g_MagicID2String@@YAPBDH@Z 100738b0 f   KMagicDesc.obj
+ 0001:000728e0       ?g_String2MagicID@@YAHPAD@Z 100738e0 f   KMagicDesc.obj
+ 0001:00072950       ?String2MagicID@KMagicDesc@@QAEHPAD@Z 10073950 f   KMagicDesc.obj
+ 0001:00072a00       ?g_GetStringRes@@YAPADHPADH@Z 10073a00 f   KTaskFuns.obj
+ 0001:00072a50       ?SetGamma@KOption@@QAEXH@Z 10073a50 f   KOption.obj
+ 0001:00072a70       ?SetSndVolume@KOption@@QAEXH@Z 10073a70 f   KOption.obj
+ 0001:00072ac0       ?SetMusicVolume@KOption@@QAEXH@Z 10073ac0 f   KOption.obj
+ 0001:00072b40       ??0KMapMusic@@QAE@XZ       10073b40 f   KMapMusic.obj
+ 0001:00072bb0       ??1KMapMusic@@QAE@XZ       10073bb0 f   KMapMusic.obj
+ 0001:00072bc0       ?Release@KMapMusic@@AAEXXZ 10073bc0 f   KMapMusic.obj
+ 0001:00072c10       ?LoadSetFile@KMapMusic@@QAEXXZ 10073c10 f   KMapMusic.obj
+ 0001:00072fa0       ?Init@KMapMusic@@QAEXXZ    10073fa0 f   KMapMusic.obj
+ 0001:00072fc0       ?Play@KMapMusic@@QAEXHHH@Z 10073fc0 f   KMapMusic.obj
+ 0001:00073570       ?Stop@KMapMusic@@QAEXXZ    10074570 f   KMapMusic.obj
+ 0001:00073590       ?SetGameVolume@KMapMusic@@QAEXH@Z 10074590 f   KMapMusic.obj
+ 0001:00073610       ?SetWeatherVolume@KMapMusic@@QAEXH@Z 10074610 f   KMapMusic.obj
+ 0001:00073690       ?Start@KMapMusic@@QAEXHHH@Z 10074690 f   KMapMusic.obj
+ 0001:000736c0       ?ScriptPlay@KMapMusic@@QAEXPAD@Z 100746c0 f   KMapMusic.obj
+ 0001:000737d0       ??0KLadder@@QAE@XZ         100747d0 f   KLadder.obj
+ 0001:000737f0       ??1KLadder@@QAE@XZ         100747f0 f   KLadder.obj
+ 0001:00073800       ?Init@KLadder@@QAEHPAXI@Z  10074800 f   KLadder.obj
+ 0001:00073830       ?TopTenFacMasterHand@KLadder@@QAEPBUTRoleList@@H@Z 10074830 f   KLadder.obj
+ 0001:00073860       ?TopTenFacRich@KLadder@@QAEPBUTRoleList@@H@Z 10074860 f   KLadder.obj
+ 0001:00073890       ?TopTenKiller@KLadder@@QAEPBUTRoleList@@XZ 10074890 f   KLadder.obj
+ 0001:000738a0       ?TopTenMasterHand@KLadder@@QAEPBUTRoleList@@XZ 100748a0 f   KLadder.obj
+ 0001:000738b0       ?TopTenRich@KLadder@@QAEPBUTRoleList@@XZ 100748b0 f   KLadder.obj
+ 0001:000738c0       ?GetFacMasterHandPercent@KLadder@@QAEHH@Z 100748c0 f   KLadder.obj
+ 0001:000738e0       ?GetFacMoneyPercent@KLadder@@QAEHH@Z 100748e0 f   KLadder.obj
+ 0001:00073900       ?GetFacMemberCount@KLadder@@QAEHH@Z 10074900 f   KLadder.obj
+ 0001:00073920       ?GetTopTen@KLadder@@QAEPBUTRoleList@@K@Z 10074920 f   KLadder.obj
+ 0001:000739c0       ??0ZLoadFile@@QAE@XZ       100749c0 f   ZLoadFile.obj
+ 0001:00073a30       ??1ZLoadFile@@QAE@XZ       10074a30 f   ZLoadFile.obj
+ 0001:00073aa0       ?Init@ZLoadFile@@QAEHXZ    10074aa0 f   ZLoadFile.obj
+ 0001:00073ae0       ?FindTabFree@ZLoadFile@@AAEHXZ 10074ae0 f   ZLoadFile.obj
+ 0001:00073b20       ?SearchTabFile@ZLoadFile@@QAEHK@Z 10074b20 f   ZLoadFile.obj
+ 0001:00073b60       ?ReadTabFile@ZLoadFile@@QAEHPBD@Z 10074b60 f   ZLoadFile.obj
+ 0001:00073bb0       ?ClearTabFile@ZLoadFile@@QAEHPBD@Z 10074bb0 f   ZLoadFile.obj
+ 0001:00073bf0       ?GetTabFileRow@ZLoadFile@@QAEHPBD@Z 10074bf0 f   ZLoadFile.obj
+ 0001:00073c30       ?GetTabFileColum@ZLoadFile@@QAEHPBD@Z 10074c30 f   ZLoadFile.obj
+ 0001:00073c70       ?GetTabFileCell@ZLoadFile@@QAEXPBDHHPAD@Z 10074c70 f   ZLoadFile.obj
+ 0001:00073cf0       ?FindIniFree@ZLoadFile@@AAEHXZ 10074cf0 f   ZLoadFile.obj
+ 0001:00073d30       ?SearchIniFile@ZLoadFile@@QAEHK@Z 10074d30 f   ZLoadFile.obj
+ 0001:00073d70       ?ReadIniFile@ZLoadFile@@QAEHPBD@Z 10074d70 f   ZLoadFile.obj
+ 0001:00073dd0       ?ClearIniFile@ZLoadFile@@QAEHPBD@Z 10074dd0 f   ZLoadFile.obj
+ 0001:00073e20       ?GetIniFileData@ZLoadFile@@QAEHPBD00PAD@Z 10074e20 f   ZLoadFile.obj
+ 0001:00073ea0       ?Get@KWorldMsg@@QAEHPAVKWorldMsgNode@@@Z 10074ea0 f   KWorldMsg.obj
+ 0001:00073f10       ?Peek@KWorldMsg@@QAEHPAVKWorldMsgNode@@K@Z 10074f10 f   KWorldMsg.obj
+ 0001:00073f70       ?Clear@KWorldMsg@@QAEXXZ   10074f70 f   KWorldMsg.obj
+ 0001:00074060       ?AutoMove@KAutoMove@@QAEHXZ 10075060 f   Kautoai.obj
+ 0001:000740a0       ?AutoMoveTo@KAutoMove@@QAEHHH@Z 100750a0 f   Kautoai.obj
+ 0001:00074270       ?FindPathAndMove@KAutoMove@@IAEHAAHH@Z 10075270 f   Kautoai.obj
+ 0001:000745c0       ??0KJXPathFinder@@QAE@H@Z  100755c0 f   KJXPathFinder.obj
+ 0001:000745f0       ??1KJXPathFinder@@QAE@XZ   100755f0 f   KJXPathFinder.obj
+ 0001:00074650       ?CreateMap@KJXPathFinder@@AAEHHH@Z 10075650 f   KJXPathFinder.obj
+ 0001:00074710       ?ClearMap@KJXPathFinder@@AAEXXZ 10075710 f   KJXPathFinder.obj
+ 0001:00074790       ?Init@KJXPathFinder@@QAEHPAUtagRECT@@PAVKScenePlaceMapC@@@Z 10075790 f   KJXPathFinder.obj
+ 0001:000747d0       ?LoadMap@KJXPathFinder@@AAEHPAUtagRECT@@PAVKScenePlaceMapC@@@Z 100757d0 f   KJXPathFinder.obj
+ 0001:00074930       ?CalcFactors@KJXPathFinder@@AAEXXZ 10075930 f   KJXPathFinder.obj
+ 0001:00074be0       ?FillNote@KJXPathFinder@@QAEXHHH@Z 10075be0 f   KJXPathFinder.obj
+ 0001:00074c20       ?FindPath@KJXPathFinder@@QAEHHHHH@Z 10075c20 f   KJXPathFinder.obj
+ 0001:00074ca0       ?GetPath@KJXPathFinder@@QAEXHHAAV?$vector@UFindPathNode@@V?$allocator@UFindPathNode@@@std@@@std@@@Z 10075ca0 f   KJXPathFinder.obj
+ 0001:00074f20       ?FindPath@KJXPathFinder@@QAEHAAUFindPathNode@@0H@Z 10075f20 f   KJXPathFinder.obj
+ 0001:00075000       ?GetNextStep@KJXPathFinder@@QAE?AW4KE_NEXTSTEP_RESULT@@ABUFindPathNode@@AAU3@H@Z 10076000 f   KJXPathFinder.obj
+ 0001:000750e0       ?GetNextStep@KJXPathFinder@@AAE?AW4KE_NEXTSTEP_RESULT@@ABUFindPathNode@@AAU3@@Z 100760e0 f   KJXPathFinder.obj
+ 0001:00075300       ?ClearOpenTable@KJXPathFinder@@AAEXXZ 10076300 f   KJXPathFinder.obj
+ 0001:00075340       ?ResetMap@KJXPathFinder@@AAEXXZ 10076340 f   KJXPathFinder.obj
+ 0001:000753a0       ?AddOpenNode@KJXPathFinder@@AAEXHHGGHH@Z 100763a0 f   KJXPathFinder.obj
+ 0001:000754c0       ?AddCloseNode@KJXPathFinder@@AAEXPAVOpenNode@@HH@Z 100764c0 f   KJXPathFinder.obj
+ 0001:000758d0       ?FixOpenTable@KJXPathFinder@@AAEXABUFindPathNode@@@Z 100768d0 f   KJXPathFinder.obj
+ 0001:00075a10       ?GetPath@KJXPathFinder@@QAEHAAUFindPathNode@@AAPAU2@@Z 10076a10 f   KJXPathFinder.obj
+ 0001:00075ad0       ?_Destroy@?$vector@UFindPathNode@@V?$allocator@UFindPathNode@@@std@@@std@@IAEXPAUFindPathNode@@0@Z 10076ad0 f i KJXPathFinder.obj
+ 0001:00075ae0       ?_Ucopy@?$vector@UFindPathNode@@V?$allocator@UFindPathNode@@@std@@@std@@IAEPAUFindPathNode@@PBU3@0PAU3@@Z 10076ae0 f i KJXPathFinder.obj
+ 0001:00075b20       ?_Ufill@?$vector@UFindPathNode@@V?$allocator@UFindPathNode@@@std@@@std@@IAEXPAUFindPathNode@@IABU3@@Z 10076b20 f i KJXPathFinder.obj
+ 0001:00075b50       ?_Construct@std@@YAXPAUFindPathNode@@ABU2@@Z 10076b50 f i KJXPathFinder.obj
+ 0001:00075b70       ??1OpenTable@@QAE@XZ       10076b70 f i KJXPathFinder.obj
+ 0001:00075ba0       ?Reset@OpenTable@@QAEXH@Z  10076ba0 f i KJXPathFinder.obj
+ 0001:00075c10       ??0KLittleMap@@QAE@XZ      10076c10 f   KLittleMap.obj
+ 0001:00075c80       ??1KLittleMap@@QAE@XZ      10076c80 f   KLittleMap.obj
+ 0001:00075ca0       ?Release@KLittleMap@@QAEXXZ 10076ca0 f   KLittleMap.obj
+ 0001:00075d20       ?Init@KLittleMap@@QAEXHHHH@Z 10076d20 f   KLittleMap.obj
+ 0001:000761b0       ?GetBarrierBuf@KLittleMap@@QAEPAEHH@Z 100771b0 f   KLittleMap.obj
+ 0001:00076230       ?GetRect@KLittleMap@@QAEPAUtagRECT@@XZ 10077230 f   KLittleMap.obj
+ 0001:00076240       ?SetHaveLoad@KLittleMap@@QAEXHH@Z 10077240 f   KLittleMap.obj
+ 0001:00076280       ?Draw@KLittleMap@@QAEXHH@Z 10077280 f   KLittleMap.obj
+ 0001:00076940       ?SetTeammateShow@KLittleMap@@QAEXH@Z 10077940 f   KLittleMap.obj
+ 0001:00076950       ?SetPlayerShow@KLittleMap@@QAEXH@Z 10077950 f   KLittleMap.obj
+ 0001:00076960       ?SetFightNpcShow@KLittleMap@@QAEXH@Z 10077960 f   KLittleMap.obj
+ 0001:00076970       ?SetNormalNpcShow@KLittleMap@@QAEXH@Z 10077970 f   KLittleMap.obj
+ 0001:00076980       ?SetScreenPos@KLittleMap@@QAEXHH@Z 10077980 f   KLittleMap.obj
+ 0001:000769a0       ?Show@KLittleMap@@QAEXH@Z  100779a0 f   KLittleMap.obj
+ 0001:000769b0       ?SetShowSize@KLittleMap@@QAEXHH@Z 100779b0 f   KLittleMap.obj
+ 0001:00076a00       _GetTickCount@0            10077a00 f   kernel32:KERNEL32.dll
+ 0001:00076a06       _MulDiv@12                 10077a06 f   kernel32:KERNEL32.dll
+ 0001:00076a0c       _GetLocalTime@4            10077a0c f   kernel32:KERNEL32.dll
+ 0001:00076a12       _FileTimeToSystemTime@8    10077a12 f   kernel32:KERNEL32.dll
+ 0001:00076a18       _LocalFileTimeToFileTime@8 10077a18 f   kernel32:KERNEL32.dll
+ 0001:00076a1e       _SystemTimeToFileTime@8    10077a1e f   kernel32:KERNEL32.dll
+ 0001:00076a24       _LeaveCriticalSection@4    10077a24 f   kernel32:KERNEL32.dll
+ 0001:00076a2a       _EnterCriticalSection@4    10077a2a f   kernel32:KERNEL32.dll
+ 0001:00076a30       _ResetEvent@4              10077a30 f   kernel32:KERNEL32.dll
+ 0001:00076a36       _CloseHandle@4             10077a36 f   kernel32:KERNEL32.dll
+ 0001:00076a3c       _DeleteCriticalSection@4   10077a3c f   kernel32:KERNEL32.dll
+ 0001:00076a42       _CreateThread@24           10077a42 f   kernel32:KERNEL32.dll
+ 0001:00076a48       _InitializeCriticalSection@4 10077a48 f   kernel32:KERNEL32.dll
+ 0001:00076a4e       _CreateEventA@16           10077a4e f   kernel32:KERNEL32.dll
+ 0001:00076a54       _WaitForSingleObject@8     10077a54 f   kernel32:KERNEL32.dll
+ 0001:00076a5a       _GetExitCodeThread@8       10077a5a f   kernel32:KERNEL32.dll
+ 0001:00076a60       _SetEvent@4                10077a60 f   kernel32:KERNEL32.dll
+ 0001:00076a66       _lua_tostring              10077a66 f   lualibdll:LuaLibDll.dll
+ 0001:00076a6c       _lua_isstring              10077a6c f   lualibdll:LuaLibDll.dll
+ 0001:00076a72       _lua_tonumber              10077a72 f   lualibdll:LuaLibDll.dll
+ 0001:00076a78       _lua_isnumber              10077a78 f   lualibdll:LuaLibDll.dll
+ 0001:00076a7e       _lua_typename              10077a7e f   lualibdll:LuaLibDll.dll
+ 0001:00076a84       _lua_gettop                10077a84 f   lualibdll:LuaLibDll.dll
+ 0001:00076a8a       _lua_pushnumber            10077a8a f   lualibdll:LuaLibDll.dll
+ 0001:00076a90       _lua_type                  10077a90 f   lualibdll:LuaLibDll.dll
+ 0001:00076a96       _lua_getglobal             10077a96 f   lualibdll:LuaLibDll.dll
+ 0001:00076a9c       _lua_rawget                10077a9c f   lualibdll:LuaLibDll.dll
+ 0001:00076aa2       _lua_dofile                10077aa2 f   lualibdll:LuaLibDll.dll
+ 0001:00076aa8       _lua_pushnil               10077aa8 f   lualibdll:LuaLibDll.dll
+ 0001:00076aae       _timeGetTime@0             10077aae f   Winmm:WINMM.dll
+ 0001:00076ab4       ?g_FileName2Id@@YAKPAD@Z   10077ab4 f   engine:Engine.dll
+ 0001:00076aba       ?GetString@KTabFile@@UAEHHPAD00KH@Z 10077aba f   engine:Engine.dll
+ 0001:00076ac0       ?GetInteger@KTabFile@@UAEHHPADHPAHH@Z 10077ac0 f   engine:Engine.dll
+ 0001:00076ac6       ??1KTabFile@@UAE@XZ        10077ac6 f   engine:Engine.dll
+ 0001:00076acc       ?Load@KTabFile@@UAEHPAD@Z  10077acc f   engine:Engine.dll
+ 0001:00076ad2       ??0KTabFile@@QAE@XZ        10077ad2 f   engine:Engine.dll
+ 0001:00076ad8       ??1KLinkArray@@QAE@XZ      10077ad8 f   engine:Engine.dll
+ 0001:00076ade       ?KSG_StringSkipSymbol@@YA_NPAPBDH@Z 10077ade f   engine:Engine.dll
+ 0001:00076ae4       ?KSG_StringGetInt@@YAHPAPBDH@Z 10077ae4 f   engine:Engine.dll
+ 0001:00076aea       ?g_Random@@YAII@Z          10077aea f   engine:Engine.dll
+ 0001:00076af0       ?g_StrCpy@@YAXPADPBD@Z     10077af0 f   engine:Engine.dll
+ 0001:00076af6       ?Play@KWavSound@@QAEXHHH@Z 10077af6 f   engine:Engine.dll
+ 0001:00076afc       ?GetNode@KCache@@UAEPAVKCacheNode@@PADPAV2@@Z 10077afc f   engine:Engine.dll
+ 0001:00076b02       ?Stop@KWavSound@@QAEXXZ    10077b02 f   engine:Engine.dll
+ 0001:00076b08       ?Insert@KLinkArray@@QAEXH@Z 10077b08 f   engine:Engine.dll
+ 0001:00076b0e       ?Init@KLinkArray@@QAEXH@Z  10077b0e f   engine:Engine.dll
+ 0001:00076b14       ?Remove@KLinkArray@@QAEXH@Z 10077b14 f   engine:Engine.dll
+ 0001:00076b1a       ?SafeCallEnd@KLuaScript@@QAEXH@Z 10077b1a f   engine:Engine.dll
+ 0001:00076b20       ?SafeCallBegin@KLuaScript@@QAEXPAH@Z 10077b20 f   engine:Engine.dll
+ 0001:00076b26       ??1KLuaScript@@UAE@XZ      10077b26 f   engine:Engine.dll
+ 0001:00076b2c       ?Load@KLuaScript@@UAEHPAD@Z 10077b2c f   engine:Engine.dll
+ 0001:00076b32       ?RegisterFunctions@KLuaScript@@QAEHQAUTLua_Funcs@@H@Z 10077b32 f   engine:Engine.dll
+ 0001:00076b38       ?Init@KLuaScript@@UAEHXZ   10077b38 f   engine:Engine.dll
+ 0001:00076b3e       ??0KLuaScript@@QAE@XZ      10077b3e f   engine:Engine.dll
+ 0001:00076b44       ?g_SetFilePath@@YAXPAD@Z   10077b44 f   engine:Engine.dll
+ 0001:00076b4a       ?GetString@KIniFile@@QAEHPBD00PADK@Z 10077b4a f   engine:Engine.dll
+ 0001:00076b50       ??1KIniFile@@QAE@XZ        10077b50 f   engine:Engine.dll
+ 0001:00076b56       ?Load@KIniFile@@QAEHPBD@Z  10077b56 f   engine:Engine.dll
+ 0001:00076b5c       ??0KIniFile@@QAE@XZ        10077b5c f   engine:Engine.dll
+ 0001:00076b62       ?g_StrCpyLen@@YAXPADPBDH@Z 10077b62 f   engine:Engine.dll
+ 0001:00076b68       ?g_StrLen@@YAHPBD@Z        10077b68 f   engine:Engine.dll
+ 0001:00076b6e       ?GetString@KTabFile@@UAEHHHPAD0K@Z 10077b6e f   engine:Engine.dll
+ 0001:00076b74       ?FindRow@KTabFile@@UAEHPADH@Z 10077b74 f   engine:Engine.dll
+ 0001:00076b7a       _TGetEncodedTextLineCount  10077b7a f   engine:Engine.dll
+ 0001:00076b80       _TGetLimitLenEncodedString 10077b80 f   engine:Engine.dll
+ 0001:00076b86       ?SetGlobalName@KLuaScript@@QAEXPAD@Z 10077b86 f   engine:Engine.dll
+ 0001:00076b8c       ?GetInteger@KTabFile@@UAEHHHHPAH@Z 10077b8c f   engine:Engine.dll
+ 0001:00076b92       ?IsPlaying@KWavSound@@QAEHXZ 10077b92 f   engine:Engine.dll
+ 0001:00076b98       ?FindColumn@KTabFile@@UAEHPAD@Z 10077b98 f   engine:Engine.dll
+ 0001:00076b9e       ?g_StrCat@@YAXPADPBD@Z     10077b9e f   engine:Engine.dll
+ 0001:00076ba4       ?g_UnitePathAndName@@YAXPAD00@Z 10077ba4 f   engine:Engine.dll
+ 0001:00076baa       ?IsSectionExist@KIniFile@@QAEHPBD@Z 10077baa f   engine:Engine.dll
+ 0001:00076bb0       ?Clear@KIniFile@@QAEXXZ    10077bb0 f   engine:Engine.dll
+ 0001:00076bb6       ?GetInteger@KIniFile@@QAEHPBD0HPAH@Z 10077bb6 f   engine:Engine.dll
+ 0001:00076bbc       ?g_StrCmp@@YAHPBD0@Z       10077bbc f   engine:Engine.dll
+ 0001:00076bc2       ?SetScriptName@KLuaScript@@UAEXPAD@Z 10077bc2 f   engine:Engine.dll
+ 0001:00076bc8       ?RegisterFunction@KLuaScript@@UAEHPADPAX@Z 10077bc8 f   engine:Engine.dll
+ 0001:00076bce       ?CallFunction@KLuaScript@@UAAHPADH0ZZ 10077bce f   engine:Engine.dll
+ 0001:00076bd4       ?Execute@KLuaScript@@UAEHXZ 10077bd4 f   engine:Engine.dll
+ 0001:00076bda       ?Compile@KLuaScript@@UAEHPAD@Z 10077bda f   engine:Engine.dll
+ 0001:00076be0       ?Exit@KLuaScript@@UAEXXZ   10077be0 f   engine:Engine.dll
+ 0001:00076be6       _TEncodeText               10077be6 f   engine:Engine.dll
+ 0001:00076bec       ?Save@KIniFile@@QAEHPBD@Z  10077bec f   engine:Engine.dll
+ 0001:00076bf2       ?WriteInteger@KIniFile@@QAEXPBD0H@Z 10077bf2 f   engine:Engine.dll
+ 0001:00076bf8       ?WriteString@KIniFile@@QAEXPBD00@Z 10077bf8 f   engine:Engine.dll
+ 0001:00076bfe       ?g_CreatePath@@YAXPAD@Z    10077bfe f   engine:Engine.dll
+ 0001:00076c04       ?GetShort@KIniFile@@QAEHPBD0FPAF@Z 10077c04 f   engine:Engine.dll
+ 0001:00076c0a       ?g_SetRootPath@@YAXPAD@Z   10077c0a f   engine:Engine.dll
+ 0001:00076c10       ?g_RandomSeed@@YAXI@Z      10077c10 f   engine:Engine.dll
+ 0001:00076c16       ??0KPolygon@@QAE@XZ        10077c16 f   engine:Engine.dll
+ 0001:00076c1c       ?Clear@KPolygon@@QAEXXZ    10077c1c f   engine:Engine.dll
+ 0001:00076c22       ?g_StrLower@@YAXPAD@Z      10077c22 f   engine:Engine.dll
+ 0001:00076c28       ?SetVolume@KWavSound@@QAEXH@Z 10077c28 f   engine:Engine.dll
+ 0001:00076c2e       ?SetPan@KWavSound@@QAEXH@Z 10077c2e f   engine:Engine.dll
+ 0001:00076c34       ?GetCenterPos@KPolygon@@QAEXPAUtagPOINT@@@Z 10077c34 f   engine:Engine.dll
+ 0001:00076c3a       ?IsPointInPolygon@KPolygon@@QAEHUtagPOINT@@@Z 10077c3a f   engine:Engine.dll
+ 0001:00076c40       ?Read@KPakFile@@QAEKPAXI@Z 10077c40 f   engine:Engine.dll
+ 0001:00076c46       ??1KPakFile@@QAE@XZ        10077c46 f   engine:Engine.dll
+ 0001:00076c4c       ?Close@KPakFile@@QAEXXZ    10077c4c f   engine:Engine.dll
+ 0001:00076c52       ?Size@KPakFile@@QAEKXZ     10077c52 f   engine:Engine.dll
+ 0001:00076c58       ?Open@KPakFile@@QAEHPBD@Z  10077c58 f   engine:Engine.dll
+ 0001:00076c5e       ??0KPakFile@@QAE@XZ        10077c5e f   engine:Engine.dll
+ 0001:00076c64       ?Seek@KPakFile@@QAEKHI@Z   10077c64 f   engine:Engine.dll
+ 0001:00076c6a       ??0KSoundCache@@QAE@XZ     10077c6a f   engine:Engine.dll
+ 0001:00076c70       ??1KSoundCache@@QAE@XZ     10077c70 f   engine:Engine.dll
+ 0001:00076c76       ?Init@KCache@@UAEXH@Z      10077c76 f   engine:Engine.dll
+ 0001:00076c7c       ?g_FindDebugWindow@@YAPAUHWND__@@PAD0@Z 10077c7c f   engine:Engine.dll
+ 0001:00076c82       ??0KScriptList@@QAE@XZ     10077c82 f   engine:Engine.dll
+ 0001:00076c88       ??1KScriptList@@QAE@XZ     10077c88 f   engine:Engine.dll
+ 0001:00076c8e       ?g_GetRootPath@@YAXPAD@Z   10077c8e f   engine:Engine.dll
+ 0001:00076c94       ?GetNextKey@KIniFile@@QAEHPBD0PAD@Z 10077c94 f   engine:Engine.dll
+ 0001:00076c9a       ?g_GetFullPath@@YAXPAD0@Z  10077c9a f   engine:Engine.dll
+ 0001:00076ca0       ?GetString@KTabFile@@UAEHPAD000K@Z 10077ca0 f   engine:Engine.dll
+ 0001:00076ca6       ?GetRect@KIniFile@@QAEXPBD0PAUtagRECT@@@Z 10077ca6 f   engine:Engine.dll
+ 0001:00076cac       ?GetInteger2@KIniFile@@QAEXPBD0PAH1@Z 10077cac f   engine:Engine.dll
+ 0001:00076cb2       ?Tell@KPakFile@@QAEKXZ     10077cb2 f   engine:Engine.dll
+ 0001:00076cb8       ??0KTimer@@QAE@XZ          10077cb8 f   engine:Engine.dll
+ 0001:00076cbe       ?g_FileExists@@YAHPAD@Z    10077cbe f   engine:Engine.dll
+ 0001:00076cc4       ?get_jpg_image@@YAPAUKSGImageContent@@QBDI@Z 10077cc4 f   engine:Engine.dll
+ 0001:00076cca       ?release_image@@YAXPAUKSGImageContent@@@Z 10077cca f   engine:Engine.dll
+ 0001:00076cd0       ??3@YAXPAX@Z               10077cd0 f   msvcprt:delop_s.obj
+ 0001:00076cdc       ??0Init@ios_base@std@@QAE@XZ 10077cdc f   msvcprt:MSVCP60.dll
+ 0001:00076ce2       ??1Init@ios_base@std@@QAE@XZ 10077ce2 f   msvcprt:MSVCP60.dll
+ 0001:00076ce8       ??0_Winit@std@@QAE@XZ      10077ce8 f   msvcprt:MSVCP60.dll
+ 0001:00076cee       ??1_Winit@std@@QAE@XZ      10077cee f   msvcprt:MSVCP60.dll
+ 0001:00076cf4       ??1?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ 10077cf4 f   msvcprt:MSVCP60.dll
+ 0001:00076cfa       ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@PBDI@Z 10077cfa f   msvcprt:MSVCP60.dll
+ 0001:00076d00       ?_Eos@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEXI@Z 10077d00 f   msvcprt:MSVCP60.dll
+ 0001:00076d06       ?_Grow@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAE_NI_N@Z 10077d06 f   msvcprt:MSVCP60.dll
+ 0001:00076d0c       ?_Tidy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEX_N@Z 10077d0c f   msvcprt:MSVCP60.dll
+ 0001:00076d12       ?replace@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@IIID@Z 10077d12 f   msvcprt:MSVCP60.dll
+ 0001:00076d18       ?_Freeze@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEXXZ 10077d18 f   msvcprt:MSVCP60.dll
+ 0001:00076d1e       ?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@ABV12@II@Z 10077d1e f   msvcprt:MSVCP60.dll
+ 0001:00076d24       ?erase@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEAAV12@II@Z 10077d24 f   msvcprt:MSVCP60.dll
+ 0001:00076d2a       ?find@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBEIPBDII@Z 10077d2a f   msvcprt:MSVCP60.dll
+ 0001:00076d30       __purecall                 10077d30 f   MSVCRT:MSVCRT.dll
+ 0001:00076d36       ___CxxFrameHandler         10077d36 f   MSVCRT:MSVCRT.dll
+ 0001:00076d40       __ftol                     10077d40 f   MSVCRT:MSVCRT.dll
+ 0001:00076d46       ??_L@YGXPAXIHP6EX0@Z1@Z    10077d46 f   MSVCRT:ehvecctr.obj
+ 0001:00076dc8       __onexit                   10077dc8 f   MSVCRT:atonexit.obj
+ 0001:00076df4       _atexit                    10077df4 f   MSVCRT:atonexit.obj
+ 0001:00076e06       ??_M@YGXPAXIHP6EX0@Z@Z     10077e06 f   MSVCRT:ehvecdtr.obj
+ 0001:00076e86       ?__ArrayUnwind@@YGXPAXIHP6EX0@Z@Z 10077e86 f   MSVCRT:ehvecdtr.obj
+ 0001:00076efa       _sprintf                   10077efa f   MSVCRT:MSVCRT.dll
+ 0001:00076f00       ??2@YAPAXI@Z               10077f00 f   MSVCRT:MSVCRT.dll
+ 0001:00076f06       _printf                    10077f06 f   MSVCRT:MSVCRT.dll
+ 0001:00076f0c       _strncpy                   10077f0c f   MSVCRT:MSVCRT.dll
+ 0001:00076f12       _atoi                      10077f12 f   MSVCRT:MSVCRT.dll
+ 0001:00076f18       _strstr                    10077f18 f   MSVCRT:MSVCRT.dll
+ 0001:00076f1e       _free                      10077f1e f   MSVCRT:MSVCRT.dll
+ 0001:00076f24       _malloc                    10077f24 f   MSVCRT:MSVCRT.dll
+ 0001:00076f2a       _memmove                   10077f2a f   MSVCRT:MSVCRT.dll
+ 0001:00076f30       _rand                      10077f30 f   MSVCRT:MSVCRT.dll
+ 0001:00076f36       _srand                     10077f36 f   MSVCRT:MSVCRT.dll
+ 0001:00076f3c       _time                      10077f3c f   MSVCRT:MSVCRT.dll
+ 0001:00076f42       __findclose                10077f42 f   MSVCRT:MSVCRT.dll
+ 0001:00076f48       __findnext                 10077f48 f   MSVCRT:MSVCRT.dll
+ 0001:00076f4e       __strupr                   10077f4e f   MSVCRT:MSVCRT.dll
+ 0001:00076f54       __findfirst                10077f54 f   MSVCRT:MSVCRT.dll
+ 0001:00076f60       __chkstk                   10077f60 f   MSVCRT:chkstk.obj
+ 0001:00076f60       __alloca_probe             10077f60 f   MSVCRT:chkstk.obj
+ 0001:00076f90       __CIpow                    10077f90 f   MSVCRT:MSVCRT.dll
+ 0001:00076f96       _realloc                   10077f96 f   MSVCRT:MSVCRT.dll
+ 0001:00076f9c       _strchr                    10077f9c f   MSVCRT:MSVCRT.dll
+ 0001:00076fa2       _atof                      10077fa2 f   MSVCRT:MSVCRT.dll
+ 0001:00076fa8       __CRT_INIT@12              10077fa8 f   MSVCRT:crtdll.obj
+ 0001:00077053       __DllMainCRTStartup@12     10078053 f   MSVCRT:crtdll.obj
+ 0001:000770f0       __except_handler3          100780f0 f   MSVCRT:MSVCRT.dll
+ 0001:000770f6       ___dllonexit               100780f6 f   MSVCRT:MSVCRT.dll
+ 0001:000770fc       ?terminate@@YAXXZ          100780fc f   MSVCRT:MSVCRT.dll
+ 0001:00077102       __initterm                 10078102 f   MSVCRT:MSVCRT.dll
+ 0001:00077108       _DllMain@12                10078108 f   MSVCRT:dllmain.obj
+ 0001:00077130       _DisableThreadLibraryCalls@4 10078130 f   kernel32:KERNEL32.dll
+ 0001:00077136       __strlwr                   10078136 f   MSVCRT:MSVCRT.dll
+ 0001:0007713c       __itoa                     1007813c f   MSVCRT:MSVCRT.dll
+ 0001:00077142       __getcwd                   10078142 f   MSVCRT:MSVCRT.dll
+ 0001:00077148       __chdir                    10078148 f   MSVCRT:MSVCRT.dll
  0002:00000000       __imp_?g_CreatePath@@YAXPAD@Z 1007a000     engine:Engine.dll
  0002:00000004       __imp_?Init@KCache@@UAEXH@Z 1007a004     engine:Engine.dll
  0002:00000008       __imp_??1KSoundCache@@QAE@XZ 1007a008     engine:Engine.dll
@@ -2479,10 +2480,10 @@
  0002:000002a0       __imp___initterm           1007a2a0     MSVCRT:MSVCRT.dll
  0002:000002a4       __imp___adjust_fdiv        1007a2a4     MSVCRT:MSVCRT.dll
  0002:000002a8       __imp___ftol               1007a2a8     MSVCRT:MSVCRT.dll
- 0002:000002ac       __imp__strlwr              1007a2ac     MSVCRT:MSVCRT.dll
  0002:000002ac       __imp___strlwr             1007a2ac     MSVCRT:MSVCRT.dll
- 0002:000002b0       __imp__itoa                1007a2b0     MSVCRT:MSVCRT.dll
+ 0002:000002ac       __imp__strlwr              1007a2ac     MSVCRT:MSVCRT.dll
  0002:000002b0       __imp___itoa               1007a2b0     MSVCRT:MSVCRT.dll
+ 0002:000002b0       __imp__itoa                1007a2b0     MSVCRT:MSVCRT.dll
  0002:000002b4       \177MSVCRT_NULL_THUNK_DATA 1007a2b4     MSVCRT:MSVCRT.dll
  0002:000002b8       __imp__timeGetTime@0       1007a2b8     Winmm:WINMM.dll
  0002:000002bc       \177WINMM_NULL_THUNK_DATA  1007a2bc     Winmm:WINMM.dll
@@ -3533,44 +3534,44 @@
  0003:01d673a4       ___onexitend               11df13a4     <common>
  0003:01d673a8       ___onexitbegin             11df13a8     <common>
 
- entry point at        0001:00076ff3
+ entry point at        0001:00077053
 
  Static symbols
 
- 0001:00074520       _$E9                       10075520 f   KJXPathFinder.obj
- 0001:00074530       _$E6                       10075530 f   KJXPathFinder.obj
- 0001:00074540       _$E8                       10075540 f   KJXPathFinder.obj
- 0001:00074550       _$E7                       10075550 f   KJXPathFinder.obj
- 0001:00073f80       _$E28                      10074f80 f   Kautoai.obj
- 0001:00073f90       _$E25                      10074f90 f   Kautoai.obj
- 0001:00073fa0       _$E27                      10074fa0 f   Kautoai.obj
- 0001:00073fb0       _$E26                      10074fb0 f   Kautoai.obj
- 0001:00073fc0       _$E34                      10074fc0 f   Kautoai.obj
- 0001:00073fd0       _$E31                      10074fd0 f   Kautoai.obj
- 0001:00073fe0       _$E33                      10074fe0 f   Kautoai.obj
- 0001:00073ff0       _$E32                      10074ff0 f   Kautoai.obj
- 0001:00073920       _$E9                       10074920 f   ZLoadFile.obj
- 0001:00073930       _$E6                       10074930 f   ZLoadFile.obj
- 0001:00073940       _$E8                       10074940 f   ZLoadFile.obj
- 0001:00073950       _$E7                       10074950 f   ZLoadFile.obj
- 0001:00073730       _$E9                       10074730 f   KLadder.obj
- 0001:00073740       _$E6                       10074740 f   KLadder.obj
- 0001:00073750       _$E8                       10074750 f   KLadder.obj
- 0001:00073760       _$E7                       10074760 f   KLadder.obj
- 0001:00072960       _$E32                      10073960 f   KTaskFuns.obj
- 0001:00072970       _$E29                      10073970 f   KTaskFuns.obj
- 0001:00072980       _$E31                      10073980 f   KTaskFuns.obj
- 0001:00072990       _$E30                      10073990 f   KTaskFuns.obj
- 0001:00072270       _$E9                       10073270 f   KMagicDesc.obj
- 0001:00072280       _$E6                       10073280 f   KMagicDesc.obj
- 0001:00072290       _$E8                       10073290 f   KMagicDesc.obj
- 0001:000722a0       _$E7                       100732a0 f   KMagicDesc.obj
- 0001:0006ef60       _$E7                       1006ff60 f   SceneMath.obj
- 0001:0006ef70       _$E6                       1006ff70 f   SceneMath.obj
- 0001:000687f0       _$E13                      100697f0 f   KScenePlaceC.obj
- 0001:00068800       _$E10                      10069800 f   KScenePlaceC.obj
- 0001:00068810       _$E12                      10069810 f   KScenePlaceC.obj
- 0001:00068820       _$E11                      10069820 f   KScenePlaceC.obj
+ 0001:00074580       _$E9                       10075580 f   KJXPathFinder.obj
+ 0001:00074590       _$E6                       10075590 f   KJXPathFinder.obj
+ 0001:000745a0       _$E8                       100755a0 f   KJXPathFinder.obj
+ 0001:000745b0       _$E7                       100755b0 f   KJXPathFinder.obj
+ 0001:00073fe0       _$E28                      10074fe0 f   Kautoai.obj
+ 0001:00073ff0       _$E25                      10074ff0 f   Kautoai.obj
+ 0001:00074000       _$E27                      10075000 f   Kautoai.obj
+ 0001:00074010       _$E26                      10075010 f   Kautoai.obj
+ 0001:00074020       _$E34                      10075020 f   Kautoai.obj
+ 0001:00074030       _$E31                      10075030 f   Kautoai.obj
+ 0001:00074040       _$E33                      10075040 f   Kautoai.obj
+ 0001:00074050       _$E32                      10075050 f   Kautoai.obj
+ 0001:00073980       _$E9                       10074980 f   ZLoadFile.obj
+ 0001:00073990       _$E6                       10074990 f   ZLoadFile.obj
+ 0001:000739a0       _$E8                       100749a0 f   ZLoadFile.obj
+ 0001:000739b0       _$E7                       100749b0 f   ZLoadFile.obj
+ 0001:00073790       _$E9                       10074790 f   KLadder.obj
+ 0001:000737a0       _$E6                       100747a0 f   KLadder.obj
+ 0001:000737b0       _$E8                       100747b0 f   KLadder.obj
+ 0001:000737c0       _$E7                       100747c0 f   KLadder.obj
+ 0001:000729c0       _$E32                      100739c0 f   KTaskFuns.obj
+ 0001:000729d0       _$E29                      100739d0 f   KTaskFuns.obj
+ 0001:000729e0       _$E31                      100739e0 f   KTaskFuns.obj
+ 0001:000729f0       _$E30                      100739f0 f   KTaskFuns.obj
+ 0001:000722d0       _$E9                       100732d0 f   KMagicDesc.obj
+ 0001:000722e0       _$E6                       100732e0 f   KMagicDesc.obj
+ 0001:000722f0       _$E8                       100732f0 f   KMagicDesc.obj
+ 0001:00072300       _$E7                       10073300 f   KMagicDesc.obj
+ 0001:0006efc0       _$E7                       1006ffc0 f   SceneMath.obj
+ 0001:0006efd0       _$E6                       1006ffd0 f   SceneMath.obj
+ 0001:00068850       _$E13                      10069850 f   KScenePlaceC.obj
+ 0001:00068860       _$E10                      10069860 f   KScenePlaceC.obj
+ 0001:00068870       _$E12                      10069870 f   KScenePlaceC.obj
+ 0001:00068880       _$E11                      10069880 f   KScenePlaceC.obj
  0001:0005dbf0       _$E33                      1005ebf0 f   CoreShell.obj
  0001:0005dc00       _$E32                      1005ec00 f   CoreShell.obj
  0001:0005d240       _$E9                       1005e240 f   KSortScript.obj
@@ -3757,4 +3758,4 @@
  0001:00000c30       _$E37                      10001c30 f   KMissle.obj
  0001:00000c50       _$E39                      10001c50 f   KMissle.obj
  0001:00000c60       _$E38                      10001c60 f   KMissle.obj
- 0001:00076e84       ?ArrayUnwindFilter@@YAHPAU_EXCEPTION_POINTERS@@@Z 10077e84 f   MSVCRT:ehvecdtr.obj
+ 0001:00076ee4       ?ArrayUnwindFilter@@YAHPAU_EXCEPTION_POINTERS@@@Z 10077ee4 f   MSVCRT:ehvecdtr.obj

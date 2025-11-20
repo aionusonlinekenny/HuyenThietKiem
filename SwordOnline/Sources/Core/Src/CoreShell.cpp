@@ -101,6 +101,7 @@ public:
 	int 	GetLevelItem(unsigned int uId );
 	int 	GetSeriesItem(unsigned int uId );
 	int 	GetNumStack(unsigned int uId );
+	int 	CheckPositionBarrier(int nMapX, int nMapY);
 };
 
 static KCoreShell	g_CoreShell;
@@ -5430,5 +5431,18 @@ int KCoreShell::GetNumStack(unsigned int uId )
 {
 	return Item[uId].GetStackCount();
 }
-
+int KCoreShell::CheckPositionBarrier(int nMapX, int nMapY)
+{
+	// Check if player exists
+	int nPlayerIndex = Player[CLIENT_PLAYER_INDEX].m_nIndex;
+	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_NPC)
+		return -1; // Invalid player
+	// Check if subworld is valid
+	int nSubWorldIndex = Npc[nPlayerIndex].m_SubWorldIndex;
+	if (nSubWorldIndex < 0 || nSubWorldIndex >= MAX_SUBWORLD)
+		return -1; // Invalid subworld
+	// Get barrier at position
+	// Returns 0 if no barrier (Obstacle_NULL), >0 if has barrier
+	return SubWorld[nSubWorldIndex].GetBarrier(nMapX, nMapY);
+}
 //

@@ -1,6 +1,6 @@
  GameServer
 
- Timestamp is 691e0c46 (Wed Nov 19 13:28:22 2025)
+ Timestamp is 691f9d40 (Thu Nov 20 17:59:12 2025)
 
  Preferred load address is 00400000
 
@@ -29,8 +29,8 @@
  0003:000000ec 00000004H .CRT$XTA                DATA
  0003:000000f0 00000004H .CRT$XTB                DATA
  0003:000000f4 00000004H .CRT$XTZ                DATA
- 0003:00000100 0000327cH .data                   DATA
- 0003:00003380 000022d0H .bss                    DATA
+ 0003:00000100 0000322cH .data                   DATA
+ 0003:00003330 000022e0H .bss                    DATA
  0004:00000000 000000a0H .rsrc$01                DATA
  0004:000000a0 000010c0H .rsrc$02                DATA
 
@@ -86,15 +86,15 @@
  0001:00001740       ?seekpos@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MAE?AV?$fpos@H@2@V32@H@Z 00402740 f i GameServer.obj
  0001:00001820       ??_E?$basic_ostream@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00402820 f i GameServer.obj
  0001:00001820       ??_G?$basic_ostream@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00402820 f i GameServer.obj
- 0001:00001850       ??_G?$basic_ios@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00402850 f i GameServer.obj
  0001:00001850       ??_E?$basic_ios@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00402850 f i GameServer.obj
+ 0001:00001850       ??_G?$basic_ios@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00402850 f i GameServer.obj
  0001:00001870       ??_E?$basic_istream@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00402870 f i GameServer.obj
  0001:00001870       ??_G?$basic_istream@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00402870 f i GameServer.obj
- 0001:000018a0       ??_G?$basic_streambuf@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 004028a0 f i GameServer.obj
  0001:000018a0       ??_E?$basic_streambuf@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 004028a0 f i GameServer.obj
+ 0001:000018a0       ??_G?$basic_streambuf@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 004028a0 f i GameServer.obj
  0001:000018c0       ??1?$basic_streambuf@DU?$char_traits@D@std@@@std@@UAE@XZ 004028c0 f i GameServer.obj
- 0001:00001910       ??_G?$basic_iostream@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00402910 f i GameServer.obj
  0001:00001910       ??_E?$basic_iostream@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00402910 f i GameServer.obj
+ 0001:00001910       ??_G?$basic_iostream@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00402910 f i GameServer.obj
  0001:00001940       ??_G?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UAEPAXI@Z 00402940 f i GameServer.obj
  0001:00001940       ??_E?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UAEPAXI@Z 00402940 f i GameServer.obj
  0001:00001970       ??_G?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UAEPAXI@Z 00402970 f i GameServer.obj
@@ -116,8 +116,8 @@
  0001:00002450       ?_Split@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AAEXXZ 00403450 f i GameServer.obj
  0001:00002520       ??0?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@QAE@I@Z 00403520 f i GameServer.obj
  0001:00002580       ??1facet@locale@std@@UAE@XZ 00403580 f i GameServer.obj
- 0001:00002590       ??_Efacet@locale@std@@UAEPAXI@Z 00403590 f i GameServer.obj
  0001:00002590       ??_Gfacet@locale@std@@UAEPAXI@Z 00403590 f i GameServer.obj
+ 0001:00002590       ??_Efacet@locale@std@@UAEPAXI@Z 00403590 f i GameServer.obj
  0001:000025b0       ?do_put@?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@MBE?AV?$ostreambuf_iterator@DU?$char_traits@D@std@@@2@V32@AAVios_base@2@D_N@Z 004035b0 f i GameServer.obj
  0001:00002890       ??0bad_cast@std@@QAE@PBD@Z 00403890 f i GameServer.obj
  0001:000028b0       ?sputc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QAEHD@Z 004038b0 f i GameServer.obj
@@ -142,8 +142,8 @@
  0001:00003910       ?do_grouping@?$numpunct@D@std@@MBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@XZ 00404910 f i GameServer.obj
  0001:000039e0       ?do_falsename@?$numpunct@D@std@@MBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@XZ 004049e0 f i GameServer.obj
  0001:00003ab0       ?do_truename@?$numpunct@D@std@@MBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@XZ 00404ab0 f i GameServer.obj
- 0001:00003b80       ??_E?$numpunct@D@std@@UAEPAXI@Z 00404b80 f i GameServer.obj
  0001:00003b80       ??_G?$numpunct@D@std@@UAEPAXI@Z 00404b80 f i GameServer.obj
+ 0001:00003b80       ??_E?$numpunct@D@std@@UAEPAXI@Z 00404b80 f i GameServer.obj
  0001:00003ba0       ??1?$numpunct@D@std@@UAE@XZ 00404ba0 f i GameServer.obj
  0001:00003bd0       ?_Save@?$_Tidyfac@V?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@std@@SAPAV?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@PAV32@@Z 00404bd0 f i GameServer.obj
  0001:00003c50       ?_Save@?$_Tidyfac@V?$numpunct@D@std@@@std@@SAPAV?$numpunct@D@2@PAV32@@Z 00404c50 f i GameServer.obj
@@ -258,8 +258,8 @@
  0001:0000c2e0       ?GetMessageA@CException@Win32@OnlineGameLib@@UBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ 0040d2e0 f   common:Exception.obj
  0001:0000c410       ?MessageBoxA@CException@Win32@OnlineGameLib@@QBEXPAUHWND__@@@Z 0040d410 f   common:Exception.obj
  0001:0000c520       ??0CLibrary@Win32@OnlineGameLib@@QAE@QBD@Z 0040d520 f   common:Library.obj
- 0001:0000c580       ??_ECLibrary@Win32@OnlineGameLib@@UAEPAXI@Z 0040d580 f i common:Library.obj
  0001:0000c580       ??_GCLibrary@Win32@OnlineGameLib@@UAEPAXI@Z 0040d580 f i common:Library.obj
+ 0001:0000c580       ??_ECLibrary@Win32@OnlineGameLib@@UAEPAXI@Z 0040d580 f i common:Library.obj
  0001:0000c5a0       ??0CLibrary@Win32@OnlineGameLib@@QAE@XZ 0040d5a0 f   common:Library.obj
  0001:0000c5c0       ??1CLibrary@Win32@OnlineGameLib@@UAE@XZ 0040d5c0 f   common:Library.obj
  0001:0000c630       ?Load@CLibrary@Win32@OnlineGameLib@@QAE_NQBD@Z 0040d630 f   common:Library.obj
@@ -267,8 +267,8 @@
  0001:0000c740       ??0CUsesWinsock@Win32@OnlineGameLib@@QAE@XZ 0040d740 f   common:UsesWinsock.obj
  0001:0000c810       ??1CWin32Exception@Win32@OnlineGameLib@@UAE@XZ 0040d810 f i common:UsesWinsock.obj
  0001:0000c890       ??0CWin32Exception@Win32@OnlineGameLib@@QAE@ABV012@@Z 0040d890 f i common:UsesWinsock.obj
- 0001:0000c9d0       ??_GCWin32Exception@Win32@OnlineGameLib@@UAEPAXI@Z 0040d9d0 f i common:UsesWinsock.obj
  0001:0000c9d0       ??_ECWin32Exception@Win32@OnlineGameLib@@UAEPAXI@Z 0040d9d0 f i common:UsesWinsock.obj
+ 0001:0000c9d0       ??_GCWin32Exception@Win32@OnlineGameLib@@UAEPAXI@Z 0040d9d0 f i common:UsesWinsock.obj
  0001:0000c9f0       ??1CUsesWinsock@Win32@OnlineGameLib@@QAE@XZ 0040d9f0 f   common:UsesWinsock.obj
  0001:0000ca30       ??0CBuffer@Win32@OnlineGameLib@@AAE@AAVAllocator@012@I@Z 0040da30 f   common:Buffer.obj
  0001:0000cab0       ??1COpaqueUserData@OnlineGameLib@@IAE@XZ 0040dab0 f i common:Buffer.obj
@@ -395,8 +395,8 @@
  0001:000128eb       ?what@runtime_error@std@@UBEPBDXZ 004138eb f i libcpmt:ios.obj
  0001:000128f8       ?_Doraise@runtime_error@std@@MBEXXZ 004138f8 f i libcpmt:ios.obj
  0001:00012915       ??1runtime_error@std@@UAE@XZ 00413915 f i libcpmt:ios.obj
- 0001:00012952       ??_Eruntime_error@std@@UAEPAXI@Z 00413952 f i libcpmt:ios.obj
  0001:00012952       ??_Gruntime_error@std@@UAEPAXI@Z 00413952 f i libcpmt:ios.obj
+ 0001:00012952       ??_Eruntime_error@std@@UAEPAXI@Z 00413952 f i libcpmt:ios.obj
  0001:0001296e       ??0runtime_error@std@@QAE@ABV01@@Z 0041396e f i libcpmt:ios.obj
  0001:000129cb       ??1failure@ios_base@std@@UAE@XZ 004139cb f i libcpmt:ios.obj
  0001:00012a08       ?_Doraise@failure@ios_base@std@@MBEXXZ 00413a08 f i libcpmt:ios.obj
@@ -467,8 +467,8 @@
  0001:00013e5a       ?do_tolower@?$ctype@D@std@@MBEPBDPADPBD@Z 00414e5a f i libcpmt:locale.obj
  0001:00013e85       ?do_toupper@?$ctype@D@std@@MBEDD@Z 00414e85 f i libcpmt:locale.obj
  0001:00013e99       ?do_toupper@?$ctype@D@std@@MBEPBDPADPBD@Z 00414e99 f i libcpmt:locale.obj
- 0001:00013ec4       ??_G?$ctype@D@std@@UAEPAXI@Z 00414ec4 f i libcpmt:locale.obj
  0001:00013ec4       ??_E?$ctype@D@std@@UAEPAXI@Z 00414ec4 f i libcpmt:locale.obj
+ 0001:00013ec4       ??_G?$ctype@D@std@@UAEPAXI@Z 00414ec4 f i libcpmt:locale.obj
  0001:00013ee0       ??1?$ctype@D@std@@UAE@XZ   00414ee0 f i libcpmt:locale.obj
  0001:00013f00       ??0_Locimp@locale@std@@AAE@ABV012@@Z 00414f00 f   libcpmt:locale.obj
  0001:00014020       ?_Addfac@_Locimp@locale@std@@AAEXPAVfacet@23@I@Z 00415020 f   libcpmt:locale.obj
@@ -488,8 +488,8 @@
  0001:00014874       ?do_get@?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@MBE?AV?$istreambuf_iterator@DU?$char_traits@D@std@@@2@V32@0AAVios_base@2@AAHAAN@Z 00415874 f i libcpmt:locale.obj
  0001:0001491e       ?do_get@?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@MBE?AV?$istreambuf_iterator@DU?$char_traits@D@std@@@2@V32@0AAVios_base@2@AAHAAO@Z 0041591e f i libcpmt:locale.obj
  0001:000149c8       ?do_get@?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@MBE?AV?$istreambuf_iterator@DU?$char_traits@D@std@@@2@V32@0AAVios_base@2@AAHAAPAX@Z 004159c8 f i libcpmt:locale.obj
- 0001:00014abe       ??_G?$codecvt@DDH@std@@UAEPAXI@Z 00415abe f i libcpmt:locale.obj
  0001:00014abe       ??_E?$codecvt@DDH@std@@UAEPAXI@Z 00415abe f i libcpmt:locale.obj
+ 0001:00014abe       ??_G?$codecvt@DDH@std@@UAEPAXI@Z 00415abe f i libcpmt:locale.obj
  0001:00014ada       ??1?$codecvt@DDH@std@@UAE@XZ 00415ada f i libcpmt:locale.obj
  0001:00014ae1       ??_G?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAEPAXI@Z 00415ae1 f i libcpmt:locale.obj
  0001:00014ae1       ??_E?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAEPAXI@Z 00415ae1 f i libcpmt:locale.obj
@@ -574,14 +574,14 @@
  0001:00016f13       ?sync@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MAEHXZ 00417f13 f i libcpmt:wiostrea.obj
  0001:00016f2c       ??_E?$basic_ostream@GU?$char_traits@G@std@@@std@@UAEPAXI@Z 00417f2c f i libcpmt:wiostrea.obj
  0001:00016f2c       ??_G?$basic_ostream@GU?$char_traits@G@std@@@std@@UAEPAXI@Z 00417f2c f i libcpmt:wiostrea.obj
- 0001:00016f4b       ??_E?$basic_ios@GU?$char_traits@G@std@@@std@@UAEPAXI@Z 00417f4b f i libcpmt:wiostrea.obj
  0001:00016f4b       ??_G?$basic_ios@GU?$char_traits@G@std@@@std@@UAEPAXI@Z 00417f4b f i libcpmt:wiostrea.obj
+ 0001:00016f4b       ??_E?$basic_ios@GU?$char_traits@G@std@@@std@@UAEPAXI@Z 00417f4b f i libcpmt:wiostrea.obj
  0001:00016f67       ??_E?$basic_istream@GU?$char_traits@G@std@@@std@@UAEPAXI@Z 00417f67 f i libcpmt:wiostrea.obj
  0001:00016f67       ??_G?$basic_istream@GU?$char_traits@G@std@@@std@@UAEPAXI@Z 00417f67 f i libcpmt:wiostrea.obj
- 0001:00016f86       ??_E?$basic_streambuf@GU?$char_traits@G@std@@@std@@UAEPAXI@Z 00417f86 f i libcpmt:wiostrea.obj
  0001:00016f86       ??_G?$basic_streambuf@GU?$char_traits@G@std@@@std@@UAEPAXI@Z 00417f86 f i libcpmt:wiostrea.obj
- 0001:00016fa2       ??_G?$basic_filebuf@GU?$char_traits@G@std@@@std@@UAEPAXI@Z 00417fa2 f i libcpmt:wiostrea.obj
+ 0001:00016f86       ??_E?$basic_streambuf@GU?$char_traits@G@std@@@std@@UAEPAXI@Z 00417f86 f i libcpmt:wiostrea.obj
  0001:00016fa2       ??_E?$basic_filebuf@GU?$char_traits@G@std@@@std@@UAEPAXI@Z 00417fa2 f i libcpmt:wiostrea.obj
+ 0001:00016fa2       ??_G?$basic_filebuf@GU?$char_traits@G@std@@@std@@UAEPAXI@Z 00417fa2 f i libcpmt:wiostrea.obj
  0001:00016fbe       ?init@?$basic_ios@GU?$char_traits@G@std@@@std@@IAEXPAV?$basic_streambuf@GU?$char_traits@G@std@@@2@_N@Z 00417fbe f i libcpmt:wiostrea.obj
  0001:00017008       ?gbump@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IAEXH@Z 00418008 f i libcpmt:wiostrea.obj
  0001:0001701c       ?_Gndec@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IAEPAGXZ 0041801c f i libcpmt:wiostrea.obj
@@ -595,8 +595,8 @@
  0001:000171ad       ??0bad_alloc@std@@QAE@PBD@Z 004181ad f i libcpmt:nomemory.obj
  0001:000171c6       ??1bad_alloc@std@@UAE@XZ   004181c6 f i libcpmt:nomemory.obj
  0001:000171d1       ?_Doraise@bad_alloc@std@@MBEXXZ 004181d1 f i libcpmt:nomemory.obj
- 0001:000171ee       ??_Gbad_alloc@std@@UAEPAXI@Z 004181ee f i libcpmt:nomemory.obj
  0001:000171ee       ??_Ebad_alloc@std@@UAEPAXI@Z 004181ee f i libcpmt:nomemory.obj
+ 0001:000171ee       ??_Gbad_alloc@std@@UAEPAXI@Z 004181ee f i libcpmt:nomemory.obj
  0001:0001720a       ??0bad_alloc@std@@QAE@ABV01@@Z 0041820a f i libcpmt:nomemory.obj
  0001:0001722c       ?_Makewloc@_Locimp@locale@std@@CAXABV_Locinfo@3@HPAV123@PBV23@@Z 0041822c f   libcpmt:wlocale.obj
  0001:0001777e       ??1_Timevec@std@@QAE@XZ    0041877e f i libcpmt:wlocale.obj
@@ -678,8 +678,8 @@
  0001:000192d3       ??_G?$num_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@UAEPAXI@Z 0041a2d3 f i libcpmt:wlocale.obj
  0001:000192d3       ??_E?$num_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@UAEPAXI@Z 0041a2d3 f i libcpmt:wlocale.obj
  0001:000192ef       ??1?$num_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@UAE@XZ 0041a2ef f i libcpmt:wlocale.obj
- 0001:000192f6       ??_G?$num_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@UAEPAXI@Z 0041a2f6 f i libcpmt:wlocale.obj
  0001:000192f6       ??_E?$num_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@UAEPAXI@Z 0041a2f6 f i libcpmt:wlocale.obj
+ 0001:000192f6       ??_G?$num_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@UAEPAXI@Z 0041a2f6 f i libcpmt:wlocale.obj
  0001:00019312       ??1?$num_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@UAE@XZ 0041a312 f i libcpmt:wlocale.obj
  0001:00019319       ??_E?$numpunct@G@std@@UAEPAXI@Z 0041a319 f i libcpmt:wlocale.obj
  0001:00019319       ??_G?$numpunct@G@std@@UAEPAXI@Z 0041a319 f i libcpmt:wlocale.obj
@@ -687,8 +687,8 @@
  0001:00019361       ??_E?$collate@G@std@@UAEPAXI@Z 0041a361 f i libcpmt:wlocale.obj
  0001:00019361       ??_G?$collate@G@std@@UAEPAXI@Z 0041a361 f i libcpmt:wlocale.obj
  0001:0001937d       ??1?$collate@G@std@@UAE@XZ 0041a37d f i libcpmt:wlocale.obj
- 0001:00019384       ??_G?$messages@G@std@@UAEPAXI@Z 0041a384 f i libcpmt:wlocale.obj
  0001:00019384       ??_E?$messages@G@std@@UAEPAXI@Z 0041a384 f i libcpmt:wlocale.obj
+ 0001:00019384       ??_G?$messages@G@std@@UAEPAXI@Z 0041a384 f i libcpmt:wlocale.obj
  0001:000193a0       ??1?$messages@G@std@@UAE@XZ 0041a3a0 f i libcpmt:wlocale.obj
  0001:000193c3       ??_E?$money_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@UAEPAXI@Z 0041a3c3 f i libcpmt:wlocale.obj
  0001:000193c3       ??_G?$money_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@UAEPAXI@Z 0041a3c3 f i libcpmt:wlocale.obj
@@ -698,10 +698,10 @@
  0001:00019402       ??1?$money_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@UAE@XZ 0041a402 f i libcpmt:wlocale.obj
  0001:00019409       ??_G?$moneypunct@G$0A@@std@@UAEPAXI@Z 0041a409 f i libcpmt:wlocale.obj
  0001:00019409       ??_E?$moneypunct@G$0A@@std@@UAEPAXI@Z 0041a409 f i libcpmt:wlocale.obj
- 0001:00019425       ??_G?$moneypunct@G$00@std@@UAEPAXI@Z 0041a425 f i libcpmt:wlocale.obj
  0001:00019425       ??_E?$moneypunct@G$00@std@@UAEPAXI@Z 0041a425 f i libcpmt:wlocale.obj
- 0001:00019441       ??_G?$time_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@UAEPAXI@Z 0041a441 f i libcpmt:wlocale.obj
+ 0001:00019425       ??_G?$moneypunct@G$00@std@@UAEPAXI@Z 0041a425 f i libcpmt:wlocale.obj
  0001:00019441       ??_E?$time_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@UAEPAXI@Z 0041a441 f i libcpmt:wlocale.obj
+ 0001:00019441       ??_G?$time_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@UAEPAXI@Z 0041a441 f i libcpmt:wlocale.obj
  0001:0001945d       ??1?$time_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@UAE@XZ 0041a45d f i libcpmt:wlocale.obj
  0001:00019480       ??1?$moneypunct@G$0A@@std@@UAE@XZ 0041a480 f i libcpmt:wlocale.obj
  0001:00019485       ??1?$_Mpunct@G@std@@UAE@XZ 0041a485 f i libcpmt:wlocale.obj
@@ -833,14 +833,14 @@
  0001:0001e02e       ?do_get_monthname@?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@MBE?AV?$istreambuf_iterator@DU?$char_traits@D@std@@@2@V32@0AAVios_base@2@AAHPAUtm@@@Z 0041f02e f i libcpmt:xlocale.obj
  0001:0001e06c       ?do_get_year@?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@MBE?AV?$istreambuf_iterator@DU?$char_traits@D@std@@@2@V32@0AAVios_base@2@AAHPAUtm@@@Z 0041f06c f i libcpmt:xlocale.obj
  0001:0001e0d2       ?do_put@?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@MBE?AV?$ostreambuf_iterator@DU?$char_traits@D@std@@@2@V32@AAVios_base@2@PBUtm@@DD@Z 0041f0d2 f i libcpmt:xlocale.obj
- 0001:0001e1ab       ??_E?$collate@D@std@@UAEPAXI@Z 0041f1ab f i libcpmt:xlocale.obj
  0001:0001e1ab       ??_G?$collate@D@std@@UAEPAXI@Z 0041f1ab f i libcpmt:xlocale.obj
+ 0001:0001e1ab       ??_E?$collate@D@std@@UAEPAXI@Z 0041f1ab f i libcpmt:xlocale.obj
  0001:0001e1c7       ??1?$collate@D@std@@UAE@XZ 0041f1c7 f i libcpmt:xlocale.obj
- 0001:0001e1ce       ??_G?$messages@D@std@@UAEPAXI@Z 0041f1ce f i libcpmt:xlocale.obj
  0001:0001e1ce       ??_E?$messages@D@std@@UAEPAXI@Z 0041f1ce f i libcpmt:xlocale.obj
+ 0001:0001e1ce       ??_G?$messages@D@std@@UAEPAXI@Z 0041f1ce f i libcpmt:xlocale.obj
  0001:0001e1ea       ??1?$messages@D@std@@UAE@XZ 0041f1ea f i libcpmt:xlocale.obj
- 0001:0001e20d       ??_G?$money_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAEPAXI@Z 0041f20d f i libcpmt:xlocale.obj
  0001:0001e20d       ??_E?$money_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAEPAXI@Z 0041f20d f i libcpmt:xlocale.obj
+ 0001:0001e20d       ??_G?$money_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAEPAXI@Z 0041f20d f i libcpmt:xlocale.obj
  0001:0001e229       ??1?$money_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAE@XZ 0041f229 f i libcpmt:xlocale.obj
  0001:0001e230       ??_E?$money_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAEPAXI@Z 0041f230 f i libcpmt:xlocale.obj
  0001:0001e230       ??_G?$money_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAEPAXI@Z 0041f230 f i libcpmt:xlocale.obj
@@ -852,13 +852,13 @@
  0001:0001e28b       ??_G?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAEPAXI@Z 0041f28b f i libcpmt:xlocale.obj
  0001:0001e28b       ??_E?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAEPAXI@Z 0041f28b f i libcpmt:xlocale.obj
  0001:0001e2a7       ??1?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAE@XZ 0041f2a7 f i libcpmt:xlocale.obj
- 0001:0001e2ca       ??_E?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAEPAXI@Z 0041f2ca f i libcpmt:xlocale.obj
  0001:0001e2ca       ??_G?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAEPAXI@Z 0041f2ca f i libcpmt:xlocale.obj
+ 0001:0001e2ca       ??_E?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAEPAXI@Z 0041f2ca f i libcpmt:xlocale.obj
  0001:0001e2e6       ??1?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@UAE@XZ 0041f2e6 f i libcpmt:xlocale.obj
  0001:0001e300       ??1?$moneypunct@D$0A@@std@@UAE@XZ 0041f300 f i libcpmt:xlocale.obj
  0001:0001e305       ??1?$_Mpunct@D@std@@UAE@XZ 0041f305 f i libcpmt:xlocale.obj
- 0001:0001e339       ??_G?$_Mpunct@D@std@@UAEPAXI@Z 0041f339 f i libcpmt:xlocale.obj
  0001:0001e339       ??_E?$_Mpunct@D@std@@UAEPAXI@Z 0041f339 f i libcpmt:xlocale.obj
+ 0001:0001e339       ??_G?$_Mpunct@D@std@@UAEPAXI@Z 0041f339 f i libcpmt:xlocale.obj
  0001:0001e355       ??1?$moneypunct@D$00@std@@UAE@XZ 0041f355 f i libcpmt:xlocale.obj
  0001:0001e35a       ?resize@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEXI@Z 0041f35a f i libcpmt:xlocale.obj
  0001:0001e380       ?_Init@?$messages@D@std@@IAEXABV_Locinfo@2@@Z 0041f380 f i libcpmt:xlocale.obj
@@ -932,8 +932,8 @@
  0001:00020eb8       _gethostbyname@4           00421eb8 f   ws2_32:WS2_32.dll
  0001:00020ebe       _gethostname@8             00421ebe f   ws2_32:WS2_32.dll
  0001:00020ec4       ??1type_info@@UAE@XZ       00421ec4 f   LIBCMT:typinfo.obj
- 0001:00020eed       ??_Gtype_info@@UAEPAXI@Z   00421eed f i LIBCMT:typinfo.obj
  0001:00020eed       ??_Etype_info@@UAEPAXI@Z   00421eed f i LIBCMT:typinfo.obj
+ 0001:00020eed       ??_Gtype_info@@UAEPAXI@Z   00421eed f i LIBCMT:typinfo.obj
  0001:00020f09       ??8type_info@@QBEHABV0@@Z  00421f09 f   LIBCMT:typinfo.obj
  0001:00020f24       ??9type_info@@QBEHABV0@@Z  00421f24 f   LIBCMT:typinfo.obj
  0001:00020f40       ?before@type_info@@QBEHABV1@@Z 00421f40 f   LIBCMT:typinfo.obj
@@ -2220,334 +2220,333 @@
  0003:00000b40       ??_C@_0N@NAGH@crc_db_error?$AA@ 0043bb40     KSOServer.obj
  0003:00000b50       ??_C@_0BB@CCCJ@ALL_PLAYER_QUIT?6?$AA@ 0043bb50     KSOServer.obj
  0003:00000b64       ??_C@_0BD@CDKH@Safe?5close?5server?6?$AA@ 0043bb64     KSOServer.obj
- 0003:00000b78       ??_C@_0EJ@CL@?$FLPING?9TIMEOUT?$FN?5lnID?$DN?$CFd?5playerIdx@ 0043bb78     KSOServer.obj
- 0003:00000bc4       ??_C@_0DF@HLGF@?$FLPING?9RETRY?9AFTER?$FN?5lnID?$DN?$CFd?5sendT@ 0043bbc4     KSOServer.obj
- 0003:00000bfc       ??_C@_0FH@LCBF@?$FLPING?9RETRY?$FN?5lnID?$DN?$CFd?5elapsed?$DN?$CFd?5@ 0043bbfc     KSOServer.obj
- 0003:00000c54       ??_C@_0EB@OBJ@?$FLFIX?9APPLIED?$FN?5Timers?5reset?5for?5l@ 0043bc54     KSOServer.obj
- 0003:00000c98       ??_C@_0EF@FNJF@?$FLFIX?9APPLIED?$FN?5Resetting?5timers?5f@ 0043bc98     KSOServer.obj
- 0003:00000ce0       ??_C@_0EO@MDIJ@?$FLWARNING?$FN?5PingClient?3?5Player?5lnI@ 0043bce0     KSOServer.obj
- 0003:00000d30       ??_C@_0DL@MMDN@?$FLWARNING?$FN?5PingClient?3?5Invalid?5ln@ 0043bd30     KSOServer.obj
- 0003:00000d6c       ??_C@_0GD@CIMC@?$FLWARNING?$FN?5ProcessPingReply?3?5Play@ 0043bd6c     KSOServer.obj
- 0003:00000dd0       ??_C@_0DC@HEBC@?$FLPING?9OK?$FN?5ID?$DN?$CFlu?5RTT?$DN?$CFd?5ticks?5?$CIs@ 0043bdd0     KSOServer.obj
- 0003:00000e04       ??_C@_0CD@ILKD@ping?5cmd?5size?5not?5correct?0?5ignor@ 0043be04     KSOServer.obj
- 0003:00000e28       ??_C@_0EB@MHIA@?$FLWARNING?$FN?5ProcessPingReply?3?5Inva@ 0043be28     KSOServer.obj
- 0003:00000e6c       ??_C@_0FN@KLJL@?$FLEXCHANGE?9TIMEOUT?$FN?5Player?5?$CFd?5stu@ 0043be6c     KSOServer.obj
- 0003:00000ecc       ??_C@_0BM@INLB@?5Lixian?5game?$CB?5?9?5?$FLQuit?5Game?$FN?$AA@ 0043becc     KSOServer.obj
- 0003:00000ee8       ??_C@_06GCNB@?$DM?1?1?5?9?9?$AA@ 0043bee8     KSOServer.obj
- 0003:00000ef0       ??_C@_0BL@PNIO@?5leave?5game?$CB?5?9?5?$FLQuit?5Game?$FN?$AA@ 0043bef0     KSOServer.obj
- 0003:00000f0c       ??_C@_04CIPL@?$DM?5?9?9?$AA@ 0043bf0c     KSOServer.obj
- 0003:00000f14       ??_C@_0CA@CFJB@?5leave?5game?5?9?5?$FLLogin?5Time?5Out?$FN?$CB?$AA@ 0043bf14     KSOServer.obj
- 0003:00000f34       ??_C@_0BM@LLLH@Packing?5failed?4?5?$CFd?0?5?$CFd?0?5?$CFd?6?$AA@ 0043bf34     KSOServer.obj
- 0003:00000f50       ??_C@_0BJ@KHI@PlayerDbLoading?5failed?4?6?$AA@ 0043bf50     KSOServer.obj
- 0003:00000f6c       ??_C@_0BA@NLGN@GetAdaptersInfo?$AA@ 0043bf6c     KSOServer.obj
- 0003:00000f7c       ??_C@_0N@JPOB@iphlpapi?4dll?$AA@ 0043bf7c     KSOServer.obj
- 0003:00000f90       ??_R0?AVCWin32Exception@Win32@OnlineGameLib@@@8 0043bf90     common:UsesWinsock.obj
- 0003:00000fc4       ??_C@_0BN@CJDO@CUsesWinsock?3?3CUsesWinsock?$CI?$CJ?$AA@ 0043bfc4     common:UsesWinsock.obj
- 0003:00000fe4       ??_C@_0BB@BJC@CBuffer?3?3AddData?$AA@ 0043bfe4     common:Buffer.obj
- 0003:00000ff8       ??_C@_0BL@HPMM@Not?5enough?5space?5in?5buffer?$AA@ 0043bff8     common:Buffer.obj
- 0003:00001014       ??_C@_0BD@MKLK@CBuffer?3?3Release?$CI?$CJ?$AA@ 0043c014     common:Buffer.obj
- 0003:00001028       ??_C@_0BG@EBOE@m_ref?5is?5already?5zero?$AA@ 0043c028     common:Buffer.obj
- 0003:00001040       ??_C@_0BP@ONCE@CBuffer?3?3Allocator?3?3Allocate?$CI?$CJ?$AA@ 0043c040     common:Buffer.obj
- 0003:00001060       ??_C@_0O@MNOP@Out?5of?5memory?$AA@ 0043c060     common:Buffer.obj
- 0003:00001070       ??_C@_0BO@NDNG@CBuffer?3?3Allocator?3?3Release?$CI?$CJ?$AA@ 0043c070     common:Buffer.obj
- 0003:00001090       ??_C@_0BA@GJNE@pBuffer?5is?5null?$AA@ 0043c090     common:Buffer.obj
- 0003:000010a4       ??_C@_0M@EHLI@?2common?4log?$AA@ 0043c0a4     common:Utils.obj
- 0003:000010b0       ??_C@_04BOIP@Info?$AA@     0043c0b0     common:Utils.obj
- 0003:000010b8       ??_C@_0M@EGHG@?$CFu?4?$CFu?4?$CFu?4?$CFu?$AA@ 0043c0b8     common:Utils.obj
- 0003:000010c4       ??_C@_0N@PPGC@?$CF02d?$CF02d?$CF02d?$AA@ 0043c0c4     common:Utils.obj
- 0003:000010d4       ??_C@_0P@INAO@?$CF02d?3?$CF02d?3?$CF02d?$AA@ 0043c0d4     common:Utils.obj
- 0003:000010e4       ??_C@_04LDEB@?$CF02X?$AA@  0043c0e4     common:Utils.obj
- 0003:000010ec       ??_C@_01BJG@?6?$AA@        0043c0ec     common:Utils.obj
- 0003:000010f0       ??_C@_03DMDD@?5?9?5?$AA@   0043c0f0     common:Utils.obj
- 0003:000010f4       ??_C@_03MFGH@?5?5?5?$AA@   0043c0f4     common:Utils.obj
- 0003:000010f8       ??_C@_01FCOA@?5?$AA@       0043c0f8     common:Utils.obj
- 0003:000010fc       ??_C@_0M@GPOH@UNAVAILABLE?$AA@ 0043c0fc     common:Utils.obj
- 0003:00001108       ??_C@_0CF@HLGK@?2StringFileInfo?2?$CF04x?$CF04x?2FileVer@ 0043c108     common:Utils.obj
- 0003:00001130       ??_C@_0BJ@KCFH@?2VarFileInfo?2Translation?$AA@ 0043c130     common:Utils.obj
- 0003:0000114c       ?_Sync@ios_base@std@@0_NA  0043c14c     libcpmt:ios.obj
- 0003:00001150       ??_R0?AVruntime_error@std@@@8 0043c150     libcpmt:ios.obj
- 0003:00001170       ??_R0?AVfailure@ios_base@std@@@8 0043c170     libcpmt:ios.obj
- 0003:00001198       ??_R0?AVios_base@std@@@8   0043c198     libcpmt:ios.obj
- 0003:000011b8       ??_R0?AVfacet@locale@std@@@8 0043c1b8     libcpmt:locale0.obj
- 0003:000011d8       ??_R0?AV_Locimp@locale@std@@@8 0043c1d8     libcpmt:locale0.obj
- 0003:00001200       ??_R0?AVlogic_error@std@@@8 0043c200     libcpmt:string.obj
- 0003:00001220       ??_R0?AVlength_error@std@@@8 0043c220     libcpmt:string.obj
- 0003:00001240       ??_R0?AVout_of_range@std@@@8 0043c240     libcpmt:string.obj
- 0003:00001260       ??_R0?AV?$numpunct@D@std@@@8 0043c260     libcpmt:locale.obj
- 0003:00001280       ??_R0?AVcodecvt_base@std@@@8 0043c280     libcpmt:locale.obj
- 0003:000012a0       ??_R0?AV?$codecvt@DDH@std@@@8 0043c2a0     libcpmt:locale.obj
- 0003:000012c0       ??_R0?AV?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@8 0043c2c0     libcpmt:locale.obj
- 0003:00001318       ??_R0?AV?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@8 0043c318     libcpmt:locale.obj
- 0003:00001370       ??_R0?AUctype_base@std@@@8 0043c370     libcpmt:locale.obj
- 0003:00001390       ??_R0?AV?$ctype@D@std@@@8  0043c390     libcpmt:locale.obj
- 0003:000013ac       ?_Init_cnt@Init@ios_base@std@@0HA 0043c3ac     libcpmt:iostream.obj
- 0003:000013b0       ??_R0?AV?$basic_ios@DU?$char_traits@D@std@@@std@@@8 0043c3b0     libcpmt:iostream.obj
- 0003:000013e8       ??_R0?AV?$basic_istream@DU?$char_traits@D@std@@@std@@@8 0043c3e8     libcpmt:iostream.obj
- 0003:00001428       ??_R0?AV?$basic_ostream@DU?$char_traits@D@std@@@std@@@8 0043c428     libcpmt:iostream.obj
- 0003:00001468       ??_R0?AV?$basic_streambuf@DU?$char_traits@D@std@@@std@@@8 0043c468     libcpmt:iostream.obj
- 0003:000014a8       ??_R0?AV?$basic_filebuf@DU?$char_traits@D@std@@@std@@@8 0043c4a8     libcpmt:iostream.obj
- 0003:000014e4       ?_Init_cnt@_Winit@std@@0HA 0043c4e4     libcpmt:wiostrea.obj
- 0003:000014e8       ??_R0?AV?$basic_ios@GU?$char_traits@G@std@@@std@@@8 0043c4e8     libcpmt:wiostrea.obj
- 0003:00001520       ??_R0?AV?$basic_istream@GU?$char_traits@G@std@@@std@@@8 0043c520     libcpmt:wiostrea.obj
- 0003:00001560       ??_R0?AV?$basic_ostream@GU?$char_traits@G@std@@@std@@@8 0043c560     libcpmt:wiostrea.obj
- 0003:000015a0       ??_R0?AV?$basic_filebuf@GU?$char_traits@G@std@@@std@@@8 0043c5a0     libcpmt:wiostrea.obj
- 0003:000015e0       ??_R0?AV?$basic_streambuf@GU?$char_traits@G@std@@@std@@@8 0043c5e0     libcpmt:wiostrea.obj
- 0003:00001620       ??_R0?AVbad_alloc@std@@@8  0043c620     libcpmt:nomemory.obj
- 0003:00001640       ??_R0?AV?$num_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@8 0043c640     libcpmt:wlocale.obj
- 0003:00001698       ??_R0?AV?$num_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@8 0043c698     libcpmt:wlocale.obj
- 0003:000016f0       ??_R0?AV?$numpunct@G@std@@@8 0043c6f0     libcpmt:wlocale.obj
- 0003:00001710       ??_R0?AV?$ctype@G@std@@@8  0043c710     libcpmt:wlocale.obj
- 0003:00001730       ??_R0?AV?$time_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@8 0043c730     libcpmt:wlocale.obj
- 0003:00001788       ??_R0?AUtime_base@std@@@8  0043c788     libcpmt:wlocale.obj
- 0003:000017a8       ??_R0?AV?$time_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@8 0043c7a8     libcpmt:wlocale.obj
- 0003:00001800       ??_R0?AV?$moneypunct@G$00@std@@@8 0043c800     libcpmt:wlocale.obj
- 0003:00001828       ??_R0?AUmoney_base@std@@@8 0043c828     libcpmt:wlocale.obj
- 0003:00001848       ??_R0?AV?$_Mpunct@G@std@@@8 0043c848     libcpmt:wlocale.obj
- 0003:00001868       ??_R0?AV?$moneypunct@G$0A@@std@@@8 0043c868     libcpmt:wlocale.obj
- 0003:00001890       ??_R0?AV?$money_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@8 0043c890     libcpmt:wlocale.obj
- 0003:000018e8       ??_R0?AV?$money_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@8 0043c8e8     libcpmt:wlocale.obj
- 0003:00001940       ??_R0?AUmessages_base@std@@@8 0043c940     libcpmt:wlocale.obj
- 0003:00001960       ??_R0?AV?$messages@G@std@@@8 0043c960     libcpmt:wlocale.obj
- 0003:00001980       ??_R0?AV?$collate@G@std@@@8 0043c980     libcpmt:wlocale.obj
- 0003:000019a0       ??_R0?AV?$codecvt@GDH@std@@@8 0043c9a0     libcpmt:wlocale.obj
- 0003:000019c0       ??_R0?AV?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@8 0043c9c0     libcpmt:xlocale.obj
- 0003:00001a18       ??_R0?AV?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@8 0043ca18     libcpmt:xlocale.obj
- 0003:00001a70       ??_R0?AV?$moneypunct@D$00@std@@@8 0043ca70     libcpmt:xlocale.obj
- 0003:00001a98       ??_R0?AV?$_Mpunct@D@std@@@8 0043ca98     libcpmt:xlocale.obj
- 0003:00001ab8       ??_R0?AV?$moneypunct@D$0A@@std@@@8 0043cab8     libcpmt:xlocale.obj
- 0003:00001ae0       ??_R0?AV?$money_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@8 0043cae0     libcpmt:xlocale.obj
- 0003:00001b38       ??_R0?AV?$money_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@8 0043cb38     libcpmt:xlocale.obj
- 0003:00001b90       ??_R0?AV?$messages@D@std@@@8 0043cb90     libcpmt:xlocale.obj
- 0003:00001bb0       ??_R0?AV?$collate@D@std@@@8 0043cbb0     libcpmt:xlocale.obj
- 0003:00001bd0       ??_R0?AVtype_info@@@8      0043cbd0     LIBCMT:typinfo.obj
- 0003:00001be8       __NLG_Destination          0043cbe8     LIBCMT:exsup.obj
- 0003:00001bf8       ?__pMyUnhandledExceptionFilter@@3PAXA 0043cbf8     LIBCMT:throw.obj
- 0003:00001c00       __fltused                  0043cc00     LIBCMT:fpinit.obj
- 0003:00001c04       __ldused                   0043cc04     LIBCMT:fpinit.obj
- 0003:00001c08       __FPinit                   0043cc08     LIBCMT:fpinit.obj
- 0003:00001c0c       __FPmtinit                 0043cc0c     LIBCMT:fpinit.obj
- 0003:00001c10       __FPmtterm                 0043cc10     LIBCMT:fpinit.obj
- 0003:00001c20       ___lconv_static_decimal    0043cc20     LIBCMT:lconv.obj
- 0003:00001c28       ___lconv_c                 0043cc28     LIBCMT:lconv.obj
- 0003:00001c58       ___lconv                   0043cc58     LIBCMT:lconv.obj
- 0003:00001c60       __aexit_rtn                0043cc60     LIBCMT:crt0.obj
- 0003:00001c64       ___app_type                0043cc64     LIBCMT:crt0.obj
- 0003:00001d80       ___lc_category             0043cd80     LIBCMT:setlocal.obj
- 0003:00001f30       __iob                      0043cf30     LIBCMT:_file.obj
- 0003:000021b0       ___mb_cur_max              0043d1b0     LIBCMT:nlsdata1.obj
- 0003:000021b4       ___decimal_point           0043d1b4     LIBCMT:nlsdata1.obj
- 0003:000021b8       ___decimal_point_length    0043d1b8     LIBCMT:nlsdata1.obj
- 0003:000021bc       ___lc_time_curr            0043d1bc     LIBCMT:strftime.obj
- 0003:000021c0       ___lc_time_c               0043d1c0     LIBCMT:strftime.obj
- 0003:0000226c       __locktable                0043d26c     LIBCMT:mlock.obj
- 0003:0000232c       __pctype                   0043d32c     LIBCMT:ctype.obj
- 0003:00002330       __pwctype                  0043d330     LIBCMT:ctype.obj
- 0003:00002334       __ctype                    0043d334     LIBCMT:ctype.obj
- 0003:00002550       ___tlsindex                0043d550     LIBCMT:tidtable.obj
- 0003:00002554       ?__pInconsistency@@3P6AXXZA 0043d554     LIBCMT:hooks.obj
- 0003:00002570       ___nullstring              0043d570     LIBCMT:output.obj
- 0003:00002574       ___wnullstring             0043d574     LIBCMT:output.obj
- 0003:00002578       __cfltcvt_tab              0043d578     LIBCMT:cmiscdat.obj
- 0003:00002590       __XcptActTab               0043d590     LIBCMT:winxfltr.obj
- 0003:00002608       __First_FPE_Indx           0043d608     LIBCMT:winxfltr.obj
- 0003:0000260c       __Num_FPE                  0043d60c     LIBCMT:winxfltr.obj
- 0003:00002610       __XcptActTabSize           0043d610     LIBCMT:winxfltr.obj
- 0003:00002614       __XcptActTabCount          0043d614     LIBCMT:winxfltr.obj
- 0003:00002618       ___badioinfo               0043d618     LIBCMT:ioinit.obj
- 0003:0000263c       __amblksiz                 0043d63c     LIBCMT:heapinit.obj
- 0003:000026d0       ___sbh_threshold           0043d6d0     LIBCMT:sbheap.obj
- 0003:000026e0       ___rgLocInfo               0043d6e0     LIBCMT:getqloc.obj
- 0003:00002b84       ___rglangidNotDefault      0043db84     LIBCMT:getqloc.obj
- 0003:00002b98       ___rg_country              0043db98     LIBCMT:getqloc.obj
- 0003:00002c50       ___rg_language             0043dc50     LIBCMT:getqloc.obj
- 0003:00002e58       __timezone                 0043de58     LIBCMT:timeset.obj
- 0003:00002e5c       __daylight                 0043de5c     LIBCMT:timeset.obj
- 0003:00002e60       __dstbias                  0043de60     LIBCMT:timeset.obj
- 0003:00002ee4       __tzname                   0043dee4     LIBCMT:timeset.obj
- 0003:00002f10       __HUGE                     0043df10     LIBCMT:huge.obj
- 0003:00002f18       __p_overlay                0043df18     LIBCMT:dospawn.obj
- 0003:00003050       __lpdays                   0043e050     LIBCMT:days.obj
- 0003:00003084       __days                     0043e084     LIBCMT:days.obj
- 0003:000030c0       __pow10pos                 0043e0c0     LIBCMT:constpow.obj
- 0003:00003220       __pow10neg                 0043e220     LIBCMT:constpow.obj
- 0003:00003380       ?g_nPort@@3HA              0043e380     GameServer.obj
- 0003:00003384       ?ATL_CREATE_OBJECT@CComApartment@ATL@@2IA 0043e384     GameServer.obj
- 0003:00003388       ?m_libid@CComModule@ATL@@2U_GUID@@A 0043e388     GameServer.obj
- 0003:00003398       ?_pModule@ATL@@3PAVCComModule@1@A 0043e398     GameServer.obj
- 0003:0000339c       ?_Psave@?1??use_facet@std@@YAABV?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043e39c     GameServer.obj
- 0003:000033a0       ?_Psave@?1??use_facet@std@@YAABV?$numpunct@D@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043e3a0     GameServer.obj
- 0003:000033a4       ?_Facsav@?$_Tidyfac@V?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@std@@0PAV?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@A 0043e3a4     GameServer.obj
- 0003:000033a8       ?_Facsav@?$_Tidyfac@V?$numpunct@D@std@@@std@@0PAV?$numpunct@D@2@A 0043e3a8     GameServer.obj
- 0003:000033b0       ?g_SOServer@@3VKSwordOnLineSever@@A 0043e3b0     KSOServer.obj
- 0003:00003528       ?m_theSend@@3VCPackager@Win32@OnlineGameLib@@A 0043e528     KSOServer.obj
- 0003:000035b0       ?m_theRecv@@3VCPackager@Win32@OnlineGameLib@@A 0043e5b0     KSOServer.obj
- 0003:00003638       ?g_csFlow@@3VCCriticalSection@Win32@OnlineGameLib@@A 0043e638     KSOServer.obj
- 0003:00003650       ?g_SocketInit@@3VCUsesWinsock@Win32@OnlineGameLib@@A 0043e650     KSOServer.obj
- 0003:000037e0       ?g_theRainbowLibrary@@3VCLibrary@Win32@OnlineGameLib@@A 0043e7e0     KSOServer.obj
- 0003:000037f8       ?g_theHeavenLibrary@@3VCLibrary@Win32@OnlineGameLib@@A 0043e7f8     KSOServer.obj
- 0003:00003810       ?g_pGSLicense@@3VKLicense@@A 0043e810     KSOServer.obj
- 0003:00003818       ?_Nilrefs@?$_Tree@KU?$pair@$$CBKPAVKTransferUnit@@@std@@U_Kfn@?$map@KPAVKTransferUnit@@U?$less@K@std@@V?$allocator@PAVKTransferUnit@@@3@@2@U?$less@K@2@V?$allocator@PAVKTransferUnit@@@2@@std@@1IA 0043e818     KSOServer.obj
- 0003:0000381c       ?_Nil@?$_Tree@KU?$pair@$$CBKPAVKTransferUnit@@@std@@U_Kfn@?$map@KPAVKTransferUnit@@U?$less@K@std@@V?$allocator@PAVKTransferUnit@@@3@@2@U?$less@K@2@V?$allocator@PAVKTransferUnit@@@2@@std@@1PAU_Node@12@A 0043e81c     KSOServer.obj
- 0003:00003820       ?_Nilrefs@?$_Tree@EU?$pair@$$CBEPAVCBuffer@Win32@OnlineGameLib@@@std@@U_Kfn@?$map@EPAVCBuffer@Win32@OnlineGameLib@@U?$less@E@std@@V?$allocator@PAVCBuffer@Win32@OnlineGameLib@@@5@@2@U?$less@E@2@V?$allocator@PAVCBuffer@Win32@OnlineGameLib@@@2@@std@@1IA 0043e820     common:Buffer.obj
- 0003:00003824       ?_Nil@?$_Tree@EU?$pair@$$CBEPAVCBuffer@Win32@OnlineGameLib@@@std@@U_Kfn@?$map@EPAVCBuffer@Win32@OnlineGameLib@@U?$less@E@std@@V?$allocator@PAVCBuffer@Win32@OnlineGameLib@@@5@@2@U?$less@E@2@V?$allocator@PAVCBuffer@Win32@OnlineGameLib@@@2@@std@@1PAU_Node@12@A 0043e824     common:Buffer.obj
- 0003:00003978       ?s_criticalSection@Win32@OnlineGameLib@@3VCCriticalSection@12@A 0043e978     common:Utils.obj
- 0003:00003998       ??_C@_00A@?$AA@            0043e998     common:Utils.obj
- 0003:0000399c       ?_Index@ios_base@std@@0HA  0043e99c     libcpmt:ios.obj
- 0003:000039f0       ?_Clocptr@_Locimp@locale@std@@0PAV123@A 0043e9f0     libcpmt:locale0.obj
- 0003:000039f4       ?_Global@_Locimp@locale@std@@0PAV123@A 0043e9f4     libcpmt:locale0.obj
- 0003:000039f8       ?_Id_cnt@id@locale@std@@0HA 0043e9f8     libcpmt:locale0.obj
- 0003:000039fc       ?_Cltab@?$ctype@D@std@@0PBFB 0043e9fc     libcpmt:locale0.obj
- 0003:00003a00       ?id@?$codecvt@DDH@std@@2V0locale@2@A 0043ea00     libcpmt:locale.obj
- 0003:00003a04       ?id@?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@2V0locale@2@A 0043ea04     libcpmt:locale.obj
- 0003:00003a08       ?id@?$ctype@D@std@@2V0locale@2@A 0043ea08     libcpmt:locale.obj
- 0003:00003a0c       ?id@?$numpunct@D@std@@2V0locale@2@A 0043ea0c     libcpmt:locale.obj
- 0003:00003a10       ?id@?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@2V0locale@2@A 0043ea10     libcpmt:locale.obj
- 0003:00003a14       ?_Psave@?1??use_facet@std@@YAABV?$ctype@D@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ea14     libcpmt:locale.obj
- 0003:00003a18       ?_Psave@?1??use_facet@std@@YAABV?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ea18     libcpmt:locale.obj
- 0003:00003a1c       ?_Psave@?1??use_facet@std@@YAABV?$codecvt@DDH@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ea1c     libcpmt:locale.obj
- 0003:00003a20       ?_Facsav@?$_Tidyfac@V?$ctype@D@std@@@std@@0PAV?$ctype@D@2@A 0043ea20     libcpmt:locale.obj
- 0003:00003a24       ?_Facsav@?$_Tidyfac@V?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@std@@0PAV?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@A 0043ea24     libcpmt:locale.obj
- 0003:00003a28       ?_Facsav@?$_Tidyfac@V?$codecvt@DDH@std@@@std@@0PAV?$codecvt@DDH@2@A 0043ea28     libcpmt:locale.obj
- 0003:00003a30       ?clog@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A 0043ea30     libcpmt:iostream.obj
- 0003:00003ac0       ?cout@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A 0043eac0     libcpmt:iostream.obj
- 0003:00003b50       ?cin@std@@3V?$basic_istream@DU?$char_traits@D@std@@@1@A 0043eb50     libcpmt:iostream.obj
- 0003:00003be8       ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A 0043ebe8     libcpmt:iostream.obj
- 0003:00003c20       ?wcerr@std@@3V?$basic_ostream@GU?$char_traits@G@std@@@1@A 0043ec20     libcpmt:wiostrea.obj
- 0003:00003c60       ?wclog@std@@3V?$basic_ostream@GU?$char_traits@G@std@@@1@A 0043ec60     libcpmt:wiostrea.obj
- 0003:00003c98       ?wcin@std@@3V?$basic_istream@GU?$char_traits@G@std@@@1@A 0043ec98     libcpmt:wiostrea.obj
- 0003:00003d88       ?wcout@std@@3V?$basic_ostream@GU?$char_traits@G@std@@@1@A 0043ed88     libcpmt:wiostrea.obj
- 0003:00003e2c       ?id@?$numpunct@G@std@@2V0locale@2@A 0043ee2c     libcpmt:wlocale.obj
- 0003:00003e30       ?id@?$money_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@2V0locale@2@A 0043ee30     libcpmt:wlocale.obj
- 0003:00003e34       ?id@?$messages@G@std@@2V0locale@2@A 0043ee34     libcpmt:wlocale.obj
- 0003:00003e38       ?id@?$moneypunct@G$00@std@@2V0locale@2@A 0043ee38     libcpmt:wlocale.obj
- 0003:00003e3c       ?id@?$num_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@2V0locale@2@A 0043ee3c     libcpmt:wlocale.obj
- 0003:00003e40       ?id@?$collate@G@std@@2V0locale@2@A 0043ee40     libcpmt:wlocale.obj
- 0003:00003e44       ?id@?$time_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@2V0locale@2@A 0043ee44     libcpmt:wlocale.obj
- 0003:00003e48       ?id@?$ctype@G@std@@2V0locale@2@A 0043ee48     libcpmt:wlocale.obj
- 0003:00003e4c       ?id@?$num_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@2V0locale@2@A 0043ee4c     libcpmt:wlocale.obj
- 0003:00003e50       ?id@?$codecvt@GDH@std@@2V0locale@2@A 0043ee50     libcpmt:wlocale.obj
- 0003:00003e54       ?id@?$time_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@2V0locale@2@A 0043ee54     libcpmt:wlocale.obj
- 0003:00003e58       ?id@?$moneypunct@G$0A@@std@@2V0locale@2@A 0043ee58     libcpmt:wlocale.obj
- 0003:00003e5c       ?id@?$money_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@2V0locale@2@A 0043ee5c     libcpmt:wlocale.obj
- 0003:00003e60       ?_Psave@?1??use_facet@std@@YAABV?$ctype@G@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee60     libcpmt:wlocale.obj
- 0003:00003e64       ?_Psave@?1??use_facet@std@@YAABV?$num_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee64     libcpmt:wlocale.obj
- 0003:00003e68       ?_Psave@?1??use_facet@std@@YAABV?$num_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee68     libcpmt:wlocale.obj
- 0003:00003e6c       ?_Psave@?1??use_facet@std@@YAABV?$numpunct@G@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee6c     libcpmt:wlocale.obj
- 0003:00003e70       ?_Psave@?1??use_facet@std@@YAABV?$collate@G@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee70     libcpmt:wlocale.obj
- 0003:00003e74       ?_Psave@?1??use_facet@std@@YAABV?$messages@G@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee74     libcpmt:wlocale.obj
- 0003:00003e78       ?_Psave@?1??use_facet@std@@YAABV?$money_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee78     libcpmt:wlocale.obj
- 0003:00003e7c       ?_Psave@?1??use_facet@std@@YAABV?$money_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee7c     libcpmt:wlocale.obj
- 0003:00003e80       ?_Psave@?1??use_facet@std@@YAABV?$moneypunct@G$0A@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee80     libcpmt:wlocale.obj
- 0003:00003e84       ?_Psave@?1??use_facet@std@@YAABV?$moneypunct@G$00@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee84     libcpmt:wlocale.obj
- 0003:00003e88       ?_Psave@?1??use_facet@std@@YAABV?$time_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee88     libcpmt:wlocale.obj
- 0003:00003e8c       ?_Psave@?1??use_facet@std@@YAABV?$time_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee8c     libcpmt:wlocale.obj
- 0003:00003e90       ?_Psave@?1??use_facet@std@@YAABV?$codecvt@GDH@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee90     libcpmt:wlocale.obj
- 0003:00003e94       ?_Facsav@?$_Tidyfac@V?$ctype@G@std@@@std@@0PAV?$ctype@G@2@A 0043ee94     libcpmt:wlocale.obj
- 0003:00003e98       ?_Facsav@?$_Tidyfac@V?$num_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@std@@0PAV?$num_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@A 0043ee98     libcpmt:wlocale.obj
- 0003:00003e9c       ?_Facsav@?$_Tidyfac@V?$num_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@std@@0PAV?$num_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@A 0043ee9c     libcpmt:wlocale.obj
- 0003:00003ea0       ?_Facsav@?$_Tidyfac@V?$numpunct@G@std@@@std@@0PAV?$numpunct@G@2@A 0043eea0     libcpmt:wlocale.obj
- 0003:00003ea4       ?_Facsav@?$_Tidyfac@V?$collate@G@std@@@std@@0PAV?$collate@G@2@A 0043eea4     libcpmt:wlocale.obj
- 0003:00003ea8       ?_Facsav@?$_Tidyfac@V?$messages@G@std@@@std@@0PAV?$messages@G@2@A 0043eea8     libcpmt:wlocale.obj
- 0003:00003eac       ?_Facsav@?$_Tidyfac@V?$money_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@std@@0PAV?$money_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@A 0043eeac     libcpmt:wlocale.obj
- 0003:00003eb0       ?_Facsav@?$_Tidyfac@V?$money_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@std@@0PAV?$money_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@A 0043eeb0     libcpmt:wlocale.obj
- 0003:00003eb4       ?_Facsav@?$_Tidyfac@V?$moneypunct@G$0A@@std@@@std@@0PAV?$moneypunct@G$0A@@2@A 0043eeb4     libcpmt:wlocale.obj
- 0003:00003eb8       ?_Facsav@?$_Tidyfac@V?$moneypunct@G$00@std@@@std@@0PAV?$moneypunct@G$00@2@A 0043eeb8     libcpmt:wlocale.obj
- 0003:00003ebc       ?_Facsav@?$_Tidyfac@V?$time_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@std@@0PAV?$time_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@A 0043eebc     libcpmt:wlocale.obj
- 0003:00003ec0       ?_Facsav@?$_Tidyfac@V?$time_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@std@@0PAV?$time_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@A 0043eec0     libcpmt:wlocale.obj
- 0003:00003ec4       ?_Facsav@?$_Tidyfac@V?$codecvt@GDH@std@@@std@@0PAV?$codecvt@GDH@2@A 0043eec4     libcpmt:wlocale.obj
- 0003:00003ec8       ?id@?$money_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@2V0locale@2@A 0043eec8     libcpmt:xlocale.obj
- 0003:00003ecc       ?id@?$moneypunct@D$00@std@@2V0locale@2@A 0043eecc     libcpmt:xlocale.obj
- 0003:00003ed0       ?id@?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@2V0locale@2@A 0043eed0     libcpmt:xlocale.obj
- 0003:00003ed4       ?id@?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@2V0locale@2@A 0043eed4     libcpmt:xlocale.obj
- 0003:00003ed8       ?id@?$messages@D@std@@2V0locale@2@A 0043eed8     libcpmt:xlocale.obj
- 0003:00003edc       ?id@?$moneypunct@D$0A@@std@@2V0locale@2@A 0043eedc     libcpmt:xlocale.obj
- 0003:00003ee0       ?id@?$money_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@2V0locale@2@A 0043eee0     libcpmt:xlocale.obj
- 0003:00003ee4       ?id@?$collate@D@std@@2V0locale@2@A 0043eee4     libcpmt:xlocale.obj
- 0003:00003ee8       ?_Psave@?1??use_facet@std@@YAABV?$collate@D@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043eee8     libcpmt:xlocale.obj
- 0003:00003eec       ?_Psave@?1??use_facet@std@@YAABV?$messages@D@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043eeec     libcpmt:xlocale.obj
- 0003:00003ef0       ?_Psave@?1??use_facet@std@@YAABV?$money_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043eef0     libcpmt:xlocale.obj
- 0003:00003ef4       ?_Psave@?1??use_facet@std@@YAABV?$money_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043eef4     libcpmt:xlocale.obj
- 0003:00003ef8       ?_Psave@?1??use_facet@std@@YAABV?$moneypunct@D$0A@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043eef8     libcpmt:xlocale.obj
- 0003:00003efc       ?_Psave@?1??use_facet@std@@YAABV?$moneypunct@D$00@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043eefc     libcpmt:xlocale.obj
- 0003:00003f00       ?_Psave@?1??use_facet@std@@YAABV?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ef00     libcpmt:xlocale.obj
- 0003:00003f04       ?_Psave@?1??use_facet@std@@YAABV?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ef04     libcpmt:xlocale.obj
- 0003:00003f08       ?_Facsav@?$_Tidyfac@V?$collate@D@std@@@std@@0PAV?$collate@D@2@A 0043ef08     libcpmt:xlocale.obj
- 0003:00003f0c       ?_Facsav@?$_Tidyfac@V?$messages@D@std@@@std@@0PAV?$messages@D@2@A 0043ef0c     libcpmt:xlocale.obj
- 0003:00003f10       ?_Facsav@?$_Tidyfac@V?$money_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@std@@0PAV?$money_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@A 0043ef10     libcpmt:xlocale.obj
- 0003:00003f14       ?_Facsav@?$_Tidyfac@V?$money_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@std@@0PAV?$money_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@A 0043ef14     libcpmt:xlocale.obj
- 0003:00003f18       ?_Facsav@?$_Tidyfac@V?$moneypunct@D$0A@@std@@@std@@0PAV?$moneypunct@D$0A@@2@A 0043ef18     libcpmt:xlocale.obj
- 0003:00003f1c       ?_Facsav@?$_Tidyfac@V?$moneypunct@D$00@std@@@std@@0PAV?$moneypunct@D$00@2@A 0043ef1c     libcpmt:xlocale.obj
- 0003:00003f20       ?_Facsav@?$_Tidyfac@V?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@std@@0PAV?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@A 0043ef20     libcpmt:xlocale.obj
- 0003:00003f24       ?_Facsav@?$_Tidyfac@V?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@std@@0PAV?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@A 0043ef24     libcpmt:xlocale.obj
- 0003:00003f34       ___fastflag                0043ef34     LIBCMT:fpinit.obj
- 0003:00003f38       __adjust_fdiv              0043ef38     LIBCMT:fpinit.obj
- 0003:00003f3c       ___lconv_static_null       0043ef3c     LIBCMT:lconv.obj
- 0003:00003f40       __aenvptr                  0043ef40     LIBCMT:crt0.obj
- 0003:00003f44       __wenvptr                  0043ef44     LIBCMT:crt0.obj
- 0003:00003f48       ___error_mode              0043ef48     LIBCMT:crt0.obj
- 0003:00003f58       __cflush                   0043ef58     LIBCMT:_file.obj
- 0003:00003fc0       ___lc_handle               0043efc0     LIBCMT:nlsdata2.obj
- 0003:00003fd8       ___lc_codepage             0043efd8     LIBCMT:nlsdata2.obj
- 0003:00003fdc       ___lc_collate_cp           0043efdc     LIBCMT:nlsdata2.obj
- 0003:00003fec       __umaskval                 0043efec     LIBCMT:crt0dat.obj
- 0003:00003ff0       __osver                    0043eff0     LIBCMT:crt0dat.obj
- 0003:00003ff4       __winver                   0043eff4     LIBCMT:crt0dat.obj
- 0003:00003ff8       __winmajor                 0043eff8     LIBCMT:crt0dat.obj
- 0003:00003ffc       __winminor                 0043effc     LIBCMT:crt0dat.obj
- 0003:00004000       ___argc                    0043f000     LIBCMT:crt0dat.obj
- 0003:00004004       ___argv                    0043f004     LIBCMT:crt0dat.obj
- 0003:00004008       ___wargv                   0043f008     LIBCMT:crt0dat.obj
- 0003:0000400c       __environ                  0043f00c     LIBCMT:crt0dat.obj
- 0003:00004010       ___initenv                 0043f010     LIBCMT:crt0dat.obj
- 0003:00004014       __wenviron                 0043f014     LIBCMT:crt0dat.obj
- 0003:00004018       ___winitenv                0043f018     LIBCMT:crt0dat.obj
- 0003:0000401c       __pgmptr                   0043f01c     LIBCMT:crt0dat.obj
- 0003:00004020       __wpgmptr                  0043f020     LIBCMT:crt0dat.obj
- 0003:00004024       __exitflag                 0043f024     LIBCMT:crt0dat.obj
- 0003:00004028       __C_Termination_Done       0043f028     LIBCMT:crt0dat.obj
- 0003:0000402c       __C_Exit_Done              0043f02c     LIBCMT:crt0dat.obj
- 0003:00004030       __stdbuf                   0043f030     LIBCMT:_sftbuf.obj
- 0003:00004140       __adbgmsg                  0043f140     LIBCMT:crt0msg.obj
- 0003:00004144       ___lc_time_intl            0043f144     LIBCMT:inittime.obj
- 0003:00004160       ___lc_id                   0043f160     LIBCMT:nlsdata3.obj
- 0003:000041a8       __newmode                  0043f1a8     LIBCMT:_newmode.obj
- 0003:000041ac       ?_pnhHeap@@3P6AHI@ZA       0043f1ac     LIBCMT:handler.obj
- 0003:00004270       __commode                  0043f270     LIBCMT:ncommode.obj
- 0003:000042a4       __fmode                    0043f2a4     LIBCMT:txtmode.obj
- 0003:000042b0       ??_B?1???id@?$ctype@G@std@@$D@@9@51 0043f2b0     <common>
- 0003:000042b1       ??_B?1???id@?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@$D@@9@51 0043f2b1     <common>
- 0003:000042b2       ??_B?1???id@?$numpunct@D@std@@$D@@9@51 0043f2b2     <common>
- 0003:000042b4       ?_Stz@?$fpos@H@std@@0HA    0043f2b4     <common>
- 0003:000042b8       ?_Stinit@?1??_Init@?$basic_filebuf@DU?$char_traits@D@std@@@std@@IAEXPAU_iobuf@@W4_Initfl@23@@Z@4HA 0043f2b8     <common>
- 0003:000042bc       ?_Stinit@?1??_Init@?$basic_filebuf@GU?$char_traits@G@std@@@std@@IAEXPAU_iobuf@@W4_Initfl@23@@Z@4HA 0043f2bc     <common>
- 0003:000042c0       ??_B?1???id@?$collate@D@std@@$D@@9@51 0043f2c0     <common>
- 0003:000042c4       ___mbcodepage              0043f2c4     <common>
- 0003:000042d0       ___mbulinfo                0043f2d0     <common>
- 0003:000042dc       ___ismbcodepage            0043f2dc     <common>
- 0003:000042e0       __mbcasemap                0043f2e0     <common>
- 0003:000043e0       __mbctype                  0043f3e0     <common>
- 0003:000044e4       ___mblcid                  0043f4e4     <common>
- 0003:000044e8       ___sbh_sizeHeaderList      0043f4e8     <common>
- 0003:000044ec       ___sbh_indGroupDefer       0043f4ec     <common>
- 0003:000044f0       ___sbh_pHeaderScan         0043f4f0     <common>
- 0003:000044f4       ___sbh_pHeaderDefer        0043f4f4     <common>
- 0003:000044f8       ___sbh_cntHeaderList       0043f4f8     <common>
- 0003:000044fc       ___sbh_pHeaderList         0043f4fc     <common>
- 0003:00004500       __crtheap                  0043f500     <common>
- 0003:00004520       ___pioinfo                 0043f520     <common>
- 0003:00004620       __nhandle                  0043f620     <common>
- 0003:00004624       ___env_initialized         0043f624     <common>
- 0003:00004628       ___mbctype_initialized     0043f628     <common>
- 0003:0000462c       ___onexitend               0043f62c     <common>
- 0003:00004630       ___onexitbegin             0043f630     <common>
- 0003:00004634       ___alternate_form          0043f634     <common>
- 0003:00004638       ___no_lead_zeros           0043f638     <common>
- 0003:0000463c       ___piob                    0043f63c     <common>
- 0003:00004640       __bufin                    0043f640     <common>
- 0003:00005640       __nstream                  00440640     <common>
- 0003:00005644       ___setlc_active            00440644     <common>
- 0003:00005648       ___unguarded_readlc_active 00440648     <common>
- 0003:0000564c       __acmdln                   0044064c     <common>
+ 0003:00000b78       ??_C@_0EI@ICNB@?$FLPING?9TIMEOUT?$FN?5lnID?$DN?$CFd?5playerIdx@ 0043bb78     KSOServer.obj
+ 0003:00000bc0       ??_C@_0EB@INAA@?$FLPING?9RETRY?$FN?5lnID?$DN?$CFd?5elapsed?$DN?$CFd?5@ 0043bbc0     KSOServer.obj
+ 0003:00000c04       ??_C@_0EB@OBJ@?$FLFIX?9APPLIED?$FN?5Timers?5reset?5for?5l@ 0043bc04     KSOServer.obj
+ 0003:00000c48       ??_C@_0EF@FNJF@?$FLFIX?9APPLIED?$FN?5Resetting?5timers?5f@ 0043bc48     KSOServer.obj
+ 0003:00000c90       ??_C@_0EO@MDIJ@?$FLWARNING?$FN?5PingClient?3?5Player?5lnI@ 0043bc90     KSOServer.obj
+ 0003:00000ce0       ??_C@_0DL@MMDN@?$FLWARNING?$FN?5PingClient?3?5Invalid?5ln@ 0043bce0     KSOServer.obj
+ 0003:00000d1c       ??_C@_0GD@CIMC@?$FLWARNING?$FN?5ProcessPingReply?3?5Play@ 0043bd1c     KSOServer.obj
+ 0003:00000d80       ??_C@_0DC@HEBC@?$FLPING?9OK?$FN?5ID?$DN?$CFlu?5RTT?$DN?$CFd?5ticks?5?$CIs@ 0043bd80     KSOServer.obj
+ 0003:00000db4       ??_C@_0CD@ILKD@ping?5cmd?5size?5not?5correct?0?5ignor@ 0043bdb4     KSOServer.obj
+ 0003:00000dd8       ??_C@_0EB@MHIA@?$FLWARNING?$FN?5ProcessPingReply?3?5Inva@ 0043bdd8     KSOServer.obj
+ 0003:00000e1c       ??_C@_0FN@KLJL@?$FLEXCHANGE?9TIMEOUT?$FN?5Player?5?$CFd?5stu@ 0043be1c     KSOServer.obj
+ 0003:00000e7c       ??_C@_0BM@INLB@?5Lixian?5game?$CB?5?9?5?$FLQuit?5Game?$FN?$AA@ 0043be7c     KSOServer.obj
+ 0003:00000e98       ??_C@_06GCNB@?$DM?1?1?5?9?9?$AA@ 0043be98     KSOServer.obj
+ 0003:00000ea0       ??_C@_0BL@PNIO@?5leave?5game?$CB?5?9?5?$FLQuit?5Game?$FN?$AA@ 0043bea0     KSOServer.obj
+ 0003:00000ebc       ??_C@_04CIPL@?$DM?5?9?9?$AA@ 0043bebc     KSOServer.obj
+ 0003:00000ec4       ??_C@_0CA@CFJB@?5leave?5game?5?9?5?$FLLogin?5Time?5Out?$FN?$CB?$AA@ 0043bec4     KSOServer.obj
+ 0003:00000ee4       ??_C@_0BM@LLLH@Packing?5failed?4?5?$CFd?0?5?$CFd?0?5?$CFd?6?$AA@ 0043bee4     KSOServer.obj
+ 0003:00000f00       ??_C@_0BJ@KHI@PlayerDbLoading?5failed?4?6?$AA@ 0043bf00     KSOServer.obj
+ 0003:00000f1c       ??_C@_0BA@NLGN@GetAdaptersInfo?$AA@ 0043bf1c     KSOServer.obj
+ 0003:00000f2c       ??_C@_0N@JPOB@iphlpapi?4dll?$AA@ 0043bf2c     KSOServer.obj
+ 0003:00000f40       ??_R0?AVCWin32Exception@Win32@OnlineGameLib@@@8 0043bf40     common:UsesWinsock.obj
+ 0003:00000f74       ??_C@_0BN@CJDO@CUsesWinsock?3?3CUsesWinsock?$CI?$CJ?$AA@ 0043bf74     common:UsesWinsock.obj
+ 0003:00000f94       ??_C@_0BB@BJC@CBuffer?3?3AddData?$AA@ 0043bf94     common:Buffer.obj
+ 0003:00000fa8       ??_C@_0BL@HPMM@Not?5enough?5space?5in?5buffer?$AA@ 0043bfa8     common:Buffer.obj
+ 0003:00000fc4       ??_C@_0BD@MKLK@CBuffer?3?3Release?$CI?$CJ?$AA@ 0043bfc4     common:Buffer.obj
+ 0003:00000fd8       ??_C@_0BG@EBOE@m_ref?5is?5already?5zero?$AA@ 0043bfd8     common:Buffer.obj
+ 0003:00000ff0       ??_C@_0BP@ONCE@CBuffer?3?3Allocator?3?3Allocate?$CI?$CJ?$AA@ 0043bff0     common:Buffer.obj
+ 0003:00001010       ??_C@_0O@MNOP@Out?5of?5memory?$AA@ 0043c010     common:Buffer.obj
+ 0003:00001020       ??_C@_0BO@NDNG@CBuffer?3?3Allocator?3?3Release?$CI?$CJ?$AA@ 0043c020     common:Buffer.obj
+ 0003:00001040       ??_C@_0BA@GJNE@pBuffer?5is?5null?$AA@ 0043c040     common:Buffer.obj
+ 0003:00001054       ??_C@_0M@EHLI@?2common?4log?$AA@ 0043c054     common:Utils.obj
+ 0003:00001060       ??_C@_04BOIP@Info?$AA@     0043c060     common:Utils.obj
+ 0003:00001068       ??_C@_0M@EGHG@?$CFu?4?$CFu?4?$CFu?4?$CFu?$AA@ 0043c068     common:Utils.obj
+ 0003:00001074       ??_C@_0N@PPGC@?$CF02d?$CF02d?$CF02d?$AA@ 0043c074     common:Utils.obj
+ 0003:00001084       ??_C@_0P@INAO@?$CF02d?3?$CF02d?3?$CF02d?$AA@ 0043c084     common:Utils.obj
+ 0003:00001094       ??_C@_04LDEB@?$CF02X?$AA@  0043c094     common:Utils.obj
+ 0003:0000109c       ??_C@_01BJG@?6?$AA@        0043c09c     common:Utils.obj
+ 0003:000010a0       ??_C@_03DMDD@?5?9?5?$AA@   0043c0a0     common:Utils.obj
+ 0003:000010a4       ??_C@_03MFGH@?5?5?5?$AA@   0043c0a4     common:Utils.obj
+ 0003:000010a8       ??_C@_01FCOA@?5?$AA@       0043c0a8     common:Utils.obj
+ 0003:000010ac       ??_C@_0M@GPOH@UNAVAILABLE?$AA@ 0043c0ac     common:Utils.obj
+ 0003:000010b8       ??_C@_0CF@HLGK@?2StringFileInfo?2?$CF04x?$CF04x?2FileVer@ 0043c0b8     common:Utils.obj
+ 0003:000010e0       ??_C@_0BJ@KCFH@?2VarFileInfo?2Translation?$AA@ 0043c0e0     common:Utils.obj
+ 0003:000010fc       ?_Sync@ios_base@std@@0_NA  0043c0fc     libcpmt:ios.obj
+ 0003:00001100       ??_R0?AVruntime_error@std@@@8 0043c100     libcpmt:ios.obj
+ 0003:00001120       ??_R0?AVfailure@ios_base@std@@@8 0043c120     libcpmt:ios.obj
+ 0003:00001148       ??_R0?AVios_base@std@@@8   0043c148     libcpmt:ios.obj
+ 0003:00001168       ??_R0?AVfacet@locale@std@@@8 0043c168     libcpmt:locale0.obj
+ 0003:00001188       ??_R0?AV_Locimp@locale@std@@@8 0043c188     libcpmt:locale0.obj
+ 0003:000011b0       ??_R0?AVlogic_error@std@@@8 0043c1b0     libcpmt:string.obj
+ 0003:000011d0       ??_R0?AVlength_error@std@@@8 0043c1d0     libcpmt:string.obj
+ 0003:000011f0       ??_R0?AVout_of_range@std@@@8 0043c1f0     libcpmt:string.obj
+ 0003:00001210       ??_R0?AV?$numpunct@D@std@@@8 0043c210     libcpmt:locale.obj
+ 0003:00001230       ??_R0?AVcodecvt_base@std@@@8 0043c230     libcpmt:locale.obj
+ 0003:00001250       ??_R0?AV?$codecvt@DDH@std@@@8 0043c250     libcpmt:locale.obj
+ 0003:00001270       ??_R0?AV?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@8 0043c270     libcpmt:locale.obj
+ 0003:000012c8       ??_R0?AV?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@8 0043c2c8     libcpmt:locale.obj
+ 0003:00001320       ??_R0?AUctype_base@std@@@8 0043c320     libcpmt:locale.obj
+ 0003:00001340       ??_R0?AV?$ctype@D@std@@@8  0043c340     libcpmt:locale.obj
+ 0003:0000135c       ?_Init_cnt@Init@ios_base@std@@0HA 0043c35c     libcpmt:iostream.obj
+ 0003:00001360       ??_R0?AV?$basic_ios@DU?$char_traits@D@std@@@std@@@8 0043c360     libcpmt:iostream.obj
+ 0003:00001398       ??_R0?AV?$basic_istream@DU?$char_traits@D@std@@@std@@@8 0043c398     libcpmt:iostream.obj
+ 0003:000013d8       ??_R0?AV?$basic_ostream@DU?$char_traits@D@std@@@std@@@8 0043c3d8     libcpmt:iostream.obj
+ 0003:00001418       ??_R0?AV?$basic_streambuf@DU?$char_traits@D@std@@@std@@@8 0043c418     libcpmt:iostream.obj
+ 0003:00001458       ??_R0?AV?$basic_filebuf@DU?$char_traits@D@std@@@std@@@8 0043c458     libcpmt:iostream.obj
+ 0003:00001494       ?_Init_cnt@_Winit@std@@0HA 0043c494     libcpmt:wiostrea.obj
+ 0003:00001498       ??_R0?AV?$basic_ios@GU?$char_traits@G@std@@@std@@@8 0043c498     libcpmt:wiostrea.obj
+ 0003:000014d0       ??_R0?AV?$basic_istream@GU?$char_traits@G@std@@@std@@@8 0043c4d0     libcpmt:wiostrea.obj
+ 0003:00001510       ??_R0?AV?$basic_ostream@GU?$char_traits@G@std@@@std@@@8 0043c510     libcpmt:wiostrea.obj
+ 0003:00001550       ??_R0?AV?$basic_filebuf@GU?$char_traits@G@std@@@std@@@8 0043c550     libcpmt:wiostrea.obj
+ 0003:00001590       ??_R0?AV?$basic_streambuf@GU?$char_traits@G@std@@@std@@@8 0043c590     libcpmt:wiostrea.obj
+ 0003:000015d0       ??_R0?AVbad_alloc@std@@@8  0043c5d0     libcpmt:nomemory.obj
+ 0003:000015f0       ??_R0?AV?$num_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@8 0043c5f0     libcpmt:wlocale.obj
+ 0003:00001648       ??_R0?AV?$num_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@8 0043c648     libcpmt:wlocale.obj
+ 0003:000016a0       ??_R0?AV?$numpunct@G@std@@@8 0043c6a0     libcpmt:wlocale.obj
+ 0003:000016c0       ??_R0?AV?$ctype@G@std@@@8  0043c6c0     libcpmt:wlocale.obj
+ 0003:000016e0       ??_R0?AV?$time_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@8 0043c6e0     libcpmt:wlocale.obj
+ 0003:00001738       ??_R0?AUtime_base@std@@@8  0043c738     libcpmt:wlocale.obj
+ 0003:00001758       ??_R0?AV?$time_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@8 0043c758     libcpmt:wlocale.obj
+ 0003:000017b0       ??_R0?AV?$moneypunct@G$00@std@@@8 0043c7b0     libcpmt:wlocale.obj
+ 0003:000017d8       ??_R0?AUmoney_base@std@@@8 0043c7d8     libcpmt:wlocale.obj
+ 0003:000017f8       ??_R0?AV?$_Mpunct@G@std@@@8 0043c7f8     libcpmt:wlocale.obj
+ 0003:00001818       ??_R0?AV?$moneypunct@G$0A@@std@@@8 0043c818     libcpmt:wlocale.obj
+ 0003:00001840       ??_R0?AV?$money_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@8 0043c840     libcpmt:wlocale.obj
+ 0003:00001898       ??_R0?AV?$money_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@8 0043c898     libcpmt:wlocale.obj
+ 0003:000018f0       ??_R0?AUmessages_base@std@@@8 0043c8f0     libcpmt:wlocale.obj
+ 0003:00001910       ??_R0?AV?$messages@G@std@@@8 0043c910     libcpmt:wlocale.obj
+ 0003:00001930       ??_R0?AV?$collate@G@std@@@8 0043c930     libcpmt:wlocale.obj
+ 0003:00001950       ??_R0?AV?$codecvt@GDH@std@@@8 0043c950     libcpmt:wlocale.obj
+ 0003:00001970       ??_R0?AV?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@8 0043c970     libcpmt:xlocale.obj
+ 0003:000019c8       ??_R0?AV?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@8 0043c9c8     libcpmt:xlocale.obj
+ 0003:00001a20       ??_R0?AV?$moneypunct@D$00@std@@@8 0043ca20     libcpmt:xlocale.obj
+ 0003:00001a48       ??_R0?AV?$_Mpunct@D@std@@@8 0043ca48     libcpmt:xlocale.obj
+ 0003:00001a68       ??_R0?AV?$moneypunct@D$0A@@std@@@8 0043ca68     libcpmt:xlocale.obj
+ 0003:00001a90       ??_R0?AV?$money_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@8 0043ca90     libcpmt:xlocale.obj
+ 0003:00001ae8       ??_R0?AV?$money_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@8 0043cae8     libcpmt:xlocale.obj
+ 0003:00001b40       ??_R0?AV?$messages@D@std@@@8 0043cb40     libcpmt:xlocale.obj
+ 0003:00001b60       ??_R0?AV?$collate@D@std@@@8 0043cb60     libcpmt:xlocale.obj
+ 0003:00001b80       ??_R0?AVtype_info@@@8      0043cb80     LIBCMT:typinfo.obj
+ 0003:00001b98       __NLG_Destination          0043cb98     LIBCMT:exsup.obj
+ 0003:00001ba8       ?__pMyUnhandledExceptionFilter@@3PAXA 0043cba8     LIBCMT:throw.obj
+ 0003:00001bb0       __fltused                  0043cbb0     LIBCMT:fpinit.obj
+ 0003:00001bb4       __ldused                   0043cbb4     LIBCMT:fpinit.obj
+ 0003:00001bb8       __FPinit                   0043cbb8     LIBCMT:fpinit.obj
+ 0003:00001bbc       __FPmtinit                 0043cbbc     LIBCMT:fpinit.obj
+ 0003:00001bc0       __FPmtterm                 0043cbc0     LIBCMT:fpinit.obj
+ 0003:00001bd0       ___lconv_static_decimal    0043cbd0     LIBCMT:lconv.obj
+ 0003:00001bd8       ___lconv_c                 0043cbd8     LIBCMT:lconv.obj
+ 0003:00001c08       ___lconv                   0043cc08     LIBCMT:lconv.obj
+ 0003:00001c10       __aexit_rtn                0043cc10     LIBCMT:crt0.obj
+ 0003:00001c14       ___app_type                0043cc14     LIBCMT:crt0.obj
+ 0003:00001d30       ___lc_category             0043cd30     LIBCMT:setlocal.obj
+ 0003:00001ee0       __iob                      0043cee0     LIBCMT:_file.obj
+ 0003:00002160       ___mb_cur_max              0043d160     LIBCMT:nlsdata1.obj
+ 0003:00002164       ___decimal_point           0043d164     LIBCMT:nlsdata1.obj
+ 0003:00002168       ___decimal_point_length    0043d168     LIBCMT:nlsdata1.obj
+ 0003:0000216c       ___lc_time_curr            0043d16c     LIBCMT:strftime.obj
+ 0003:00002170       ___lc_time_c               0043d170     LIBCMT:strftime.obj
+ 0003:0000221c       __locktable                0043d21c     LIBCMT:mlock.obj
+ 0003:000022dc       __pctype                   0043d2dc     LIBCMT:ctype.obj
+ 0003:000022e0       __pwctype                  0043d2e0     LIBCMT:ctype.obj
+ 0003:000022e4       __ctype                    0043d2e4     LIBCMT:ctype.obj
+ 0003:00002500       ___tlsindex                0043d500     LIBCMT:tidtable.obj
+ 0003:00002504       ?__pInconsistency@@3P6AXXZA 0043d504     LIBCMT:hooks.obj
+ 0003:00002520       ___nullstring              0043d520     LIBCMT:output.obj
+ 0003:00002524       ___wnullstring             0043d524     LIBCMT:output.obj
+ 0003:00002528       __cfltcvt_tab              0043d528     LIBCMT:cmiscdat.obj
+ 0003:00002540       __XcptActTab               0043d540     LIBCMT:winxfltr.obj
+ 0003:000025b8       __First_FPE_Indx           0043d5b8     LIBCMT:winxfltr.obj
+ 0003:000025bc       __Num_FPE                  0043d5bc     LIBCMT:winxfltr.obj
+ 0003:000025c0       __XcptActTabSize           0043d5c0     LIBCMT:winxfltr.obj
+ 0003:000025c4       __XcptActTabCount          0043d5c4     LIBCMT:winxfltr.obj
+ 0003:000025c8       ___badioinfo               0043d5c8     LIBCMT:ioinit.obj
+ 0003:000025ec       __amblksiz                 0043d5ec     LIBCMT:heapinit.obj
+ 0003:00002680       ___sbh_threshold           0043d680     LIBCMT:sbheap.obj
+ 0003:00002690       ___rgLocInfo               0043d690     LIBCMT:getqloc.obj
+ 0003:00002b34       ___rglangidNotDefault      0043db34     LIBCMT:getqloc.obj
+ 0003:00002b48       ___rg_country              0043db48     LIBCMT:getqloc.obj
+ 0003:00002c00       ___rg_language             0043dc00     LIBCMT:getqloc.obj
+ 0003:00002e08       __timezone                 0043de08     LIBCMT:timeset.obj
+ 0003:00002e0c       __daylight                 0043de0c     LIBCMT:timeset.obj
+ 0003:00002e10       __dstbias                  0043de10     LIBCMT:timeset.obj
+ 0003:00002e94       __tzname                   0043de94     LIBCMT:timeset.obj
+ 0003:00002ec0       __HUGE                     0043dec0     LIBCMT:huge.obj
+ 0003:00002ec8       __p_overlay                0043dec8     LIBCMT:dospawn.obj
+ 0003:00003000       __lpdays                   0043e000     LIBCMT:days.obj
+ 0003:00003034       __days                     0043e034     LIBCMT:days.obj
+ 0003:00003070       __pow10pos                 0043e070     LIBCMT:constpow.obj
+ 0003:000031d0       __pow10neg                 0043e1d0     LIBCMT:constpow.obj
+ 0003:00003330       ?g_nPort@@3HA              0043e330     GameServer.obj
+ 0003:00003334       ?ATL_CREATE_OBJECT@CComApartment@ATL@@2IA 0043e334     GameServer.obj
+ 0003:00003338       ?m_libid@CComModule@ATL@@2U_GUID@@A 0043e338     GameServer.obj
+ 0003:00003348       ?_pModule@ATL@@3PAVCComModule@1@A 0043e348     GameServer.obj
+ 0003:0000334c       ?_Psave@?1??use_facet@std@@YAABV?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043e34c     GameServer.obj
+ 0003:00003350       ?_Psave@?1??use_facet@std@@YAABV?$numpunct@D@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043e350     GameServer.obj
+ 0003:00003354       ?_Facsav@?$_Tidyfac@V?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@std@@0PAV?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@A 0043e354     GameServer.obj
+ 0003:00003358       ?_Facsav@?$_Tidyfac@V?$numpunct@D@std@@@std@@0PAV?$numpunct@D@2@A 0043e358     GameServer.obj
+ 0003:00003360       ?g_SOServer@@3VKSwordOnLineSever@@A 0043e360     KSOServer.obj
+ 0003:000034d8       ?m_theSend@@3VCPackager@Win32@OnlineGameLib@@A 0043e4d8     KSOServer.obj
+ 0003:00003560       ?m_theRecv@@3VCPackager@Win32@OnlineGameLib@@A 0043e560     KSOServer.obj
+ 0003:000035e8       ?g_csFlow@@3VCCriticalSection@Win32@OnlineGameLib@@A 0043e5e8     KSOServer.obj
+ 0003:00003600       ?g_SocketInit@@3VCUsesWinsock@Win32@OnlineGameLib@@A 0043e600     KSOServer.obj
+ 0003:00003790       ?g_theRainbowLibrary@@3VCLibrary@Win32@OnlineGameLib@@A 0043e790     KSOServer.obj
+ 0003:000037a8       ?g_theHeavenLibrary@@3VCLibrary@Win32@OnlineGameLib@@A 0043e7a8     KSOServer.obj
+ 0003:000037c0       ?g_pGSLicense@@3VKLicense@@A 0043e7c0     KSOServer.obj
+ 0003:000037c8       ?_Nilrefs@?$_Tree@KU?$pair@$$CBKPAVKTransferUnit@@@std@@U_Kfn@?$map@KPAVKTransferUnit@@U?$less@K@std@@V?$allocator@PAVKTransferUnit@@@3@@2@U?$less@K@2@V?$allocator@PAVKTransferUnit@@@2@@std@@1IA 0043e7c8     KSOServer.obj
+ 0003:000037cc       ?_Nil@?$_Tree@KU?$pair@$$CBKPAVKTransferUnit@@@std@@U_Kfn@?$map@KPAVKTransferUnit@@U?$less@K@std@@V?$allocator@PAVKTransferUnit@@@3@@2@U?$less@K@2@V?$allocator@PAVKTransferUnit@@@2@@std@@1PAU_Node@12@A 0043e7cc     KSOServer.obj
+ 0003:000037d0       ?_Nilrefs@?$_Tree@EU?$pair@$$CBEPAVCBuffer@Win32@OnlineGameLib@@@std@@U_Kfn@?$map@EPAVCBuffer@Win32@OnlineGameLib@@U?$less@E@std@@V?$allocator@PAVCBuffer@Win32@OnlineGameLib@@@5@@2@U?$less@E@2@V?$allocator@PAVCBuffer@Win32@OnlineGameLib@@@2@@std@@1IA 0043e7d0     common:Buffer.obj
+ 0003:000037d4       ?_Nil@?$_Tree@EU?$pair@$$CBEPAVCBuffer@Win32@OnlineGameLib@@@std@@U_Kfn@?$map@EPAVCBuffer@Win32@OnlineGameLib@@U?$less@E@std@@V?$allocator@PAVCBuffer@Win32@OnlineGameLib@@@5@@2@U?$less@E@2@V?$allocator@PAVCBuffer@Win32@OnlineGameLib@@@2@@std@@1PAU_Node@12@A 0043e7d4     common:Buffer.obj
+ 0003:00003928       ?s_criticalSection@Win32@OnlineGameLib@@3VCCriticalSection@12@A 0043e928     common:Utils.obj
+ 0003:00003948       ??_C@_00A@?$AA@            0043e948     common:Utils.obj
+ 0003:0000394c       ?_Index@ios_base@std@@0HA  0043e94c     libcpmt:ios.obj
+ 0003:000039a0       ?_Clocptr@_Locimp@locale@std@@0PAV123@A 0043e9a0     libcpmt:locale0.obj
+ 0003:000039a4       ?_Global@_Locimp@locale@std@@0PAV123@A 0043e9a4     libcpmt:locale0.obj
+ 0003:000039a8       ?_Id_cnt@id@locale@std@@0HA 0043e9a8     libcpmt:locale0.obj
+ 0003:000039ac       ?_Cltab@?$ctype@D@std@@0PBFB 0043e9ac     libcpmt:locale0.obj
+ 0003:000039b0       ?id@?$codecvt@DDH@std@@2V0locale@2@A 0043e9b0     libcpmt:locale.obj
+ 0003:000039b4       ?id@?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@2V0locale@2@A 0043e9b4     libcpmt:locale.obj
+ 0003:000039b8       ?id@?$ctype@D@std@@2V0locale@2@A 0043e9b8     libcpmt:locale.obj
+ 0003:000039bc       ?id@?$numpunct@D@std@@2V0locale@2@A 0043e9bc     libcpmt:locale.obj
+ 0003:000039c0       ?id@?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@2V0locale@2@A 0043e9c0     libcpmt:locale.obj
+ 0003:000039c4       ?_Psave@?1??use_facet@std@@YAABV?$ctype@D@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043e9c4     libcpmt:locale.obj
+ 0003:000039c8       ?_Psave@?1??use_facet@std@@YAABV?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043e9c8     libcpmt:locale.obj
+ 0003:000039cc       ?_Psave@?1??use_facet@std@@YAABV?$codecvt@DDH@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043e9cc     libcpmt:locale.obj
+ 0003:000039d0       ?_Facsav@?$_Tidyfac@V?$ctype@D@std@@@std@@0PAV?$ctype@D@2@A 0043e9d0     libcpmt:locale.obj
+ 0003:000039d4       ?_Facsav@?$_Tidyfac@V?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@std@@0PAV?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@A 0043e9d4     libcpmt:locale.obj
+ 0003:000039d8       ?_Facsav@?$_Tidyfac@V?$codecvt@DDH@std@@@std@@0PAV?$codecvt@DDH@2@A 0043e9d8     libcpmt:locale.obj
+ 0003:000039e0       ?clog@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A 0043e9e0     libcpmt:iostream.obj
+ 0003:00003a70       ?cout@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A 0043ea70     libcpmt:iostream.obj
+ 0003:00003b00       ?cin@std@@3V?$basic_istream@DU?$char_traits@D@std@@@1@A 0043eb00     libcpmt:iostream.obj
+ 0003:00003b98       ?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A 0043eb98     libcpmt:iostream.obj
+ 0003:00003bd0       ?wcerr@std@@3V?$basic_ostream@GU?$char_traits@G@std@@@1@A 0043ebd0     libcpmt:wiostrea.obj
+ 0003:00003c10       ?wclog@std@@3V?$basic_ostream@GU?$char_traits@G@std@@@1@A 0043ec10     libcpmt:wiostrea.obj
+ 0003:00003c48       ?wcin@std@@3V?$basic_istream@GU?$char_traits@G@std@@@1@A 0043ec48     libcpmt:wiostrea.obj
+ 0003:00003d38       ?wcout@std@@3V?$basic_ostream@GU?$char_traits@G@std@@@1@A 0043ed38     libcpmt:wiostrea.obj
+ 0003:00003ddc       ?id@?$numpunct@G@std@@2V0locale@2@A 0043eddc     libcpmt:wlocale.obj
+ 0003:00003de0       ?id@?$money_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@2V0locale@2@A 0043ede0     libcpmt:wlocale.obj
+ 0003:00003de4       ?id@?$messages@G@std@@2V0locale@2@A 0043ede4     libcpmt:wlocale.obj
+ 0003:00003de8       ?id@?$moneypunct@G$00@std@@2V0locale@2@A 0043ede8     libcpmt:wlocale.obj
+ 0003:00003dec       ?id@?$num_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@2V0locale@2@A 0043edec     libcpmt:wlocale.obj
+ 0003:00003df0       ?id@?$collate@G@std@@2V0locale@2@A 0043edf0     libcpmt:wlocale.obj
+ 0003:00003df4       ?id@?$time_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@2V0locale@2@A 0043edf4     libcpmt:wlocale.obj
+ 0003:00003df8       ?id@?$ctype@G@std@@2V0locale@2@A 0043edf8     libcpmt:wlocale.obj
+ 0003:00003dfc       ?id@?$num_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@2V0locale@2@A 0043edfc     libcpmt:wlocale.obj
+ 0003:00003e00       ?id@?$codecvt@GDH@std@@2V0locale@2@A 0043ee00     libcpmt:wlocale.obj
+ 0003:00003e04       ?id@?$time_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@2V0locale@2@A 0043ee04     libcpmt:wlocale.obj
+ 0003:00003e08       ?id@?$moneypunct@G$0A@@std@@2V0locale@2@A 0043ee08     libcpmt:wlocale.obj
+ 0003:00003e0c       ?id@?$money_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@2V0locale@2@A 0043ee0c     libcpmt:wlocale.obj
+ 0003:00003e10       ?_Psave@?1??use_facet@std@@YAABV?$ctype@G@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee10     libcpmt:wlocale.obj
+ 0003:00003e14       ?_Psave@?1??use_facet@std@@YAABV?$num_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee14     libcpmt:wlocale.obj
+ 0003:00003e18       ?_Psave@?1??use_facet@std@@YAABV?$num_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee18     libcpmt:wlocale.obj
+ 0003:00003e1c       ?_Psave@?1??use_facet@std@@YAABV?$numpunct@G@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee1c     libcpmt:wlocale.obj
+ 0003:00003e20       ?_Psave@?1??use_facet@std@@YAABV?$collate@G@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee20     libcpmt:wlocale.obj
+ 0003:00003e24       ?_Psave@?1??use_facet@std@@YAABV?$messages@G@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee24     libcpmt:wlocale.obj
+ 0003:00003e28       ?_Psave@?1??use_facet@std@@YAABV?$money_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee28     libcpmt:wlocale.obj
+ 0003:00003e2c       ?_Psave@?1??use_facet@std@@YAABV?$money_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee2c     libcpmt:wlocale.obj
+ 0003:00003e30       ?_Psave@?1??use_facet@std@@YAABV?$moneypunct@G$0A@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee30     libcpmt:wlocale.obj
+ 0003:00003e34       ?_Psave@?1??use_facet@std@@YAABV?$moneypunct@G$00@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee34     libcpmt:wlocale.obj
+ 0003:00003e38       ?_Psave@?1??use_facet@std@@YAABV?$time_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee38     libcpmt:wlocale.obj
+ 0003:00003e3c       ?_Psave@?1??use_facet@std@@YAABV?$time_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee3c     libcpmt:wlocale.obj
+ 0003:00003e40       ?_Psave@?1??use_facet@std@@YAABV?$codecvt@GDH@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee40     libcpmt:wlocale.obj
+ 0003:00003e44       ?_Facsav@?$_Tidyfac@V?$ctype@G@std@@@std@@0PAV?$ctype@G@2@A 0043ee44     libcpmt:wlocale.obj
+ 0003:00003e48       ?_Facsav@?$_Tidyfac@V?$num_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@std@@0PAV?$num_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@A 0043ee48     libcpmt:wlocale.obj
+ 0003:00003e4c       ?_Facsav@?$_Tidyfac@V?$num_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@std@@0PAV?$num_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@A 0043ee4c     libcpmt:wlocale.obj
+ 0003:00003e50       ?_Facsav@?$_Tidyfac@V?$numpunct@G@std@@@std@@0PAV?$numpunct@G@2@A 0043ee50     libcpmt:wlocale.obj
+ 0003:00003e54       ?_Facsav@?$_Tidyfac@V?$collate@G@std@@@std@@0PAV?$collate@G@2@A 0043ee54     libcpmt:wlocale.obj
+ 0003:00003e58       ?_Facsav@?$_Tidyfac@V?$messages@G@std@@@std@@0PAV?$messages@G@2@A 0043ee58     libcpmt:wlocale.obj
+ 0003:00003e5c       ?_Facsav@?$_Tidyfac@V?$money_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@std@@0PAV?$money_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@A 0043ee5c     libcpmt:wlocale.obj
+ 0003:00003e60       ?_Facsav@?$_Tidyfac@V?$money_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@std@@0PAV?$money_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@A 0043ee60     libcpmt:wlocale.obj
+ 0003:00003e64       ?_Facsav@?$_Tidyfac@V?$moneypunct@G$0A@@std@@@std@@0PAV?$moneypunct@G$0A@@2@A 0043ee64     libcpmt:wlocale.obj
+ 0003:00003e68       ?_Facsav@?$_Tidyfac@V?$moneypunct@G$00@std@@@std@@0PAV?$moneypunct@G$00@2@A 0043ee68     libcpmt:wlocale.obj
+ 0003:00003e6c       ?_Facsav@?$_Tidyfac@V?$time_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@std@@0PAV?$time_get@GV?$istreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@A 0043ee6c     libcpmt:wlocale.obj
+ 0003:00003e70       ?_Facsav@?$_Tidyfac@V?$time_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@std@@@std@@0PAV?$time_put@GV?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@@2@A 0043ee70     libcpmt:wlocale.obj
+ 0003:00003e74       ?_Facsav@?$_Tidyfac@V?$codecvt@GDH@std@@@std@@0PAV?$codecvt@GDH@2@A 0043ee74     libcpmt:wlocale.obj
+ 0003:00003e78       ?id@?$money_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@2V0locale@2@A 0043ee78     libcpmt:xlocale.obj
+ 0003:00003e7c       ?id@?$moneypunct@D$00@std@@2V0locale@2@A 0043ee7c     libcpmt:xlocale.obj
+ 0003:00003e80       ?id@?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@2V0locale@2@A 0043ee80     libcpmt:xlocale.obj
+ 0003:00003e84       ?id@?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@2V0locale@2@A 0043ee84     libcpmt:xlocale.obj
+ 0003:00003e88       ?id@?$messages@D@std@@2V0locale@2@A 0043ee88     libcpmt:xlocale.obj
+ 0003:00003e8c       ?id@?$moneypunct@D$0A@@std@@2V0locale@2@A 0043ee8c     libcpmt:xlocale.obj
+ 0003:00003e90       ?id@?$money_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@2V0locale@2@A 0043ee90     libcpmt:xlocale.obj
+ 0003:00003e94       ?id@?$collate@D@std@@2V0locale@2@A 0043ee94     libcpmt:xlocale.obj
+ 0003:00003e98       ?_Psave@?1??use_facet@std@@YAABV?$collate@D@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee98     libcpmt:xlocale.obj
+ 0003:00003e9c       ?_Psave@?1??use_facet@std@@YAABV?$messages@D@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043ee9c     libcpmt:xlocale.obj
+ 0003:00003ea0       ?_Psave@?1??use_facet@std@@YAABV?$money_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043eea0     libcpmt:xlocale.obj
+ 0003:00003ea4       ?_Psave@?1??use_facet@std@@YAABV?$money_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043eea4     libcpmt:xlocale.obj
+ 0003:00003ea8       ?_Psave@?1??use_facet@std@@YAABV?$moneypunct@D$0A@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043eea8     libcpmt:xlocale.obj
+ 0003:00003eac       ?_Psave@?1??use_facet@std@@YAABV?$moneypunct@D$00@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043eeac     libcpmt:xlocale.obj
+ 0003:00003eb0       ?_Psave@?1??use_facet@std@@YAABV?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043eeb0     libcpmt:xlocale.obj
+ 0003:00003eb4       ?_Psave@?1??use_facet@std@@YAABV?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@ABVlocale@2@PBV32@_N@Z@4PBVfacet@42@B 0043eeb4     libcpmt:xlocale.obj
+ 0003:00003eb8       ?_Facsav@?$_Tidyfac@V?$collate@D@std@@@std@@0PAV?$collate@D@2@A 0043eeb8     libcpmt:xlocale.obj
+ 0003:00003ebc       ?_Facsav@?$_Tidyfac@V?$messages@D@std@@@std@@0PAV?$messages@D@2@A 0043eebc     libcpmt:xlocale.obj
+ 0003:00003ec0       ?_Facsav@?$_Tidyfac@V?$money_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@std@@0PAV?$money_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@A 0043eec0     libcpmt:xlocale.obj
+ 0003:00003ec4       ?_Facsav@?$_Tidyfac@V?$money_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@std@@0PAV?$money_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@A 0043eec4     libcpmt:xlocale.obj
+ 0003:00003ec8       ?_Facsav@?$_Tidyfac@V?$moneypunct@D$0A@@std@@@std@@0PAV?$moneypunct@D$0A@@2@A 0043eec8     libcpmt:xlocale.obj
+ 0003:00003ecc       ?_Facsav@?$_Tidyfac@V?$moneypunct@D$00@std@@@std@@0PAV?$moneypunct@D$00@2@A 0043eecc     libcpmt:xlocale.obj
+ 0003:00003ed0       ?_Facsav@?$_Tidyfac@V?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@std@@0PAV?$time_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@A 0043eed0     libcpmt:xlocale.obj
+ 0003:00003ed4       ?_Facsav@?$_Tidyfac@V?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@@std@@0PAV?$time_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@2@A 0043eed4     libcpmt:xlocale.obj
+ 0003:00003ee4       ___fastflag                0043eee4     LIBCMT:fpinit.obj
+ 0003:00003ee8       __adjust_fdiv              0043eee8     LIBCMT:fpinit.obj
+ 0003:00003eec       ___lconv_static_null       0043eeec     LIBCMT:lconv.obj
+ 0003:00003ef0       __aenvptr                  0043eef0     LIBCMT:crt0.obj
+ 0003:00003ef4       __wenvptr                  0043eef4     LIBCMT:crt0.obj
+ 0003:00003ef8       ___error_mode              0043eef8     LIBCMT:crt0.obj
+ 0003:00003f08       __cflush                   0043ef08     LIBCMT:_file.obj
+ 0003:00003f70       ___lc_handle               0043ef70     LIBCMT:nlsdata2.obj
+ 0003:00003f88       ___lc_codepage             0043ef88     LIBCMT:nlsdata2.obj
+ 0003:00003f8c       ___lc_collate_cp           0043ef8c     LIBCMT:nlsdata2.obj
+ 0003:00003f9c       __umaskval                 0043ef9c     LIBCMT:crt0dat.obj
+ 0003:00003fa0       __osver                    0043efa0     LIBCMT:crt0dat.obj
+ 0003:00003fa4       __winver                   0043efa4     LIBCMT:crt0dat.obj
+ 0003:00003fa8       __winmajor                 0043efa8     LIBCMT:crt0dat.obj
+ 0003:00003fac       __winminor                 0043efac     LIBCMT:crt0dat.obj
+ 0003:00003fb0       ___argc                    0043efb0     LIBCMT:crt0dat.obj
+ 0003:00003fb4       ___argv                    0043efb4     LIBCMT:crt0dat.obj
+ 0003:00003fb8       ___wargv                   0043efb8     LIBCMT:crt0dat.obj
+ 0003:00003fbc       __environ                  0043efbc     LIBCMT:crt0dat.obj
+ 0003:00003fc0       ___initenv                 0043efc0     LIBCMT:crt0dat.obj
+ 0003:00003fc4       __wenviron                 0043efc4     LIBCMT:crt0dat.obj
+ 0003:00003fc8       ___winitenv                0043efc8     LIBCMT:crt0dat.obj
+ 0003:00003fcc       __pgmptr                   0043efcc     LIBCMT:crt0dat.obj
+ 0003:00003fd0       __wpgmptr                  0043efd0     LIBCMT:crt0dat.obj
+ 0003:00003fd4       __exitflag                 0043efd4     LIBCMT:crt0dat.obj
+ 0003:00003fd8       __C_Termination_Done       0043efd8     LIBCMT:crt0dat.obj
+ 0003:00003fdc       __C_Exit_Done              0043efdc     LIBCMT:crt0dat.obj
+ 0003:00003fe0       __stdbuf                   0043efe0     LIBCMT:_sftbuf.obj
+ 0003:000040f0       __adbgmsg                  0043f0f0     LIBCMT:crt0msg.obj
+ 0003:000040f4       ___lc_time_intl            0043f0f4     LIBCMT:inittime.obj
+ 0003:00004110       ___lc_id                   0043f110     LIBCMT:nlsdata3.obj
+ 0003:00004158       __newmode                  0043f158     LIBCMT:_newmode.obj
+ 0003:0000415c       ?_pnhHeap@@3P6AHI@ZA       0043f15c     LIBCMT:handler.obj
+ 0003:00004220       __commode                  0043f220     LIBCMT:ncommode.obj
+ 0003:00004254       __fmode                    0043f254     LIBCMT:txtmode.obj
+ 0003:00004260       ??_B?1???id@?$ctype@G@std@@$D@@9@51 0043f260     <common>
+ 0003:00004261       ??_B?1???id@?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@$D@@9@51 0043f261     <common>
+ 0003:00004262       ??_B?1???id@?$numpunct@D@std@@$D@@9@51 0043f262     <common>
+ 0003:00004264       ?_Stz@?$fpos@H@std@@0HA    0043f264     <common>
+ 0003:00004268       ?_Stinit@?1??_Init@?$basic_filebuf@DU?$char_traits@D@std@@@std@@IAEXPAU_iobuf@@W4_Initfl@23@@Z@4HA 0043f268     <common>
+ 0003:0000426c       ?_Stinit@?1??_Init@?$basic_filebuf@GU?$char_traits@G@std@@@std@@IAEXPAU_iobuf@@W4_Initfl@23@@Z@4HA 0043f26c     <common>
+ 0003:00004270       ??_B?1???id@?$collate@D@std@@$D@@9@51 0043f270     <common>
+ 0003:00004274       ___mbcodepage              0043f274     <common>
+ 0003:00004280       ___mbulinfo                0043f280     <common>
+ 0003:0000428c       ___ismbcodepage            0043f28c     <common>
+ 0003:000042a0       __mbcasemap                0043f2a0     <common>
+ 0003:000043a0       __mbctype                  0043f3a0     <common>
+ 0003:000044a4       ___mblcid                  0043f4a4     <common>
+ 0003:000044a8       ___sbh_sizeHeaderList      0043f4a8     <common>
+ 0003:000044ac       ___sbh_indGroupDefer       0043f4ac     <common>
+ 0003:000044b0       ___sbh_pHeaderScan         0043f4b0     <common>
+ 0003:000044b4       ___sbh_pHeaderDefer        0043f4b4     <common>
+ 0003:000044b8       ___sbh_cntHeaderList       0043f4b8     <common>
+ 0003:000044bc       ___sbh_pHeaderList         0043f4bc     <common>
+ 0003:000044c0       __crtheap                  0043f4c0     <common>
+ 0003:000044e0       ___pioinfo                 0043f4e0     <common>
+ 0003:000045e0       __nhandle                  0043f5e0     <common>
+ 0003:000045e4       ___env_initialized         0043f5e4     <common>
+ 0003:000045e8       ___mbctype_initialized     0043f5e8     <common>
+ 0003:000045ec       ___onexitend               0043f5ec     <common>
+ 0003:000045f0       ___onexitbegin             0043f5f0     <common>
+ 0003:000045f4       ___alternate_form          0043f5f4     <common>
+ 0003:000045f8       ___no_lead_zeros           0043f5f8     <common>
+ 0003:000045fc       ___piob                    0043f5fc     <common>
+ 0003:00004600       __bufin                    0043f600     <common>
+ 0003:00005600       __nstream                  00440600     <common>
+ 0003:00005604       ___setlc_active            00440604     <common>
+ 0003:00005608       ___unguarded_readlc_active 00440608     <common>
+ 0003:0000560c       __acmdln                   0044060c     <common>
 
  entry point at        0001:0002202f
 

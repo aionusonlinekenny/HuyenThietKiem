@@ -60,6 +60,7 @@ KUiMiniMap::KUiMiniMap()
 	m_bFlagged		= false;
 	memset(&m_szFlagImage, 0, sizeof(m_szFlagImage));
 	m_bHavePicMap	= true;
+			 
 }
 
 //--------------------------------------------------------------------------
@@ -473,16 +474,16 @@ void KUiMiniMap::Breathe()
 	{
 		MapMoveBack();
 	}
-	int nCursorX, nCursorY;	
+	int nCursorX, nCursorY;
 	if (m_bCalcPosMode)
 	{
-		Wnd_GetCursorPos(&nCursorX, &nCursorY);	
-		g_pCoreShell->SceneMapFindPosOperation(GSMOI_PAINT_SCENE_FIND_POS, nCursorX, nCursorY, true, false);		
+		Wnd_GetCursorPos(&nCursorX, &nCursorY);
+		g_pCoreShell->SceneMapFindPosOperation(GSMOI_PAINT_SCENE_FIND_POS, nCursorX, nCursorY, true, false);
 	}
 
-	if (!m_bFlagged && g_pCoreShell->GetPaintFindPos())
+	if (!m_bFlagged && g_pCoreShell && g_pCoreShell->GetPaintFindPos())
 	{
-		g_pCoreShell->AutoMove();// find way by kinnox;
+		g_pCoreShell->AutoMove();
 	}
 }
 
