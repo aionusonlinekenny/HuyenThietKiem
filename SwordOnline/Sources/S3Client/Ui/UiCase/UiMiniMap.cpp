@@ -60,7 +60,6 @@ KUiMiniMap::KUiMiniMap()
 	m_bFlagged		= false;
 	memset(&m_szFlagImage, 0, sizeof(m_szFlagImage));
 	m_bHavePicMap	= true;
-	m_uLastAutoMoveTime = 0;
 }
 
 //--------------------------------------------------------------------------
@@ -481,17 +480,11 @@ void KUiMiniMap::Breathe()
 		g_pCoreShell->SceneMapFindPosOperation(GSMOI_PAINT_SCENE_FIND_POS, nCursorX, nCursorY, true, false);
 	}
 
-	// Fix: Throttle AutoMove() to prevent severe lag
-	// Only call AutoMove() every 150ms instead of every frame (60-120 times/sec)
-	// This reduces CPU usage by 90%+ while maintaining smooth pathfinding
-	// AutoMove() needs to be called periodically to process pathfinding queue
+	// Call AutoMove() every frame when pathfinding is active
+	// This is the same as original flag/marker mechanism
 	if (!m_bFlagged && g_pCoreShell && g_pCoreShell->GetPaintFindPos())
 	{
-		if (IR_IsTimePassed(150, m_uLastAutoMoveTime))
-		{
-			g_pCoreShell->AutoMove();
-			m_uLastAutoMoveTime = IR_GetCurrentTime();
-		}
+		g_pCoreShell->AutoMove();
 	}
 }
 
