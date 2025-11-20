@@ -171,38 +171,19 @@ void KUiFindPos::OnOk()
 
 	OnCheckInput();
 
-	// Get input coordinates (in Tâm units, need to convert to game units *8)
+	// Get input coordinates (in Tâm units)
 	int nDestX = m_PosX.GetIntNumber();
 	int nDestY = m_PosY.GetIntNumber();
 
-	// Convert from Tâm to game coordinates (1 Tâm = 8 game units)
-	int nGameX = nDestX * 8;
-	int nGameY = nDestY * 8;
-
-	// Check if destination has barrier/obstacle
-	// This also validates if coordinates are within valid map range
-	int nBarrier = g_pCoreShell->CheckPositionBarrier(nGameX, nGameY);
-
-	if(nBarrier < 0)
+	// Validate: coordinates must be positive
+	if(nDestX <= 0 || nDestY <= 0)
 	{
-		// Error checking barrier - usually means coordinates are outside map
-		char szMsg[256];
-		sprintf(szMsg, "Tọa độ %d/%d Tâm nằm ngoài bản đồ!\nVui lòng nhập tọa độ hợp lệ.",
-			nDestX, nDestY);
-		UIMessageBox(szMsg, this);
+		UIMessageBox("Vui lòng nhập tọa độ hợp lệ!", this);
 		return;
 	}
-	else if(nBarrier > 0)
-	{
-		// Has barrier - do NOT allow movement
-		char szMsg[256];
-		sprintf(szMsg, "Tọa độ %d/%d Tâm bị vật cản!\nKhông thể di chuyển đến đây.",
-			nDestX, nDestY);
-		UIMessageBox(szMsg, this);
-		return; // Block pathfinding completely
-	}
 
-	// All validations passed! Destination is clear, start pathfinding
+	// Use the same mechanism as flag/marker on minimap
+	// This will automatically handle pathfinding and obstacles
 	KUiMiniMap::SetValueFindPos(nDestX, nDestY);
 	g_pCoreShell->AutoMove();
 
