@@ -204,9 +204,26 @@ void KUiFindPos::OnOk()
 		return;
 	}
 
-	// All validations passed! Start pathfinding
-	// Note: Pathfinding algorithm will automatically handle obstacles/barriers
-	// If destination is blocked, it will find alternative path or stop
+	// Check if destination has barrier/obstacle
+	int nBarrier = g_pCoreShell->CheckPositionBarrier(nGameX, nGameY);
+
+	if(nBarrier < 0)
+	{
+		// Error checking barrier (invalid player/subworld)
+		UIMessageBox("Không thể kiểm tra tọa độ!", this);
+		return;
+	}
+	else if(nBarrier > 0)
+	{
+		// Has barrier - do NOT allow movement
+		char szMsg[256];
+		sprintf(szMsg, "Tọa độ %d/%d Tâm bị vật cản!\nKhông thể di chuyển đến đây.",
+			nDestX, nDestY);
+		UIMessageBox(szMsg, this);
+		return; // Block pathfinding completely
+	}
+
+	// All validations passed! Destination is clear, start pathfinding
 	KUiMiniMap::SetValueFindPos(nDestX, nDestY);
 	g_pCoreShell->AutoMove();
 
