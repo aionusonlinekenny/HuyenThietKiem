@@ -303,33 +303,54 @@ void CGameServer::End()
 }
 
 // ============================================
-// Manager Thread (FIXED - với cleanup)
+// Manager Thread (FIXED v2 - eliminate lock contention)
+// FIX: Don't hold m_csGameSvrAction while processing packets
+// This was causing 4-6s lock contention when many packets need processing
 // ============================================
 DWORD WINAPI CGameServer::ManagerThreadFunction(void *pParam)
 {
     IServer *pGameSvrServer = (IServer *)pParam;
     ASSERT(pGameSvrServer);
     m_shStartupManagerThreadEvent.Wait();
-    
+
     stdGameSvr::iterator it;
     DWORD dwLastCleanup = ::GetTickCount();
     const DWORD CLEANUP_INTERVAL = 5000; // 5 seconds
-    
+
+    // Pre-allocate arrays for server info
+    struct ServerInfo {
+        UINT nlnID;
+        IGServer *pServer;
+    };
+    ServerInfo servers[10];  // Support up to 10 GameServers
+
     while (!m_shQuitEvent.Wait(0))
     {
-        CCriticalSection::Owner locker(CGameServer::m_csGameSvrAction);
-        for (it = CGameServer::m_theGameServers.begin(); it != CGameServer::m_theGameServers.end(); it++)
+        // Step 1: Get server info with lock held (FAST - just copying pointers)
+        int serverCount = 0;
         {
-            UINT nlnID = (*it).first;
+            CCriticalSection::Owner locker(CGameServer::m_csGameSvrAction);
+            for (it = CGameServer::m_theGameServers.begin();
+                 it != CGameServer::m_theGameServers.end() && serverCount < 10;
+                 it++)
+            {
+                servers[serverCount].nlnID = (*it).first;
+                servers[serverCount].pServer = (*it).second;
+                serverCount++;
+            }
+        }  // Lock released here!
+
+        // Step 2: Process packets WITHOUT holding m_csGameSvrAction (NO contention!)
+        for (int i = 0; i < serverCount; i++)
+        {
             size_t datalength = 0;
-            const void *pData = pGameSvrServer->GetPackFromClient(nlnID, datalength);
-            if (0 == datalength || NULL == pData)
-                continue;
-            IGServer *pGServer = (*it).second;
-            if (pGServer)
-                pGServer->AnalyzeRequire(pData, datalength);
+            const void *pData = pGameSvrServer->GetPackFromClient(servers[i].nlnID, datalength);
+            if (datalength > 0 && pData && servers[i].pServer)
+            {
+                servers[i].pServer->AnalyzeRequire(pData, datalength);
+            }
         }
-        
+
         // FIX: Periodic cleanup of stale transfers
         DWORD dwNow = ::GetTickCount();
         if ((dwNow - dwLastCleanup) > CLEANUP_INTERVAL || dwNow < dwLastCleanup)
