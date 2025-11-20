@@ -842,19 +842,34 @@ IGServer *CGameServer::QueryServer(UINT nMapID)
 }
 
 // ============================================
-// FindServerByAccount (FIXED)
+// FindServerByAccount (FIXED v2)
+// FIX: Don't hold m_csGameSvrAction while calling HaveAccountInGameServer()
+// This was causing 8+ second lock contention during concurrent login/logout
 // ============================================
 int CGameServer::FindServerByAccount(const char* szAcc)
 {
     if (!szAcc || !szAcc[0])
         return -1;
-    OnlineGameLib::Win32::CCriticalSection::Owner locker(m_csGameSvrAction);
-    stdGameSvr::iterator it = m_theGameServers.begin();
-    for (; it != m_theGameServers.end(); ++it)
+
+    // Step 1: Get all server pointers with lock held (FAST)
+    CGameServer *servers[10];  // Support up to 10 GameServers
+    int serverCount = 0;
     {
-        CGameServer* pSrv = (CGameServer*)(it->second);
-        if (pSrv && pSrv->HaveAccountInGameServer(szAcc))
-            return (int)pSrv->GetID();
+        OnlineGameLib::Win32::CCriticalSection::Owner locker(m_csGameSvrAction);
+        stdGameSvr::iterator it = m_theGameServers.begin();
+        for (; it != m_theGameServers.end() && serverCount < 10; ++it)
+        {
+            CGameServer* pSrv = (CGameServer*)(it->second);
+            if (pSrv)
+                servers[serverCount++] = pSrv;
+        }
+    }  // Lock released here!
+
+    // Step 2: Check each server WITHOUT holding m_csGameSvrAction (NO contention!)
+    for (int i = 0; i < serverCount; i++)
+    {
+        if (servers[i]->HaveAccountInGameServer(szAcc))
+            return (int)servers[i]->GetID();
     }
     return -1;
 }
