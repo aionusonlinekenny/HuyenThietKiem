@@ -132,26 +132,13 @@ Represent3.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: S3Client - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPA303.tmp" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPB0D.tmp" with contents
 [
 /nologo /MD /W3 /GX /Zi /O2 /I "../Engine/src" /I "../Core/src" /I "../Engine/include" /I "../../Headers" /D "WIN32" /D "NDEBUG_WINDOWS" /D "_MBCS" /D "SWORDONLINE_USE_MD5_PASSWORD" /Fp"Release/S3Client.pch" /Yu"KWin32.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiPlayerBar.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiItem.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMakeAdv.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMarket.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiPlayerShop.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UIcase\UiShop.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiShoppingCart.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiFindPos.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\uicase\UiMiniMap.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiHelper.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\GameSpaceChangedNotify.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\ShortcutKey.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiBase.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiShell.cpp"
+"D:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiConnectInfo.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPA303.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPA304.tmp" with contents
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPB0D.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPB0E.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib Winmm.lib shlwapi.lib lualibdll.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Game.pdb" /map:"Release/Game.map" /debug /machine:I386 /out:"Release/Game.exe" /libpath:"../../lib/" 
 .\Release\AutoLocateWnd.obj
@@ -291,26 +278,12 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 ..\..\Lib\release\engine.lib
 ..\..\Lib\release\CoreClient.lib
 ]
-Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPA304.tmp"
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSPB0E.tmp"
 <h3>Output Window</h3>
 Compiling...
-UiPlayerBar.cpp
-UiItem.cpp
-UiMakeAdv.cpp
-UiMarket.cpp
-UiPlayerShop.cpp
-UiShop.cpp
-UiShoppingCart.cpp
-UiFindPos.cpp
-UiMiniMap.cpp
-UiHelper.cpp
-GameSpaceChangedNotify.cpp
-ShortcutKey.cpp
-UiBase.cpp
-UiShell.cpp
-Generating Code...
+UiConnectInfo.cpp
 Linking...
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPAC2D.bat" with contents
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSPC67.bat" with contents
 [
 @echo off
 md ..\..\..\bin\client
@@ -322,7 +295,7 @@ copy Release\Game.exe ..\..\..\bin\Client\release\Game.exe
 copy Release\Game.pdb ..\..\..\bin\Client\release\Game.pdb
 copy Release\Game.map ..\..\..\bin\Client\release\Game.map
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPAC2D.bat"
+Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSPC67.bat"
 
 A subdirectory or file ..\..\..\bin\client already exists.
 The process cannot access the file because it is being used by another process.

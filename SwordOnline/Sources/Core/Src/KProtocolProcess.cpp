@@ -361,7 +361,17 @@ void KProtocolProcess::s2cPing(BYTE* pMsg)
 	pcc.ProtocolType = c2s_ping;
 	pcc.m_dwReplyServerTime = PingCmd->m_dwTime;
 	pcc.m_dwClientTime = dwTimer;
-	g_pClient->SendPackToServer(&pcc, sizeof(PING_CLIENTREPLY_COMMAND));
+	// DEBUG: Log PING receipt and PONG send attempt
+	printf("[CLIENT-PING] Received PING with time=%u, sending PONG reply...\n", PingCmd->m_dwTime);
+	if (g_pClient)
+	{
+		int sendResult = g_pClient->SendPackToServer(&pcc, sizeof(PING_CLIENTREPLY_COMMAND));
+		printf("[CLIENT-PONG] SendPackToServer result=%d (0=success)\n", sendResult);
+	}
+	else
+	{
+		printf("[CLIENT-PONG-ERROR] g_pClient is NULL, cannot send PONG!\n");
+	}
 	//g_SubWorldSet.SetPing(PingCmd->m_dwTime);
 }
 

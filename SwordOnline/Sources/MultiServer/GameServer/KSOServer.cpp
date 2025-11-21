@@ -2161,6 +2161,8 @@ void KSwordOnLineSever::PlayerMessageProcess(const unsigned long lnID, const cha
 		{
 			if (*(BYTE*)pData == c2s_ping)
 			{
+				printf("[GS-RECV-PONG] lnID=%lu received PONG packet (size=%zu), calling ProcessPingReply...\n",
+					   lnID, dataLength);
 				ProcessPingReply(lnID, pData, dataLength);
 			}
 			else if (*(BYTE*)pData == c2s_extendtong)
@@ -2543,7 +2545,10 @@ void KSwordOnLineSever::MainLoop()
 	if (nIndex > 0 && nIndex <= m_nMaxPlayer && m_pGameStatus[lnID].nGameStatus == enumPlayerPlaying)
 	{
 #define	defMAX_PING_TIMEOUT		600 * 20
-#define	defMAX_PING_INTERVAL	10 * 20
+// FIX: Increase PING interval from 3.3s to 10s to reduce packet rate
+// OLD: 10*20=200 ticks = 3.3 seconds ? high frequency can trigger VPS rate limiting
+// NEW: 30*20=600 ticks = 10 seconds ? lower frequency, less likely to be flagged as spam
+#define	defMAX_PING_INTERVAL	30 * 20
 
 		if (m_pGameStatus[lnID].nReplyPingTime != 0)
 		{
@@ -2560,10 +2565,17 @@ void KSwordOnLineSever::MainLoop()
 				elapsed > defMAX_PING_INTERVAL &&
 				elapsed < defMAX_PING_TIMEOUT)
 			{
-				if (elapsed % defMAX_PING_INTERVAL < 10)  // Allow small tolerance for frame timing
+				// FIX v2: Eliminate PING spam causing VPS to block IP
+				// ROOT CAUSE: tolerance=10 ticks ? PingClient() called 10 times per retry window
+				// With 3 clients stuck ? 30 packets in 166ms ? VPS treats as DDoS attack ? blocks IP!
+				//
+				// SOLUTION: Reduce tolerance from 10 to 2 ticks to minimize spam
+				// 2 ticks = 33ms tolerance (enough for frame timing jitter, but only 2 packets max)
+				int remainder = elapsed % defMAX_PING_INTERVAL;
+				if (remainder > 0 && remainder <= 2)  // REDUCED from 10 to 2!
 				{
-					printf("[PING-RETRY] lnID=%d elapsed=%d nPlayerIdx=%d -> resending ping\n",
-						   lnID, elapsed, m_pGameStatus[lnID].nPlayerIndex);
+					printf("[PING-RETRY] lnID=%d elapsed=%d remainder=%d -> resending ping\n",
+						   lnID, elapsed, remainder);
 					PingClient(lnID);
 				}
 			}
@@ -2659,13 +2671,17 @@ void KSwordOnLineSever::ProcessPingReply(const unsigned long lnID, const char* p
 
     PING_CLIENTREPLY_COMMAND* pPC = (PING_CLIENTREPLY_COMMAND *)pData;
     int replied = (int)pPC->m_dwReplyServerTime;
-
+			printf("[ProcessPingReply] lnID=%lu replied=%d histCount=%d history=[%d,%d,%d,%d]\n",
+           lnID, replied, m_pGameStatus[lnID].nPingHistCount,
+           m_pGameStatus[lnID].nPingHistory[0], m_pGameStatus[lnID].nPingHistory[1],
+           m_pGameStatus[lnID].nPingHistory[2], m_pGameStatus[lnID].nPingHistory[3]);
     BOOL ok = FALSE;
     for (int k = 0; k < m_pGameStatus[lnID].nPingHistCount; ++k)
     {
         if (m_pGameStatus[lnID].nPingHistory[k] == replied)
         {
             ok = TRUE;
+			printf("[ProcessPingReply] lnID=%lu MATCH found at history[%d]=%d\n", lnID, k, replied);
             break;
         }
     }
@@ -2674,12 +2690,19 @@ void KSwordOnLineSever::ProcessPingReply(const unsigned long lnID, const char* p
     {
         const int grace = defMAX_PING_INTERVAL * 3;
         int expected = m_pGameStatus[lnID].nPingHistory[0];
+		{
         if (replied < expected && (expected - replied) <= grace)
             ok = TRUE;
+		 printf("[ProcessPingReply] lnID=%lu GRACE period match (replied=%d expected=%d grace=%d)\n",
+                   lnID, replied, expected, grace);
+        }
     }
 
     if (!ok)
+		 {
+        printf("[ProcessPingReply] lnID=%lu DISCARDED - replied=%d does not match history!\n", lnID, replied);
         return;
+		 }
 
     // --- Update reply time & compute RTT ---
     int lastSend = m_pGameStatus[lnID].nSendPingTime;
