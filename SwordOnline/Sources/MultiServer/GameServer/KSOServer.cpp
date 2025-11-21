@@ -2545,7 +2545,10 @@ void KSwordOnLineSever::MainLoop()
 	if (nIndex > 0 && nIndex <= m_nMaxPlayer && m_pGameStatus[lnID].nGameStatus == enumPlayerPlaying)
 	{
 #define	defMAX_PING_TIMEOUT		600 * 20
-#define	defMAX_PING_INTERVAL	10 * 20
+// FIX: Increase PING interval from 3.3s to 10s to reduce packet rate
+// OLD: 10*20=200 ticks = 3.3 seconds → high frequency can trigger VPS rate limiting
+// NEW: 30*20=600 ticks = 10 seconds → lower frequency, less likely to be flagged as spam
+#define	defMAX_PING_INTERVAL	30 * 20
 
 		if (m_pGameStatus[lnID].nReplyPingTime != 0)
 		{
