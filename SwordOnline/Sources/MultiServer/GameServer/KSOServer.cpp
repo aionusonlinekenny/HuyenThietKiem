@@ -2161,6 +2161,8 @@ void KSwordOnLineSever::PlayerMessageProcess(const unsigned long lnID, const cha
 		{
 			if (*(BYTE*)pData == c2s_ping)
 			{
+				printf("[GS-RECV-PONG] lnID=%lu received PONG packet (size=%zu), calling ProcessPingReply...\n",
+					   lnID, dataLength);
 				ProcessPingReply(lnID, pData, dataLength);
 			}
 			else if (*(BYTE*)pData == c2s_extendtong)
@@ -2663,12 +2665,18 @@ void KSwordOnLineSever::ProcessPingReply(const unsigned long lnID, const char* p
     PING_CLIENTREPLY_COMMAND* pPC = (PING_CLIENTREPLY_COMMAND *)pData;
     int replied = (int)pPC->m_dwReplyServerTime;
 
+    printf("[ProcessPingReply] lnID=%lu replied=%d histCount=%d history=[%d,%d,%d,%d]\n",
+           lnID, replied, m_pGameStatus[lnID].nPingHistCount,
+           m_pGameStatus[lnID].nPingHistory[0], m_pGameStatus[lnID].nPingHistory[1],
+           m_pGameStatus[lnID].nPingHistory[2], m_pGameStatus[lnID].nPingHistory[3]);
+
     BOOL ok = FALSE;
     for (int k = 0; k < m_pGameStatus[lnID].nPingHistCount; ++k)
     {
         if (m_pGameStatus[lnID].nPingHistory[k] == replied)
         {
             ok = TRUE;
+            printf("[ProcessPingReply] lnID=%lu MATCH found at history[%d]=%d\n", lnID, k, replied);
             break;
         }
     }
@@ -2678,11 +2686,18 @@ void KSwordOnLineSever::ProcessPingReply(const unsigned long lnID, const char* p
         const int grace = defMAX_PING_INTERVAL * 3;
         int expected = m_pGameStatus[lnID].nPingHistory[0];
         if (replied < expected && (expected - replied) <= grace)
+        {
             ok = TRUE;
+            printf("[ProcessPingReply] lnID=%lu GRACE period match (replied=%d expected=%d grace=%d)\n",
+                   lnID, replied, expected, grace);
+        }
     }
 
     if (!ok)
+    {
+        printf("[ProcessPingReply] lnID=%lu DISCARDED - replied=%d does not match history!\n", lnID, replied);
         return;
+    }
 
     // --- Update reply time & compute RTT ---
     int lastSend = m_pGameStatus[lnID].nSendPingTime;
