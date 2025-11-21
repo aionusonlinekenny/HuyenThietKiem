@@ -2562,13 +2562,17 @@ void KSwordOnLineSever::MainLoop()
 				elapsed > defMAX_PING_INTERVAL &&
 				elapsed < defMAX_PING_TIMEOUT)
 			{
-				// FIX: Only retry every INTERVAL, not every frame!
-				// Without this, PingClient() is called 60 times/second for 60 seconds = 3600 calls
-				// Only retry when elapsed crosses INTERVAL boundaries (200, 400, 600, etc.)
-				if (elapsed % defMAX_PING_INTERVAL < 10)  // Allow small tolerance for frame timing
+				// FIX v2: Eliminate PING spam causing VPS to block IP
+				// ROOT CAUSE: tolerance=10 ticks → PingClient() called 10 times per retry window
+				// With 3 clients stuck → 30 packets in 166ms → VPS treats as DDoS attack → blocks IP!
+				//
+				// SOLUTION: Reduce tolerance from 10 to 2 ticks to minimize spam
+				// 2 ticks = 33ms tolerance (enough for frame timing jitter, but only 2 packets max)
+				int remainder = elapsed % defMAX_PING_INTERVAL;
+				if (remainder > 0 && remainder <= 2)  // REDUCED from 10 to 2!
 				{
-					printf("[PING-RETRY] lnID=%d elapsed=%d nPlayerIdx=%d -> resending ping\n",
-						   lnID, elapsed, m_pGameStatus[lnID].nPlayerIndex);
+					printf("[PING-RETRY] lnID=%d elapsed=%d remainder=%d -> resending ping\n",
+						   lnID, elapsed, remainder);
 					PingClient(lnID);
 				}
 			}
