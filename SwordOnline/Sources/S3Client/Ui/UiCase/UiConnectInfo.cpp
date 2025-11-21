@@ -268,6 +268,14 @@ void KUiConnectInfo::SetInfoMsg(LOGIN_BG_INFO_MSG_INDEX eIndex)
 		char	szKey[8];
 		_itoa(eIndex, szKey, 10);
 		pIni->GetString("InfoString", szKey, "", m_szMessage, sizeof(m_szMessage));
+
+		// Convert ~ to \n for multiline support
+		for (int i = 0; m_szMessage[i] != '\0'; i++)
+		{
+			if (m_szMessage[i] == '~')
+				m_szMessage[i] = '\n';
+		}
+
 		m_nMsgLen = strlen(m_szMessage);
 		if (m_nMsgLen)
 		{
@@ -277,7 +285,7 @@ void KUiConnectInfo::SetInfoMsg(LOGIN_BG_INFO_MSG_INDEX eIndex)
 		}
 	}
 
-	if (eIndex == CI_MI_TO_DEL_ROLE)	//13=ÒªÉ¾³ý½ÇÉ«
+	if (eIndex == CI_MI_TO_DEL_ROLE)	//13=ÒªÉ¾ï¿½ï¿½ï¿½ï¿½É«
 	{
 		AddChild(&m_DelRoleBgImg);
 		AddChild(&m_InputPwdWnd);
