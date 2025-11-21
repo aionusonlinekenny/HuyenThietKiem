@@ -440,82 +440,103 @@ void KUiConnectInfo::PaintWindow()
 	KWndImage::PaintWindow();
 	if (m_nMsgLen && g_pRepresentShell)
 	{
-		// Check if message contains newline - disable animation for multiline messages
-		bool bHasNewline = false;
-		for (int i = 0; i < m_nMsgLen; i++)
+		// Update animation
+		if (IR_IsTimePassed(m_uMsgColorChangeInterval, m_uLastMsgColorChanageTime))
 		{
-			if (m_szMessage[i] == '\n')
+			if (m_nColor2CharacterEndIndex != m_nMsgLen)
+				m_nColor2CharacterStartIndex = m_nColor2CharacterEndIndex;
+			else
+				m_nColor2CharacterStartIndex = 0;
+			m_nColor2CharacterEndIndex =
+					TSplitString(m_szMessage, m_nColor2CharacterStartIndex + 1, false);
+		}
+
+		// Build line info for multiline rendering
+		struct LineInfo { int start; int end; };
+		LineInfo lines[16];
+		int nLineCount = 0;
+		int nTempStart = 0;
+
+		for (int i = 0; i <= m_nMsgLen && nLineCount < 16; i++)
+		{
+			if (i == m_nMsgLen || m_szMessage[i] == '\n')
 			{
-				bHasNewline = true;
-				break;
+				lines[nLineCount].start = nTempStart;
+				lines[nLineCount].end = i;
+				nLineCount++;
+				nTempStart = i + 1;
 			}
 		}
 
-		if (bHasNewline)
+		// Render text with animation for each line
+		int nBaseX = m_nAbsoluteLeft + m_nTextCentreX;
+		int nBaseY = m_nAbsoluteTop + m_nTextCentreY;
+		char szSegment[256];
+
+		for (int iLine = 0; iLine < nLineCount; iLine++)
 		{
-			// Simple multiline rendering without color animation
-			int nX = m_nAbsoluteLeft + m_nTextCentreX;
-			int nY = m_nAbsoluteTop + m_nTextCentreY;
+			int nLineStart = lines[iLine].start;
+			int nLineEnd = lines[iLine].end;
+			int nLineLen = nLineEnd - nLineStart;
 
-			// Split into lines and render each centered
-			char szLine[256];
-			int nLineStart = 0;
-			int nLineY = nY;
+			if (nLineLen <= 0) continue;
 
-			for (int i = 0; i <= m_nMsgLen; i++)
+			int nY = nBaseY + iLine * (m_nFont + 2);
+			int nLineX = nBaseX - nLineLen * m_nFont / 4;  // Center this line
+
+			// Render three color segments for this line
+			// Segment 1: Before animation (color1)
+			if (m_nColor2CharacterStartIndex > nLineStart)
 			{
-				if (i == m_nMsgLen || m_szMessage[i] == '\n')
-				{
-					int nLineLen = i - nLineStart;
-					if (nLineLen > 0)
-					{
-						memcpy(szLine, &m_szMessage[nLineStart], nLineLen);
-						szLine[nLineLen] = '\0';
+				int nSegStart = nLineStart;
+				int nSegEnd = (m_nColor2CharacterStartIndex < nLineEnd) ? m_nColor2CharacterStartIndex : nLineEnd;
+				int nSegLen = nSegEnd - nSegStart;
 
-						// Center each line
-						int nLineX = nX - nLineLen * m_nFont / 4;
-						g_pRepresentShell->OutputText(m_nFont, szLine, nLineLen,
-							nLineX, nLineY, m_uMsgColor, 0, TEXT_IN_SINGLE_PLANE_COORD, m_uMsgBorderColor);
-					}
-					nLineY += m_nFont + 2;  // Move to next line (font height + spacing)
-					nLineStart = i + 1;
+				if (nSegLen > 0)
+				{
+					memcpy(szSegment, &m_szMessage[nSegStart], nSegLen);
+					szSegment[nSegLen] = '\0';
+
+					int nSegX = nLineX + (nSegStart - nLineStart) * m_nFont / 2;
+					g_pRepresentShell->OutputText(m_nFont, szSegment, nSegLen,
+						nSegX, nY, m_uMsgColor, 0, TEXT_IN_SINGLE_PLANE_COORD, m_uMsgBorderColor);
 				}
 			}
-		}
-		else
-		{
-			// Original single-line rendering with color animation
-			if (IR_IsTimePassed(m_uMsgColorChangeInterval, m_uLastMsgColorChanageTime))
+
+			// Segment 2: Animation (color2)
+			if (m_nColor2CharacterStartIndex < nLineEnd && m_nColor2CharacterEndIndex > nLineStart)
 			{
-				if (m_nColor2CharacterEndIndex != m_nMsgLen)
-					m_nColor2CharacterStartIndex = m_nColor2CharacterEndIndex;
-				else
-					m_nColor2CharacterStartIndex = 0;
-				m_nColor2CharacterEndIndex =
-						TSplitString(m_szMessage, m_nColor2CharacterStartIndex + 1, false);
+				int nSegStart = (m_nColor2CharacterStartIndex > nLineStart) ? m_nColor2CharacterStartIndex : nLineStart;
+				int nSegEnd = (m_nColor2CharacterEndIndex < nLineEnd) ? m_nColor2CharacterEndIndex : nLineEnd;
+				int nSegLen = nSegEnd - nSegStart;
+
+				if (nSegLen > 0)
+				{
+					memcpy(szSegment, &m_szMessage[nSegStart], nSegLen);
+					szSegment[nSegLen] = '\0';
+
+					int nSegX = nLineX + (nSegStart - nLineStart) * m_nFont / 2;
+					g_pRepresentShell->OutputText(m_nFont, szSegment, nSegLen,
+						nSegX, nY, m_uMsgColor2, 0, TEXT_IN_SINGLE_PLANE_COORD, m_uMsgBorderColor2);
+				}
 			}
 
-			int nX = m_nAbsoluteLeft + m_nTextCentreX - m_nMsgLen * m_nFont / 4;
-			int nY = m_nAbsoluteTop + m_nTextCentreY;
-			if (m_nColor2CharacterStartIndex)
+			// Segment 3: After animation (color1)
+			if (m_nColor2CharacterEndIndex < nLineEnd)
 			{
-				g_pRepresentShell->OutputText(m_nFont, m_szMessage,
-					m_nColor2CharacterStartIndex, nX, nY, m_uMsgColor,
-					0, TEXT_IN_SINGLE_PLANE_COORD, m_uMsgBorderColor);
-				nX += m_nColor2CharacterStartIndex * m_nFont / 2;
-			}
-			g_pRepresentShell->OutputText(m_nFont,
-				&m_szMessage[m_nColor2CharacterStartIndex],
-				m_nColor2CharacterEndIndex - m_nColor2CharacterStartIndex,
-				nX, nY, m_uMsgColor2,
-				0, TEXT_IN_SINGLE_PLANE_COORD, m_uMsgBorderColor2);
-			nX += (m_nColor2CharacterEndIndex - m_nColor2CharacterStartIndex) * m_nFont / 2;
-			if (m_nColor2CharacterEndIndex < m_nMsgLen)
-			{
-				g_pRepresentShell->OutputText(m_nFont,
-					&m_szMessage[m_nColor2CharacterEndIndex],
-					m_nMsgLen - m_nColor2CharacterEndIndex, nX, nY, m_uMsgColor,
-					0, TEXT_IN_SINGLE_PLANE_COORD, m_uMsgBorderColor);
+				int nSegStart = (m_nColor2CharacterEndIndex > nLineStart) ? m_nColor2CharacterEndIndex : nLineStart;
+				int nSegEnd = nLineEnd;
+				int nSegLen = nSegEnd - nSegStart;
+
+				if (nSegLen > 0)
+				{
+					memcpy(szSegment, &m_szMessage[nSegStart], nSegLen);
+					szSegment[nSegLen] = '\0';
+
+					int nSegX = nLineX + (nSegStart - nLineStart) * m_nFont / 2;
+					g_pRepresentShell->OutputText(m_nFont, szSegment, nSegLen,
+						nSegX, nY, m_uMsgColor, 0, TEXT_IN_SINGLE_PLANE_COORD, m_uMsgBorderColor);
+				}
 			}
 		}
 	}
