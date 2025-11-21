@@ -2161,8 +2161,8 @@ void KSwordOnLineSever::PlayerMessageProcess(const unsigned long lnID, const cha
 		{
 			if (*(BYTE*)pData == c2s_ping)
 			{
-				printf("[GS-RECV-PONG] lnID=%lu received PONG packet (size=%zu), calling ProcessPingReply...\n",
-					   lnID, dataLength);
+				printf("[GS-RECV-PONG] lnID=%lu received PONG packet (size=%u), calling ProcessPingReply...\n",
+					   lnID, (unsigned int)dataLength);
 				ProcessPingReply(lnID, pData, dataLength);
 			}
 			else if (*(BYTE*)pData == c2s_extendtong)
