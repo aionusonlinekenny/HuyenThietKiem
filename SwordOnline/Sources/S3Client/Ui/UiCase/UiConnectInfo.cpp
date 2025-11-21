@@ -440,37 +440,83 @@ void KUiConnectInfo::PaintWindow()
 	KWndImage::PaintWindow();
 	if (m_nMsgLen && g_pRepresentShell)
 	{
-		if (IR_IsTimePassed(m_uMsgColorChangeInterval, m_uLastMsgColorChanageTime))
+		// Check if message contains newline - disable animation for multiline messages
+		bool bHasNewline = false;
+		for (int i = 0; i < m_nMsgLen; i++)
 		{
-			if (m_nColor2CharacterEndIndex != m_nMsgLen)
-				m_nColor2CharacterStartIndex = m_nColor2CharacterEndIndex;
-			else
-				m_nColor2CharacterStartIndex = 0;
-			m_nColor2CharacterEndIndex = 
-					TSplitString(m_szMessage, m_nColor2CharacterStartIndex + 1, false);
+			if (m_szMessage[i] == '\n')
+			{
+				bHasNewline = true;
+				break;
+			}
 		}
 
-		int nX = m_nAbsoluteLeft + m_nTextCentreX - m_nMsgLen * m_nFont / 4;
-		int nY = m_nAbsoluteTop + m_nTextCentreY;
-		if (m_nColor2CharacterStartIndex)
+		if (bHasNewline)
 		{
-			g_pRepresentShell->OutputText(m_nFont, m_szMessage,
-				m_nColor2CharacterStartIndex, nX, nY, m_uMsgColor,
-				0, TEXT_IN_SINGLE_PLANE_COORD, m_uMsgBorderColor);
-			nX += m_nColor2CharacterStartIndex * m_nFont / 2;
+			// Simple multiline rendering without color animation
+			int nX = m_nAbsoluteLeft + m_nTextCentreX;
+			int nY = m_nAbsoluteTop + m_nTextCentreY;
+
+			// Split into lines and render each centered
+			char szLine[256];
+			int nLineStart = 0;
+			int nLineY = nY;
+
+			for (int i = 0; i <= m_nMsgLen; i++)
+			{
+				if (i == m_nMsgLen || m_szMessage[i] == '\n')
+				{
+					int nLineLen = i - nLineStart;
+					if (nLineLen > 0)
+					{
+						memcpy(szLine, &m_szMessage[nLineStart], nLineLen);
+						szLine[nLineLen] = '\0';
+
+						// Center each line
+						int nLineX = nX - nLineLen * m_nFont / 4;
+						g_pRepresentShell->OutputText(m_nFont, szLine, nLineLen,
+							nLineX, nLineY, m_uMsgColor, 0, TEXT_IN_SINGLE_PLANE_COORD, m_uMsgBorderColor);
+					}
+					nLineY += m_nFont + 2;  // Move to next line (font height + spacing)
+					nLineStart = i + 1;
+				}
+			}
 		}
-		g_pRepresentShell->OutputText(m_nFont,
-			&m_szMessage[m_nColor2CharacterStartIndex],
-			m_nColor2CharacterEndIndex - m_nColor2CharacterStartIndex,
-			nX, nY, m_uMsgColor2,
-			0, TEXT_IN_SINGLE_PLANE_COORD, m_uMsgBorderColor2);
-		nX += (m_nColor2CharacterEndIndex - m_nColor2CharacterStartIndex) * m_nFont / 2;
-		if (m_nColor2CharacterEndIndex < m_nMsgLen)
+		else
 		{
+			// Original single-line rendering with color animation
+			if (IR_IsTimePassed(m_uMsgColorChangeInterval, m_uLastMsgColorChanageTime))
+			{
+				if (m_nColor2CharacterEndIndex != m_nMsgLen)
+					m_nColor2CharacterStartIndex = m_nColor2CharacterEndIndex;
+				else
+					m_nColor2CharacterStartIndex = 0;
+				m_nColor2CharacterEndIndex =
+						TSplitString(m_szMessage, m_nColor2CharacterStartIndex + 1, false);
+			}
+
+			int nX = m_nAbsoluteLeft + m_nTextCentreX - m_nMsgLen * m_nFont / 4;
+			int nY = m_nAbsoluteTop + m_nTextCentreY;
+			if (m_nColor2CharacterStartIndex)
+			{
+				g_pRepresentShell->OutputText(m_nFont, m_szMessage,
+					m_nColor2CharacterStartIndex, nX, nY, m_uMsgColor,
+					0, TEXT_IN_SINGLE_PLANE_COORD, m_uMsgBorderColor);
+				nX += m_nColor2CharacterStartIndex * m_nFont / 2;
+			}
 			g_pRepresentShell->OutputText(m_nFont,
-				&m_szMessage[m_nColor2CharacterEndIndex],
-				m_nMsgLen - m_nColor2CharacterEndIndex, nX, nY, m_uMsgColor,
-				0, TEXT_IN_SINGLE_PLANE_COORD, m_uMsgBorderColor);
+				&m_szMessage[m_nColor2CharacterStartIndex],
+				m_nColor2CharacterEndIndex - m_nColor2CharacterStartIndex,
+				nX, nY, m_uMsgColor2,
+				0, TEXT_IN_SINGLE_PLANE_COORD, m_uMsgBorderColor2);
+			nX += (m_nColor2CharacterEndIndex - m_nColor2CharacterStartIndex) * m_nFont / 2;
+			if (m_nColor2CharacterEndIndex < m_nMsgLen)
+			{
+				g_pRepresentShell->OutputText(m_nFont,
+					&m_szMessage[m_nColor2CharacterEndIndex],
+					m_nMsgLen - m_nColor2CharacterEndIndex, nX, nY, m_uMsgColor,
+					0, TEXT_IN_SINGLE_PLANE_COORD, m_uMsgBorderColor);
+			}
 		}
 	}
 }
