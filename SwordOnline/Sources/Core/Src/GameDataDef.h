@@ -12,7 +12,7 @@
 #define		FILE_NAME_LENGTH					80
 #define		PLAYER_PICKUP_CLIENT_DISTANCE		128//63
 #define		defMAX_EXEC_OBJ_SCRIPT_DISTANCE		200
-#define		defMAX_PLAYER_SEND_MOVE_FRAME		1  // Reduced from 2 to 1 for smoother position sync (fix lag between clients)
+#define		defMAX_PLAYER_SEND_MOVE_FRAME		2  // Balanced: movement sync (9-15/s) + periodic sync (0.5/s) = smooth without spam
 #define		PLAYER_PICKUP_SERVER_DISTANCE		40000
 #define		MAX_INT								0x7fffffff
 
