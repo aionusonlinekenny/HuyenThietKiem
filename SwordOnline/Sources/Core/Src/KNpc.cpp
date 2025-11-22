@@ -193,7 +193,7 @@ void KNpc::Init()
 	m_wMaskType 				= 0;		
 	m_wMaskMark 				= 0;
 	m_MantleType				= -1;
-	
+	m_byMantleLevel				= 0;
 	ZeroMemory(Name, sizeof(Name));		
 	m_NpcSettingIdx = 0;		
 	m_CorpseSettingIdx = 0;
@@ -5785,6 +5785,7 @@ void KNpc::NormalSync()
 		}
 		PlayerSync.MaskType			= m_wMaskType;
 		PlayerSync.MantleType		= m_MantleType;
+		PlayerSync.MantleLevel		= m_byMantleLevel;
 		PlayerSync.RankID			= (BYTE)m_btRankId;
 		PlayerSync.PKValue			= Player[m_nPlayerIdx].m_cPK.GetPKValue();
 		PlayerSync.WorldStat		= Player[m_nPlayerIdx].m_nWorldStat;
@@ -6138,11 +6139,18 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 				strcat(szString, "Lo¹n");
 			strcat(szString, ")");
 		}
-	//Kenny hieu ung dinh don
-		//g_pRepresent->OutputText(nFontSize, szString, KRF_ZERO_END, nMpsX - nFontSize * g_StrLen(Name) / 4, nMpsY, dwColor, 0, nHeightOff, dwBorderColor);
-		int nXX = nMpsX - nFontSize * g_StrLen(szString) / 4 + ((m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL) ? 40 : 0);
+// Calculate name position - shift right if has mantle icon
+		int nNameWidth = nFontSize * g_StrLen(szString) / 4;
+		int nXX = nMpsX - nNameWidth + ((m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL) ? 40 : 0);
+
+		// Draw mantle icon before name (if equipped)
+		if(m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL)
+		{
+			PaintMantle(nHeightOff, nFontSize, nXX, nMpsY);
+		}
+
+		// Draw name								  
 		g_pRepresent->OutputText(nFontSize, szString, KRF_ZERO_END, nXX, nMpsY, dwColor, 0, nHeightOff, dwBorderColor);
-		
 		if(m_wMaskType > 0)
 		{
 			PaintHorseState(nFontSize, nHeightOff);
@@ -6153,11 +6161,7 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 		{
 			PaintTransLifeInfo(nFontSize, nHeightOff);
 		}
-		// Draw mantle icon before name
-		if(m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL)
-		{
-			nXX = PaintMantle(nHeightOff, nFontSize, nXX, nMpsY);
-		}
+
 		nHeightOffset += nFontSize + 1;
 
 	}
