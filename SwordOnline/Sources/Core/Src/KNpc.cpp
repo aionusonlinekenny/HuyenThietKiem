@@ -5596,6 +5596,7 @@ BOOL KNpc::SendSyncData(int nClient)
 		}
 		PlayerSync.MaskType			= m_wMaskType;
 		PlayerSync.MantleType		= m_MantleType;
+		PlayerSync.MantleLevel		= m_byMantleLevel;
 		PlayerSync.RunSpeed			= m_CurrentRunSpeed;
 		PlayerSync.WalkSpeed		= m_CurrentWalkSpeed;
 		PlayerSync.WeaponType		= (BYTE)m_WeaponType;
