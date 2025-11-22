@@ -403,9 +403,9 @@ void KPlayerAI::Active()
 						}
 						else
 						{
-							// Check if grace period expired (2 seconds)
+							// Check if grace period expired (4 seconds - increased for better coordination)
 							unsigned int elapsed = GetTickCount() - m_nLeaderTargetLostTime;
-							if (elapsed > 2000)  // 2 second grace period
+							if (elapsed > 4000)  // 4 second grace period (was 2s, too short)
 							{
 								// Grace period expired, leader really has no target now
 								m_nLeaderCurrentTarget = 0;
@@ -438,20 +438,33 @@ void KPlayerAI::Active()
 
 					if (distance >= m_nRadiusFollow)
 					{
-						int nX, nY;
-						Npc[m_FollowPeopleIdx].GetMpsPos(&nX,&nY);
-						if (!m_bPriorityUseMouse)
-							MoveTo(nX, nY);
+						// FIX: Don't reset combat if attacking leader's target
+						// Check if we're currently attacking leader's target
+						BOOL isAttackingLeaderTarget = (m_nLeaderCurrentTarget > 0 &&
+						                                 m_Actacker == m_nLeaderCurrentTarget &&
+						                                 m_bActacker == TRUE);
 
-						m_Actacker = 0;
-						m_bActacker = FALSE;
-						m_nLifeLag = 0;
-						m_nTimeRunLag = 0;
-						m_nTimeSkip = 0;
-						m_Count_Acttack_Lag = 0;
-						m_nObject = 0;
-						m_bObject = FALSE;
-						return;
+						// If attacking leader's target, allow combat to continue even when far from leader
+						// This prevents breaking combat coordination when chasing enemies
+						if (!isAttackingLeaderTarget)
+						{
+							// Not attacking leader's target, move back to leader
+							int nX, nY;
+							Npc[m_FollowPeopleIdx].GetMpsPos(&nX,&nY);
+							if (!m_bPriorityUseMouse)
+								MoveTo(nX, nY);
+
+							m_Actacker = 0;
+							m_bActacker = FALSE;
+							m_nLifeLag = 0;
+							m_nTimeRunLag = 0;
+							m_nTimeSkip = 0;
+							m_Count_Acttack_Lag = 0;
+							m_nObject = 0;
+							m_bObject = FALSE;
+							return;
+						}
+						// Else: Continue attacking leader's target even if far from leader
 					}
 				}
 
@@ -672,7 +685,7 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 		}
 
 		unsigned int elapsed = GetTickCount() - m_nLeaderTargetLostTime;
-		if (elapsed < 2000)  // Still in grace period (2 seconds)
+		if (elapsed < 4000)  // Still in grace period (4 seconds - increased for better coordination)
 		{
 			// Don't find new target yet, wait for leader to pick next target
 			// Return 0 to stay near leader
@@ -727,8 +740,25 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 
 	if (nRet == 0 && m_bAutoAttack == TRUE)
 	{
-		if (m_AutoMove)
-			 PlayerMoveMps();
+		// FIX: When following leader and no target, stick to leader instead of wandering
+		// This keeps follower ready to attack leader's next target
+		if (m_bFollowPeople && m_FollowPeopleIdx > 0)
+		{
+			// Move closer to leader when idle (no target)
+			int leaderDistance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_FollowPeopleIdx);
+			if (leaderDistance > m_nRadiusFollow / 3)  // If not very close to leader
+			{
+				int nX, nY;
+				Npc[m_FollowPeopleIdx].GetMpsPos(&nX, &nY);
+				if (!m_bPriorityUseMouse)
+					MoveTo(nX, nY);  // Move to leader's position
+			}
+		}
+		else if (m_AutoMove)
+		{
+			PlayerMoveMps();  // Original behavior when not following
+		}
+
 		AutoReturn();
 		m_Actacker = 0;
 		m_bActacker = FALSE;
@@ -737,7 +767,7 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 		// This prevents losing track of combat when waiting for leader's next target
 		BOOL isInGracePeriod = (m_bFollowPeople && m_FollowPeopleIdx > 0 &&
 		                         m_nLeaderTargetLostTime > 0 &&
-		                         (GetTickCount() - m_nLeaderTargetLostTime) < 2000);
+		                         (GetTickCount() - m_nLeaderTargetLostTime) < 4000);  // 4s grace period
 
 		if (!isInGracePeriod)
 		{
