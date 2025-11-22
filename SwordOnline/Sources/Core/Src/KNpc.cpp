@@ -6151,8 +6151,8 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 			KImageParam Param;
 			g_pRepresent->GetImageParam(PlayerSet.m_szFortuneRankPic[m_byMantleLevel], &Param, ISI_T_SPR);
 			nSpriteWidth = Param.nWidth;
-			// Start position for [sprite][name] to be centered
-			nStartX = nMpsX - (nSpriteWidth + nNameWidth);
+			// Start position for [sprite][name] to be centered: subtract HALF of total width
+			nStartX = nMpsX - (nSpriteWidth + nNameWidth) / 2;
 			// Draw sprite first
 			PaintMantle(nHeightOff, nFontSize, nStartX, nMpsY);
 		}
