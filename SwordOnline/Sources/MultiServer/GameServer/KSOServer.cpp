@@ -2586,6 +2586,11 @@ void KSwordOnLineSever::MainLoop()
 				printf("[PING-TIMEOUT] lnID=%d playerIdx=%d elapsed=%d -> disconnecting client\n",
 					   lnID, nPlayerIdx, elapsed);
 				m_pServer->ShutdownClient(lnID);
+				// FIX: Reset nGameStatus to prevent repeated PING-TIMEOUT logging
+				// Without this, the timeout check continues to trigger in subsequent Breathe() calls
+				// because nGameStatus == enumPlayerPlaying remains true, causing spam in logs
+				m_pGameStatus[lnID].nGameStatus = enumPlayerBegin;
+				m_pGameStatus[lnID].nPlayerIndex = 0;
 				m_pGameStatus[lnID].nSendPingTime  = 0;
 				m_pGameStatus[lnID].nReplyPingTime = 1;
 			}

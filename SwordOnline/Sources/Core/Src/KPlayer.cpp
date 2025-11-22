@@ -360,19 +360,14 @@ void	KPlayer::Active()
 	// FIX: Periodic position sync to prevent desync (every 2 seconds)
 	// This ensures position is accurate even when player is standing still/attacking
 	DWORD currentTime = GetTickCount();
-	if (m_dwLastPosSyncTime == 0 || (currentTime - m_dwLastPosSyncTime) >= 2000)  // 2 seconds
+	if (m_dwLastPosSyncTime == 0 || (currentTime - m_dwLastPosSyncTime) >= 1000)  // 2 seconds
 	{
 		// Force sync current position
 		int nMpsX, nMpsY;
 		Npc[m_nIndex].GetMpsPos(&nMpsX, &nMpsY);
-		if (Npc[m_nIndex].m_Doing == do_run)
-		{
-			SendClientCmdRun(nMpsX, nMpsY);  // Sync as run
-		}
-		else if (Npc[m_nIndex].m_Doing == do_walk)
-		{
-			SendClientCmdWalk(nMpsX, nMpsY);  // Sync as walk
-		}
+		// Always sync position - use walk by default (server will handle state separately)
+		// This fixes desync when player is attacking/skilling/standing
+		SendClientCmdWalk(nMpsX, nMpsY);
 		m_dwLastPosSyncTime = currentTime;  // Update last sync time
 	}
 	this->m_cPK.Active();
@@ -631,7 +626,12 @@ void KPlayer::ProcessMouse(int x, int y, int Key, MOUSE_BUTTON nButton)
 				m_nPeapleIdx = 0;
 				return ;
 			}
-			
+			// FIX: Force sync position before attacking to prevent desync
+			// This ensures other clients see correct attack position immediately
+			int nMpsX, nMpsY;
+			Npc[m_nIndex].GetMpsPos(&nMpsX, &nMpsY);
+			SendClientCmdWalk(nMpsX, nMpsY);  // Force position sync before skill
+			m_dwLastPosSyncTime = GetTickCount();  // Update to prevent duplicate sync
 			if (!nTargetIdx)
 			{
 				Npc[m_nIndex].SendCommand(do_skill, Npc[m_nIndex].m_ActiveSkillID, nX, nY);

@@ -36,6 +36,7 @@ typedef struct
 	BYTE	HorseType;
 	WORD	MaskType;
 	short	MantleType;
+	BYTE	MantleLevel;			  
 	BYTE	RankID;
 	char	PKValue;
 	short	WorldStat;
@@ -67,6 +68,7 @@ typedef struct
 	BYTE	HorseType;
 	WORD	MaskType;
 	short	MantleType;
+	BYTE	MantleLevel;			  
 	BYTE	RankID;
 	char	PKValue;
 	short	WorldStat;

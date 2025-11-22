@@ -2121,7 +2121,7 @@ void KProtocolProcess::SyncPlayer(BYTE* pMsg)
 	//
 	Npc[nIdx].m_wMaskType			= pPlaySync->MaskType;
 	Npc[nIdx].m_MantleType			= pPlaySync->MantleType;
-	
+	Npc[nIdx].m_byMantleLevel		= pPlaySync->MantleLevel;
 	Npc[nIdx].m_Kind				= kind_player;
 	Npc[nIdx].m_btRankId			= pPlaySync->RankID;
 	
@@ -2190,7 +2190,7 @@ void KProtocolProcess::SyncPlayerMin(BYTE* pMsg)
 	//
 	Npc[nIdx].m_wMaskType			= pPlaySync->MaskType;
 	Npc[nIdx].m_MantleType			= pPlaySync->MantleType;
-	
+	Npc[nIdx].m_byMantleLevel		= pPlaySync->MantleLevel;
 	Npc[nIdx].m_Kind				= kind_player;
 	Npc[nIdx].m_btRankId			= pPlaySync->RankID;
 	
