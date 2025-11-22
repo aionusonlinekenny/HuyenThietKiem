@@ -441,12 +441,10 @@ void KPlayerAI::Active()
 						}
 					}
 
-					// FIX: Extended radius check for train route scenarios
-					// Allow follower to chase leader even when very far away
-					// This prevents "giving up" when leader moves according to coordinate list
-					int effectiveRadius = isTooFar ? (m_nRadiusFollow * 5) : m_nRadiusFollow;
-
-					if (distance >= effectiveRadius)
+					// FIX: ALWAYS chase leader when beyond radius (NEVER give up!)
+					// Remove effectiveRadius limit - follower will chase no matter how far
+					// This ensures follower NEVER stops following, even if leader is 10x+ radius away
+					if (distance >= m_nRadiusFollow)  // Beyond normal radius - need to catch up
 					{
 						// FIX: Don't reset combat if attacking leader's target
 						// Check if we're currently attacking leader's target
@@ -468,7 +466,7 @@ void KPlayerAI::Active()
 									Npc[m_FollowPeopleIdx].m_MapY);
 							}
 
-							// Not attacking leader's target, move back to leader
+							// ALWAYS move to leader (never give up, no distance limit)
 							int nX, nY;
 							Npc[m_FollowPeopleIdx].GetMpsPos(&nX,&nY);
 							if (!m_bPriorityUseMouse)
