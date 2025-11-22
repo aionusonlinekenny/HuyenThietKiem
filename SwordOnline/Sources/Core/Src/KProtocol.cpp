@@ -13,7 +13,7 @@ typedef struct
 
 int	g_nProtocolSize[MAX_PROTOCOL_NUM] = 
 {
-#ifndef _SERVER				// ¿Í»§¶Ë½ÓÊÕµ½µÄ·þÎñÆ÷µ½¿Í»§¶ËµÄÐ­Òé³¤¶È
+#ifndef _SERVER				// ï¿½Í»ï¿½ï¿½Ë½ï¿½ï¿½Õµï¿½ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ëµï¿½Ð­ï¿½é³¤ï¿½ï¿½
 	-1,							// s2c_login,
 	-1,							// s2c_logout,
 	sizeof(BYTE),				// s2c_syncend,
@@ -300,15 +300,15 @@ void SendClientCmdWalk(int nX, int nY)
 void SendClientCmdSkill(int nSkillID, int nX, int nY)
 {
 	NPC_SKILL_COMMAND	NetCommand;
-	
+
 	NetCommand.ProtocolType		= (BYTE)c2s_npcskill;
-/*	NetCommand.dwID = Player[CLIENT_PLAYER_INDEX].GetPlayerID();			
-	NetCommand.dwTimePacker = GetTickCount();*/
+	NetCommand.dwID = Player[CLIENT_PLAYER_INDEX].GetPlayerID();
+	NetCommand.dwTimePacker = GetTickCount();  // FIX: Send player ID and timestamp for accurate position sync
 	NetCommand.nSkillID			= nSkillID;
 	NetCommand.nMpsX			= nX;
 	NetCommand.nMpsY			= nY;
 	if (g_pClient)
-		g_pClient->SendPackToServer((BYTE*)&NetCommand, sizeof(NPC_SKILL_COMMAND));	
+		g_pClient->SendPackToServer((BYTE*)&NetCommand, sizeof(NPC_SKILL_COMMAND));
 }
 
 // --
