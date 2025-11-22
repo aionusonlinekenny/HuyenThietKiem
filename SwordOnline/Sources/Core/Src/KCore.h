@@ -185,9 +185,11 @@ inline int GetRandomNumber(int nMin, int nMax)
 }
 #ifdef _SERVER
 	void g_SetServer(LPVOID pServer);
-	extern IServer* g_pServer;
+	//extern IServer* g_pServer;
+	extern CORE_API IServer* g_pServer;
 #else
 	void g_SetClient(LPVOID pClient);
-	extern IClient* g_pClient;
+	//extern IClient* g_pClient;
+	extern CORE_API IClient* g_pClient;
 #endif
 #endif

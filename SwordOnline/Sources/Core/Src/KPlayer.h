@@ -199,6 +199,7 @@ public:
 	int				m_RunStatus;
 	DWORD			m_dwNextLevelLeadExp;
 	int				m_nSendMoveFrames;
+	DWORD			m_dwLastPosSyncTime; 
 	BOOL			m_bDebugMode;
 	
 	char			m_szExpAddNo[16];

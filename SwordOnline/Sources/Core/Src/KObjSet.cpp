@@ -279,6 +279,37 @@ int		KObjSet::Add(int nDataID, KMapPos MapPos, KObjItemInfo sItemInfo)
 		{
 			sItemInfo.m_nColorID = 4;
 		}
+			else if(Item[sItemInfo.m_nItemID].GetGenre() == item_platinaequip)
+		{
+			sItemInfo.m_nColorID = 1;
+		}
+		else if(Item[sItemInfo.m_nItemID].GetGenre() == item_equip)
+		{
+			// Kiểm tra TẤT CẢ magic attributes [0-5], không chỉ [0]
+			BOOL bHasMagic = FALSE;
+			int nAttribIdx;
+			KItemGeneratorParam* pGenParam = Item[sItemInfo.m_nItemID].GetGeneratorParam();
+			if(pGenParam)
+			{
+				for(nAttribIdx = 0; nAttribIdx < 6; nAttribIdx++)
+				{
+					if(pGenParam->nGeneratorLevel[nAttribIdx] > 0)
+					{
+						bHasMagic = TRUE;
+						break;
+					}
+				}
+			}
+			if(bHasMagic)
+			{
+				sItemInfo.m_nColorID = 3;
+			}
+			else
+			{
+				sItemInfo.m_nColorID = 0;
+			}
+
+		}
 		else if(Item[sItemInfo.m_nItemID].GetGenre() == item_task || 
 				Item[sItemInfo.m_nItemID].GetGenre() == item_script)
 		{

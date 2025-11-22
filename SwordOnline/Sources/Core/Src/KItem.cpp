@@ -1122,10 +1122,15 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 	};
 
 	if (m_CommonAttrib.cGenre == item_equip)
-	{	
-		if(m_aryMagicAttrib[0].nAttribType)
+	{
+		int nAttribIdx;
+		for(nAttribIdx = 0; nAttribIdx < 6; nAttribIdx++)
 		{
-			strcpy(szColor[item_equip], "<color=Blue>");
+			if(m_aryMagicAttrib[nAttribIdx].nAttribType > 0)
+			{
+				strcpy(szColor[item_equip], "<color=Blue>");
+				break;
+			}
 		}
 	}
 	strcpy(pszMsg, szColor[m_CommonAttrib.cGenre]);

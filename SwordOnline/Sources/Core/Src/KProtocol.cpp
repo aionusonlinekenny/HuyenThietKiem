@@ -6,6 +6,11 @@
 #include "KItemList.h"
 #include "KLadder.h"
 
+typedef struct
+{
+	BYTE ProtocolType;
+} AUTO_SORT_EQUIPMENT;
+
 int	g_nProtocolSize[MAX_PROTOCOL_NUM] = 
 {
 #ifndef _SERVER				// 客户端接收到的服务器到客户端的协议长度
@@ -233,6 +238,7 @@ int	g_nProtocolSize[MAX_PROTOCOL_NUM] =
 	sizeof(AVATAR_PLAYER),						// c2s_avatarplayer //Player Avatar by kinnox; ID: 159
 	sizeof(RECOVERY_BOX_CMD),					// c2s_recoverybox //TrembleItem by kinnox; ID: 160
 	sizeof(ITEM_RIGHT_AUTO_MOVE_REQ),			// c2s_
+	sizeof(AUTO_SORT_EQUIPMENT),	
 #endif
 };
 
@@ -296,8 +302,8 @@ void SendClientCmdSkill(int nSkillID, int nX, int nY)
 	NPC_SKILL_COMMAND	NetCommand;
 	
 	NetCommand.ProtocolType		= (BYTE)c2s_npcskill;
-/*	NetCommand.dwID = Player[CLIENT_PLAYER_INDEX].GetPlayerID();			
-	NetCommand.dwTimePacker = GetTickCount();*/
+	NetCommand.dwID = Player[CLIENT_PLAYER_INDEX].GetPlayerID();
+	NetCommand.dwTimePacker = GetTickCount();  // FIX: Send player ID and timestamp for accurate position sync
 	NetCommand.nSkillID			= nSkillID;
 	NetCommand.nMpsX			= nX;
 	NetCommand.nMpsY			= nY;

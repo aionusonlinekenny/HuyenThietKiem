@@ -12,7 +12,7 @@
 #define		FILE_NAME_LENGTH					80
 #define		PLAYER_PICKUP_CLIENT_DISTANCE		128//63
 #define		defMAX_EXEC_OBJ_SCRIPT_DISTANCE		200
-#define		defMAX_PLAYER_SEND_MOVE_FRAME		5
+#define		defMAX_PLAYER_SEND_MOVE_FRAME		2
 #define		PLAYER_PICKUP_SERVER_DISTANCE		40000
 #define		MAX_INT								0x7fffffff
 
@@ -36,7 +36,7 @@
 //// --
 #define		MAX_DEATH_PUNISH_PK_VALUE			10
 #define		MAX_TRANSLIFE_VALUE					5
-#define		MAX_ITEM_LEVEL						10
+#define		MAX_ITEM_LEVEL						10 //Kenny Nguyen
 #define		MAX_REUPTE_VALUE					10000
 #define		MAX_FUYUAN_VALUE					10000
 //// --
@@ -379,13 +379,13 @@ enum PLAYER_INSTANT_STATE
 enum CHAT_STATUS
 {
 	CHAT_S_ONLINE = 0,		//????
-	CHAT_S_BUSY,			//ï¿½
+	CHAT_S_BUSY,			//æµ
 	CHAT_S_HIDE,			//????
 	CHAT_S_LEAVE,			//??
 	CHAT_S_DISCONNECT,		//????
 };
 
-// ?????ï¿½???????????(by zroc)
+// ?????ö???????????(by zroc)
 enum OBJ_ATTRIBYTE_TYPE
 {
 	series_metal = 0,		//	???
@@ -698,7 +698,7 @@ enum PLAYER_ACTION_LIST
 //==================================
 enum SYS_MESSAGE_TYPE
 {
-	SMT_NORMAL = 0,	//???ï¿½????????
+	SMT_NORMAL = 0,	//???µ????????
 	SMT_SYSTEM,		//???????????
 	SMT_PLAYER,		//??????
 	SMT_TEAM,		//??????
@@ -876,16 +876,16 @@ struct KUiPlayerImmedItemSkill
 //==================================
 enum UI_EQUIPMENT_POSITION
 {
-	UIEP_HEAD			= 0,
-	UIEP_HAND			= 1,
-	UIEP_NECK			= 2,
-	UIEP_FINESSE		= 3,
-	UIEP_BODY			= 4,
-	UIEP_WAIST			= 5,
-	UIEP_FINGER1		= 6,
-	UIEP_FINGER2		= 7,
+	UIEP_HEAD			= 0,		
+	UIEP_HAND			= 1,		
+	UIEP_NECK			= 2,		
+	UIEP_FINESSE		= 3,	
+	UIEP_BODY			= 4,		
+	UIEP_WAIST			= 5,		
+	UIEP_FINGER1		= 6,	
+	UIEP_FINGER2		= 7,	
 	UIEP_WAIST_DECOR	= 8,
-	UIEP_FOOT			= 9,
+	UIEP_FOOT			= 9,		
 	UIEP_HORSE			= 10,
 	UIEP_MASK			= 11,
 	UIEP_MANTLE			= 12,

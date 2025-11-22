@@ -45,12 +45,11 @@ static struct UE_CTRL_MAP
 	{ UIEP_WAIST_DECOR,	"Pendant"	},
 	{ UIEP_FOOT,		"Shoes"		},
 	{ UIEP_HORSE,		"Horse"		},
-
 	{ UIEP_MASK,		"Mask"		},
 	{ UIEP_MANTLE,		"Mantle"	},
 	{ UIEP_SIGNET,		"Signet"	},
 	{ UIEP_SHIPIN,		"Shipin"	},
-
+	
 };
 
 
@@ -258,7 +257,7 @@ void KUiStatus::LoadScheme(class KIniFile* pIni)
 	m_BtnUnBind.Init(pIni, "BtnUnBind"); 
 	//Player Avatar by kinnox;
 	m_chooseavatar.Init(pIni, "ClickHere");
-	m_chooseavatar.SetText("         Dung mï¿½o");
+	m_chooseavatar.SetText("         Dung m¹o");
 	m_Avatar  .Init(pIni, "ClickHere");
 	//
 	m_OpenItemPad.Init(pIni, "Item");
@@ -602,13 +601,13 @@ void KUiStatus::OnDirectAddPoint(int nResultParam)
 	}
 
 	if(nResultParam == WAIT_UP_STRENGHT){
-		KUiGetNumber::OpenWindow("Nï¿½ng Sï¿½c Mï¿½nh", Point, 250, this, nResultParam);
+		KUiGetNumber::OpenWindow("N©ng Søc M¹nh", Point, 250, this, nResultParam);
 	}else if(nResultParam == WAIT_UP_DEXTERITY){
-		KUiGetNumber::OpenWindow("Nï¿½ng Thï¿½n Phï¿½p", Point, 250, this, nResultParam);
+		KUiGetNumber::OpenWindow("N©ng Th©n Ph¸p", Point, 250, this, nResultParam);
 	}else if(nResultParam == WAIT_UP_VITALITY){
-		KUiGetNumber::OpenWindow("Nï¿½ng Sinh Khï¿½", Point, 250, this, nResultParam);
+		KUiGetNumber::OpenWindow("N©ng Sinh KhÝ", Point, 250, this, nResultParam);
 	}else if(nResultParam == WAIT_UP_ENERGY){
-		KUiGetNumber::OpenWindow("Nï¿½ng Nï¿½i Cï¿½ng", Point, 250, this, nResultParam);
+		KUiGetNumber::OpenWindow("N©ng Néi C«ng", Point, 250, this, nResultParam);
 	}
 
 	
@@ -917,7 +916,7 @@ UISYS_STATUS eStatus = g_UiBase.GetStatus();
 	}
 	else
 	{
-		UIMessageBox("Cï¿½c hï¿½ chï¿½a thiï¿½t lï¿½p mï¿½t khï¿½u bï¿½o vï¿½ nhï¿½n vï¿½t!",this,"Thoï¿½t");
+		UIMessageBox("C¸c h¹ ch­a thiÕt lËp mËt khÈu b¶o vÖ nh©n vËt!",this,"Tho¸t");
 	}
 }
 
@@ -959,7 +958,7 @@ void KUiStatus::OnClickUnLockBtn()
 	}
 	else
 	{
-		UIMessageBox("Cï¿½c hï¿½ chï¿½a thiï¿½t lï¿½p mï¿½t khï¿½u bï¿½o vï¿½ nhï¿½n vï¿½t!",this,"Thoï¿½t");
+		UIMessageBox("C¸c h¹ ch­a thiÕt lËp mËt khÈu b¶o vÖ nh©n vËt!",this,"Tho¸t");
 	}	
 }
 

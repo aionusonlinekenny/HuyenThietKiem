@@ -1432,7 +1432,7 @@ BOOL KItemList::Fit(int nIdx, int nPlace)
 	case equip_shipin:
 		if (nPlace == itempart_shipin)
 			bRet = TRUE;
-		break;
+		break;	
 	}
 	return bRet;
 }
@@ -1743,13 +1743,13 @@ int KItemList::SearchPlaceEquip(int nItemID, BYTE nPos)
 			break;
 		case equip_shipin:
 			nRet = itempart_shipin;
-			break;
+			break;				
 		default:
 			nRet = 0;
 		break;
 	}
 	return nRet;
-}
+} 
 #endif
 BOOL KItemList::SearchPosition(int nWidth, int nHeight, ItemPos* pPos)
 {
@@ -2912,7 +2912,7 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 		break;
 	//
 	case pos_builditem: //TrembleItem by kinnox;
-		if (Player[this->m_PlayerIdx].CheckTrading())	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½
+		if (Player[this->m_PlayerIdx].CheckTrading())	// Èç¹ûÕýÔÚ½»Ò×
 			return;
 		if (SrcPos->nX < 0 || SrcPos->nX >= MAX_PART_BUILD || DesPos->nX < 0 || DesPos->nX >= MAX_PART_BUILD)
 			return;
@@ -3134,7 +3134,7 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 			UIEP_SIGNET,
 			UIEP_SHIPIN,
 		};
-
+		
 	int PartBuildItem[MAX_PART_BUILD] = //TrembleItem by kinnox;
 		{
 			UIEP_BUILDITEM1,
@@ -4777,14 +4777,14 @@ void KItemList::SetItemBindState(int nIndex, BYTE btState, BYTE btDay)
 		// if(btDay > 0)
 		// {	
 			// char szMsg[512];//80  //luu y do dai cua ky tu khi build release by kinnox;
-			// sprintf(szMsg, "ï¿½ï¿½ mï¿½ khï¿½a bï¿½o hiï¿½m vï¿½t phï¿½m <color=green>[%s]<color>.", Item[nIndex].GetName());
-			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "Vï¿½t phï¿½m", szMsg, strlen(szMsg));
+			// sprintf(szMsg, "§· më khãa b¶o hiÓm vËt phÈm <color=green>[%s]<color>.", Item[nIndex].GetName());
+			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "VËt phÈm", szMsg, strlen(szMsg));
 		// }
 		// else
 		// {	
 			// char szMsg[512];//80  //luu y do dai cua ky tu khi build release by kinnox;
-			// sprintf(szMsg, "ï¿½ï¿½ khï¿½a bï¿½o hiï¿½m vï¿½t phï¿½m <color=green>[%s]<color>.", Item[nIndex].GetName());
-			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "Vï¿½t phï¿½m", szMsg, strlen(szMsg));
+			// sprintf(szMsg, "§· khãa b¶o hiÓm vËt phÈm <color=green>[%s]<color>.", Item[nIndex].GetName());
+			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "VËt phÈm", szMsg, strlen(szMsg));
 		// }
 	// }
 	ITEM_CHANGE_INFO sChange;
@@ -5199,9 +5199,9 @@ int KItemList::MapPlaceToUIContainer(int nPlace)
     case pos_expandtoryroom1:  return UOC_EXPAND_BOX1;
     case pos_givebox:          return UOC_GIVE_BOX;
 
-    // N?u c?n thï¿½ b? sung thï¿½m cï¿½c place khï¿½c ? ?ï¿½y
+    // N?u c?n thì b? sung thêm các place khác ? ?ây
 
-    default:                   return 0; // 0/NULL: container khï¿½ng h?p l?
+    default:                   return 0; // 0/NULL: container không h?p l?
     }
 }
 #endif // !_SERVER
@@ -5305,7 +5305,7 @@ void KItemList::UnBuildItem(int nIdx, int nPos/* = -1*/)
 	}
 	else
 	{
-		if (m_BuildItem[nPos] != nIdx)	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		if (m_BuildItem[nPos] != nIdx)	// ¶«Î÷²»¶Ô
 			return;
 		i = nPos;
 	}
@@ -5322,7 +5322,7 @@ int KItemList::PositionToRoom(int nPlace)
     else if (nPlace >= pos_repositoryroom && nPlace < pos_repositoryroom + 10)
         return room_repository + (nPlace - pos_repositoryroom);
     else
-        return -1;  // ? Khï¿½ng h?p l?
+        return -1;  // ? Không h?p l?
 }
 
 #ifdef _SERVER

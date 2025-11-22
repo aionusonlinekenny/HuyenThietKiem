@@ -69,6 +69,9 @@ void KNpcAI::Activate(int nIndex)
 		case 10:
 			ProcessAIType10();
 			break;*/
+		case 8:
+			ProcessAIType08(); // Follow owner player
+			break;
 		default:
 			break;
 		}
@@ -1744,7 +1747,56 @@ void	KNpcAI::ProcessAIType07()
 		Npc[m_nIndex].SetActiveSkill(4);
 	}
 }
+// AI Type 08: Follow owner player (for escort NPCs like carts)
+void	KNpcAI::ProcessAIType08()
+{
+	// Check if NPC has an owner (stored in m_AiParam[8] and m_AiParam[9])
+	// m_AiParam[8] = owner player index
+	// m_AiParam[9] = follow mode (1=follow, 0=disabled)
+	int nOwnerPlayerIdx = Npc[m_nIndex].m_AiParam[8];
+	int nFollowMode = Npc[m_nIndex].m_AiParam[9];
 
+	// If no owner or follow disabled, just stand still
+	if (nOwnerPlayerIdx < 0 || nOwnerPlayerIdx >= MAX_PLAYER || nFollowMode == 0)
+		return;
+
+	// Check if owner player is still valid
+	if (Player[nOwnerPlayerIdx].m_nIndex <= 0)
+		return;
+
+	int nPlayerNpcIdx = Player[nOwnerPlayerIdx].m_nIndex;
+	if (nPlayerNpcIdx <= 0 || nPlayerNpcIdx >= MAX_NPC)
+		return;
+
+	// Check if player is on same subworld
+	if (Npc[m_nIndex].m_SubWorldIndex != Npc[nPlayerNpcIdx].m_SubWorldIndex)
+		return;
+
+	// Calculate distance to owner
+	int nDistanceSquare = KNpcSet::GetDistanceSquare(m_nIndex, nPlayerNpcIdx);
+
+	// Follow behavior:
+	// - If distance > 5 tiles (160 pixels), walk to player
+	// - If distance 2-5 tiles, keep following at normal pace
+	// - Only stop if distance < 1.5 tiles (48 pixels) to avoid collision
+
+	if (nDistanceSquare > 25600)  // 160*160 = 25600 (> 5 tiles)
+	{
+		// Far away - walk towards player
+		// IMPORTANT: Use GetMpsPos() to get world coordinates, NOT MapX/MapY!
+		int nPlayerX, nPlayerY;
+		Npc[nPlayerNpcIdx].GetMpsPos(&nPlayerX, &nPlayerY);
+		Npc[m_nIndex].SendCommand(do_walk, nPlayerX, nPlayerY);
+	}
+	else if (nDistanceSquare > 2304)  // 48*48 = 2304 (> 1.5 tiles)
+	{
+		// Medium distance - keep following
+		int nPlayerX, nPlayerY;
+		Npc[nPlayerNpcIdx].GetMpsPos(&nPlayerX, &nPlayerY);
+		Npc[m_nIndex].SendCommand(do_walk, nPlayerX, nPlayerY);
+	}
+	// else: very close (< 1.5 tiles) - do nothing, let NPC idle naturally
+}
 /*
 // 一般主动型
 void KNpcAI::ProcessAIType1()

@@ -81,3 +81,5 @@ NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
 62	11	103062	167313		VÖ binh thµnh m«n  	1
 332	11	103478	167610		L¹c HånTö ®Ö  	1
 769	11	102688	159136	\script\mission\vuotai\npc_talk.lua	NhiÕp ThÝ TrÇn	1
+769	11	98720	164544	\script\event\vantieu\tieudau.lua	Tiªu ®Çu côc	1
+769	11	104735	159744	\script\event\vantieu\tieusu.lua	Tiªu s­	1

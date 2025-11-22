@@ -328,6 +328,7 @@ enum c2s_PROTOCOL
 	c2s_avatarplayer,//Player Avatar by kinnox;
 	c2s_recoverybox,//TrembleItem by kinnox;
 	c2s_rightitemautomove, //AutoMoveRightClick
+	c2s_autosortequipment, //Auto Sort Inventory
 	_c2s_begin_relay = 250,
 	c2s_extend = _c2s_begin_relay,
 	c2s_extendchat,

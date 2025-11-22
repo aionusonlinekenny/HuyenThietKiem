@@ -471,7 +471,16 @@ CSocketServer::Socket::Socket( CSocketServer &server,
 		throw CException( _T("CSocketServer::Socket::Socket()"), 
 			_T("Invalid socket") );
 	}
-	
+	// OPTIMIZATION: Disable Nagle's algorithm for low-latency real-time communication
+	// TCP_NODELAY prevents buffering of small packets, reducing latency for game traffic
+	int flag = 1;
+	if ( SOCKET_ERROR == ::setsockopt( m_socket, IPPROTO_TCP, TCP_NODELAY,
+		reinterpret_cast<const char*>(&flag), sizeof(flag) ) )
+	{
+		// Non-fatal error - log but continue
+		m_server.OnError( _T("CSocketServer::Socket::Socket() - setsockopt(TCP_NODELAY) failed - ") +
+			GetLastErrorMessage( ::WSAGetLastError() ) );
+	}
 	if ( useSequenceNumbers )
 	{
 		m_pSequenceData = new SequenceData( m_crit );
@@ -500,7 +509,15 @@ void CSocketServer::Socket::Attach( SOCKET theSocket )
 	}
 	
 	m_socket = theSocket;
-	
+	// OPTIMIZATION: Disable Nagle's algorithm for low-latency real-time communication
+	int flag = 1;
+	if ( SOCKET_ERROR == ::setsockopt( m_socket, IPPROTO_TCP, TCP_NODELAY,
+		reinterpret_cast<const char*>(&flag), sizeof(flag) ) )
+	{
+		// Non-fatal error - log but continue
+		m_server.OnError( _T("CSocketServer::Socket::Attach() - setsockopt(TCP_NODELAY) failed - ") +
+			GetLastErrorMessage( ::WSAGetLastError() ) );
+	}
 	SetUserData( 0 );
 	
 	m_readShutdown = false;

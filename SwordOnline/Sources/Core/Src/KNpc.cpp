@@ -90,7 +90,7 @@ extern KLuaScript		*g_pNpcLevelScript;
 #define	CONREGIONIDX(x)		CURREGION.m_nConnectRegion[x]
 #define BROADCAST_REGION(pBuff,uSize,uMaxCount)	 if(m_SubWorldIndex >= 0 && m_SubWorldIndex < MAX_SUBWORLD && SubWorld[m_SubWorldIndex].m_SubWorldID != -1) SubWorld[m_SubWorldIndex].BroadCastRegion((pBuff), (uSize), (uMaxCount), m_RegionIndex, m_MapX, m_MapY);
 #define POS_EDITION_PERCENT				40
-#define	STUN_STATE_SPR					"\\spr\\skill\\ï¿½ï¿½ï¿½ï¿½\\mag_spe_Ñ£ï¿½ï¿½.spr"
+#define	STUN_STATE_SPR					"\\spr\\skill\\²¹³ä\\mag_spe_Ñ£ÔÎ.spr"
 #define defSEC_MOVE_BLUR_TIME			72
 
 KNpc	Npc[MAX_NPC];
@@ -828,6 +828,11 @@ BOOL KNpc::ProcessState()
 	}
 	if(!(m_LoopFrames % 5))
 	{
+		// Broadcast position if currently moving
+		if (m_Doing == do_run || m_Doing == do_walk)
+		{
+			BroadCastPosition();
+		}
 		if(!IsPlayer() && m_nTotalReceiveDamage > 0)
 		{
 			SendBloodNo(m_dwID, m_nTotalReceiveDamage);
@@ -1380,7 +1385,7 @@ void KNpc::OnDeath()
                 char szMessageDeath[128];
                 if (m_nPlayerIdx > 0)
                 {
-                        sprintf(szMessageDeath,"ï¿½ï¿½i hiï¿½p ï¿½ï¿½ bï¿½ %s ï¿½ï¿½nh trï¿½ng thï¿½ï¿½ng",Npc[m_nLastDamageIdx].Name);
+                        sprintf(szMessageDeath,"§¹i hiÖp ®· bÞ %s ®¸nh träng th­¬ng",Npc[m_nLastDamageIdx].Name);
                         KPlayerChat::SendSystemInfo(1, m_nPlayerIdx, MESSAGE_SYSTEM_ANNOUCE_HEAD, szMessageDeath,strlen(szMessageDeath) );
                         if (Player[m_nPlayerIdx].m_cTeam.m_nFlag && Player[m_nPlayerIdx].m_cTeam.m_nID >= 0)
                         {
@@ -1391,7 +1396,7 @@ void KNpc::OnDeath()
                 }
                 if (Npc[m_nLastDamageIdx].m_nPlayerIdx > 0)
                 {
-                sprintf(szMessageDeath,"ï¿½ï¿½i hiï¿½p ï¿½ï¿½ ï¿½ï¿½nh trï¿½ng thï¿½ï¿½ng %s",Name);
+                sprintf(szMessageDeath,"§¹i hiÖp ®· ®¸nh träng th­¬ng %s",Name);
                 KPlayerChat::SendSystemInfo(1, Npc[m_nLastDamageIdx].m_nPlayerIdx, MESSAGE_SYSTEM_ANNOUCE_HEAD, szMessageDeath, strlen(szMessageDeath) );
                 }         
         }
@@ -5596,7 +5601,7 @@ BOOL KNpc::SendSyncData(int nClient)
 		}
 		PlayerSync.MaskType			= m_wMaskType;
 		PlayerSync.MantleType		= m_MantleType;
-		PlayerSync.MantleLevel		= m_byMantleLevel;
+		PlayerSync.MantleLevel		= m_byMantleLevel;									
 		PlayerSync.RunSpeed			= m_CurrentRunSpeed;
 		PlayerSync.WalkSpeed		= m_CurrentWalkSpeed;
 		PlayerSync.WeaponType		= (BYTE)m_WeaponType;
@@ -6124,26 +6129,20 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 		{
 			strcat(szString, "(");
 			if (m_FreezeState.nTime)
-				strcat(szString, "Bï¿½ng");
+				strcat(szString, "B¨ng");
 			if (m_PoisonState.nTime)
-				strcat(szString, "ï¿½ï¿½c");
+				strcat(szString, "§éc");
 			if (m_StunState.nTime)
-				strcat(szString, "Mï¿½");
+				strcat(szString, "Mª");
 			if (m_RandMoveState.nTime)   
-				strcat(szString, "Loï¿½n");
+				strcat(szString, "Lo¹n");
 			strcat(szString, ")");
 		}
-
-		// Calculate X position - name stays centered
-		int nXX = nMpsX - nFontSize * g_StrLen(szString) / 4;
+	//Kenny hieu ung dinh don
+		//g_pRepresent->OutputText(nFontSize, szString, KRF_ZERO_END, nMpsX - nFontSize * g_StrLen(Name) / 4, nMpsY, dwColor, 0, nHeightOff, dwBorderColor);
+		int nXX = nMpsX - nFontSize * g_StrLen(szString) / 4 + ((m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL) ? 40 : 0);
 		g_pRepresent->OutputText(nFontSize, szString, KRF_ZERO_END, nXX, nMpsY, dwColor, 0, nHeightOff, dwBorderColor);
-
-		// Draw mantle icon before name (to the left)
-		if(m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL)
-		{
-			PaintMantle(nHeightOff, nFontSize, nXX, nMpsY);
-		}
-
+		
 		if(m_wMaskType > 0)
 		{
 			PaintHorseState(nFontSize, nHeightOff);
@@ -6154,7 +6153,11 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 		{
 			PaintTransLifeInfo(nFontSize, nHeightOff);
 		}
-
+		// Draw mantle icon before name
+		if(m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL)
+		{
+			nXX = PaintMantle(nHeightOff, nFontSize, nXX, nMpsY);
+		}
 		nHeightOffset += nFontSize + 1;
 
 	}
@@ -6267,6 +6270,30 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 }
 
 //
+// Draw mantle icon before player name
+//
+
+int KNpc::PaintMantle(int nHeightOff, int nFontSize, int nMpsX, int nMpsY)
+
+{
+	KRUImage RUIconImage;
+	RUIconImage.nType = ISI_T_SPR;
+	RUIconImage.Color.Color_b.a = 255;
+	RUIconImage.bRenderStyle = IMAGE_RENDER_STYLE_ALPHA;
+	RUIconImage.uImage = 0;
+	RUIconImage.nISPosition = IMAGE_IS_POSITION_INIT;
+	RUIconImage.bRenderFlag = RUIMAGE_RENDER_FLAG_REF_SPOT;
+	strcpy(RUIconImage.szImage, PlayerSet.m_szFortuneRankPic[m_byMantleLevel]);
+	KImageParam	Param;
+	g_pRepresent->GetImageParam(RUIconImage.szImage, &Param, ISI_T_SPR);
+	RUIconImage.oPosition.nX = nMpsX - Param.nWidth;
+	RUIconImage.oPosition.nY = nMpsY - Param.nHeight/2 - 4;
+	RUIconImage.oPosition.nZ = nHeightOff;
+	RUIconImage.nFrame = g_SubWorldSet.GetGameTime() % Param.nNumFrames;
+	g_pRepresent->DrawPrimitives(1, &RUIconImage, RU_T_IMAGE, 0);
+	return RUIconImage.oPosition.nX;
+}
+//
 void KNpc::PaintNpcAuto(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBorderColor)
 {
 	int nMpsX, nMpsY;
@@ -6282,18 +6309,18 @@ void KNpc::PaintNpcAuto(int nHeightOffset, bool bSelect, int nFontSize, DWORD dw
 		int nDesY = Player[CLIENT_PLAYER_INDEX].m_cAI.nDestYPaint;
 		if (Player[CLIENT_PLAYER_INDEX].m_cAI.nNpcIDPaint <= 0 && m_FightMode && m_Doing != do_stand)
 		{
-			sprintf(szString, "[%s]", "Tï¿½m ï¿½ï¿½i tï¿½ï¿½ng...");
+			sprintf(szString, "[%s]", "T×m ®èi t­îng...");
 		}
 		else
 		{
-			sprintf(szString, "[%s]", "ï¿½ang tï¿½ ï¿½ï¿½ng");
+			sprintf(szString, "[%s]", "§ang tù ®éng");
 		}
 		
 		if (Player[CLIENT_PLAYER_INDEX].m_cAI.nNpcIDPaint > 0)
 		{
 			if (nDesX > 0 && nDesY > 0)
 			{
-				sprintf(szString, "[%s - Tï¿½:%d/%d]",Npc[Player[CLIENT_PLAYER_INDEX].m_cAI.nNpcIDPaint].Name,nDesX, nDesY);
+				sprintf(szString, "[%s - T®:%d/%d]",Npc[Player[CLIENT_PLAYER_INDEX].m_cAI.nNpcIDPaint].Name,nDesX, nDesY);
 				Player[CLIENT_PLAYER_INDEX].m_cAI.nDestXPaint = 0;
 				Player[CLIENT_PLAYER_INDEX].m_cAI.nDestYPaint = 0;
 				Player[CLIENT_PLAYER_INDEX].m_cAI.nNpcIDPaint = 0;
@@ -6306,7 +6333,7 @@ void KNpc::PaintNpcAuto(int nHeightOffset, bool bSelect, int nFontSize, DWORD dw
 		}
 		else if (nDesX > 0 && nDesY > 0)
 		{
-			sprintf(szString, "[Tï¿½a ï¿½ï¿½:%d/%d]",nDesX, nDesY);
+			sprintf(szString, "[Täa ®é:%d/%d]",nDesX, nDesY);
 		}
 		
 		if (strlen(szString) > 0)
@@ -6517,30 +6544,6 @@ void KNpc::PaintTransLifeInfo(int nFontSize, int nHeightOff)
 	g_pRepresent->DrawPrimitives(1, &m_RUTransLifeImg, RU_T_IMAGE, FALSE);
 }
 
-//
-// Draw mantle icon before player name
-//
-int KNpc::PaintMantle(int nHeightOff, int nFontSize, int nMpsX, int nMpsY)
-{
-	KRUImage RUIconImage;
-	RUIconImage.nType = ISI_T_SPR;
-	RUIconImage.Color.Color_b.a = 255;
-	RUIconImage.bRenderStyle = IMAGE_RENDER_STYLE_ALPHA;
-	RUIconImage.uImage = 0;
-	RUIconImage.nISPosition = IMAGE_IS_POSITION_INIT;
-	RUIconImage.bRenderFlag = RUIMAGE_RENDER_FLAG_REF_SPOT;
-	strcpy(RUIconImage.szImage, PlayerSet.m_szFortuneRankPic[m_byMantleLevel]);
-	KImageParam	Param;
-	g_pRepresent->GetImageParam(RUIconImage.szImage, &Param, ISI_T_SPR);
-	RUIconImage.oPosition.nX = nMpsX - Param.nWidth;
-	RUIconImage.oPosition.nY = nMpsY - Param.nHeight/2 - 4;
-	RUIconImage.oPosition.nZ = nHeightOff;
-	RUIconImage.nFrame = g_SubWorldSet.GetGameTime() % Param.nNumFrames;
-	g_pRepresent->DrawPrimitives(1, &RUIconImage, RU_T_IMAGE, 0);
-
-	return RUIconImage.oPosition.nX;
-}
-
 
 //
 
@@ -6723,7 +6726,7 @@ int	KNpc::SetChatInfo(const char* Name, const char* pMsgBuff, unsigned short nMs
 								bOk = TRUE;
 								break;
 						}
-						if(*pszCheck2 == 'ï¿½')
+						if(*pszCheck2 == '•')
 						{
 							nCount++;
 						}
@@ -6808,7 +6811,7 @@ int	KNpc::PaintWarning(int nHeightOffset, bool bSelect)
 				if (Npc[m_Index].m_bRideHorse)
 				nMpsYs = nMpsYs-(SHOW_LIFE_HEIGHT+24);
 			}
-			g_pRepresent->OutputText(12,"Cï¿½ cao thï¿½ mai phï¿½c hï¿½y thï¿½n trï¿½ng!", KRF_ZERO_END, (nMpsXs - SHOW_LIFE_WIDTH * 2.5),nMpsYs, 0x810000, 0, nHeightOffset, 0);
+			g_pRepresent->OutputText(12,"Cã cao thñ mai phôc h·y thËn träng!", KRF_ZERO_END, (nMpsXs - SHOW_LIFE_WIDTH * 2.5),nMpsYs, 0x810000, 0, nHeightOffset, 0);
 		}
 		return true;
 	}
@@ -7108,7 +7111,7 @@ void	KNpc::CalcCurLifeMax()
 -
 void	KNpc::CalcCurStaminaMax()
 {
-	m_CurrentStaminaMax = m_StaminaMax;		// ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ ×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¡ï¿½Ò©ï¿½ï£¨ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Èµï¿½Ó°ï¿½ï¿½
+	m_CurrentStaminaMax = m_StaminaMax;		// »¹ÐèÒª¼ÓÉÏ ×°±¸¡¢¼¼ÄÜ¡¢Ò©Îï£¨ÁÙÊ±£©µÈµÄÓ°Ïì
 }
 */
 
@@ -7118,7 +7121,7 @@ void	KNpc::CalcCurStaminaMax()
 -
 void	KNpc::CalcCurManaMax()
 {
-	m_CurrentManaMax = m_ManaMax;			// ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ ×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¡ï¿½Ò©ï¿½ï£¨ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Èµï¿½Ó°ï¿½ï¿½
+	m_CurrentManaMax = m_ManaMax;			// »¹ÐèÒª¼ÓÉÏ ×°±¸¡¢¼¼ÄÜ¡¢Ò©Îï£¨ÁÙÊ±£©µÈµÄÓ°Ïì
 }
 */
 
@@ -7326,7 +7329,7 @@ void KNpc::SetStateSkillEffect(int nLauncher, int nSkillID, int nLevel, void *pD
         {
             if (pNode->m_SkillID == nSkillID)
             {
-                // G? tï¿½c d?ng (d?o l?i thu?c tï¿½nh)
+                // G? tác d?ng (d?o l?i thu?c tính)
                 for (int i = 0; i < nDataNum; i++)
                 {
                     ModifyAttrib(nLauncher, &pNode->m_State[i]);
@@ -7344,17 +7347,17 @@ void KNpc::SetStateSkillEffect(int nLauncher, int nSkillID, int nLevel, void *pD
             }
             pNode = (KStateNode*)pNode->GetNext();
         }
-        return; // khï¿½ng cï¿½ node d? remove
+        return; // không có node d? remove
     }
 
     // ---------------- ADD / REFRESH / UPGRADE ----------------
-    // Tï¿½m state cï¿½ng SkillID dï¿½ t?n t?i
+    // Tìm state cùng SkillID dã t?n t?i
     pNode = (KStateNode*)m_StateSkillList.GetHead();
     while (pNode)
     {
         if (pNode->m_SkillID == nSkillID)
         {
-            // REFRESH (cï¿½ng level) -> gia h?n th?i gian
+            // REFRESH (cùng level) -> gia h?n th?i gian
             if (pNode->m_Level == nLevel)
             {
                 pNode->m_LeftTime = nTime;
@@ -7364,7 +7367,7 @@ void KNpc::SetStateSkillEffect(int nLauncher, int nSkillID, int nLevel, void *pD
                 //printf("[StateApply-Refresh]  skill=%d lvl=%d time=%d (broadcast)\n", nSkillID, nLevel, nTime);
 #endif
             }
-            // UPGRADE (level tang) -> g? cu + ï¿½p m?i
+            // UPGRADE (level tang) -> g? cu + áp m?i
             else if (pNode->m_Level < nLevel)
             {
 #ifdef _SERVER
@@ -7373,11 +7376,11 @@ void KNpc::SetStateSkillEffect(int nLauncher, int nSkillID, int nLevel, void *pD
                 pTemp = (KMagicAttrib*)pData;
                 for (int i = 0; i < nDataNum; i++)
                 {
-                    // g? tï¿½c d?ng cu
+                    // g? tác d?ng cu
                     ModifyAttrib(nLauncher, &pNode->m_State[i]);
-                    // ï¿½p tï¿½c d?ng m?i
+                    // áp tác d?ng m?i
                     ModifyAttrib(nLauncher, pTemp);
-                    // luu giï¿½ tr? d?o d?u d? ti?n g? sau nï¿½y
+                    // luu giá tr? d?o d?u d? ti?n g? sau này
                     pNode->m_State[i].nAttribType = pTemp->nAttribType;
                     pNode->m_State[i].nValue[0]   = -pTemp->nValue[0];
                     pNode->m_State[i].nValue[1]   = -pTemp->nValue[1];
@@ -7415,7 +7418,7 @@ void KNpc::SetStateSkillEffect(int nLauncher, int nSkillID, int nLevel, void *pD
         pNode->m_StateGraphics = 0;
 
 #ifdef _SERVER
-    // N?u cï¿½ StateSpecialId -> thï¿½m icon r?i broadcast
+    // N?u có StateSpecialId -> thêm icon r?i broadcast
     if (pNode->m_StateGraphics)
     {
         AddStateInfo(pNode->m_StateGraphics);
@@ -7891,7 +7894,7 @@ BOOL KNpc::CheckHitTarget(int nAR, int nDf, int nIngore/* = 0*/)
 
 	BOOL bRet = g_RandPercent(nPercent);
 #ifdef _DEBUG
-	//g_DebugLog("[ï¿½ï¿½Öµ]AttackRating %d : Defense %d: RandomPercent (%d, %d)", nAR, nDf, nPercent, bRet);
+	//g_DebugLog("[ÊýÖµ]AttackRating %d : Defense %d: RandomPercent (%d, %d)", nAR, nDf, nPercent, bRet);
 #endif
 	return bRet;
 }
@@ -8535,12 +8538,28 @@ void KNpc::LoseSingleItem(int nBelongPlayer)
 			pnMagicLevel[j] = 0;
 		}
 	}
-
+// Debug: Check pnMagicLevel before creating item
+	printf("[NPC_DROP_DEBUG] Before ItemSet.Add | Genre:%d Level:%d Luck:%d | MagicLevel:[%d,%d,%d,%d,%d,%d]\n",
+		nGenre, nLevel, nLuck,
+		pnMagicLevel[0], pnMagicLevel[1], pnMagicLevel[2],
+		pnMagicLevel[3], pnMagicLevel[4], pnMagicLevel[5]);
+		
 	const int nItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParticular, pnMagicLevel, g_SubWorldSet.GetGameVersion());
 
 	if( (nItemIdx <= 0) || (nItemIdx >= MAX_ITEM) )
 		return;
-
+	
+	// Debug: Check magic attributes right after item creation
+	printf("[NPC_DROP_DEBUG] Item created: %s | Genre:%d | Attrib:[%d,%d,%d,%d,%d,%d]\n",
+		Item[nItemIdx].GetName(),
+		Item[nItemIdx].GetGenre(),
+		Item[nItemIdx].GetAttribType(0),
+		Item[nItemIdx].GetAttribType(1),
+		Item[nItemIdx].GetAttribType(2),
+		Item[nItemIdx].GetAttribType(3),
+		Item[nItemIdx].GetAttribType(4),
+		Item[nItemIdx].GetAttribType(5));
+		
 	int		nX, nY;
 	POINT	ptLocal;
 	KMapPos	Pos;
@@ -9192,7 +9211,7 @@ int		KNpc::GetMenuState()
 
 #ifndef _SERVER
 
-//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§9ï¿½ï¿½Regionï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ ID ï¿½ï¿½ npc
+//	¹¦ÄÜ£º²éÕÒÖÜÎ§9¸öRegionÖÐÊÇ·ñÓÐÖ¸¶¨ ID µÄ npc
 
 DWORD	KNpc::SearchAroundID(DWORD dwID)
 {
@@ -9215,7 +9234,7 @@ DWORD	KNpc::SearchAroundID(DWORD dwID)
 
 #ifndef _SERVER
 
-//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½è¶¨ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sprï¿½Ä¼ï¿½
+//	¹¦ÄÜ£ºÉè¶¨ÌØÊâµÄÖ»²¥·ÅÒ»±éµÄËæÉísprÎÄ¼þ
 
 void	KNpc::SetSpecialSpr(char *lpszSprName)
 {
@@ -9225,7 +9244,7 @@ void	KNpc::SetSpecialSpr(char *lpszSprName)
 
 #ifndef _SERVER
 
-//	ï¿½ï¿½ï¿½Ü£ï¿½ï¿½è¶¨Ë²ï¿½ï¿½ï¿½ï¿½Ð§
+//	¹¦ÄÜ£ºÉè¶¨Ë²¼äÌØÐ§
 
 void	KNpc::SetInstantSpr(int nNo)
 {
@@ -9569,7 +9588,7 @@ int KNpc::ChangeWorld(DWORD dwSubWorldID, int nX, int nY)
         TobeExchangeServer(dwSubWorldID, nX, nY);
         g_pServer->ShutdownClient(Player[m_nPlayerIdx].m_nNetConnectIdx);
 
-        return 1;   // ï¿½ï¿½Òªï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ -- spe
+        return 1;   // ÐèÒª¼ÓÇÐ»»·þÎñÆ÷µÄ´¦Àí -- spe
     }
 
 	if( !IsPlayer() )
@@ -9823,7 +9842,7 @@ void KNpc::ReCalcStateEffect()
 	pNode = (KStateNode *)m_StateSkillList.GetHead();
 	while(pNode)
 	{
-		if (pNode->m_LeftTime != 0)	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(-1)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(>0)
+		if (pNode->m_LeftTime != 0)	// °üÀ¨±»¶¯(-1)ºÍÖ÷¶¯(>0)
 		{
 			int i;
 			for (i = 0; i < MAX_SKILL_STATE; i++)
@@ -9856,15 +9875,15 @@ int		KNpc::GetCurActiveWeaponSkill()
 		int nDetailType = Player[m_nPlayerIdx].m_ItemList.GetWeaponType();
 		int nParticularType = Player[m_nPlayerIdx].m_ItemList.GetWeaponParticular();
 		
-		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		//½üÉíÎäÆ÷
 		if (nDetailType == 0)
 		{
 			nSkillId = g_nMeleeWeaponSkill[nParticularType];
-		}//Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		}//Ô¶³ÌÎäÆ÷
 		else if (nDetailType == 1)
 		{
 			nSkillId = g_nRangeWeaponSkill[nParticularType];
-		}//ï¿½ï¿½ï¿½ï¿½
+		}//¿ÕÊÖ
 		else if (nDetailType == -1)
 		{
 			nSkillId = g_nHandSkill;
@@ -10039,7 +10058,7 @@ void	KNpc::SetBlood(int nNo)
 	}
 	else
 	{
-		//sprintf(m_szBloodNo[i], "Nï¿½ ");
+		//sprintf(m_szBloodNo[i], "NÐ ");
 	}
 }
 #endif

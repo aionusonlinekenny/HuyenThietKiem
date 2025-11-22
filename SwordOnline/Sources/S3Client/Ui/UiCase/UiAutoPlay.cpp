@@ -12,9 +12,11 @@
 #include "../UiBase.h" 
 #include "../UiSoundSetting.h"
 #include "../../../Represent/iRepresent/iRepresentShell.h"
-
+#include "../../../Headers/KProtocolDef.h"  // cho c2s_autosortequipment
+#include "../../../core/src/KCore.h"        // cho g_pClient
 extern iRepresentShell* g_pRepresentShell;
 extern iCoreShell* g_pCoreShell;
+
 KUiPlayerItem*	m_pNearbyPlayersList; //
 
 #define 	SCHEME_INI				"UiAutoPlay.ini"
@@ -894,6 +896,8 @@ void KUiPick::Initialize()
 	AddChild(&m_PickAllEdit);//m_PickTypeTxt
 	AddChild(&m_PickAllPopup);// m_PickAllPopup
 	AddChild(&m_PickFilterCK); // m_PickFilterCK
+	AddChild(&m_PickAutoSortCK);
+	AddChild(&t_PickAutoSortTxt);
 	//AddChild(&m_PickFollowTargetCK);
 	//AddChild(&m_PickFollowTargetEdit);
 	AddChild(&m_PickChooseFilterTxt); //m_FilterEdit
@@ -932,6 +936,8 @@ void KUiPick::LoadScheme(KIniFile* pIni)
 	m_PickAllEdit.Init(pIni,"PickAllEdit");
 	m_PickAllPopup.Init(pIni,"PickAllPopup");
 	m_PickFilterCK.Init(pIni,"PickFilterCK");
+	m_PickAutoSortCK.Init(pIni,"PickAutoSortCK");
+	t_PickAutoSortTxt.Init(pIni,"PickAutoSortTxt");
 	//m_PickFollowTargetCK.Init(pIni,"PickFollowTargetCK");
 	//m_PickFollowTargetEdit.Init(pIni,"PickFollowTargetEdit");
 	m_PickChooseFilterTxt.Init(pIni,"PickChooseFilterTxt");
@@ -962,6 +968,8 @@ int KUiPick::WndProc(unsigned int uMsg, unsigned int uParam, int nParam)
 			OnGiveItem();
 		else if (uParam == (unsigned int)(KWndWindow*)&m_PickFilterCK)
 			OnFillterItem();
+		else if (uParam == (unsigned int)(KWndWindow*)&m_PickAutoSortCK)
+			OnAutoSortClick();
 		else if (uParam == (unsigned int)(KWndWindow*)&m_PickAllPopup)
 			OnSelectPickType(MENU_SELECT_PICK_TYPE);
 		else if (uParam == (unsigned int)(KWndWindow*)&m_PickChooseFilterPopup)
@@ -1057,7 +1065,15 @@ void KUiPick::OnFillterItem()
 		btFlag = 0;
 	g_pCoreShell->PAIOperation(GPI_P_FILTEQUIP,btFlag,NULL,NULL);
 }
-
+void KUiPick::OnAutoSortClick()
+{
+	
+	if (g_pClient)
+	{
+		BYTE protocol = c2s_autosortequipment; // c2s_autosortequipment - temporary ID, will define properly
+		g_pClient->SendPackToServer(&protocol, sizeof(protocol));
+	}
+}
 void KUiPick::OnGiveItem() 
 {	
 	BYTE btFlag = 0;

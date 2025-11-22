@@ -303,33 +303,56 @@ void CGameServer::End()
 }
 
 // ============================================
-// Manager Thread (FIXED - với cleanup)
+// Manager Thread (FIXED v2 - eliminate lock contention)
+// FIX: Don't hold m_csGameSvrAction while processing packets
+// This was causing 4-6s lock contention when many packets need processing
 // ============================================
 DWORD WINAPI CGameServer::ManagerThreadFunction(void *pParam)
 {
     IServer *pGameSvrServer = (IServer *)pParam;
     ASSERT(pGameSvrServer);
     m_shStartupManagerThreadEvent.Wait();
-    
+
     stdGameSvr::iterator it;
     DWORD dwLastCleanup = ::GetTickCount();
     const DWORD CLEANUP_INTERVAL = 5000; // 5 seconds
-    
+
+    // Pre-allocate arrays for server info
+    struct ServerInfo {
+        UINT nlnID;
+        IGServer *pServer;
+    };
+    ServerInfo servers[10];  // Support up to 10 GameServers
+
     while (!m_shQuitEvent.Wait(0))
     {
-        CCriticalSection::Owner locker(CGameServer::m_csGameSvrAction);
-        for (it = CGameServer::m_theGameServers.begin(); it != CGameServer::m_theGameServers.end(); it++)
+        // Step 1: Get server info with lock held (FAST - just copying pointers)
+        int serverCount = 0;
         {
-            UINT nlnID = (*it).first;
+            CCriticalSection::Owner locker(CGameServer::m_csGameSvrAction);
+            for (it = CGameServer::m_theGameServers.begin();
+                 it != CGameServer::m_theGameServers.end() && serverCount < 10;
+                 it++)
+            {
+                servers[serverCount].nlnID = (*it).first;
+                servers[serverCount].pServer = (*it).second;
+                serverCount++;
+            }
+        }  // Lock released here!
+
+        // Step 2: Process packets WITHOUT holding m_csGameSvrAction (NO contention!)
+        for (int i = 0; i < serverCount; i++)
+        {
             size_t datalength = 0;
-            const void *pData = pGameSvrServer->GetPackFromClient(nlnID, datalength);
-            if (0 == datalength || NULL == pData)
-                continue;
-            IGServer *pGServer = (*it).second;
-            if (pGServer)
-                pGServer->AnalyzeRequire(pData, datalength);
+            const void *pData = pGameSvrServer->GetPackFromClient(servers[i].nlnID, datalength);
+            if (datalength > 0 && pData && servers[i].pServer)
+            {
+											  
+						 
+                servers[i].pServer->AnalyzeRequire(pData, datalength);
+            }
         }
-        
+
         // FIX: Periodic cleanup of stale transfers
         DWORD dwNow = ::GetTickCount();
         if ((dwNow - dwLastCleanup) > CLEANUP_INTERVAL || dwNow < dwLastCleanup)
@@ -560,13 +583,26 @@ bool CGameServer::_NotifyLeaveGame(const void *pData, size_t datalength)
     {
         BeginTransfer(pAccountName);
         bool result = PopAccount(pAccountName, false);
-        printf("[BISHOP] LeaveGame (transfer): %s detached=%d\n", pAccountName, result ? 1 : 0);
+        printf("[BISHOP] LeaveGame (already transferring): %s detached=%d\n", pAccountName, result ? 1 : 0);
         return result;
     }
 
-    bool result = PopAccount(pAccountName, !hold && !isTransferring);
-    printf("[BISHOP] LeaveGame (normal): %s detached=%d, unlocked=%d\n",
-           pAccountName, result ? 1 : 0, (!hold && !isTransferring) ? 1 : 0);
+    // FIX: If HOLDACC_LEAVEGAME received, this is a cross-GS transfer
+    // Must call BeginTransfer() to track account in transfer state
+    // This allows EndTransfer() to work correctly when player enters new GS
+    if (hold)
+    {
+        BeginTransfer(pAccountName);
+        bool result = PopAccount(pAccountName, false);
+        printf("[BISHOP] LeaveGame (hold for transfer): %s detached=%d, tracking transfer\n",
+               pAccountName, result ? 1 : 0);
+        return result;
+    }
+
+    // Normal logout - unlock account
+    bool result = PopAccount(pAccountName, true);
+    printf("[BISHOP] LeaveGame (normal logout): %s detached=%d, unlocked=%d\n",
+           pAccountName, result ? 1 : 0, 1);
     return result;
 }
 
@@ -609,16 +645,29 @@ bool CGameServer::Attach(const char *pAccountName, bool bCheck)
     
     int nExistingGS = FindServerByAccount(pAccountName);
     int nThisGS = (int)GetID();
-    
+
     if (nExistingGS != -1 && nExistingGS != nThisGS)
     {
         bool isTransferring = IsInTransfer(pAccountName);
         printf("[BISHOP] Attach: %s from GS%d to GS%d, Transfer=%d\n", pAccountName, nExistingGS, nThisGS, isTransferring);
         if (!isTransferring)
             BeginTransfer(pAccountName);
+
+        // FIX: Do NOT call DispatchTask(enumPlayerLogicLogout) to old GS
+        // This is a BLOCKING synchronous call that can take 20+ seconds if old GS is busy!
+        // Old GS will detect player disconnect and cleanup automatically.
+        // Just detach account from old GS locally without waiting for response.
         IGServer *pOld = GetServer(nExistingGS);
         if (pOld)
-            pOld->DispatchTask(CGameServer::enumPlayerLogicLogout, pAccountName, (int)strlen(pAccountName) + 1);
+        {
+            CGameServer *pOldGS = static_cast<CGameServer*>(pOld);
+            if (pOldGS)
+            {
+                pOldGS->DetachAccountFromGameServer(pAccountName);
+                printf("[BISHOP] Attach: Detached \"%s\" from old GS%d (no logout signal)\n",
+                       pAccountName, nExistingGS);
+            }
+        }
     }
     return AttatchAccountToGameServer(pAccountName, bCheck);
 }
@@ -816,19 +865,34 @@ IGServer *CGameServer::QueryServer(UINT nMapID)
 }
 
 // ============================================
-// FindServerByAccount (FIXED)
+// FindServerByAccount (FIXED v2)
+// FIX: Don't hold m_csGameSvrAction while calling HaveAccountInGameServer()
+// This was causing 8+ second lock contention during concurrent login/logout
 // ============================================
 int CGameServer::FindServerByAccount(const char* szAcc)
 {
     if (!szAcc || !szAcc[0])
         return -1;
-    OnlineGameLib::Win32::CCriticalSection::Owner locker(m_csGameSvrAction);
-    stdGameSvr::iterator it = m_theGameServers.begin();
-    for (; it != m_theGameServers.end(); ++it)
+
+    // Step 1: Get all server pointers with lock held (FAST)
+    CGameServer *servers[10];  // Support up to 10 GameServers
+    int serverCount = 0;
     {
-        CGameServer* pSrv = (CGameServer*)(it->second);
-        if (pSrv && pSrv->HaveAccountInGameServer(szAcc))
-            return (int)pSrv->GetID();
+        OnlineGameLib::Win32::CCriticalSection::Owner locker(m_csGameSvrAction);
+        stdGameSvr::iterator it = m_theGameServers.begin();
+        for (; it != m_theGameServers.end() && serverCount < 10; ++it)
+        {
+            CGameServer* pSrv = (CGameServer*)(it->second);
+            if (pSrv)
+                servers[serverCount++] = pSrv;
+        }
+    }  // Lock released here!
+
+    // Step 2: Check each server WITHOUT holding m_csGameSvrAction (NO contention!)
+    for (int i = 0; i < serverCount; i++)
+    {
+        if (servers[i]->HaveAccountInGameServer(szAcc))
+            return (int)servers[i]->GetID();
     }
     return -1;
 }
@@ -847,6 +911,34 @@ IGServer *CGameServer::GetServer(size_t nID)
 }
 
 // ============================================
+// GetAllServers - Retrieve all GameServers with single lock acquisition
+// ============================================
+void CGameServer::GetAllServers(CGameServer **pOutServers, int nMaxServers)
+{
+    if (!pOutServers || nMaxServers <= 0)
+        return;
+
+    // Initialize output array
+    for (int i = 0; i < nMaxServers; i++)
+        pOutServers[i] = NULL;
+
+    // Acquire lock ONCE and get all servers
+    CCriticalSection::Owner locker(CGameServer::m_csGameSvrAction);
+    stdGameSvr::iterator it;
+    for (it = CGameServer::m_theGameServers.begin(); it != CGameServer::m_theGameServers.end(); ++it)
+    {
+        CGameServer *pGS = static_cast<CGameServer*>(it->second);
+        if (pGS)
+        {
+            size_t nID = pGS->GetID();
+            if (nID >= 1 && nID <= (size_t)nMaxServers)
+                pOutServers[nID - 1] = pGS;  // Store in 0-indexed array
+        }
+    }
+    // Lock automatically released here
+}
+
+// ============================================											   
 // Content Management
 // ============================================
 size_t CGameServer::GetContent()

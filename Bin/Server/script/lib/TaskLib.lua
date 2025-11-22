@@ -108,6 +108,7 @@ TASK_DT_REWAR500	= 732;
 TASK_DT_REWAR700	= 733;
 TASK_DT_REWAR1000	= 734;
 TASK_DT_KEY			= 735; -- lenh bai hoan thanh cap toc
+
 ------------------TASK THIEN BAO KHO --------------
 T_BK_KEY_1			= 736; 
 T_BK_KEY_2			= 737; 
@@ -121,6 +122,10 @@ T_BK_KEY_DONE_4		= 744;
 T_BK_KEY_DONE_5		= 744; 
 T_TIN_SU			= 746;
 T_TIN_SU_LB			= 747;
+-------------------TASK VAN TIEU (ESCORT)------------
+TASK_VANTIEU		= 750; -- Van Tieu main task: [1]=type(4/5/6), [2]=random, [7-9]=boss kills
+TASK_NPCVANTIEU		= 751; -- NPC ID of escort cart
+TASK_RESET_VANTIEU	= 752; -- Daily reset: [6]=daily runs, [7]=chest loots
 -------------------TASK LIEN DAU------------
 -------------------TASK PHONG LANG DO------------ 
 -- MISSIONID 				= 4

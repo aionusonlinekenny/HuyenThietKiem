@@ -101,6 +101,7 @@ public:
 	int 	GetLevelItem(unsigned int uId );
 	int 	GetSeriesItem(unsigned int uId );
 	int 	GetNumStack(unsigned int uId );
+	int 	CheckPositionBarrier(int nMapX, int nMapY);
 };
 
 static KCoreShell	g_CoreShell;
@@ -567,19 +568,19 @@ int	KCoreShell::GetGameData(unsigned int uDataId, unsigned int uParam, int nPara
 			switch(pNpc->m_Series)
 			{
 				case series_water:
-					strcpy(pInfo->StatusDesc, "H? Th?y");
+					strcpy(pInfo->StatusDesc, "HÖ Thñy");
 					break;
 				case series_wood:
-					strcpy(pInfo->StatusDesc, "H? M?c");
+					strcpy(pInfo->StatusDesc, "HÖ Méc");
 					break;
 				case series_metal:
-					strcpy(pInfo->StatusDesc, "H? Kim");
+					strcpy(pInfo->StatusDesc, "HÖ Kim");
 					break;
 				case series_fire:
-					strcpy(pInfo->StatusDesc, "H? H?a");
+					strcpy(pInfo->StatusDesc, "HÖ Háa");
 					break;
 				case series_earth:
-					strcpy(pInfo->StatusDesc, "H? Th? ");
+					strcpy(pInfo->StatusDesc, "HÖ Thæ ");
 					break;
 			}
 
@@ -994,7 +995,8 @@ int	KCoreShell::GetGameData(unsigned int uDataId, unsigned int uParam, int nPara
 					itempart_ring1,		itempart_ring2,
 					itempart_pendant,	itempart_foot,
 					itempart_horse,		itempart_mask,
-					itempart_mantle,
+					itempart_mantle,	itempart_signet,
+					itempart_shipin,
 				};
 
 				_ASSERT(pObj->eContainer < itempart_num);
@@ -4435,7 +4437,7 @@ int KCoreShell::SystemMessages(unsigned int uDataId, unsigned int uParam, int nP
 	switch(uDataId)
 	{	
 	case GSM_FIGHT_MODE_ON:
-		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "H? th?ng", MSG_FIGHT_MODE_ON, 
+		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "HÖ thèng", MSG_FIGHT_MODE_ON, 
 														strlen(MSG_FIGHT_MODE_ON), TRUE); 
 		break;
 	case GSM_FEATURE_BUIDING:
@@ -4476,16 +4478,16 @@ int KCoreShell::SystemMessages(unsigned int uDataId, unsigned int uParam, int nP
 				i++;
 			}
 #endif
-			l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "H? th?ng", MSG_FEATURE_BUIDING, 
+			l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "HÖ thèng", MSG_FEATURE_BUIDING, 
 															strlen(MSG_FEATURE_BUIDING), TRUE); 
 		}
 		break;
 	case GSM_PLAYER_RIDEHORSE:
-		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "H? th?ng", MSG_PLAYER_RIDEHORSE, 
+		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "HÖ thèng", MSG_PLAYER_RIDEHORSE, 
 															strlen(MSG_PLAYER_RIDEHORSE), TRUE); 
 		break;
 	case GSM_MAP_TYPE_ERROR:
-		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "H? th?ng", MSG_MAP_TYPE_ERROR, 
+		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "HÖ thèng", MSG_MAP_TYPE_ERROR, 
 															strlen(MSG_MAP_TYPE_ERROR), TRUE); 
 		break;
 	default:
@@ -5429,5 +5431,18 @@ int KCoreShell::GetNumStack(unsigned int uId )
 {
 	return Item[uId].GetStackCount();
 }
-
+int KCoreShell::CheckPositionBarrier(int nMapX, int nMapY)
+{
+	// Check if player exists
+	int nPlayerIndex = Player[CLIENT_PLAYER_INDEX].m_nIndex;
+	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_NPC)
+		return -1; // Invalid player
+	// Check if subworld is valid
+	int nSubWorldIndex = Npc[nPlayerIndex].m_SubWorldIndex;
+	if (nSubWorldIndex < 0 || nSubWorldIndex >= MAX_SUBWORLD)
+		return -1; // Invalid subworld
+	// Get barrier at position
+	// Returns 0 if no barrier (Obstacle_NULL), >0 if has barrier
+	return SubWorld[nSubWorldIndex].GetBarrier(nMapX, nMapY);
+}
 //

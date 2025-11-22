@@ -38,10 +38,11 @@ KPlayerSet::KPlayerSet()
 	m_nResetTaskCount	= 0;
 	m_pSyncTask			= NULL;
 	m_nSyncTaskCount	= 0;
-
 #endif
+
+
 #ifndef _SERVER
-	memset(m_szFortuneRankPic, 0, sizeof(m_szFortuneRankPic));
+	memset(m_szFortuneRankPic, 0, sizeof(m_szFortuneRankPic));	
 #endif
 }
 
@@ -141,7 +142,6 @@ BOOL	KPlayerSet::Init()
 		m_sTongParam.m_nChangePrice	= 1000000;
 		m_sTongParam.m_nLeaveMoney	= 1000000;
 	}
-
 #ifndef _SERVER
 	// Load FortuneRank sprites for mantle display
 	char Buff[32];
@@ -406,7 +406,7 @@ void KPlayerSet::RemoveQuiting(int nIndex)
 		//
 		char szData[128];
 
-		sprintf(szData,"So Tien:%d - So xu:%d - Sï¿½ lï¿½ï¿½ng Item:%d/%d", Player[nIndex].m_ItemList.GetMoney(room_equipment) + Player[nIndex].m_ItemList.GetMoney(room_repository), Player[nIndex].GetExtPoint(), Player[nIndex].m_ItemList.GetItemCount(), MAX_PLAYER_ITEM);
+		sprintf(szData,"So Tien:%d - So xu:%d - Sè l­îng Item:%d/%d", Player[nIndex].m_ItemList.GetMoney(room_equipment) + Player[nIndex].m_ItemList.GetMoney(room_repository), Player[nIndex].GetExtPoint(), Player[nIndex].m_ItemList.GetItemCount(), MAX_PLAYER_ITEM);
 		//
 //		Player[nIndex].SaveLog(1, szData, "LOG_OUT_GAME", "");
 

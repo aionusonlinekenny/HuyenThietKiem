@@ -8,8 +8,10 @@
 #include "../UiBase.h"
 #include "UiFindPos.h"
 #include "UiMiniMap.h"//PaintFindPos by kinnox;
+#include "UiInformation.h"						  
 #include "../../../core/src/coreshell.h"
 #include "../../../core/src/GameDataDef.h"
+							   
 
 extern iCoreShell*		g_pCoreShell;
 
@@ -161,19 +163,34 @@ int KUiFindPos::WndProc(unsigned int uMsg, unsigned int uParam, int nParam)
 
 
 void KUiFindPos::OnOk()
-{	
-	if(g_pCoreShell)
-	{	
-		OnCheckInput();
-
-		POINT LineDest;
-
-		LineDest.x = m_PosX.GetIntNumber();
-		LineDest.y = m_PosY.GetIntNumber();
-		KUiMiniMap::SetValueFindPos(LineDest.x, LineDest.y);//PaintFindPos by kinnox;
-		//g_pCoreShell->SceneMapOperation(GSMOI_PAINT_LINE, (unsigned int)&LineDest, 0);
-		g_pCoreShell->AutoMove();// find way by kinnox;
+{
+	if(!g_pCoreShell)
+	{
+		CloseWindow();
+		return;
 	}
+
+	OnCheckInput();
+
+	// Get input coordinates (in Tâm units)
+	int nDestX = m_PosX.GetIntNumber();
+	int nDestY = m_PosY.GetIntNumber();
+
+
+	// Validate: coordinates must be positive
+
+
+	if(nDestX <= 0 || nDestY <= 0)
+	{
+		UIMessageBox("Vui lßng nhËp täa ®é hîp lÖ!", this);
+		return;
+	}
+
+	// Use the same mechanism as flag/marker on minimap
+	// This will automatically handle pathfinding and obstacles
+	KUiMiniMap::SetValueFindPos(nDestX, nDestY);
+	g_pCoreShell->AutoMove();
+
 	CloseWindow();
 }
 

@@ -234,6 +234,7 @@ public:
 	// Add By ShinT
 	void	c2sEndRunTime(int nIndex, BYTE* pProtocol);
 	void	PlayerRightAutoMove(int nIndex, BYTE* pProtocol);
+	void	PlayerAutoSortEquipment(int nIndex, BYTE* pProtocol); // Auto-sort inventory
 	// End
 #endif
 };

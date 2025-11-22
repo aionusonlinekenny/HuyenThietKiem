@@ -72,7 +72,7 @@ private:
 	KWndText32		m_PriceParam;
 
 	POINT           m_OldPos;
-	unsigned int	m_uLastScrollTime;
+	unsigned int	m_uLastScrollTime;						  
 	short           m_nOffsetX;
 	short           m_nOffsetY;
 	int				m_nIsStopUpdate;

@@ -729,7 +729,6 @@ BOOL	KNpcRes::SetMantle(short nMantleType)
 	}
 	return TRUE;
 }
-
 // --
 //
 // --
