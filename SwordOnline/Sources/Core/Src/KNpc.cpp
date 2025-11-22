@@ -190,10 +190,11 @@ void KNpc::Init()
 	m_WeaponType = 1;			
 	m_HorseType = -1;			
 	m_bRideHorse = FALSE;
-	m_wMaskType 				= 0;		
+	m_wMaskType 				= 0;
 	m_wMaskMark 				= 0;
 	m_MantleType				= -1;
-	
+	m_byMantleLevel				= 0;
+
 	ZeroMemory(Name, sizeof(Name));		
 	m_NpcSettingIdx = 0;		
 	m_CorpseSettingIdx = 0;
@@ -6142,10 +6143,10 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 		int nXX = nMpsX - nFontSize * g_StrLen(szString) / 4;
 		g_pRepresent->OutputText(nFontSize, szString, KRF_ZERO_END, nXX, nMpsY, dwColor, 0, nHeightOff, dwBorderColor);
 
-		// Draw mantle icon before name (to the left)
+		// Draw mantle icon centered above name (aligned with life bar)
 		if(m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL)
 		{
-			PaintMantle(nHeightOff, nFontSize, nXX, nMpsY);
+			PaintMantle(nHeightOff, nFontSize, nMpsX, nMpsY);
 		}
 
 		if(m_wMaskType > 0)
@@ -6271,7 +6272,7 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 
 #ifndef _SERVER
 //
-// Draw mantle icon before player name
+// Draw mantle icon centered above player name (aligned with life bar)
 //
 int KNpc::PaintMantle(int nHeightOff, int nFontSize, int nMpsX, int nMpsY)
 {
@@ -6285,8 +6286,9 @@ int KNpc::PaintMantle(int nHeightOff, int nFontSize, int nMpsX, int nMpsY)
 	strcpy(RUIconImage.szImage, PlayerSet.m_szFortuneRankPic[m_byMantleLevel]);
 	KImageParam	Param;
 	g_pRepresent->GetImageParam(RUIconImage.szImage, &Param, ISI_T_SPR);
-	RUIconImage.oPosition.nX = nMpsX - Param.nWidth;
-	RUIconImage.oPosition.nY = nMpsY - Param.nHeight/2 - 4;
+	// Center the icon horizontally like the life bar
+	RUIconImage.oPosition.nX = nMpsX - Param.nWidth / 2;
+	RUIconImage.oPosition.nY = nMpsY - Param.nHeight - nFontSize - 8;
 	RUIconImage.oPosition.nZ = nHeightOff;
 	RUIconImage.nFrame = g_SubWorldSet.GetGameTime() % Param.nNumFrames;
 	g_pRepresent->DrawPrimitives(1, &RUIconImage, RU_T_IMAGE, 0);
