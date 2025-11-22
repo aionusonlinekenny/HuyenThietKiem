@@ -119,6 +119,7 @@ void	KPlayer::Release()
 	m_nRightSkillID = 0;
 	m_nRightSkillLevel = 0;
 	m_nSendMoveFrames = defMAX_PLAYER_SEND_MOVE_FRAME;
+	m_dwLastPosSyncTime = 0;
 	m_MouseDown[0] = FALSE;
 	m_MouseDown[1] = FALSE;
 	m_bDebugMode	= FALSE;
@@ -356,7 +357,24 @@ void	KPlayer::Active()
 	}
 	
 	m_nSendMoveFrames++;
-	
+	// FIX: Periodic position sync to prevent desync (every 2 seconds)
+	// This ensures position is accurate even when player is standing still/attacking
+	DWORD currentTime = GetTickCount();
+	if (m_dwLastPosSyncTime == 0 || (currentTime - m_dwLastPosSyncTime) >= 2000)  // 2 seconds
+	{
+		// Force sync current position
+		int nMpsX, nMpsY;
+		Npc[m_nIndex].GetMpsPos(&nMpsX, &nMpsY);
+		if (Npc[m_nIndex].m_Doing == do_run)
+		{
+			SendClientCmdRun(nMpsX, nMpsY);  // Sync as run
+		}
+		else if (Npc[m_nIndex].m_Doing == do_walk)
+		{
+			SendClientCmdWalk(nMpsX, nMpsY);  // Sync as walk
+		}
+		m_dwLastPosSyncTime = currentTime;  // Update last sync time
+	}
 	this->m_cPK.Active();
 	if (Npc[m_nIndex].m_bOpenShop <= 0)
 		this->m_cAI.Active(); //AutoAI by kinnox;
@@ -664,6 +682,7 @@ void KPlayer::ProcessMouse(int x, int y, int Key, MOUSE_BUTTON nButton)
 				SendClientCmdRun(nX, nY);
 			}
 			m_nSendMoveFrames = 0;
+			m_dwLastPosSyncTime = GetTickCount();
 		}
 		return;
 	}
@@ -707,6 +726,7 @@ void KPlayer::Walk(int nDir, int nSpeed)
 			return;
 		
 		SendClientCmdWalk(nX, nY);
+		m_dwLastPosSyncTime = GetTickCount();
 	}
 }
 

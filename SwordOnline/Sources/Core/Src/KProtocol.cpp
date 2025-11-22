@@ -302,8 +302,8 @@ void SendClientCmdSkill(int nSkillID, int nX, int nY)
 	NPC_SKILL_COMMAND	NetCommand;
 	
 	NetCommand.ProtocolType		= (BYTE)c2s_npcskill;
-/*	NetCommand.dwID = Player[CLIENT_PLAYER_INDEX].GetPlayerID();			
-	NetCommand.dwTimePacker = GetTickCount();*/
+	NetCommand.dwID = Player[CLIENT_PLAYER_INDEX].GetPlayerID();
+	NetCommand.dwTimePacker = GetTickCount();  // FIX: Send player ID and timestamp for accurate position sync
 	NetCommand.nSkillID			= nSkillID;
 	NetCommand.nMpsX			= nX;
 	NetCommand.nMpsY			= nY;

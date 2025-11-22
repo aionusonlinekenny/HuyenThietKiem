@@ -73,7 +73,8 @@ public:
 	BOOL			m_bFollowPeople;
 	char			m_FollowPeopleName[32];
 	int				m_nRadiusFollow;
-	int				m_nLeaderCurrentTarget;	
+	int				m_nLeaderCurrentTarget;
+	unsigned int	m_nLeaderTargetLostTime;	// Time when leader's target was lost (for grace period)	
 	BOOL			m_bAttackAround;
 	BOOL			m_bAroundBtn;
 	int				m_PosXAuto;

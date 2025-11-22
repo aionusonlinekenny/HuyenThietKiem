@@ -62,7 +62,8 @@ void KPlayerAI::Release()
 	m_FollowPeopleName[0] 	= 0;
 	m_FollowPeopleIdx 		= 0;
 	m_nRadiusFollow			= 0;
-	m_nLeaderCurrentTarget	= 0;	
+	m_nLeaderCurrentTarget	= 0;
+	m_nLeaderTargetLostTime	= 0;	
 	m_bAutoAttack 			= TRUE;	
 	m_bFollowAttack			= FALSE;
 	m_SpaceBar 				= FALSE;
@@ -378,18 +379,40 @@ void KPlayerAI::Active()
 
 				if (m_FollowPeopleIdx)
 				{
-					// FIX: Track leader's current attack target for coordinated combat
+					// FIX: Track leader's current attack target for coordinated combat with grace period
 					// When following, follower should attack the same target as leader
 					if (Npc[m_FollowPeopleIdx].m_nPeopleIdx > 0 &&
 						Npc[m_FollowPeopleIdx].m_Index > 0)
 					{
 						// Leader is attacking someone - update our target tracking
-						m_nLeaderCurrentTarget = Npc[m_FollowPeopleIdx].m_nPeopleIdx;
+						int newTarget = Npc[m_FollowPeopleIdx].m_nPeopleIdx;
+						if (m_nLeaderCurrentTarget != newTarget)
+						{
+							// Leader switched to a new target
+							m_nLeaderCurrentTarget = newTarget;
+							m_nLeaderTargetLostTime = 0;  // Reset grace period timer
+						}
 					}
-					else
+					else if (m_nLeaderCurrentTarget > 0)
 					{
 						// Leader not attacking - clear target tracking
-						m_nLeaderCurrentTarget = 0;
+						// Leader stopped attacking - start grace period
+						// Don't clear target immediately, give leader time to pick next target
+						if (m_nLeaderTargetLostTime == 0)
+						{
+							m_nLeaderTargetLostTime = GetTickCount();
+						}
+						else
+						{
+							// Check if grace period expired (2 seconds)
+							unsigned int elapsed = GetTickCount() - m_nLeaderTargetLostTime;
+							if (elapsed > 4000)  // 2 second grace period
+							{
+								// Grace period expired, leader really has no target now
+								m_nLeaderCurrentTarget = 0;
+								m_nLeaderTargetLostTime = 0;
+							}
+						}
 					}
 					int distance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_FollowPeopleIdx);
 
@@ -416,20 +439,32 @@ void KPlayerAI::Active()
 
 					if (distance >= m_nRadiusFollow)
 					{
-						int nX, nY;
-						Npc[m_FollowPeopleIdx].GetMpsPos(&nX,&nY);
-						if (!m_bPriorityUseMouse)
-							MoveTo(nX, nY);
+						// FIX: Don't reset combat if attacking leader's target
+						// Check if we're currently attacking leader's target
+						BOOL isAttackingLeaderTarget = (m_nLeaderCurrentTarget > 0 &&
+						                                 m_Actacker == m_nLeaderCurrentTarget &&
+						                                 m_bActacker == TRUE);
 
-						m_Actacker = 0;
-						m_bActacker = FALSE;
-						m_nLifeLag = 0;
-						m_nTimeRunLag = 0;
-						m_nTimeSkip = 0;
-						m_Count_Acttack_Lag = 0;
-						m_nObject = 0;
-						m_bObject = FALSE;
-						return;
+						// If attacking leader's target, allow combat to continue even when far from leader
+						// This prevents breaking combat coordination when chasing enemies
+						if (!isAttackingLeaderTarget)
+						{
+						// Not attacking leader's target, move back to leader
+							int nX, nY;
+							Npc[m_FollowPeopleIdx].GetMpsPos(&nX,&nY);
+							if (!m_bPriorityUseMouse)
+								MoveTo(nX, nY);
+							m_Actacker = 0;
+							m_bActacker = FALSE;
+							m_nLifeLag = 0;
+							m_nTimeRunLag = 0;
+							m_nTimeSkip = 0;
+							m_Count_Acttack_Lag = 0;
+							m_nObject = 0;
+							m_bObject = FALSE;
+							return;
+						}
+						// Else: Continue attacking leader's target even if far from leader
 					}
 				}
 
@@ -636,11 +671,27 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 			if (distance <= m_nRadiusFollow * 2)
 			{
 				// Attack same target as leader (coordinated combat)
+				// Reset grace period since target is still valid
+				m_nLeaderTargetLostTime = 0;
 				return m_nLeaderCurrentTarget;
 			}
 		}
-		// Leader's target invalid/dead -> clear it and find new target below
+		// Leader's target invalid/dead -> check if in grace period
+		if (m_nLeaderTargetLostTime == 0)
+		{
+			// Just lost target, start grace period
+			m_nLeaderTargetLostTime = GetTickCount();
+		}
+		unsigned int elapsed = GetTickCount() - m_nLeaderTargetLostTime;
+		if (elapsed < 4000)  // Still in grace period (2 seconds)
+		{
+			// Don't find new target yet, wait for leader to pick next target
+			// Return 0 to stay near leader
+			return 0;
+		}
+		// Grace period expired, clear target and find new one below
 		m_nLeaderCurrentTarget = 0;
+		m_nLeaderTargetLostTime = 0;
 	}
 	// Original logic: Find nearest NPC when not following or leader has no target
 	if (AutoAddNpc2Array(nRelation))
@@ -686,15 +737,39 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 
 	if (nRet == 0 && m_bAutoAttack == TRUE)
 	{
-		if (m_AutoMove)
-			 PlayerMoveMps();
+		// FIX: When following leader and no target, stick to leader instead of wandering
+		// This keeps follower ready to attack leader's next target
+		if (m_bFollowPeople && m_FollowPeopleIdx > 0)
+		{
+			// Move closer to leader when idle (no target)
+			int leaderDistance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_FollowPeopleIdx);
+			if (leaderDistance > m_nRadiusFollow / 3)  // If not very close to leader
+			{
+				int nX, nY;
+				Npc[m_FollowPeopleIdx].GetMpsPos(&nX, &nY);
+				if (!m_bPriorityUseMouse)
+					MoveTo(nX, nY);  // Move to leader's position
+			}
+		}
+		else if (m_AutoMove)
+		{
+			PlayerMoveMps();  // Original behavior when not following
+		}
 		AutoReturn();
 		m_Actacker = 0;
 		m_bActacker = FALSE;
-		Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;//moi them by kinnox 20/07/2023;
+		// FIX: Don't clear player's target when following leader and in grace period
+		// This prevents losing track of combat when waiting for leader's next target
+		BOOL isInGracePeriod = (m_bFollowPeople && m_FollowPeopleIdx > 0 &&
+		                         m_nLeaderTargetLostTime > 0 &&
+		                         (GetTickCount() - m_nLeaderTargetLostTime) < 4000);
+		if (!isInGracePeriod)
+		{
+			// Only clear target if not in grace period
+			Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;//moi them by kinnox 20/07/2023;
+		}
 		// m_nTimeRunLag = 0;
 		// m_Count_Acttack_Lag = 0;
-
 	}
 	return nRet;
 }
