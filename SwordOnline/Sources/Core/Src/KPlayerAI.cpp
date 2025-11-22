@@ -415,15 +415,20 @@ void KPlayerAI::Active()
 					}
 					int distance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_FollowPeopleIdx);
 
+					// FIX: Smart catch-up when leader is too far (train route scenario)
+					// Detect if follower is "lost" - leader moved very far away
+					BOOL isTooFar = (distance > m_nRadiusFollow * 3);  // 3x radius = lost
+
 					// AUTO RIDE HORSE FEATURE: Auto mount when target is too far
 					// Note: Dismounting is handled by other auto-play logic (some classes can attack while riding)
 					if (Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing != do_attack &&
 						Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing != do_magic &&
 						Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing != do_skill)
 					{
-						// If target moves beyond half radius → mount horse to catch up early
-						// Example: radius=500 → mount at distance>250 (not 750!) to catch up in time
-						if (distance > m_nRadiusFollow / 2)  // 0.5x radius (half)
+						// Smart horse mounting based on distance
+						// - Normal distance (>0.5x radius): mount to catch up
+						// - Too far (>3x radius): definitely mount to chase
+						if (distance > m_nRadiusFollow / 2 || isTooFar)  // 0.5x radius OR lost
 						{
 							if (!Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_bRideHorse)
 							{
@@ -436,7 +441,12 @@ void KPlayerAI::Active()
 						}
 					}
 
-					if (distance >= m_nRadiusFollow)
+					// FIX: Extended radius check for train route scenarios
+					// Allow follower to chase leader even when very far away
+					// This prevents "giving up" when leader moves according to coordinate list
+					int effectiveRadius = isTooFar ? (m_nRadiusFollow * 5) : m_nRadiusFollow;
+
+					if (distance >= effectiveRadius)
 					{
 						// FIX: Don't reset combat if attacking leader's target
 						// Check if we're currently attacking leader's target
@@ -448,6 +458,16 @@ void KPlayerAI::Active()
 						// This prevents breaking combat coordination when chasing enemies
 						if (!isAttackingLeaderTarget)
 						{
+							// FIX: Smart catch-up - force RUN mode when too far
+							// When leader is very far (train route), follower must run to catch up
+							if (isTooFar)
+							{
+								// Force RUN mode to catch up faster
+								Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].SendCommand(do_run,
+									Npc[m_FollowPeopleIdx].m_MapX,
+									Npc[m_FollowPeopleIdx].m_MapY);
+							}
+
 							// Not attacking leader's target, move back to leader
 							int nX, nY;
 							Npc[m_FollowPeopleIdx].GetMpsPos(&nX,&nY);
