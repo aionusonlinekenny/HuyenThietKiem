@@ -6269,12 +6269,11 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 	return nHeightOffset;
 }
 
+#ifndef _SERVER
 //
 // Draw mantle icon before player name
 //
-
 int KNpc::PaintMantle(int nHeightOff, int nFontSize, int nMpsX, int nMpsY)
-
 {
 	KRUImage RUIconImage;
 	RUIconImage.nType = ISI_T_SPR;
@@ -6293,6 +6292,7 @@ int KNpc::PaintMantle(int nHeightOff, int nFontSize, int nMpsX, int nMpsY)
 	g_pRepresent->DrawPrimitives(1, &RUIconImage, RU_T_IMAGE, 0);
 	return RUIconImage.oPosition.nX;
 }
+#endif
 //
 void KNpc::PaintNpcAuto(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBorderColor)
 {
