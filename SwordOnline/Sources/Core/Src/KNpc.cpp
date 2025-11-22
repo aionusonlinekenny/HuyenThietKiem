@@ -6140,26 +6140,9 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 				strcat(szString, "Lo�n");
 			strcat(szString, ")");
 		}
-		// Draw mantle icon and name: [sprite][name] centered with life bar
-		int nNameWidth = nFontSize * g_StrLen(szString) / 4;
-		int nSpriteWidth = 0;
-		int nStartX = nMpsX - nNameWidth; // Default: just name centered
-
-		if(m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL)
-		{
-			// Get sprite width to calculate total width
-			KImageParam Param;
-			g_pRepresent->GetImageParam(PlayerSet.m_szFortuneRankPic[m_byMantleLevel], &Param, ISI_T_SPR);
-			nSpriteWidth = Param.nWidth;
-			// Start position for [sprite][name] to be centered: subtract HALF of total width
-			nStartX = nMpsX - (nSpriteWidth + nNameWidth) / 2;
-			// Draw sprite first
-			PaintMantle(nHeightOff, nFontSize, nStartX, nMpsY);
-		}
-
-		// Draw name after sprite (or centered if no sprite)
-		int nNameX = nStartX + nSpriteWidth;
-		g_pRepresent->OutputText(nFontSize, szString, KRF_ZERO_END, nNameX, nMpsY, dwColor, 0, nHeightOff, dwBorderColor);
+		// Calculate X position with offset for mantle icon
+		int nXX = nMpsX - nFontSize * g_StrLen(szString) / 4 + ((m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL) ? 40 : 0);
+		g_pRepresent->OutputText(nFontSize, szString, KRF_ZERO_END, nXX, nMpsY, dwColor, 0, nHeightOff, dwBorderColor);
 
 		if(m_wMaskType > 0)
 		{
@@ -6170,6 +6153,12 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 		if(m_cTransLife > 0)
 		{
 			PaintTransLifeInfo(nFontSize, nHeightOff);
+		}
+
+		// Draw mantle icon before name
+		if(m_byMantleLevel > 0 && m_byMantleLevel <= MAX_ITEM_LEVEL)
+		{
+			nXX = PaintMantle(nHeightOff, nFontSize, nXX, nMpsY);
 		}
 		nHeightOffset += nFontSize + 1;
 
@@ -6284,7 +6273,7 @@ int KNpc::PaintInfo(int nHeightOffset, bool bSelect, int nFontSize, DWORD dwBord
 
 #ifndef _SERVER
 //
-// Draw mantle icon at specified position (left of player name)
+// Draw mantle icon before player name
 //
 int KNpc::PaintMantle(int nHeightOff, int nFontSize, int nMpsX, int nMpsY)
 {
@@ -6298,9 +6287,8 @@ int KNpc::PaintMantle(int nHeightOff, int nFontSize, int nMpsX, int nMpsY)
 	strcpy(RUIconImage.szImage, PlayerSet.m_szFortuneRankPic[m_byMantleLevel]);
 	KImageParam	Param;
 	g_pRepresent->GetImageParam(RUIconImage.szImage, &Param, ISI_T_SPR);
-	// Draw sprite at the position passed in (already calculated to be left of name)
-	RUIconImage.oPosition.nX = nMpsX;
-	RUIconImage.oPosition.nY = nMpsY - Param.nHeight / 2;
+	RUIconImage.oPosition.nX = nMpsX - Param.nWidth;
+	RUIconImage.oPosition.nY = nMpsY - Param.nHeight/2 - 4;
 	RUIconImage.oPosition.nZ = nHeightOff;
 	RUIconImage.nFrame = g_SubWorldSet.GetGameTime() % Param.nNumFrames;
 	g_pRepresent->DrawPrimitives(1, &RUIconImage, RU_T_IMAGE, 0);
