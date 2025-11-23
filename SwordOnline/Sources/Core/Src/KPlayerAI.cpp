@@ -684,15 +684,11 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 		    Npc[m_nLeaderCurrentTarget].m_Index > 0 &&
 		    Npc[m_nLeaderCurrentTarget].m_dwID > 0)
 		{
-			// Check if target is within reasonable range (2x follow radius)
-			int distance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_nLeaderCurrentTarget);
-			if (distance <= m_nRadiusFollow * 2)
-			{
-				// Attack same target as leader (coordinated combat)
-				// Reset grace period since target is still valid
-				m_nLeaderTargetLostTime = 0;
-				return m_nLeaderCurrentTarget;
-			}
+			// FIX: NO distance limit - attack leader's target no matter how far
+			// This prevents losing leader when chasing targets in train routes
+			// Follower will chase leader AND target simultaneously
+			m_nLeaderTargetLostTime = 0;  // Reset grace period since target is still valid
+			return m_nLeaderCurrentTarget;
 		}
 
 		// Leader's target invalid/dead -> check if in grace period
@@ -1504,58 +1500,60 @@ void KPlayerAI::PlayerFollowActack(int i)
 	{
 		if (m_Count_Acttack_Lag >= defAUTO_COUNT_LAG/2  || m_nTimeRunLag >= defAUTO_TIME_LAG/2 || m_nTimeSkip >= defAUTO_TIME_SKIP*nAddTime)
 		{
+			// FIX: Move closer and clear target (stuck detection)
+			int nTargetX, nTargetY;
+			Npc[i].GetMpsPos(&nTargetX, &nTargetY);
+			MoveTo(nTargetX, nTargetY);  // Approach target to retry from closer position
+
+			// Try to add to lag array (for tracking), but proceed even if array is full
 			for (int j=0; j < defMAX_ARRAY_AUTO; j++)
 			{
 				if (m_ArrayNpcLag[j] == 0)
 				{
 					m_ArrayNpcLag[j] = i;
 					m_ArrayTimeNpcLag[j] = GetTickCount();
-
-					// FIX: Move closer to target player before giving up (stuck due to position desync)
-					// This helps retry attack from a better position
-					int nTargetX, nTargetY;
-					Npc[i].GetMpsPos(&nTargetX, &nTargetY);
-					MoveTo(nTargetX, nTargetY);  // Approach target to retry from closer position
-
-					m_Actacker = 0;
-					m_bActacker = FALSE;
-					m_nLifeLag = 0;
-					m_nTimeRunLag = 0;
-					m_Count_Acttack_Lag = 0;
-					m_nTimeSkip = 0;
-					Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;//moi them by kinnox 20/07/2023;
-					return;
+					break;  // Found slot, stop searching
 				}
 			}
+			// CRITICAL: Clear target even if array is full (prevents infinite stuck)
+			m_Actacker = 0;
+			m_bActacker = FALSE;
+			m_nLifeLag = 0;
+			m_nTimeRunLag = 0;
+			m_Count_Acttack_Lag = 0;
+			m_nTimeSkip = 0;
+			Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;//moi them by kinnox 20/07/2023;
+			return;
 		}
 	}
 	else
 	{
 		if (m_Count_Acttack_Lag >= defAUTO_COUNT_LAG*nAddTime || m_nTimeRunLag >= defAUTO_TIME_LAG * 2*nAddTime || m_nTimeSkip >= defAUTO_TIME_SKIP*nAddTime)
 		{
+			// FIX: Move closer and clear target (stuck detection)
+			int nNpcX, nNpcY;
+			Npc[i].GetMpsPos(&nNpcX, &nNpcY);
+			MoveTo(nNpcX, nNpcY);  // Approach NPC to retry from closer position
+
+			// Try to add to lag array (for tracking), but proceed even if array is full
 			for (int j=0; j < defMAX_ARRAY_AUTO; j++)
 			{
 				if (m_ArrayNpcLag[j] == 0)
 				{
 					m_ArrayNpcLag[j] = i;
 					m_ArrayTimeNpcLag[j] = GetTickCount();
-
-					// FIX: Move closer to NPC before giving up (stuck due to position desync)
-					// This helps retry attack from a better position
-					int nNpcX, nNpcY;
-					Npc[i].GetMpsPos(&nNpcX, &nNpcY);
-					MoveTo(nNpcX, nNpcY);  // Approach NPC to retry from closer position
-
-					m_Actacker = 0;
-					m_bActacker = FALSE;
-					m_nLifeLag = 0;
-					m_nTimeRunLag = 0;
-					m_Count_Acttack_Lag = 0;
-					m_nTimeSkip = 0;
-					Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;//moi them by kinnox 20/07/2023;
-					return;
+					break;  // Found slot, stop searching
 				}
 			}
+			// CRITICAL: Clear target even if array is full (prevents infinite stuck)
+			m_Actacker = 0;
+			m_bActacker = FALSE;
+			m_nLifeLag = 0;
+			m_nTimeRunLag = 0;
+			m_Count_Acttack_Lag = 0;
+			m_nTimeSkip = 0;
+			Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;//moi them by kinnox 20/07/2023;
+			return;
 		}
 
 	}
