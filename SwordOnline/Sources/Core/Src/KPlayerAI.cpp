@@ -622,7 +622,9 @@ void KPlayerAI::Active()
 				}
 			else
 				m_bActacker = FALSE;
-				if ( m_AutoMove && index == 0)
+				// FIX: Only auto move to coordinate list when NOT following leader
+				// Prevent PlayerMoveMps() from overriding "stick to leader" logic
+				if (m_AutoMove && index == 0 && !m_bFollowPeople)
 				{
 					if (m_bPriorityUseMouse)
 						return;
