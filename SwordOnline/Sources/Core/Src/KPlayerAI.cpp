@@ -1501,9 +1501,13 @@ void KPlayerAI::PlayerFollowActack(int i)
 		if (m_Count_Acttack_Lag >= defAUTO_COUNT_LAG/2  || m_nTimeRunLag >= defAUTO_TIME_LAG/2 || m_nTimeSkip >= defAUTO_TIME_SKIP*nAddTime)
 		{
 			// FIX: Move closer and clear target (stuck detection)
-			int nTargetX, nTargetY;
-			Npc[i].GetMpsPos(&nTargetX, &nTargetY);
-			MoveTo(nTargetX, nTargetY);  // Approach target to retry from closer position
+			// Only approach if not manual control (respect user input)
+			if (!m_bPriorityUseMouse)
+			{
+				int nTargetX, nTargetY;
+				Npc[i].GetMpsPos(&nTargetX, &nTargetY);
+				MoveTo(nTargetX, nTargetY);  // Approach target to retry from closer position
+			}
 
 			// Try to add to lag array (for tracking), but proceed even if array is full
 			for (int j=0; j < defMAX_ARRAY_AUTO; j++)
@@ -1531,9 +1535,13 @@ void KPlayerAI::PlayerFollowActack(int i)
 		if (m_Count_Acttack_Lag >= defAUTO_COUNT_LAG*nAddTime || m_nTimeRunLag >= defAUTO_TIME_LAG * 2*nAddTime || m_nTimeSkip >= defAUTO_TIME_SKIP*nAddTime)
 		{
 			// FIX: Move closer and clear target (stuck detection)
-			int nNpcX, nNpcY;
-			Npc[i].GetMpsPos(&nNpcX, &nNpcY);
-			MoveTo(nNpcX, nNpcY);  // Approach NPC to retry from closer position
+			// Only approach if not manual control (respect user input)
+			if (!m_bPriorityUseMouse)
+			{
+				int nNpcX, nNpcY;
+				Npc[i].GetMpsPos(&nNpcX, &nNpcY);
+				MoveTo(nNpcX, nNpcY);  // Approach NPC to retry from closer position
+			}
 
 			// Try to add to lag array (for tracking), but proceed even if array is full
 			for (int j=0; j < defMAX_ARRAY_AUTO; j++)
