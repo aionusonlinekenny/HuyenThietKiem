@@ -87,8 +87,8 @@
 //AutoAI by kinnox;
 //// -- 
 #define		defMAX_ARRAY_AUTO				50
-#define		defAUTO_TIME_LAG				100
-#define		defAUTO_COUNT_LAG				150 //150
+#define		defAUTO_TIME_LAG				50   // Reduced from 100 for faster stuck detection (~0.8s @ 60fps)
+#define		defAUTO_COUNT_LAG				75   // Reduced from 150 for faster stuck detection (~1.25s @ 60fps)
 #define		defAUTO_TIME_RESET_LAG			10000 //7000
 #define		defAUTO_TIME_SKIP				300 //7000
 #define		TIME_RIDE						5000  // 5 seconds cooldown for riding/dismounting

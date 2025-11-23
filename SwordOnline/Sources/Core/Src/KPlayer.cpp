@@ -632,12 +632,17 @@ void KPlayer::ProcessMouse(int x, int y, int Key, MOUSE_BUTTON nButton)
 				return ;
 			}
 			
-			// FIX: Force sync position before attacking to prevent desync
-			// This ensures other clients see correct attack position immediately
-			int nMpsX, nMpsY;
-			Npc[m_nIndex].GetMpsPos(&nMpsX, &nMpsY);
-			SendClientCmdWalk(nMpsX, nMpsY);  // Force position sync before skill
-			m_dwLastPosSyncTime = GetTickCount();  // Update to prevent duplicate sync
+			// FIX: Throttled position sync before skill to prevent desync (anti-spam protection)
+			// Only sync if 300ms passed since last sync to avoid VPS spam detection
+			// Max 3.3 sync/s + periodic 1/s = 4.3/s total position sync (safe)
+			DWORD currentTime = GetTickCount();
+			if (m_dwLastPosSyncTime == 0 || (currentTime - m_dwLastPosSyncTime) >= 300)
+			{
+				int nMpsX, nMpsY;
+				Npc[m_nIndex].GetMpsPos(&nMpsX, &nMpsY);
+				SendClientCmdWalk(nMpsX, nMpsY);  // Throttled position sync
+				m_dwLastPosSyncTime = currentTime;
+			}
 
 			if (!nTargetIdx)
 			{

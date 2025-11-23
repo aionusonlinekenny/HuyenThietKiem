@@ -1510,6 +1510,13 @@ void KPlayerAI::PlayerFollowActack(int i)
 				{
 					m_ArrayNpcLag[j] = i;
 					m_ArrayTimeNpcLag[j] = GetTickCount();
+
+					// FIX: Move closer to target player before giving up (stuck due to position desync)
+					// This helps retry attack from a better position
+					int nTargetX, nTargetY;
+					Npc[i].GetMpsPos(&nTargetX, &nTargetY);
+					MoveTo(nTargetX, nTargetY);  // Approach target to retry from closer position
+
 					m_Actacker = 0;
 					m_bActacker = FALSE;
 					m_nLifeLag = 0;
@@ -1532,6 +1539,13 @@ void KPlayerAI::PlayerFollowActack(int i)
 				{
 					m_ArrayNpcLag[j] = i;
 					m_ArrayTimeNpcLag[j] = GetTickCount();
+
+					// FIX: Move closer to NPC before giving up (stuck due to position desync)
+					// This helps retry attack from a better position
+					int nNpcX, nNpcY;
+					Npc[i].GetMpsPos(&nNpcX, &nNpcY);
+					MoveTo(nNpcX, nNpcY);  // Approach NPC to retry from closer position
+
 					m_Actacker = 0;
 					m_bActacker = FALSE;
 					m_nLifeLag = 0;
@@ -1543,7 +1557,7 @@ void KPlayerAI::PlayerFollowActack(int i)
 				}
 			}
 		}
-	
+
 	}
 	m_nTimeRunLag++;
 	PaintActionAuto(1,i,0,0);//Dang danh quai
