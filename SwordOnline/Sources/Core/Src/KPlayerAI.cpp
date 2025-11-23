@@ -456,21 +456,18 @@ void KPlayerAI::Active()
 						// This prevents breaking combat coordination when chasing enemies
 						if (!isAttackingLeaderTarget)
 						{
-							// FIX: Smart catch-up - force RUN mode when too far
-							// When leader is very far (train route), follower must run to catch up
-							if (isTooFar)
-							{
-								// Force RUN mode to catch up faster
-								Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].SendCommand(do_run,
-									Npc[m_FollowPeopleIdx].m_MapX,
-									Npc[m_FollowPeopleIdx].m_MapY);
-							}
-
 							// ALWAYS move to leader (never give up, no distance limit)
-							int nX, nY;
-							Npc[m_FollowPeopleIdx].GetMpsPos(&nX,&nY);
+							// Only if not manual control (respect user input)
 							if (!m_bPriorityUseMouse)
+							{
+								int nX, nY;
+								Npc[m_FollowPeopleIdx].GetMpsPos(&nX,&nY);
+
+								// FIX: Use MoveTo for all distances (handles run mode automatically)
+								// Removed SendCommand(do_run) - it used wrong MapX/MapY coordinates
+								// and didn't respect manual control, causing "giật giật" and wrong direction
 								MoveTo(nX, nY);
+							}
 
 							m_Actacker = 0;
 							m_bActacker = FALSE;
