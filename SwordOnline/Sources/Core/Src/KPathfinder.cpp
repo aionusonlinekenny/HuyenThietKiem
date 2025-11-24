@@ -24,13 +24,7 @@ KPathfinder::KPathfinder()
 	m_nNodesSearched = 0;
 	m_nPathsFound = 0;
 	m_nCacheHits = 0;
-
-	// Pre-allocate node pool
-	m_NodePool.reserve(PATHFINDER_MAX_NODES);
-	for (int i = 0; i < PATHFINDER_MAX_NODES; i++)
-	{
-		m_NodePool.push_back(new AStarPathNode());
-	}
+	m_bInitialized = false;  // Lazy initialization
 
 	// Clear cache
 	for (int i = 0; i < PATHFINDER_CACHE_SIZE; i++)
@@ -47,11 +41,27 @@ KPathfinder::~KPathfinder()
 		delete m_NodePool[i];
 	}
 	m_NodePool.clear();
+	m_bInitialized = false;
 }
 
 //===============================================================
 // Initialization
 //===============================================================
+
+void KPathfinder::InitializeNodePool()
+{
+	if (m_bInitialized)
+		return;  // Already initialized
+
+	// Pre-allocate node pool (lazy initialization to save memory)
+	m_NodePool.reserve(PATHFINDER_MAX_NODES);
+	for (int i = 0; i < PATHFINDER_MAX_NODES; i++)
+	{
+		m_NodePool.push_back(new AStarPathNode());
+	}
+
+	m_bInitialized = true;
+}
 
 void KPathfinder::Init(int nNpcIdx)
 {
@@ -81,6 +91,12 @@ void KPathfinder::Clear()
 
 bool KPathfinder::FindPath(int startX, int startY, int goalX, int goalY)
 {
+	// Lazy initialization on first use
+	if (!m_bInitialized)
+	{
+		InitializeNodePool();
+	}
+
 	// Convert to grid coordinates
 	PathPoint gridStart = WorldToGrid(startX, startY);
 	PathPoint gridGoal = WorldToGrid(goalX, goalY);
@@ -516,6 +532,9 @@ AStarPathNode* KPathfinder::AllocateNode()
 
 void KPathfinder::ResetNodePool()
 {
+	if (!m_bInitialized)
+		return;  // Not initialized yet, nothing to reset
+
 	for (size_t i = 0; i < m_NodePool.size(); i++)
 	{
 		m_NodePool[i]->inOpenSet = false;

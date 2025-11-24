@@ -20,10 +20,10 @@ class KSubWorld;
 //===============================================================
 // Constants
 //===============================================================
-#define PATHFINDER_MAX_NODES       2000  // Max nodes to search
+#define PATHFINDER_MAX_NODES       500   // Max nodes to search (reduced to save memory)
 #define PATHFINDER_GRID_SIZE       32    // Grid cell size (pixels)
 #define PATHFINDER_MAX_PATH_LENGTH 100   // Max waypoints in path
-#define PATHFINDER_CACHE_SIZE      50    // Number of cached paths
+#define PATHFINDER_CACHE_SIZE      15    // Number of cached paths (reduced)
 #define PATHFINDER_CACHE_TIMEOUT   5000  // Cache timeout (ms)
 
 //===============================================================
@@ -117,6 +117,9 @@ private:
 	int m_nPathsFound;
 	int m_nCacheHits;
 
+	// Initialization flag
+	bool m_bInitialized;  // Node pool allocated?
+
 public:
 	KPathfinder();
 	~KPathfinder();
@@ -179,6 +182,7 @@ private:
 	bool IsCacheValid(const CachedPath& cache) const;
 
 	// Node pool management
+	void InitializeNodePool();  // Lazy initialization
 	AStarPathNode* AllocateNode();
 	void ResetNodePool();
 
