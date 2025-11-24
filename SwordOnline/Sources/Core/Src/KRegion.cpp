@@ -135,21 +135,21 @@ BOOL KRegion::Load(int nX, int nY)
 	m_nRegionX = nX * 512;
 	m_nRegionY = nY * 1024;
 
-	// ÏÂ·½
+	// ï¿½Â·ï¿½
 	m_nConRegionID[0] = MAKELONG(nX, nY + 1);
-	// ×óÏÂ·½
+	// ï¿½ï¿½ï¿½Â·ï¿½
 	m_nConRegionID[1] = MAKELONG(nX - 1, nY + 1);
-	// ×ó·½
+	// ï¿½ï¿½
 	m_nConRegionID[2] = MAKELONG(nX - 1, nY);
-	// ×óÉÏ·½
+	// ï¿½ï¿½ï¿½Ï·ï¿½
 	m_nConRegionID[3] = MAKELONG(nX - 1, nY - 1);
-	// ÉÏ·½
+	// ï¿½Ï·ï¿½
 	m_nConRegionID[4] = MAKELONG(nX, nY - 1);
-	// ÓÒÉÏ·½
+	// ï¿½ï¿½ï¿½Ï·ï¿½
 	m_nConRegionID[5] = MAKELONG(nX + 1, nY - 1);
-	// ÓÒ·½
+	// ï¿½Ò·ï¿½
 	m_nConRegionID[6] = MAKELONG(nX + 1, nY);
-	// ÓÒÏÂ·½
+	// ï¿½ï¿½ï¿½Â·ï¿½
 	m_nConRegionID[7] = MAKELONG(nX + 1, nY + 1);
 
 	return TRUE;
@@ -700,7 +700,7 @@ void KRegion::Activate()
 #endif
 
 #ifndef _SERVER
-	if (Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_RegionIndex == m_nIndex)	// ÊÇPlayerËùÔÚµÄRegion
+	if (Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_RegionIndex == m_nIndex)	// ï¿½ï¿½Playerï¿½ï¿½ï¿½Úµï¿½Region
 	{
 		Player[CLIENT_PLAYER_INDEX].Active();
 	}
@@ -1228,8 +1228,10 @@ void KRegion::BroadCast(const void* pBuffer, DWORD dwSize, int &nMaxCount, int n
 		int nNpcIndex = Player[nPlayerIndex].m_nIndex;
 		if (Player[pNode->m_nIndex].m_nNetConnectIdx >= 0
 			&& Player[pNode->m_nIndex].m_bSleepMode == FALSE)
+		{
 			g_pServer->PackDataToClient(Player[pNode->m_nIndex].m_nNetConnectIdx, (BYTE*)pBuffer, dwSize);
-		nMaxCount--;
+			nMaxCount--; // Only decrease counter when actually sending data
+		}
 		pNode = (KIndexNode *)pNode->GetNext();
 	}
 }

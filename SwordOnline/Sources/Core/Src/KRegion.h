@@ -6,7 +6,7 @@
 #include "KWorldMsg.h"
 // --
 #ifdef _SERVER
-#define	MAX_BROADCAST_COUNT		100
+#define	MAX_BROADCAST_COUNT		200  // Increased from 100 to 200 for better sync reliability
 #else
 #define	MAX_REGION		9
 #endif
@@ -72,7 +72,7 @@ public:
 #endif
 	void		Close();
 	void		Activate();
-	BYTE		GetBarrier(int MapX, int MapY, int nDx, int nDy);	//	µØÍ¼¸ß¶È
+	BYTE		GetBarrier(int MapX, int MapY, int nDx, int nDy);	//	ï¿½ï¿½Í¼ï¿½ß¶ï¿½
 	BYTE		GetBarrierMin(int nGridX, int nGridY, int nOffX, int nOffY, BOOL bCheckNpc);
 	DWORD		GetTrap(int MapX, int MapY);
 	inline BOOL		IsActive()
