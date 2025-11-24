@@ -436,21 +436,28 @@ void KPlayerAI::Active()
 						}
 					}
 
-					if (distance >= m_nRadiusFollow)  // Beyond normal radius - need to catch up
+					// FIX: Smooth movement - update position more frequently for less teleporting
+					// Update every frame when following (not just when beyond radius)
+					BOOL isAttackingLeaderTarget = (m_nLeaderCurrentTarget > 0 &&
+					                                 m_Actacker == m_nLeaderCurrentTarget &&
+					                                 m_bActacker == TRUE);
+
+					// Always update movement towards leader (smooth following)
+					// But prioritize combat if attacking leader's target
+					if (!isAttackingLeaderTarget && distance >= m_nRadiusFollow / 2)  // Update when half-way to radius (smoother)
 					{
+						if (!m_bPriorityUseMouse)
+						{
+							int nX, nY;
+							Npc[m_FollowPeopleIdx].GetMpsPos(&nX,&nY);
+							MoveTo(nX, nY);  // Continuous position updates for smooth movement
+						}
+					}
 
-						BOOL isAttackingLeaderTarget = (m_nLeaderCurrentTarget > 0 &&
-						                                 m_Actacker == m_nLeaderCurrentTarget &&
-						                                 m_bActacker == TRUE);
-
+					if (distance >= m_nRadiusFollow)  // Beyond normal radius - force reset combat state
+					{
 						if (!isAttackingLeaderTarget)
 						{
-							if (!m_bPriorityUseMouse)
-							{
-								int nX, nY;
-								Npc[m_FollowPeopleIdx].GetMpsPos(&nX,&nY);
-								MoveTo(nX, nY);
-							}
 							m_Actacker = 0;
 							m_bActacker = FALSE;
 							m_nLifeLag = 0;
@@ -467,7 +474,17 @@ void KPlayerAI::Active()
 
 			}
 
-			if ((m_bObject == FALSE || m_nObject == 0) && Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nObjectIdx == 0)
+			// FIX: Don't auto-pick items when following leader (prevents movement conflicts)
+			// Only pick items when close to leader (within 1/4 radius) to avoid chase conflicts
+			BOOL canPickItems = !m_bFollowPeople;  // Default: can pick if not following
+			if (m_bFollowPeople && m_FollowPeopleIdx > 0)
+			{
+				int leaderDist = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_FollowPeopleIdx);
+				// Only allow picking if very close to leader (not chasing)
+				canPickItems = (leaderDist < m_nRadiusFollow / 4);
+			}
+
+			if (canPickItems && (m_bObject == FALSE || m_nObject == 0) && Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nObjectIdx == 0)
 			{
 				iObject = FindNearObject2Array();
 				if (iObject > 0)
