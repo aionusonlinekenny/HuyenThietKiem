@@ -595,7 +595,9 @@ void KPlayerAI::Active()
 						m_bActacker = FALSE;
 						Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;//moi them by kinnox 20/07/2023;
 						index = 0;
-						if (m_AutoMove)
+						// FIX: Only auto move to coordinate list when NOT following leader
+						// Prevent lag target from triggering PlayerMoveMps when following
+						if (m_AutoMove && !m_bFollowPeople)
 						{
 							if (m_bPriorityUseMouse)
 							return;
