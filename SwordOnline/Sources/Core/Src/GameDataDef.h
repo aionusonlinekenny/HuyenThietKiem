@@ -87,8 +87,8 @@
 //AutoAI by kinnox;
 //// -- 
 #define		defMAX_ARRAY_AUTO				50
-#define		defAUTO_TIME_LAG				100
-#define		defAUTO_COUNT_LAG				150 //150
+#define		defAUTO_TIME_LAG				50
+#define		defAUTO_COUNT_LAG				75 //150
 #define		defAUTO_TIME_RESET_LAG			10000 //7000
 #define		defAUTO_TIME_SKIP				300 //7000
 #define		TIME_RIDE						5000  // 5 seconds cooldown for riding/dismounting

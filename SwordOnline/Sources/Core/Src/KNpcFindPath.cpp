@@ -3,13 +3,14 @@
 #include	<math.h>
 #include	"KMath.h"
 #include	"KNpcFindPath.h"
+#include	"KPathfinder.h"  // NEW: A* pathfinding
 #include	"KSubWorld.h"
 #include	"KNpc.h"
 
 #define	MAX_FIND_TIMER	30
 
 
-//	
+//
 
 KNpcFindPath::KNpcFindPath()
 {
@@ -21,8 +22,24 @@ KNpcFindPath::KNpcFindPath()
 	m_nPathSide = 0;
 	m_nFindTimes = 0;
 	m_NpcIdx = 0;
+
+	// NEW: Initialize A* pathfinding
+	m_pPathfinder = new KPathfinder();
+	m_bUseAStar = TRUE;  // Enable A* by default
+	m_nLastPathTime = 0;
+	m_nLastPathX = 0;
+	m_nLastPathY = 0;
 };
 
+// NEW: Destructor
+KNpcFindPath::~KNpcFindPath()
+{
+	if (m_pPathfinder)
+	{
+		delete m_pPathfinder;
+		m_pPathfinder = NULL;
+	}
+}
 
 //
 
@@ -36,6 +53,12 @@ void KNpcFindPath::Init(int nNpc)
 	m_nFindState = 0;
 	m_nPathSide = 0;
 	m_nFindTimes = 0;
+
+	// NEW: Initialize A* pathfinder
+	if (m_pPathfinder)
+	{
+		m_pPathfinder->Init(nNpc);
+	}
 }
 
 #define		defFIND_PATH_STOP_DISTANCE		64
@@ -45,7 +68,19 @@ void KNpcFindPath::Init(int nNpc)
 int	KNpcFindPath::GetDir(int nXpos,int nYpos, int nDir, int nDestX, int nDestY, int nMoveSpeed, int *pnGetDir, int *pnStopOK)
 {
 	*pnStopOK = 0;
-	
+
+	// NEW: Try A* pathfinding first (if enabled)
+	if (m_bUseAStar && m_pPathfinder)
+	{
+		int astarResult = GetDirAStar(nXpos, nYpos, nDestX, nDestY, pnGetDir, pnStopOK);
+		if (astarResult == 1)
+		{
+			return 1;  // A* succeeded, use it
+		}
+		// A* failed or not applicable, fallback to old algorithm below
+	}
+
+	// FALLBACK: Original wall-following algorithm
 	// Kiem tra khoang cach
 	int nTempX = nXpos >> 10;
 	int nTempY = nYpos >> 10;
@@ -268,3 +303,88 @@ int	KNpcFindPath::CheckBarrier(int nChangeX, int nChangeY)
 #endif
 }
 
+
+//===============================================================
+// NEW: A* Pathfinding Integration
+// Author: Claude AI Assistant
+// Date: 2025-11-24
+//===============================================================
+
+int KNpcFindPath::GetDirAStar(int nXpos, int nYpos, int nDestX, int nDestY, int *pnGetDir, int *pnStopOK)
+{
+	*pnStopOK = 0;
+
+	if (!m_pPathfinder)
+		return 0;  // Pathfinder not initialized
+
+	// Convert coordinates (bit-shift from fixed-point)
+	int currentX = nXpos >> 10;
+	int currentY = nYpos >> 10;
+
+	// Check if close enough to destination
+	if (CheckDistance(currentX, currentY, nDestX, nDestY, defFIND_PATH_STOP_DISTANCE))
+	{
+		*pnStopOK = 1;
+		return 0;
+	}
+
+	// Check if we need to recalculate path
+	BOOL needNewPath = FALSE;
+	unsigned int currentTime = GetTickCount();
+
+	// Recalculate if:
+	// 1. Destination changed
+	// 2. Start position changed significantly (>64 pixels)
+	// 3. Path is old (>2 seconds)
+	// 4. Path is invalid (new obstacles)
+	if (m_nDestX != nDestX || m_nDestY != nDestY)
+	{
+		needNewPath = TRUE;
+	}
+	else if (abs(currentX - m_nLastPathX) > 2 || abs(currentY - m_nLastPathY) > 2)
+	{
+		needNewPath = TRUE;
+	}
+	else if (m_nLastPathTime == 0 || (currentTime - m_nLastPathTime) > 2000)
+	{
+		needNewPath = TRUE;
+	}
+	else if (!m_pPathfinder->IsPathValid())
+	{
+		needNewPath = TRUE;
+	}
+
+	// Calculate new path if needed
+	if (needNewPath)
+	{
+		m_nDestX = nDestX;
+		m_nDestY = nDestY;
+		m_nLastPathX = currentX;
+		m_nLastPathY = currentY;
+		m_nLastPathTime = currentTime;
+
+		// Find path using A*
+		BOOL pathFound = m_pPathfinder->FindPath(currentX, currentY, nDestX, nDestY);
+
+		if (!pathFound)
+		{
+			// A* failed, fallback to old algorithm
+			return 0;
+		}
+	}
+
+	// Get next waypoint from path
+	int waypointX, waypointY;
+	if (!m_pPathfinder->GetNextWaypoint(currentX, currentY, &waypointX, &waypointY))
+	{
+		// Reached destination
+		*pnStopOK = 1;
+		return 0;
+	}
+
+	// Calculate direction to waypoint
+	int targetDir = g_GetDirIdxForFindPath(currentX, currentY, waypointX, waypointY);
+	*pnGetDir = targetDir;
+
+	return 1;  // Success
+}

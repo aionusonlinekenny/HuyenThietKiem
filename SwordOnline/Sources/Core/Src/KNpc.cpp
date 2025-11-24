@@ -2222,7 +2222,6 @@ void KNpc::DoRun()
 		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 	}
 #endif
-
 	if (m_Doing == do_run)
 	{
 		return;
@@ -2887,7 +2886,6 @@ void KNpc::DoWalk()
 		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 	}	
 #endif
-
 	if (m_Doing == do_walk)
 	{
 		return;

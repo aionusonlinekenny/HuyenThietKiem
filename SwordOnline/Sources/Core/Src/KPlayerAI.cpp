@@ -332,7 +332,6 @@ void KPlayerAI::Active()
 
 				// LAYER 1: Search in current region
 				m_FollowPeopleIdx = SubWorld[0].m_Region[Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_RegionIndex].SearchNpcName(m_FollowPeopleName);
-
 				// LAYER 2: Search in 8 adjacent regions (1st layer neighbors)
 				if(m_FollowPeopleIdx <= 0)
 				{
@@ -346,9 +345,7 @@ void KPlayerAI::Active()
 							break;
 					}
 				}
-
 				// LAYER 3: Search in 2nd layer neighbors (regions adjacent to 1st layer)
-				// This expands search area to ~24 additional regions
 				if(m_FollowPeopleIdx <= 0)
 				{
 					for (i = 0; i < 8; i++)
@@ -380,7 +377,6 @@ void KPlayerAI::Active()
 				if (m_FollowPeopleIdx)
 				{
 					// FIX: Track leader's current attack target for coordinated combat with grace period
-					// When following, follower should attack the same target as leader
 					if (Npc[m_FollowPeopleIdx].m_nPeopleIdx > 0 &&
 						Npc[m_FollowPeopleIdx].m_Index > 0)
 					{
@@ -390,23 +386,22 @@ void KPlayerAI::Active()
 						{
 							// Leader switched to a new target
 							m_nLeaderCurrentTarget = newTarget;
-							m_nLeaderTargetLostTime = 0;  // Reset grace period timer
+							m_nLeaderTargetLostTime = 0;
 						}
 					}
 					else if (m_nLeaderCurrentTarget > 0)
 					{
-						// Leader not attacking - clear target tracking
+													 
 						// Leader stopped attacking - start grace period
-						// Don't clear target immediately, give leader time to pick next target
 						if (m_nLeaderTargetLostTime == 0)
 						{
 							m_nLeaderTargetLostTime = GetTickCount();
 						}
 						else
 						{
-							// Check if grace period expired (2 seconds)
+							// Check if grace period expired (4 seconds - increased for better coordination)
 							unsigned int elapsed = GetTickCount() - m_nLeaderTargetLostTime;
-							if (elapsed > 4000)  // 2 second grace period
+							if (elapsed > 4000)  // 4 second grace period (was 2s, too short)
 							{
 								// Grace period expired, leader really has no target now
 								m_nLeaderCurrentTarget = 0;
@@ -416,15 +411,19 @@ void KPlayerAI::Active()
 					}
 					int distance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_FollowPeopleIdx);
 
+					// FIX: Smart catch-up when leader is too far (train route scenario)
+					// Detect if follower is "lost" - leader moved very far away
+					BOOL isTooFar = (distance > m_nRadiusFollow * 3);  // 3x radius = lost
+
 					// AUTO RIDE HORSE FEATURE: Auto mount when target is too far
-					// Note: Dismounting is handled by other auto-play logic (some classes can attack while riding)
 					if (Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing != do_attack &&
 						Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing != do_magic &&
 						Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing != do_skill)
 					{
-						// If target moves beyond half radius → mount horse to catch up early
-						// Example: radius=500 → mount at distance>250 (not 750!) to catch up in time
-						if (distance > m_nRadiusFollow / 2)  // 0.5x radius (half)
+						// Smart horse mounting based on distance
+						// - Normal distance (>0.5x radius): mount to catch up
+						// - Too far (>3x radius): definitely mount to chase
+						if (distance > m_nRadiusFollow / 2 || isTooFar)
 						{
 							if (!Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_bRideHorse)
 							{
@@ -437,23 +436,21 @@ void KPlayerAI::Active()
 						}
 					}
 
-					if (distance >= m_nRadiusFollow)
+					if (distance >= m_nRadiusFollow)  // Beyond normal radius - need to catch up
 					{
-						// FIX: Don't reset combat if attacking leader's target
-						// Check if we're currently attacking leader's target
+
 						BOOL isAttackingLeaderTarget = (m_nLeaderCurrentTarget > 0 &&
 						                                 m_Actacker == m_nLeaderCurrentTarget &&
 						                                 m_bActacker == TRUE);
 
-						// If attacking leader's target, allow combat to continue even when far from leader
-						// This prevents breaking combat coordination when chasing enemies
 						if (!isAttackingLeaderTarget)
 						{
-						// Not attacking leader's target, move back to leader
-							int nX, nY;
-							Npc[m_FollowPeopleIdx].GetMpsPos(&nX,&nY);
 							if (!m_bPriorityUseMouse)
+							{
+								int nX, nY;
+								Npc[m_FollowPeopleIdx].GetMpsPos(&nX,&nY);
 								MoveTo(nX, nY);
+							}
 							m_Actacker = 0;
 							m_bActacker = FALSE;
 							m_nLifeLag = 0;
@@ -470,9 +467,6 @@ void KPlayerAI::Active()
 
 			}
 
-			//////////FOllow pick object
-			/*if (((m_bActacker == FALSE || m_Actacker == 0) && (m_bObject == FALSE || m_nObject == 0)) && 
-				Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nObjectIdx == 0)*/
 			if ((m_bObject == FALSE || m_nObject == 0) && Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nObjectIdx == 0)
 			{
 				iObject = FindNearObject2Array();
@@ -542,25 +536,15 @@ void KPlayerAI::Active()
 			{
 				memset(m_ArrayNpcNeast,0,sizeof(m_ArrayNpcNeast));
 				index = FindNearNpc2Array(relation_enemy);
-				//Anti Lag Pos Attack Around by kinnox;
-				/*int nMpsX,nMpsY;
-				Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].GetMpsPos(&nMpsX,&nMpsY);
-				if (nMpsX == m_PosXAuto && nMpsY == m_PosYAuto)
-					index = 0;*/
-				
-				// Anti Lag Pos Attack Around by kinnox (nới điều kiện)
 				int nMpsX, nMpsY;
 				Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].GetMpsPos(&nMpsX, &nMpsY);
-
-				// Cho phép đứng gần PosAuto trong bán kính ~2 cell (mps/32)
 				const int CELL = 32;
 				const int TOL_CELL = 2; // 2 cell
 				int dxAuto = (nMpsX / CELL) - (m_PosXAuto / CELL);
 				int dyAuto = (nMpsY / CELL) - (m_PosYAuto / CELL);
 				if (dxAuto*dxAuto + dyAuto*dyAuto <= TOL_CELL*TOL_CELL)
 				{
-					// KHÔNG ép index = 0 nữa; để AI vẫn có thể pick target gần
-					// index = 0;  // xoá dòng này
+
 				}
 				//
 				if (index > 0)
@@ -580,7 +564,7 @@ void KPlayerAI::Active()
 						m_bActacker = FALSE;
 						Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;//moi them by kinnox 20/07/2023;
 						index = 0;
-						if (m_AutoMove)
+						if (m_AutoMove && !m_bFollowPeople)
 						{
 							if (m_bPriorityUseMouse)
 							return;
@@ -604,7 +588,7 @@ void KPlayerAI::Active()
 				}
 			else
 				m_bActacker = FALSE;
-				if ( m_AutoMove && index == 0)
+				if (m_AutoMove && index == 0 && !m_bFollowPeople)
 				{
 					if (m_bPriorityUseMouse)
 						return;
@@ -658,7 +642,7 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 {
 	int nRet = 0;
 	// FIX: Priority 1 - If following someone, attack their target first (coordinated combat)
-	// This ensures follower focuses on leader's target instead of randomly finding nearest NPC
+
 	if (m_bFollowPeople && m_FollowPeopleIdx > 0 && m_nLeaderCurrentTarget > 0)
 	{
 		// Validate leader's target is still valid and attackable
@@ -666,29 +650,26 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 		    Npc[m_nLeaderCurrentTarget].m_Index > 0 &&
 		    Npc[m_nLeaderCurrentTarget].m_dwID > 0)
 		{
-			// Check if target is within reasonable range (2x follow radius)
-			int distance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_nLeaderCurrentTarget);
-			if (distance <= m_nRadiusFollow * 2)
-			{
-				// Attack same target as leader (coordinated combat)
-				// Reset grace period since target is still valid
-				m_nLeaderTargetLostTime = 0;
-				return m_nLeaderCurrentTarget;
-			}
+			// FIX: NO distance limit - attack leader's target no matter how far
+			m_nLeaderTargetLostTime = 0;  // Reset grace period since target is still valid
+			return m_nLeaderCurrentTarget;
 		}
+
 		// Leader's target invalid/dead -> check if in grace period
 		if (m_nLeaderTargetLostTime == 0)
 		{
 			// Just lost target, start grace period
 			m_nLeaderTargetLostTime = GetTickCount();
 		}
+
 		unsigned int elapsed = GetTickCount() - m_nLeaderTargetLostTime;
-		if (elapsed < 4000)  // Still in grace period (2 seconds)
+		if (elapsed < 4000)  // Still in grace period (4 seconds - increased for better coordination)
 		{
 			// Don't find new target yet, wait for leader to pick next target
 			// Return 0 to stay near leader
 			return 0;
 		}
+
 		// Grace period expired, clear target and find new one below
 		m_nLeaderCurrentTarget = 0;
 		m_nLeaderTargetLostTime = 0;
@@ -755,14 +736,17 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 		{
 			PlayerMoveMps();  // Original behavior when not following
 		}
+
 		AutoReturn();
 		m_Actacker = 0;
 		m_bActacker = FALSE;
+
 		// FIX: Don't clear player's target when following leader and in grace period
 		// This prevents losing track of combat when waiting for leader's next target
 		BOOL isInGracePeriod = (m_bFollowPeople && m_FollowPeopleIdx > 0 &&
 		                         m_nLeaderTargetLostTime > 0 &&
-		                         (GetTickCount() - m_nLeaderTargetLostTime) < 4000);
+		                         (GetTickCount() - m_nLeaderTargetLostTime) < 4000);  // 4s grace period
+
 		if (!isInGracePeriod)
 		{
 			// Only clear target if not in grace period
@@ -770,6 +754,7 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 		}
 		// m_nTimeRunLag = 0;
 		// m_Count_Acttack_Lag = 0;
+
 	}
 	return nRet;
 }
@@ -1479,44 +1464,62 @@ void KPlayerAI::PlayerFollowActack(int i)
 	{
 		if (m_Count_Acttack_Lag >= defAUTO_COUNT_LAG/2  || m_nTimeRunLag >= defAUTO_TIME_LAG/2 || m_nTimeSkip >= defAUTO_TIME_SKIP*nAddTime)
 		{
+			// FIX: Move closer and clear target (stuck detection)
+			int nTargetX, nTargetY;
+			Npc[i].GetMpsPos(&nTargetX, &nTargetY);
+			MoveTo(nTargetX, nTargetY);  // Approach target to retry from closer position
+			// Try to add to lag array (for tracking), but proceed even if array is full
 			for (int j=0; j < defMAX_ARRAY_AUTO; j++)
 			{
 				if (m_ArrayNpcLag[j] == 0)
 				{
 					m_ArrayNpcLag[j] = i;
 					m_ArrayTimeNpcLag[j] = GetTickCount();
-					m_Actacker = 0;
-					m_bActacker = FALSE;
-					m_nLifeLag = 0;
-					m_nTimeRunLag = 0;
-					m_Count_Acttack_Lag = 0;
-					m_nTimeSkip = 0;
-					Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;//moi them by kinnox 20/07/2023;
-					return;
+					break;  // Found slot, stop searching
 				}
 			}
+			// CRITICAL: Clear target even if array is full (prevents infinite stuck)
+			m_Actacker = 0;
+			m_bActacker = FALSE;
+			m_nLifeLag = 0;
+			m_nTimeRunLag = 0;
+			m_Count_Acttack_Lag = 0;
+			m_nTimeSkip = 0;
+			Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;//moi them by kinnox 20/07/2023;
+			return;
 		}
 	}
 	else
 	{
 		if (m_Count_Acttack_Lag >= defAUTO_COUNT_LAG*nAddTime || m_nTimeRunLag >= defAUTO_TIME_LAG * 2*nAddTime || m_nTimeSkip >= defAUTO_TIME_SKIP*nAddTime)
 		{
+			// FIX: Move closer and clear target (stuck detection)
+						// Only approach if not manual control (respect user input)
+			if (!m_bPriorityUseMouse)
+			{
+				int nNpcX, nNpcY;
+				Npc[i].GetMpsPos(&nNpcX, &nNpcY);
+				MoveTo(nNpcX, nNpcY);  // Approach NPC to retry from closer position
+			}
+			// Try to add to lag array (for tracking), but proceed even if array is full
 			for (int j=0; j < defMAX_ARRAY_AUTO; j++)
 			{
 				if (m_ArrayNpcLag[j] == 0)
 				{
 					m_ArrayNpcLag[j] = i;
 					m_ArrayTimeNpcLag[j] = GetTickCount();
-					m_Actacker = 0;
-					m_bActacker = FALSE;
-					m_nLifeLag = 0;
-					m_nTimeRunLag = 0;
-					m_Count_Acttack_Lag = 0;
-					m_nTimeSkip = 0;
-					Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;//moi them by kinnox 20/07/2023;
-					return;
+					break;  // Found slot, stop searching
 				}
 			}
+			// CRITICAL: Clear target even if array is full (prevents infinite stuck)
+			m_Actacker = 0;
+			m_bActacker = FALSE;
+			m_nLifeLag = 0;
+			m_nTimeRunLag = 0;
+			m_Count_Acttack_Lag = 0;
+			m_nTimeSkip = 0;
+			Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;//moi them by kinnox 20/07/2023;
+			return;
 		}
 	
 	}

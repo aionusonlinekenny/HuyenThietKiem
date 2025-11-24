@@ -4283,7 +4283,6 @@ void KProtocolProcess::NpcRunCommand(int nIndex, BYTE* pProtocol)
 	Npc[Player[nIndex].m_nIndex].SendCommand(do_run, ParamX, ParamY);
 }
 
-
 void KProtocolProcess::NpcSkillCommand(int nIndex, BYTE* pProtocol)
 {
 	NPC_SKILL_COMMAND* pNetCommand = (NPC_SKILL_COMMAND *)pProtocol;
@@ -4298,7 +4297,42 @@ void KProtocolProcess::NpcSkillCommand(int nIndex, BYTE* pProtocol)
 
 	if (ParamZ < 0) 
 		return;
-
+	int nNpcIdx = Player[nIndex].m_nIndex;
+	// FIX: Broadcast position before executing skill
+	// This ensures all clients know where the player is when using skill
+	// Fixes desync where player A attacks monster but player B sees A far away
+	if (ParamY >= 0)
+	{
+		// Position-based skill (click on ground/target)
+		// Broadcast position update to all clients
+		NPC_RUN_SYNC NetCommand;
+		NetCommand.ProtocolType = (BYTE)s2c_npcrun;
+		NetCommand.ID = Npc[nNpcIdx].m_dwID;
+		NetCommand.nMpsX = ParamY;  // Target X position
+		NetCommand.nMpsY = ParamZ;  // Target Y position
+		// Convert to map coordinates for broadcast
+		int nMapX, nMapY;
+		SubWorld[Npc[nNpcIdx].m_SubWorldIndex].Mps2Map(ParamY, ParamZ,
+			&Npc[nNpcIdx].m_RegionIndex, &nMapX, &nMapY,
+			&Npc[nNpcIdx].m_OffX, &Npc[nNpcIdx].m_OffY);
+		// Broadcast to current region and surrounding regions
+		POINT POff[8] =
+		{
+			{0, 32}, {-16, 32}, {-16, 0}, {-16, -32},
+			{0, -32}, {16, -32}, {16, 0}, {16, 32},
+		};
+		int nMaxCount = MAX_BROADCAST_COUNT;
+		SubWorld[Npc[nNpcIdx].m_SubWorldIndex].m_Region[Npc[nNpcIdx].m_RegionIndex].BroadCast(
+			&NetCommand, sizeof(NetCommand), nMaxCount, nMapX, nMapY);
+		for (int i = 0; i < 8; i++)
+		{
+			int nConRegionIdx = SubWorld[Npc[nNpcIdx].m_SubWorldIndex].m_Region[Npc[nNpcIdx].m_RegionIndex].m_nConnectRegion[i];
+			if (nConRegionIdx == -1)
+				continue;
+			SubWorld[Npc[nNpcIdx].m_SubWorldIndex].m_Region[nConRegionIdx].BroadCast(
+				&NetCommand, sizeof(NetCommand), nMaxCount, nMapX - POff[i].x, nMapY - POff[i].y);
+		}
+	}
 	if (ParamY < 0)
 	{
 		if (ParamY != -1) 
@@ -4306,10 +4340,10 @@ void KProtocolProcess::NpcSkillCommand(int nIndex, BYTE* pProtocol)
 
 		int nNpcIndex = Player[nIndex].FindAroundNpc((DWORD)ParamZ);
 		if (nNpcIndex > 0)
-			Npc[Player[nIndex].m_nIndex].SendCommand(do_skill, ParamX, ParamY, nNpcIndex);
+			Npc[nNpcIdx].SendCommand(do_skill, ParamX, ParamY, nNpcIndex);
 	}
 	else
-		Npc[Player[nIndex].m_nIndex].SendCommand(do_skill, ParamX, ParamY, ParamZ);
+		Npc[nNpcIdx].SendCommand(do_skill, ParamX, ParamY, ParamZ);
 }
 
 void KProtocolProcess::NpcJumpCommand(int nIndex, BYTE* pProtocol)
@@ -4317,7 +4351,37 @@ void KProtocolProcess::NpcJumpCommand(int nIndex, BYTE* pProtocol)
 	NPC_JUMP_COMMAND* pNetCommand = (NPC_JUMP_COMMAND *)pProtocol;
 	int ParamX = pNetCommand->nMpsX;
 	int ParamY = pNetCommand->nMpsY;
-	Npc[Player[nIndex].m_nIndex].SendCommand(do_jump, ParamX, ParamY);
+	int nNpcIdx = Player[nIndex].m_nIndex;
+	// FIX: Broadcast position for jump command
+	// Jump also moves player to a new position, so broadcast is needed
+	NPC_RUN_SYNC NetCommand;
+	NetCommand.ProtocolType = (BYTE)s2c_npcrun;
+	NetCommand.ID = Npc[nNpcIdx].m_dwID;
+	NetCommand.nMpsX = ParamX;
+	NetCommand.nMpsY = ParamY;
+	// Convert to map coordinates for broadcast
+	int nMapX, nMapY;
+	SubWorld[Npc[nNpcIdx].m_SubWorldIndex].Mps2Map(ParamX, ParamY,
+		&Npc[nNpcIdx].m_RegionIndex, &nMapX, &nMapY,
+		&Npc[nNpcIdx].m_OffX, &Npc[nNpcIdx].m_OffY);
+	// Broadcast to current region and surrounding regions
+	POINT POff[8] =
+	{
+		{0, 32}, {-16, 32}, {-16, 0}, {-16, -32},
+		{0, -32}, {16, -32}, {16, 0}, {16, 32},
+	};
+	int nMaxCount = MAX_BROADCAST_COUNT;
+	SubWorld[Npc[nNpcIdx].m_SubWorldIndex].m_Region[Npc[nNpcIdx].m_RegionIndex].BroadCast(
+		&NetCommand, sizeof(NetCommand), nMaxCount, nMapX, nMapY);
+	for (int i = 0; i < 8; i++)
+	{
+		int nConRegionIdx = SubWorld[Npc[nNpcIdx].m_SubWorldIndex].m_Region[Npc[nNpcIdx].m_RegionIndex].m_nConnectRegion[i];
+		if (nConRegionIdx == -1)
+			continue;
+		SubWorld[Npc[nNpcIdx].m_SubWorldIndex].m_Region[nConRegionIdx].BroadCast(
+			&NetCommand, sizeof(NetCommand), nMaxCount, nMapX - POff[i].x, nMapY - POff[i].y);
+	}
+	Npc[nNpcIdx].SendCommand(do_jump, ParamX, ParamY);
 }
 
 void KProtocolProcess::NpcTalkCommand(int nIndex, BYTE* pProtocol)
