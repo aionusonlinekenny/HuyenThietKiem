@@ -29,7 +29,7 @@ KPathfinder::KPathfinder()
 	m_NodePool.reserve(PATHFINDER_MAX_NODES);
 	for (int i = 0; i < PATHFINDER_MAX_NODES; i++)
 	{
-		m_NodePool.push_back(new PathNode());
+		m_NodePool.push_back(new AStarPathNode());
 	}
 
 	// Clear cache
@@ -126,7 +126,7 @@ bool KPathfinder::AStar(const PathPoint& start, const PathPoint& goal)
 		return false;
 
 	// Initialize start node
-	PathNode* startNode = AllocateNode();
+	AStarPathNode* startNode = AllocateNode();
 	if (!startNode)
 		return false;
 
@@ -146,7 +146,7 @@ bool KPathfinder::AStar(const PathPoint& start, const PathPoint& goal)
 	while (!m_OpenSet.empty() && nodesSearched < PATHFINDER_MAX_NODES)
 	{
 		// Get node with lowest fCost
-		PathNode* current = m_OpenSet.top();
+		AStarPathNode* current = m_OpenSet.top();
 		m_OpenSet.pop();
 
 		// Skip if already processed
@@ -184,7 +184,7 @@ bool KPathfinder::AStar(const PathPoint& start, const PathPoint& goal)
 			float newGCost = current->gCost + moveCost;
 
 			// Try to find existing node for this neighbor
-			PathNode* neighborNode = NULL;
+			AStarPathNode* neighborNode = NULL;
 			for (size_t j = 0; j < m_OpenSetList.size(); j++)
 			{
 				if (m_OpenSetList[j]->point == neighbor)
@@ -299,11 +299,11 @@ bool KPathfinder::IsWalkable(int x, int y) const
 // Path Reconstruction
 //===============================================================
 
-void KPathfinder::ReconstructPath(PathNode* goalNode)
+void KPathfinder::ReconstructPath(AStarPathNode* goalNode)
 {
 	m_CurrentPath.clear();
 
-	PathNode* current = goalNode;
+	AStarPathNode* current = goalNode;
 	while (current != NULL)
 	{
 		// Convert grid back to world coordinates
@@ -494,11 +494,11 @@ bool KPathfinder::IsCacheValid(const CachedPath& cache) const
 // Node Pool Management
 //===============================================================
 
-PathNode* KPathfinder::AllocateNode()
+AStarPathNode* KPathfinder::AllocateNode()
 {
 	for (size_t i = 0; i < m_NodePool.size(); i++)
 	{
-		PathNode* node = m_NodePool[i];
+		AStarPathNode* node = m_NodePool[i];
 		if (!node->inOpenSet && !node->inClosedSet)
 		{
 			// Reset node

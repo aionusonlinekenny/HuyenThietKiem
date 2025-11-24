@@ -50,28 +50,28 @@ struct PathPoint
 	}
 };
 
-// A* Node for pathfinding
-struct PathNode
+// A* Node for pathfinding (renamed to avoid conflict with KJXPathFinder::PathNode)
+struct AStarPathNode
 {
 	PathPoint point;      // Grid position
 	float gCost;          // Distance from start
 	float hCost;          // Heuristic to goal
 	float fCost;          // Total cost (g + h)
-	PathNode* parent;     // Parent node for path reconstruction
+	AStarPathNode* parent;     // Parent node for path reconstruction
 	bool inOpenSet;       // Is in open set?
 	bool inClosedSet;     // Is in closed set?
 
-	PathNode() : gCost(0), hCost(0), fCost(0), parent(NULL),
+	AStarPathNode() : gCost(0), hCost(0), fCost(0), parent(NULL),
 	             inOpenSet(false), inClosedSet(false) {}
 
-	PathNode(const PathPoint& p) : point(p), gCost(0), hCost(0), fCost(0),
+	AStarPathNode(const PathPoint& p) : point(p), gCost(0), hCost(0), fCost(0),
 	                                parent(NULL), inOpenSet(false), inClosedSet(false) {}
 };
 
 // Comparator for priority queue (min-heap by fCost)
-struct PathNodeComparator
+struct AStarPathNodeComparator
 {
-	bool operator()(const PathNode* a, const PathNode* b) const
+	bool operator()(const AStarPathNode* a, const AStarPathNode* b) const
 	{
 		return a->fCost > b->fCost;  // Min-heap
 	}
@@ -100,9 +100,9 @@ private:
 	int m_nSubWorldIndex;    // SubWorld index
 
 	// A* data structures
-	std::vector<PathNode*> m_NodePool;     // Pre-allocated node pool
-	std::priority_queue<PathNode*, std::vector<PathNode*>, PathNodeComparator> m_OpenSet;
-	std::vector<PathNode*> m_OpenSetList;  // For cleanup
+	std::vector<AStarPathNode*> m_NodePool;     // Pre-allocated node pool
+	std::priority_queue<AStarPathNode*, std::vector<AStarPathNode*>, AStarPathNodeComparator> m_OpenSet;
+	std::vector<AStarPathNode*> m_OpenSetList;  // For cleanup
 
 	// Path cache
 	CachedPath m_PathCache[PATHFINDER_CACHE_SIZE];
@@ -165,7 +165,7 @@ private:
 	bool IsWalkable(int x, int y) const;
 
 	// Reconstruct path from goal node
-	void ReconstructPath(PathNode* goalNode);
+	void ReconstructPath(AStarPathNode* goalNode);
 
 	// Path smoothing using string pulling
 	void SmoothPath();
@@ -179,7 +179,7 @@ private:
 	bool IsCacheValid(const CachedPath& cache) const;
 
 	// Node pool management
-	PathNode* AllocateNode();
+	AStarPathNode* AllocateNode();
 	void ResetNodePool();
 
 	// Coordinate conversion
