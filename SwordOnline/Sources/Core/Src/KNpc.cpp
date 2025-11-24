@@ -337,7 +337,8 @@ void KNpc::SetCurrentCamp(int nCamp)
 	{
 		if (CONREGIONIDX(i) == -1)
 			continue;
-		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
+				int nRegionMaxCount = MAX_BROADCAST_COUNT;
+		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nRegionMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 	}
 #endif
 }
@@ -943,7 +944,8 @@ BOOL KNpc::ProcessState()
 				{
 					if (CONREGIONIDX(i) == -1)
 						continue;
-					CONREGION(i).BroadCast(&SkillCmd, sizeof(SkillCmd), nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
+							int nRegionMaxCount = MAX_BROADCAST_COUNT;
+		CONREGION(i).BroadCast(&SkillCmd, sizeof(SkillCmd), nRegionMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 				}
 #endif				
 				KSkill * pOrdinSkill1 = (KSkill *) g_SkillManager.GetSkill(m_ActiveAuraID, nLevel + nPointAdd);
@@ -1028,7 +1030,8 @@ BOOL KNpc::ProcessState()
 						{
 							if (CONREGIONIDX(j) == -1)
 								continue;
-							CONREGION(j).BroadCast(&SkillCmd, sizeof(SkillCmd), nMaxCount, m_MapX - POff[j].x, m_MapY - POff[j].y);
+									int nRegionMaxCount = MAX_BROADCAST_COUNT;
+		CONREGION(j).BroadCast(&SkillCmd, sizeof(SkillCmd), nRegionMaxCount, m_MapX - POff[j].x, m_MapY - POff[j].y);
 						}					
 #endif
 						KSkill * pOrdinSkill1 = (KSkill *) g_SkillManager.GetSkill(m_AppendSkill[i], nLevel + nPointAdd);
@@ -1587,7 +1590,8 @@ POINT	POff[8] =
 	{
 		if (CONREGIONIDX(i) == -1)
 			continue;
-		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
+				int nRegionMaxCount = MAX_BROADCAST_COUNT;
+		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nRegionMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 	}
 #endif
 }
@@ -2010,7 +2014,8 @@ BOOL KNpc::DoGlide(short nLenght)
 	{
 		if (CONREGIONIDX(i) == -1)
 			continue;
-		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
+				int nRegionMaxCount = MAX_BROADCAST_COUNT;
+		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nRegionMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 	}
 #endif
 	DoStand();
@@ -2203,7 +2208,7 @@ void KNpc::DoRun()
 	NetCommand.nMpsX = m_DesX;
 	NetCommand.nMpsY = m_DesY;
 
-	POINT	POff[8] = 
+	POINT	POff[8] =
 	{
 		{0, 32},
 		{-16, 32},
@@ -2222,7 +2227,8 @@ void KNpc::DoRun()
 	{
 		if (CONREGIONIDX(i) == -1)
 			continue;
-		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
+		int nRegionMaxCount = MAX_BROADCAST_COUNT;
+		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nRegionMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 	}
 #endif
 	if (m_Doing == do_run)
@@ -2301,7 +2307,8 @@ void KNpc::DoSit()
 	{
 		if (CONREGIONIDX(i) == -1)
 			continue;
-		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
+				int nRegionMaxCount = MAX_BROADCAST_COUNT;
+		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nRegionMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 	}
 #endif
 
@@ -2862,7 +2869,7 @@ void KNpc::DoWalk()
 	NetCommand.ID = m_dwID;
 	NetCommand.nMpsX = m_DesX;
 	NetCommand.nMpsY = m_DesY;
-	
+
 	if(m_RandMoveState.nTime > 0)
 	{
 		NetCommand.bRandMove = TRUE;
@@ -2872,7 +2879,7 @@ void KNpc::DoWalk()
 		NetCommand.bRandMove = FALSE;
 	}
 
-	POINT	POff[8] = 
+	POINT	POff[8] =
 	{
 		{0, 32},
 		{-16, 32},
@@ -2890,7 +2897,8 @@ void KNpc::DoWalk()
 	{
 		if (CONREGIONIDX(i) == -1)
 			continue;
-		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
+		int nRegionMaxCount = MAX_BROADCAST_COUNT;
+		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nRegionMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 	}	
 #endif
 	if (m_Doing == do_walk)
@@ -2947,7 +2955,8 @@ void KNpc::DoPlayerTalk(char * szTalk)
 	{
 		if (CONREGIONIDX(i) == -1)
 			continue;
-		CONREGION(i).BroadCast(pNetCommand, nTalkLen + 6 + 1, nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
+				int nRegionMaxCount = MAX_BROADCAST_COUNT;
+		CONREGION(i).BroadCast(pNetCommand, nTalkLen + 6 + 1, nRegionMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 	}
 	if (pNetCommand)
 	{
@@ -5265,8 +5274,8 @@ void KNpc::DoJump()
 	NetCommand.m_dwID		= m_dwID;
 	NetCommand.m_nMpsX		= m_DesX;
 	NetCommand.m_nMpsY		= m_DesY;
-		
-	POINT	POff[8] = 
+
+	POINT	POff[8] =
 	{
 		{0, 32},
 		{-16, 32},
@@ -5283,7 +5292,8 @@ void KNpc::DoJump()
 	{
 		if (CONREGIONIDX(i) == -1)
 			continue;
-		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
+		int nRegionMaxCount = MAX_BROADCAST_COUNT;
+		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nRegionMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 	}
 #endif
 	
@@ -9333,7 +9343,7 @@ void	KNpc::BroadCastState()
 	for (i = 0; i < MAX_NPC_RECORDER_STATE; i++)
 		StateInfo.m_btStateInfo[i] = m_btStateInfo[i];
 
-	POINT	POff[8] = 
+	POINT	POff[8] =
 	{
 		{0, 32},
 		{-16, 32},
@@ -9350,7 +9360,8 @@ void	KNpc::BroadCastState()
 	{
 		if (CONREGIONIDX(i) == -1)
 			continue;
-		CONREGION(i).BroadCast(&StateInfo, sizeof(NPC_SYNC_STATEINFO), nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
+		int nRegionMaxCount = MAX_BROADCAST_COUNT;
+		CONREGION(i).BroadCast(&StateInfo, sizeof(NPC_SYNC_STATEINFO), nRegionMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 	}
 	
 }
@@ -10168,7 +10179,7 @@ void KNpc::BroadCastPosition()
 	PosInfo.ProtocolType	= s2c_playerpos;
 	PosInfo.m_dwNpcID		= m_dwID;
 	GetMpsPos(&PosInfo.m_nMpsX, &PosInfo.m_nMpsY);
-	POINT	POff[8] = 
+	POINT	POff[8] =
 	{
 		{0, 32},
 		{-16, 32},
@@ -10186,7 +10197,8 @@ void KNpc::BroadCastPosition()
 	{
 		if (CONREGIONIDX(i) == -1)
 			continue;
-		CONREGION(i).BroadCast(&PosInfo, sizeof(PosInfo), nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
+		int nRegionMaxCount = MAX_BROADCAST_COUNT;
+		CONREGION(i).BroadCast(&PosInfo, sizeof(PosInfo), nRegionMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 	}
 	g_pServer->PackDataToClient(Player[m_nPlayerIdx].m_nNetConnectIdx, (PLAYER_POS_SYNC*)&PosInfo, sizeof(PosInfo));	
 }
@@ -10498,7 +10510,8 @@ void	KNpc::AutoDoSkill(int nSkillId, int nLevel, int nX, int nY)
 	{
 		if (CONREGIONIDX(i) == -1)
 			continue;
-		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
+				int nRegionMaxCount = MAX_BROADCAST_COUNT;
+		CONREGION(i).BroadCast(&NetCommand, sizeof(NetCommand), nRegionMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 	}
 	NetCommand.ProtocolType = s2c_playerautodoskill;
 	g_pServer->PackDataToClient(Player[m_nPlayerIdx].m_nNetConnectIdx, (NPC_SKILL_SYNC*)&NetCommand, sizeof(NetCommand));	
@@ -10650,7 +10663,8 @@ void	KNpc::RandMove(int nX, int nY, BOOL bFlag)
 			{
 				if (CONREGIONIDX(i) == -1)
 					continue;
-				CONREGION(i).BroadCast(&Sync, sizeof(NPC_RANDMOVE_SYNC), nMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
+						int nRegionMaxCount = MAX_BROADCAST_COUNT;
+		CONREGION(i).BroadCast(&Sync, sizeof(NPC_RANDMOVE_SYNC), nRegionMaxCount, m_MapX - POff[i].x, m_MapY - POff[i].y);
 			}
 			g_pServer->PackDataToClient(Player[m_nPlayerIdx].m_nNetConnectIdx, (NPC_RANDMOVE_SYNC*)&Sync, sizeof(Sync));
 #endif
