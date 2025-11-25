@@ -3771,16 +3771,17 @@ void    KProtocolProcess::s2cPlayerPos(BYTE * pMsg)
 		SubWorld[Npc[nIndex].m_SubWorldIndex].Mps2Map(pSync->m_nMpsX, pSync->m_nMpsY,
 			&Npc[nIndex].m_RegionIndex, &nMapX, &nMapY, &nOffX, &nOffY);
 
-		// Only update if position changed significantly (avoid micro-jitter)
-		int dx = nMapX - Npc[nIndex].m_MapX;
-		int dy = nMapY - Npc[nIndex].m_MapY;
-		if (dx*dx + dy*dy > 4)  // Threshold: 2 cells
-		{
-			Npc[nIndex].m_MapX = nMapX;
-			Npc[nIndex].m_MapY = nMapY;
-			Npc[nIndex].m_OffX = nOffX;
-			Npc[nIndex].m_OffY = nOffY;
-		}
+		// CRITICAL FIX: ALWAYS update position from server to maintain sync across all clients
+		// The previous threshold check (dx*dx + dy*dy > 4) was causing desynchronization:
+		// - Server broadcasts position (X, Y)
+		// - Client A updates to (X, Y)
+		// - Client B checks threshold and REJECTS update if distance < 2 cells
+		// - Result: Client A and B see same player at DIFFERENT positions!
+		// - This causes jerky follow behavior because each client's AI moves to different targets
+		Npc[nIndex].m_MapX = nMapX;
+		Npc[nIndex].m_MapY = nMapY;
+		Npc[nIndex].m_OffX = nOffX;
+		Npc[nIndex].m_OffY = nOffY;
 	}
 
 	Npc[nIndex].EditPos(true);
