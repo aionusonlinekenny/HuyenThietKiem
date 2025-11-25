@@ -497,6 +497,29 @@ void KPlayerAI::Active()
 				iObject = FindNearObject2Array();
 				if (iObject > 0)
 				{
+				// FIX: Check if item is too far from leader to prevent losing leader
+				// Skip item pickup if it would cause follower to lose track of leader
+				if (m_bFollowPeople && m_FollowPeopleIdx > 0)
+				{
+					int objX, objY, leaderX, leaderY;
+					Object[iObject].GetMpsPos(&objX, &objY);
+					Npc[m_FollowPeopleIdx].GetMpsPos(&leaderX, &leaderY);
+
+					// Calculate distance from item to leader
+					int distanceToLeader = (int)sqrt((double)((objX - leaderX) * (objX - leaderX) +
+					                                           (objY - leaderY) * (objY - leaderY)));
+
+					// If item is too far from leader (beyond 1.5x follow radius), skip it
+					// This prevents follower from running too far and losing leader
+					if (distanceToLeader > m_nRadiusFollow * 3 / 2)  // 1.5x follow radius
+					{
+						// Item too far, would lose leader - skip this item
+						iObject = 0;
+						m_nObject = 0;
+						m_bObject = FALSE;
+					}
+				}
+
 					BOOL _flagLag = FALSE;
 					for (i = 0; i < defMAX_ARRAY_AUTO; i++)
 					{
