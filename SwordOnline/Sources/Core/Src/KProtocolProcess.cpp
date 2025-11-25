@@ -534,15 +534,32 @@ void KProtocolProcess::NetCommandRun(BYTE* pMsg)
 {
 	DWORD	dwNpcID;
 	DWORD	MapX, MapY;
-	
+
 	dwNpcID = *(DWORD *)&pMsg[1];
 	MapX = *(int *)&pMsg[5];
 	MapY = *(int *)&pMsg[9];
 	int nIdx = NpcSet.SearchID(dwNpcID);
 	if (Player[CLIENT_PLAYER_INDEX].ConformIdx(nIdx))
 	{
+		// CRITICAL FIX: IMMEDIATELY update position from server for OTHER players
+		// Problem: SendCommand(do_run, x, y) only sets DESTINATION, not CURRENT position
+		// This causes gradual movement over multiple frames → different clients see player at different positions!
+		// Solution: IMMEDIATELY teleport to server position, ensuring ALL clients see identical positions
+
+		int nMapX, nMapY, nOffX, nOffY;
+		SubWorld[Npc[nIdx].m_SubWorldIndex].Mps2Map(MapX, MapY,
+			&Npc[nIdx].m_RegionIndex, &nMapX, &nMapY, &nOffX, &nOffY);
+
+		// Update current position immediately (not gradual!)
+		Npc[nIdx].m_MapX = nMapX;
+		Npc[nIdx].m_MapY = nMapY;
+		Npc[nIdx].m_OffX = nOffX;
+		Npc[nIdx].m_OffY = nOffY;
+
+		// Also set destination for smooth animation continuation
 		Npc[nIdx].SendCommand(do_run, MapX, MapY);
 		Npc[nIdx].m_SyncSignal = SubWorld[0].m_dwCurrentTime;
+		Npc[nIdx].EditPos(true);
 	}
 }
 
@@ -661,16 +678,31 @@ void KProtocolProcess::NetCommandWalk(BYTE* pMsg)
 {
 	DWORD	dwNpcID;
 	DWORD	MapX, MapY;
-	BOOL	bRandMove;		
-	
+	BOOL	bRandMove;
+
 	dwNpcID = *(DWORD *)&pMsg[1];
 	MapX = *(int *)&pMsg[5];
 	MapY = *(int *)&pMsg[9];
-	bRandMove = *(BOOL *)&pMsg[13];		
+	bRandMove = *(BOOL *)&pMsg[13];
 	int nIdx = NpcSet.SearchID(dwNpcID);
 	if (Player[CLIENT_PLAYER_INDEX].ConformIdx(nIdx))
-	{	
-		//
+	{
+		// CRITICAL FIX: IMMEDIATELY update position from server for OTHER players
+		// Problem: SendCommand(do_walk, x, y) only sets DESTINATION, not CURRENT position
+		// This causes gradual movement over multiple frames → different clients see player at different positions!
+		// Solution: IMMEDIATELY teleport to server position, ensuring ALL clients see identical positions
+
+		int nMapX, nMapY, nOffX, nOffY;
+		SubWorld[Npc[nIdx].m_SubWorldIndex].Mps2Map(MapX, MapY,
+			&Npc[nIdx].m_RegionIndex, &nMapX, &nMapY, &nOffX, &nOffY);
+
+		// Update current position immediately (not gradual!)
+		Npc[nIdx].m_MapX = nMapX;
+		Npc[nIdx].m_MapY = nMapY;
+		Npc[nIdx].m_OffX = nOffX;
+		Npc[nIdx].m_OffY = nOffY;
+
+		// Also set destination for smooth animation continuation
 		if(bRandMove)
 		{
 			Npc[nIdx].SendCommandRandMove(MapX, MapY);
@@ -679,8 +711,9 @@ void KProtocolProcess::NetCommandWalk(BYTE* pMsg)
 		{
 			Npc[nIdx].SendCommand(do_walk, MapX, MapY);
 		}
-		
+
 		Npc[nIdx].m_SyncSignal = SubWorld[0].m_dwCurrentTime;
+		Npc[nIdx].EditPos(true);
 	}
 }
 
