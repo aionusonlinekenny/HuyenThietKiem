@@ -1802,7 +1802,17 @@ void KPlayerAI::MoveTo(int nX, int nY)
 		dY = nPlayerY & 0x1F;
 		nDestX = nX + 0x10 - dX; // Anti-LAG
 		nDestY = nY + 0x10 - dY; // Anti-LAG	
-		if (!Player[CLIENT_PLAYER_INDEX].m_RunStatus)
+
+		// FIX: Auto run/walk based on distance to target for better follow behavior
+		// Calculate distance from current position to target
+		int distance = (int)sqrt((double)((nX - nPlayerX) * (nX - nPlayerX) + (nY - nPlayerY) * (nY - nPlayerY)));
+
+		// Decide run vs walk based on distance
+		// If distance > 150 (far from target), force run for quick catch-up
+		// Otherwise use player's run status preference
+		BOOL shouldRun = (distance > 150) ? TRUE : Player[CLIENT_PLAYER_INDEX].m_RunStatus;
+
+		if (!shouldRun)
 		{
 			Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].SendCommand(do_walk, nDestX, nDestY);
 			SendClientCmdWalk(nX, nY);
