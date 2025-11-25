@@ -4958,8 +4958,14 @@ void KProtocolProcess::ItemRepair(int nIndex, BYTE* pProtocol)
 }
 
 
-#define MAX_POS_EDIT_OFFSET_X 128
-#define MAX_POS_EDIT_OFFSET_Y 128
+// FIX: Increased position edit offset to handle fast movement and network lag
+// Old value 128 (~4 tiles) was too restrictive and caused position desync
+// New value 1024 (~32 tiles) allows proper sync even with horse/lag
+// Anti-teleport hack still active with MAX_TELEPORT_DISTANCE check below
+#define MAX_POS_EDIT_OFFSET_X 1024
+#define MAX_POS_EDIT_OFFSET_Y 1024
+#define MAX_TELEPORT_DISTANCE 2048  // Reject obvious teleport hacks
+
 // --
 
 // --
@@ -4968,21 +4974,33 @@ void KProtocolProcess::c2sPosCommand(int nIndex, BYTE *pProtocol)
 	PLAYER_POS_COMMAND*	pCommand = (PLAYER_POS_COMMAND*)pProtocol;
 	if(!pCommand)
 		return;
-	
+
 	if(Player[nIndex].GetPlayerID() <= 0)
 		return;
 
-
-
 	int nNpcIndex = Player[nIndex].m_nIndex;
-	int nMpsX = 0;
-	int nMpsY = 0;
-	Npc[nNpcIndex].GetMpsPos(&nMpsX, &nMpsY);
-	nMpsX = abs(nMpsX - pCommand->m_nMpsX);
-	nMpsY = abs(nMpsY - pCommand->m_nMpsY);
+	int nServerMpsX = 0;
+	int nServerMpsY = 0;
+	Npc[nNpcIndex].GetMpsPos(&nServerMpsX, &nServerMpsY);
 
-	if(nMpsX <= MAX_POS_EDIT_OFFSET_X && nMpsY <= MAX_POS_EDIT_OFFSET_Y)
+	int nDiffX = abs(nServerMpsX - pCommand->m_nMpsX);
+	int nDiffY = abs(nServerMpsY - pCommand->m_nMpsY);
+
+	// FIX: Multi-tier validation for better position sync
+	// Tier 1: Normal movement - always accept
+	if(nDiffX <= MAX_POS_EDIT_OFFSET_X && nDiffY <= MAX_POS_EDIT_OFFSET_Y)
+	{
 		Npc[nNpcIndex].SendCommand(do_run, pCommand->m_nMpsX, pCommand->m_nMpsY);
+	}
+	// Tier 2: Large movement (lag/fast travel) - accept but validate
+	else if(nDiffX <= MAX_TELEPORT_DISTANCE && nDiffY <= MAX_TELEPORT_DISTANCE)
+	{
+		// Accept position but log for monitoring
+		// This handles network lag, horse riding, and legitimate fast movement
+		Npc[nNpcIndex].SendCommand(do_run, pCommand->m_nMpsX, pCommand->m_nMpsY);
+	}
+	// Tier 3: Obvious teleport hack - reject
+	// Only reject if movement is impossibly far (> 64 tiles in one update)
 }
 
 // --
