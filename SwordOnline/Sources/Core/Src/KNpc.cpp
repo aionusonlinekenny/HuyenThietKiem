@@ -2786,13 +2786,19 @@ void KNpc::OnSkill()
 		DoStand();
 		SendClientPos2Server();// them by kinnox 27/03/2024;
 	}
-#endif	
-		m_ProcessAI = 1;	
+#endif
+		m_ProcessAI = 1;
 	}
 	else if(IsReachFrame(ATTACKACTION_EFFECT_PERCENT))
 	{
 #ifndef _SERVER
 		m_DataRes.SetBlur(FALSE);
+		// FIX: Send position during attack to keep server synced
+		// This ensures Client B sees correct position during combat
+		if (IsPlayer())
+		{
+			SendClientPos2Server();
+		}
 #endif
 
 		if(m_DesX == -1) 
@@ -7592,9 +7598,14 @@ void KNpc::OnManyAttack()
 	{
 #ifndef _SERVER
 		m_DataRes.SetBlur(FALSE);
+		// FIX: Send position during multi-attack to keep server synced
+		if (IsPlayer())
+		{
+			SendClientPos2Server();
+		}
 #endif
 		KSkill * pSkill = (KSkill*)GetActiveSkill();
-		if (!pSkill) 
+		if (!pSkill)
             return ;
 
 		int nPhySkillId =  pSkill->GetChildSkillId();
@@ -7610,7 +7621,7 @@ void KNpc::OnManyAttack()
 		m_SpecialSkillStep ++;
 		DoManyAttack();
 
-	}	
+	}
 }
 
 // --
@@ -7727,12 +7738,19 @@ void KNpc::OnRunAttack()
 		if(!pSkill) 
             return ;
 		
-        if(m_Doing == do_stand || (DWORD)m_nCurrentMeleeTime > pSkill->GetMissleGenerateTime(0)) 
+        if(m_Doing == do_stand || (DWORD)m_nCurrentMeleeTime > pSkill->GetMissleGenerateTime(0))
 		{
 			m_SpecialSkillStep++;
 			m_nCurrentMeleeTime = 0;
 
 			DoRunAttack();
+#ifndef _SERVER
+			// FIX: Send position during run-attack to keep server synced
+			if (IsPlayer())
+			{
+				SendClientPos2Server();
+			}
+#endif
 		}
 		else
 		{
