@@ -74,7 +74,11 @@ public:
 	char			m_FollowPeopleName[32];
 	int				m_nRadiusFollow;
 	int				m_nLeaderCurrentTarget;
-	unsigned int	m_nLeaderTargetLostTime;	// Time when leader's target was lost (for grace period)	
+	unsigned int	m_nLeaderTargetLostTime;	// Time when leader's target was lost (for grace period)
+	int				m_nCachedLeaderPosX;		// FIX: Cached leader X position to prevent stale position
+	int				m_nCachedLeaderPosY;		// FIX: Cached leader Y position
+	unsigned int	m_dwLastLeaderPosCache;		// FIX: Time of last position cache update
+	unsigned int	m_dwCombatEndTime;			// FIX: Time when combat ended (for delay before follow)
 	BOOL			m_bAttackAround;
 	BOOL			m_bAroundBtn;
 	int				m_PosXAuto;

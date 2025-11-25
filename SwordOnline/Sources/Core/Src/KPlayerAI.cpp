@@ -63,7 +63,11 @@ void KPlayerAI::Release()
 	m_FollowPeopleIdx 		= 0;
 	m_nRadiusFollow			= 0;
 	m_nLeaderCurrentTarget	= 0;
-	m_nLeaderTargetLostTime	= 0;	
+	m_nLeaderTargetLostTime	= 0;
+	m_nCachedLeaderPosX		= 0;	// FIX: Initialize cached leader position
+	m_nCachedLeaderPosY		= 0;
+	m_dwLastLeaderPosCache	= 0;
+	m_dwCombatEndTime		= 0;
 	m_bAutoAttack 			= TRUE;	
 	m_bFollowAttack			= FALSE;
 	m_SpaceBar 				= FALSE;
@@ -409,6 +413,15 @@ void KPlayerAI::Active()
 							}
 						}
 					}
+
+					// FIX: Cache leader position periodically to prevent stale position bugs
+					// Update cache every 150ms to smooth out network lag/desync issues
+					DWORD currentTime = GetTickCount();
+					if (m_dwLastLeaderPosCache == 0 || (currentTime - m_dwLastLeaderPosCache) >= 150)
+					{
+						Npc[m_FollowPeopleIdx].GetMpsPos(&m_nCachedLeaderPosX, &m_nCachedLeaderPosY);
+						m_dwLastLeaderPosCache = currentTime;
+					}
 					int distance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_FollowPeopleIdx);
 
 					// FIX: Smart catch-up when leader is too far (train route scenario)
@@ -445,14 +458,26 @@ void KPlayerAI::Active()
 
 						if (!isAttackingLeaderTarget)
 						{
-							if (!m_bPriorityUseMouse)
+						// FIX: Record combat end time for delayed follow
+						if (m_bActacker == TRUE && m_dwCombatEndTime == 0)
+						{
+							m_dwCombatEndTime = GetTickCount();
+						}
+
+						if (!m_bPriorityUseMouse)
+						{
+							// FIX: Use cached position and delay after combat (wait 150ms for position sync)
+							DWORD timeSinceCombatEnd = (m_dwCombatEndTime > 0) ? (GetTickCount() - m_dwCombatEndTime) : 200;
+							if (timeSinceCombatEnd >= 150)
 							{
-								int nX, nY;
-								Npc[m_FollowPeopleIdx].GetMpsPos(&nX,&nY);
-								MoveTo(nX, nY);
+								// Use cached position to avoid stale position bug
+								MoveTo(m_nCachedLeaderPosX, m_nCachedLeaderPosY);
 							}
-							m_Actacker = 0;
-							m_bActacker = FALSE;
+							// Else: Too soon after combat, skip to wait for position update
+						}
+						m_Actacker = 0;
+						m_bActacker = FALSE;
+						m_dwCombatEndTime = 0;  // Reset combat end time
 							m_nLifeLag = 0;
 							m_nTimeRunLag = 0;
 							m_nTimeSkip = 0;
@@ -726,10 +751,9 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 			int leaderDistance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_FollowPeopleIdx);
 			if (leaderDistance > m_nRadiusFollow / 3)  // If not very close to leader
 			{
-				int nX, nY;
-				Npc[m_FollowPeopleIdx].GetMpsPos(&nX, &nY);
+				// FIX: Use cached leader position instead of real-time to avoid desync
 				if (!m_bPriorityUseMouse)
-					MoveTo(nX, nY);  // Move to leader's position
+					MoveTo(m_nCachedLeaderPosX, m_nCachedLeaderPosY);
 			}
 		}
 		else if (m_AutoMove)
