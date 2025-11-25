@@ -68,16 +68,16 @@ public:
 	void RecoverPlayerExchange(int nIndex);
 	int  AddCharacter(void* pBuffer, GUID* pGuid);
 	int	 AddTempTaskValue(int nIndex, const char* pData);
-	//ÏòÓÎÏ··¢ËÍ²Ù×÷
+	//ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½Í²ï¿½ï¿½ï¿½
 	int	 OperationRequest(unsigned int uOper, unsigned int uParam, int nParam);
-	//»ñÈ¡Á¬½Ó×´¿ö
+	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½×´ï¿½ï¿½
 	int	 GetConnectInfo(KCoreConnectInfo* pInfo);
 	//BOOL ValidPingTime(int nIndex);
-	//´ÓÓÎÏ·ÊÀ½ç»ñÈ¡Êý¾Ý
+	//ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
 	int	 GetGameData(unsigned int uDataId, unsigned int uParam, int nParam);
-	//ÈÕ³£»î¶¯£¬coreÈç¹ûÒªÊÙÖÕÕýÇÞÔò·µ»Ø0£¬·ñÔò·µ»Ø·Ç0Öµ
+	//ï¿½Õ³ï¿½ï¿½î¶¯ï¿½ï¿½coreï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»Ø·ï¿½0Öµ
 	int  Breathe();
-	//ÊÍ·Å½Ó¿Ú¶ÔÏó
+	//ï¿½Í·Å½Ó¿Ú¶ï¿½ï¿½ï¿½
 	void Release();
 	void SetSaveStatus(int nIndex, UINT uStatus);
 	UINT GetSaveStatus(int nIndex);
@@ -119,7 +119,7 @@ int CoreServerShell::GetLoopRate()
 	return g_SubWorldSet.m_nLoopRate;
 }
 
-	//»ñÈ¡Á¬½Ó×´¿ö
+	//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½×´ï¿½ï¿½
 int	 CoreServerShell::GetConnectInfo(KCoreConnectInfo* pInfo)
 {
 	if (pInfo)
@@ -191,6 +191,7 @@ void CoreServerShell::AddPlayerToWorld(int nIndex)
 {
 //	int nIndex = PlayerSet.FindClient(lnID);
 	Player[nIndex].LaunchPlayer();
+	Player[nIndex].UpdataCurData();		// Re-apply equipment bonuses before syncing skills
 	Player[nIndex].SendSyncData_Skill();
 }
 
@@ -362,7 +363,7 @@ int	CoreServerShell::GetGameData(unsigned int uDataId, unsigned int uParam, int 
 		}
 		break;
 
-	// ÉêÇë¼ÓÈë°ï»á
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	// uParam : struct STONG_SERVER_TO_CORE_APPLY_ADD point
 	case SGDI_TONG_APPLY_ADD:
 		if (uParam)
@@ -392,8 +393,8 @@ int	CoreServerShell::GetGameData(unsigned int uDataId, unsigned int uParam, int 
 		}
 		break;
 
-	// »ñµÃ°ï»áÐÅÏ¢
-	// uParam : ´«ÈëµÄ STONG_SERVER_TO_CORE_GET_INFO point
+	// ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ï¿½Ï¢
+	// uParam : ï¿½ï¿½ï¿½ï¿½ï¿½ STONG_SERVER_TO_CORE_GET_INFO point
 	case SGDI_TONG_GET_INFO:
 		{
 			STONG_SERVER_TO_CORE_GET_INFO	*pInfo = (STONG_SERVER_TO_CORE_GET_INFO*)uParam;
@@ -450,8 +451,8 @@ int	CoreServerShell::GetGameData(unsigned int uDataId, unsigned int uParam, int 
 		}
 		break;
 
-	// ÅÐ¶ÏÊÇ·ñÓÐÈÎÃüÈ¨Àû
-	// uParam : ´«ÈëµÄ TONG_APPLY_INSTATE_COMMAND point
+	// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½
+	// uParam : ï¿½ï¿½ï¿½ï¿½ï¿½ TONG_APPLY_INSTATE_COMMAND point
 	// nParam : PlayerIndex
 	case SGDI_TONG_INSTATE_POWER:
 		if (uParam)
@@ -466,8 +467,8 @@ int	CoreServerShell::GetGameData(unsigned int uDataId, unsigned int uParam, int 
 		}
 		break;
 
-	// ±»ÈÎÃü£¬°ï»áÊý¾Ý±ä»¯
-	// uParam : ´«ÈëµÄ STONG_SERVER_TO_CORE_BE_INSTATED point
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý±ä»¯
+	// uParam : ï¿½ï¿½ï¿½ï¿½ï¿½ STONG_SERVER_TO_CORE_BE_INSTATED point
 	case SGDI_TONG_BE_INSTATED:
 		if (uParam)
 		{
@@ -480,8 +481,8 @@ int	CoreServerShell::GetGameData(unsigned int uDataId, unsigned int uParam, int 
 		}
 		break;
 
-	// ÅÐ¶ÏÊÇ·ñÓÐÌßÈËÈ¨Àû
-	// uParam : ´«ÈëµÄ TONG_APPLY_KICK_COMMAND point
+	// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½
+	// uParam : ï¿½ï¿½ï¿½ï¿½ï¿½ TONG_APPLY_KICK_COMMAND point
 	// nParam : PlayerIndex
 	case SGDI_TONG_KICK_POWER:
 		if (uParam)
@@ -496,8 +497,8 @@ int	CoreServerShell::GetGameData(unsigned int uDataId, unsigned int uParam, int 
 		}
 		break;
 
-	// ±»Ìß³ö°ï»á
-	// uParam : ´«ÈëµÄ STONG_SERVER_TO_CORE_BE_KICKED point
+	// ï¿½ï¿½ï¿½ß³ï¿½ï¿½ï¿½ï¿½
+	// uParam : ï¿½ï¿½ï¿½ï¿½ï¿½ STONG_SERVER_TO_CORE_BE_KICKED point
 	case SGDI_TONG_BE_KICKED:
 		if (uParam)
 		{
@@ -510,8 +511,8 @@ int	CoreServerShell::GetGameData(unsigned int uDataId, unsigned int uParam, int 
 		}
 		break;
 
-	// Àë¿ª°ï»á
-	// uParam : ´«ÈëµÄ TONG_APPLY_LEAVE_COMMAND point
+	// ï¿½ë¿ªï¿½ï¿½ï¿½
+	// uParam : ï¿½ï¿½ï¿½ï¿½ï¿½ TONG_APPLY_LEAVE_COMMAND point
 	// nParam : PlayerIndex
 	case SGDI_TONG_LEAVE_POWER:
 		if (uParam)
@@ -526,8 +527,8 @@ int	CoreServerShell::GetGameData(unsigned int uDataId, unsigned int uParam, int 
 		}
 		break;
 
-	// Àë¿ª°ï»á
-	// uParam : ´«ÈëµÄ STONG_SERVER_TO_CORE_LEAVE point
+	// ï¿½ë¿ªï¿½ï¿½ï¿½
+	// uParam : ï¿½ï¿½ï¿½ï¿½ï¿½ STONG_SERVER_TO_CORE_LEAVE point
 	case SGDI_TONG_LEAVE:
 		if (uParam)
 		{
@@ -540,8 +541,8 @@ int	CoreServerShell::GetGameData(unsigned int uDataId, unsigned int uParam, int 
 		}
 		break;
 
-	// Àë¿ª°ï»áÅÐ¶Ï
-	// uParam : ´«ÈëµÄ TONG_APPLY_CHANGE_MASTER_COMMAND point
+	// ï¿½ë¿ªï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
+	// uParam : ï¿½ï¿½ï¿½ï¿½ï¿½ TONG_APPLY_CHANGE_MASTER_COMMAND point
 	// nParam : PlayerIndex
 	case SGDI_TONG_CHANGE_MASTER_POWER:
 		if (uParam)
@@ -556,8 +557,8 @@ int	CoreServerShell::GetGameData(unsigned int uDataId, unsigned int uParam, int 
 		}
 		break;
 
-	// ÄÜ·ñ½ÓÊÜ´«Î»ÅÐ¶Ï
-	// uParam : ´«ÈëµÄ STONG_SERVER_TO_CORE_CHECK_GET_MASTER_POWER point
+	// ï¿½Ü·ï¿½ï¿½ï¿½Ü´ï¿½Î»ï¿½Ð¶ï¿½
+	// uParam : ï¿½ï¿½ï¿½ï¿½ï¿½ STONG_SERVER_TO_CORE_CHECK_GET_MASTER_POWER point
 	case SGDI_TONG_GET_MASTER_POWER:
 		if (uParam)
 		{
@@ -571,8 +572,8 @@ int	CoreServerShell::GetGameData(unsigned int uDataId, unsigned int uParam, int 
 		}
 		break;
 
-	// ´«Î»µ¼ÖÂÉí·Ý¸Ä±ä
-	// uParam : ´«ÈëµÄ STONG_SERVER_TO_CORE_CHANGE_AS point
+	// ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¸Ä±ï¿½
+	// uParam : ï¿½ï¿½ï¿½ï¿½ï¿½ STONG_SERVER_TO_CORE_CHANGE_AS point
 	case SGDI_TONG_CHANGE_AS:
 		if (uParam)
 		{
@@ -585,8 +586,8 @@ int	CoreServerShell::GetGameData(unsigned int uDataId, unsigned int uParam, int 
 		}
 		break;
 
-	// °ïÖ÷»»ÁË
-	// uParam : ´«ÈëµÄ STONG_SERVER_TO_CORE_CHANGE_MASTER point
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// uParam : ï¿½ï¿½ï¿½ï¿½ï¿½ STONG_SERVER_TO_CORE_CHANGE_MASTER point
 	case SGDI_TONG_CHANGE_MASTER:
 		if (uParam)
 		{
@@ -604,7 +605,7 @@ int	CoreServerShell::GetGameData(unsigned int uDataId, unsigned int uParam, int 
 		}
 		break;
 
-	// »ñµÃ°ï»áÃû×Ö·û´®×ª»»³ÉµÄ dword
+	// ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½Éµï¿½ dword
 	// nParam : PlayerIndex
 	case SGDI_TONG_GET_TONG_NAMEID:
 		{
@@ -763,7 +764,7 @@ int	CoreServerShell::GetGameData(unsigned int uDataId, unsigned int uParam, int 
 				break;
 			if(Player[nParam].m_cTong.GetTongNameID() != pFail->m_dwTongNameID)
 				break;
-			KPlayerChat::SendSystemInfo(1, nParam, "Bang héi", MSG_TONG_SAVE_MONEY_FAIL, strlen(MSG_TONG_SAVE_MONEY_FAIL));
+			KPlayerChat::SendSystemInfo(1, nParam, "Bang hï¿½i", MSG_TONG_SAVE_MONEY_FAIL, strlen(MSG_TONG_SAVE_MONEY_FAIL));
 			Player[nParam].Earn(pFail->m_nMoney);
 		}
 		break;
@@ -975,7 +976,7 @@ bool CoreServerShell::CheckProtocolSize(const char* pChar, int nSize, BOOL &bShu
 	if (wCheckSize != nSize)
 	{
 #ifndef _WIN32
-		printf("[error]ÍøÂç½ÓÊÕÐ­Òé´óÐ¡²»Æ¥Åä<%d>, should %d, but %d\n", nProtocol, wCheckSize, nSize);
+		printf("[error]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Æ¥ï¿½ï¿½<%d>, should %d, but %d\n", nProtocol, wCheckSize, nSize);
 #endif
 		bShutDown = TRUE;
 		return false;
@@ -1188,11 +1189,11 @@ BOOL CoreServerShell::GroupChat(IClient* pClient, DWORD FromIP, unsigned long Fr
 		memcpy(pExHeader + 1, pData, size);
 
 		int nTargetIdx;
-		// ¸ø¶Ó³¤·¢
+		// ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½
 		nTargetIdx = g_Team[tgtid].m_nCaptain;
 //		if (FromRelayID != Player[nTargetIdx].m_nNetConnectIdx)
 			g_pServer->SendData(Player[nTargetIdx].m_nNetConnectIdx, pData, size);
-		// ¸ø¶ÓÔ±·¢
+		// ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½
 		for (int i = 0; i <	MAX_TEAM_MEMBER; i++)
 		{
 			nTargetIdx = g_Team[tgtid].m_nMember[i];
@@ -1464,34 +1465,34 @@ BOOL CoreServerShell::PayForSpeech(int nIndex, int nType)
 	int nNpcIdx = Player[nIndex].m_nIndex;
 	if (nNpcIdx <= 0)
 		return FALSE;
-	if (Player[nIndex].m_nForbiddenFlag & KPlayer::FF_CHAT)	//±»½ûÑÔ
+	if (Player[nIndex].m_nForbiddenFlag & KPlayer::FF_CHAT)	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		return FALSE;
 	int nLevel = Npc[nNpcIdx].m_Level;
 	int nMaxMana = Npc[nNpcIdx].m_CurrentManaMax;
 	switch (nType)
 	{
-	case 0:		//Ãâ·Ñ
+	case 0:		//ï¿½ï¿½ï¿½
 		return TRUE;
 		break;
-	case 1:		//10ÔªÃ¿¾ä
+	case 1:		//10ÔªÃ¿ï¿½ï¿½
 		{
 			nMoney = 10;
 			return Player[nIndex].Pay(nMoney);
 		}
 		break;
-	case 2:		//2: <10Lv ? ²»ÄÜËµ : MaxMana/2/¾ä
+	case 2:		//2: <10Lv ? ï¿½ï¿½ï¿½ï¿½Ëµ : MaxMana/2/ï¿½ï¿½
 		{
 			if (nLevel < 10)
 				return FALSE;
 			return Npc[nNpcIdx].Cost(attrib_mana, nMaxMana / 2);
 		}
 		break;
-	case 3:		//3: MaxMana/10/¾ä
+	case 3:		//3: MaxMana/10/ï¿½ï¿½
 		{
 			return Npc[nNpcIdx].Cost(attrib_mana, nMaxMana / 10);
 		}
 		break;
-	case 4:		//4: <20Lv ? ²»ÄÜËµ : MaxMana*4/5/¾ä
+	case 4:		//4: <20Lv ? ï¿½ï¿½ï¿½ï¿½Ëµ : MaxMana*4/5/ï¿½ï¿½
 		{
 			if (nLevel < 20)
 				return FALSE;
@@ -1499,6 +1500,6 @@ BOOL CoreServerShell::PayForSpeech(int nIndex, int nType)
 		}
 		break;
 	default:
-		return FALSE;	//²»ÈÏÊ¶µÄÀà±ð²»·¢ËÍ
+		return FALSE;	//ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½ð²»·ï¿½ï¿½ï¿½
 	}
 }
