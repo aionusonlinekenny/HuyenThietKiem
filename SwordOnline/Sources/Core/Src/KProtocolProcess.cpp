@@ -541,25 +541,46 @@ void KProtocolProcess::NetCommandRun(BYTE* pMsg)
 	int nIdx = NpcSet.SearchID(dwNpcID);
 	if (Player[CLIENT_PLAYER_INDEX].ConformIdx(nIdx))
 	{
-		// CRITICAL FIX: IMMEDIATELY update position from server for OTHER players
-		// Problem: SendCommand(do_run, x, y) only sets DESTINATION, not CURRENT position
-		// This causes gradual movement over multiple frames → different clients see player at different positions!
-		// Solution: IMMEDIATELY teleport to server position, ensuring ALL clients see identical positions
+		// CRITICAL FIX: Smart position sync - smooth for small distances, teleport for large
+		// Problem: Always teleporting causes jerky "blink/dính" movement
+		// Solution: Only teleport if distance is large (serious desync), otherwise smooth interpolation
 
 		int nMapX, nMapY, nOffX, nOffY;
 		SubWorld[Npc[nIdx].m_SubWorldIndex].Mps2Map(MapX, MapY,
 			&Npc[nIdx].m_RegionIndex, &nMapX, &nMapY, &nOffX, &nOffY);
 
-		// Update current position immediately (not gradual!)
-		Npc[nIdx].m_MapX = nMapX;
-		Npc[nIdx].m_MapY = nMapY;
-		Npc[nIdx].m_OffX = nOffX;
-		Npc[nIdx].m_OffY = nOffY;
+		// Calculate distance between current position and server position
+		int nCurMpsX, nCurMpsY;
+		Npc[nIdx].GetMpsPos(&nCurMpsX, &nCurMpsY);
+		int dx = MapX - nCurMpsX;
+		int dy = MapY - nCurMpsY;
+		int distanceSquared = dx*dx + dy*dy;
 
-		// Also set destination for smooth animation continuation
-		Npc[nIdx].SendCommand(do_run, MapX, MapY);
+		// Threshold: 192 units (~6 tiles) - within this use smooth movement
+		// Beyond this = serious desync, need immediate teleport
+		#define SMOOTH_SYNC_THRESHOLD 192
+		int thresholdSquared = SMOOTH_SYNC_THRESHOLD * SMOOTH_SYNC_THRESHOLD;
+
+		if (distanceSquared <= thresholdSquared)
+		{
+			// Small distance: Smooth movement with speed boost (EditPos)
+			// This looks natural - player runs smoothly to catch up
+			Npc[nIdx].SendCommand(do_run, MapX, MapY);
+			Npc[nIdx].EditPos(true);  // Activates 40% speed boost to catch up faster
+		}
+		else
+		{
+			// Large distance: Immediate teleport (serious desync/lag)
+			// Prevents player from being stuck far from real position
+			Npc[nIdx].m_MapX = nMapX;
+			Npc[nIdx].m_MapY = nMapY;
+			Npc[nIdx].m_OffX = nOffX;
+			Npc[nIdx].m_OffY = nOffY;
+			Npc[nIdx].SendCommand(do_run, MapX, MapY);
+			Npc[nIdx].EditPos(true);
+		}
+
 		Npc[nIdx].m_SyncSignal = SubWorld[0].m_dwCurrentTime;
-		Npc[nIdx].EditPos(true);
 	}
 }
 
@@ -687,33 +708,60 @@ void KProtocolProcess::NetCommandWalk(BYTE* pMsg)
 	int nIdx = NpcSet.SearchID(dwNpcID);
 	if (Player[CLIENT_PLAYER_INDEX].ConformIdx(nIdx))
 	{
-		// CRITICAL FIX: IMMEDIATELY update position from server for OTHER players
-		// Problem: SendCommand(do_walk, x, y) only sets DESTINATION, not CURRENT position
-		// This causes gradual movement over multiple frames → different clients see player at different positions!
-		// Solution: IMMEDIATELY teleport to server position, ensuring ALL clients see identical positions
+		// CRITICAL FIX: Smart position sync - smooth for small distances, teleport for large
+		// Problem: Always teleporting causes jerky "blink/dính" movement
+		// Solution: Only teleport if distance is large (serious desync), otherwise smooth interpolation
 
 		int nMapX, nMapY, nOffX, nOffY;
 		SubWorld[Npc[nIdx].m_SubWorldIndex].Mps2Map(MapX, MapY,
 			&Npc[nIdx].m_RegionIndex, &nMapX, &nMapY, &nOffX, &nOffY);
 
-		// Update current position immediately (not gradual!)
-		Npc[nIdx].m_MapX = nMapX;
-		Npc[nIdx].m_MapY = nMapY;
-		Npc[nIdx].m_OffX = nOffX;
-		Npc[nIdx].m_OffY = nOffY;
+		// Calculate distance between current position and server position
+		int nCurMpsX, nCurMpsY;
+		Npc[nIdx].GetMpsPos(&nCurMpsX, &nCurMpsY);
+		int dx = MapX - nCurMpsX;
+		int dy = MapY - nCurMpsY;
+		int distanceSquared = dx*dx + dy*dy;
 
-		// Also set destination for smooth animation continuation
-		if(bRandMove)
+		// Threshold: 192 units (~6 tiles) - within this use smooth movement
+		// Beyond this = serious desync, need immediate teleport
+		#define SMOOTH_SYNC_THRESHOLD_WALK 192
+		int thresholdSquared = SMOOTH_SYNC_THRESHOLD_WALK * SMOOTH_SYNC_THRESHOLD_WALK;
+
+		if (distanceSquared <= thresholdSquared)
 		{
-			Npc[nIdx].SendCommandRandMove(MapX, MapY);
+			// Small distance: Smooth movement with speed boost (EditPos)
+			// This looks natural - player walks smoothly to catch up
+			if(bRandMove)
+			{
+				Npc[nIdx].SendCommandRandMove(MapX, MapY);
+			}
+			else
+			{
+				Npc[nIdx].SendCommand(do_walk, MapX, MapY);
+			}
+			Npc[nIdx].EditPos(true);  // Activates 40% speed boost to catch up faster
 		}
 		else
 		{
-			Npc[nIdx].SendCommand(do_walk, MapX, MapY);
+			// Large distance: Immediate teleport (serious desync/lag)
+			// Prevents player from being stuck far from real position
+			Npc[nIdx].m_MapX = nMapX;
+			Npc[nIdx].m_MapY = nMapY;
+			Npc[nIdx].m_OffX = nOffX;
+			Npc[nIdx].m_OffY = nOffY;
+			if(bRandMove)
+			{
+				Npc[nIdx].SendCommandRandMove(MapX, MapY);
+			}
+			else
+			{
+				Npc[nIdx].SendCommand(do_walk, MapX, MapY);
+			}
+			Npc[nIdx].EditPos(true);
 		}
 
 		Npc[nIdx].m_SyncSignal = SubWorld[0].m_dwCurrentTime;
-		Npc[nIdx].EditPos(true);
 	}
 }
 
@@ -3787,36 +3835,52 @@ void    KProtocolProcess::s2cPlayerPos(BYTE * pMsg)
 	if(nIndex == Player[CLIENT_PLAYER_INDEX].m_nIndex)
 		return;
 
-	// CRITICAL FIX: IMMEDIATELY update position from server for OTHER players
-	// Problem: SendCommand(do_run, x, y) sets DESTINATION, not CURRENT position
-	// This causes gradual movement over multiple frames, causing desync:
-	// - Server broadcasts: Player A at (500, 500)
-	// - Client A receives when local visual at (450, 450) → starts moving to (500, 500)
-	// - Client B receives when local visual at (480, 480) → starts moving to (500, 500)
-	// - Result: Different clients see Player A at DIFFERENT positions!
-	//
-	// Solution: IMMEDIATELY teleport OTHER players to server position, no gradual movement
-	// This ensures ALL clients see identical positions at all times
+	// CRITICAL FIX: Smart position sync - smooth for small distances, teleport for large
+	// Problem: Always teleporting causes jerky "blink/dính" movement
+	// Solution: Only teleport if distance is large (serious desync), otherwise smooth interpolation
 
 	int nMapX, nMapY, nOffX, nOffY;
 	SubWorld[Npc[nIndex].m_SubWorldIndex].Mps2Map(pSync->m_nMpsX, pSync->m_nMpsY,
 		&Npc[nIndex].m_RegionIndex, &nMapX, &nMapY, &nOffX, &nOffY);
 
-	// Update position immediately
-	Npc[nIndex].m_MapX = nMapX;
-	Npc[nIndex].m_MapY = nMapY;
-	Npc[nIndex].m_OffX = nOffX;
-	Npc[nIndex].m_OffY = nOffY;
+	// Calculate distance between current position and server position
+	int nCurMpsX, nCurMpsY;
+	Npc[nIndex].GetMpsPos(&nCurMpsX, &nCurMpsY);
+	int dx = pSync->m_nMpsX - nCurMpsX;
+	int dy = pSync->m_nMpsY - nCurMpsY;
+	int distanceSquared = dx*dx + dy*dy;
 
-	// Also update destination for smooth animation continuation
+	// Threshold: 192 units (~6 tiles) - within this use smooth movement
+	// Beyond this = serious desync, need immediate teleport
+	#define SMOOTH_SYNC_THRESHOLD_POS 192
+	int thresholdSquared = SMOOTH_SYNC_THRESHOLD_POS * SMOOTH_SYNC_THRESHOLD_POS;
+
 	int currentDoing = Npc[nIndex].m_Doing;
-	if (currentDoing == do_stand || currentDoing == do_walk || currentDoing == do_run || currentDoing == do_sit)
-	{
-		// Set destination to current server position for smooth transition
-		Npc[nIndex].SendCommand(do_run, pSync->m_nMpsX, pSync->m_nMpsY);
-	}
 
-	Npc[nIndex].EditPos(true);
+	if (distanceSquared <= thresholdSquared)
+	{
+		// Small distance: Smooth movement with speed boost (EditPos)
+		// This looks natural - player moves smoothly to catch up
+		if (currentDoing == do_stand || currentDoing == do_walk || currentDoing == do_run || currentDoing == do_sit)
+		{
+			Npc[nIndex].SendCommand(do_run, pSync->m_nMpsX, pSync->m_nMpsY);
+		}
+		Npc[nIndex].EditPos(true);  // Activates 40% speed boost to catch up faster
+	}
+	else
+	{
+		// Large distance: Immediate teleport (serious desync/lag)
+		// Prevents player from being stuck far from real position
+		Npc[nIndex].m_MapX = nMapX;
+		Npc[nIndex].m_MapY = nMapY;
+		Npc[nIndex].m_OffX = nOffX;
+		Npc[nIndex].m_OffY = nOffY;
+		if (currentDoing == do_stand || currentDoing == do_walk || currentDoing == do_run || currentDoing == do_sit)
+		{
+			Npc[nIndex].SendCommand(do_run, pSync->m_nMpsX, pSync->m_nMpsY);
+		}
+		Npc[nIndex].EditPos(true);
+	}
 }
 
 //-
