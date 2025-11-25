@@ -3754,34 +3754,33 @@ void    KProtocolProcess::s2cPlayerPos(BYTE * pMsg)
 	if(nIndex == Player[CLIENT_PLAYER_INDEX].m_nIndex)
 		return;
 
-	// FIX: Don't force do_run - only update position if player is idle/moving
-	// This prevents animation conflicts and stuck players
-	int currentDoing = Npc[nIndex].m_Doing;
+	// CRITICAL FIX: IMMEDIATELY update position from server for OTHER players
+	// Problem: SendCommand(do_run, x, y) sets DESTINATION, not CURRENT position
+	// This causes gradual movement over multiple frames, causing desync:
+	// - Server broadcasts: Player A at (500, 500)
+	// - Client A receives when local visual at (450, 450) → starts moving to (500, 500)
+	// - Client B receives when local visual at (480, 480) → starts moving to (500, 500)
+	// - Result: Different clients see Player A at DIFFERENT positions!
+	//
+	// Solution: IMMEDIATELY teleport OTHER players to server position, no gradual movement
+	// This ensures ALL clients see identical positions at all times
 
-	// Only force movement if player is in neutral/movement state
+	int nMapX, nMapY, nOffX, nOffY;
+	SubWorld[Npc[nIndex].m_SubWorldIndex].Mps2Map(pSync->m_nMpsX, pSync->m_nMpsY,
+		&Npc[nIndex].m_RegionIndex, &nMapX, &nMapY, &nOffX, &nOffY);
+
+	// Update position immediately
+	Npc[nIndex].m_MapX = nMapX;
+	Npc[nIndex].m_MapY = nMapY;
+	Npc[nIndex].m_OffX = nOffX;
+	Npc[nIndex].m_OffY = nOffY;
+
+	// Also update destination for smooth animation continuation
+	int currentDoing = Npc[nIndex].m_Doing;
 	if (currentDoing == do_stand || currentDoing == do_walk || currentDoing == do_run || currentDoing == do_sit)
 	{
+		// Set destination to current server position for smooth transition
 		Npc[nIndex].SendCommand(do_run, pSync->m_nMpsX, pSync->m_nMpsY);
-	}
-	else
-	{
-		// Player is attacking/casting - just update internal position, don't change animation
-		// This keeps visual smooth while maintaining correct position
-		int nMapX, nMapY, nOffX, nOffY;
-		SubWorld[Npc[nIndex].m_SubWorldIndex].Mps2Map(pSync->m_nMpsX, pSync->m_nMpsY,
-			&Npc[nIndex].m_RegionIndex, &nMapX, &nMapY, &nOffX, &nOffY);
-
-		// CRITICAL FIX: ALWAYS update position from server to maintain sync across all clients
-		// The previous threshold check (dx*dx + dy*dy > 4) was causing desynchronization:
-		// - Server broadcasts position (X, Y)
-		// - Client A updates to (X, Y)
-		// - Client B checks threshold and REJECTS update if distance < 2 cells
-		// - Result: Client A and B see same player at DIFFERENT positions!
-		// - This causes jerky follow behavior because each client's AI moves to different targets
-		Npc[nIndex].m_MapX = nMapX;
-		Npc[nIndex].m_MapY = nMapY;
-		Npc[nIndex].m_OffX = nOffX;
-		Npc[nIndex].m_OffY = nOffY;
 	}
 
 	Npc[nIndex].EditPos(true);
