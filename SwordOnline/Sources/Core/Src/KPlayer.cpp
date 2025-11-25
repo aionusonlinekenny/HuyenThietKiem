@@ -357,17 +357,24 @@ void	KPlayer::Active()
 	}
 	
 	m_nSendMoveFrames++;
-	// FIX: Periodic position sync to prevent desync (every 2 seconds)
+	// FIX: Periodic position sync to prevent desync (10 times per second for better sync)
 	// This ensures position is accurate even when player is standing still/attacking
 	DWORD currentTime = GetTickCount();
-	if (m_dwLastPosSyncTime == 0 || (currentTime - m_dwLastPosSyncTime) >= 1000)  // 2 seconds
+	if (m_dwLastPosSyncTime == 0 || (currentTime - m_dwLastPosSyncTime) >= 200)  // 2 seconds
 	{
 		// Force sync current position
 		int nMpsX, nMpsY;
 		Npc[m_nIndex].GetMpsPos(&nMpsX, &nMpsY);
-		// Always sync position - use walk by default (server will handle state separately)
-		// This fixes desync when player is attacking/skilling/standing
-		SendClientCmdWalk(nMpsX, nMpsY);
+		// FIX: Sync with correct movement state (run/walk) to prevent other clients seeing wrong state
+		// Check current Npc doing state and send appropriate command
+		if (Npc[m_nIndex].m_Doing == do_run)
+		{
+			SendClientCmdRun(nMpsX, nMpsY);  // Player is running, sync as run
+		}
+		else
+		{
+			SendClientCmdWalk(nMpsX, nMpsY);  // Player is walking/standing, sync as walk
+		}
 		m_dwLastPosSyncTime = currentTime;  // Update last sync time
 	}
 	this->m_cPK.Active();
@@ -627,10 +634,10 @@ void KPlayer::ProcessMouse(int x, int y, int Key, MOUSE_BUTTON nButton)
 				return ;
 			}
 			// FIX: Throttled position sync before skill to prevent desync (anti-spam protection)
-			// Only sync if 300ms passed since last sync to avoid VPS spam detection
-			// Max 3.3 sync/s + periodic 1/s = 4.3/s total position sync (safe)
+			// Reduced throttle from 300ms to 50ms for better accuracy
+			// With periodic 10 Hz sync, this ensures position is fresh before skill cast
 			DWORD currentTime = GetTickCount();
-			if (m_dwLastPosSyncTime == 0 || (currentTime - m_dwLastPosSyncTime) >= 300)
+			if (m_dwLastPosSyncTime == 0 || (currentTime - m_dwLastPosSyncTime) >= 50)
 			{
 				int nMpsX, nMpsY;
 				Npc[m_nIndex].GetMpsPos(&nMpsX, &nMpsY);

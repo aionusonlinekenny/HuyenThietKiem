@@ -4971,3 +4971,94 @@
 [2025-11-19 13:44:54.980] [Inactive][ID=1] Total detached "123456" from 1 GameServer(s)
 [2025-11-19 13:44:54.980] [Inactive][ID=1] ACTIVE lock REMOVED for "123456" (player on GS)
 [2025-11-19 13:44:54.980] [Inactive][ID=1] Completed cleanup for "123456" (player was on GS)
+[2025-11-25 15:22:38.551] [WaitForAccPwd][ID=0] Received login: account="123456"
+[2025-11-25 15:22:38.551] [WaitForAccPwd][ID=0] TEMP-LOCK OK for "123456"
+[2025-11-25 15:22:38.551] [WaitForAccPwd][ID=0] Ready to QueryAccPwd for "123456"
+[2025-11-25 15:22:38.566] [QueryAccPwd][ID=0] Send to AccServer: Type=2 Ver=1 Operate=0 Acc="123456" passLen=32 licLen=20
+[2025-11-25 15:22:38.644] [VerifyAccount][ID=0] Acc="123456" result=3
+[2025-11-25 15:22:38.644] [VerifyAccount][ID=0] Failed: name/password error for "123456"
+[2025-11-25 15:22:38.644] [SafeUnlock] ACTIVE lock REMOVED for "123456"
+[2025-11-25 15:22:38.644] [VerifyAccount_ToPlayer][ID=0] Login response sent to client (result=0x50003, sent=1)
+[2025-11-25 15:22:38.645] [VerifyAccount][ID=0] Client shutdown due to login error for "123456"
+[2025-11-25 15:22:38.660] [Inactive][ID=0] Sent AccountLogout for "123456"
+[2025-11-25 15:22:38.660] [Inactive][ID=0] Skip ACTIVE unlock for "123456" (not owner)
+[2025-11-25 15:22:38.660] [Inactive][ID=0] Completed cleanup for "123456"
+[2025-11-25 15:22:55.899] [WaitForAccPwd][ID=1] Received login: account="123456"
+[2025-11-25 15:22:55.899] [WaitForAccPwd][ID=1] TEMP-LOCK OK for "123456"
+[2025-11-25 15:22:55.899] [WaitForAccPwd][ID=1] Ready to QueryAccPwd for "123456"
+[2025-11-25 15:22:55.914] [QueryAccPwd][ID=1] Send to AccServer: Type=2 Ver=1 Operate=1 Acc="123456" passLen=32 licLen=20
+[2025-11-25 15:22:55.992] [VerifyAccount][ID=1] Acc="123456" result=1
+[2025-11-25 15:22:55.993] [VerifyAccount][ID=1] ACTION_SUCCESS for "123456" (inActiveSet=0 onGameServer=0[GS=-1] inTransfer=0)
+[2025-11-25 15:22:55.993] [VerifyAccount][ID=1] "123456" LOCKED ACTIVE (owner=1)
+[2025-11-25 15:22:55.993] [VerifyAccount_ToPlayer][ID=1] Login response sent to client (result=0x50001, sent=1)
+[2025-11-25 15:22:56.008] [QueryRoleList][ID=1] Requesting character list for "123456"
+[2025-11-25 15:22:56.008] [QueryRoleList][ID=1] Request sent to RoleServer
+[2025-11-25 15:22:56.087] [ProcessRoleList][ID=1] Received character list: 0 characters for "123456"
+[2025-11-25 15:22:56.087] [ProcessRoleList][ID=1] Character list sent to client
+[2025-11-25 15:23:05.692] [Inactive][ID=1] Sent AccountLogout for "123456"
+[2025-11-25 15:23:05.692] [Inactive][ID=1] ACTIVE lock REMOVED for "123456" (owner)
+[2025-11-25 15:23:05.693] [Inactive][ID=1] Completed cleanup for "123456"
+[2025-11-25 15:23:09.437] [WaitForAccPwd][ID=2] Received login: account="123456"
+[2025-11-25 15:23:09.437] [WaitForAccPwd][ID=2] TEMP-LOCK OK for "123456"
+[2025-11-25 15:23:09.437] [WaitForAccPwd][ID=2] Ready to QueryAccPwd for "123456"
+[2025-11-25 15:23:09.452] [QueryAccPwd][ID=2] Send to AccServer: Type=2 Ver=1 Operate=2 Acc="123456" passLen=32 licLen=20
+[2025-11-25 15:23:09.515] [VerifyAccount][ID=2] Acc="123456" result=1
+[2025-11-25 15:23:09.515] [VerifyAccount][ID=2] ACTION_SUCCESS for "123456" (inActiveSet=0 onGameServer=0[GS=-1] inTransfer=0)
+[2025-11-25 15:23:09.515] [VerifyAccount][ID=2] "123456" LOCKED ACTIVE (owner=1)
+[2025-11-25 15:23:09.515] [VerifyAccount_ToPlayer][ID=2] Login response sent to client (result=0x50001, sent=1)
+[2025-11-25 15:23:09.530] [QueryRoleList][ID=2] Requesting character list for "123456"
+[2025-11-25 15:23:09.530] [QueryRoleList][ID=2] Request sent to RoleServer
+[2025-11-25 15:23:09.611] [ProcessRoleList][ID=2] Received character list: 0 characters for "123456"
+[2025-11-25 15:23:09.611] [ProcessRoleList][ID=2] Character list sent to client
+[2025-11-25 15:23:17.783] [ProcessRoleInfo][ID=2] Received role data from RoleServer (result=1, dataLen=326)
+[2025-11-25 15:23:17.783] [_SyncRoleInfo][ID=2] Starting sync for "123456" (UseRevive=1, revivalID=53, enterID=0)
+[2025-11-25 15:23:17.783] [_SyncRoleInfo][ID=2] Target GameServer found: GS2
+[2025-11-25 15:23:17.783] [_SyncRoleInfo][ID=2] Checking for duplicates: account "123456" currently on GS-1 (target GS2)
+[2025-11-25 15:23:17.783] [_SyncRoleInfo][ID=2] Checking if can attach "123456" to GS2...
+[2025-11-25 15:23:17.783] [_SyncRoleInfo][ID=2] Attach check PASSED - ready to sync role data
+[2025-11-25 15:23:17.783] [_SyncRoleInfo][ID=2] Sending role data to GS2 (dataLen=325)...
+[2025-11-25 15:23:17.784] [_SyncRoleInfo][ID=2] DispatchTask SUCCESS - GS2 received role data
+[2025-11-25 15:23:17.784] [SyncRoleInfo][ID=2] Successfully attached "123456" to GS2
+[2025-11-25 15:23:17.784] [ProcessRoleInfo][ID=2] Successfully synced role to GameServer
+[2025-11-25 15:23:17.830] [WaitForGameSvrPermit][ID=2] Received GameServer response (bPermit=1, IP=192.168.254.53, Port=6666)
+[2025-11-25 15:23:17.830] [WaitForGameSvrPermit][ID=2] GameServer ACCEPTED login for "123456"
+[2025-11-25 15:24:04.870] [Inactive][ID=2] Player "123456" on GS2 - notifying GameServer
+[2025-11-25 15:24:04.870] [Inactive][ID=2] Sending logic logout to GS for role "KennyMask"
+[2025-11-25 15:24:04.870] [Inactive][ID=2] Detached "123456" from GS2 (primary) in 0ms
+[2025-11-25 15:24:04.870] [Inactive][ID=2] Detach summary: "123456" removed from 1 GameServer(s) in 0ms total
+[2025-11-25 15:24:04.870] [Inactive][ID=2] ACTIVE lock REMOVED for "123456" (player on GS)
+[2025-11-25 15:24:04.870] [Inactive][ID=2] Sent AccountLogout for "123456"
+[2025-11-25 15:24:04.870] [Inactive][ID=2] Completed cleanup for "123456" (player was on GS)
+[2025-11-25 15:24:04.964] [WaitForAccPwd][ID=3] Received login: account="123456"
+[2025-11-25 15:24:04.964] [WaitForAccPwd][ID=3] TEMP-LOCK OK for "123456"
+[2025-11-25 15:24:04.964] [WaitForAccPwd][ID=3] Ready to QueryAccPwd for "123456"
+[2025-11-25 15:24:04.980] [QueryAccPwd][ID=3] Send to AccServer: Type=2 Ver=1 Operate=3 Acc="123456" passLen=32 licLen=20
+[2025-11-25 15:24:05.043] [VerifyAccount][ID=3] Acc="123456" result=1
+[2025-11-25 15:24:05.043] [VerifyAccount][ID=3] ACTION_SUCCESS for "123456" (inActiveSet=0 onGameServer=0[GS=-1] inTransfer=0)
+[2025-11-25 15:24:05.043] [VerifyAccount][ID=3] "123456" LOCKED ACTIVE (owner=1)
+[2025-11-25 15:24:05.043] [VerifyAccount_ToPlayer][ID=3] Login response sent to client (result=0x50001, sent=1)
+[2025-11-25 15:24:05.058] [QueryRoleList][ID=3] Requesting character list for "123456"
+[2025-11-25 15:24:05.058] [QueryRoleList][ID=3] Request sent to RoleServer
+[2025-11-25 15:24:05.136] [ProcessRoleList][ID=3] Received character list: 1 characters for "123456"
+[2025-11-25 15:24:05.136] [ProcessRoleList][ID=3] Character list sent to client
+[2025-11-25 15:24:05.152] [SelAddDelRole][ID=3] Client selected character: "KennyMask"
+[2025-11-25 15:24:05.152] [SelAddDelRole][ID=3] Requesting role data for "KennyMask" from RoleServer
+[2025-11-25 15:24:05.230] [ProcessRoleInfo][ID=3] Received role data from RoleServer (result=1, dataLen=2435)
+[2025-11-25 15:24:05.230] [_SyncRoleInfo][ID=3] Starting sync for "123456" (UseRevive=0, revivalID=53, enterID=11)
+[2025-11-25 15:24:05.230] [_SyncRoleInfo][ID=3] Target GameServer found: GS3
+[2025-11-25 15:24:05.230] [_SyncRoleInfo][ID=3] Checking for duplicates: account "123456" currently on GS-1 (target GS3)
+[2025-11-25 15:24:05.230] [_SyncRoleInfo][ID=3] Checking if can attach "123456" to GS3...
+[2025-11-25 15:24:05.230] [_SyncRoleInfo][ID=3] Attach check PASSED - ready to sync role data
+[2025-11-25 15:24:05.230] [_SyncRoleInfo][ID=3] Sending role data to GS3 (dataLen=2434)...
+[2025-11-25 15:24:05.231] [_SyncRoleInfo][ID=3] DispatchTask SUCCESS - GS3 received role data
+[2025-11-25 15:24:05.231] [SyncRoleInfo][ID=3] Successfully attached "123456" to GS3
+[2025-11-25 15:24:05.231] [ProcessRoleInfo][ID=3] Successfully synced role to GameServer
+[2025-11-25 15:24:05.276] [WaitForGameSvrPermit][ID=3] Received GameServer response (bPermit=1, IP=192.168.254.53, Port=6667)
+[2025-11-25 15:24:05.276] [WaitForGameSvrPermit][ID=3] GameServer ACCEPTED login for "123456"
+[2025-11-25 15:30:05.795] [Inactive][ID=3] Player "123456" on GS3 - notifying GameServer
+[2025-11-25 15:30:05.795] [Inactive][ID=3] Sending logic logout to GS for role "KennyMask"
+[2025-11-25 15:30:05.795] [Inactive][ID=3] Detached "123456" from GS3 (primary) in 0ms
+[2025-11-25 15:30:05.795] [Inactive][ID=3] Detach summary: "123456" removed from 1 GameServer(s) in 0ms total
+[2025-11-25 15:30:05.795] [Inactive][ID=3] ACTIVE lock REMOVED for "123456" (player on GS)
+[2025-11-25 15:30:05.795] [Inactive][ID=3] Sent AccountLogout for "123456"
+[2025-11-25 15:30:05.796] [Inactive][ID=3] Completed cleanup for "123456" (player was on GS)

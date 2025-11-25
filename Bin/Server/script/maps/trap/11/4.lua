@@ -9,7 +9,10 @@ function main()
 	-- local nLevel = GetLevel(); -- Check Level Player
 	-- local nState = GetFightState(); -- Check Fight Sate Player
 	-- local nSubWorld = SubWorldID2Idx(nIDMapsTrap) -- Check Open Maps
-	
+	if (NewWorld(21, 2625,4507) == 1) then
+        SetFightState(1)
+        AddSkillState(963, 1, 0, 18*3)
+    end
 	-- if (nSubWorld <= 0) then -- Show Msg Trap
 	-- 	Talk(1,"",LIB_STRING[1]);
 	-- 	return

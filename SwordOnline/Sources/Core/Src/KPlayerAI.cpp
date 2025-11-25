@@ -63,7 +63,11 @@ void KPlayerAI::Release()
 	m_FollowPeopleIdx 		= 0;
 	m_nRadiusFollow			= 0;
 	m_nLeaderCurrentTarget	= 0;
-	m_nLeaderTargetLostTime	= 0;	
+	m_nLeaderTargetLostTime	= 0;
+	m_nCachedLeaderPosX		= 0;	// FIX: Initialize cached leader position
+	m_nCachedLeaderPosY		= 0;
+	m_dwLastLeaderPosCache	= 0;
+	m_dwCombatEndTime		= 0;
 	m_bAutoAttack 			= TRUE;	
 	m_bFollowAttack			= FALSE;
 	m_SpaceBar 				= FALSE;
@@ -409,6 +413,14 @@ void KPlayerAI::Active()
 							}
 						}
 					}
+					// FIX: Cache leader position periodically to prevent stale position bugs
+					// Update cache every 150ms to smooth out network lag/desync issues
+					DWORD currentTime = GetTickCount();
+					if (m_dwLastLeaderPosCache == 0 || (currentTime - m_dwLastLeaderPosCache) >= 150)
+					{
+						Npc[m_FollowPeopleIdx].GetMpsPos(&m_nCachedLeaderPosX, &m_nCachedLeaderPosY);
+						m_dwLastLeaderPosCache = currentTime;
+					}
 					int distance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_FollowPeopleIdx);
 
 					// FIX: Smart catch-up when leader is too far (train route scenario)
@@ -438,21 +450,30 @@ void KPlayerAI::Active()
 
 					if (distance >= m_nRadiusFollow)  // Beyond normal radius - need to catch up
 					{
-
 						BOOL isAttackingLeaderTarget = (m_nLeaderCurrentTarget > 0 &&
 						                                 m_Actacker == m_nLeaderCurrentTarget &&
 						                                 m_bActacker == TRUE);
-
 						if (!isAttackingLeaderTarget)
 						{
-							if (!m_bPriorityUseMouse)
+							// FIX: Record combat end time for delayed follow
+						if (m_bActacker == TRUE && m_dwCombatEndTime == 0)
+						{
+							m_dwCombatEndTime = GetTickCount();
+						}
+						if (!m_bPriorityUseMouse)
+						{
+							// FIX: Use cached position and delay after combat (wait 150ms for position sync)
+							DWORD timeSinceCombatEnd = (m_dwCombatEndTime > 0) ? (GetTickCount() - m_dwCombatEndTime) : 200;
+							if (timeSinceCombatEnd >= 150)
 							{
-								int nX, nY;
-								Npc[m_FollowPeopleIdx].GetMpsPos(&nX,&nY);
-								MoveTo(nX, nY);
+								// Use cached position to avoid stale position bug
+								MoveTo(m_nCachedLeaderPosX, m_nCachedLeaderPosY);
 							}
+							// Else: Too soon after combat, skip to wait for position update
+						}
 							m_Actacker = 0;
 							m_bActacker = FALSE;
+							m_dwCombatEndTime = 0;  // Reset combat end time
 							m_nLifeLag = 0;
 							m_nTimeRunLag = 0;
 							m_nTimeSkip = 0;
@@ -472,6 +493,26 @@ void KPlayerAI::Active()
 				iObject = FindNearObject2Array();
 				if (iObject > 0)
 				{
+				// FIX: Check if item is too far from leader to prevent losing leader
+				// Skip item pickup if it would cause follower to lose track of leader
+				if (m_bFollowPeople && m_FollowPeopleIdx > 0)
+				{
+					int objX, objY, leaderX, leaderY;
+					Object[iObject].GetMpsPos(&objX, &objY);
+					Npc[m_FollowPeopleIdx].GetMpsPos(&leaderX, &leaderY);
+					// Calculate distance from item to leader
+					int distanceToLeader = (int)sqrt((double)((objX - leaderX) * (objX - leaderX) +
+					                                           (objY - leaderY) * (objY - leaderY)));
+					// If item is too far from leader (beyond 1.5x follow radius), skip it
+					// This prevents follower from running too far and losing leader
+					if (distanceToLeader > m_nRadiusFollow * 10 / 2)  // 1.5x follow radius
+					{
+						// Item too far, would lose leader - skip this item
+						iObject = 0;
+						m_nObject = 0;
+						m_bObject = FALSE;
+					}
+				}
 					BOOL _flagLag = FALSE;
 					for (i = 0; i < defMAX_ARRAY_AUTO; i++)
 					{
@@ -726,10 +767,10 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 			int leaderDistance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_FollowPeopleIdx);
 			if (leaderDistance > m_nRadiusFollow / 3)  // If not very close to leader
 			{
-				int nX, nY;
-				Npc[m_FollowPeopleIdx].GetMpsPos(&nX, &nY);
+				// FIX: Use cached leader position instead of real-time to avoid desync
+				
 				if (!m_bPriorityUseMouse)
-					MoveTo(nX, nY);  // Move to leader's position
+					MoveTo(m_nCachedLeaderPosX, m_nCachedLeaderPosY);
 			}
 		}
 		else if (m_AutoMove)
@@ -1778,7 +1819,15 @@ void KPlayerAI::MoveTo(int nX, int nY)
 		dY = nPlayerY & 0x1F;
 		nDestX = nX + 0x10 - dX; // Anti-LAG
 		nDestY = nY + 0x10 - dY; // Anti-LAG	
-		if (!Player[CLIENT_PLAYER_INDEX].m_RunStatus)
+			// FIX: Auto run/walk based on distance to target for better follow behavior
+		// Calculate distance from current position to target
+		int distance = (int)sqrt((double)((nX - nPlayerX) * (nX - nPlayerX) + (nY - nPlayerY) * (nY - nPlayerY)));
+		// Decide run vs walk based on distance
+		// If distance > 150 (far from target), force run for quick catch-up
+		// Otherwise use player's run status preference
+		BOOL shouldRun = (distance > 150) ? TRUE : Player[CLIENT_PLAYER_INDEX].m_RunStatus;
+
+		if (!shouldRun)
 		{
 			Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].SendCommand(do_walk, nDestX, nDestY);
 			SendClientCmdWalk(nX, nY);

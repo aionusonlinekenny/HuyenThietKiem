@@ -4306,7 +4306,26 @@ void KProtocolProcess::NpcSkillCommand(int nIndex, BYTE* pProtocol)
 
 		int nNpcIndex = Player[nIndex].FindAroundNpc((DWORD)ParamZ);
 		if (nNpcIndex > 0)
+		{
+			// FIX: Server-side distance validation to prevent desync exploits
+			// This ensures player is actually in range before allowing skill
+			int nSkillLevel = Npc[Player[nIndex].m_nIndex].m_SkillList.GetLevel(ParamX);
+			if (nSkillLevel <= 0)
+				nSkillLevel = 1;  // Use level 1 if skill not learned yet
+			ISkill* pSkill = g_SkillManager.GetSkill(ParamX, nSkillLevel);
+			if (pSkill)
+			{
+				int nDistance = KNpcSet::GetDistance(Player[nIndex].m_nIndex, nNpcIndex);
+				int nAttackRadius = pSkill->GetAttackRadius();
+				// Reject skill if target is out of range (with 10% tolerance for lag)
+				if (nAttackRadius > 0 && nDistance > nAttackRadius * 1.1)
+				{
+					// Target too far - reject skill to prevent desync damage
+					return;
+				}
+			}
 			Npc[Player[nIndex].m_nIndex].SendCommand(do_skill, ParamX, ParamY, nNpcIndex);
+		}
 	}
 	else
 		Npc[Player[nIndex].m_nIndex].SendCommand(do_skill, ParamX, ParamY, ParamZ);
