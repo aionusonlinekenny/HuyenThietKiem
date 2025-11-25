@@ -405,14 +405,6 @@ SOURCE=.\Src\KNpcTemplate.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Src\KPathfinder.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Src\KPathfinder.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Src\KPlayer.cpp
 # End Source File
 # Begin Source File
