@@ -365,9 +365,17 @@ void	KPlayer::Active()
 		// Force sync current position
 		int nMpsX, nMpsY;
 		Npc[m_nIndex].GetMpsPos(&nMpsX, &nMpsY);
-		// Always sync position - use walk by default (server will handle state separately)
-		// This fixes desync when player is attacking/skilling/standing
-		SendClientCmdWalk(nMpsX, nMpsY);
+
+		// FIX: Sync with correct movement state (run/walk) to prevent other clients seeing wrong state
+		// Check current Npc doing state and send appropriate command
+		if (Npc[m_nIndex].m_Doing == do_run)
+		{
+			SendClientCmdRun(nMpsX, nMpsY);  // Player is running, sync as run
+		}
+		else
+		{
+			SendClientCmdWalk(nMpsX, nMpsY);  // Player is walking/standing, sync as walk
+		}
 		m_dwLastPosSyncTime = currentTime;  // Update last sync time
 	}
 	this->m_cPK.Active();
