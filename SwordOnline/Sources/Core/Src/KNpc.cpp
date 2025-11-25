@@ -831,11 +831,20 @@ BOOL KNpc::ProcessState()
 	}
 	if(!(m_LoopFrames % 5))
 	{
-		// Broadcast position if currently moving
-		if (m_Doing == do_run || m_Doing == do_walk)
+		// FIX: Always broadcast position for players, not just when moving
+		// This ensures other clients see correct position during combat/skills
+		if (IsPlayer())
 		{
+			// Broadcast position for ANY action: walk, run, attack, skill, stand
+			// Critical for correct visual sync across clients
 			BroadCastPosition();
 		}
+		else if (m_Doing == do_run || m_Doing == do_walk)
+		{
+			// NPCs: only broadcast when moving (optimization)
+			BroadCastPosition();
+		}
+
 		if(!IsPlayer() && m_nTotalReceiveDamage > 0)
 		{
 			SendBloodNo(m_dwID, m_nTotalReceiveDamage);
