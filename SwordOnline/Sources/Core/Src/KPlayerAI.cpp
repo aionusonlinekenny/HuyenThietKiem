@@ -779,10 +779,14 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 					MoveTo(m_nCachedLeaderPosX, m_nCachedLeaderPosY);
 			}
 		}
-		else if (m_AutoMove)
+		else if (m_AutoMove && !m_bFollowPeople)
 		{
-			PlayerMoveMps();  // Original behavior when not following
+			// Only auto-move when NOT in follow mode
+			// When following but lost leader, stay at current position and attack nearby monsters
+			PlayerMoveMps();
 		}
+		// Else: Following but lost leader (m_bFollowPeople = TRUE but m_FollowPeopleIdx = 0)
+		//       Stay at current position, don't wander - just attack nearby monsters
 
 		AutoReturn();
 		m_Actacker = 0;
@@ -1511,10 +1515,10 @@ void KPlayerAI::PlayerFollowActack(int i)
 	{
 		if (m_Count_Acttack_Lag >= defAUTO_COUNT_LAG/2  || m_nTimeRunLag >= defAUTO_TIME_LAG/2 || m_nTimeSkip >= defAUTO_TIME_SKIP*nAddTime)
 		{
-			// FIX: Move closer and clear target (stuck detection)
-			int nTargetX, nTargetY;
-			Npc[i].GetMpsPos(&nTargetX, &nTargetY);
-			MoveTo(nTargetX, nTargetY);  // Approach target to retry from closer position
+			// FIX: Don't MoveTo old target when stuck - let AI find new target instead
+			// Moving towards stuck target causes infinite loop where player keeps attacking same unreachable target
+			// By NOT moving, AI will naturally search for a different nearby target in next frame
+
 			// Try to add to lag array (for tracking), but proceed even if array is full
 			for (int j=0; j < defMAX_ARRAY_AUTO; j++)
 			{
@@ -1540,14 +1544,10 @@ void KPlayerAI::PlayerFollowActack(int i)
 	{
 		if (m_Count_Acttack_Lag >= defAUTO_COUNT_LAG*nAddTime || m_nTimeRunLag >= defAUTO_TIME_LAG * 2*nAddTime || m_nTimeSkip >= defAUTO_TIME_SKIP*nAddTime)
 		{
-			// FIX: Move closer and clear target (stuck detection)
-						// Only approach if not manual control (respect user input)
-			if (!m_bPriorityUseMouse)
-			{
-				int nNpcX, nNpcY;
-				Npc[i].GetMpsPos(&nNpcX, &nNpcY);
-				MoveTo(nNpcX, nNpcY);  // Approach NPC to retry from closer position
-			}
+			// FIX: Don't MoveTo old target when stuck - let AI find new target instead
+			// Moving towards stuck target causes infinite loop where player keeps attacking same unreachable target
+			// By NOT moving, AI will naturally search for a different nearby target in next frame
+
 			// Try to add to lag array (for tracking), but proceed even if array is full
 			for (int j=0; j < defMAX_ARRAY_AUTO; j++)
 			{
