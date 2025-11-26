@@ -17,7 +17,7 @@ namespace MapTool
         private string _gameFolder;
         private bool _isServerMode = true;
         private MapLoader _mapLoader;
-        private MapData _currentMap;
+        private CompleteMapData _currentMap;
         private MapRenderer _renderer;
         private TrapExporter _exporter;
         private MapCoordinate? _selectedCoordinate;

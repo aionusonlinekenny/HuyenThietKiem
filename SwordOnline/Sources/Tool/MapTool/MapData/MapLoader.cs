@@ -24,7 +24,7 @@ namespace MapTool.MapData
         /// <summary>
         /// Load complete map data automatically
         /// </summary>
-        public MapData LoadMap(int mapId)
+        public CompleteMapData LoadMap(int mapId)
         {
             // Step 1: Load MapList.ini
             _mapListParser.Load();
@@ -50,7 +50,7 @@ namespace MapTool.MapData
             int totalRegions = regionWidth * regionHeight;
 
             // Step 4: Auto-load all regions
-            MapData mapData = new MapData
+            CompleteMapData mapData = new CompleteMapData
             {
                 MapId = mapId,
                 MapName = mapEntry.Name,
@@ -120,7 +120,7 @@ namespace MapTool.MapData
     /// <summary>
     /// Complete map data
     /// </summary>
-    public class MapData
+    public class CompleteMapData
     {
         public int MapId { get; set; }
         public string MapName { get; set; }
