@@ -111,8 +111,9 @@ public:
 	static void		 LoadScheme(const char* pScheme);		
 	static void		 UpdateSkill(KUiSkillData* pSkill, int nIndex);	
 
-	void	UpdateFightRemainPoint(int nPoint);				
-	void	UpdateLiveBaseData();							
+	void	UpdateFightRemainPoint(int nPoint);
+	void	UpdateLiveBaseData();
+	void	UpdateFightSkillData();		// Refresh all fight skills data
 
 private:
 	KUiSkills(){}

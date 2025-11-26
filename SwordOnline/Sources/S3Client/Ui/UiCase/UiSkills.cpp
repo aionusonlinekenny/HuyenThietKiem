@@ -169,7 +169,7 @@ int	KUiFightSkillSubPage::WndProc(unsigned int uMsg, unsigned int uParam, int nP
 						Msg.byPriority = 0;
 						Msg.eType = SMT_NORMAL;
 						Msg.uReservedForUi = 0;
-						strcpy(Msg.szMessage, "Kh«ng thÓ lÊy kü n¨ng nµy ra!");
+						strcpy(Msg.szMessage, "Khï¿½ng thï¿½ lï¿½y kï¿½ nï¿½ng nï¿½y ra!");
 						KUiSysMsgCentre::AMessageArrival(&Msg, NULL);
 						return 0;
 					}
@@ -572,6 +572,11 @@ void KUiSkills::UpdateFightRemainPoint(int nPoint)
 void KUiSkills::UpdateLiveBaseData()
 {
 	m_LiveSkillPad.UpdateBaseData();
+}
+
+void KUiSkills::UpdateFightSkillData()
+{
+	m_FightSkillPad.UpdateData();
 }
 
 int KUiSkills::WndProc(unsigned int uMsg, unsigned int uParam, int nParam)
