@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using MapTool.MapData;
+using MapRegionData = MapTool.MapData.RegionData;
 
 namespace MapTool.Rendering
 {
@@ -11,7 +12,7 @@ namespace MapTool.Rendering
     /// </summary>
     public class MapRenderer
     {
-        private Dictionary<int, RegionData> _loadedRegions;
+        private Dictionary<int, MapRegionData> _loadedRegions;
         private int _cellSize = 16; // Render size per cell (pixels on screen)
         private int _viewOffsetX = 0;
         private int _viewOffsetY = 0;
@@ -42,10 +43,10 @@ namespace MapTool.Rendering
 
         public MapRenderer()
         {
-            _loadedRegions = new Dictionary<int, RegionData>();
+            _loadedRegions = new Dictionary<int, MapRegionData>();
         }
 
-        public void AddRegion(RegionData region)
+        public void AddRegion(MapRegionData region)
         {
             _loadedRegions[region.RegionID] = region;
         }
@@ -100,7 +101,7 @@ namespace MapTool.Rendering
         /// <summary>
         /// Render a single region
         /// </summary>
-        private void RenderRegion(Graphics g, RegionData region, MapCoordinate? selectedCoord)
+        private void RenderRegion(Graphics g, MapRegionData region, MapCoordinate? selectedCoord)
         {
             int regionWorldX = region.RegionX * MapConstants.REGION_PIXEL_WIDTH;
             int regionWorldY = region.RegionY * MapConstants.REGION_PIXEL_HEIGHT;

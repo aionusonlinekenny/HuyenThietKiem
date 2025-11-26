@@ -12,7 +12,7 @@ Tạo tool để:
 
 ## ✅ Đã hoàn thành
 
-Tôi đã tạo **3 công cụ** cho bạn:
+Tôi đã tạo **4 công cụ** cho bạn:
 
 ### 1. Python Tools 🐍
 **Location:** `tools/`
@@ -123,7 +123,47 @@ Hoặc mở trong Visual Studio:
 
 ---
 
-### 3. C++ Integration Guide 📚
+### 3. C++ MapCoord Console Tool 🔧
+**Location:** `SwordOnline/Sources/Tool/MapCoord/`
+
+**Files:**
+- `MapCoord.cpp` - Main console application
+- `MapCoord.dsp` - Visual C++ 6.0 project file
+- `build.bat` - Build script
+- `README.md` - Full documentation
+
+**Sử dụng:**
+```bash
+# Build (Windows với Visual C++)
+cd SwordOnline\Sources\Tool\MapCoord
+build.bat
+
+# Convert World → Region/Cell
+MapCoord w2r 47328 640
+
+# Convert Region/Cell → World
+MapCoord r2w 92 0 7 20
+
+# Generate trap entry
+MapCoord trap 21 5000 10000 \script\maps\trap\21\1.lua
+```
+
+**Ưu điểm:**
+- ✅ Native C++ code
+- ✅ Không cần .NET SDK
+- ✅ Compile với Visual C++ 6.0
+- ✅ Không có dependencies
+- ✅ Command-line, scripting friendly
+- ✅ Cực kỳ nhỏ gọn (~20 KB)
+
+**Nhược điểm:**
+- ❌ Không có UI visual
+- ❌ Chưa integrate với Core library
+- ❌ Command-line only
+
+---
+
+### 4. C++ Integration Guide 📚
 **Location:** `SwordOnline/Sources/Tool/MapToolCpp/`
 
 **Files:**
@@ -149,12 +189,23 @@ Hoặc mở trong Visual Studio:
 
 ## 🎯 Khuyến nghị sử dụng
 
-### Nếu bạn muốn tool hoàn chỉnh ngay:
+### Nếu bạn muốn tool C++ native, không cần .NET:
+→ **Dùng C++ MapCoord** ⭐ KHUYẾN NGHỊ
+```
+SwordOnline/Sources/Tool/MapCoord/
+```
+- Native C++ code
+- Compile với Visual C++ 6.0
+- Không cần .NET SDK
+- Command-line, dễ script
+- Cực kỳ nhỏ gọn
+
+### Nếu bạn muốn tool hoàn chỉnh với UI:
 → **Dùng C# MapTool**
 ```
 SwordOnline/Sources/Tool/MapTool/
 ```
-- Build và run ngay được
+- Build và run ngay được (cần .NET SDK)
 - UI đẹp, đầy đủ tính năng
 - Perfect cho việc tạo trap data
 
@@ -182,6 +233,35 @@ SwordOnline/Sources/Tool/MapToolCpp/HOW_TO_INTEGRATE_WITH_CORE.md
 ## 📝 Ví dụ Workflow
 
 ### Scenario: Tạo Trap cho Map 21
+
+**Using C++ MapCoord (Khuyến nghị - Nhanh nhất):**
+
+1. **Build tool:**
+   ```batch
+   cd SwordOnline\Sources\Tool\MapCoord
+   build.bat
+   ```
+
+2. **Generate trap entry từ World coordinates:**
+   ```batch
+   MapCoord trap 21 5000 10000 \script\maps\trap\21\1.lua
+   ```
+
+3. **Copy output vào file:**
+   - Mở `Bin\Server\library\maps\Trap\21.txt`
+   - Add dòng output từ tool:
+   ```
+   21	589833	12	24	\script\maps\trap\21\1.lua	1
+   ```
+
+4. **Hoặc convert coordinates riêng:**
+   ```batch
+   REM World → Region/Cell
+   MapCoord w2r 5000 10000
+
+   REM Region/Cell → World
+   MapCoord r2w 9 9 12 24
+   ```
 
 **Using C# MapTool:**
 
@@ -236,17 +316,18 @@ python3 -c "from map_region_parser import MapCoordinateConverter; \
 
 ## 📊 So sánh Tools
 
-| Feature | Python Tools | C# MapTool | C++ Integrated |
-|---------|-------------|------------|----------------|
-| **Visual Map** | ❌ | ✅ | ✅ (nếu implement) |
-| **Coordinate Conversion** | ✅ | ✅ | ✅ |
-| **Export Trap File** | ✅ | ✅ | ✅ |
-| **Interactive Click** | ❌ | ✅ | ✅ (nếu implement) |
-| **Batch Processing** | ✅ | ❌ | ✅ (có thể) |
-| **Easy to Use** | 🟡 | ✅ | ❌ |
-| **Native Performance** | ❌ | ❌ | ✅ |
-| **Engine Integration** | ❌ | ❌ | ✅ |
-| **Setup Time** | 0 min | 5 min | 30+ min |
+| Feature | MapCoord (C++) | Python Tools | C# MapTool | C++ Integrated |
+|---------|---------------|-------------|------------|----------------|
+| **Visual Map** | ❌ | ❌ | ✅ | ✅ (nếu implement) |
+| **Coordinate Conversion** | ✅ | ✅ | ✅ | ✅ |
+| **Export Trap Entry** | ✅ | ✅ | ✅ | ✅ |
+| **Interactive Click** | ❌ | ❌ | ✅ | ✅ (nếu implement) |
+| **Batch Processing** | ✅ | ✅ | ❌ | ✅ (có thể) |
+| **Easy to Use** | ✅ | 🟡 | ✅ | ❌ |
+| **Native Performance** | ✅ | ❌ | ❌ | ✅ |
+| **Dependencies** | None | Python 3 | .NET SDK | Core.lib |
+| **File Size** | ~20 KB | ~10 KB | ~500 KB | TBD |
+| **Setup Time** | 1 min | 0 min | 5 min | 30+ min |
 
 ---
 
@@ -278,6 +359,11 @@ Nếu bạn muốn dần chuyển từ C# → C++:
 
 ## 📚 References
 
+**C++ MapCoord:**
+- `SwordOnline/Sources/Tool/MapCoord/README.md` - Full documentation
+- `SwordOnline/Sources/Tool/MapCoord/MapCoord.cpp` - Source code
+- `SwordOnline/Sources/Tool/MapCoord/build.bat` - Build script
+
 **Python Tools:**
 - `tools/README.md` - Full documentation
 - `MAP_21_ANALYSIS.md` - Map 21 case study
@@ -299,17 +385,23 @@ Nếu bạn muốn dần chuyển từ C# → C++:
 
 ## 🚀 Next Steps
 
-1. **Immediate Use:**
-   - Dùng C# MapTool để tạo trap data
-   - Tool đã sẵn sàng, chỉ cần build và run
+1. **Immediate Use (Khuyến nghị):**
+   - Dùng **C++ MapCoord** để convert coordinates và tạo trap entries
+   - Native C++, không cần .NET SDK
+   - Build nhanh, chạy ngay
 
-2. **Learn & Explore:**
+2. **Alternative với UI:**
+   - Dùng **C# MapTool** nếu có .NET SDK
+   - Visual interface, interactive clicking
+   - Tạo trap data bằng click chuột
+
+3. **Learn & Explore:**
    - Study Python tools code
    - Understand coordinate system
    - Read C++ integration guide
 
-3. **Advanced:**
-   - Implement C++ version nếu cần
+4. **Advanced:**
+   - Implement C++ GUI version nếu cần
    - Extend với features riêng
    - Integrate với game engine
 
