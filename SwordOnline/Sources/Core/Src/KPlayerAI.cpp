@@ -1710,10 +1710,14 @@ void KPlayerAI::PlayerFollowActack(int i)
 		int nDesX, nDesY;
 		Npc[i].GetMpsPos(&nDesX, &nDesY);
 
-		if (Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing == do_run || Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing == do_skill)
-			return;	
+		// FIX: If out of range, move closer to target instead of standing still
+		// Only skip if already running (to avoid interrupting movement)
+		// Don't skip if doing skill - must reposition to actually hit!
+		if (Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing == do_run)
+			return;	// Already moving, let it complete
+
 		if (m_bFollowAttack == TRUE)
-			MoveTo(nDesX, nDesY);
+			MoveTo(nDesX, nDesY);  // Move closer to attack range
 		return;
 	}	
 	m_Actacker = 0;
