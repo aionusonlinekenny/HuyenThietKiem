@@ -1174,7 +1174,10 @@ BOOL KItemList::Equip(int nIdx, int nPlace /* = -1 */)
 		m_bActiveSet = GetIfActive();
 
 	Player[m_PlayerIdx].UpdataCurData();
-	//
+		// Notify UI to refresh skill display when item bonuses change
+#ifndef _SERVER
+	CoreDataChanged(GDCNI_FIGHT_SKILL_POINT, 0, Player[m_PlayerIdx].m_nSkillPoint);
+#endif
 	return TRUE;
 }
 
@@ -1307,7 +1310,14 @@ BOOL KItemList::UnEquip(int nIdx, int nPos/* = -1*/)
 		m_bActiveSet = GetIfActive();
 
 	if(!m_bActiveSet)
+		{
 		Player[m_PlayerIdx].UpdataCurData();
+		// Notify UI to refresh skill display when item bonuses change
+
+#ifndef _SERVER
+		CoreDataChanged(GDCNI_FIGHT_SKILL_POINT, 0, Player[m_PlayerIdx].m_nSkillPoint);
+#endif
+	}
 	return TRUE;
 }
 

@@ -2362,14 +2362,11 @@ void KProtocolProcess::s2cSyncAllSkill(BYTE * pMsg)
     int nSkillCount = (pSync->m_wProtocolLong - 2) / sizeof(SKILL_SEND_ALL_SYNC_DATA);
     int nNpcIndex = Player[CLIENT_PLAYER_INDEX].m_nIndex;
     KSkill * pOrdinSkill = NULL;
-
-    // 1) Clear & n?p l?i skill list t? server (gi? nguyên logic cu)
     Npc[nNpcIndex].m_SkillList.Clear();
     for (int i = 0; i < nSkillCount; i++)
     {
         if (pSync->m_sAllSkill[i].SkillId)
         {
-            // N?u tru?c dây b?n có validate pOrdinSkill thì b?t l?i t?i dây (tu?)
             Npc[nNpcIndex].m_SkillList.Add(
                 pSync->m_sAllSkill[i].SkillId,
                 pSync->m_sAllSkill[i].SkillLevel
@@ -2377,7 +2374,13 @@ void KProtocolProcess::s2cSyncAllSkill(BYTE * pMsg)
         }
     }
 
-    // 2) RE-APPLY AURA RIGHT SKILL — g?i API public c?a KPlayer (không d?ng bi?n private)
+     // 2) Re-apply equipment bonuses to restore +skill from items
+    Player[CLIENT_PLAYER_INDEX].UpdataCurData();
+    // 3) Notify UI to refresh skill display
+#ifndef _SERVER
+    CoreDataChanged(GDCNI_FIGHT_SKILL_POINT, 0, Player[CLIENT_PLAYER_INDEX].m_nSkillPoint);
+#endif
+    // 4) Re-apply aura/right skill
 #ifndef _SERVER
     Player[CLIENT_PLAYER_INDEX].ForceReapplyRightAura();
 	int rightId = Player[CLIENT_PLAYER_INDEX].GetRightSkillID();

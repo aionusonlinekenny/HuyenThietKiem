@@ -265,6 +265,8 @@ void CoreDataChangedCallback(unsigned int uDataId, unsigned int uParam, int nPar
 			if (pPad)
 			{
 				pPad->UpdateFightRemainPoint(nParam);
+				// Also refresh all skill data when item bonuses change
+				pPad->UpdateFightSkillData();
 			}
 		}
 		break;

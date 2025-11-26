@@ -573,7 +573,10 @@ void KUiSkills::UpdateLiveBaseData()
 {
 	m_LiveSkillPad.UpdateBaseData();
 }
-
+void KUiSkills::UpdateFightSkillData()
+{
+	m_FightSkillPad.UpdateData();
+}
 int KUiSkills::WndProc(unsigned int uMsg, unsigned int uParam, int nParam)
 {
 	if (uMsg == WND_N_BUTTON_CLICK && (KWndWindow*)uParam == (KWndWindow*)&m_Close)

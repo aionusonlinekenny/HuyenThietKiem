@@ -113,7 +113,7 @@ public:
 
 	void	UpdateFightRemainPoint(int nPoint);				
 	void	UpdateLiveBaseData();							
-
+	void	UpdateFightSkillData();
 private:
 	KUiSkills(){}
 	~KUiSkills() {}

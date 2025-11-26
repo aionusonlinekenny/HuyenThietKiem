@@ -191,6 +191,7 @@ void CoreServerShell::AddPlayerToWorld(int nIndex)
 {
 //	int nIndex = PlayerSet.FindClient(lnID);
 	Player[nIndex].LaunchPlayer();
+	Player[nIndex].UpdataCurData();	
 	Player[nIndex].SendSyncData_Skill();
 }
 
