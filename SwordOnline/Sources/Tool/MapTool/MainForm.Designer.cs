@@ -23,7 +23,7 @@ namespace MapTool
         private System.Windows.Forms.TextBox txtScriptFile;
         private System.Windows.Forms.Label lblMapInfo;
         private System.Windows.Forms.Label lblStats;
-        private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.ListBox lstRegions;
         private System.Windows.Forms.ListBox lstEntries;
         private System.Windows.Forms.CheckBox chkUseServer;
@@ -31,7 +31,6 @@ namespace MapTool
         private System.Windows.Forms.GroupBox grpCoordinates;
         private System.Windows.Forms.GroupBox grpEntries;
         private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
 
         protected override void Dispose(bool disposing)
         {
@@ -64,7 +63,6 @@ namespace MapTool
             this.txtScriptFile = new System.Windows.Forms.TextBox();
             this.lblMapInfo = new System.Windows.Forms.Label();
             this.lblStats = new System.Windows.Forms.Label();
-            this.lblStatus = new System.Windows.Forms.Label();
             this.lstRegions = new System.Windows.Forms.ListBox();
             this.lstEntries = new System.Windows.Forms.ListBox();
             this.chkUseServer = new System.Windows.Forms.CheckBox();
@@ -72,7 +70,6 @@ namespace MapTool
             this.grpCoordinates = new System.Windows.Forms.GroupBox();
             this.grpEntries = new System.Windows.Forms.GroupBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 
             this.grpMapInfo.SuspendLayout();
             this.grpCoordinates.SuspendLayout();
@@ -186,7 +183,7 @@ namespace MapTool
             // txtRegionX
             this.txtRegionX.Location = new System.Drawing.Point(90, 22);
             this.txtRegionX.Name = "txtRegionX";
-            this.txtRegionX.Size = new System.Drawing.Point(100, 23);
+            this.txtRegionX.Size = new System.Drawing.Size(100, 23);
             this.txtRegionX.ReadOnly = false;
             this.txtRegionX.TabIndex = 0;
             this.txtRegionX.Text = "0";
@@ -329,11 +326,11 @@ namespace MapTool
             this.statusStrip.TabIndex = 6;
             this.statusStrip.Text = "statusStrip1";
 
-            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
-            this.toolStripStatusLabel.Text = "Ready";
-
-            this.lblStatus = this.toolStripStatusLabel;
+            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(39, 17);
+            this.lblStatus.Text = "Ready";
+            this.statusStrip.Items.Add(this.lblStatus);
 
             // MainForm
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);

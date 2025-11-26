@@ -162,13 +162,13 @@ namespace MapTool
 
         private void mapPanel_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButton.Right)
+            if (e.Button == MouseButtons.Right)
             {
                 _isPanning = true;
                 _lastMousePosition = e.Location;
                 mapPanel.Cursor = Cursors.SizeAll;
             }
-            else if (e.Button == MouseButton.Left)
+            else if (e.Button == MouseButtons.Left)
             {
                 // Select cell
                 _selectedCoordinate = _renderer.ScreenToMapCoordinate(e.X, e.Y);
@@ -179,7 +179,7 @@ namespace MapTool
 
         private void mapPanel_MouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButton.Right)
+            if (e.Button == MouseButtons.Right)
             {
                 _isPanning = false;
                 mapPanel.Cursor = Cursors.Default;
@@ -208,7 +208,7 @@ namespace MapTool
 
         private void mapPanel_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButton.Left && _selectedCoordinate.HasValue)
+            if (e.Button == MouseButtons.Left && _selectedCoordinate.HasValue)
             {
                 // Add entry
                 string scriptFile = txtScriptFile.Text;
