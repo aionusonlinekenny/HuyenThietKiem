@@ -6,6 +6,7 @@ Bộ công cụ để phân tích và chuyển đổi tọa độ Map/Region/Cel
 
 - **map_region_parser.py** - Module chính để chuyển đổi tọa độ
 - **trap_finder.py** - Tool tìm kiếm và phân tích trap data (interactive mode)
+- **list_trap_maps.py** - Liệt kê tất cả maps có trap và hướng dẫn tạo trap mới
 - **../analyze_map.py** - Script nhanh để phân tích một map cụ thể
 
 ## 🎯 Cách sử dụng nhanh
@@ -27,7 +28,30 @@ python3 analyze_map.py 11
 - Danh sách các Script file
 - Ví dụ 10 trap đầu tiên với tọa độ World
 
-### 2. Xem hướng dẫn về tọa độ
+### 2. Kiểm tra map có trap không
+
+```bash
+cd tools
+python3 list_trap_maps.py <map_id>
+```
+
+**Ví dụ:**
+```bash
+python3 list_trap_maps.py 21
+```
+
+Nếu map không có trap, tool sẽ hiển thị hướng dẫn tạo trap mới.
+
+### 3. Liệt kê tất cả maps có trap
+
+```bash
+cd tools
+python3 list_trap_maps.py list
+```
+
+Kết quả: Danh sách 46 maps có trap data
+
+### 4. Xem hướng dẫn về tọa độ
 
 ```bash
 python3 analyze_map.py help
@@ -38,7 +62,7 @@ Hiển thị:
 - Công thức chuyển đổi
 - Ví dụ minh họa
 
-### 3. Sử dụng trong Python
+### 5. Sử dụng trong Python
 
 ```python
 import sys
@@ -65,7 +89,7 @@ traps = TrapFileParser.parse_trap_file("Bin/Server/library/maps/Trap/11.txt")
 print(f"Tìm thấy {len(traps)} traps")
 ```
 
-### 4. Tool tìm kiếm interactive
+### 6. Tool tìm kiếm interactive
 
 ```bash
 cd tools
