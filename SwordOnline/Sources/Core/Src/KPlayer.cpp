@@ -1073,8 +1073,8 @@ BOOL KPlayer::SendSyncData_Skill()
 		if( Npc[m_nIndex].m_SkillList.m_Skills[i].SkillId <= 0)
 			continue;
 		sSkill.m_sAllSkill[j].SkillId = Npc[m_nIndex].m_SkillList.m_Skills[i].SkillId;
-		// Send CurrentSkillLevel + PointAdd (effective level including item bonuses)
-		sSkill.m_sAllSkill[j].SkillLevel = Npc[m_nIndex].m_SkillList.m_Skills[i].CurrentSkillLevel + Npc[m_nIndex].m_SkillList.m_Skills[i].PointAdd;
+		// Send base SkillLevel only (client will re-apply item bonuses)
+		sSkill.m_sAllSkill[j].SkillLevel = Npc[m_nIndex].m_SkillList.m_Skills[i].SkillLevel;
 		j++;
 	}
 	sSkill.m_wProtocolLong += sizeof(SKILL_SEND_ALL_SYNC_DATA) * j;
