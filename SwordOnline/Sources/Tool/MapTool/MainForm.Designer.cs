@@ -319,7 +319,6 @@ namespace MapTool
             this.btnZoomOut.Click += new System.EventHandler(this.btnZoomOut_Click);
 
             // Status strip
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.toolStripStatusLabel });
             this.statusStrip.Location = new System.Drawing.Point(0, 840);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1184, 22);
