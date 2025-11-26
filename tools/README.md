@@ -7,6 +7,8 @@ Bộ công cụ để phân tích và chuyển đổi tọa độ Map/Region/Cel
 - **map_region_parser.py** - Module chính để chuyển đổi tọa độ
 - **trap_finder.py** - Tool tìm kiếm và phân tích trap data (interactive mode)
 - **list_trap_maps.py** - Liệt kê tất cả maps có trap và hướng dẫn tạo trap mới
+- **scan_region_files.py** - Scan region files trong thư mục maps/ và phân tích tọa độ
+- **parse_obj_npc_files.py** - Parse Object/NPC files để lấy tọa độ World và convert sang Region/Cell
 - **../analyze_map.py** - Script nhanh để phân tích một map cụ thể
 
 ## 🎯 Cách sử dụng nhanh
@@ -89,7 +91,44 @@ traps = TrapFileParser.parse_trap_file("Bin/Server/library/maps/Trap/11.txt")
 print(f"Tìm thấy {len(traps)} traps")
 ```
 
-### 6. Tool tìm kiếm interactive
+### 6. Kiểm tra region files
+
+```bash
+cd tools
+python3 scan_region_files.py <map_id>
+```
+
+**Chức năng:**
+- Kiểm tra map có file region .dat không
+- Liệt kê tất cả maps có region files (74-140)
+- Gợi ý các cách thay thế nếu map không có region
+
+**Ví dụ:**
+```bash
+python3 scan_region_files.py 21      # Check map 21
+python3 scan_region_files.py list    # List all maps with regions
+```
+
+### 7. Phân tích tọa độ từ Object/NPC files
+
+```bash
+cd tools
+python3 parse_obj_npc_files.py <map_id>
+```
+
+**Chức năng:**
+- Parse file Obj/[MapID].txt hoặc Npc/[MapID].txt
+- Lấy tọa độ World và convert sang Region/Cell
+- Thống kê regions và phạm vi tọa độ
+- Export sang format Trap
+
+**Ví dụ:**
+```bash
+python3 parse_obj_npc_files.py 20           # Analyze map 20
+python3 parse_obj_npc_files.py 1 export     # Export to file
+```
+
+### 8. Tool tìm kiếm interactive
 
 ```bash
 cd tools
