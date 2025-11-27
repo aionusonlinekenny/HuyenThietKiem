@@ -1,24 +1,118 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using MapTool.PakFile;
 
 namespace MapTool.MapData
 {
     /// <summary>
     /// Auto-loads complete map data from game folder
     /// Workflow: GameFolder + MapID → Auto load all regions
+    /// Supports both .pak files and disk files
     /// </summary>
-    public class MapLoader
+    public class MapLoader : IDisposable
     {
         private string _gameFolder;
         private bool _isServerMode;
         private MapListParser _mapListParser;
+        private PakFileReader _pakReader;
 
         public MapLoader(string gameFolder, bool isServerMode = true)
         {
             _gameFolder = gameFolder;
             _isServerMode = isServerMode;
             _mapListParser = new MapListParser(gameFolder);
+
+            // Try to open maps.pak
+            TryOpenPakFile();
+        }
+
+        private void TryOpenPakFile()
+        {
+            string pakPath = Path.Combine(_gameFolder, "pak", "maps.pak");
+            if (File.Exists(pakPath))
+            {
+                try
+                {
+                    _pakReader = new PakFileReader(pakPath);
+                    Console.WriteLine($"✓ Opened pak file: {pakPath}");
+
+                    // Show pak statistics
+                    var stats = _pakReader.GetStatistics();
+                    Console.WriteLine($"✓ Pak contains {stats.TotalFiles} files");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"⚠ Warning: Could not open pak file: {ex.Message}");
+                    _pakReader = null;
+                }
+            }
+            else
+            {
+                Console.WriteLine($"ℹ No pak file found, will read from disk");
+            }
+        }
+
+        /// <summary>
+        /// Check if file exists (pak or disk)
+        /// </summary>
+        private bool FileExists(string relativePath)
+        {
+            // Try pak first
+            if (_pakReader != null && _pakReader.FileExists(relativePath))
+            {
+                return true;
+            }
+
+            // Try disk
+            string diskPath = Path.Combine(_gameFolder, relativePath.TrimStart('\\', '/'));
+            return File.Exists(diskPath);
+        }
+
+        /// <summary>
+        /// Read file (pak or disk)
+        /// </summary>
+        private byte[] ReadFileBytes(string relativePath)
+        {
+            // Try pak first
+            if (_pakReader != null)
+            {
+                try
+                {
+                    byte[] data = _pakReader.ReadFile(relativePath);
+                    if (data != null)
+                    {
+                        return data;
+                    }
+                }
+                catch (NotImplementedException ex)
+                {
+                    // UCL decompression not implemented
+                    throw new Exception(
+                        $"❌ Cannot read compressed file from pak:\n{relativePath}\n\n" +
+                        "═══════════════════════════════════════\n" +
+                        ex.Message + "\n" +
+                        "═══════════════════════════════════════\n\n" +
+                        "📝 Recommended Solution:\n" +
+                        "1. Extract maps.pak using UnpackTool\n" +
+                        "2. Place extracted files in Bin/Server/maps/\n" +
+                        "3. Reload the map\n\n" +
+                        "Alternative: Implement UCL decompression (PInvoke to ucl.dll)");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"⚠ Failed to read from pak: {ex.Message}");
+                }
+            }
+
+            // Fallback to disk
+            string diskPath = Path.Combine(_gameFolder, relativePath.TrimStart('\\', '/'));
+            if (File.Exists(diskPath))
+            {
+                return File.ReadAllBytes(diskPath);
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -62,7 +156,6 @@ namespace MapTool.MapData
                 Regions = new Dictionary<int, RegionData>()
             };
 
-            string mapFolderPath = _mapListParser.GetMapFolderPath(mapId);
             string regionSuffix = _isServerMode ? "Region_S.dat" : "Region_C.dat";
 
             int loadedCount = 0;
@@ -70,25 +163,36 @@ namespace MapTool.MapData
             {
                 for (int x = config.RegionLeft; x <= config.RegionRight; x++)
                 {
-                    // Build region file path: <mapFolder>\v_YYY\XXX_Region_S.dat
-                    string regionPath = Path.Combine(
-                        mapFolderPath,
+                    // Build region file path: \maps\<mapfolder>\v_YYY\XXX_Region_S.dat
+                    string regionRelativePath = Path.Combine(
+                        "maps",
+                        mapEntry.FolderPath,
                         $"v_{y:D3}",
                         $"{x:D3}_{regionSuffix}"
-                    );
+                    ).Replace(Path.DirectorySeparatorChar, '\\'); // Normalize to backslash
 
-                    if (File.Exists(regionPath))
+                    if (FileExists(regionRelativePath))
                     {
                         try
                         {
-                            RegionData regionData = MapFileParser.LoadRegionData(regionPath, x, y);
-                            mapData.Regions[regionData.RegionID] = regionData;
-                            loadedCount++;
+                            byte[] regionBytes = ReadFileBytes(regionRelativePath);
+                            if (regionBytes != null)
+                            {
+                                // Parse region data from bytes
+                                RegionData regionData = ParseRegionDataFromBytes(regionBytes, x, y);
+                                mapData.Regions[regionData.RegionID] = regionData;
+                                loadedCount++;
+                            }
+                        }
+                        catch (NotImplementedException)
+                        {
+                            // Re-throw UCL decompression error with clear message
+                            throw;
                         }
                         catch (Exception ex)
                         {
                             // Log error but continue loading other regions
-                            Console.WriteLine($"Failed to load region ({x},{y}): {ex.Message}");
+                            Console.WriteLine($"⚠ Failed to load region ({x},{y}): {ex.Message}");
                         }
                     }
                 }
@@ -96,6 +200,18 @@ namespace MapTool.MapData
 
             mapData.LoadedRegionCount = loadedCount;
             return mapData;
+        }
+
+        /// <summary>
+        /// Parse region data from byte array
+        /// </summary>
+        private RegionData ParseRegionDataFromBytes(byte[] data, int regionX, int regionY)
+        {
+            using (MemoryStream ms = new MemoryStream(data))
+            using (BinaryReader reader = new BinaryReader(ms))
+            {
+                return MapFileParser.LoadRegionDataFromStream(reader, regionX, regionY);
+            }
         }
 
         /// <summary>
@@ -114,6 +230,15 @@ namespace MapTool.MapData
         {
             _mapListParser.Load();
             return _mapListParser.GetMapEntry(mapId);
+        }
+
+        public void Dispose()
+        {
+            if (_pakReader != null)
+            {
+                _pakReader.Dispose();
+                _pakReader = null;
+            }
         }
     }
 
