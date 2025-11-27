@@ -142,13 +142,9 @@ namespace MapTool.MapData
                 return null;
             }
 
-            // Extract map name from folder path
-            // Example: "场景地图\城市\成都" → "成都"
-            string[] parts = entry.FolderPath.Split('\\', '/');
-            string mapName = parts[parts.Length - 1];
-
-            // Build full path: <gameFolder>\maps\<folderPath>\<mapName>.wor
-            string worPath = Path.Combine(_gameFolder, "maps", entry.FolderPath, mapName + ".wor");
+            // MapList.ini contains complete path, just append .wor
+            // Pattern: <gameFolder>\maps\{FolderPath}.wor
+            string worPath = Path.Combine(_gameFolder, "maps", entry.FolderPath + ".wor");
             return worPath;
         }
 
@@ -163,13 +159,16 @@ namespace MapTool.MapData
                 return null;
             }
 
-            // Extract map name from folder path
-            // Example: "场景地图\城市\成都" → "成都"
-            string[] parts = entry.FolderPath.Split('\\', '/');
-            string mapName = parts[parts.Length - 1];
+            // MapList.ini already contains the complete path structure!
+            // Examples from MapList.ini:
+            //   1=西北南区\凤翔           → \maps\西北南区\凤翔.wor
+            //   11=西南北区\成都\成都     → \maps\西南北区\成都\成都.wor
+            //   3=西北南区\剑阁西北\剑阁西北 → \maps\西北南区\剑阁西北\剑阁西北.wor
+            //
+            // Pattern: \maps\{FolderPath}.wor
+            // Do NOT add extra folder level!
 
-            // Build relative path: \maps\<folderPath>\<mapName>.wor
-            return $"\\maps\\{entry.FolderPath}\\{mapName}.wor";
+            return $"\\maps\\{entry.FolderPath}.wor";
         }
 
         /// <summary>
