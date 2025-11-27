@@ -93,6 +93,15 @@ namespace MapTool.MapData
                             config.RegionTop = int.Parse(coords[1].Trim());
                             config.RegionRight = int.Parse(coords[2].Trim());
                             config.RegionBottom = int.Parse(coords[3].Trim());
+
+                            // DEBUG: Log parsed rect
+                            Console.WriteLine($"🔍 DEBUG: Parsed rect= {config.RegionLeft},{config.RegionTop},{config.RegionRight},{config.RegionBottom}");
+                            Console.WriteLine($"🔍 DEBUG: Grid size: {config.RegionRight - config.RegionLeft + 1} x {config.RegionBottom - config.RegionTop + 1}");
+                            Console.WriteLine($"🔍 DEBUG: First region will be at ({config.RegionLeft}, {config.RegionTop})");
+
+                            // Calculate what RegionID SHOULD be for first region
+                            int firstRegionID = config.RegionTop * 256 + config.RegionLeft;
+                            Console.WriteLine($"🔍 DEBUG: First RegionID should be: {firstRegionID}");
                         }
                         break;
                 }
