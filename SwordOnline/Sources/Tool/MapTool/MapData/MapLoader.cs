@@ -198,10 +198,20 @@ namespace MapTool.MapData
             string regionSuffix = _isServerMode ? "Region_S.dat" : "Region_C.dat";
 
             int loadedCount = 0;
+            int attemptedCount = 0;
+            List<string> existingRegions = new List<string>();
+            List<string> missingRegions = new List<string>();
+
+            DebugLogger.LogSeparator();
+            DebugLogger.Log($"🔍 SCANNING FOR REGION FILES");
+            DebugLogger.Log($"   Looking for regions from ({config.RegionLeft},{config.RegionTop}) to ({config.RegionRight},{config.RegionBottom})");
+
             for (int y = config.RegionTop; y <= config.RegionBottom; y++)
             {
                 for (int x = config.RegionLeft; x <= config.RegionRight; x++)
                 {
+                    attemptedCount++;
+
                     // Build region file path: \maps\<mapfolder>\v_YYY\XXX_Region_S.dat
                     string regionRelativePath = Path.Combine(
                         "maps",
@@ -221,6 +231,14 @@ namespace MapTool.MapData
                                 RegionData regionData = ParseRegionDataFromBytes(regionBytes, x, y);
                                 mapData.Regions[regionData.RegionID] = regionData;
                                 loadedCount++;
+
+                                // Log first 5 regions found
+                                if (loadedCount <= 5)
+                                {
+                                    int regionId = y * 256 + x;
+                                    DebugLogger.Log($"   ✓ Found region ({x:3d},{y:3d}) → RegionID={regionId,5} | File: {regionRelativePath}");
+                                    existingRegions.Add($"({x},{y})");
+                                }
                             }
                         }
                         catch (NotImplementedException)
@@ -232,10 +250,67 @@ namespace MapTool.MapData
                         {
                             // Log error but continue loading other regions
                             Console.WriteLine($"⚠ Failed to load region ({x},{y}): {ex.Message}");
+                            DebugLogger.Log($"   ⚠ Error loading ({x},{y}): {ex.Message}");
+                        }
+                    }
+                    else
+                    {
+                        // Log first 5 missing regions
+                        if (missingRegions.Count < 5)
+                        {
+                            DebugLogger.Log($"   ✗ Missing region ({x:3d},{y:3d}) | Expected: {regionRelativePath}");
+                            missingRegions.Add($"({x},{y})");
                         }
                     }
                 }
             }
+
+            DebugLogger.LogSeparator();
+            DebugLogger.Log($"📊 REGION SCAN SUMMARY");
+            DebugLogger.Log($"   Attempted: {attemptedCount} regions");
+            DebugLogger.Log($"   Loaded: {loadedCount} regions");
+            DebugLogger.Log($"   Missing: {attemptedCount - loadedCount} regions");
+            if (missingRegions.Count > 0)
+            {
+                DebugLogger.Log($"   First missing: {string.Join(", ", missingRegions)}");
+            }
+            if (existingRegions.Count > 0)
+            {
+                DebugLogger.Log($"   First existing: {string.Join(", ", existingRegions)}");
+            }
+
+            // Check for data mismatch - warn if most regions are missing
+            if (loadedCount == 0)
+            {
+                DebugLogger.LogSeparator();
+                DebugLogger.Log($"❌ CRITICAL: NO REGIONS LOADED!");
+                DebugLogger.Log($"   The .wor file says regions should exist at ({config.RegionLeft},{config.RegionTop}) to ({config.RegionRight},{config.RegionBottom})");
+                DebugLogger.Log($"   But NO region files were found at these coordinates!");
+                DebugLogger.Log($"");
+                DebugLogger.Log($"   Possible causes:");
+                DebugLogger.Log($"   1. Map files not extracted from pak");
+                DebugLogger.Log($"   2. Wrong game folder selected");
+                DebugLogger.Log($"   3. .wor file doesn't match actual region files (different version)");
+                DebugLogger.LogSeparator();
+            }
+            else if ((double)loadedCount / attemptedCount < 0.1) // Less than 10% loaded
+            {
+                DebugLogger.LogSeparator();
+                DebugLogger.Log($"⚠ WARNING: DATA MISMATCH DETECTED!");
+                DebugLogger.Log($"   Only {loadedCount}/{attemptedCount} regions loaded ({(double)loadedCount / attemptedCount * 100:F1}%)");
+                DebugLogger.Log($"   .wor expects: ({config.RegionLeft},{config.RegionTop}) to ({config.RegionRight},{config.RegionBottom})");
+                DebugLogger.Log($"   Actual regions: Starting around {existingRegions[0]}");
+                DebugLogger.Log($"");
+                DebugLogger.Log($"   This means your .wor file doesn't match your region files!");
+                DebugLogger.Log($"   The exported RegionIDs will be WRONG for trap placement.");
+                DebugLogger.Log($"");
+                DebugLogger.Log($"   📝 SOLUTION:");
+                DebugLogger.Log($"   Compare with Bin/Server/library/maps/Trap/{mapId}.txt to see correct RegionIDs");
+                DebugLogger.Log($"   You may need to extract correct map files from original game data");
+                DebugLogger.LogSeparator();
+            }
+
+            DebugLogger.LogSeparator();
 
             mapData.LoadedRegionCount = loadedCount;
 
