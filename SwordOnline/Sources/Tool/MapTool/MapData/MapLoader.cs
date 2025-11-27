@@ -29,27 +29,41 @@ namespace MapTool.MapData
 
         private void TryOpenPakFile()
         {
-            string pakPath = Path.Combine(_gameFolder, "pak", "maps.pak");
-            if (File.Exists(pakPath))
+            // Try multiple possible pak file locations
+            string[] possiblePaths = new[]
             {
-                try
-                {
-                    _pakReader = new PakFileReader(pakPath);
-                    Console.WriteLine($"✓ Opened pak file: {pakPath}");
+                Path.Combine(_gameFolder, "pak", "maps.pak"),      // Server: Bin/Server/pak/maps.pak
+                Path.Combine(_gameFolder, "..", "pak", "maps.pak"), // Client: Bin/Client/../pak/maps.pak
+                Path.Combine(_gameFolder, "maps.pak"),             // Direct: Bin/maps.pak
+            };
 
-                    // Show pak statistics
-                    var stats = _pakReader.GetStatistics();
-                    Console.WriteLine($"✓ Pak contains {stats.TotalFiles} files");
-                }
-                catch (Exception ex)
+            foreach (string pakPath in possiblePaths)
+            {
+                if (File.Exists(pakPath))
                 {
-                    Console.WriteLine($"⚠ Warning: Could not open pak file: {ex.Message}");
-                    _pakReader = null;
+                    try
+                    {
+                        _pakReader = new PakFileReader(pakPath);
+                        Console.WriteLine($"✓ Opened pak file: {pakPath}");
+
+                        // Show pak statistics
+                        var stats = _pakReader.GetStatistics();
+                        Console.WriteLine($"✓ Pak contains {stats.TotalFiles} files");
+                        return; // Success!
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"⚠ Warning: Could not open pak file {pakPath}: {ex.Message}");
+                        _pakReader = null;
+                    }
                 }
             }
-            else
+
+            Console.WriteLine($"ℹ No pak file found at any location, will read from disk");
+            Console.WriteLine($"  Tried paths:");
+            foreach (string path in possiblePaths)
             {
-                Console.WriteLine($"ℹ No pak file found, will read from disk");
+                Console.WriteLine($"    - {path}");
             }
         }
 
@@ -226,22 +240,38 @@ namespace MapTool.MapData
 
             // Step 5: Try to load map image (24.jpg)
             string mapImageRelativePath = $"\\maps\\{mapEntry.FolderPath}24.jpg";
+            Console.WriteLine($"🔍 Looking for map image: {mapImageRelativePath}");
             try
             {
                 if (FileExists(mapImageRelativePath))
                 {
+                    Console.WriteLine($"✓ Map image file exists!");
                     mapData.MapImageData = ReadFileBytes(mapImageRelativePath);
-                    mapData.MapImagePath = mapImageRelativePath;
-                    Console.WriteLine($"✓ Loaded map image: {mapImageRelativePath}");
+                    if (mapData.MapImageData != null)
+                    {
+                        mapData.MapImagePath = mapImageRelativePath;
+                        Console.WriteLine($"✓ Loaded map image: {mapImageRelativePath} ({mapData.MapImageData.Length} bytes)");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"⚠ Map image data is null after reading!");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"ℹ No map image found: {mapImageRelativePath}");
+                    Console.WriteLine($"❌ No map image found at: {mapImageRelativePath}");
+                    Console.WriteLine($"  Pak reader: {(_pakReader != null ? "Available" : "Not available")}");
+
+                    // Try disk path
+                    string diskPath = Path.Combine(_gameFolder, mapImageRelativePath.TrimStart('\\', '/'));
+                    Console.WriteLine($"  Disk path: {diskPath}");
+                    Console.WriteLine($"  Disk exists: {File.Exists(diskPath)}");
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"⚠ Failed to load map image: {ex.Message}");
+                Console.WriteLine($"  Stack trace: {ex.StackTrace}");
             }
 
             return mapData;

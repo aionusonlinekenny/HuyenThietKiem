@@ -80,9 +80,15 @@ namespace MapTool.Rendering
                 {
                     using (MemoryStream ms = new MemoryStream(imageData))
                     {
-                        _mapImage = Image.FromStream(ms);
+                        // Load image from stream and CLONE it (MemoryStream will be disposed)
+                        Image tempImage = Image.FromStream(ms);
+                        _mapImage = new Bitmap(tempImage);
+                        tempImage.Dispose();
+
                         _mapImageOffsetX = offsetX;
                         _mapImageOffsetY = offsetY;
+
+                        Console.WriteLine($"✓ Map image loaded: {_mapImage.Width}x{_mapImage.Height} pixels");
                     }
                 }
                 catch (Exception ex)

@@ -117,11 +117,13 @@ namespace MapTool
                 // Load map image if available
                 if (_currentMap.MapImageData != null)
                 {
+                    Console.WriteLine($"🎨 Setting map image to renderer ({_currentMap.MapImageData.Length} bytes)");
                     _renderer.SetMapImage(_currentMap.MapImageData);
                     lblStatus.Text = $"Map loaded with image! {_currentMap.LoadedRegionCount} regions.";
                 }
                 else
                 {
+                    Console.WriteLine($"⚠ No map image data available");
                     _renderer.ClearMapImage();
                     lblStatus.Text = $"Map loaded (no image). {_currentMap.LoadedRegionCount} regions.";
                 }
