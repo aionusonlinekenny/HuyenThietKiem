@@ -118,7 +118,8 @@ namespace MapTool
                 if (_currentMap.MapImageData != null)
                 {
                     Console.WriteLine($"🎨 Setting map image to renderer ({_currentMap.MapImageData.Length} bytes)");
-                    _renderer.SetMapImage(_currentMap.MapImageData);
+                    Console.WriteLine($"🎨 Map image offset: ({_currentMap.MapImageOffsetX}, {_currentMap.MapImageOffsetY})");
+                    _renderer.SetMapImage(_currentMap.MapImageData, _currentMap.MapImageOffsetX, _currentMap.MapImageOffsetY);
                     lblStatus.Text = $"Map loaded with image! {_currentMap.LoadedRegionCount} regions.";
                 }
                 else
@@ -335,9 +336,8 @@ namespace MapTool
                             if (!region.IsLoaded)
                                 continue;
 
-                            // Calculate simple RegionId from coordinates
-                            // Format: RegionY * 256 + RegionX (assuming max 256 regions width)
-                            int simpleRegionId = region.RegionY * 256 + region.RegionX;
+                            // Use the correct RegionID (x | (y << 16)) from the region data
+                            int regionId = region.RegionID;
 
                             // Loop through all cells in region (16x32)
                             for (int cellY = 0; cellY < MapConstants.REGION_GRID_HEIGHT; cellY++)
@@ -346,7 +346,7 @@ namespace MapTool
                                 {
                                     // Write cell data
                                     // Format: MapId	RegionId	CellX	CellY	ScriptFile	IsLoad
-                                    writer.WriteLine($"{_currentMap.MapId}\t{simpleRegionId}\t{cellX}\t{cellY}\t\t1");
+                                    writer.WriteLine($"{_currentMap.MapId}\t{regionId}\t{cellX}\t{cellY}\t\t1");
                                     totalCells++;
                                 }
                             }

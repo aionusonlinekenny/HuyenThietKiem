@@ -250,7 +250,16 @@ namespace MapTool.MapData
                     if (mapData.MapImageData != null)
                     {
                         mapData.MapImagePath = mapImageRelativePath;
+
+                        // Calculate image offset based on region boundaries
+                        // 24.jpg typically starts at world origin (0,0)
+                        // But regions start at (RegionLeft, RegionTop)
+                        // So the image offset in pixels is:
+                        mapData.MapImageOffsetX = config.RegionLeft * MapConstants.REGION_PIXEL_WIDTH;
+                        mapData.MapImageOffsetY = config.RegionTop * MapConstants.REGION_PIXEL_HEIGHT;
+
                         Console.WriteLine($"✓ Loaded map image: {mapImageRelativePath} ({mapData.MapImageData.Length} bytes)");
+                        Console.WriteLine($"✓ Map image offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY})");
                     }
                     else
                     {
@@ -335,6 +344,8 @@ namespace MapTool.MapData
         // Map image (24.jpg file)
         public byte[] MapImageData { get; set; }
         public string MapImagePath { get; set; }
+        public int MapImageOffsetX { get; set; }
+        public int MapImageOffsetY { get; set; }
 
         /// <summary>
         /// Get total map size in pixels
