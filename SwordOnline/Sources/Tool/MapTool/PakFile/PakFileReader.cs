@@ -279,10 +279,50 @@ namespace MapTool.PakFile
                 return _nameToId[withSlash];
             }
 
-            // Fallback: compute ID like g_FileName2Id when .pak.txt mapping is missing
-            return ComputeFileId(withSlash);
-        }
+            // Fallback: calculate ID using the same hash as KPakList::FileNameToId
+            uint hashedId = HashFileName(withSlash);
+            if (_fileIndex.ContainsKey(hashedId))
+            {
+                return hashedId;
+            }
 
+            return 0;
+        }
+/// <summary>
+        /// Compute file ID using the original pack hash (same as KPakList::FileNameToId)
+        /// </summary>
+        private uint HashFileName(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return 0;
+            }
+
+            // Ensure a leading slash like the engine expects
+            if (fileName[0] != '\\' && fileName[0] != '/')
+            {
+                fileName = "\\" + fileName;
+            }
+
+            ulong id = 0;
+            int index = 0;
+
+            foreach (char rawCh in fileName)
+            {
+                char ch = rawCh;
+                if (ch >= 'A' && ch <= 'Z')
+                {
+                    ch = (char)(ch + ('a' - 'A'));
+                }
+
+                index++;
+                id = (id + (ulong)(index * ch)) % 0x8000000b;
+                id *= 0xffffffef;
+                id &= 0xFFFFFFFF; // Clamp to 32-bit like the original unsigned long
+            }
+
+            return (uint)(id ^ 0x12345678);
+        }
         /// <summary>
         /// Compute file ID using the same algorithm as g_FileName2Id
         /// </summary>
