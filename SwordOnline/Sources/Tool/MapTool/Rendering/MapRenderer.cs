@@ -118,7 +118,9 @@ namespace MapTool.Rendering
                     int screenX = cellWorldX - _viewOffsetX;
                     int screenY = cellWorldY - _viewOffsetY;
 
-                    Rectangle cellRect = new Rectangle(screenX, screenY, _cellSize, _cellSize);
+                    // Use LOGIC_CELL size for rendering (no gaps!)
+                    Rectangle cellRect = new Rectangle(screenX, screenY,
+                        MapConstants.LOGIC_CELL_WIDTH, MapConstants.LOGIC_CELL_HEIGHT);
 
                     // Draw base cell (always draw so we can see the map!)
                     Color cellColor = _walkableCellColor; // Default: walkable (dark gray)
@@ -167,8 +169,8 @@ namespace MapTool.Rendering
             Rectangle regionRect = new Rectangle(
                 regionWorldX - _viewOffsetX,
                 regionWorldY - _viewOffsetY,
-                MapConstants.REGION_GRID_WIDTH * _cellSize,
-                MapConstants.REGION_GRID_HEIGHT * _cellSize);
+                MapConstants.REGION_PIXEL_WIDTH,
+                MapConstants.REGION_PIXEL_HEIGHT);
 
             using (Pen pen = new Pen(_regionBorderColor, 2))
             {
