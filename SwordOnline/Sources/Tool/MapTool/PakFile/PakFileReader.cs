@@ -373,6 +373,14 @@ namespace MapTool.PakFile
         }
 
         /// <summary>
+        /// Get all filenames known from .pak.txt index
+        /// </summary>
+        public List<string> GetAllFileNames()
+        {
+            return _nameToId.Keys.ToList();
+        }
+
+        /// <summary>
         /// Get pak statistics
         /// </summary>
         public PakStatistics GetStatistics()
@@ -383,7 +391,8 @@ namespace MapTool.PakFile
                 CompressedFiles = 0,
                 UncompressedFiles = 0,
                 TotalSize = 0,
-                CompressedSize = 0
+                CompressedSize = 0,
+                FilesWithoutNames = (uint)(_header.FileCount - _nameToId.Count)
             };
 
             foreach (var entry in _fileIndex.Values)
@@ -439,6 +448,7 @@ namespace MapTool.PakFile
         public uint TotalFiles { get; set; }
         public uint CompressedFiles { get; set; }
         public uint UncompressedFiles { get; set; }
+        public uint FilesWithoutNames { get; set; }
         public long TotalSize { get; set; }
         public long CompressedSize { get; set; }
 
