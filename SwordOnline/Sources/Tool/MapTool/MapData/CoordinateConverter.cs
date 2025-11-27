@@ -103,5 +103,13 @@ namespace MapTool.MapData
             cellX = Math.Max(0, Math.Min(MapConstants.REGION_GRID_WIDTH - 1, cellX));
             cellY = Math.Max(0, Math.Min(MapConstants.REGION_GRID_HEIGHT - 1, cellY));
         }
+
+        /// <summary>
+        /// Make Region ID from coordinates (wrapper for RegionData.MakeRegionID)
+        /// </summary>
+        public static int MakeRegionID(int regionX, int regionY)
+        {
+            return RegionData.MakeRegionID(regionX, regionY);
+        }
     }
 }
