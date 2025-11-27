@@ -114,32 +114,51 @@ namespace MapTool
                                   $"Map Size: {_currentMap.GetMapPixelWidth()}x{_currentMap.GetMapPixelHeight()} pixels\n" +
                                   $"Loaded: {_currentMap.LoadedRegionCount}/{_currentMap.RegionWidth * _currentMap.RegionHeight} regions";
 
-                // Load map image if available
-                if (_currentMap.MapImageData != null)
-                {
-                    Console.WriteLine($"🎨 Setting map image to renderer ({_currentMap.MapImageData.Length} bytes)");
-                    Console.WriteLine($"🎨 Map image offset: ({_currentMap.MapImageOffsetX}, {_currentMap.MapImageOffsetY})");
-                    _renderer.SetMapImage(_currentMap.MapImageData, _currentMap.MapImageOffsetX, _currentMap.MapImageOffsetY);
-                    lblStatus.Text = $"Map loaded with image! {_currentMap.LoadedRegionCount} regions.";
-                }
-                else
-                {
-                    Console.WriteLine($"⚠ No map image data available");
-                    _renderer.ClearMapImage();
-                    lblStatus.Text = $"Map loaded (no image). {_currentMap.LoadedRegionCount} regions.";
-                }
-
-                // Load regions into renderer
+                // Load regions into renderer FIRST
                 _renderer.ClearRegions();
                 foreach (var region in _currentMap.Regions.Values)
                 {
                     _renderer.AddRegion(region);
                 }
 
-                // Set initial view to map image position (so image is visible)
-                // If we don't do this, image will be at offset (40000, 50000) while view is at (0, 0)
-                _renderer.ViewOffsetX = _currentMap.MapImageOffsetX;
-                _renderer.ViewOffsetY = _currentMap.MapImageOffsetY;
+                // Load map image if available
+                if (_currentMap.MapImageData != null)
+                {
+                    Console.WriteLine($"🎨 Setting map image to renderer ({_currentMap.MapImageData.Length} bytes)");
+                    Console.WriteLine($"🎨 Map image offset: ({_currentMap.MapImageOffsetX}, {_currentMap.MapImageOffsetY})");
+                    _renderer.SetMapImage(_currentMap.MapImageData, _currentMap.MapImageOffsetX, _currentMap.MapImageOffsetY);
+
+                    // Set initial view to map image position (so image is visible)
+                    _renderer.ViewOffsetX = _currentMap.MapImageOffsetX;
+                    _renderer.ViewOffsetY = _currentMap.MapImageOffsetY;
+
+                    lblStatus.Text = $"Map loaded with image! {_currentMap.LoadedRegionCount} regions.";
+                }
+                else
+                {
+                    Console.WriteLine($"ℹ No map image (24.jpg) - this is normal for most maps");
+                    Console.WriteLine($"  Tool will render region grid and obstacles/traps");
+                    _renderer.ClearMapImage();
+
+                    // Set view to first loaded region
+                    if (_currentMap.Regions.Count > 0)
+                    {
+                        var firstRegion = _currentMap.Regions.Values.GetEnumerator();
+                        firstRegion.MoveNext();
+                        var region = firstRegion.Current;
+                        _renderer.ViewOffsetX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                        _renderer.ViewOffsetY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+                        Console.WriteLine($"  Set view to first region: ({region.RegionX}, {region.RegionY})");
+                    }
+                    else
+                    {
+                        _renderer.ViewOffsetX = _currentMap.Config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                        _renderer.ViewOffsetY = _currentMap.Config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+                    }
+
+                    lblStatus.Text = $"Map loaded (no background image). {_currentMap.LoadedRegionCount} regions.";
+                }
+
                 _renderer.Zoom = 1.0f;
 
                 mapPanel.Invalidate();
