@@ -256,93 +256,54 @@ namespace MapTool.PakFile
                 return 0;
             }
 
-            // Normalize path
-            fileName = fileName.Replace('/', '\\');
+            // Normalize path (backslashes, like game engine)
+            fileName = FileNameHasher.NormalizePath(fileName);
 
-            // Try direct lookup
+            // Method 1: Try direct lookup from .pak.txt index
             if (_nameToId.ContainsKey(fileName))
             {
                 return _nameToId[fileName];
             }
 
-            // Try without leading slash
+            // Try variations with/without leading slash
             string withoutSlash = fileName.TrimStart('\\');
             if (_nameToId.ContainsKey(withoutSlash))
             {
                 return _nameToId[withoutSlash];
             }
 
-            // Try with leading slash
             string withSlash = "\\" + withoutSlash;
             if (_nameToId.ContainsKey(withSlash))
             {
                 return _nameToId[withSlash];
             }
 
-            // Fallback: calculate ID using the same hash as KPakList::FileNameToId
-            uint hashedId = HashFileName(withSlash);
-            if (_fileIndex.ContainsKey(hashedId))
+            // Method 2: Calculate hash using game's algorithm (fallback)
+            // This ensures we can find files even if .pak.txt is missing or incomplete
+            uint calculatedId = FileNameHasher.CalculateFileId(fileName);
+            if (_fileIndex.ContainsKey(calculatedId))
             {
-                return hashedId;
+                // Found by calculated hash! Cache it for future lookups
+                _nameToId[fileName] = calculatedId;
+                return calculatedId;
+            }
+
+            // Try variations with calculated hash
+            uint withoutSlashId = FileNameHasher.CalculateFileId(withoutSlash);
+            if (_fileIndex.ContainsKey(withoutSlashId))
+            {
+                _nameToId[withoutSlash] = withoutSlashId;
+                return withoutSlashId;
+            }
+
+            uint withSlashId = FileNameHasher.CalculateFileId(withSlash);
+            if (_fileIndex.ContainsKey(withSlashId))
+            {
+                _nameToId[withSlash] = withSlashId;
+                return withSlashId;
             }
 
             return 0;
-        }
-/// <summary>
-        /// Compute file ID using the original pack hash (same as KPakList::FileNameToId)
-        /// </summary>
-        private uint HashFileName(string fileName)
-        {
-            if (string.IsNullOrEmpty(fileName))
-            {
-                return 0;
-            }
-
-            // Ensure a leading slash like the engine expects
-            if (fileName[0] != '\\' && fileName[0] != '/')
-            {
-                fileName = "\\" + fileName;
-            }
-
-            ulong id = 0;
-            int index = 0;
-
-            foreach (char rawCh in fileName)
-            {
-                char ch = rawCh;
-                if (ch >= 'A' && ch <= 'Z')
-                {
-                    ch = (char)(ch + ('a' - 'A'));
-                }
-
-                index++;
-                id = (id + (ulong)(index * ch)) % 0x8000000b;
-                id *= 0xffffffef;
-                id &= 0xFFFFFFFF; // Clamp to 32-bit like the original unsigned long
-            }
-
-            return (uint)(id ^ 0x12345678);
-        }
-        /// <summary>
-        /// Compute file ID using the same algorithm as g_FileName2Id
-        /// </summary>
-        private uint ComputeFileId(string normalizedPath)
-        {
-            uint id = 0;
-
-            for (int i = 0; i < normalizedPath.Length; i++)
-            {
-                char c = normalizedPath[i];
-                if (c == '/')
-                {
-                    c = '\\';
-                }
-
-                id = (id + (uint)((i + 1) * c)) % 0x8000000b;
-                id *= 0xffffffef;
-            }
-
-            return id ^ 0x12345678;
         }
 
         /// <summary>

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using MapTool.MapData;
 using MapRegionData = MapTool.MapData.RegionData;
 
@@ -18,13 +19,19 @@ namespace MapTool.Rendering
         private int _viewOffsetY = 0;
         private float _zoom = 1.0f;
 
+        // Map background image (24.jpg)
+        private Image _mapImage = null;
+        private int _mapImageOffsetX = 0;
+        private int _mapImageOffsetY = 0;
+
         // Colors
         private Color _gridColor = Color.FromArgb(100, 128, 128, 128);
         private Color _regionBorderColor = Color.FromArgb(200, 0, 0, 255);
-        private Color _obstacleColor = Color.FromArgb(120, 255, 0, 0);
-        private Color _trapColor = Color.FromArgb(120, 255, 255, 0);
+        private Color _obstacleColor = Color.FromArgb(180, 255, 0, 0);      // Red for obstacles
+        private Color _trapColor = Color.FromArgb(180, 255, 255, 0);         // Yellow for traps
+        private Color _walkableCellColor = Color.FromArgb(255, 60, 60, 60);  // Dark gray for walkable cells
         private Color _selectedCellColor = Color.FromArgb(150, 0, 255, 0);
-        private Color _backgroundcolor = Color.FromArgb(255, 32, 32, 32);
+        private Color _backgroundColor = Color.FromArgb(255, 20, 20, 20);     // Very dark background
 
         public int CellSize
         {
@@ -57,12 +64,59 @@ namespace MapTool.Rendering
         }
 
         /// <summary>
+        /// Set map background image from byte array
+        /// </summary>
+        public void SetMapImage(byte[] imageData, int offsetX = 0, int offsetY = 0)
+        {
+            if (_mapImage != null)
+            {
+                _mapImage.Dispose();
+                _mapImage = null;
+            }
+
+            if (imageData != null && imageData.Length > 0)
+            {
+                try
+                {
+                    using (MemoryStream ms = new MemoryStream(imageData))
+                    {
+                        // Load image from stream and CLONE it (MemoryStream will be disposed)
+                        Image tempImage = Image.FromStream(ms);
+                        _mapImage = new Bitmap(tempImage);
+                        tempImage.Dispose();
+
+                        _mapImageOffsetX = offsetX;
+                        _mapImageOffsetY = offsetY;
+
+                        Console.WriteLine($"✓ Map image loaded: {_mapImage.Width}x{_mapImage.Height} pixels");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"⚠ Failed to load map image: {ex.Message}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Clear map background image
+        /// </summary>
+        public void ClearMapImage()
+        {
+            if (_mapImage != null)
+            {
+                _mapImage.Dispose();
+                _mapImage = null;
+            }
+        }
+
+        /// <summary>
         /// Render map to graphics surface
         /// </summary>
         public void Render(Graphics g, int width, int height, MapCoordinate? selectedCoord = null)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.Clear(_backgroundcolor);
+            g.Clear(_backgroundColor);
 
             // Apply zoom transform
             g.ScaleTransform(_zoom, _zoom);
@@ -73,7 +127,15 @@ namespace MapTool.Rendering
             int endWorldX = startWorldX + (int)(width / _zoom);
             int endWorldY = startWorldY + (int)(height / _zoom);
 
-            // Draw loaded regions
+            // Draw map background image if available
+            if (_mapImage != null)
+            {
+                int imgX = _mapImageOffsetX - _viewOffsetX;
+                int imgY = _mapImageOffsetY - _viewOffsetY;
+                g.DrawImage(_mapImage, imgX, imgY, _mapImage.Width, _mapImage.Height);
+            }
+
+            // Draw loaded regions (overlay on top of map image)
             foreach (var region in _loadedRegions.Values)
             {
                 if (!region.IsLoaded)
@@ -117,27 +179,39 @@ namespace MapTool.Rendering
                     int screenX = cellWorldX - _viewOffsetX;
                     int screenY = cellWorldY - _viewOffsetY;
 
-                    Rectangle cellRect = new Rectangle(screenX, screenY, _cellSize, _cellSize);
+                    // Use LOGIC_CELL size for rendering (no gaps!)
+                    Rectangle cellRect = new Rectangle(screenX, screenY,
+                        MapConstants.LOGIC_CELL_WIDTH, MapConstants.LOGIC_CELL_HEIGHT);
 
-                    // Draw obstacle
+                    // Determine cell color and whether to draw
+                    bool shouldDraw = true;
+                    Color cellColor = _walkableCellColor; // Default: walkable (dark gray)
+
                     if (region.Obstacles[cx, cy] != 0)
                     {
-                        using (SolidBrush brush = new SolidBrush(_obstacleColor))
-                        {
-                            g.FillRectangle(brush, cellRect);
-                        }
+                        cellColor = _obstacleColor; // Red for obstacles
                     }
-
-                    // Draw trap
-                    if (region.Traps[cx, cy] != 0)
+                    else if (region.Traps[cx, cy] != 0)
                     {
-                        using (SolidBrush brush = new SolidBrush(_trapColor))
+                        cellColor = _trapColor; // Yellow for traps
+                    }
+                    else if (_mapImage != null)
+                    {
+                        // If we have map image, don't draw empty walkable cells
+                        // (they would cover the image!)
+                        shouldDraw = false;
+                    }
+
+                    // Fill cell with color (only if needed)
+                    if (shouldDraw)
+                    {
+                        using (SolidBrush brush = new SolidBrush(cellColor))
                         {
                             g.FillRectangle(brush, cellRect);
                         }
                     }
 
-                    // Highlight selected cell
+                    // Highlight selected cell (draw on top)
                     if (selectedCoord.HasValue &&
                         selectedCoord.Value.RegionID == region.RegionID &&
                         selectedCoord.Value.CellX == cx &&
@@ -153,7 +227,7 @@ namespace MapTool.Rendering
                         }
                     }
 
-                    // Draw grid
+                    // Draw grid (draw last so it's visible)
                     using (Pen pen = new Pen(_gridColor))
                     {
                         g.DrawRectangle(pen, cellRect);
@@ -165,8 +239,8 @@ namespace MapTool.Rendering
             Rectangle regionRect = new Rectangle(
                 regionWorldX - _viewOffsetX,
                 regionWorldY - _viewOffsetY,
-                MapConstants.REGION_GRID_WIDTH * _cellSize,
-                MapConstants.REGION_GRID_HEIGHT * _cellSize);
+                MapConstants.REGION_PIXEL_WIDTH,
+                MapConstants.REGION_PIXEL_HEIGHT);
 
             using (Pen pen = new Pen(_regionBorderColor, 2))
             {

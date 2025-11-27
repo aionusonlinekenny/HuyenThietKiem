@@ -26,49 +26,64 @@ namespace MapTool.MapData
 
             // Parse INI file
             string[] lines = File.ReadAllLines(worFilePath, Encoding.GetEncoding("GB2312"));
-                        ParseWorContent(config, lines);
+
+            ParseWorContent(config, lines);
             return config;
         }
- 
-        
- 
+
+        /// <summary>
+        /// Load map configuration from byte array (for pak file support)
+        /// </summary>
+        public static MapConfig LoadMapConfigFromBytes(byte[] worBytes, string mapName = "Unknown")
+        {
+            MapConfig config = new MapConfig();
+            config.MapName = mapName;
+
+            // Parse INI file from bytes
+            string content = Encoding.GetEncoding("GB2312").GetString(worBytes);
+            string[] lines = content.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+            ParseWorContent(config, lines);
+            return config;
+        }
+
         /// <summary>
         /// Parse .wor file content (shared logic)
         /// </summary>
         private static void ParseWorContent(MapConfig config, string[] lines)
         {
             string currentSection = "";
- 
+
             foreach (string line in lines)
             {
                 string trimmed = line.Trim();
- 
+
                 // Skip comments and empty lines
                 if (trimmed.StartsWith(";") || trimmed.StartsWith("#") || string.IsNullOrEmpty(trimmed))
                     continue;
- 
+
                 // Section header
                 if (trimmed.StartsWith("[") && trimmed.EndsWith("]"))
                 {
                     currentSection = trimmed.Substring(1, trimmed.Length - 2);
                     continue;
                 }
- 
+
                 // Key=Value pair
                 string[] parts = trimmed.Split(new[] { '=' }, 2);
                 if (parts.Length != 2)
                     continue;
- 
+
                 string key = parts[0].Trim().ToLower();
                 string value = parts[1].Trim();
- 
+
                 // Parse values based on key
                 switch (key)
                 {
                     case "isindoor":
                         config.IsIndoor = value == "1" || value.ToLower() == "true";
                         break;
- 
+
                     case "rect":
                         // Format: rect=left,top,right,bottom
                         string[] coords = value.Split(',');
@@ -83,70 +98,7 @@ namespace MapTool.MapData
                 }
             }
         }
-/// <summary>
-        /// Load map configuration from raw .wor bytes (e.g. when reading from maps.pak)
-        /// </summary>
-        public static MapConfig LoadMapConfigFromBytes(byte[] worBytes, string mapName)
-        {
-            if (worBytes == null || worBytes.Length == 0)
-            {
-                throw new InvalidDataException("Empty .wor data");
-            }
 
-            MapConfig config = new MapConfig();
-            config.MapName = mapName;
-
-            using (MemoryStream stream = new MemoryStream(worBytes))
-            using (StreamReader reader = new StreamReader(stream, Encoding.GetEncoding("GB2312")))
-            {
-                string currentSection = "";
-                string line;
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    string trimmed = line.Trim();
-
-                    // Skip comments and empty lines
-                    if (trimmed.StartsWith(";") || trimmed.StartsWith("#") || string.IsNullOrEmpty(trimmed))
-                        continue;
-
-                    // Section header
-                    if (trimmed.StartsWith("[") && trimmed.EndsWith("]"))
-                    {
-                        currentSection = trimmed.Substring(1, trimmed.Length - 2);
-                        continue;
-                    }
-
-                    // Key=Value pair
-                    string[] parts = trimmed.Split(new[] { '=' }, 2);
-                    if (parts.Length != 2)
-                        continue;
-
-                    string key = parts[0].Trim().ToLower();
-                    string value = parts[1].Trim();
-
-                    switch (key)
-                    {
-                        case "isindoor":
-                            config.IsIndoor = value == "1" || value.ToLower() == "true";
-                            break;
-
-                        case "rect":
-                            string[] coords = value.Split(',');
-                            if (coords.Length == 4)
-                            {
-                                config.RegionLeft = int.Parse(coords[0].Trim());
-                                config.RegionTop = int.Parse(coords[1].Trim());
-                                config.RegionRight = int.Parse(coords[2].Trim());
-                                config.RegionBottom = int.Parse(coords[3].Trim());
-                            }
-                            break;
-                    }
-                }
-            }
-
-            return config;
-        }
         /// <summary>
         /// Load region data from Region_C.dat or Region_S.dat file
         /// </summary>

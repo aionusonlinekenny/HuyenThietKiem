@@ -221,7 +221,7 @@ namespace MapTool
                 UpdateEntryList();
                 UpdateStatistics();
 
-                lblStatus.Text = "Entry added!";
+                lblStatus.Text = "Entry added";
             }
         }
 
