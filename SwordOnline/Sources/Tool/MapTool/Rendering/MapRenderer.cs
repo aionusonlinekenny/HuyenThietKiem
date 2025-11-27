@@ -183,10 +183,10 @@ namespace MapTool.Rendering
                     Rectangle cellRect = new Rectangle(screenX, screenY,
                         MapConstants.LOGIC_CELL_WIDTH, MapConstants.LOGIC_CELL_HEIGHT);
 
-                    // Draw base cell (always draw so we can see the map!)
+                    // Determine cell color and whether to draw
+                    bool shouldDraw = true;
                     Color cellColor = _walkableCellColor; // Default: walkable (dark gray)
 
-                    // Override color based on cell content
                     if (region.Obstacles[cx, cy] != 0)
                     {
                         cellColor = _obstacleColor; // Red for obstacles
@@ -195,11 +195,20 @@ namespace MapTool.Rendering
                     {
                         cellColor = _trapColor; // Yellow for traps
                     }
-
-                    // Fill cell with color
-                    using (SolidBrush brush = new SolidBrush(cellColor))
+                    else if (_mapImage != null)
                     {
-                        g.FillRectangle(brush, cellRect);
+                        // If we have map image, don't draw empty walkable cells
+                        // (they would cover the image!)
+                        shouldDraw = false;
+                    }
+
+                    // Fill cell with color (only if needed)
+                    if (shouldDraw)
+                    {
+                        using (SolidBrush brush = new SolidBrush(cellColor))
+                        {
+                            g.FillRectangle(brush, cellRect);
+                        }
                     }
 
                     // Highlight selected cell (draw on top)
