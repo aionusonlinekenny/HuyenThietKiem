@@ -136,9 +136,10 @@ namespace MapTool
                     _renderer.AddRegion(region);
                 }
 
-                // Reset view
-                _renderer.ViewOffsetX = 0;
-                _renderer.ViewOffsetY = 0;
+                // Set initial view to map image position (so image is visible)
+                // If we don't do this, image will be at offset (40000, 50000) while view is at (0, 0)
+                _renderer.ViewOffsetX = _currentMap.MapImageOffsetX;
+                _renderer.ViewOffsetY = _currentMap.MapImageOffsetY;
                 _renderer.Zoom = 1.0f;
 
                 mapPanel.Invalidate();
