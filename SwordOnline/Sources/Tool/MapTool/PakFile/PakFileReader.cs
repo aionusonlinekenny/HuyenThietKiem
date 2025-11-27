@@ -256,27 +256,51 @@ namespace MapTool.PakFile
                 return 0;
             }
 
-            // Normalize path
-            fileName = fileName.Replace('/', '\\');
+            // Normalize path (backslashes, like game engine)
+            fileName = FileNameHasher.NormalizePath(fileName);
 
-            // Try direct lookup
+            // Method 1: Try direct lookup from .pak.txt index
             if (_nameToId.ContainsKey(fileName))
             {
                 return _nameToId[fileName];
             }
 
-            // Try without leading slash
+            // Try variations with/without leading slash
             string withoutSlash = fileName.TrimStart('\\');
             if (_nameToId.ContainsKey(withoutSlash))
             {
                 return _nameToId[withoutSlash];
             }
 
-            // Try with leading slash
             string withSlash = "\\" + withoutSlash;
             if (_nameToId.ContainsKey(withSlash))
             {
                 return _nameToId[withSlash];
+            }
+
+            // Method 2: Calculate hash using game's algorithm (fallback)
+            // This ensures we can find files even if .pak.txt is missing or incomplete
+            uint calculatedId = FileNameHasher.CalculateFileId(fileName);
+            if (_fileIndex.ContainsKey(calculatedId))
+            {
+                // Found by calculated hash! Cache it for future lookups
+                _nameToId[fileName] = calculatedId;
+                return calculatedId;
+            }
+
+            // Try variations with calculated hash
+            uint withoutSlashId = FileNameHasher.CalculateFileId(withoutSlash);
+            if (_fileIndex.ContainsKey(withoutSlashId))
+            {
+                _nameToId[withoutSlash] = withoutSlashId;
+                return withoutSlashId;
+            }
+
+            uint withSlashId = FileNameHasher.CalculateFileId(withSlash);
+            if (_fileIndex.ContainsKey(withSlashId))
+            {
+                _nameToId[withSlash] = withSlashId;
+                return withSlashId;
             }
 
             return 0;
