@@ -24,14 +24,14 @@ namespace MapTool.Rendering
         private int _mapImageOffsetX = 0;
         private int _mapImageOffsetY = 0;
 
-        // Colors
-        private Color _gridColor = Color.FromArgb(100, 128, 128, 128);
-        private Color _regionBorderColor = Color.FromArgb(200, 0, 0, 255);
-        private Color _obstacleColor = Color.FromArgb(180, 255, 0, 0);      // Red for obstacles
-        private Color _trapColor = Color.FromArgb(180, 255, 255, 0);         // Yellow for traps
-        private Color _walkableCellColor = Color.FromArgb(255, 60, 60, 60);  // Dark gray for walkable cells
-        private Color _selectedCellColor = Color.FromArgb(150, 0, 255, 0);
-        private Color _backgroundColor = Color.FromArgb(255, 20, 20, 20);     // Very dark background
+        // Colors - Enhanced visualization
+        private Color _gridColor = Color.FromArgb(80, 100, 100, 120);  // Subtle grid
+        private Color _regionBorderColor = Color.FromArgb(200, 80, 120, 255);  // Bright border
+        private Color _obstacleColor = Color.FromArgb(200, 60, 60, 60);      // Dark gray obstacles
+        private Color _trapColor = Color.FromArgb(200, 255, 200, 100);         // Light yellow traps
+        private Color _walkableCellColor = Color.FromArgb(255, 180, 220, 180);  // Light green walkable
+        private Color _selectedCellColor = Color.FromArgb(150, 255, 255, 0);
+        private Color _backgroundColor = Color.FromArgb(255, 140, 180, 140);     // Green background like terrain
 
         public int CellSize
         {
@@ -189,32 +189,27 @@ namespace MapTool.Rendering
                     Rectangle cellRect = new Rectangle(screenX, screenY,
                         cellMapWidth, cellMapHeight);
 
-                    // Determine cell color and whether to draw
-                    bool shouldDraw = true;
-                    Color cellColor = _walkableCellColor; // Default: walkable (dark gray)
+                    // Determine cell color - ALWAYS draw for visualization
+                    Color cellColor = _walkableCellColor; // Default: walkable (light green)
 
                     if (region.Obstacles[cx, cy] != 0)
                     {
-                        cellColor = _obstacleColor; // Red for obstacles
+                        cellColor = _obstacleColor; // Dark gray for obstacles
                     }
                     else if (region.Traps[cx, cy] != 0)
                     {
-                        cellColor = _trapColor; // Yellow for traps
+                        cellColor = _trapColor; // Light yellow for traps
                     }
                     else if (_mapImage != null)
                     {
-                        // If we have map image, don't draw empty walkable cells
-                        // (they would cover the image!)
-                        shouldDraw = false;
+                        // If we have map image, use semi-transparent walkable color
+                        cellColor = Color.FromArgb(100, 180, 220, 180);
                     }
 
-                    // Fill cell with color (only if needed)
-                    if (shouldDraw)
+                    // Always draw cells for better visualization
+                    using (SolidBrush brush = new SolidBrush(cellColor))
                     {
-                        using (SolidBrush brush = new SolidBrush(cellColor))
-                        {
-                            g.FillRectangle(brush, cellRect);
-                        }
+                        g.FillRectangle(brush, cellRect);
                     }
 
                     // Highlight selected cell (draw on top)
