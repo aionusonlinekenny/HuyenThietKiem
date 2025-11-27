@@ -279,7 +279,30 @@ namespace MapTool.PakFile
                 return _nameToId[withSlash];
             }
 
-            return 0;
+            // Fallback: compute ID like g_FileName2Id when .pak.txt mapping is missing
+            return ComputeFileId(withSlash);
+        }
+
+        /// <summary>
+        /// Compute file ID using the same algorithm as g_FileName2Id
+        /// </summary>
+        private uint ComputeFileId(string normalizedPath)
+        {
+            uint id = 0;
+
+            for (int i = 0; i < normalizedPath.Length; i++)
+            {
+                char c = normalizedPath[i];
+                if (c == '/')
+                {
+                    c = '\\';
+                }
+
+                id = (id + (uint)((i + 1) * c)) % 0x8000000b;
+                id *= 0xffffffef;
+            }
+
+            return id ^ 0x12345678;
         }
 
         /// <summary>
