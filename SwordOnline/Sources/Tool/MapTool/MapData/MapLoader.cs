@@ -32,9 +32,10 @@ namespace MapTool.MapData
             // Try multiple possible pak file locations
             string[] possiblePaths = new[]
             {
-                Path.Combine(_gameFolder, "pak", "maps.pak"),      // Server: Bin/Server/pak/maps.pak
-                Path.Combine(_gameFolder, "..", "pak", "maps.pak"), // Client: Bin/Client/../pak/maps.pak
-                Path.Combine(_gameFolder, "maps.pak"),             // Direct: Bin/maps.pak
+                Path.Combine(_gameFolder, "pak", "maps.pak"),              // Server: Bin/Server/pak/maps.pak
+                Path.Combine(_gameFolder, "..", "pak", "maps.pak"),         // Bin/Client/../pak/maps.pak (if exists)
+                Path.Combine(_gameFolder, "..", "Server", "pak", "maps.pak"), // Client: Bin/Client/../Server/pak/maps.pak
+                Path.Combine(_gameFolder, "maps.pak"),                     // Direct: Bin/maps.pak
             };
 
             foreach (string pakPath in possiblePaths)
@@ -239,7 +240,24 @@ namespace MapTool.MapData
             mapData.LoadedRegionCount = loadedCount;
 
             // Step 5: Try to load map image (24.jpg)
-            string mapImageRelativePath = $"\\maps\\{mapEntry.FolderPath}24.jpg";
+            // File naming convention: {LastFolderName}24.jpg (NO separator!)
+            // Examples from actual files:
+            //   FolderPath = "特殊用地\剑门关"    → Image: "\maps\特殊用地\剑门关24.jpg"
+            //   FolderPath = "西北南区\华山派2013\华山派2013" → Image: "\maps\西北南区\华山派2013\华山派201324.jpg"
+            //
+            // Extract last folder name from FolderPath
+            string[] pathParts = mapEntry.FolderPath.Split(new[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
+            string lastFolderName = pathParts[pathParts.Length - 1];
+
+            // Build parent path (everything except last folder)
+            string parentPath = "";
+            if (pathParts.Length > 1)
+            {
+                parentPath = string.Join("\\", pathParts, 0, pathParts.Length - 1) + "\\";
+            }
+
+            // Construct image path: \maps\{parentPath}{lastFolderName}24.jpg
+            string mapImageRelativePath = $"\\maps\\{parentPath}{lastFolderName}24.jpg";
             Console.WriteLine($"🔍 Looking for map image: {mapImageRelativePath}");
             try
             {
