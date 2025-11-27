@@ -29,6 +29,15 @@ namespace MapTool
         public MainFormSimple()
         {
             InitializeComponent();
+
+            // Initialize debug logger FIRST
+            DebugLogger.Initialize();
+            DebugLogger.Log("=== MapTool Started ===");
+            DebugLogger.Log($"Executable: {System.Reflection.Assembly.GetExecutingAssembly().Location}");
+            DebugLogger.Log($"Working Directory: {Environment.CurrentDirectory}");
+            DebugLogger.Log($"Log file: {DebugLogger.GetLogFilePath()}");
+            DebugLogger.LogSeparator();
+
             _renderer = new MapRenderer();
             _exporter = new TrapExporter();
 
@@ -37,7 +46,11 @@ namespace MapTool
             if (Directory.Exists(defaultFolder))
             {
                 txtGameFolder.Text = defaultFolder;
+                DebugLogger.Log($"Default folder set: {defaultFolder}");
             }
+
+            // Show log file path in status
+            lblStatus.Text = $"Ready. Log: {Path.GetFileName(DebugLogger.GetLogFilePath())}";
         }
 
         // Browse game folder
@@ -101,10 +114,33 @@ namespace MapTool
                 Application.DoEvents();
 
                 _gameFolder = txtGameFolder.Text;
+
+                // Log load attempt
+                DebugLogger.LogSeparator();
+                DebugLogger.Log($"📂 LOADING MAP");
+                DebugLogger.Log($"   Map ID: {mapId}");
+                DebugLogger.Log($"   Game Folder: {_gameFolder}");
+                DebugLogger.Log($"   Mode: {(_isServerMode ? "Server" : "Client")}");
+                DebugLogger.LogSeparator();
+
                 _mapLoader = new MapLoader(_gameFolder, _isServerMode);
 
                 // Auto-load complete map
                 _currentMap = _mapLoader.LoadMap(mapId);
+
+                // Log loaded map info
+                DebugLogger.Log($"✓ Map loaded successfully!");
+                DebugLogger.Log($"   Name: {_currentMap.MapName}");
+                DebugLogger.Log($"   Folder: {_currentMap.MapFolder}");
+                DebugLogger.Log($"   Regions loaded: {_currentMap.LoadedRegionCount}");
+                if (_currentMap.Regions.Count > 0)
+                {
+                    var firstRegion = _currentMap.Regions.Values.GetEnumerator();
+                    firstRegion.MoveNext();
+                    var region = firstRegion.Current;
+                    DebugLogger.Log($"   First region: ({region.RegionX}, {region.RegionY}) RegionID={region.RegionID}");
+                }
+                DebugLogger.LogSeparator();
 
                 // Update UI
                 lblMapInfo.Text = $"Map: {_currentMap.MapName} (ID: {_currentMap.MapId})\n" +
@@ -341,9 +377,16 @@ namespace MapTool
                 try
                 {
                     Cursor = Cursors.WaitCursor;
-                    Console.WriteLine($"📝 Exporting all cells to: {dialog.FileName}");
+
+                    // Log export start
+                    DebugLogger.LogSeparator();
+                    DebugLogger.Log($"📝 EXPORTING TO TXT");
+                    DebugLogger.Log($"   Output file: {dialog.FileName}");
+                    DebugLogger.Log($"   Map ID: {_currentMap.MapId}");
+                    DebugLogger.Log($"   Regions to export: {_currentMap.Regions.Count}");
 
                     int totalCells = 0;
+                    int regionCount = 0;
 
                     using (StreamWriter writer = new StreamWriter(dialog.FileName, false, System.Text.Encoding.UTF8))
                     {
@@ -356,8 +399,15 @@ namespace MapTool
                             if (!region.IsLoaded)
                                 continue;
 
-                            // Use RegionID from region data (x | (y << 16))
+                            // Use RegionID from region data (calculated by Y*256+X formula)
                             int regionId = region.RegionID;
+
+                            // Log first few regions to debug
+                            if (regionCount < 5)
+                            {
+                                DebugLogger.Log($"   Region #{regionCount + 1}: ({region.RegionX}, {region.RegionY}) → RegionID = {regionId}");
+                                DebugLogger.Log($"      Formula check: {region.RegionY} * 256 + {region.RegionX} = {region.RegionY * 256 + region.RegionX}");
+                            }
 
                             // Loop through all cells in region (16x32)
                             for (int cellY = 0; cellY < MapConstants.REGION_GRID_HEIGHT; cellY++)
@@ -369,11 +419,17 @@ namespace MapTool
                                     totalCells++;
                                 }
                             }
+
+                            regionCount++;
                         }
                     }
 
-                    Console.WriteLine($"✓ Exported {totalCells} cells to {dialog.FileName}");
-                    MessageBox.Show($"Exported {totalCells} cells to:\n{dialog.FileName}",
+                    DebugLogger.Log($"✓ Export completed!");
+                    DebugLogger.Log($"   Total cells: {totalCells}");
+                    DebugLogger.Log($"   Total regions: {regionCount}");
+                    DebugLogger.LogSeparator();
+
+                    MessageBox.Show($"Exported {totalCells} cells from {regionCount} regions to:\n{dialog.FileName}\n\nCheck log file for details!",
                         "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
