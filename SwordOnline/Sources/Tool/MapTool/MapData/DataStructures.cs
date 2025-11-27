@@ -85,13 +85,17 @@ namespace MapTool.MapData
 
         public static int MakeRegionID(int x, int y)
         {
-            return x | (y << 16);
+            // CORRECT formula: Y * 256 + X
+            // This matches the game's trap file format and in-memory representation
+            // NOT the Windows MAKELONG formula (which would be x | (y << 16))
+            return y * 256 + x;
         }
 
         public static void ParseRegionID(int regionID, out int x, out int y)
         {
-            x = regionID & 0xFFFF;
-            y = (regionID >> 16) & 0xFFFF;
+            // Parse using Y * 256 + X formula
+            x = regionID % 256;
+            y = regionID / 256;
         }
     }
 
