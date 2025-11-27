@@ -132,7 +132,7 @@ namespace MapTool.MapData
         }
 
         /// <summary>
-        /// Get full path to map .wor file
+                /// Get full path to map .wor file (for disk access)
         /// </summary>
         public string GetMapWorPath(int mapId)
         {
@@ -141,15 +141,36 @@ namespace MapTool.MapData
             {
                 return null;
             }
-
+ 
             // Extract map name from folder path
             // Example: "场景地图\城市\成都" → "成都"
             string[] parts = entry.FolderPath.Split('\\', '/');
             string mapName = parts[parts.Length - 1];
-
+ 
             // Build full path: <gameFolder>\maps\<folderPath>\<mapName>.wor
             string worPath = Path.Combine(_gameFolder, "maps", entry.FolderPath, mapName + ".wor");
             return worPath;
+        }
+ 
+        /// <summary>
+        /// Get relative path to map .wor file (for pak access)
+        /// </summary>
+        public string GetMapWorRelativePath(int mapId)
+        {
+            var entry = GetMapEntry(mapId);
+            if (entry == null || string.IsNullOrEmpty(entry.FolderPath))
+            {
+                return null;
+            }
+ 
+            // Extract map name from folder path
+            // Example: "场景地图\城市\成都" → "成都"
+            string[] parts = entry.FolderPath.Split('\\', '/');
+            string mapName = parts[parts.Length - 1];
+ 
+            // Build relative path: \maps\<folderPath>\<mapName>.wor
+            return $"\\maps\\{entry.FolderPath}\\{mapName}.wor";
+        
         }
 
         /// <summary>

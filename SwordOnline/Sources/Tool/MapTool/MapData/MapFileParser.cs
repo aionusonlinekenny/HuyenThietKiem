@@ -140,13 +140,61 @@ namespace MapTool.MapData
             region.IsLoaded = true;
             return region;
         }
+
         /// <summary>
-        /// Compatibility wrapper for older callers
+        /// Load region data from BinaryReader stream (for pak file support)
         /// </summary>
-        public static RegionData LoadRegionData(string filePath, int regionX, int regionY)
+        public static RegionData LoadRegionDataFromStream(BinaryReader reader, int regionX, int regionY)
         {
-            return LoadRegion(filePath, regionX, regionY);
+            RegionData region = new RegionData(regionX, regionY);
+
+            // Read header: DWORD dwMaxElemFile
+            uint elemCount = reader.ReadUInt32();
+
+            if (elemCount != MapConstants.ELEM_FILE_COUNT)
+            {
+                throw new InvalidDataException($"Invalid element count: {elemCount}, expected {MapConstants.ELEM_FILE_COUNT}");
+            }
+
+            // Read file sections
+            for (int i = 0; i < elemCount; i++)
+            {
+                region.FileSections[i].Offset = reader.ReadUInt32();
+                region.FileSections[i].Length = reader.ReadUInt32();
+            }
+
+            // Load obstacle data (Element 0)
+            if (region.FileSections[MapConstants.ELEM_OBSTACLE].Length > 0)
+            {
+                reader.BaseStream.Seek(region.FileSections[MapConstants.ELEM_OBSTACLE].Offset, SeekOrigin.Begin);
+
+                for (int y = 0; y < MapConstants.REGION_GRID_HEIGHT; y++)
+                {
+                    for (int x = 0; x < MapConstants.REGION_GRID_WIDTH; x++)
+                    {
+                        region.Obstacles[x, y] = reader.ReadInt32(); // long = 4 bytes
+                    }
+                }
+            }
+
+            // Load trap data (Element 1)
+            if (region.FileSections[MapConstants.ELEM_TRAP].Length > 0)
+            {
+                reader.BaseStream.Seek(region.FileSections[MapConstants.ELEM_TRAP].Offset, SeekOrigin.Begin);
+
+                for (int y = 0; y < MapConstants.REGION_GRID_HEIGHT; y++)
+                {
+                    for (int x = 0; x < MapConstants.REGION_GRID_WIDTH; x++)
+                    {
+                        region.Traps[x, y] = reader.ReadUInt32(); // DWORD = 4 bytes
+                    }
+                }
+            }
+
+            region.IsLoaded = true;
+            return region;
         }
+
         /// <summary>
         /// Quick check if region file exists
         /// </summary>

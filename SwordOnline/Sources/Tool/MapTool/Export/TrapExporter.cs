@@ -74,6 +74,14 @@ namespace MapTool.Export
         }
 
         /// <summary>
+        /// Export to file (defaults to Trap format)
+        /// </summary>
+        public void ExportToFile(string filePath)
+        {
+            ExportToTrapFile(filePath);
+        }
+
+        /// <summary>
         /// Export to Trap format file (tab-separated)
         /// </summary>
         public void ExportToTrapFile(string filePath)
@@ -90,13 +98,7 @@ namespace MapTool.Export
                 }
             }
         }
-        /// <summary>
-        /// Default export helper for UI callers (exports Trap format)
-        /// </summary>
-        public void ExportToFile(string filePath)
-        {
-            ExportToTrapFile(filePath);
-        }
+
         /// <summary>
         /// Export to Object format file
         /// </summary>
