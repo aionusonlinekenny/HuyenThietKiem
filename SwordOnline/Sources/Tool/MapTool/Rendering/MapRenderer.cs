@@ -127,20 +127,15 @@ namespace MapTool.Rendering
             int endWorldX = startWorldX + (int)(width / _zoom);
             int endWorldY = startWorldY + (int)(height / _zoom);
 
-            // DEBUG: Check what we're rendering
-            Console.WriteLine($"🎨 Render called: {_loadedRegions.Count} regions loaded, Image: {(_mapImage != null ? $"{_mapImage.Width}x{_mapImage.Height}" : "None")}");
-
             // Draw map background image if available
             if (_mapImage != null)
             {
                 int imgX = _mapImageOffsetX - _viewOffsetX;
                 int imgY = _mapImageOffsetY - _viewOffsetY;
-                Console.WriteLine($"  Drawing image at ({imgX}, {imgY})");
                 g.DrawImage(_mapImage, imgX, imgY, _mapImage.Width, _mapImage.Height);
             }
 
             // Draw loaded regions (overlay on top of map image)
-            Console.WriteLine($"  Rendering {_loadedRegions.Count} regions...");
             foreach (var region in _loadedRegions.Values)
             {
                 if (!region.IsLoaded)

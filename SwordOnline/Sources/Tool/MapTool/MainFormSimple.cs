@@ -142,8 +142,7 @@ namespace MapTool
 
                 mapPanel.Invalidate();
 
-                // Auto-export all cells to txt file
-                AutoExportAllCellsToTxt();
+                // Don't auto-export - user will use Export button
             }
             catch (Exception ex)
             {
@@ -281,32 +280,8 @@ namespace MapTool
         // Export buttons
         private void btnExport_Click(object sender, EventArgs e)
         {
-            if (_exporter.GetEntries().Count == 0)
-            {
-                MessageBox.Show("No trap entries to export!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            using (SaveFileDialog dialog = new SaveFileDialog())
-            {
-                dialog.Filter = "Trap Files (*.txt)|*.txt|All Files (*.*)|*.*";
-                dialog.FileName = $"{_currentMap?.MapId ?? 0}.txt";
-                dialog.DefaultExt = "txt";
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        _exporter.ExportToFile(dialog.FileName);
-                        MessageBox.Show($"Exported {_exporter.GetEntries().Count} entries to:\n{dialog.FileName}",
-                            "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Export failed:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
+            // Export ALL cells from ALL loaded regions
+            ExportAllCellsToTxt();
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -321,59 +296,77 @@ namespace MapTool
             UpdateTrapList();
         }
 
-        // Auto-export all cells from all loaded regions
-        private void AutoExportAllCellsToTxt()
+        // Export all cells from all loaded regions
+        private void ExportAllCellsToTxt()
         {
             if (_currentMap == null || _currentMap.Regions == null || _currentMap.Regions.Count == 0)
             {
-                Console.WriteLine("⚠ No regions to export");
+                MessageBox.Show("No map loaded! Please load a map first.", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            try
+            // Ask user for save location
+            using (SaveFileDialog dialog = new SaveFileDialog())
             {
-                // Create file name from map ID
-                string fileName = $"{_currentMap.MapId}.txt";
-                string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+                dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                dialog.FileName = $"{_currentMap.MapId}.txt";
+                dialog.DefaultExt = "txt";
+                dialog.Title = "Export All Cells to Txt";
 
-                Console.WriteLine($"📝 Auto-exporting all cells to: {filePath}");
+                if (dialog.ShowDialog() != DialogResult.OK)
+                    return;
 
-                int totalCells = 0;  // Declare outside using block!
-
-                using (StreamWriter writer = new StreamWriter(filePath, false, System.Text.Encoding.UTF8))
+                try
                 {
-                    // Write header
-                    writer.WriteLine("MapId\tRegionId\tCellX\tCellY\tScriptFile\tIsLoad");
+                    Cursor = Cursors.WaitCursor;
+                    Console.WriteLine($"📝 Exporting all cells to: {dialog.FileName}");
 
-                    // Loop through all loaded regions
-                    foreach (var region in _currentMap.Regions.Values)
+                    int totalCells = 0;
+
+                    using (StreamWriter writer = new StreamWriter(dialog.FileName, false, System.Text.Encoding.UTF8))
                     {
-                        if (!region.IsLoaded)
-                            continue;
+                        // Write header
+                        writer.WriteLine("MapId\tRegionId\tCellX\tCellY\tScriptFile\tIsLoad");
 
-                        // Loop through all cells in region (16x32)
-                        for (int cellY = 0; cellY < MapConstants.REGION_GRID_HEIGHT; cellY++)
+                        // Loop through all loaded regions
+                        foreach (var region in _currentMap.Regions.Values)
                         {
-                            for (int cellX = 0; cellX < MapConstants.REGION_GRID_WIDTH; cellX++)
+                            if (!region.IsLoaded)
+                                continue;
+
+                            // Calculate simple RegionId from coordinates
+                            // Format: RegionY * 256 + RegionX (assuming max 256 regions width)
+                            int simpleRegionId = region.RegionY * 256 + region.RegionX;
+
+                            // Loop through all cells in region (16x32)
+                            for (int cellY = 0; cellY < MapConstants.REGION_GRID_HEIGHT; cellY++)
                             {
-                                // Write cell data
-                                // Format: MapId	RegionId	CellX	CellY	ScriptFile	IsLoad
-                                writer.WriteLine($"{_currentMap.MapId}\t{region.RegionID}\t{cellX}\t{cellY}\t\t1");
-                                totalCells++;
+                                for (int cellX = 0; cellX < MapConstants.REGION_GRID_WIDTH; cellX++)
+                                {
+                                    // Write cell data
+                                    // Format: MapId	RegionId	CellX	CellY	ScriptFile	IsLoad
+                                    writer.WriteLine($"{_currentMap.MapId}\t{simpleRegionId}\t{cellX}\t{cellY}\t\t1");
+                                    totalCells++;
+                                }
                             }
                         }
                     }
-                }
 
-                Console.WriteLine($"✓ Exported {totalCells} cells to {fileName}");
-                MessageBox.Show($"Auto-exported {totalCells} cells to:\n{fileName}",
-                    "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"❌ Failed to auto-export: {ex.Message}");
-                MessageBox.Show($"Failed to auto-export:\n{ex.Message}",
-                    "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Console.WriteLine($"✓ Exported {totalCells} cells to {dialog.FileName}");
+                    MessageBox.Show($"Exported {totalCells} cells to:\n{dialog.FileName}",
+                        "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"❌ Failed to export: {ex.Message}");
+                    MessageBox.Show($"Failed to export:\n{ex.Message}",
+                        "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    Cursor = Cursors.Default;
+                }
             }
         }
     }
