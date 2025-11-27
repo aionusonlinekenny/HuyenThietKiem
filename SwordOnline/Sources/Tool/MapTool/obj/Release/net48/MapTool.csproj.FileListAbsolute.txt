@@ -1,0 +1,11 @@
+D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\obj\Release\net48\MapTool.csproj.AssemblyReference.cache
+D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\obj\Release\net48\MapTool.GeneratedMSBuildEditorConfig.editorconfig
+D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\obj\Release\net48\MapTool.AssemblyInfoInputs.cache
+D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\obj\Release\net48\MapTool.AssemblyInfo.cs
+D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\obj\Release\net48\MapTool.csproj.CoreCompileInputs.cache
+D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\obj\Release\net48\MapTool.sourcelink.json
+D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48\MapTool.exe.config
+D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48\MapTool.exe
+D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48\MapTool.pdb
+D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\obj\Release\net48\MapTool.exe
+D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\obj\Release\net48\MapTool.pdb
