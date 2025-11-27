@@ -25,8 +25,14 @@ Tool này giải nén tất cả files từ `maps.pak` ra thư mục `Bin/Server
    - Double-click vào: Bin/Server/PakExtractTool.exe
    - Nhấn Enter 2 lần (dùng path mặc định)
    - Chờ tool extract (có thể mất vài phút)
-   - Xong!
+   - Nhấn phím bất kỳ để đóng khi xong
+   - Kiểm tra log file: PakExtract_Log_YYYYMMDD_HHMMSS.log
    ```
+
+**⚠️ QUAN TRỌNG:**
+- Console window sẽ **KHÔNG tự động đóng** - bạn cần nhấn phím để thoát
+- Mọi thông tin đều được ghi vào **log file** cùng thư mục với tool
+- Nếu tool bị lỗi, xem log file để biết chi tiết!
 
 ### Option 2: Chạy với tham số
 
