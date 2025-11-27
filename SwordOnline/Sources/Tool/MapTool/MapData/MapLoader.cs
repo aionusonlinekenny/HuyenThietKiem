@@ -223,6 +223,27 @@ namespace MapTool.MapData
             }
 
             mapData.LoadedRegionCount = loadedCount;
+
+            // Step 5: Try to load map image (24.jpg)
+            string mapImageRelativePath = $"\\maps\\{mapEntry.FolderPath}24.jpg";
+            try
+            {
+                if (FileExists(mapImageRelativePath))
+                {
+                    mapData.MapImageData = ReadFileBytes(mapImageRelativePath);
+                    mapData.MapImagePath = mapImageRelativePath;
+                    Console.WriteLine($"✓ Loaded map image: {mapImageRelativePath}");
+                }
+                else
+                {
+                    Console.WriteLine($"ℹ No map image found: {mapImageRelativePath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"⚠ Failed to load map image: {ex.Message}");
+            }
+
             return mapData;
         }
 
@@ -280,6 +301,10 @@ namespace MapTool.MapData
         public int RegionHeight { get; set; }
         public int LoadedRegionCount { get; set; }
         public Dictionary<int, RegionData> Regions { get; set; }
+
+        // Map image (24.jpg file)
+        public byte[] MapImageData { get; set; }
+        public string MapImagePath { get; set; }
 
         /// <summary>
         /// Get total map size in pixels

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using MapTool.MapData;
 using MapRegionData = MapTool.MapData.RegionData;
 
@@ -17,6 +18,11 @@ namespace MapTool.Rendering
         private int _viewOffsetX = 0;
         private int _viewOffsetY = 0;
         private float _zoom = 1.0f;
+
+        // Map background image (24.jpg)
+        private Image _mapImage = null;
+        private int _mapImageOffsetX = 0;
+        private int _mapImageOffsetY = 0;
 
         // Colors
         private Color _gridColor = Color.FromArgb(100, 128, 128, 128);
@@ -58,6 +64,47 @@ namespace MapTool.Rendering
         }
 
         /// <summary>
+        /// Set map background image from byte array
+        /// </summary>
+        public void SetMapImage(byte[] imageData, int offsetX = 0, int offsetY = 0)
+        {
+            if (_mapImage != null)
+            {
+                _mapImage.Dispose();
+                _mapImage = null;
+            }
+
+            if (imageData != null && imageData.Length > 0)
+            {
+                try
+                {
+                    using (MemoryStream ms = new MemoryStream(imageData))
+                    {
+                        _mapImage = Image.FromStream(ms);
+                        _mapImageOffsetX = offsetX;
+                        _mapImageOffsetY = offsetY;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"⚠ Failed to load map image: {ex.Message}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Clear map background image
+        /// </summary>
+        public void ClearMapImage()
+        {
+            if (_mapImage != null)
+            {
+                _mapImage.Dispose();
+                _mapImage = null;
+            }
+        }
+
+        /// <summary>
         /// Render map to graphics surface
         /// </summary>
         public void Render(Graphics g, int width, int height, MapCoordinate? selectedCoord = null)
@@ -74,7 +121,15 @@ namespace MapTool.Rendering
             int endWorldX = startWorldX + (int)(width / _zoom);
             int endWorldY = startWorldY + (int)(height / _zoom);
 
-            // Draw loaded regions
+            // Draw map background image if available
+            if (_mapImage != null)
+            {
+                int imgX = _mapImageOffsetX - _viewOffsetX;
+                int imgY = _mapImageOffsetY - _viewOffsetY;
+                g.DrawImage(_mapImage, imgX, imgY, _mapImage.Width, _mapImage.Height);
+            }
+
+            // Draw loaded regions (overlay on top of map image)
             foreach (var region in _loadedRegions.Values)
             {
                 if (!region.IsLoaded)

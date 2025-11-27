@@ -114,6 +114,18 @@ namespace MapTool
                                   $"Map Size: {_currentMap.GetMapPixelWidth()}x{_currentMap.GetMapPixelHeight()} pixels\n" +
                                   $"Loaded: {_currentMap.LoadedRegionCount}/{_currentMap.RegionWidth * _currentMap.RegionHeight} regions";
 
+                // Load map image if available
+                if (_currentMap.MapImageData != null)
+                {
+                    _renderer.SetMapImage(_currentMap.MapImageData);
+                    lblStatus.Text = $"Map loaded with image! {_currentMap.LoadedRegionCount} regions.";
+                }
+                else
+                {
+                    _renderer.ClearMapImage();
+                    lblStatus.Text = $"Map loaded (no image). {_currentMap.LoadedRegionCount} regions.";
+                }
+
                 // Load regions into renderer
                 _renderer.ClearRegions();
                 foreach (var region in _currentMap.Regions.Values)
@@ -127,7 +139,6 @@ namespace MapTool
                 _renderer.Zoom = 1.0f;
 
                 mapPanel.Invalidate();
-                lblStatus.Text = $"Map loaded successfully! {_currentMap.LoadedRegionCount} regions.";
             }
             catch (Exception ex)
             {
