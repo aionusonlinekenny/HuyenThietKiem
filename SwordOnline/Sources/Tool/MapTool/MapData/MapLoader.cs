@@ -249,6 +249,10 @@ namespace MapTool.MapData
             string[] pathParts = mapEntry.FolderPath.Split(new[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
             string lastFolderName = pathParts[pathParts.Length - 1];
 
+            Console.WriteLine($"DEBUG: FolderPath = '{mapEntry.FolderPath}'");
+            Console.WriteLine($"DEBUG: PathParts = {string.Join(", ", pathParts)}");
+            Console.WriteLine($"DEBUG: LastFolderName = '{lastFolderName}'");
+
             // Build parent path (everything except last folder)
             string parentPath = "";
             if (pathParts.Length > 1)
@@ -259,6 +263,13 @@ namespace MapTool.MapData
             // Construct image path: \maps\{parentPath}{lastFolderName}24.jpg
             string mapImageRelativePath = $"\\maps\\{parentPath}{lastFolderName}24.jpg";
             Console.WriteLine($"🔍 Looking for map image: {mapImageRelativePath}");
+
+            // Also try disk path
+            string diskPath = Path.Combine(_gameFolder, mapImageRelativePath.TrimStart('\\', '/'));
+            Console.WriteLine($"DEBUG: Disk path = {diskPath}");
+            Console.WriteLine($"DEBUG: Disk exists = {File.Exists(diskPath)}");
+            Console.WriteLine($"DEBUG: Pak reader = {(_pakReader != null ? "Available" : "Not available")}");
+
             try
             {
                 if (FileExists(mapImageRelativePath))

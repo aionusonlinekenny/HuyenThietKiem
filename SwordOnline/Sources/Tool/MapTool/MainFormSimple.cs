@@ -328,8 +328,8 @@ namespace MapTool
 
                     using (StreamWriter writer = new StreamWriter(dialog.FileName, false, System.Text.Encoding.UTF8))
                     {
-                        // Write header - matching existing trap file format
-                        writer.WriteLine("XPOS\tYPOS");
+                        // Write header - MapId RegionId CellX CellY ScriptFile IsLoad format
+                        writer.WriteLine("MapId\tRegionId\tCellX\tCellY\tScriptFile\tIsLoad");
 
                         // Loop through all loaded regions
                         foreach (var region in _currentMap.Regions.Values)
@@ -337,23 +337,16 @@ namespace MapTool
                             if (!region.IsLoaded)
                                 continue;
 
-                            // Calculate region's world position
-                            // Region size in world coords: 2048 x 4096 (from client code)
-                            int regionWorldX = region.RegionX * 2048;
-                            int regionWorldY = region.RegionY * 4096;
+                            // Use RegionID from region data (x | (y << 16))
+                            int regionId = region.RegionID;
 
                             // Loop through all cells in region (16x32)
                             for (int cellY = 0; cellY < MapConstants.REGION_GRID_HEIGHT; cellY++)
                             {
                                 for (int cellX = 0; cellX < MapConstants.REGION_GRID_WIDTH; cellX++)
                                 {
-                                    // Calculate cell's world position
-                                    // Each cell is 128 x 128 in world coords (2048/16 = 128, 4096/32 = 128)
-                                    int worldX = regionWorldX + cellX * 128;
-                                    int worldY = regionWorldY + cellY * 128;
-
-                                    // Write world coordinates (matching existing trap format)
-                                    writer.WriteLine($"{worldX}\t{worldY}");
+                                    // Write cell data in correct format
+                                    writer.WriteLine($"{_currentMap.MapId}\t{regionId}\t{cellX}\t{cellY}\t\t1");
                                     totalCells++;
                                 }
                             }
