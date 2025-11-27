@@ -21,10 +21,11 @@ namespace MapTool.Rendering
         // Colors
         private Color _gridColor = Color.FromArgb(100, 128, 128, 128);
         private Color _regionBorderColor = Color.FromArgb(200, 0, 0, 255);
-        private Color _obstacleColor = Color.FromArgb(120, 255, 0, 0);
-        private Color _trapColor = Color.FromArgb(120, 255, 255, 0);
+        private Color _obstacleColor = Color.FromArgb(180, 255, 0, 0);      // Red for obstacles
+        private Color _trapColor = Color.FromArgb(180, 255, 255, 0);         // Yellow for traps
+        private Color _walkableCellColor = Color.FromArgb(255, 60, 60, 60);  // Dark gray for walkable cells
         private Color _selectedCellColor = Color.FromArgb(150, 0, 255, 0);
-        private Color _backgroundcolor = Color.FromArgb(255, 32, 32, 32);
+        private Color _backgroundColor = Color.FromArgb(255, 20, 20, 20);     // Very dark background
 
         public int CellSize
         {
@@ -62,7 +63,7 @@ namespace MapTool.Rendering
         public void Render(Graphics g, int width, int height, MapCoordinate? selectedCoord = null)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.Clear(_backgroundcolor);
+            g.Clear(_backgroundColor);
 
             // Apply zoom transform
             g.ScaleTransform(_zoom, _zoom);
@@ -119,25 +120,26 @@ namespace MapTool.Rendering
 
                     Rectangle cellRect = new Rectangle(screenX, screenY, _cellSize, _cellSize);
 
-                    // Draw obstacle
+                    // Draw base cell (always draw so we can see the map!)
+                    Color cellColor = _walkableCellColor; // Default: walkable (dark gray)
+
+                    // Override color based on cell content
                     if (region.Obstacles[cx, cy] != 0)
                     {
-                        using (SolidBrush brush = new SolidBrush(_obstacleColor))
-                        {
-                            g.FillRectangle(brush, cellRect);
-                        }
+                        cellColor = _obstacleColor; // Red for obstacles
                     }
-
-                    // Draw trap
-                    if (region.Traps[cx, cy] != 0)
+                    else if (region.Traps[cx, cy] != 0)
                     {
-                        using (SolidBrush brush = new SolidBrush(_trapColor))
-                        {
-                            g.FillRectangle(brush, cellRect);
-                        }
+                        cellColor = _trapColor; // Yellow for traps
                     }
 
-                    // Highlight selected cell
+                    // Fill cell with color
+                    using (SolidBrush brush = new SolidBrush(cellColor))
+                    {
+                        g.FillRectangle(brush, cellRect);
+                    }
+
+                    // Highlight selected cell (draw on top)
                     if (selectedCoord.HasValue &&
                         selectedCoord.Value.RegionID == region.RegionID &&
                         selectedCoord.Value.CellX == cx &&
@@ -153,7 +155,7 @@ namespace MapTool.Rendering
                         }
                     }
 
-                    // Draw grid
+                    // Draw grid (draw last so it's visible)
                     using (Pen pen = new Pen(_gridColor))
                     {
                         g.DrawRectangle(pen, cellRect);
