@@ -141,15 +141,15 @@ namespace MapTool.Rendering
                 if (!region.IsLoaded)
                     continue;
 
-                // Calculate region bounds in world coordinates
-                int regionWorldX = region.RegionX * MapConstants.REGION_PIXEL_WIDTH;
-                int regionWorldY = region.RegionY * MapConstants.REGION_PIXEL_HEIGHT;
+                // Calculate region bounds in MAP coordinates
+                int regionMapX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                int regionMapY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
 
                 // Skip if region is not in view
-                if (regionWorldX + MapConstants.REGION_PIXEL_WIDTH < startWorldX ||
-                    regionWorldX > endWorldX ||
-                    regionWorldY + MapConstants.REGION_PIXEL_HEIGHT < startWorldY ||
-                    regionWorldY > endWorldY)
+                if (regionMapX + MapConstants.MAP_REGION_PIXEL_WIDTH < startWorldX ||
+                    regionMapX > endWorldX ||
+                    regionMapY + MapConstants.MAP_REGION_PIXEL_HEIGHT < startWorldY ||
+                    regionMapY > endWorldY)
                     continue;
 
                 RenderRegion(g, region, selectedCoord);
@@ -165,23 +165,29 @@ namespace MapTool.Rendering
         /// </summary>
         private void RenderRegion(Graphics g, MapRegionData region, MapCoordinate? selectedCoord)
         {
-            int regionWorldX = region.RegionX * MapConstants.REGION_PIXEL_WIDTH;
-            int regionWorldY = region.RegionY * MapConstants.REGION_PIXEL_HEIGHT;
+            // Use MAP coordinates (same as 24.jpg) for rendering
+            // 1 region = 128x128 pixels on screen (matching image scale)
+            int regionMapX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
+            int regionMapY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+
+            // Calculate cell size on map (divide region size by cell count)
+            int cellMapWidth = MapConstants.MAP_REGION_PIXEL_WIDTH / MapConstants.REGION_GRID_WIDTH;   // 128/16 = 8
+            int cellMapHeight = MapConstants.MAP_REGION_PIXEL_HEIGHT / MapConstants.REGION_GRID_HEIGHT; // 128/32 = 4
 
             // Draw cells
             for (int cy = 0; cy < MapConstants.REGION_GRID_HEIGHT; cy++)
             {
                 for (int cx = 0; cx < MapConstants.REGION_GRID_WIDTH; cx++)
                 {
-                    int cellWorldX = regionWorldX + cx * MapConstants.LOGIC_CELL_WIDTH;
-                    int cellWorldY = regionWorldY + cy * MapConstants.LOGIC_CELL_HEIGHT;
+                    int cellMapX = regionMapX + cx * cellMapWidth;
+                    int cellMapY = regionMapY + cy * cellMapHeight;
 
-                    int screenX = cellWorldX - _viewOffsetX;
-                    int screenY = cellWorldY - _viewOffsetY;
+                    int screenX = cellMapX - _viewOffsetX;
+                    int screenY = cellMapY - _viewOffsetY;
 
-                    // Use LOGIC_CELL size for rendering (no gaps!)
+                    // Use MAP scale for rendering
                     Rectangle cellRect = new Rectangle(screenX, screenY,
-                        MapConstants.LOGIC_CELL_WIDTH, MapConstants.LOGIC_CELL_HEIGHT);
+                        cellMapWidth, cellMapHeight);
 
                     // Determine cell color and whether to draw
                     bool shouldDraw = true;
@@ -237,10 +243,10 @@ namespace MapTool.Rendering
 
             // Draw region border
             Rectangle regionRect = new Rectangle(
-                regionWorldX - _viewOffsetX,
-                regionWorldY - _viewOffsetY,
-                MapConstants.REGION_PIXEL_WIDTH,
-                MapConstants.REGION_PIXEL_HEIGHT);
+                regionMapX - _viewOffsetX,
+                regionMapY - _viewOffsetY,
+                MapConstants.MAP_REGION_PIXEL_WIDTH,
+                MapConstants.MAP_REGION_PIXEL_HEIGHT);
 
             using (Pen pen = new Pen(_regionBorderColor, 2))
             {

@@ -270,11 +270,11 @@ namespace MapTool.MapData
                         mapData.MapImagePath = mapImageRelativePath;
 
                         // Calculate image offset based on region boundaries
-                        // 24.jpg typically starts at world origin (0,0)
-                        // But regions start at (RegionLeft, RegionTop)
-                        // So the image offset in pixels is:
-                        mapData.MapImageOffsetX = config.RegionLeft * MapConstants.REGION_PIXEL_WIDTH;
-                        mapData.MapImageOffsetY = config.RegionTop * MapConstants.REGION_PIXEL_HEIGHT;
+                        // 24.jpg uses MAP coordinates (not logic coordinates!)
+                        // Client scale: 1 region = 128x128 pixels on 24.jpg
+                        // NOT 512x1024 (logic scale)!
+                        mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                        mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
 
                         Console.WriteLine($"✓ Loaded map image: {mapImageRelativePath} ({mapData.MapImageData.Length} bytes)");
                         Console.WriteLine($"✓ Map image offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY})");
