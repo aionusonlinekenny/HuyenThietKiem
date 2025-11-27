@@ -26,6 +26,32 @@ namespace MapTool.MapData
 
             // Parse INI file
             string[] lines = File.ReadAllLines(worFilePath, Encoding.GetEncoding("GB2312"));
+
+            ParseWorContent(config, lines);
+            return config;
+        }
+
+        /// <summary>
+        /// Load map configuration from byte array (for pak file support)
+        /// </summary>
+        public static MapConfig LoadMapConfigFromBytes(byte[] worBytes, string mapName = "Unknown")
+        {
+            MapConfig config = new MapConfig();
+            config.MapName = mapName;
+
+            // Parse INI file from bytes
+            string content = Encoding.GetEncoding("GB2312").GetString(worBytes);
+            string[] lines = content.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+            ParseWorContent(config, lines);
+            return config;
+        }
+
+        /// <summary>
+        /// Parse .wor file content (shared logic)
+        /// </summary>
+        private static void ParseWorContent(MapConfig config, string[] lines)
+        {
             string currentSection = "";
 
             foreach (string line in lines)
@@ -71,8 +97,6 @@ namespace MapTool.MapData
                         break;
                 }
             }
-
-            return config;
         }
 
         /// <summary>

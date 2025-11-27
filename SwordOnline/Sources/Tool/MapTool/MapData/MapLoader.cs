@@ -130,13 +130,37 @@ namespace MapTool.MapData
             }
 
             // Step 2: Load .wor file to get region grid
-            string worPath = _mapListParser.GetMapWorPath(mapId);
-            if (!File.Exists(worPath))
-            {
-                throw new FileNotFoundException($".wor file not found: {worPath}");
-            }
+            MapConfig config;
+            string worRelativePath = _mapListParser.GetMapWorRelativePath(mapId);
 
-            MapConfig config = MapFileParser.LoadMapConfig(worPath);
+            // Try to read from pak first, then disk
+            if (FileExists(worRelativePath))
+            {
+                byte[] worBytes = ReadFileBytes(worRelativePath);
+                if (worBytes != null)
+                {
+                    Console.WriteLine($"✓ Loaded .wor from pak: {worRelativePath}");
+                    config = MapFileParser.LoadMapConfigFromBytes(worBytes, mapEntry.Name);
+                }
+                else
+                {
+                    throw new FileNotFoundException($".wor file not found: {worRelativePath}");
+                }
+            }
+            else
+            {
+                // Fallback to disk
+                string worPath = _mapListParser.GetMapWorPath(mapId);
+                if (File.Exists(worPath))
+                {
+                    Console.WriteLine($"✓ Loaded .wor from disk: {worPath}");
+                    config = MapFileParser.LoadMapConfig(worPath);
+                }
+                else
+                {
+                    throw new FileNotFoundException($".wor file not found in pak ({worRelativePath}) or disk ({worPath})");
+                }
+            }
 
             // Step 3: Calculate region grid dimensions
             int regionWidth = config.RegionRight - config.RegionLeft + 1;
