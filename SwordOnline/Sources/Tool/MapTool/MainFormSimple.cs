@@ -141,6 +141,9 @@ namespace MapTool
                 _renderer.Zoom = 1.0f;
 
                 mapPanel.Invalidate();
+
+                // Auto-export all cells to txt file
+                AutoExportAllCellsToTxt();
             }
             catch (Exception ex)
             {
@@ -316,6 +319,62 @@ namespace MapTool
         {
             _exporter.RemoveLast();
             UpdateTrapList();
+        }
+
+        // Auto-export all cells from all loaded regions
+        private void AutoExportAllCellsToTxt()
+        {
+            if (_currentMap == null || _currentMap.Regions == null || _currentMap.Regions.Count == 0)
+            {
+                Console.WriteLine("⚠ No regions to export");
+                return;
+            }
+
+            try
+            {
+                // Create file name from map ID
+                string fileName = $"{_currentMap.MapId}.txt";
+                string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+
+                Console.WriteLine($"📝 Auto-exporting all cells to: {filePath}");
+
+                using (StreamWriter writer = new StreamWriter(filePath, false, System.Text.Encoding.UTF8))
+                {
+                    // Write header
+                    writer.WriteLine("MapId\tRegionId\tCellX\tCellY\tScriptFile\tIsLoad");
+
+                    int totalCells = 0;
+
+                    // Loop through all loaded regions
+                    foreach (var region in _currentMap.Regions.Values)
+                    {
+                        if (!region.IsLoaded)
+                            continue;
+
+                        // Loop through all cells in region (16x32)
+                        for (int cellY = 0; cellY < MapConstants.REGION_GRID_HEIGHT; cellY++)
+                        {
+                            for (int cellX = 0; cellX < MapConstants.REGION_GRID_WIDTH; cellX++)
+                            {
+                                // Write cell data
+                                // Format: MapId	RegionId	CellX	CellY	ScriptFile	IsLoad
+                                writer.WriteLine($"{_currentMap.MapId}\t{region.RegionID}\t{cellX}\t{cellY}\t\t1");
+                                totalCells++;
+                            }
+                        }
+                    }
+                }
+
+                Console.WriteLine($"✓ Exported {totalCells} cells to {fileName}");
+                MessageBox.Show($"Auto-exported {totalCells} cells to:\n{fileName}",
+                    "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Failed to auto-export: {ex.Message}");
+                MessageBox.Show($"Failed to auto-export:\n{ex.Message}",
+                    "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
