@@ -299,9 +299,6 @@ namespace MapTool.MapData
                 {
                     Console.WriteLine($"❌ No map image found at: {mapImageRelativePath}");
                     Console.WriteLine($"  Pak reader: {(_pakReader != null ? "Available" : "Not available")}");
-
-                    // Try disk path
-                    string diskPath = Path.Combine(_gameFolder, mapImageRelativePath.TrimStart('\\', '/'));
                     Console.WriteLine($"  Disk path: {diskPath}");
                     Console.WriteLine($"  Disk exists: {File.Exists(diskPath)}");
                 }
