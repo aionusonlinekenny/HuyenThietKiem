@@ -338,12 +338,12 @@ namespace MapTool
 
                 Console.WriteLine($"📝 Auto-exporting all cells to: {filePath}");
 
+                int totalCells = 0;  // Declare outside using block!
+
                 using (StreamWriter writer = new StreamWriter(filePath, false, System.Text.Encoding.UTF8))
                 {
                     // Write header
                     writer.WriteLine("MapId\tRegionId\tCellX\tCellY\tScriptFile\tIsLoad");
-
-                    int totalCells = 0;
 
                     // Loop through all loaded regions
                     foreach (var region in _currentMap.Regions.Values)
