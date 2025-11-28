@@ -240,11 +240,11 @@ namespace MapTool
                 return;
             }
 
-            // Calculate bounding box that includes BOTH regions AND map image
-            int minX = int.MaxValue;
-            int minY = int.MaxValue;
-            int maxX = int.MinValue;
-            int maxY = int.MinValue;
+            // Calculate the farthest extent of all content (regions and map image)
+            // Scroll area must be large enough to SCROLL TO any content position
+            // Not just contain the content size!
+            int maxX = 0;
+            int maxY = 0;
 
             // Include all loaded regions
             foreach (var region in _currentMap.Regions.Values)
@@ -252,8 +252,6 @@ namespace MapTool
                 int regionMapX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
                 int regionMapY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
 
-                minX = Math.Min(minX, regionMapX);
-                minY = Math.Min(minY, regionMapY);
                 maxX = Math.Max(maxX, regionMapX + MapConstants.MAP_REGION_PIXEL_WIDTH);
                 maxY = Math.Max(maxY, regionMapY + MapConstants.MAP_REGION_PIXEL_HEIGHT);
             }
@@ -261,32 +259,23 @@ namespace MapTool
             // Include map image if available
             if (_currentMap.MapImageData != null && _renderer != null)
             {
-                // Get map image info from renderer
                 var imageInfo = _renderer.GetMapImageBounds();
                 if (imageInfo.HasValue)
                 {
-                    minX = Math.Min(minX, imageInfo.Value.X);
-                    minY = Math.Min(minY, imageInfo.Value.Y);
                     maxX = Math.Max(maxX, imageInfo.Value.X + imageInfo.Value.Width);
                     maxY = Math.Max(maxY, imageInfo.Value.Y + imageInfo.Value.Height);
                 }
             }
 
-            // Calculate total size in MAP pixels
-            int mapWidth = (maxX - minX);
-            int mapHeight = (maxY - minY);
-
-            // Apply zoom to get SCREEN pixels
-            int scrollWidth = (int)(mapWidth * _renderer.Zoom);
-            int scrollHeight = (int)(mapHeight * _renderer.Zoom);
-
-            // Add padding for comfortable navigation
-            scrollWidth += 500;
-            scrollHeight += 500;
+            // Scroll area = entire virtual canvas from (0,0) to (maxX, maxY)
+            // AutoScrollPosition can be 0 to (ScrollArea - Viewport)
+            // So if content is at position X, ScrollArea must be >= X + Viewport
+            int scrollWidth = (int)(maxX * _renderer.Zoom) + mapPanel.Width + 1000;
+            int scrollHeight = (int)(maxY * _renderer.Zoom) + mapPanel.Height + 1000;
 
             mapPanel.AutoScrollMinSize = new Size(scrollWidth, scrollHeight);
 
-            Console.WriteLine($"📏 Content bounds: MAP ({minX},{minY}) to ({maxX},{maxY})");
+            Console.WriteLine($"📏 Content max extent: MAP (0,0) to ({maxX},{maxY})");
             Console.WriteLine($"📏 Scroll area: {scrollWidth}x{scrollHeight} SCREEN pixels (zoom: {_renderer.Zoom:F2})");
         }
 
