@@ -29,6 +29,15 @@ namespace MapTool
         public MainFormSimple()
         {
             InitializeComponent();
+
+            // Initialize debug logger FIRST
+            DebugLogger.Initialize();
+            DebugLogger.Log("=== MapTool Started ===");
+            DebugLogger.Log($"Executable: {System.Reflection.Assembly.GetExecutingAssembly().Location}");
+            DebugLogger.Log($"Working Directory: {Environment.CurrentDirectory}");
+            DebugLogger.Log($"Log file: {DebugLogger.GetLogFilePath()}");
+            DebugLogger.LogSeparator();
+
             _renderer = new MapRenderer();
             _exporter = new TrapExporter();
 
@@ -37,7 +46,11 @@ namespace MapTool
             if (Directory.Exists(defaultFolder))
             {
                 txtGameFolder.Text = defaultFolder;
+                DebugLogger.Log($"Default folder set: {defaultFolder}");
             }
+
+            // Show log file path in status
+            lblStatus.Text = $"Ready. Log: {Path.GetFileName(DebugLogger.GetLogFilePath())}";
         }
 
         // Browse game folder
@@ -101,10 +114,33 @@ namespace MapTool
                 Application.DoEvents();
 
                 _gameFolder = txtGameFolder.Text;
+
+                // Log load attempt
+                DebugLogger.LogSeparator();
+                DebugLogger.Log($"📂 LOADING MAP");
+                DebugLogger.Log($"   Map ID: {mapId}");
+                DebugLogger.Log($"   Game Folder: {_gameFolder}");
+                DebugLogger.Log($"   Mode: {(_isServerMode ? "Server" : "Client")}");
+                DebugLogger.LogSeparator();
+
                 _mapLoader = new MapLoader(_gameFolder, _isServerMode);
 
                 // Auto-load complete map
                 _currentMap = _mapLoader.LoadMap(mapId);
+
+                // Log loaded map info
+                DebugLogger.Log($"✓ Map loaded successfully!");
+                DebugLogger.Log($"   Name: {_currentMap.MapName}");
+                DebugLogger.Log($"   Folder: {_currentMap.MapFolder}");
+                DebugLogger.Log($"   Regions loaded: {_currentMap.LoadedRegionCount}");
+                if (_currentMap.Regions.Count > 0)
+                {
+                    var firstRegion = _currentMap.Regions.Values.GetEnumerator();
+                    firstRegion.MoveNext();
+                    var region = firstRegion.Current;
+                    DebugLogger.Log($"   First region: ({region.RegionX}, {region.RegionY}) RegionID={region.RegionID}");
+                }
+                DebugLogger.LogSeparator();
 
                 // Update UI
                 lblMapInfo.Text = $"Map: {_currentMap.MapName} (ID: {_currentMap.MapId})\n" +
@@ -114,30 +150,51 @@ namespace MapTool
                                   $"Map Size: {_currentMap.GetMapPixelWidth()}x{_currentMap.GetMapPixelHeight()} pixels\n" +
                                   $"Loaded: {_currentMap.LoadedRegionCount}/{_currentMap.RegionWidth * _currentMap.RegionHeight} regions";
 
-                // Load map image if available
-                if (_currentMap.MapImageData != null)
-                {
-                    Console.WriteLine($"🎨 Setting map image to renderer ({_currentMap.MapImageData.Length} bytes)");
-                    _renderer.SetMapImage(_currentMap.MapImageData);
-                    lblStatus.Text = $"Map loaded with image! {_currentMap.LoadedRegionCount} regions.";
-                }
-                else
-                {
-                    Console.WriteLine($"⚠ No map image data available");
-                    _renderer.ClearMapImage();
-                    lblStatus.Text = $"Map loaded (no image). {_currentMap.LoadedRegionCount} regions.";
-                }
-
-                // Load regions into renderer
+                // Load regions into renderer FIRST
                 _renderer.ClearRegions();
                 foreach (var region in _currentMap.Regions.Values)
                 {
                     _renderer.AddRegion(region);
                 }
 
-                // Reset view
-                _renderer.ViewOffsetX = 0;
-                _renderer.ViewOffsetY = 0;
+                // Load map image if available
+                if (_currentMap.MapImageData != null)
+                {
+                    Console.WriteLine($"🎨 Setting map image to renderer ({_currentMap.MapImageData.Length} bytes)");
+                    Console.WriteLine($"🎨 Map image offset: ({_currentMap.MapImageOffsetX}, {_currentMap.MapImageOffsetY})");
+                    _renderer.SetMapImage(_currentMap.MapImageData, _currentMap.MapImageOffsetX, _currentMap.MapImageOffsetY);
+
+                    // Set initial view to map image position (so image is visible)
+                    _renderer.ViewOffsetX = _currentMap.MapImageOffsetX;
+                    _renderer.ViewOffsetY = _currentMap.MapImageOffsetY;
+
+                    lblStatus.Text = $"Map loaded with image! {_currentMap.LoadedRegionCount} regions.";
+                }
+                else
+                {
+                    Console.WriteLine($"ℹ No map image (24.jpg) - this is normal for most maps");
+                    Console.WriteLine($"  Tool will render region grid and obstacles/traps");
+                    _renderer.ClearMapImage();
+
+                    // Set view to first loaded region
+                    if (_currentMap.Regions.Count > 0)
+                    {
+                        var firstRegion = _currentMap.Regions.Values.GetEnumerator();
+                        firstRegion.MoveNext();
+                        var region = firstRegion.Current;
+                        _renderer.ViewOffsetX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                        _renderer.ViewOffsetY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+                        Console.WriteLine($"  Set view to first region: ({region.RegionX}, {region.RegionY})");
+                    }
+                    else
+                    {
+                        _renderer.ViewOffsetX = _currentMap.Config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                        _renderer.ViewOffsetY = _currentMap.Config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+                    }
+
+                    lblStatus.Text = $"Map loaded (no background image). {_currentMap.LoadedRegionCount} regions.";
+                }
+
                 _renderer.Zoom = 1.0f;
 
                 mapPanel.Invalidate();
@@ -320,13 +377,20 @@ namespace MapTool
                 try
                 {
                     Cursor = Cursors.WaitCursor;
-                    Console.WriteLine($"📝 Exporting all cells to: {dialog.FileName}");
+
+                    // Log export start
+                    DebugLogger.LogSeparator();
+                    DebugLogger.Log($"📝 EXPORTING TO TXT");
+                    DebugLogger.Log($"   Output file: {dialog.FileName}");
+                    DebugLogger.Log($"   Map ID: {_currentMap.MapId}");
+                    DebugLogger.Log($"   Regions to export: {_currentMap.Regions.Count}");
 
                     int totalCells = 0;
+                    int regionCount = 0;
 
                     using (StreamWriter writer = new StreamWriter(dialog.FileName, false, System.Text.Encoding.UTF8))
                     {
-                        // Write header
+                        // Write header - MapId RegionId CellX CellY ScriptFile IsLoad format
                         writer.WriteLine("MapId\tRegionId\tCellX\tCellY\tScriptFile\tIsLoad");
 
                         // Loop through all loaded regions
@@ -335,26 +399,37 @@ namespace MapTool
                             if (!region.IsLoaded)
                                 continue;
 
-                            // Calculate simple RegionId from coordinates
-                            // Format: RegionY * 256 + RegionX (assuming max 256 regions width)
-                            int simpleRegionId = region.RegionY * 256 + region.RegionX;
+                            // Use RegionID from region data (calculated by Y*256+X formula)
+                            int regionId = region.RegionID;
+
+                            // Log first few regions to debug
+                            if (regionCount < 5)
+                            {
+                                DebugLogger.Log($"   Region #{regionCount + 1}: ({region.RegionX}, {region.RegionY}) → RegionID = {regionId}");
+                                DebugLogger.Log($"      Formula check: {region.RegionY} * 256 + {region.RegionX} = {region.RegionY * 256 + region.RegionX}");
+                            }
 
                             // Loop through all cells in region (16x32)
                             for (int cellY = 0; cellY < MapConstants.REGION_GRID_HEIGHT; cellY++)
                             {
                                 for (int cellX = 0; cellX < MapConstants.REGION_GRID_WIDTH; cellX++)
                                 {
-                                    // Write cell data
-                                    // Format: MapId	RegionId	CellX	CellY	ScriptFile	IsLoad
-                                    writer.WriteLine($"{_currentMap.MapId}\t{simpleRegionId}\t{cellX}\t{cellY}\t\t1");
+                                    // Write cell data in correct format
+                                    writer.WriteLine($"{_currentMap.MapId}\t{regionId}\t{cellX}\t{cellY}\t\t1");
                                     totalCells++;
                                 }
                             }
+
+                            regionCount++;
                         }
                     }
 
-                    Console.WriteLine($"✓ Exported {totalCells} cells to {dialog.FileName}");
-                    MessageBox.Show($"Exported {totalCells} cells to:\n{dialog.FileName}",
+                    DebugLogger.Log($"✓ Export completed!");
+                    DebugLogger.Log($"   Total cells: {totalCells}");
+                    DebugLogger.Log($"   Total regions: {regionCount}");
+                    DebugLogger.LogSeparator();
+
+                    MessageBox.Show($"Exported {totalCells} cells from {regionCount} regions to:\n{dialog.FileName}\n\nCheck log file for details!",
                         "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)

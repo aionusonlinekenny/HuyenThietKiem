@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Administrator\\Downloads\\HuyenThietKiem-claude-map-cell-script-data-01CfedzqEM8vHBeTT4eZM1Pw\\HuyenThietKiem-claude-map-cell-script-data-01CfedzqEM8vHBeTT4eZM1Pw\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj": {}
+    "D:\\HuyenThietKiem\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Administrator\\Downloads\\HuyenThietKiem-claude-map-cell-script-data-01CfedzqEM8vHBeTT4eZM1Pw\\HuyenThietKiem-claude-map-cell-script-data-01CfedzqEM8vHBeTT4eZM1Pw\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj": {
+    "D:\\HuyenThietKiem\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrator\\Downloads\\HuyenThietKiem-claude-map-cell-script-data-01CfedzqEM8vHBeTT4eZM1Pw\\HuyenThietKiem-claude-map-cell-script-data-01CfedzqEM8vHBeTT4eZM1Pw\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj",
+        "projectUniqueName": "D:\\HuyenThietKiem\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj",
         "projectName": "MapTool",
-        "projectPath": "C:\\Users\\Administrator\\Downloads\\HuyenThietKiem-claude-map-cell-script-data-01CfedzqEM8vHBeTT4eZM1Pw\\HuyenThietKiem-claude-map-cell-script-data-01CfedzqEM8vHBeTT4eZM1Pw\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj",
+        "projectPath": "D:\\HuyenThietKiem\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Administrator\\Downloads\\HuyenThietKiem-claude-map-cell-script-data-01CfedzqEM8vHBeTT4eZM1Pw\\HuyenThietKiem-claude-map-cell-script-data-01CfedzqEM8vHBeTT4eZM1Pw\\SwordOnline\\Sources\\Tool\\MapTool\\obj\\",
+        "outputPath": "D:\\HuyenThietKiem\\SwordOnline\\Sources\\Tool\\MapTool\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

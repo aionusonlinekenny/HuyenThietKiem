@@ -1,0 +1,94 @@
+﻿================================================================================
+MapTool Debug Log - 2025-11-27 17:52:31
+================================================================================
+
+[17:52:31.885] ✓ Debug log initialized: D:\HuyenThietKiem\Bin\Server\MapTool_Debug_20251127_175231.log
+[17:52:31.885] === MapTool Started ===
+[17:52:31.885] Executable: D:\HuyenThietKiem\Bin\Server\MapTool.exe
+[17:52:31.885] Working Directory: D:\HuyenThietKiem\Bin\Server
+[17:52:31.885] Log file: D:\HuyenThietKiem\Bin\Server\MapTool_Debug_20251127_175231.log
+[17:52:31.885] --------------------------------------------------------------------------------
+[17:52:31.885] Default folder set: D:\HuyenThietKiem\Bin\Server
+[17:52:33.173] --------------------------------------------------------------------------------
+[17:52:33.173] 📂 LOADING MAP
+[17:52:33.173]    Map ID: 11
+[17:52:33.173]    Game Folder: D:\HuyenThietKiem\Bin\Server
+[17:52:33.173]    Mode: Server
+[17:52:33.173] --------------------------------------------------------------------------------
+[17:52:33.388] --------------------------------------------------------------------------------
+[17:52:33.388] 🔍 PARSED RECT FROM .WOR FILE
+[17:52:33.388]    rect = 165,142,215,172
+[17:52:33.388]    Grid size: 51 x 31 regions
+[17:52:33.388]    First region coords: (165, 142)
+[17:52:33.388]    First RegionID (Y*256+X): 142*256 + 165 = 36517
+[17:52:33.388] --------------------------------------------------------------------------------
+[17:52:33.393] --------------------------------------------------------------------------------
+[17:52:33.393] 🔍 SCANNING FOR REGION FILES
+[17:52:33.393]    Looking for regions from (165,142) to (215,172)
+[17:52:33.393]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\165_Region_S.dat
+[17:52:33.393]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\166_Region_S.dat
+[17:52:33.393]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\167_Region_S.dat
+[17:52:33.393]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\168_Region_S.dat
+[17:52:33.393]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\169_Region_S.dat
+[17:52:33.393]    ✓ Found region (3d,3d) → RegionID=36557 | File: maps\西南北区\成都\成都\v_142\205_Region_S.dat
+[17:52:33.393]    ✓ Found region (3d,3d) → RegionID=36558 | File: maps\西南北区\成都\成都\v_142\206_Region_S.dat
+[17:52:33.393]    ✓ Found region (3d,3d) → RegionID=36559 | File: maps\西南北区\成都\成都\v_142\207_Region_S.dat
+[17:52:33.393]    ✓ Found region (3d,3d) → RegionID=36807 | File: maps\西南北区\成都\成都\v_143\199_Region_S.dat
+[17:52:33.393]    ✓ Found region (3d,3d) → RegionID=36808 | File: maps\西南北区\成都\成都\v_143\200_Region_S.dat
+[17:52:33.393]    ⚠ Error loading (206,143): Unable to read beyond the end of the stream.
+[17:52:33.393]    ⚠ Error loading (206,144): Unable to read beyond the end of the stream.
+[17:52:33.393]    ⚠ Error loading (175,149): Unable to read beyond the end of the stream.
+[17:52:33.393]    ⚠ Error loading (176,149): Unable to read beyond the end of the stream.
+[17:52:33.402]    ⚠ Error loading (175,150): Unable to read beyond the end of the stream.
+[17:52:33.402]    ⚠ Error loading (176,150): Unable to read beyond the end of the stream.
+[17:52:33.405]    ⚠ Error loading (188,154): Unable to read beyond the end of the stream.
+[17:52:33.405]    ⚠ Error loading (205,155): Unable to read beyond the end of the stream.
+[17:52:33.405]    ⚠ Error loading (205,156): Unable to read beyond the end of the stream.
+[17:52:33.405]    ⚠ Error loading (177,158): Unable to read beyond the end of the stream.
+[17:52:33.405]    ⚠ Error loading (203,158): Unable to read beyond the end of the stream.
+[17:52:33.412]    ⚠ Error loading (177,159): Unable to read beyond the end of the stream.
+[17:52:33.412]    ⚠ Error loading (186,160): Unable to read beyond the end of the stream.
+[17:52:33.412]    ⚠ Error loading (200,163): Unable to read beyond the end of the stream.
+[17:52:33.412]    ⚠ Error loading (201,163): Unable to read beyond the end of the stream.
+[17:52:33.412]    ⚠ Error loading (212,165): Unable to read beyond the end of the stream.
+[17:52:33.412]    ⚠ Error loading (213,165): Unable to read beyond the end of the stream.
+[17:52:33.412]    ⚠ Error loading (169,166): Unable to read beyond the end of the stream.
+[17:52:33.412]    ⚠ Error loading (212,166): Unable to read beyond the end of the stream.
+[17:52:33.412]    ⚠ Error loading (213,166): Unable to read beyond the end of the stream.
+[17:52:33.412]    ⚠ Error loading (169,167): Unable to read beyond the end of the stream.
+[17:52:33.423]    ⚠ Error loading (202,169): Unable to read beyond the end of the stream.
+[17:52:33.423]    ⚠ Error loading (201,170): Unable to read beyond the end of the stream.
+[17:52:33.423]    ⚠ Error loading (202,170): Unable to read beyond the end of the stream.
+[17:52:33.423] --------------------------------------------------------------------------------
+[17:52:33.423] 📊 REGION SCAN SUMMARY
+[17:52:33.423]    Attempted: 1581 regions
+[17:52:33.423]    Loaded: 803 regions
+[17:52:33.423]    Missing: 778 regions
+[17:52:33.423]    First missing: (165,142), (166,142), (167,142), (168,142), (169,142)
+[17:52:33.423]    First existing: (205,142), (206,142), (207,142), (199,143), (200,143)
+[17:52:33.423] --------------------------------------------------------------------------------
+[17:52:33.423] ✓ Map loaded successfully!
+[17:52:33.423]    Name: Th祅h Й
+[17:52:33.423]    Folder: 西南北区\成都\成都
+[17:52:33.423]    Regions loaded: 803
+[17:52:33.423]    First region: (205, 142) RegionID=36557
+[17:52:33.423] --------------------------------------------------------------------------------
+[17:52:40.413] --------------------------------------------------------------------------------
+[17:52:40.413] 📝 EXPORTING TO TXT
+[17:52:40.413]    Output file: D:\11.txt
+[17:52:40.413]    Map ID: 11
+[17:52:40.413]    Regions to export: 803
+[17:52:40.413]    Region #1: (205, 142) → RegionID = 36557
+[17:52:40.413]       Formula check: 142 * 256 + 205 = 36557
+[17:52:40.413]    Region #2: (206, 142) → RegionID = 36558
+[17:52:40.413]       Formula check: 142 * 256 + 206 = 36558
+[17:52:40.413]    Region #3: (207, 142) → RegionID = 36559
+[17:52:40.413]       Formula check: 142 * 256 + 207 = 36559
+[17:52:40.413]    Region #4: (199, 143) → RegionID = 36807
+[17:52:40.413]       Formula check: 143 * 256 + 199 = 36807
+[17:52:40.413]    Region #5: (200, 143) → RegionID = 36808
+[17:52:40.413]       Formula check: 143 * 256 + 200 = 36808
+[17:52:40.622] ✓ Export completed!
+[17:52:40.622]    Total cells: 411136
+[17:52:40.622]    Total regions: 803
+[17:52:40.622] --------------------------------------------------------------------------------

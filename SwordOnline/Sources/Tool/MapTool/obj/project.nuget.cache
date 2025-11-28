@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "clVblr2yQSQ=",
+  "dgSpecHash": "lkhWf5AbKgw=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Administrator\\Downloads\\HuyenThietKiem-claude-map-cell-script-data-01CfedzqEM8vHBeTT4eZM1Pw\\HuyenThietKiem-claude-map-cell-script-data-01CfedzqEM8vHBeTT4eZM1Pw\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj",
+  "projectFilePath": "D:\\HuyenThietKiem\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.3\\microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net48\\1.0.3\\microsoft.netframework.referenceassemblies.net48.1.0.3.nupkg.sha512"

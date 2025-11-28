@@ -32,9 +32,10 @@ namespace MapTool.MapData
             // Try multiple possible pak file locations
             string[] possiblePaths = new[]
             {
-                Path.Combine(_gameFolder, "pak", "maps.pak"),      // Server: Bin/Server/pak/maps.pak
-                Path.Combine(_gameFolder, "..", "pak", "maps.pak"), // Client: Bin/Client/../pak/maps.pak
-                Path.Combine(_gameFolder, "maps.pak"),             // Direct: Bin/maps.pak
+                Path.Combine(_gameFolder, "pak", "maps.pak"),              // Server: Bin/Server/pak/maps.pak
+                Path.Combine(_gameFolder, "..", "pak", "maps.pak"),         // Bin/Client/../pak/maps.pak (if exists)
+                Path.Combine(_gameFolder, "..", "Server", "pak", "maps.pak"), // Client: Bin/Client/../Server/pak/maps.pak
+                Path.Combine(_gameFolder, "maps.pak"),                     // Direct: Bin/maps.pak
             };
 
             foreach (string pakPath in possiblePaths)
@@ -197,10 +198,20 @@ namespace MapTool.MapData
             string regionSuffix = _isServerMode ? "Region_S.dat" : "Region_C.dat";
 
             int loadedCount = 0;
+            int attemptedCount = 0;
+            List<string> existingRegions = new List<string>();
+            List<string> missingRegions = new List<string>();
+
+            DebugLogger.LogSeparator();
+            DebugLogger.Log($"🔍 SCANNING FOR REGION FILES");
+            DebugLogger.Log($"   Looking for regions from ({config.RegionLeft},{config.RegionTop}) to ({config.RegionRight},{config.RegionBottom})");
+
             for (int y = config.RegionTop; y <= config.RegionBottom; y++)
             {
                 for (int x = config.RegionLeft; x <= config.RegionRight; x++)
                 {
+                    attemptedCount++;
+
                     // Build region file path: \maps\<mapfolder>\v_YYY\XXX_Region_S.dat
                     string regionRelativePath = Path.Combine(
                         "maps",
@@ -220,6 +231,14 @@ namespace MapTool.MapData
                                 RegionData regionData = ParseRegionDataFromBytes(regionBytes, x, y);
                                 mapData.Regions[regionData.RegionID] = regionData;
                                 loadedCount++;
+
+                                // Log first 5 regions found
+                                if (loadedCount <= 5)
+                                {
+                                    int regionId = y * 256 + x;
+                                    DebugLogger.Log($"   ✓ Found region ({x:3d},{y:3d}) → RegionID={regionId,5} | File: {regionRelativePath}");
+                                    existingRegions.Add($"({x},{y})");
+                                }
                             }
                         }
                         catch (NotImplementedException)
@@ -231,16 +250,101 @@ namespace MapTool.MapData
                         {
                             // Log error but continue loading other regions
                             Console.WriteLine($"⚠ Failed to load region ({x},{y}): {ex.Message}");
+                            DebugLogger.Log($"   ⚠ Error loading ({x},{y}): {ex.Message}");
+                        }
+                    }
+                    else
+                    {
+                        // Log first 5 missing regions
+                        if (missingRegions.Count < 5)
+                        {
+                            DebugLogger.Log($"   ✗ Missing region ({x:3d},{y:3d}) | Expected: {regionRelativePath}");
+                            missingRegions.Add($"({x},{y})");
                         }
                     }
                 }
             }
 
+            DebugLogger.LogSeparator();
+            DebugLogger.Log($"📊 REGION SCAN SUMMARY");
+            DebugLogger.Log($"   Attempted: {attemptedCount} regions");
+            DebugLogger.Log($"   Loaded: {loadedCount} regions");
+            DebugLogger.Log($"   Missing: {attemptedCount - loadedCount} regions");
+            if (missingRegions.Count > 0)
+            {
+                DebugLogger.Log($"   First missing: {string.Join(", ", missingRegions)}");
+            }
+            if (existingRegions.Count > 0)
+            {
+                DebugLogger.Log($"   First existing: {string.Join(", ", existingRegions)}");
+            }
+
+            // Check for data mismatch - warn if most regions are missing
+            if (loadedCount == 0)
+            {
+                DebugLogger.LogSeparator();
+                DebugLogger.Log($"❌ CRITICAL: NO REGIONS LOADED!");
+                DebugLogger.Log($"   The .wor file says regions should exist at ({config.RegionLeft},{config.RegionTop}) to ({config.RegionRight},{config.RegionBottom})");
+                DebugLogger.Log($"   But NO region files were found at these coordinates!");
+                DebugLogger.Log($"");
+                DebugLogger.Log($"   Possible causes:");
+                DebugLogger.Log($"   1. Map files not extracted from pak");
+                DebugLogger.Log($"   2. Wrong game folder selected");
+                DebugLogger.Log($"   3. .wor file doesn't match actual region files (different version)");
+                DebugLogger.LogSeparator();
+            }
+            else if ((double)loadedCount / attemptedCount < 0.1) // Less than 10% loaded
+            {
+                DebugLogger.LogSeparator();
+                DebugLogger.Log($"⚠ WARNING: DATA MISMATCH DETECTED!");
+                DebugLogger.Log($"   Only {loadedCount}/{attemptedCount} regions loaded ({(double)loadedCount / attemptedCount * 100:F1}%)");
+                DebugLogger.Log($"   .wor expects: ({config.RegionLeft},{config.RegionTop}) to ({config.RegionRight},{config.RegionBottom})");
+                DebugLogger.Log($"   Actual regions: Starting around {existingRegions[0]}");
+                DebugLogger.Log($"");
+                DebugLogger.Log($"   This means your .wor file doesn't match your region files!");
+                DebugLogger.Log($"   The exported RegionIDs will be WRONG for trap placement.");
+                DebugLogger.Log($"");
+                DebugLogger.Log($"   📝 SOLUTION:");
+                DebugLogger.Log($"   Compare with Bin/Server/library/maps/Trap/{mapId}.txt to see correct RegionIDs");
+                DebugLogger.Log($"   You may need to extract correct map files from original game data");
+                DebugLogger.LogSeparator();
+            }
+
+            DebugLogger.LogSeparator();
+
             mapData.LoadedRegionCount = loadedCount;
 
             // Step 5: Try to load map image (24.jpg)
-            string mapImageRelativePath = $"\\maps\\{mapEntry.FolderPath}24.jpg";
+            // File naming convention: {LastFolderName}24.jpg (NO separator!)
+            // Examples from actual files:
+            //   FolderPath = "特殊用地\剑门关"    → Image: "\maps\特殊用地\剑门关24.jpg"
+            //   FolderPath = "西北南区\华山派2013\华山派2013" → Image: "\maps\西北南区\华山派2013\华山派201324.jpg"
+            //
+            // Extract last folder name from FolderPath
+            string[] pathParts = mapEntry.FolderPath.Split(new[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
+            string lastFolderName = pathParts[pathParts.Length - 1];
+
+            Console.WriteLine($"DEBUG: FolderPath = '{mapEntry.FolderPath}'");
+            Console.WriteLine($"DEBUG: PathParts = {string.Join(", ", pathParts)}");
+            Console.WriteLine($"DEBUG: LastFolderName = '{lastFolderName}'");
+
+            // Build parent path (everything except last folder)
+            string parentPath = "";
+            if (pathParts.Length > 1)
+            {
+                parentPath = string.Join("\\", pathParts, 0, pathParts.Length - 1) + "\\";
+            }
+
+            // Construct image path: \maps\{parentPath}{lastFolderName}24.jpg
+            string mapImageRelativePath = $"\\maps\\{parentPath}{lastFolderName}24.jpg";
             Console.WriteLine($"🔍 Looking for map image: {mapImageRelativePath}");
+
+            // Also try disk path
+            string diskPath = Path.Combine(_gameFolder, mapImageRelativePath.TrimStart('\\', '/'));
+            Console.WriteLine($"DEBUG: Disk path = {diskPath}");
+            Console.WriteLine($"DEBUG: Disk exists = {File.Exists(diskPath)}");
+            Console.WriteLine($"DEBUG: Pak reader = {(_pakReader != null ? "Available" : "Not available")}");
+
             try
             {
                 if (FileExists(mapImageRelativePath))
@@ -250,7 +354,16 @@ namespace MapTool.MapData
                     if (mapData.MapImageData != null)
                     {
                         mapData.MapImagePath = mapImageRelativePath;
+
+                        // Calculate image offset based on region boundaries
+                        // 24.jpg uses MAP coordinates (not logic coordinates!)
+                        // Client scale: 1 region = 128x128 pixels on 24.jpg
+                        // NOT 512x1024 (logic scale)!
+                        mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                        mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+
                         Console.WriteLine($"✓ Loaded map image: {mapImageRelativePath} ({mapData.MapImageData.Length} bytes)");
+                        Console.WriteLine($"✓ Map image offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY})");
                     }
                     else
                     {
@@ -261,9 +374,6 @@ namespace MapTool.MapData
                 {
                     Console.WriteLine($"❌ No map image found at: {mapImageRelativePath}");
                     Console.WriteLine($"  Pak reader: {(_pakReader != null ? "Available" : "Not available")}");
-
-                    // Try disk path
-                    string diskPath = Path.Combine(_gameFolder, mapImageRelativePath.TrimStart('\\', '/'));
                     Console.WriteLine($"  Disk path: {diskPath}");
                     Console.WriteLine($"  Disk exists: {File.Exists(diskPath)}");
                 }
@@ -335,6 +445,8 @@ namespace MapTool.MapData
         // Map image (24.jpg file)
         public byte[] MapImageData { get; set; }
         public string MapImagePath { get; set; }
+        public int MapImageOffsetX { get; set; }
+        public int MapImageOffsetY { get; set; }
 
         /// <summary>
         /// Get total map size in pixels

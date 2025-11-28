@@ -7,7 +7,7 @@ namespace MapTool.MapData
     /// </summary>
     public static class MapConstants
     {
-        // Cell dimensions
+        // Cell dimensions (logic/scene coordinates)
         public const int LOGIC_CELL_WIDTH = 32;
         public const int LOGIC_CELL_HEIGHT = 32;
 
@@ -15,9 +15,17 @@ namespace MapTool.MapData
         public const int REGION_GRID_WIDTH = 16;
         public const int REGION_GRID_HEIGHT = 32;
 
-        // Region dimensions (in pixels)
+        // Region dimensions (in logic pixels) - for game data
         public const int REGION_PIXEL_WIDTH = 512;   // 16 * 32
         public const int REGION_PIXEL_HEIGHT = 1024; // 32 * 32
+
+        // Map image rendering (24.jpg coordinates) - from client MAP_SCALE_H/V
+        // Client uses scale factors: world / 16 (H) and world / 32 (V)
+        // Result: 1 region = 2048/16 x 4096/32 = 128x128 pixels on 24.jpg
+        public const int MAP_SCALE_H = 16;
+        public const int MAP_SCALE_V = 32;
+        public const int MAP_REGION_PIXEL_WIDTH = 128;   // 2048 / 16
+        public const int MAP_REGION_PIXEL_HEIGHT = 128;  // 4096 / 32
 
         // File names
         public const string REGION_CLIENT_FILE = "Region_C.dat";
@@ -77,13 +85,17 @@ namespace MapTool.MapData
 
         public static int MakeRegionID(int x, int y)
         {
-            return x | (y << 16);
+            // CORRECT formula: Y * 256 + X
+            // This matches the game's trap file format and in-memory representation
+            // NOT the Windows MAKELONG formula (which would be x | (y << 16))
+            return y * 256 + x;
         }
 
         public static void ParseRegionID(int regionID, out int x, out int y)
         {
-            x = regionID & 0xFFFF;
-            y = (regionID >> 16) & 0xFFFF;
+            // Parse using Y * 256 + X formula
+            x = regionID % 256;
+            y = regionID / 256;
         }
     }
 

@@ -24,14 +24,14 @@ namespace MapTool.Rendering
         private int _mapImageOffsetX = 0;
         private int _mapImageOffsetY = 0;
 
-        // Colors
-        private Color _gridColor = Color.FromArgb(100, 128, 128, 128);
-        private Color _regionBorderColor = Color.FromArgb(200, 0, 0, 255);
-        private Color _obstacleColor = Color.FromArgb(180, 255, 0, 0);      // Red for obstacles
-        private Color _trapColor = Color.FromArgb(180, 255, 255, 0);         // Yellow for traps
-        private Color _walkableCellColor = Color.FromArgb(255, 60, 60, 60);  // Dark gray for walkable cells
-        private Color _selectedCellColor = Color.FromArgb(150, 0, 255, 0);
-        private Color _backgroundColor = Color.FromArgb(255, 20, 20, 20);     // Very dark background
+        // Colors - Enhanced visualization
+        private Color _gridColor = Color.FromArgb(80, 100, 100, 120);  // Subtle grid
+        private Color _regionBorderColor = Color.FromArgb(200, 80, 120, 255);  // Bright border
+        private Color _obstacleColor = Color.FromArgb(200, 60, 60, 60);      // Dark gray obstacles
+        private Color _trapColor = Color.FromArgb(200, 255, 200, 100);         // Light yellow traps
+        private Color _walkableCellColor = Color.FromArgb(255, 180, 220, 180);  // Light green walkable
+        private Color _selectedCellColor = Color.FromArgb(150, 255, 255, 0);
+        private Color _backgroundColor = Color.FromArgb(255, 140, 180, 140);     // Green background like terrain
 
         public int CellSize
         {
@@ -141,15 +141,15 @@ namespace MapTool.Rendering
                 if (!region.IsLoaded)
                     continue;
 
-                // Calculate region bounds in world coordinates
-                int regionWorldX = region.RegionX * MapConstants.REGION_PIXEL_WIDTH;
-                int regionWorldY = region.RegionY * MapConstants.REGION_PIXEL_HEIGHT;
+                // Calculate region bounds in MAP coordinates
+                int regionMapX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                int regionMapY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
 
                 // Skip if region is not in view
-                if (regionWorldX + MapConstants.REGION_PIXEL_WIDTH < startWorldX ||
-                    regionWorldX > endWorldX ||
-                    regionWorldY + MapConstants.REGION_PIXEL_HEIGHT < startWorldY ||
-                    regionWorldY > endWorldY)
+                if (regionMapX + MapConstants.MAP_REGION_PIXEL_WIDTH < startWorldX ||
+                    regionMapX > endWorldX ||
+                    regionMapY + MapConstants.MAP_REGION_PIXEL_HEIGHT < startWorldY ||
+                    regionMapY > endWorldY)
                     continue;
 
                 RenderRegion(g, region, selectedCoord);
@@ -165,50 +165,51 @@ namespace MapTool.Rendering
         /// </summary>
         private void RenderRegion(Graphics g, MapRegionData region, MapCoordinate? selectedCoord)
         {
-            int regionWorldX = region.RegionX * MapConstants.REGION_PIXEL_WIDTH;
-            int regionWorldY = region.RegionY * MapConstants.REGION_PIXEL_HEIGHT;
+            // Use MAP coordinates (same as 24.jpg) for rendering
+            // 1 region = 128x128 pixels on screen (matching image scale)
+            int regionMapX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
+            int regionMapY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+
+            // Calculate cell size on map (divide region size by cell count)
+            int cellMapWidth = MapConstants.MAP_REGION_PIXEL_WIDTH / MapConstants.REGION_GRID_WIDTH;   // 128/16 = 8
+            int cellMapHeight = MapConstants.MAP_REGION_PIXEL_HEIGHT / MapConstants.REGION_GRID_HEIGHT; // 128/32 = 4
 
             // Draw cells
             for (int cy = 0; cy < MapConstants.REGION_GRID_HEIGHT; cy++)
             {
                 for (int cx = 0; cx < MapConstants.REGION_GRID_WIDTH; cx++)
                 {
-                    int cellWorldX = regionWorldX + cx * MapConstants.LOGIC_CELL_WIDTH;
-                    int cellWorldY = regionWorldY + cy * MapConstants.LOGIC_CELL_HEIGHT;
+                    int cellMapX = regionMapX + cx * cellMapWidth;
+                    int cellMapY = regionMapY + cy * cellMapHeight;
 
-                    int screenX = cellWorldX - _viewOffsetX;
-                    int screenY = cellWorldY - _viewOffsetY;
+                    int screenX = cellMapX - _viewOffsetX;
+                    int screenY = cellMapY - _viewOffsetY;
 
-                    // Use LOGIC_CELL size for rendering (no gaps!)
+                    // Use MAP scale for rendering
                     Rectangle cellRect = new Rectangle(screenX, screenY,
-                        MapConstants.LOGIC_CELL_WIDTH, MapConstants.LOGIC_CELL_HEIGHT);
+                        cellMapWidth, cellMapHeight);
 
-                    // Determine cell color and whether to draw
-                    bool shouldDraw = true;
-                    Color cellColor = _walkableCellColor; // Default: walkable (dark gray)
+                    // Determine cell color - ALWAYS draw for visualization
+                    Color cellColor = _walkableCellColor; // Default: walkable (light green)
 
                     if (region.Obstacles[cx, cy] != 0)
                     {
-                        cellColor = _obstacleColor; // Red for obstacles
+                        cellColor = _obstacleColor; // Dark gray for obstacles
                     }
                     else if (region.Traps[cx, cy] != 0)
                     {
-                        cellColor = _trapColor; // Yellow for traps
+                        cellColor = _trapColor; // Light yellow for traps
                     }
                     else if (_mapImage != null)
                     {
-                        // If we have map image, don't draw empty walkable cells
-                        // (they would cover the image!)
-                        shouldDraw = false;
+                        // If we have map image, use semi-transparent walkable color
+                        cellColor = Color.FromArgb(100, 180, 220, 180);
                     }
 
-                    // Fill cell with color (only if needed)
-                    if (shouldDraw)
+                    // Always draw cells for better visualization
+                    using (SolidBrush brush = new SolidBrush(cellColor))
                     {
-                        using (SolidBrush brush = new SolidBrush(cellColor))
-                        {
-                            g.FillRectangle(brush, cellRect);
-                        }
+                        g.FillRectangle(brush, cellRect);
                     }
 
                     // Highlight selected cell (draw on top)
@@ -237,10 +238,10 @@ namespace MapTool.Rendering
 
             // Draw region border
             Rectangle regionRect = new Rectangle(
-                regionWorldX - _viewOffsetX,
-                regionWorldY - _viewOffsetY,
-                MapConstants.REGION_PIXEL_WIDTH,
-                MapConstants.REGION_PIXEL_HEIGHT);
+                regionMapX - _viewOffsetX,
+                regionMapY - _viewOffsetY,
+                MapConstants.MAP_REGION_PIXEL_WIDTH,
+                MapConstants.MAP_REGION_PIXEL_HEIGHT);
 
             using (Pen pen = new Pen(_regionBorderColor, 2))
             {
