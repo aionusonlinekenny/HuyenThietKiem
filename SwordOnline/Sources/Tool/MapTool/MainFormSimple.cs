@@ -197,6 +197,9 @@ namespace MapTool
 
                 _renderer.Zoom = 1.0f;
 
+                // Update scroll area size based on map size and zoom
+                UpdateScrollAreaSize();
+
                 mapPanel.Invalidate();
 
                 // Don't auto-export - user will use Export button
@@ -212,9 +215,42 @@ namespace MapTool
             }
         }
 
+        // Update scroll area size based on map and zoom level
+        private void UpdateScrollAreaSize()
+        {
+            if (_currentMap == null)
+            {
+                mapPanel.AutoScrollMinSize = new Size(0, 0);
+                return;
+            }
+
+            // Calculate total map size in pixels
+            int mapWidth = _currentMap.GetMapPixelWidth();
+            int mapHeight = _currentMap.GetMapPixelHeight();
+
+            // Apply zoom to get the actual scroll area size
+            int scrollWidth = (int)(mapWidth * _renderer.Zoom);
+            int scrollHeight = (int)(mapHeight * _renderer.Zoom);
+
+            // Add some padding
+            scrollWidth += 200;
+            scrollHeight += 200;
+
+            mapPanel.AutoScrollMinSize = new Size(scrollWidth, scrollHeight);
+
+            Console.WriteLine($"📏 Scroll area size: {scrollWidth}x{scrollHeight} pixels (zoom: {_renderer.Zoom:F2})");
+        }
+
         // Map panel paint
         private void mapPanel_Paint(object sender, PaintEventArgs e)
         {
+            // Sync renderer view offset with panel's auto scroll position
+            if (mapPanel.AutoScroll)
+            {
+                _renderer.ViewOffsetX = -mapPanel.AutoScrollPosition.X;
+                _renderer.ViewOffsetY = -mapPanel.AutoScrollPosition.Y;
+            }
+
             _renderer.Render(e.Graphics, mapPanel.Width, mapPanel.Height, _selectedCoordinate);
         }
 
@@ -249,14 +285,19 @@ namespace MapTool
         // Map panel mouse move
         private void mapPanel_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_isPanning)
+            if (_isPanning && mapPanel.AutoScroll)
             {
                 int deltaX = _lastMousePosition.X - e.X;
                 int deltaY = _lastMousePosition.Y - e.Y;
 
-                _renderer.Pan(deltaX, deltaY);
-                _lastMousePosition = e.Location;
+                // Update auto scroll position instead of manual panning
+                Point currentScroll = mapPanel.AutoScrollPosition;
+                mapPanel.AutoScrollPosition = new Point(
+                    -currentScroll.X + deltaX,
+                    -currentScroll.Y + deltaY
+                );
 
+                _lastMousePosition = e.Location;
                 mapPanel.Invalidate();
             }
             else if (_currentMap != null)
@@ -325,13 +366,17 @@ namespace MapTool
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
             _renderer.Zoom = Math.Min(4.0f, _renderer.Zoom * 1.2f);
+            UpdateScrollAreaSize();
             mapPanel.Invalidate();
+            lblStatus.Text = $"Zoom: {_renderer.Zoom:P0}";
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
             _renderer.Zoom = Math.Max(0.1f, _renderer.Zoom / 1.2f);
+            UpdateScrollAreaSize();
             mapPanel.Invalidate();
+            lblStatus.Text = $"Zoom: {_renderer.Zoom:P0}";
         }
 
         // Export buttons
