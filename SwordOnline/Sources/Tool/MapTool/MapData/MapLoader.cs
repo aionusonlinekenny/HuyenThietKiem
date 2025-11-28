@@ -328,49 +328,91 @@ namespace MapTool.MapData
 
             // Try disk first (preferred for user-uploaded images)
             string diskPath = Path.Combine(_gameFolder, mapImageRelativePath.TrimStart('\\', '/'));
-            DebugLogger.Log($"   Disk Path: {diskPath}");
-            DebugLogger.Log($"   Disk Exists: {File.Exists(diskPath)}");
+            DebugLogger.Log($"   Disk Path (Unicode): {diskPath}");
+            DebugLogger.Log($"   Disk Exists (direct): {File.Exists(diskPath)}");
 
-            // DEBUG: List folders to help diagnose encoding/path issues
+            // FALLBACK: Try to find the file using actual filesystem enumeration
+            // This handles GB2312 encoding issues on Windows
+            string actualDiskPath = null;
             if (!File.Exists(diskPath))
             {
                 try
                 {
-                    string mapsDir = Path.Combine(_gameFolder, "maps");
-                    DebugLogger.Log($"   📁 Checking maps directory: {mapsDir}");
-                    DebugLogger.Log($"   📁 Directory exists: {Directory.Exists(mapsDir)}");
+                    DebugLogger.Log($"   🔍 Searching with filesystem enumeration (handles GB2312 encoding)...");
 
+                    string mapsDir = Path.Combine(_gameFolder, "maps");
                     if (Directory.Exists(mapsDir))
                     {
-                        var folders = Directory.GetDirectories(mapsDir);
-                        DebugLogger.Log($"   📁 Found {folders.Length} folders");
+                        // Split the folder path to navigate step by step
+                        string[] pathParts = mapEntry.FolderPath.Split(new[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
+                        string currentPath = mapsDir;
 
-                        // Show first few folders to help debug
-                        int showCount = Math.Min(10, folders.Length);
-                        for (int i = 0; i < showCount; i++)
+                        bool pathExists = true;
+                        for (int i = 0; i < pathParts.Length; i++)
                         {
-                            string folderName = Path.GetFileName(folders[i]);
-                            DebugLogger.Log($"      [{i+1}] {folderName}");
+                            string expectedName = pathParts[i];
+                            string foundPath = null;
+
+                            // Enumerate subdirectories and find matching one (case-insensitive, encoding-tolerant)
+                            var subdirs = Directory.GetDirectories(currentPath);
+                            foreach (var subdir in subdirs)
+                            {
+                                string actualName = Path.GetFileName(subdir);
+                                // Try exact match first
+                                if (string.Equals(actualName, expectedName, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    foundPath = subdir;
+                                    break;
+                                }
+                            }
+
+                            if (foundPath != null)
+                            {
+                                currentPath = foundPath;
+                                DebugLogger.Log($"      ✓ Found: {pathParts[i]} → {Path.GetFileName(foundPath)}");
+                            }
+                            else
+                            {
+                                DebugLogger.Log($"      ✗ Not found: {pathParts[i]}");
+                                DebugLogger.Log($"      Available folders:");
+                                int showCount = Math.Min(5, subdirs.Length);
+                                for (int j = 0; j < showCount; j++)
+                                {
+                                    DebugLogger.Log($"        [{j+1}] {Path.GetFileName(subdirs[j])}");
+                                }
+                                pathExists = false;
+                                break;
+                            }
                         }
 
-                        // Check if expected folder exists
-                        string expectedFolder = Path.Combine(mapsDir, mapEntry.FolderPath.Split('\\')[0]);
-                        DebugLogger.Log($"   📁 Expected first folder: {mapEntry.FolderPath.Split('\\')[0]}");
-                        DebugLogger.Log($"   📁 Expected folder exists: {Directory.Exists(expectedFolder)}");
+                        if (pathExists)
+                        {
+                            // Now try to find the 24.jpg file
+                            string imagePath = Path.Combine(currentPath, "24.jpg");
+                            if (File.Exists(imagePath))
+                            {
+                                actualDiskPath = imagePath;
+                                DebugLogger.Log($"   ✓ Found image via enumeration: {actualDiskPath}");
+                            }
+                            else
+                            {
+                                DebugLogger.Log($"   ✗ Folder found but no 24.jpg: {currentPath}");
+                            }
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    DebugLogger.Log($"   ⚠ Failed to list directories: {ex.Message}");
+                    DebugLogger.Log($"   ⚠ Failed during filesystem enumeration: {ex.Message}");
                 }
             }
 
             try
             {
-                // PRIORITY 1: Try disk first (user-uploaded files)
+                // PRIORITY 1: Try direct disk path (Unicode)
                 if (File.Exists(diskPath))
                 {
-                    DebugLogger.Log($"✓ Loading image from DISK");
+                    DebugLogger.Log($"✓ Loading image from DISK (direct Unicode path)");
                     mapData.MapImageData = File.ReadAllBytes(diskPath);
                     mapData.MapImagePath = mapImageRelativePath;
 
@@ -384,7 +426,21 @@ namespace MapTool.MapData
                     DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
                     DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
                 }
-                // PRIORITY 2: Try pak file
+                // PRIORITY 2: Try enumerated path (handles GB2312 encoding)
+                else if (actualDiskPath != null && File.Exists(actualDiskPath))
+                {
+                    DebugLogger.Log($"✓ Loading image from DISK (via filesystem enumeration)");
+                    mapData.MapImageData = File.ReadAllBytes(actualDiskPath);
+                    mapData.MapImagePath = mapImageRelativePath;
+
+                    mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                    mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+
+                    DebugLogger.Log($"✓ Loaded map image from disk (enumerated): {actualDiskPath}");
+                    DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
+                    DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
+                }
+                // PRIORITY 3: Try pak file
                 else if (_pakReader != null && FileExists(mapImageRelativePath))
                 {
                     DebugLogger.Log($"✓ Loading image from PAK");
