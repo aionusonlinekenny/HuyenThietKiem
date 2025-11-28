@@ -315,9 +315,10 @@ namespace MapTool.MapData
             mapData.LoadedRegionCount = loadedCount;
 
             // Step 5: Try to load map image (24.jpg)
-            // NEW: Simple and correct image path construction
+            // NEW: Simple and correct image path construction with encoding fallback
             // FolderPath format: "西北南区\成都\成都"
             // Image path: "\maps\西北南区\成都\成都24.jpg"
+
             string mapImageRelativePath = $"\\maps\\{mapEntry.FolderPath}24.jpg";
 
             DebugLogger.Log($"🖼️  LOADING MAP IMAGE");
@@ -330,9 +331,43 @@ namespace MapTool.MapData
             DebugLogger.Log($"   Disk Path: {diskPath}");
             DebugLogger.Log($"   Disk Exists: {File.Exists(diskPath)}");
 
+            // DEBUG: List folders to help diagnose encoding/path issues
+            if (!File.Exists(diskPath))
+            {
+                try
+                {
+                    string mapsDir = Path.Combine(_gameFolder, "maps");
+                    DebugLogger.Log($"   📁 Checking maps directory: {mapsDir}");
+                    DebugLogger.Log($"   📁 Directory exists: {Directory.Exists(mapsDir)}");
+
+                    if (Directory.Exists(mapsDir))
+                    {
+                        var folders = Directory.GetDirectories(mapsDir);
+                        DebugLogger.Log($"   📁 Found {folders.Length} folders");
+
+                        // Show first few folders to help debug
+                        int showCount = Math.Min(10, folders.Length);
+                        for (int i = 0; i < showCount; i++)
+                        {
+                            string folderName = Path.GetFileName(folders[i]);
+                            DebugLogger.Log($"      [{i+1}] {folderName}");
+                        }
+
+                        // Check if expected folder exists
+                        string expectedFolder = Path.Combine(mapsDir, mapEntry.FolderPath.Split('\\')[0]);
+                        DebugLogger.Log($"   📁 Expected first folder: {mapEntry.FolderPath.Split('\\')[0]}");
+                        DebugLogger.Log($"   📁 Expected folder exists: {Directory.Exists(expectedFolder)}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    DebugLogger.Log($"   ⚠ Failed to list directories: {ex.Message}");
+                }
+            }
+
             try
             {
-                // PRIORITY 1: Try disk first
+                // PRIORITY 1: Try disk first (user-uploaded files)
                 if (File.Exists(diskPath))
                 {
                     DebugLogger.Log($"✓ Loading image from DISK");
@@ -371,7 +406,8 @@ namespace MapTool.MapData
                 }
                 else
                 {
-                    DebugLogger.Log($"ℹ️  No map image found (this is normal for maps without 24.jpg)");
+                    DebugLogger.Log($"ℹ️  No map image found");
+                    DebugLogger.Log($"   This is normal - not all maps have 24.jpg files");
                     DebugLogger.Log($"   Tool will render using obstacle data instead");
                 }
             }
