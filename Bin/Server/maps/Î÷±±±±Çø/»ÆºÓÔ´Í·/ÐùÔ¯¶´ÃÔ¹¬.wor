@@ -1,0 +1,9 @@
+[MAIN]
+HaveMap=1
+IsInDoor=1
+brightness=255
+color=119,158,0,255
+event=Ø¤°ï
+rect=97,99,107,107
+verson=0
+windspeed=0.100000,0.000000,0.000000

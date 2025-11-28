@@ -1,0 +1,75 @@
+﻿================================================================================
+MapTool Debug Log - 2025-11-27 22:08:58
+================================================================================
+
+[22:08:58.417] ✓ Debug log initialized: D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48\MapTool_Debug_20251127_220858.log
+[22:08:58.417] === MapTool Started ===
+[22:08:58.417] Executable: D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48\MapTool.exe
+[22:08:58.417] Working Directory: D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48
+[22:08:58.417] Log file: D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48\MapTool_Debug_20251127_220858.log
+[22:08:58.417] --------------------------------------------------------------------------------
+[22:08:58.417] Default folder set: D:\HuyenThietKiem\Bin\Server
+[22:09:09.420] --------------------------------------------------------------------------------
+[22:09:09.420] 📂 LOADING MAP
+[22:09:09.420]    Map ID: 11
+[22:09:09.420]    Game Folder: D:\ThienDieuOnline\ThienDieuOnline\bin\server
+[22:09:09.420]    Mode: Server
+[22:09:09.420] --------------------------------------------------------------------------------
+[22:09:09.640] --------------------------------------------------------------------------------
+[22:09:09.640] 🔍 PARSED RECT FROM .WOR FILE
+[22:09:09.640]    rect = 165,142,215,172
+[22:09:09.640]    Grid size: 51 x 31 regions
+[22:09:09.640]    First region coords: (165, 142)
+[22:09:09.640]    First RegionID (Y*256+X): 142*256 + 165 = 36517
+[22:09:09.640] --------------------------------------------------------------------------------
+[22:09:09.640] --------------------------------------------------------------------------------
+[22:09:09.640] 🔍 SCANNING FOR REGION FILES
+[22:09:09.640]    Looking for regions from (165,142) to (215,172)
+[22:09:09.640]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\165_Region_S.dat
+[22:09:09.640]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\166_Region_S.dat
+[22:09:09.640]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\167_Region_S.dat
+[22:09:09.640]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\168_Region_S.dat
+[22:09:09.640]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\169_Region_S.dat
+[22:09:09.646]    ✓ Found region (3d,3d) → RegionID=36557 | File: maps\西南北区\成都\成都\v_142\205_Region_S.dat
+[22:09:09.646]    ✓ Found region (3d,3d) → RegionID=36558 | File: maps\西南北区\成都\成都\v_142\206_Region_S.dat
+[22:09:09.646]    ✓ Found region (3d,3d) → RegionID=36559 | File: maps\西南北区\成都\成都\v_142\207_Region_S.dat
+[22:09:09.646]    ✓ Found region (3d,3d) → RegionID=36807 | File: maps\西南北区\成都\成都\v_143\199_Region_S.dat
+[22:09:09.646]    ✓ Found region (3d,3d) → RegionID=36808 | File: maps\西南北区\成都\成都\v_143\200_Region_S.dat
+[22:09:09.646]    ⚠ Error loading (206,143): Unable to read beyond the end of the stream.
+[22:09:09.652]    ⚠ Error loading (206,144): Unable to read beyond the end of the stream.
+[22:09:09.657]    ⚠ Error loading (175,149): Unable to read beyond the end of the stream.
+[22:09:09.657]    ⚠ Error loading (176,149): Unable to read beyond the end of the stream.
+[22:09:09.657]    ⚠ Error loading (175,150): Unable to read beyond the end of the stream.
+[22:09:09.657]    ⚠ Error loading (176,150): Unable to read beyond the end of the stream.
+[22:09:09.657]    ⚠ Error loading (188,154): Unable to read beyond the end of the stream.
+[22:09:09.657]    ⚠ Error loading (205,155): Unable to read beyond the end of the stream.
+[22:09:09.657]    ⚠ Error loading (205,156): Unable to read beyond the end of the stream.
+[22:09:09.666]    ⚠ Error loading (177,158): Unable to read beyond the end of the stream.
+[22:09:09.666]    ⚠ Error loading (203,158): Unable to read beyond the end of the stream.
+[22:09:09.666]    ⚠ Error loading (177,159): Unable to read beyond the end of the stream.
+[22:09:09.670]    ⚠ Error loading (186,160): Unable to read beyond the end of the stream.
+[22:09:09.670]    ⚠ Error loading (200,163): Unable to read beyond the end of the stream.
+[22:09:09.670]    ⚠ Error loading (201,163): Unable to read beyond the end of the stream.
+[22:09:09.670]    ⚠ Error loading (212,165): Unable to read beyond the end of the stream.
+[22:09:09.670]    ⚠ Error loading (213,165): Unable to read beyond the end of the stream.
+[22:09:09.670]    ⚠ Error loading (169,166): Unable to read beyond the end of the stream.
+[22:09:09.677]    ⚠ Error loading (212,166): Unable to read beyond the end of the stream.
+[22:09:09.677]    ⚠ Error loading (213,166): Unable to read beyond the end of the stream.
+[22:09:09.677]    ⚠ Error loading (169,167): Unable to read beyond the end of the stream.
+[22:09:09.677]    ⚠ Error loading (202,169): Unable to read beyond the end of the stream.
+[22:09:09.677]    ⚠ Error loading (201,170): Unable to read beyond the end of the stream.
+[22:09:09.677]    ⚠ Error loading (202,170): Unable to read beyond the end of the stream.
+[22:09:09.677] --------------------------------------------------------------------------------
+[22:09:09.677] 📊 REGION SCAN SUMMARY
+[22:09:09.677]    Attempted: 1581 regions
+[22:09:09.677]    Loaded: 803 regions
+[22:09:09.677]    Missing: 778 regions
+[22:09:09.677]    First missing: (165,142), (166,142), (167,142), (168,142), (169,142)
+[22:09:09.677]    First existing: (205,142), (206,142), (207,142), (199,143), (200,143)
+[22:09:09.677] --------------------------------------------------------------------------------
+[22:09:09.677] ✓ Map loaded successfully!
+[22:09:09.677]    Name: Th祅h Й
+[22:09:09.677]    Folder: 西南北区\成都\成都
+[22:09:09.677]    Regions loaded: 803
+[22:09:09.677]    First region: (205, 142) RegionID=36557
+[22:09:09.677] --------------------------------------------------------------------------------

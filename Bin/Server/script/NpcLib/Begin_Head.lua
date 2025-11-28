@@ -32,6 +32,7 @@ JPreLoadMap.tbUnLoad = {-- Dialoger, Normal, Trap, Object
 	[142] = {0,1,1,0},	-- duoc vuong dong 1 -> 2 
 	[319] = {0,1,1,0},	-- lam du quan 
 	[75] = {0,1,1,0},	-- khoa lang dong  
+	--[21] = {0,1,0,0},	-- khoa lang dong 
 	-- [202] = {0,1,1,0},	-- phu dung dong 
 	[224] = {0,1,1,0},	-- sa mac dia bieu 
 	[320] = {0,1,1,0},	-- chan nui truong bach 
