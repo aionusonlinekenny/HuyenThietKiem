@@ -86,6 +86,124 @@ namespace MapTool.MapData
         }
 
         /// <summary>
+        /// Try to match two strings considering GB2312 encoding issues
+        /// </summary>
+        private bool TryMatchGB2312String(string actual, string expected)
+        {
+            // Strategy 1: Direct Unicode match
+            if (string.Equals(actual, expected, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            // Strategy 2: GB2312 re-decode (Default→GB2312)
+            try
+            {
+                byte[] nameBytes = Encoding.Default.GetBytes(actual);
+                string actualGB2312 = Encoding.GetEncoding("GB2312").GetString(nameBytes);
+                if (string.Equals(actualGB2312, expected, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            catch { }
+
+            // Strategy 3: GB2312 re-decode (Latin-1→GB2312)
+            try
+            {
+                byte[] nameBytes = Encoding.GetEncoding("ISO-8859-1").GetBytes(actual);
+                string actualGB2312 = Encoding.GetEncoding("GB2312").GetString(nameBytes);
+                if (string.Equals(actualGB2312, expected, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            catch { }
+
+            // Strategy 4: Expected→GB2312→Latin-1
+            try
+            {
+                byte[] expectedBytes = Encoding.GetEncoding("GB2312").GetBytes(expected);
+                string expectedAsLatin1 = Encoding.GetEncoding("ISO-8859-1").GetString(expectedBytes);
+                if (string.Equals(actual, expectedAsLatin1, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            catch { }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Find file on disk using GB2312-aware filesystem enumeration
+        /// Handles Chinese folder/file names that use GB2312 encoding
+        /// </summary>
+        private string FindFileWithGB2312Encoding(string relativePath)
+        {
+            try
+            {
+                string fullRelativePath = relativePath.TrimStart('\\', '/');
+                string expectedFileName = Path.GetFileName(fullRelativePath);
+                string expectedDirPath = Path.GetDirectoryName(fullRelativePath);
+
+                // Split directory path into parts and navigate step by step
+                string[] pathParts = expectedDirPath.Split(new[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
+                string currentPath = _gameFolder;
+
+                // Navigate through directories
+                for (int i = 0; i < pathParts.Length; i++)
+                {
+                    string expectedName = pathParts[i];
+                    string foundPath = null;
+
+                    if (!Directory.Exists(currentPath))
+                        return null;
+
+                    var subdirs = Directory.GetDirectories(currentPath);
+                    foreach (var subdir in subdirs)
+                    {
+                        string actualName = Path.GetFileName(subdir);
+                        if (TryMatchGB2312String(actualName, expectedName))
+                        {
+                            foundPath = subdir;
+                            break;
+                        }
+                    }
+
+                    if (foundPath != null)
+                    {
+                        currentPath = foundPath;
+                    }
+                    else
+                    {
+                        return null; // Directory not found
+                    }
+                }
+
+                // Look for the file in the final directory
+                if (!Directory.Exists(currentPath))
+                    return null;
+
+                var files = Directory.GetFiles(currentPath);
+                foreach (var file in files)
+                {
+                    string actualFileName = Path.GetFileName(file);
+                    if (TryMatchGB2312String(actualFileName, expectedFileName))
+                    {
+                        return file;
+                    }
+                }
+            }
+            catch
+            {
+                // Ignore errors in GB2312 enumeration
+            }
+
+            return null; // File not found
+        }
+
+        /// <summary>
         /// Read file (pak or disk)
         /// </summary>
         private byte[] ReadFileBytes(string relativePath)
@@ -121,11 +239,18 @@ namespace MapTool.MapData
                 }
             }
 
-            // Fallback to disk
+            // Try direct disk path first (for non-GB2312 paths)
             string diskPath = Path.Combine(_gameFolder, relativePath.TrimStart('\\', '/'));
             if (File.Exists(diskPath))
             {
                 return File.ReadAllBytes(diskPath);
+            }
+
+            // Fallback: Try GB2312-aware filesystem enumeration
+            string actualPath = FindFileWithGB2312Encoding(relativePath);
+            if (actualPath != null && File.Exists(actualPath))
+            {
+                return File.ReadAllBytes(actualPath);
             }
 
             return null;
