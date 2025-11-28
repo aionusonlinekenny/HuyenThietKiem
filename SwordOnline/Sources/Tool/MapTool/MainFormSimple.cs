@@ -30,6 +30,11 @@ namespace MapTool
         {
             InitializeComponent();
 
+            // Enable double buffering for smooth rendering
+            mapPanel.GetType().InvokeMember("DoubleBuffered",
+                System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
+                null, mapPanel, new object[] { true });
+
             // Initialize debug logger FIRST
             DebugLogger.Initialize();
             DebugLogger.Log("=== MapTool Started ===");

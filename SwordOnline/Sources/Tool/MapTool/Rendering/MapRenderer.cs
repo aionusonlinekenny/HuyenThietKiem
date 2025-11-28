@@ -182,73 +182,64 @@ namespace MapTool.Rendering
         private void RenderRegion(Graphics g, MapRegionData region, MapCoordinate? selectedCoord)
         {
             // Use MAP coordinates (same as 24.jpg) for rendering
-            // 1 region = 128x128 pixels on screen (matching image scale)
+            // 1 region = 32x32 pixels on screen (matching image scale)
             int regionMapX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
             int regionMapY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
 
             // Calculate cell size on map (divide region size by cell count)
-            int cellMapWidth = MapConstants.MAP_REGION_PIXEL_WIDTH / MapConstants.REGION_GRID_WIDTH;   // 128/16 = 8
-            int cellMapHeight = MapConstants.MAP_REGION_PIXEL_HEIGHT / MapConstants.REGION_GRID_HEIGHT; // 128/32 = 4
+            int cellMapWidth = MapConstants.MAP_REGION_PIXEL_WIDTH / MapConstants.REGION_GRID_WIDTH;   // 32/16 = 2
+            int cellMapHeight = MapConstants.MAP_REGION_PIXEL_HEIGHT / MapConstants.REGION_GRID_HEIGHT; // 32/32 = 1
 
-            // Draw cells
+            // OPTIMIZED: Only draw obstacles, traps, and selected cell
+            // Cells are tiny (2x1 pixels), drawing all cells causes massive slowdown!
+            // With 800 regions × 512 cells = 409,600 draw calls = Not Responding!
             for (int cy = 0; cy < MapConstants.REGION_GRID_HEIGHT; cy++)
             {
                 for (int cx = 0; cx < MapConstants.REGION_GRID_WIDTH; cx++)
                 {
+                    bool hasObstacle = region.Obstacles[cx, cy] != 0;
+                    bool hasTrap = region.Traps[cx, cy] != 0;
+                    bool isSelected = selectedCoord.HasValue &&
+                                    selectedCoord.Value.RegionID == region.RegionID &&
+                                    selectedCoord.Value.CellX == cx &&
+                                    selectedCoord.Value.CellY == cy;
+
+                    // Skip empty walkable cells if map image exists (let image show through)
+                    if (!hasObstacle && !hasTrap && !isSelected && _mapImage != null)
+                        continue;
+
                     int cellMapX = regionMapX + cx * cellMapWidth;
                     int cellMapY = regionMapY + cy * cellMapHeight;
 
                     int screenX = cellMapX - _viewOffsetX;
                     int screenY = cellMapY - _viewOffsetY;
 
-                    // Use MAP scale for rendering
-                    Rectangle cellRect = new Rectangle(screenX, screenY,
-                        cellMapWidth, cellMapHeight);
+                    Rectangle cellRect = new Rectangle(screenX, screenY, cellMapWidth, cellMapHeight);
 
-                    // Determine cell color - ALWAYS draw for visualization
-                    Color cellColor = _walkableCellColor; // Default: walkable (light green)
+                    // Determine cell color
+                    Color cellColor;
+                    if (hasObstacle)
+                        cellColor = _obstacleColor; // Bright RED
+                    else if (hasTrap)
+                        cellColor = _trapColor; // Bright YELLOW
+                    else if (isSelected)
+                        cellColor = _selectedCellColor; // Bright GREEN
+                    else
+                        cellColor = _walkableCellColor; // Light green (when no map image)
 
-                    if (region.Obstacles[cx, cy] != 0)
-                    {
-                        cellColor = _obstacleColor; // Bright RED for obstacles
-                    }
-                    else if (region.Traps[cx, cy] != 0)
-                    {
-                        cellColor = _trapColor; // Bright YELLOW for traps
-                    }
-                    else if (_mapImage != null)
-                    {
-                        // If we have map image, use VERY transparent walkable color
-                        // This lets the background image show through clearly
-                        cellColor = Color.FromArgb(40, 180, 220, 180);
-                    }
-
-                    // Always draw cells for better visualization
+                    // Draw cell
                     using (SolidBrush brush = new SolidBrush(cellColor))
                     {
                         g.FillRectangle(brush, cellRect);
                     }
 
-                    // Highlight selected cell (draw on top)
-                    if (selectedCoord.HasValue &&
-                        selectedCoord.Value.RegionID == region.RegionID &&
-                        selectedCoord.Value.CellX == cx &&
-                        selectedCoord.Value.CellY == cy)
+                    // Draw border for selected cell
+                    if (isSelected)
                     {
-                        using (SolidBrush brush = new SolidBrush(_selectedCellColor))
-                        {
-                            g.FillRectangle(brush, cellRect);
-                        }
                         using (Pen pen = new Pen(Color.Lime, 2))
                         {
                             g.DrawRectangle(pen, cellRect);
                         }
-                    }
-
-                    // Draw grid (draw last so it's visible)
-                    using (Pen pen = new Pen(_gridColor))
-                    {
-                        g.DrawRectangle(pen, cellRect);
                     }
                 }
             }
