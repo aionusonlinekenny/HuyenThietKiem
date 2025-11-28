@@ -164,10 +164,6 @@ namespace MapTool
                     Console.WriteLine($"🎨 Map image offset: ({_currentMap.MapImageOffsetX}, {_currentMap.MapImageOffsetY})");
                     _renderer.SetMapImage(_currentMap.MapImageData, _currentMap.MapImageOffsetX, _currentMap.MapImageOffsetY);
 
-                    // Set initial view to map image position (so image is visible)
-                    _renderer.ViewOffsetX = _currentMap.MapImageOffsetX;
-                    _renderer.ViewOffsetY = _currentMap.MapImageOffsetY;
-
                     lblStatus.Text = $"Map loaded with image! {_currentMap.LoadedRegionCount} regions.";
                 }
                 else
@@ -176,22 +172,6 @@ namespace MapTool
                     Console.WriteLine($"  Tool will render region grid and obstacles/traps");
                     _renderer.ClearMapImage();
 
-                    // Set view to first loaded region
-                    if (_currentMap.Regions.Count > 0)
-                    {
-                        var firstRegion = _currentMap.Regions.Values.GetEnumerator();
-                        firstRegion.MoveNext();
-                        var region = firstRegion.Current;
-                        _renderer.ViewOffsetX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
-                        _renderer.ViewOffsetY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
-                        Console.WriteLine($"  Set view to first region: ({region.RegionX}, {region.RegionY})");
-                    }
-                    else
-                    {
-                        _renderer.ViewOffsetX = _currentMap.Config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
-                        _renderer.ViewOffsetY = _currentMap.Config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
-                    }
-
                     lblStatus.Text = $"Map loaded (no background image). {_currentMap.LoadedRegionCount} regions.";
                 }
 
@@ -199,6 +179,42 @@ namespace MapTool
 
                 // Update scroll area size based on map size and zoom
                 UpdateScrollAreaSize();
+
+                // Set initial scroll position to show map image or first region
+                // AutoScrollPosition uses NEGATIVE values and SCREEN pixels (with zoom)
+                int initialViewX = 0;
+                int initialViewY = 0;
+
+                if (_currentMap.MapImageData != null)
+                {
+                    // Scroll to map image position
+                    initialViewX = _currentMap.MapImageOffsetX;
+                    initialViewY = _currentMap.MapImageOffsetY;
+                    Console.WriteLine($"📍 Initial view set to map image position: ({initialViewX}, {initialViewY})");
+                }
+                else if (_currentMap.Regions.Count > 0)
+                {
+                    // Scroll to first loaded region
+                    var firstRegion = _currentMap.Regions.Values.GetEnumerator();
+                    firstRegion.MoveNext();
+                    var region = firstRegion.Current;
+                    initialViewX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                    initialViewY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+                    Console.WriteLine($"📍 Initial view set to first region: ({region.RegionX}, {region.RegionY})");
+                }
+                else
+                {
+                    // Scroll to region grid start
+                    initialViewX = _currentMap.Config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                    initialViewY = _currentMap.Config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+                }
+
+                // Convert MAP pixels to SCREEN pixels (apply zoom) and set scroll position
+                // AutoScrollPosition uses NEGATIVE coordinates
+                mapPanel.AutoScrollPosition = new Point(
+                    (int)(initialViewX * _renderer.Zoom),
+                    (int)(initialViewY * _renderer.Zoom)
+                );
 
                 mapPanel.Invalidate();
 
