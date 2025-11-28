@@ -111,6 +111,22 @@ namespace MapTool.Rendering
         }
 
         /// <summary>
+        /// Get map image bounds in MAP coordinates (for scroll area calculation)
+        /// </summary>
+        public Rectangle? GetMapImageBounds()
+        {
+            if (_mapImage == null)
+                return null;
+
+            return new Rectangle(
+                _mapImageOffsetX,
+                _mapImageOffsetY,
+                _mapImage.Width,
+                _mapImage.Height
+            );
+        }
+
+        /// <summary>
         /// Render map to graphics surface
         /// </summary>
         public void Render(Graphics g, int width, int height, MapCoordinate? selectedCoord = null)

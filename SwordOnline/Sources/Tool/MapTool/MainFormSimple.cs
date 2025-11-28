@@ -240,21 +240,54 @@ namespace MapTool
                 return;
             }
 
-            // Calculate total map size in pixels
-            int mapWidth = _currentMap.GetMapPixelWidth();
-            int mapHeight = _currentMap.GetMapPixelHeight();
+            // Calculate bounding box that includes BOTH regions AND map image
+            int minX = int.MaxValue;
+            int minY = int.MaxValue;
+            int maxX = int.MinValue;
+            int maxY = int.MinValue;
 
-            // Apply zoom to get the actual scroll area size
+            // Include all loaded regions
+            foreach (var region in _currentMap.Regions.Values)
+            {
+                int regionMapX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                int regionMapY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+
+                minX = Math.Min(minX, regionMapX);
+                minY = Math.Min(minY, regionMapY);
+                maxX = Math.Max(maxX, regionMapX + MapConstants.MAP_REGION_PIXEL_WIDTH);
+                maxY = Math.Max(maxY, regionMapY + MapConstants.MAP_REGION_PIXEL_HEIGHT);
+            }
+
+            // Include map image if available
+            if (_currentMap.MapImageData != null && _renderer != null)
+            {
+                // Get map image info from renderer
+                var imageInfo = _renderer.GetMapImageBounds();
+                if (imageInfo.HasValue)
+                {
+                    minX = Math.Min(minX, imageInfo.Value.X);
+                    minY = Math.Min(minY, imageInfo.Value.Y);
+                    maxX = Math.Max(maxX, imageInfo.Value.X + imageInfo.Value.Width);
+                    maxY = Math.Max(maxY, imageInfo.Value.Y + imageInfo.Value.Height);
+                }
+            }
+
+            // Calculate total size in MAP pixels
+            int mapWidth = (maxX - minX);
+            int mapHeight = (maxY - minY);
+
+            // Apply zoom to get SCREEN pixels
             int scrollWidth = (int)(mapWidth * _renderer.Zoom);
             int scrollHeight = (int)(mapHeight * _renderer.Zoom);
 
-            // Add some padding
-            scrollWidth += 200;
-            scrollHeight += 200;
+            // Add padding for comfortable navigation
+            scrollWidth += 500;
+            scrollHeight += 500;
 
             mapPanel.AutoScrollMinSize = new Size(scrollWidth, scrollHeight);
 
-            Console.WriteLine($"📏 Scroll area size: {scrollWidth}x{scrollHeight} pixels (zoom: {_renderer.Zoom:F2})");
+            Console.WriteLine($"📏 Content bounds: MAP ({minX},{minY}) to ({maxX},{maxY})");
+            Console.WriteLine($"📏 Scroll area: {scrollWidth}x{scrollHeight} SCREEN pixels (zoom: {_renderer.Zoom:F2})");
         }
 
         // Map panel paint
@@ -404,26 +437,38 @@ namespace MapTool
             if (Math.Abs(newZoom - oldZoom) < 0.001f)
                 return; // No change
 
-            // Calculate center point of current view (in MAP coordinates)
-            int centerScreenX = mapPanel.Width / 2;
-            int centerScreenY = mapPanel.Height / 2;
+            // Get current scroll position (note: AutoScrollPosition returns negative values)
+            int oldScrollX = -mapPanel.AutoScrollPosition.X;  // Convert to positive
+            int oldScrollY = -mapPanel.AutoScrollPosition.Y;
 
-            // Current center in MAP coordinates
-            int oldCenterMapX = (int)((centerScreenX - mapPanel.AutoScrollPosition.X) / oldZoom);
-            int oldCenterMapY = (int)((centerScreenY - mapPanel.AutoScrollPosition.Y) / oldZoom);
+            // Calculate center point of viewport in MAP coordinates
+            // ViewOffset (MAP coords) = ScrollPosition (SCREEN coords) / zoom
+            // Center MAP = ViewOffset + (viewportCenter / zoom)
+            int viewportCenterX = mapPanel.Width / 2;
+            int viewportCenterY = mapPanel.Height / 2;
 
-            // Update zoom
+            float centerMapX = (oldScrollX / oldZoom) + (viewportCenterX / oldZoom);
+            float centerMapY = (oldScrollY / oldZoom) + (viewportCenterY / oldZoom);
+
+            // Update zoom level
             _renderer.Zoom = newZoom;
+
+            // Recalculate scroll area with new zoom
             UpdateScrollAreaSize();
 
-            // Calculate new scroll position to keep same center point
-            // centerScreenX = newScrollX + (oldCenterMapX * newZoom)
-            // newScrollX = centerScreenX - (oldCenterMapX * newZoom)
-            int newScrollX = centerScreenX - (int)(oldCenterMapX * newZoom);
-            int newScrollY = centerScreenY - (int)(oldCenterMapY * newZoom);
+            // Calculate new scroll position to keep same MAP center point
+            // centerMapX = (newScrollX / newZoom) + (viewportCenterX / newZoom)
+            // centerMapX * newZoom = newScrollX + viewportCenterX
+            // newScrollX = (centerMapX * newZoom) - viewportCenterX
+            int newScrollX = (int)((centerMapX * newZoom) - viewportCenterX);
+            int newScrollY = (int)((centerMapY * newZoom) - viewportCenterY);
 
-            // Set scroll position (AutoScrollPosition uses negative values)
-            mapPanel.AutoScrollPosition = new Point(-newScrollX, -newScrollY);
+            // Clamp to valid range (0 to ScrollAreaSize - ViewportSize)
+            newScrollX = Math.Max(0, Math.Min(newScrollX, mapPanel.AutoScrollMinSize.Width - mapPanel.Width));
+            newScrollY = Math.Max(0, Math.Min(newScrollY, mapPanel.AutoScrollMinSize.Height - mapPanel.Height));
+
+            // Set scroll position (must use positive values when setting)
+            mapPanel.AutoScrollPosition = new Point(newScrollX, newScrollY);
 
             mapPanel.Invalidate();
             lblStatus.Text = $"Zoom: {_renderer.Zoom:P0}";
