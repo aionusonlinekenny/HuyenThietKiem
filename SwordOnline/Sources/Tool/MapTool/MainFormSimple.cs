@@ -384,16 +384,47 @@ namespace MapTool
         // Zoom buttons
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
-            _renderer.Zoom = Math.Min(4.0f, _renderer.Zoom * 1.2f);
-            UpdateScrollAreaSize();
-            mapPanel.Invalidate();
-            lblStatus.Text = $"Zoom: {_renderer.Zoom:P0}";
+            ZoomMap(1.2f);
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
-            _renderer.Zoom = Math.Max(0.1f, _renderer.Zoom / 1.2f);
+            ZoomMap(1.0f / 1.2f);
+        }
+
+        // Zoom map while keeping center point stable
+        private void ZoomMap(float zoomFactor)
+        {
+            if (_currentMap == null)
+                return;
+
+            float oldZoom = _renderer.Zoom;
+            float newZoom = Math.Max(0.1f, Math.Min(4.0f, oldZoom * zoomFactor));
+
+            if (Math.Abs(newZoom - oldZoom) < 0.001f)
+                return; // No change
+
+            // Calculate center point of current view (in MAP coordinates)
+            int centerScreenX = mapPanel.Width / 2;
+            int centerScreenY = mapPanel.Height / 2;
+
+            // Current center in MAP coordinates
+            int oldCenterMapX = (int)((centerScreenX - mapPanel.AutoScrollPosition.X) / oldZoom);
+            int oldCenterMapY = (int)((centerScreenY - mapPanel.AutoScrollPosition.Y) / oldZoom);
+
+            // Update zoom
+            _renderer.Zoom = newZoom;
             UpdateScrollAreaSize();
+
+            // Calculate new scroll position to keep same center point
+            // centerScreenX = newScrollX + (oldCenterMapX * newZoom)
+            // newScrollX = centerScreenX - (oldCenterMapX * newZoom)
+            int newScrollX = centerScreenX - (int)(oldCenterMapX * newZoom);
+            int newScrollY = centerScreenY - (int)(oldCenterMapY * newZoom);
+
+            // Set scroll position (AutoScrollPosition uses negative values)
+            mapPanel.AutoScrollPosition = new Point(-newScrollX, -newScrollY);
+
             mapPanel.Invalidate();
             lblStatus.Text = $"Zoom: {_renderer.Zoom:P0}";
         }
