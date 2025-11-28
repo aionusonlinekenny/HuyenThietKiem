@@ -164,10 +164,6 @@ namespace MapTool
                     Console.WriteLine($"🎨 Map image offset: ({_currentMap.MapImageOffsetX}, {_currentMap.MapImageOffsetY})");
                     _renderer.SetMapImage(_currentMap.MapImageData, _currentMap.MapImageOffsetX, _currentMap.MapImageOffsetY);
 
-                    // Set initial view to map image position (so image is visible)
-                    _renderer.ViewOffsetX = _currentMap.MapImageOffsetX;
-                    _renderer.ViewOffsetY = _currentMap.MapImageOffsetY;
-
                     lblStatus.Text = $"Map loaded with image! {_currentMap.LoadedRegionCount} regions.";
                 }
                 else
@@ -176,26 +172,49 @@ namespace MapTool
                     Console.WriteLine($"  Tool will render region grid and obstacles/traps");
                     _renderer.ClearMapImage();
 
-                    // Set view to first loaded region
-                    if (_currentMap.Regions.Count > 0)
-                    {
-                        var firstRegion = _currentMap.Regions.Values.GetEnumerator();
-                        firstRegion.MoveNext();
-                        var region = firstRegion.Current;
-                        _renderer.ViewOffsetX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
-                        _renderer.ViewOffsetY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
-                        Console.WriteLine($"  Set view to first region: ({region.RegionX}, {region.RegionY})");
-                    }
-                    else
-                    {
-                        _renderer.ViewOffsetX = _currentMap.Config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
-                        _renderer.ViewOffsetY = _currentMap.Config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
-                    }
-
                     lblStatus.Text = $"Map loaded (no background image). {_currentMap.LoadedRegionCount} regions.";
                 }
 
                 _renderer.Zoom = 1.0f;
+
+                // Update scroll area size based on map size and zoom
+                UpdateScrollAreaSize();
+
+                // Set initial scroll position to show map image or first region
+                // AutoScrollPosition uses NEGATIVE values and SCREEN pixels (with zoom)
+                int initialViewX = 0;
+                int initialViewY = 0;
+
+                if (_currentMap.MapImageData != null)
+                {
+                    // Scroll to map image position
+                    initialViewX = _currentMap.MapImageOffsetX;
+                    initialViewY = _currentMap.MapImageOffsetY;
+                    Console.WriteLine($"📍 Initial view set to map image position: ({initialViewX}, {initialViewY})");
+                }
+                else if (_currentMap.Regions.Count > 0)
+                {
+                    // Scroll to first loaded region
+                    var firstRegion = _currentMap.Regions.Values.GetEnumerator();
+                    firstRegion.MoveNext();
+                    var region = firstRegion.Current;
+                    initialViewX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                    initialViewY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+                    Console.WriteLine($"📍 Initial view set to first region: ({region.RegionX}, {region.RegionY})");
+                }
+                else
+                {
+                    // Scroll to region grid start
+                    initialViewX = _currentMap.Config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                    initialViewY = _currentMap.Config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+                }
+
+                // Convert MAP pixels to SCREEN pixels (apply zoom) and set scroll position
+                // AutoScrollPosition uses NEGATIVE coordinates
+                mapPanel.AutoScrollPosition = new Point(
+                    (int)(initialViewX * _renderer.Zoom),
+                    (int)(initialViewY * _renderer.Zoom)
+                );
 
                 mapPanel.Invalidate();
 
@@ -212,9 +231,67 @@ namespace MapTool
             }
         }
 
+        // Update scroll area size based on map and zoom level
+        private void UpdateScrollAreaSize()
+        {
+            if (_currentMap == null)
+            {
+                mapPanel.AutoScrollMinSize = new Size(0, 0);
+                return;
+            }
+
+            // Calculate the farthest extent of all content (regions and map image)
+            // Scroll area must be large enough to SCROLL TO any content position
+            // Not just contain the content size!
+            int maxX = 0;
+            int maxY = 0;
+
+            // Include all loaded regions
+            foreach (var region in _currentMap.Regions.Values)
+            {
+                int regionMapX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                int regionMapY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+
+                maxX = Math.Max(maxX, regionMapX + MapConstants.MAP_REGION_PIXEL_WIDTH);
+                maxY = Math.Max(maxY, regionMapY + MapConstants.MAP_REGION_PIXEL_HEIGHT);
+            }
+
+            // Include map image if available
+            if (_currentMap.MapImageData != null && _renderer != null)
+            {
+                var imageInfo = _renderer.GetMapImageBounds();
+                if (imageInfo.HasValue)
+                {
+                    maxX = Math.Max(maxX, imageInfo.Value.X + imageInfo.Value.Width);
+                    maxY = Math.Max(maxY, imageInfo.Value.Y + imageInfo.Value.Height);
+                }
+            }
+
+            // Scroll area = entire virtual canvas from (0,0) to (maxX, maxY)
+            // AutoScrollPosition can be 0 to (ScrollArea - Viewport)
+            // So if content is at position X, ScrollArea must be >= X + Viewport
+            int scrollWidth = (int)(maxX * _renderer.Zoom) + mapPanel.Width + 1000;
+            int scrollHeight = (int)(maxY * _renderer.Zoom) + mapPanel.Height + 1000;
+
+            mapPanel.AutoScrollMinSize = new Size(scrollWidth, scrollHeight);
+
+            Console.WriteLine($"📏 Content max extent: MAP (0,0) to ({maxX},{maxY})");
+            Console.WriteLine($"📏 Scroll area: {scrollWidth}x{scrollHeight} SCREEN pixels (zoom: {_renderer.Zoom:F2})");
+        }
+
         // Map panel paint
         private void mapPanel_Paint(object sender, PaintEventArgs e)
         {
+            // Sync renderer view offset with panel's auto scroll position
+            // AutoScrollPosition is in SCREEN pixels (with zoom applied)
+            // ViewOffset is in MAP pixels (without zoom)
+            // Need to convert: MAP pixels = SCREEN pixels / zoom
+            if (mapPanel.AutoScroll)
+            {
+                _renderer.ViewOffsetX = (int)(-mapPanel.AutoScrollPosition.X / _renderer.Zoom);
+                _renderer.ViewOffsetY = (int)(-mapPanel.AutoScrollPosition.Y / _renderer.Zoom);
+            }
+
             _renderer.Render(e.Graphics, mapPanel.Width, mapPanel.Height, _selectedCoordinate);
         }
 
@@ -249,14 +326,19 @@ namespace MapTool
         // Map panel mouse move
         private void mapPanel_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_isPanning)
+            if (_isPanning && mapPanel.AutoScroll)
             {
                 int deltaX = _lastMousePosition.X - e.X;
                 int deltaY = _lastMousePosition.Y - e.Y;
 
-                _renderer.Pan(deltaX, deltaY);
-                _lastMousePosition = e.Location;
+                // Update auto scroll position instead of manual panning
+                Point currentScroll = mapPanel.AutoScrollPosition;
+                mapPanel.AutoScrollPosition = new Point(
+                    -currentScroll.X + deltaX,
+                    -currentScroll.Y + deltaY
+                );
 
+                _lastMousePosition = e.Location;
                 mapPanel.Invalidate();
             }
             else if (_currentMap != null)
@@ -324,21 +406,101 @@ namespace MapTool
         // Zoom buttons
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
-            _renderer.Zoom = Math.Min(4.0f, _renderer.Zoom * 1.2f);
-            mapPanel.Invalidate();
+            ZoomMap(1.2f);
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
-            _renderer.Zoom = Math.Max(0.1f, _renderer.Zoom / 1.2f);
+            ZoomMap(1.0f / 1.2f);
+        }
+
+        // Zoom map while keeping center point stable
+        private void ZoomMap(float zoomFactor)
+        {
+            if (_currentMap == null)
+                return;
+
+            float oldZoom = _renderer.Zoom;
+            float newZoom = Math.Max(0.1f, Math.Min(4.0f, oldZoom * zoomFactor));
+
+            if (Math.Abs(newZoom - oldZoom) < 0.001f)
+                return; // No change
+
+            // Get current scroll position (note: AutoScrollPosition returns negative values)
+            int oldScrollX = -mapPanel.AutoScrollPosition.X;  // Convert to positive
+            int oldScrollY = -mapPanel.AutoScrollPosition.Y;
+
+            // Calculate center point of viewport in MAP coordinates
+            // ViewOffset (MAP coords) = ScrollPosition (SCREEN coords) / zoom
+            // Center MAP = ViewOffset + (viewportCenter / zoom)
+            int viewportCenterX = mapPanel.Width / 2;
+            int viewportCenterY = mapPanel.Height / 2;
+
+            float centerMapX = (oldScrollX / oldZoom) + (viewportCenterX / oldZoom);
+            float centerMapY = (oldScrollY / oldZoom) + (viewportCenterY / oldZoom);
+
+            // Update zoom level
+            _renderer.Zoom = newZoom;
+
+            // Recalculate scroll area with new zoom
+            UpdateScrollAreaSize();
+
+            // Calculate new scroll position to keep same MAP center point
+            // centerMapX = (newScrollX / newZoom) + (viewportCenterX / newZoom)
+            // centerMapX * newZoom = newScrollX + viewportCenterX
+            // newScrollX = (centerMapX * newZoom) - viewportCenterX
+            int newScrollX = (int)((centerMapX * newZoom) - viewportCenterX);
+            int newScrollY = (int)((centerMapY * newZoom) - viewportCenterY);
+
+            // Clamp to valid range (0 to ScrollAreaSize - ViewportSize)
+            newScrollX = Math.Max(0, Math.Min(newScrollX, mapPanel.AutoScrollMinSize.Width - mapPanel.Width));
+            newScrollY = Math.Max(0, Math.Min(newScrollY, mapPanel.AutoScrollMinSize.Height - mapPanel.Height));
+
+            // Set scroll position (must use positive values when setting)
+            mapPanel.AutoScrollPosition = new Point(newScrollX, newScrollY);
+
             mapPanel.Invalidate();
+            lblStatus.Text = $"Zoom: {_renderer.Zoom:P0}";
         }
 
         // Export buttons
         private void btnExport_Click(object sender, EventArgs e)
         {
-            // Export ALL cells from ALL loaded regions
-            ExportAllCellsToTxt();
+            // Export trap entries that user added to the list (via double-click)
+            if (_exporter.GetEntries().Count == 0)
+            {
+                MessageBox.Show("No trap entries to export!\n\nDouble-click on the map to add trap entries to the list first.",
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Ask user for save location
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                dialog.FileName = _currentMap != null ? $"{_currentMap.MapId}.txt" : "traps.txt";
+                dialog.DefaultExt = "txt";
+                dialog.Title = "Export Trap Entries";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        _exporter.ExportToFile(dialog.FileName);
+
+                        string stats = _exporter.GetStatistics();
+                        MessageBox.Show($"Exported successfully!\n\nFile: {dialog.FileName}\n\n{stats}",
+                            "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        lblStatus.Text = $"Exported {_exporter.GetEntries().Count} trap entries to {Path.GetFileName(dialog.FileName)}";
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to export:\n{ex.Message}", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
 
         private void btnClear_Click(object sender, EventArgs e)

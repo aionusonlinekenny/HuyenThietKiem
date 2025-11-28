@@ -91,6 +91,7 @@ namespace MapTool
             this.mapPanel.Name = "mapPanel";
             this.mapPanel.Size = new System.Drawing.Size(900, 700);
             this.mapPanel.TabIndex = 0;
+            this.mapPanel.AutoScroll = true;
             this.mapPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mapPanel_Paint);
             this.mapPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mapPanel_MouseDown);
             this.mapPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapPanel_MouseMove);

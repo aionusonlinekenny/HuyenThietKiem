@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text;
 using System.Collections.Generic;
 using MapTool.PakFile;
 
@@ -85,6 +86,124 @@ namespace MapTool.MapData
         }
 
         /// <summary>
+        /// Try to match two strings considering GB2312 encoding issues
+        /// </summary>
+        private bool TryMatchGB2312String(string actual, string expected)
+        {
+            // Strategy 1: Direct Unicode match
+            if (string.Equals(actual, expected, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            // Strategy 2: GB2312 re-decode (Default→GB2312)
+            try
+            {
+                byte[] nameBytes = Encoding.Default.GetBytes(actual);
+                string actualGB2312 = Encoding.GetEncoding("GB2312").GetString(nameBytes);
+                if (string.Equals(actualGB2312, expected, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            catch { }
+
+            // Strategy 3: GB2312 re-decode (Latin-1→GB2312)
+            try
+            {
+                byte[] nameBytes = Encoding.GetEncoding("ISO-8859-1").GetBytes(actual);
+                string actualGB2312 = Encoding.GetEncoding("GB2312").GetString(nameBytes);
+                if (string.Equals(actualGB2312, expected, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            catch { }
+
+            // Strategy 4: Expected→GB2312→Latin-1
+            try
+            {
+                byte[] expectedBytes = Encoding.GetEncoding("GB2312").GetBytes(expected);
+                string expectedAsLatin1 = Encoding.GetEncoding("ISO-8859-1").GetString(expectedBytes);
+                if (string.Equals(actual, expectedAsLatin1, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            catch { }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Find file on disk using GB2312-aware filesystem enumeration
+        /// Handles Chinese folder/file names that use GB2312 encoding
+        /// </summary>
+        private string FindFileWithGB2312Encoding(string relativePath)
+        {
+            try
+            {
+                string fullRelativePath = relativePath.TrimStart('\\', '/');
+                string expectedFileName = Path.GetFileName(fullRelativePath);
+                string expectedDirPath = Path.GetDirectoryName(fullRelativePath);
+
+                // Split directory path into parts and navigate step by step
+                string[] pathParts = expectedDirPath.Split(new[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
+                string currentPath = _gameFolder;
+
+                // Navigate through directories
+                for (int i = 0; i < pathParts.Length; i++)
+                {
+                    string expectedName = pathParts[i];
+                    string foundPath = null;
+
+                    if (!Directory.Exists(currentPath))
+                        return null;
+
+                    var subdirs = Directory.GetDirectories(currentPath);
+                    foreach (var subdir in subdirs)
+                    {
+                        string actualName = Path.GetFileName(subdir);
+                        if (TryMatchGB2312String(actualName, expectedName))
+                        {
+                            foundPath = subdir;
+                            break;
+                        }
+                    }
+
+                    if (foundPath != null)
+                    {
+                        currentPath = foundPath;
+                    }
+                    else
+                    {
+                        return null; // Directory not found
+                    }
+                }
+
+                // Look for the file in the final directory
+                if (!Directory.Exists(currentPath))
+                    return null;
+
+                var files = Directory.GetFiles(currentPath);
+                foreach (var file in files)
+                {
+                    string actualFileName = Path.GetFileName(file);
+                    if (TryMatchGB2312String(actualFileName, expectedFileName))
+                    {
+                        return file;
+                    }
+                }
+            }
+            catch
+            {
+                // Ignore errors in GB2312 enumeration
+            }
+
+            return null; // File not found
+        }
+
+        /// <summary>
         /// Read file (pak or disk)
         /// </summary>
         private byte[] ReadFileBytes(string relativePath)
@@ -120,11 +239,18 @@ namespace MapTool.MapData
                 }
             }
 
-            // Fallback to disk
+            // Try direct disk path first (for non-GB2312 paths)
             string diskPath = Path.Combine(_gameFolder, relativePath.TrimStart('\\', '/'));
             if (File.Exists(diskPath))
             {
                 return File.ReadAllBytes(diskPath);
+            }
+
+            // Fallback: Try GB2312-aware filesystem enumeration
+            string actualPath = FindFileWithGB2312Encoding(relativePath);
+            if (actualPath != null && File.Exists(actualPath))
+            {
+                return File.ReadAllBytes(actualPath);
             }
 
             return null;
@@ -315,74 +441,286 @@ namespace MapTool.MapData
             mapData.LoadedRegionCount = loadedCount;
 
             // Step 5: Try to load map image (24.jpg)
-            // File naming convention: {LastFolderName}24.jpg (NO separator!)
-            // Examples from actual files:
-            //   FolderPath = "特殊用地\剑门关"    → Image: "\maps\特殊用地\剑门关24.jpg"
-            //   FolderPath = "西北南区\华山派2013\华山派2013" → Image: "\maps\西北南区\华山派2013\华山派201324.jpg"
-            //
-            // Extract last folder name from FolderPath
-            string[] pathParts = mapEntry.FolderPath.Split(new[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
-            string lastFolderName = pathParts[pathParts.Length - 1];
+            // NEW: Simple and correct image path construction with encoding fallback
+            // FolderPath format: "西北南区\成都\成都"
+            // Image path: "\maps\西北南区\成都\成都24.jpg"
 
-            Console.WriteLine($"DEBUG: FolderPath = '{mapEntry.FolderPath}'");
-            Console.WriteLine($"DEBUG: PathParts = {string.Join(", ", pathParts)}");
-            Console.WriteLine($"DEBUG: LastFolderName = '{lastFolderName}'");
+            string mapImageRelativePath = $"\\maps\\{mapEntry.FolderPath}24.jpg";
 
-            // Build parent path (everything except last folder)
-            string parentPath = "";
-            if (pathParts.Length > 1)
-            {
-                parentPath = string.Join("\\", pathParts, 0, pathParts.Length - 1) + "\\";
-            }
+            DebugLogger.Log($"🖼️  LOADING MAP IMAGE");
+            DebugLogger.Log($"   Map ID: {mapId}");
+            DebugLogger.Log($"   Folder Path: {mapEntry.FolderPath}");
+            DebugLogger.Log($"   Image Path: {mapImageRelativePath}");
 
-            // Construct image path: \maps\{parentPath}{lastFolderName}24.jpg
-            string mapImageRelativePath = $"\\maps\\{parentPath}{lastFolderName}24.jpg";
-            Console.WriteLine($"🔍 Looking for map image: {mapImageRelativePath}");
-
-            // Also try disk path
+            // Try disk first (preferred for user-uploaded images)
             string diskPath = Path.Combine(_gameFolder, mapImageRelativePath.TrimStart('\\', '/'));
-            Console.WriteLine($"DEBUG: Disk path = {diskPath}");
-            Console.WriteLine($"DEBUG: Disk exists = {File.Exists(diskPath)}");
-            Console.WriteLine($"DEBUG: Pak reader = {(_pakReader != null ? "Available" : "Not available")}");
+            DebugLogger.Log($"   Disk Path (Unicode): {diskPath}");
+            DebugLogger.Log($"   Disk Exists (direct): {File.Exists(diskPath)}");
+
+            // FALLBACK: Try to find the file using actual filesystem enumeration
+            // This handles GB2312 encoding issues on Windows
+            string actualDiskPath = null;
+            if (!File.Exists(diskPath))
+            {
+                try
+                {
+                    DebugLogger.Log($"   🔍 Searching with filesystem enumeration (handles GB2312 encoding)...");
+
+                    // The image path is: \maps\{FolderPath}24.jpg
+                    // Example: \maps\西南北区\成都\成都24.jpg
+                    // We need to:
+                    // 1. Navigate through folder structure: maps\西南北区\成都\
+                    // 2. Find file: 成都24.jpg
+
+                    // Build the full relative path and split it into directory + filename
+                    string fullRelativePath = mapImageRelativePath.TrimStart('\\', '/');
+                    string expectedFileName = Path.GetFileName(fullRelativePath); // "成都24.jpg"
+                    string expectedDirPath = Path.GetDirectoryName(fullRelativePath); // "maps\西南北区\成都"
+
+                    DebugLogger.Log($"      Expected directory: {expectedDirPath}");
+                    DebugLogger.Log($"      Expected filename: {expectedFileName}");
+
+                    // Split directory path into parts and navigate step by step
+                    string[] pathParts = expectedDirPath.Split(new[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
+                    string currentPath = _gameFolder;
+
+                    bool pathExists = true;
+                    for (int i = 0; i < pathParts.Length; i++)
+                    {
+                        string expectedName = pathParts[i];
+                        string foundPath = null;
+
+                        // Enumerate subdirectories and find matching one (case-insensitive, encoding-tolerant)
+                        var subdirs = Directory.GetDirectories(currentPath);
+                        foreach (var subdir in subdirs)
+                        {
+                            string actualName = Path.GetFileName(subdir);
+
+                            // Try multiple matching strategies to handle GB2312 encoding issues
+                            bool isMatch = false;
+
+                            // Strategy 1: Direct Unicode match
+                            if (string.Equals(actualName, expectedName, StringComparison.OrdinalIgnoreCase))
+                            {
+                                isMatch = true;
+                                DebugLogger.Log($"      🔍 Match strategy: Direct Unicode");
+                            }
+
+                            // Strategy 2: GB2312 encoding conversion
+                            // If folder name was created with GB2312 bytes, .NET might misinterpret it
+                            // Try converting: actualName (wrong encoding) → bytes → GB2312 decode → compare
+                            if (!isMatch)
+                            {
+                                try
+                                {
+                                    // The folder name might be GB2312 bytes interpreted as Latin-1/Default
+                                    // Try to get the raw bytes and re-decode as GB2312
+                                    byte[] nameBytes = Encoding.Default.GetBytes(actualName);
+                                    string actualNameGB2312 = Encoding.GetEncoding("GB2312").GetString(nameBytes);
+
+                                    if (string.Equals(actualNameGB2312, expectedName, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        isMatch = true;
+                                        DebugLogger.Log($"      🔍 Match strategy: GB2312 re-decode (Default→GB2312)");
+                                        DebugLogger.Log($"         Original: '{actualName}' → Decoded: '{actualNameGB2312}'");
+                                    }
+                                }
+                                catch { /* Ignore encoding errors */ }
+                            }
+
+                            // Strategy 3: Try Latin-1 to GB2312 conversion
+                            if (!isMatch)
+                            {
+                                try
+                                {
+                                    // Folder name might be GB2312 bytes interpreted as Latin-1
+                                    byte[] nameBytes = Encoding.GetEncoding("ISO-8859-1").GetBytes(actualName);
+                                    string actualNameGB2312 = Encoding.GetEncoding("GB2312").GetString(nameBytes);
+
+                                    if (string.Equals(actualNameGB2312, expectedName, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        isMatch = true;
+                                        DebugLogger.Log($"      🔍 Match strategy: GB2312 re-decode (Latin-1→GB2312)");
+                                        DebugLogger.Log($"         Original: '{actualName}' → Decoded: '{actualNameGB2312}'");
+                                    }
+                                }
+                                catch { /* Ignore encoding errors */ }
+                            }
+
+                            // Strategy 4: Convert expected name to GB2312 and back (in case it was stored incorrectly)
+                            if (!isMatch)
+                            {
+                                try
+                                {
+                                    byte[] expectedBytes = Encoding.GetEncoding("GB2312").GetBytes(expectedName);
+                                    string expectedAsLatin1 = Encoding.GetEncoding("ISO-8859-1").GetString(expectedBytes);
+
+                                    if (string.Equals(actualName, expectedAsLatin1, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        isMatch = true;
+                                        DebugLogger.Log($"      🔍 Match strategy: Expected→GB2312→Latin-1");
+                                        DebugLogger.Log($"         Expected: '{expectedName}' → '{expectedAsLatin1}' = Actual: '{actualName}'");
+                                    }
+                                }
+                                catch { /* Ignore encoding errors */ }
+                            }
+
+                            if (isMatch)
+                            {
+                                foundPath = subdir;
+                                break;
+                            }
+                        }
+
+                        if (foundPath != null)
+                        {
+                            currentPath = foundPath;
+                            DebugLogger.Log($"      ✓ Found: {pathParts[i]} → {Path.GetFileName(foundPath)}");
+                        }
+                        else
+                        {
+                            DebugLogger.Log($"      ✗ Not found: {pathParts[i]}");
+                            DebugLogger.Log($"      Available folders:");
+                            int showCount = Math.Min(5, subdirs.Length);
+                            for (int j = 0; j < showCount; j++)
+                            {
+                                DebugLogger.Log($"        [{j+1}] {Path.GetFileName(subdirs[j])}");
+                            }
+                            pathExists = false;
+                            break;
+                        }
+                    }
+
+                    // Now look for the actual file in the final directory
+                    if (pathExists)
+                    {
+                        DebugLogger.Log($"      📁 Navigated to: {currentPath}");
+                        DebugLogger.Log($"      🔍 Looking for file: {expectedFileName}");
+
+                        // Try to find the file using enumeration (handles GB2312 filenames)
+                        var files = Directory.GetFiles(currentPath);
+                        foreach (var file in files)
+                        {
+                            string actualFileName = Path.GetFileName(file);
+                            bool fileMatch = false;
+
+                            // Try the same encoding strategies for filename
+                            if (string.Equals(actualFileName, expectedFileName, StringComparison.OrdinalIgnoreCase))
+                            {
+                                fileMatch = true;
+                                DebugLogger.Log($"      ✓ File match: Direct Unicode");
+                            }
+                            else
+                            {
+                                // Try GB2312 conversion
+                                try
+                                {
+                                    byte[] fileNameBytes = Encoding.Default.GetBytes(actualFileName);
+                                    string actualFileNameGB2312 = Encoding.GetEncoding("GB2312").GetString(fileNameBytes);
+
+                                    if (string.Equals(actualFileNameGB2312, expectedFileName, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        fileMatch = true;
+                                        DebugLogger.Log($"      ✓ File match: GB2312 re-decode");
+                                        DebugLogger.Log($"         Original: '{actualFileName}' → Decoded: '{actualFileNameGB2312}'");
+                                    }
+                                }
+                                catch { }
+                            }
+
+                            if (fileMatch)
+                            {
+                                actualDiskPath = file;
+                                DebugLogger.Log($"   ✓ Found image via enumeration: {actualDiskPath}");
+                                break;
+                            }
+                        }
+
+                        if (actualDiskPath == null)
+                        {
+                            DebugLogger.Log($"   ✗ File not found in directory: {currentPath}");
+                            DebugLogger.Log($"      Available files:");
+                            int showCount = Math.Min(5, files.Length);
+                            for (int j = 0; j < showCount; j++)
+                            {
+                                DebugLogger.Log($"        [{j+1}] {Path.GetFileName(files[j])}");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    DebugLogger.Log($"   ⚠ Failed during filesystem enumeration: {ex.Message}");
+                }
+            }
 
             try
             {
-                if (FileExists(mapImageRelativePath))
+                // PRIORITY 1: Try direct disk path (Unicode)
+                if (File.Exists(diskPath))
                 {
-                    Console.WriteLine($"✓ Map image file exists!");
+                    DebugLogger.Log($"✓ Loading image from DISK (direct Unicode path)");
+                    mapData.MapImageData = File.ReadAllBytes(diskPath);
+                    mapData.MapImagePath = mapImageRelativePath;
+
+                    // Calculate image offset based on region boundaries
+                    // 24.jpg uses MAP coordinates (not logic coordinates!)
+                    // Client scale: 1 region = 128x128 pixels on 24.jpg
+                    mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                    mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+
+                    DebugLogger.Log($"✓ Loaded map image from disk: {diskPath}");
+                    DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
+                    DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
+                }
+                // PRIORITY 2: Try enumerated path (handles GB2312 encoding)
+                else if (actualDiskPath != null && File.Exists(actualDiskPath))
+                {
+                    DebugLogger.Log($"✓ Loading image from DISK (via filesystem enumeration)");
+                    mapData.MapImageData = File.ReadAllBytes(actualDiskPath);
+                    mapData.MapImagePath = mapImageRelativePath;
+
+                    mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                    mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+
+                    DebugLogger.Log($"✓ Loaded map image from disk (enumerated): {actualDiskPath}");
+                    DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
+                    DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
+                }
+                // PRIORITY 3: Try pak file
+                else if (_pakReader != null && FileExists(mapImageRelativePath))
+                {
+                    DebugLogger.Log($"✓ Loading image from PAK");
                     mapData.MapImageData = ReadFileBytes(mapImageRelativePath);
                     if (mapData.MapImageData != null)
                     {
                         mapData.MapImagePath = mapImageRelativePath;
-
-                        // Calculate image offset based on region boundaries
-                        // 24.jpg uses MAP coordinates (not logic coordinates!)
-                        // Client scale: 1 region = 128x128 pixels on 24.jpg
-                        // NOT 512x1024 (logic scale)!
                         mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
                         mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
 
-                        Console.WriteLine($"✓ Loaded map image: {mapImageRelativePath} ({mapData.MapImageData.Length} bytes)");
-                        Console.WriteLine($"✓ Map image offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY})");
+                        DebugLogger.Log($"✓ Loaded map image from pak: {mapImageRelativePath}");
+                        DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
+                        DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
                     }
                     else
                     {
-                        Console.WriteLine($"⚠ Map image data is null after reading!");
+                        DebugLogger.Log($"⚠ Image data is null after reading from pak");
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"❌ No map image found at: {mapImageRelativePath}");
-                    Console.WriteLine($"  Pak reader: {(_pakReader != null ? "Available" : "Not available")}");
-                    Console.WriteLine($"  Disk path: {diskPath}");
-                    Console.WriteLine($"  Disk exists: {File.Exists(diskPath)}");
+                    DebugLogger.Log($"ℹ️  No map image found");
+                    DebugLogger.Log($"   This is normal - not all maps have 24.jpg files");
+                    DebugLogger.Log($"   Tool will render using obstacle data instead");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"⚠ Failed to load map image: {ex.Message}");
-                Console.WriteLine($"  Stack trace: {ex.StackTrace}");
+                DebugLogger.Log($"⚠ Failed to load map image: {ex.Message}");
+                DebugLogger.Log($"   Stack trace: {ex.StackTrace}");
             }
+
+            DebugLogger.LogSeparator();
 
             return mapData;
         }
