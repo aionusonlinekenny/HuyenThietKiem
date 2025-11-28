@@ -24,12 +24,11 @@ namespace MapTool.Rendering
         private int _mapImageOffsetX = 0;
         private int _mapImageOffsetY = 0;
 
-        // Colors - Enhanced visualization
+        // Colors - Simple overlay visualization
         private Color _gridColor = Color.FromArgb(80, 100, 100, 120);  // Subtle grid
-        private Color _regionBorderColor = Color.FromArgb(200, 80, 120, 255);  // Bright border
-        private Color _obstacleColor = Color.FromArgb(220, 255, 60, 60);       // Bright RED obstacles - highly visible!
-        private Color _trapColor = Color.FromArgb(220, 255, 220, 0);           // Bright YELLOW traps - highly visible!
-        private Color _walkableCellColor = Color.FromArgb(255, 180, 220, 180);  // Light green walkable
+        private Color _regionBorderColor = Color.FromArgb(150, 80, 120, 255);  // Semi-transparent border
+        private Color _walkableCellColor = Color.FromArgb(60, 0, 255, 0);       // Semi-transparent GREEN for walkable areas
+        private Color _trapColor = Color.FromArgb(120, 255, 220, 0);            // Semi-transparent YELLOW for traps
         private Color _selectedCellColor = Color.FromArgb(200, 0, 255, 0);      // Bright green selection
         private Color _backgroundColor = Color.FromArgb(255, 140, 180, 140);     // Green background like terrain
 
@@ -190,9 +189,10 @@ namespace MapTool.Rendering
             int cellMapWidth = MapConstants.MAP_REGION_PIXEL_WIDTH / MapConstants.REGION_GRID_WIDTH;   // 32/16 = 2
             int cellMapHeight = MapConstants.MAP_REGION_PIXEL_HEIGHT / MapConstants.REGION_GRID_HEIGHT; // 32/32 = 1
 
-            // OPTIMIZED: Only draw obstacles, traps, and selected cell
-            // Cells are tiny (2x1 pixels), drawing all cells causes massive slowdown!
-            // With 800 regions × 512 cells = 409,600 draw calls = Not Responding!
+            // OPTIMIZED: Draw walkable areas and traps, skip obstacles (let map show through)
+            // Obstacles = transparent (no overlay)
+            // Walkable = semi-transparent green overlay
+            // Traps = semi-transparent yellow overlay
             for (int cy = 0; cy < MapConstants.REGION_GRID_HEIGHT; cy++)
             {
                 for (int cx = 0; cx < MapConstants.REGION_GRID_WIDTH; cx++)
@@ -204,8 +204,12 @@ namespace MapTool.Rendering
                                     selectedCoord.Value.CellX == cx &&
                                     selectedCoord.Value.CellY == cy;
 
-                    // Skip empty walkable cells if map image exists (let image show through)
-                    if (!hasObstacle && !hasTrap && !isSelected && _mapImage != null)
+                    // Skip obstacles - they are transparent (let map image show through)
+                    if (hasObstacle && !isSelected)
+                        continue;
+
+                    // Skip drawing walkable cells when no map image (would fill entire screen with green)
+                    if (!hasTrap && !isSelected && _mapImage == null && !hasObstacle)
                         continue;
 
                     int cellMapX = regionMapX + cx * cellMapWidth;
@@ -218,14 +222,12 @@ namespace MapTool.Rendering
 
                     // Determine cell color
                     Color cellColor;
-                    if (hasObstacle)
-                        cellColor = _obstacleColor; // Bright RED
-                    else if (hasTrap)
-                        cellColor = _trapColor; // Bright YELLOW
+                    if (hasTrap)
+                        cellColor = _trapColor; // Semi-transparent YELLOW
                     else if (isSelected)
                         cellColor = _selectedCellColor; // Bright GREEN
                     else
-                        cellColor = _walkableCellColor; // Light green (when no map image)
+                        cellColor = _walkableCellColor; // Semi-transparent GREEN
 
                     // Draw cell
                     using (SolidBrush brush = new SolidBrush(cellColor))
@@ -244,24 +246,16 @@ namespace MapTool.Rendering
                 }
             }
 
-            // Draw region border
+            // Draw region border (subtle outline)
             Rectangle regionRect = new Rectangle(
                 regionMapX - _viewOffsetX,
                 regionMapY - _viewOffsetY,
                 MapConstants.MAP_REGION_PIXEL_WIDTH,
                 MapConstants.MAP_REGION_PIXEL_HEIGHT);
 
-            using (Pen pen = new Pen(_regionBorderColor, 2))
+            using (Pen pen = new Pen(_regionBorderColor, 1))
             {
                 g.DrawRectangle(pen, regionRect);
-            }
-
-            // Draw region label
-            using (Font font = new Font("Arial", 10, FontStyle.Bold))
-            using (SolidBrush brush = new SolidBrush(Color.White))
-            {
-                string label = $"R({region.RegionX},{region.RegionY})";
-                g.DrawString(label, font, brush, regionRect.X + 5, regionRect.Y + 5);
             }
         }
 
