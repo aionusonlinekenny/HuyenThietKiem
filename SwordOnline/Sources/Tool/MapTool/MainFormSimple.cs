@@ -245,10 +245,13 @@ namespace MapTool
         private void mapPanel_Paint(object sender, PaintEventArgs e)
         {
             // Sync renderer view offset with panel's auto scroll position
+            // AutoScrollPosition is in SCREEN pixels (with zoom applied)
+            // ViewOffset is in MAP pixels (without zoom)
+            // Need to convert: MAP pixels = SCREEN pixels / zoom
             if (mapPanel.AutoScroll)
             {
-                _renderer.ViewOffsetX = -mapPanel.AutoScrollPosition.X;
-                _renderer.ViewOffsetY = -mapPanel.AutoScrollPosition.Y;
+                _renderer.ViewOffsetX = (int)(-mapPanel.AutoScrollPosition.X / _renderer.Zoom);
+                _renderer.ViewOffsetY = (int)(-mapPanel.AutoScrollPosition.Y / _renderer.Zoom);
             }
 
             _renderer.Render(e.Graphics, mapPanel.Width, mapPanel.Height, _selectedCoordinate);

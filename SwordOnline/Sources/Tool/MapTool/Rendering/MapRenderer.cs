@@ -27,10 +27,10 @@ namespace MapTool.Rendering
         // Colors - Enhanced visualization
         private Color _gridColor = Color.FromArgb(80, 100, 100, 120);  // Subtle grid
         private Color _regionBorderColor = Color.FromArgb(200, 80, 120, 255);  // Bright border
-        private Color _obstacleColor = Color.FromArgb(200, 60, 60, 60);      // Dark gray obstacles
-        private Color _trapColor = Color.FromArgb(200, 255, 200, 100);         // Light yellow traps
+        private Color _obstacleColor = Color.FromArgb(220, 255, 60, 60);       // Bright RED obstacles - highly visible!
+        private Color _trapColor = Color.FromArgb(220, 255, 220, 0);           // Bright YELLOW traps - highly visible!
         private Color _walkableCellColor = Color.FromArgb(255, 180, 220, 180);  // Light green walkable
-        private Color _selectedCellColor = Color.FromArgb(150, 255, 255, 0);
+        private Color _selectedCellColor = Color.FromArgb(200, 0, 255, 0);      // Bright green selection
         private Color _backgroundColor = Color.FromArgb(255, 140, 180, 140);     // Green background like terrain
 
         public int CellSize
@@ -194,16 +194,17 @@ namespace MapTool.Rendering
 
                     if (region.Obstacles[cx, cy] != 0)
                     {
-                        cellColor = _obstacleColor; // Dark gray for obstacles
+                        cellColor = _obstacleColor; // Bright RED for obstacles
                     }
                     else if (region.Traps[cx, cy] != 0)
                     {
-                        cellColor = _trapColor; // Light yellow for traps
+                        cellColor = _trapColor; // Bright YELLOW for traps
                     }
                     else if (_mapImage != null)
                     {
-                        // If we have map image, use semi-transparent walkable color
-                        cellColor = Color.FromArgb(100, 180, 220, 180);
+                        // If we have map image, use VERY transparent walkable color
+                        // This lets the background image show through clearly
+                        cellColor = Color.FromArgb(40, 180, 220, 180);
                     }
 
                     // Always draw cells for better visualization
