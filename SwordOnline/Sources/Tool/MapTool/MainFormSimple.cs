@@ -401,8 +401,41 @@ namespace MapTool
         // Export buttons
         private void btnExport_Click(object sender, EventArgs e)
         {
-            // Export ALL cells from ALL loaded regions
-            ExportAllCellsToTxt();
+            // Export trap entries that user added to the list (via double-click)
+            if (_exporter.GetEntries().Count == 0)
+            {
+                MessageBox.Show("No trap entries to export!\n\nDouble-click on the map to add trap entries to the list first.",
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Ask user for save location
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                dialog.FileName = _currentMap != null ? $"{_currentMap.MapId}.txt" : "traps.txt";
+                dialog.DefaultExt = "txt";
+                dialog.Title = "Export Trap Entries";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        _exporter.ExportToFile(dialog.FileName);
+
+                        string stats = _exporter.GetStatistics();
+                        MessageBox.Show($"Exported successfully!\n\nFile: {dialog.FileName}\n\n{stats}",
+                            "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        lblStatus.Text = $"Exported {_exporter.GetEntries().Count} trap entries to {Path.GetFileName(dialog.FileName)}";
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to export:\n{ex.Message}", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
 
         private void btnClear_Click(object sender, EventArgs e)
