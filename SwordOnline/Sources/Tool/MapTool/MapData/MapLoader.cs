@@ -315,74 +315,73 @@ namespace MapTool.MapData
             mapData.LoadedRegionCount = loadedCount;
 
             // Step 5: Try to load map image (24.jpg)
-            // File naming convention: {LastFolderName}24.jpg (NO separator!)
-            // Examples from actual files:
-            //   FolderPath = "特殊用地\剑门关"    → Image: "\maps\特殊用地\剑门关24.jpg"
-            //   FolderPath = "西北南区\华山派2013\华山派2013" → Image: "\maps\西北南区\华山派2013\华山派201324.jpg"
-            //
-            // Extract last folder name from FolderPath
-            string[] pathParts = mapEntry.FolderPath.Split(new[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
-            string lastFolderName = pathParts[pathParts.Length - 1];
+            // NEW: Simple and correct image path construction
+            // FolderPath format: "西北南区\成都\成都"
+            // Image path: "\maps\西北南区\成都\成都24.jpg"
+            string mapImageRelativePath = $"\\maps\\{mapEntry.FolderPath}24.jpg";
 
-            Console.WriteLine($"DEBUG: FolderPath = '{mapEntry.FolderPath}'");
-            Console.WriteLine($"DEBUG: PathParts = {string.Join(", ", pathParts)}");
-            Console.WriteLine($"DEBUG: LastFolderName = '{lastFolderName}'");
+            DebugLogger.Log($"🖼️  LOADING MAP IMAGE");
+            DebugLogger.Log($"   Map ID: {mapId}");
+            DebugLogger.Log($"   Folder Path: {mapEntry.FolderPath}");
+            DebugLogger.Log($"   Image Path: {mapImageRelativePath}");
 
-            // Build parent path (everything except last folder)
-            string parentPath = "";
-            if (pathParts.Length > 1)
-            {
-                parentPath = string.Join("\\", pathParts, 0, pathParts.Length - 1) + "\\";
-            }
-
-            // Construct image path: \maps\{parentPath}{lastFolderName}24.jpg
-            string mapImageRelativePath = $"\\maps\\{parentPath}{lastFolderName}24.jpg";
-            Console.WriteLine($"🔍 Looking for map image: {mapImageRelativePath}");
-
-            // Also try disk path
+            // Try disk first (preferred for user-uploaded images)
             string diskPath = Path.Combine(_gameFolder, mapImageRelativePath.TrimStart('\\', '/'));
-            Console.WriteLine($"DEBUG: Disk path = {diskPath}");
-            Console.WriteLine($"DEBUG: Disk exists = {File.Exists(diskPath)}");
-            Console.WriteLine($"DEBUG: Pak reader = {(_pakReader != null ? "Available" : "Not available")}");
+            DebugLogger.Log($"   Disk Path: {diskPath}");
+            DebugLogger.Log($"   Disk Exists: {File.Exists(diskPath)}");
 
             try
             {
-                if (FileExists(mapImageRelativePath))
+                // PRIORITY 1: Try disk first
+                if (File.Exists(diskPath))
                 {
-                    Console.WriteLine($"✓ Map image file exists!");
+                    DebugLogger.Log($"✓ Loading image from DISK");
+                    mapData.MapImageData = File.ReadAllBytes(diskPath);
+                    mapData.MapImagePath = mapImageRelativePath;
+
+                    // Calculate image offset based on region boundaries
+                    // 24.jpg uses MAP coordinates (not logic coordinates!)
+                    // Client scale: 1 region = 128x128 pixels on 24.jpg
+                    mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                    mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+
+                    DebugLogger.Log($"✓ Loaded map image from disk: {diskPath}");
+                    DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
+                    DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
+                }
+                // PRIORITY 2: Try pak file
+                else if (_pakReader != null && FileExists(mapImageRelativePath))
+                {
+                    DebugLogger.Log($"✓ Loading image from PAK");
                     mapData.MapImageData = ReadFileBytes(mapImageRelativePath);
                     if (mapData.MapImageData != null)
                     {
                         mapData.MapImagePath = mapImageRelativePath;
-
-                        // Calculate image offset based on region boundaries
-                        // 24.jpg uses MAP coordinates (not logic coordinates!)
-                        // Client scale: 1 region = 128x128 pixels on 24.jpg
-                        // NOT 512x1024 (logic scale)!
                         mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
                         mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
 
-                        Console.WriteLine($"✓ Loaded map image: {mapImageRelativePath} ({mapData.MapImageData.Length} bytes)");
-                        Console.WriteLine($"✓ Map image offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY})");
+                        DebugLogger.Log($"✓ Loaded map image from pak: {mapImageRelativePath}");
+                        DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
+                        DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
                     }
                     else
                     {
-                        Console.WriteLine($"⚠ Map image data is null after reading!");
+                        DebugLogger.Log($"⚠ Image data is null after reading from pak");
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"❌ No map image found at: {mapImageRelativePath}");
-                    Console.WriteLine($"  Pak reader: {(_pakReader != null ? "Available" : "Not available")}");
-                    Console.WriteLine($"  Disk path: {diskPath}");
-                    Console.WriteLine($"  Disk exists: {File.Exists(diskPath)}");
+                    DebugLogger.Log($"ℹ️  No map image found (this is normal for maps without 24.jpg)");
+                    DebugLogger.Log($"   Tool will render using obstacle data instead");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"⚠ Failed to load map image: {ex.Message}");
-                Console.WriteLine($"  Stack trace: {ex.StackTrace}");
+                DebugLogger.Log($"⚠ Failed to load map image: {ex.Message}");
+                DebugLogger.Log($"   Stack trace: {ex.StackTrace}");
             }
+
+            DebugLogger.LogSeparator();
 
             return mapData;
         }
