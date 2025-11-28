@@ -358,8 +358,77 @@ namespace MapTool.MapData
                             foreach (var subdir in subdirs)
                             {
                                 string actualName = Path.GetFileName(subdir);
-                                // Try exact match first
+
+                                // Try multiple matching strategies to handle GB2312 encoding issues
+                                bool isMatch = false;
+
+                                // Strategy 1: Direct Unicode match
                                 if (string.Equals(actualName, expectedName, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    isMatch = true;
+                                    DebugLogger.Log($"      🔍 Match strategy: Direct Unicode");
+                                }
+
+                                // Strategy 2: GB2312 encoding conversion
+                                // If folder name was created with GB2312 bytes, .NET might misinterpret it
+                                // Try converting: actualName (wrong encoding) → bytes → GB2312 decode → compare
+                                if (!isMatch)
+                                {
+                                    try
+                                    {
+                                        // The folder name might be GB2312 bytes interpreted as Latin-1/Default
+                                        // Try to get the raw bytes and re-decode as GB2312
+                                        byte[] nameBytes = Encoding.Default.GetBytes(actualName);
+                                        string actualNameGB2312 = Encoding.GetEncoding("GB2312").GetString(nameBytes);
+
+                                        if (string.Equals(actualNameGB2312, expectedName, StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            isMatch = true;
+                                            DebugLogger.Log($"      🔍 Match strategy: GB2312 re-decode (Default→GB2312)");
+                                            DebugLogger.Log($"         Original: '{actualName}' → Decoded: '{actualNameGB2312}'");
+                                        }
+                                    }
+                                    catch { /* Ignore encoding errors */ }
+                                }
+
+                                // Strategy 3: Try Latin-1 to GB2312 conversion
+                                if (!isMatch)
+                                {
+                                    try
+                                    {
+                                        // Folder name might be GB2312 bytes interpreted as Latin-1
+                                        byte[] nameBytes = Encoding.GetEncoding("ISO-8859-1").GetBytes(actualName);
+                                        string actualNameGB2312 = Encoding.GetEncoding("GB2312").GetString(nameBytes);
+
+                                        if (string.Equals(actualNameGB2312, expectedName, StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            isMatch = true;
+                                            DebugLogger.Log($"      🔍 Match strategy: GB2312 re-decode (Latin-1→GB2312)");
+                                            DebugLogger.Log($"         Original: '{actualName}' → Decoded: '{actualNameGB2312}'");
+                                        }
+                                    }
+                                    catch { /* Ignore encoding errors */ }
+                                }
+
+                                // Strategy 4: Convert expected name to GB2312 and back (in case it was stored incorrectly)
+                                if (!isMatch)
+                                {
+                                    try
+                                    {
+                                        byte[] expectedBytes = Encoding.GetEncoding("GB2312").GetBytes(expectedName);
+                                        string expectedAsLatin1 = Encoding.GetEncoding("ISO-8859-1").GetString(expectedBytes);
+
+                                        if (string.Equals(actualName, expectedAsLatin1, StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            isMatch = true;
+                                            DebugLogger.Log($"      🔍 Match strategy: Expected→GB2312→Latin-1");
+                                            DebugLogger.Log($"         Expected: '{expectedName}' → '{expectedAsLatin1}' = Actual: '{actualName}'");
+                                        }
+                                    }
+                                    catch { /* Ignore encoding errors */ }
+                                }
+
+                                if (isMatch)
                                 {
                                     foundPath = subdir;
                                     break;
