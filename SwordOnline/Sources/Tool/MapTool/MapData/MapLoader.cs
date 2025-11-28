@@ -341,132 +341,184 @@ namespace MapTool.MapData
                 {
                     DebugLogger.Log($"   🔍 Searching with filesystem enumeration (handles GB2312 encoding)...");
 
-                    string mapsDir = Path.Combine(_gameFolder, "maps");
-                    if (Directory.Exists(mapsDir))
+                    // The image path is: \maps\{FolderPath}24.jpg
+                    // Example: \maps\西南北区\成都\成都24.jpg
+                    // We need to:
+                    // 1. Navigate through folder structure: maps\西南北区\成都\
+                    // 2. Find file: 成都24.jpg
+
+                    // Build the full relative path and split it into directory + filename
+                    string fullRelativePath = mapImageRelativePath.TrimStart('\\', '/');
+                    string expectedFileName = Path.GetFileName(fullRelativePath); // "成都24.jpg"
+                    string expectedDirPath = Path.GetDirectoryName(fullRelativePath); // "maps\西南北区\成都"
+
+                    DebugLogger.Log($"      Expected directory: {expectedDirPath}");
+                    DebugLogger.Log($"      Expected filename: {expectedFileName}");
+
+                    // Split directory path into parts and navigate step by step
+                    string[] pathParts = expectedDirPath.Split(new[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
+                    string currentPath = _gameFolder;
+
+                    bool pathExists = true;
+                    for (int i = 0; i < pathParts.Length; i++)
                     {
-                        // Split the folder path to navigate step by step
-                        string[] pathParts = mapEntry.FolderPath.Split(new[] { '\\', '/' }, StringSplitOptions.RemoveEmptyEntries);
-                        string currentPath = mapsDir;
+                        string expectedName = pathParts[i];
+                        string foundPath = null;
 
-                        bool pathExists = true;
-                        for (int i = 0; i < pathParts.Length; i++)
+                        // Enumerate subdirectories and find matching one (case-insensitive, encoding-tolerant)
+                        var subdirs = Directory.GetDirectories(currentPath);
+                        foreach (var subdir in subdirs)
                         {
-                            string expectedName = pathParts[i];
-                            string foundPath = null;
+                            string actualName = Path.GetFileName(subdir);
 
-                            // Enumerate subdirectories and find matching one (case-insensitive, encoding-tolerant)
-                            var subdirs = Directory.GetDirectories(currentPath);
-                            foreach (var subdir in subdirs)
+                            // Try multiple matching strategies to handle GB2312 encoding issues
+                            bool isMatch = false;
+
+                            // Strategy 1: Direct Unicode match
+                            if (string.Equals(actualName, expectedName, StringComparison.OrdinalIgnoreCase))
                             {
-                                string actualName = Path.GetFileName(subdir);
-
-                                // Try multiple matching strategies to handle GB2312 encoding issues
-                                bool isMatch = false;
-
-                                // Strategy 1: Direct Unicode match
-                                if (string.Equals(actualName, expectedName, StringComparison.OrdinalIgnoreCase))
-                                {
-                                    isMatch = true;
-                                    DebugLogger.Log($"      🔍 Match strategy: Direct Unicode");
-                                }
-
-                                // Strategy 2: GB2312 encoding conversion
-                                // If folder name was created with GB2312 bytes, .NET might misinterpret it
-                                // Try converting: actualName (wrong encoding) → bytes → GB2312 decode → compare
-                                if (!isMatch)
-                                {
-                                    try
-                                    {
-                                        // The folder name might be GB2312 bytes interpreted as Latin-1/Default
-                                        // Try to get the raw bytes and re-decode as GB2312
-                                        byte[] nameBytes = Encoding.Default.GetBytes(actualName);
-                                        string actualNameGB2312 = Encoding.GetEncoding("GB2312").GetString(nameBytes);
-
-                                        if (string.Equals(actualNameGB2312, expectedName, StringComparison.OrdinalIgnoreCase))
-                                        {
-                                            isMatch = true;
-                                            DebugLogger.Log($"      🔍 Match strategy: GB2312 re-decode (Default→GB2312)");
-                                            DebugLogger.Log($"         Original: '{actualName}' → Decoded: '{actualNameGB2312}'");
-                                        }
-                                    }
-                                    catch { /* Ignore encoding errors */ }
-                                }
-
-                                // Strategy 3: Try Latin-1 to GB2312 conversion
-                                if (!isMatch)
-                                {
-                                    try
-                                    {
-                                        // Folder name might be GB2312 bytes interpreted as Latin-1
-                                        byte[] nameBytes = Encoding.GetEncoding("ISO-8859-1").GetBytes(actualName);
-                                        string actualNameGB2312 = Encoding.GetEncoding("GB2312").GetString(nameBytes);
-
-                                        if (string.Equals(actualNameGB2312, expectedName, StringComparison.OrdinalIgnoreCase))
-                                        {
-                                            isMatch = true;
-                                            DebugLogger.Log($"      🔍 Match strategy: GB2312 re-decode (Latin-1→GB2312)");
-                                            DebugLogger.Log($"         Original: '{actualName}' → Decoded: '{actualNameGB2312}'");
-                                        }
-                                    }
-                                    catch { /* Ignore encoding errors */ }
-                                }
-
-                                // Strategy 4: Convert expected name to GB2312 and back (in case it was stored incorrectly)
-                                if (!isMatch)
-                                {
-                                    try
-                                    {
-                                        byte[] expectedBytes = Encoding.GetEncoding("GB2312").GetBytes(expectedName);
-                                        string expectedAsLatin1 = Encoding.GetEncoding("ISO-8859-1").GetString(expectedBytes);
-
-                                        if (string.Equals(actualName, expectedAsLatin1, StringComparison.OrdinalIgnoreCase))
-                                        {
-                                            isMatch = true;
-                                            DebugLogger.Log($"      🔍 Match strategy: Expected→GB2312→Latin-1");
-                                            DebugLogger.Log($"         Expected: '{expectedName}' → '{expectedAsLatin1}' = Actual: '{actualName}'");
-                                        }
-                                    }
-                                    catch { /* Ignore encoding errors */ }
-                                }
-
-                                if (isMatch)
-                                {
-                                    foundPath = subdir;
-                                    break;
-                                }
+                                isMatch = true;
+                                DebugLogger.Log($"      🔍 Match strategy: Direct Unicode");
                             }
 
-                            if (foundPath != null)
+                            // Strategy 2: GB2312 encoding conversion
+                            // If folder name was created with GB2312 bytes, .NET might misinterpret it
+                            // Try converting: actualName (wrong encoding) → bytes → GB2312 decode → compare
+                            if (!isMatch)
                             {
-                                currentPath = foundPath;
-                                DebugLogger.Log($"      ✓ Found: {pathParts[i]} → {Path.GetFileName(foundPath)}");
-                            }
-                            else
-                            {
-                                DebugLogger.Log($"      ✗ Not found: {pathParts[i]}");
-                                DebugLogger.Log($"      Available folders:");
-                                int showCount = Math.Min(5, subdirs.Length);
-                                for (int j = 0; j < showCount; j++)
+                                try
                                 {
-                                    DebugLogger.Log($"        [{j+1}] {Path.GetFileName(subdirs[j])}");
+                                    // The folder name might be GB2312 bytes interpreted as Latin-1/Default
+                                    // Try to get the raw bytes and re-decode as GB2312
+                                    byte[] nameBytes = Encoding.Default.GetBytes(actualName);
+                                    string actualNameGB2312 = Encoding.GetEncoding("GB2312").GetString(nameBytes);
+
+                                    if (string.Equals(actualNameGB2312, expectedName, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        isMatch = true;
+                                        DebugLogger.Log($"      🔍 Match strategy: GB2312 re-decode (Default→GB2312)");
+                                        DebugLogger.Log($"         Original: '{actualName}' → Decoded: '{actualNameGB2312}'");
+                                    }
                                 }
-                                pathExists = false;
+                                catch { /* Ignore encoding errors */ }
+                            }
+
+                            // Strategy 3: Try Latin-1 to GB2312 conversion
+                            if (!isMatch)
+                            {
+                                try
+                                {
+                                    // Folder name might be GB2312 bytes interpreted as Latin-1
+                                    byte[] nameBytes = Encoding.GetEncoding("ISO-8859-1").GetBytes(actualName);
+                                    string actualNameGB2312 = Encoding.GetEncoding("GB2312").GetString(nameBytes);
+
+                                    if (string.Equals(actualNameGB2312, expectedName, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        isMatch = true;
+                                        DebugLogger.Log($"      🔍 Match strategy: GB2312 re-decode (Latin-1→GB2312)");
+                                        DebugLogger.Log($"         Original: '{actualName}' → Decoded: '{actualNameGB2312}'");
+                                    }
+                                }
+                                catch { /* Ignore encoding errors */ }
+                            }
+
+                            // Strategy 4: Convert expected name to GB2312 and back (in case it was stored incorrectly)
+                            if (!isMatch)
+                            {
+                                try
+                                {
+                                    byte[] expectedBytes = Encoding.GetEncoding("GB2312").GetBytes(expectedName);
+                                    string expectedAsLatin1 = Encoding.GetEncoding("ISO-8859-1").GetString(expectedBytes);
+
+                                    if (string.Equals(actualName, expectedAsLatin1, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        isMatch = true;
+                                        DebugLogger.Log($"      🔍 Match strategy: Expected→GB2312→Latin-1");
+                                        DebugLogger.Log($"         Expected: '{expectedName}' → '{expectedAsLatin1}' = Actual: '{actualName}'");
+                                    }
+                                }
+                                catch { /* Ignore encoding errors */ }
+                            }
+
+                            if (isMatch)
+                            {
+                                foundPath = subdir;
                                 break;
                             }
                         }
 
-                        if (pathExists)
+                        if (foundPath != null)
                         {
-                            // Now try to find the 24.jpg file
-                            string imagePath = Path.Combine(currentPath, "24.jpg");
-                            if (File.Exists(imagePath))
+                            currentPath = foundPath;
+                            DebugLogger.Log($"      ✓ Found: {pathParts[i]} → {Path.GetFileName(foundPath)}");
+                        }
+                        else
+                        {
+                            DebugLogger.Log($"      ✗ Not found: {pathParts[i]}");
+                            DebugLogger.Log($"      Available folders:");
+                            int showCount = Math.Min(5, subdirs.Length);
+                            for (int j = 0; j < showCount; j++)
                             {
-                                actualDiskPath = imagePath;
-                                DebugLogger.Log($"   ✓ Found image via enumeration: {actualDiskPath}");
+                                DebugLogger.Log($"        [{j+1}] {Path.GetFileName(subdirs[j])}");
+                            }
+                            pathExists = false;
+                            break;
+                        }
+                    }
+
+                    // Now look for the actual file in the final directory
+                    if (pathExists)
+                    {
+                        DebugLogger.Log($"      📁 Navigated to: {currentPath}");
+                        DebugLogger.Log($"      🔍 Looking for file: {expectedFileName}");
+
+                        // Try to find the file using enumeration (handles GB2312 filenames)
+                        var files = Directory.GetFiles(currentPath);
+                        foreach (var file in files)
+                        {
+                            string actualFileName = Path.GetFileName(file);
+                            bool fileMatch = false;
+
+                            // Try the same encoding strategies for filename
+                            if (string.Equals(actualFileName, expectedFileName, StringComparison.OrdinalIgnoreCase))
+                            {
+                                fileMatch = true;
+                                DebugLogger.Log($"      ✓ File match: Direct Unicode");
                             }
                             else
                             {
-                                DebugLogger.Log($"   ✗ Folder found but no 24.jpg: {currentPath}");
+                                // Try GB2312 conversion
+                                try
+                                {
+                                    byte[] fileNameBytes = Encoding.Default.GetBytes(actualFileName);
+                                    string actualFileNameGB2312 = Encoding.GetEncoding("GB2312").GetString(fileNameBytes);
+
+                                    if (string.Equals(actualFileNameGB2312, expectedFileName, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        fileMatch = true;
+                                        DebugLogger.Log($"      ✓ File match: GB2312 re-decode");
+                                        DebugLogger.Log($"         Original: '{actualFileName}' → Decoded: '{actualFileNameGB2312}'");
+                                    }
+                                }
+                                catch { }
+                            }
+
+                            if (fileMatch)
+                            {
+                                actualDiskPath = file;
+                                DebugLogger.Log($"   ✓ Found image via enumeration: {actualDiskPath}");
+                                break;
+                            }
+                        }
+
+                        if (actualDiskPath == null)
+                        {
+                            DebugLogger.Log($"   ✗ File not found in directory: {currentPath}");
+                            DebugLogger.Log($"      Available files:");
+                            int showCount = Math.Min(5, files.Length);
+                            for (int j = 0; j < showCount; j++)
+                            {
+                                DebugLogger.Log($"        [{j+1}] {Path.GetFileName(files[j])}");
                             }
                         }
                     }
