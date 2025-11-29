@@ -1,37 +1,47 @@
 -- Author by AloneScript (Linh Em)
 
-IncludeLib("LEAGUE");
+-- Stub for IncludeLib if not available (C++ library loader)
+if not IncludeLib then
+	function IncludeLib(szLibName)
+		-- Stub function for C++ library loading
+		-- HuyenThietKiem may have these libraries pre-loaded or not implemented
+	end
+end
+
+if IncludeLib then
+	IncludeLib("LEAGUE");
+end
 Include("\\script\\lib\\awardtemplet.lua");
 
 ------------------------------ TONG HOP DANH SACH MODULE -------------------------------
-SUPPORT_PLAYER = 1; --ID MODULE giµnh riªng cho hç trî t©n thñ theo cÊp ®é
-	--ID Task hç trî t©n thñ theo tõng cÊp
-		TASKMODULE_NEWBIE = 1; --Task: Hç trî ng­êi ch¬i míi gia nhËp vµo game
-		-- TASK 10-200: kh«ng ®­îc sö dông (chØ ®­îc sö dông khi cho nhËn th­ëng hç trî theo tõng cÊp)
+SUPPORT_PLAYER = 1; --ID MODULE giï¿½nh riï¿½ng cho hï¿½ trï¿½ tï¿½n thï¿½ theo cï¿½p ï¿½ï¿½
+	--ID Task hï¿½ trï¿½ tï¿½n thï¿½ theo tï¿½ng cï¿½p
+		TASKMODULE_NEWBIE = 1; --Task: Hï¿½ trï¿½ ngï¿½ï¿½i chï¿½i mï¿½i gia nhï¿½p vï¿½o game
+		-- TASK 10-200: khï¿½ng ï¿½ï¿½ï¿½c sï¿½ dï¿½ng (chï¿½ ï¿½ï¿½ï¿½c sï¿½ dï¿½ng khi cho nhï¿½n thï¿½ï¿½ng hï¿½ trï¿½ theo tï¿½ng cï¿½p)
 		
-PLAYER_CHARGECARD = 2; --ID MODULE hç trî t©n thñ cho mèc n¹p thÎ
-	--ID Task hç trî t©n thñ theo tõng cÊp
-		TASKMODULE_CURCARD = 1; --Mèc n¹p thÎ hiÖn t¹i (®¬n vÞ: KNB hoÆc TiÒn §ång) mÆc ®Þnh lµ KNB
-		TASKMODULE_DATACARD = 2; --Gi¸ trÞ tiÒn n¹p khi ng­êi ch¬i rót tiÒn t¹i NPC TiÒn Trang
+PLAYER_CHARGECARD = 2; --ID MODULE hï¿½ trï¿½ tï¿½n thï¿½ cho mï¿½c nï¿½p thï¿½
+	--ID Task hï¿½ trï¿½ tï¿½n thï¿½ theo tï¿½ng cï¿½p
+		TASKMODULE_CURCARD = 1; --Mï¿½c nï¿½p thï¿½ hiï¿½n tï¿½i (ï¿½ï¿½n vï¿½: KNB hoï¿½c Tiï¿½n ï¿½ï¿½ng) mï¿½c ï¿½ï¿½nh lï¿½ KNB
+		TASKMODULE_DATACARD = 2; --Giï¿½ trï¿½ tiï¿½n nï¿½p khi ngï¿½ï¿½i chï¿½i rï¿½t tiï¿½n tï¿½i NPC Tiï¿½n Trang
 		TASKMODULE_CHARGECARD_20K = 20;
 		TASKMODULE_CHARGECARD_50K = 50;
 		TASKMODULE_CHARGECARD_100K = 100;
 		TASKMODULE_CHARGECARD_200K = 200;
 		TASKMODULE_CHARGECARD_500K = 500;
 
------------------------ HiÖn thÞ néi dung thªm cho c©u héi tho¹i khi lµ GM thao t¸c lªn nã -----------------------
+----------------------- Hiï¿½n thï¿½ nï¿½i dung thï¿½m cho cï¿½u hï¿½i thoï¿½i khi lï¿½ GM thao tï¿½c lï¿½n nï¿½ -----------------------
 function Note(szCode)
 	return ""
 end
 
------------------------ T¹o hép tho¹i theo danh s¸ch table (trang tr­íc, trang kÕ) -------------------------------
+----------------------- Tï¿½o hï¿½p thoï¿½i theo danh sï¿½ch table (trang trï¿½ï¿½c, trang kï¿½) -------------------------------
 function AddItemByTable(szTitle, tbListItem, nPage)
 	local tbOption = {}
 	local nMaxOption = 10;
 	nPage = nPage or 1;
 
 	if (nPage > 1) then
-		tinsert(tbOption, {"Trë vÒ trang tr­íc…", AddItemByTable, {szTitle, tbListItem, (nPage-1)}})
+		tinsert(tbOption, {"Trï¿½ vï¿½ trang trï¿½ï¿½cï¿½", AddItemByTable, {szTitle, tbListItem, (nPage-1)}})
 	end
 	if (getn(tbListItem) <= nMaxOption*nPage) then
 		for i = (nMaxOption*(nPage-1)+1), getn(tbListItem) do
@@ -41,9 +51,9 @@ function AddItemByTable(szTitle, tbListItem, nPage)
 		for i = (nMaxOption*(nPage-1)+1), (nMaxOption*nPage) do
 			tinsert(tbOption, {format("%s", tbListItem[i]["szName"]), AddItemByTableCheckRoom, {tbListItem[i]}})
 		end
-		tinsert(tbOption, {"§i ®Õn trang kÕ…", AddItemByTable, {szTitle, tbListItem, (nPage+1)}})
+		tinsert(tbOption, {"ï¿½i ï¿½ï¿½n trang kÕ…", AddItemByTable, {szTitle, tbListItem, (nPage+1)}})
 	end
-		tinsert(tbOption, {"KÕt thóc ®èi tho¹i."})
+		tinsert(tbOption, {"Kï¿½t thï¿½c ï¿½ï¿½i thoï¿½i."})
 	CreateNewSayEx(szTitle, tbOption)
 end
 
@@ -60,14 +70,14 @@ function IsRoom(tbItem)
 	return 1; end
 	
 	if (CountFreeRoomByWH(tbItem["nWidth"],tbItem["nHeight"]) < 1) then
-		Talk(1, "", format("§Ó nhËn ®­îc <color=yellow>%s<color> cÇn Ýt nhÊt <color=red>%dx%d<color> « trèng", tbItem["szName"],tbItem["nWidth"],tbItem["nHeight"]))
+		Talk(1, "", format("ï¿½ï¿½ nhï¿½n ï¿½ï¿½ï¿½c <color=yellow>%s<color> cï¿½n ï¿½t nhï¿½t <color=red>%dx%d<color> ï¿½ trï¿½ng", tbItem["szName"],tbItem["nWidth"],tbItem["nHeight"]))
 	return 0; end
 return 1 end
 
 ----------------------- NO / CANCEL ------------------------------
-SAYNO = "KÕt thóc ®èi tho¹i./OnCancel";
-THINKAGIAN = "§Ó ta suy nghÜ l¹i xem./OnCancel";
-NOTTRADE = "Kh«ng giao dÞch./OnCancel";
+SAYNO = "Kï¿½t thï¿½c ï¿½ï¿½i thoï¿½i./OnCancel";
+THINKAGIAN = "ï¿½ï¿½ ta suy nghï¿½ lï¿½i xem./OnCancel";
+NOTTRADE = "Khï¿½ng giao dï¿½ch./OnCancel";
 
 function OnCancel()
 end

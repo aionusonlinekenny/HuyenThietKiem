@@ -1,52 +1,61 @@
 --------------------------------------
--- ÏµÍ³ÅäÖÃ£º¿ª¹Ø¡¢×´Ì¬¡¢
+-- ÏµÍ³ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½Ø¡ï¿½×´Ì¬ï¿½ï¿½
 
 ---------------------------------------------------------------
--- ÇøÓò°æ±¾ÅäÖÃ
-DEF_PRODUCT_REGION_CN		= 0;		-- ÖĞ¹ú´óÂ½°æ±¾
-DEF_PRODUCT_REGION_CN_IB	= 1;		-- ÖĞ¹ú´óÂ½Ãâ·Ñ°æ±¾
-DEF_PRODUCT_REGION_TW		= 2;		-- Ì¨Íå°æ±¾
-DEF_PRODUCT_REGION_MY		= 3;		-- Ô½ÄÏ°æ±¾
-DEF_PRODUCT_REGION_VN		= 4;		-- Ô½ÄÏ°æ±¾
-
-SYSCFG_PRODUCT_REGION_NAME, SYSCFG_PRODUCT_REGION_ID = GetProductRegion();	-- µ±Ç°°æ±¾
+-- Stub for GetProductRegion if not available (C++ function)
+if not GetProductRegion then
+	function GetProductRegion()
+		-- Default to Vietnam version for HuyenThietKiem
+		return "vn", 4;
+	end
+end
 
 ---------------------------------------------------------------
--- Ç®×¯¹¦ÄÜÅäÖÃ (1 - ¿ªÆô£¬nil - ¹Ø±Õ)
-SYSCFG_GAMEBANK_GOLDSILVER_OPEN = 1; -- ½ğÒøÔª±¦¹¦ÄÜ¿ª·Å
-SYSCFG_EXTPOINTID1_TYPEPAY = 1; -- HÖ thèng tiÒn n¹p thÎ t¹i TiÒn Trang. 0:TiÒn ®ång, 1: KNB
-SYSCFG_GAMEBANK_GOLD_GET 		= 1; -- ½ğÔª±¦ÁìÈ¡
-SYSCFG_GAMEBANK_GOLD_PAY 		= 1; -- ½ğÔª±¦³äÖµ
-SYSCFG_GAMEBANK_GOLD_COIN 	= 1; -- ½ğÔª±¦»»Í­Ç®
-SYSCFG_GAMEBANK_GOLD_USE 		= 1; -- ½ğÔª±¦µÄÆäËüÏûºÄÓÃÍ¾
+-- ï¿½ï¿½ï¿½ï¿½æ±¾ï¿½ï¿½ï¿½ï¿½
+DEF_PRODUCT_REGION_CN		= 0;		-- ï¿½Ğ¹ï¿½ï¿½ï¿½Â½ï¿½æ±¾
+DEF_PRODUCT_REGION_CN_IB	= 1;		-- ï¿½Ğ¹ï¿½ï¿½ï¿½Â½ï¿½ï¿½Ñ°æ±¾
+DEF_PRODUCT_REGION_TW		= 2;		-- Ì¨ï¿½ï¿½æ±¾
+DEF_PRODUCT_REGION_MY		= 3;		-- Ô½ï¿½Ï°æ±¾
+DEF_PRODUCT_REGION_VN		= 4;		-- Ô½ï¿½Ï°æ±¾
 
-SYSCFG_GAMEBANK_SILVER_GET 	= 1; -- ÒøÔª±¦ÁìÈ¡
-SYSCFG_GAMEBANK_SILVER_PAY 	= 1; -- ÒøÔª±¦³äÖµ
-SYSCFG_GAMEBANK_SILVER_COIN = 1; -- ÒøÔª±¦»»Í­Ç®
-SYSCFG_GAMEBANK_SILVER_USE 	= 1; -- ÒøÔª±¦µÄÆäËüÏûºÄÓÃÍ¾
+SYSCFG_PRODUCT_REGION_NAME, SYSCFG_PRODUCT_REGION_ID = GetProductRegion();	-- ï¿½ï¿½Ç°ï¿½æ±¾
 
-SYSCFG_GAMEBANK_TICKET_OPEN = 1; -- ÒøÆ±¹¦ÄÜ¿ª·Å
-SYSCFG_GAMEBANK_TICKET_GET 	= 1; -- ÒøÆ±ÁìÈ¡
-SYSCFG_GAMEBANK_TICKET_PAY 	= 1; -- ÒøÆ±³äÖµ
-SYSCFG_GAMEBANK_TICKET_COIN = 1; -- ÒøÆ±»»Í­Ç®
-SYSCFG_GAMEBANK_TICKET_USE 	= 1; -- ÒøÆ±µÄÆäËüÏûºÄÓÃÍ¾
+---------------------------------------------------------------
+-- Ç®×¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (1 - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nil - ï¿½Ø±ï¿½)
+SYSCFG_GAMEBANK_GOLDSILVER_OPEN = 1; -- ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½ï¿½Ü¿ï¿½ï¿½ï¿½
+SYSCFG_EXTPOINTID1_TYPEPAY = 1; -- Hï¿½ thï¿½ng tiï¿½n nï¿½p thï¿½ tï¿½i Tiï¿½n Trang. 0:Tiï¿½n ï¿½ï¿½ng, 1: KNB
+SYSCFG_GAMEBANK_GOLD_GET 		= 1; -- ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½È¡
+SYSCFG_GAMEBANK_GOLD_PAY 		= 1; -- ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½Öµ
+SYSCFG_GAMEBANK_GOLD_COIN 	= 1; -- ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½Í­Ç®
+SYSCFG_GAMEBANK_GOLD_USE 		= 1; -- ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¾
+
+SYSCFG_GAMEBANK_SILVER_GET 	= 1; -- ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½È¡
+SYSCFG_GAMEBANK_SILVER_PAY 	= 1; -- ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½Öµ
+SYSCFG_GAMEBANK_SILVER_COIN = 1; -- ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½Í­Ç®
+SYSCFG_GAMEBANK_SILVER_USE 	= 1; -- ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¾
+
+SYSCFG_GAMEBANK_TICKET_OPEN = 1; -- ï¿½ï¿½Æ±ï¿½ï¿½ï¿½Ü¿ï¿½ï¿½ï¿½
+SYSCFG_GAMEBANK_TICKET_GET 	= 1; -- ï¿½ï¿½Æ±ï¿½ï¿½È¡
+SYSCFG_GAMEBANK_TICKET_PAY 	= 1; -- ï¿½ï¿½Æ±ï¿½ï¿½Öµ
+SYSCFG_GAMEBANK_TICKET_COIN = 1; -- ï¿½ï¿½Æ±ï¿½ï¿½Í­Ç®
+SYSCFG_GAMEBANK_TICKET_USE 	= 1; -- ï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¾
 ---------------------------------------------------------------
 -- LLG_ALLINONE_TODO_20070802
---À©Õ¹µãµÄÊ¹ÓÃ
-SYSCFG_EXTPOINTID7_LOGINMSG		= 1;	--µÇÈëÓÎÏ·Ê±£¬¸ù¾İÀ©Õ¹µã×´Ì¬¸øÓëĞÅÏ¢ÌáÊ¾
+--ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½
+SYSCFG_EXTPOINTID7_LOGINMSG		= 1;	--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ê¾
 
 ---------------------------------------------------------------
--- ÆæÕä¸ó¹¦ÄÜÅäÖÃ (1 - ¿ªÆô£¬nil - ¹Ø±Õ)
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (1 - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nil - ï¿½Ø±ï¿½)
 SYSCFG_SHOP_OPEN            = 1;
 ---------------------------------------------------------------
 
 ---------------------------------------------------------------
--- ÌÒ»¨µº¹¦ÄÜÅäÖÃ (1 - ¿ªÆô£¬nil - ¹Ø±Õ)
+-- ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (1 - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nil - ï¿½Ø±ï¿½)
 SYSCFG_TAOHUAISLAND_OPEN    = 1;
 ---------------------------------------------------------------
 
 ---------------------------------------------------------------
--- Ã¿ÈÕÁìÈ¡½±Àø¹¦ÄÜÅäÖÃ (1 - ¿ªÆô£¬nil - ¹Ø±Õ)
+-- Ã¿ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (1 - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nil - ï¿½Ø±ï¿½)
 SYSCFG_AWARDPERDAY_OPEN     = nil;
 if (SYSCFG_PRODUCT_REGION_ID == DEF_PRODUCT_REGION_TW or SYSCFG_PRODUCT_REGION_ID == DEF_PRODUCT_REGION_VN) then
 	SYSCFG_AWARDPERDAY_OPEN = 1;
@@ -54,7 +63,7 @@ end
 ---------------------------------------------------------------
 
 ---------------------------------------------------------------
--- ×ª°üÔÂÓÃ»§ÁìÈ¡½±Àø¹¦ÄÜÅäÖÃ (1 - ¿ªÆô£¬nil - ¹Ø±Õ)
+-- ×ªï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (1 - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nil - ï¿½Ø±ï¿½)
 SYSCFG_PAYMONTHAWARD_OPEN     = nil;
 if (SYSCFG_PRODUCT_REGION_ID == DEF_PRODUCT_REGION_TW or SYSCFG_PRODUCT_REGION_ID == DEF_PRODUCT_REGION_VN) then
 	SYSCFG_PAYMONTHAWARD_OPEN = 1;
@@ -62,7 +71,7 @@ end
 ---------------------------------------------------------------
 
 ---------------------------------------------------------------
--- Í¬°é¹¦ÄÜÅäÖÃ (1 - ¿ªÆô£¬nil - ¹Ø±Õ)
+-- Í¬ï¿½é¹¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (1 - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nil - ï¿½Ø±ï¿½)
 SYSCFG_PARTNER_OPEN     = nil;
 if (SYSCFG_PRODUCT_REGION_ID == DEF_PRODUCT_REGION_CN or SYSCFG_PRODUCT_REGION_ID == DEF_PRODUCT_REGION_TW or SYSCFG_PRODUCT_REGION_ID == DEF_PRODUCT_REGION_VN) then
 	SYSCFG_PARTNER_OPEN = 1;
@@ -70,7 +79,7 @@ end
 ---------------------------------------------------------------
 
 ---------------------------------------------------------------
--- ĞÂ°ï»á¹¦ÄÜÅäÖÃ (1 - ¿ªÆô£¬nil - ¹Ø±Õ)
+-- ï¿½Â°ï¿½á¹¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (1 - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nil - ï¿½Ø±ï¿½)
 SYSCFG_NEWTONG_OPEN     = nil;
 if (SYSCFG_PRODUCT_REGION_ID == DEF_PRODUCT_REGION_CN or SYSCFG_PRODUCT_REGION_ID == DEF_PRODUCT_REGION_CN_IB or SYSCFG_PRODUCT_REGION_ID == DEF_PRODUCT_REGION_VN) then
 	SYSCFG_NEWTONG_OPEN = 1;
@@ -92,7 +101,7 @@ function IncludeForRegionVer(strPath, strLuaFileName)
 	Include(strFullName);
 end
 
--- ÅĞ¶ÏÍæ¼ÒÊÇ·ñ VIP
+-- ï¿½Ğ¶ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ VIP
 function IsVip()
 	if (GetAccLeftTime() > 0) then 
 		return 1;
