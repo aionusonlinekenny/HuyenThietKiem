@@ -1,0 +1,16 @@
+MapId	RegionId	CellX	CellY	ScriptFile	IsLoad
+21	3423	15	26	\script\maps\trap\21\1.lua	1
+21	3424	6	28	\script\maps\trap\21\1.lua	1
+21	3424	7	26	\script\maps\trap\21\1.lua	1
+21	3424	3	29	\script\maps\trap\21\1.lua	1
+21	3424	7	25	\script\maps\trap\21\1.lua	1
+21	3424	2	19	\script\maps\trap\21\1.lua	1
+21	3424	2	30	\script\maps\trap\21\1.lua	1
+21	3424	3	28	\script\maps\trap\21\1.lua	1
+21	3424	5	26	\script\maps\trap\21\1.lua	1
+21	3424	5	25	\script\maps\trap\21\1.lua	1
+21	3507	15	0	\script\maps\trap\21\1.lua	1
+21	3508	3	3	\script\maps\trap\21\1.lua	1
+21	3508	5	1	\script\maps\trap\21\1.lua	1
+21	3508	1	4	\script\maps\trap\21\1.lua	1
+21	3508	0	1	\script\maps\trap\21\1.lua	1

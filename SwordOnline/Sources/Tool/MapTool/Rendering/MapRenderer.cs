@@ -24,12 +24,11 @@ namespace MapTool.Rendering
         private int _mapImageOffsetX = 0;
         private int _mapImageOffsetY = 0;
 
-        // Colors - Enhanced visualization
+        // Colors - Simple overlay visualization
         private Color _gridColor = Color.FromArgb(80, 100, 100, 120);  // Subtle grid
-        private Color _regionBorderColor = Color.FromArgb(200, 80, 120, 255);  // Bright border
-        private Color _obstacleColor = Color.FromArgb(220, 255, 60, 60);       // Bright RED obstacles - highly visible!
-        private Color _trapColor = Color.FromArgb(220, 255, 220, 0);           // Bright YELLOW traps - highly visible!
-        private Color _walkableCellColor = Color.FromArgb(255, 180, 220, 180);  // Light green walkable
+        private Color _regionBorderColor = Color.FromArgb(150, 80, 120, 255);  // Semi-transparent border
+        private Color _walkableCellColor = Color.FromArgb(60, 0, 255, 0);       // Semi-transparent GREEN for walkable areas
+        private Color _trapColor = Color.FromArgb(120, 255, 220, 0);            // Semi-transparent YELLOW for traps
         private Color _selectedCellColor = Color.FromArgb(200, 0, 255, 0);      // Bright green selection
         private Color _backgroundColor = Color.FromArgb(255, 140, 180, 140);     // Green background like terrain
 
@@ -182,95 +181,81 @@ namespace MapTool.Rendering
         private void RenderRegion(Graphics g, MapRegionData region, MapCoordinate? selectedCoord)
         {
             // Use MAP coordinates (same as 24.jpg) for rendering
-            // 1 region = 128x128 pixels on screen (matching image scale)
+            // 1 region = 32x32 pixels on screen (matching image scale)
             int regionMapX = region.RegionX * MapConstants.MAP_REGION_PIXEL_WIDTH;
             int regionMapY = region.RegionY * MapConstants.MAP_REGION_PIXEL_HEIGHT;
 
             // Calculate cell size on map (divide region size by cell count)
-            int cellMapWidth = MapConstants.MAP_REGION_PIXEL_WIDTH / MapConstants.REGION_GRID_WIDTH;   // 128/16 = 8
-            int cellMapHeight = MapConstants.MAP_REGION_PIXEL_HEIGHT / MapConstants.REGION_GRID_HEIGHT; // 128/32 = 4
+            int cellMapWidth = MapConstants.MAP_REGION_PIXEL_WIDTH / MapConstants.REGION_GRID_WIDTH;   // 32/16 = 2
+            int cellMapHeight = MapConstants.MAP_REGION_PIXEL_HEIGHT / MapConstants.REGION_GRID_HEIGHT; // 32/32 = 1
 
-            // Draw cells
+            // OPTIMIZED: Draw walkable areas and traps, skip obstacles (let map show through)
+            // Obstacles = transparent (no overlay)
+            // Walkable = semi-transparent green overlay
+            // Traps = semi-transparent yellow overlay
             for (int cy = 0; cy < MapConstants.REGION_GRID_HEIGHT; cy++)
             {
                 for (int cx = 0; cx < MapConstants.REGION_GRID_WIDTH; cx++)
                 {
+                    bool hasObstacle = region.Obstacles[cx, cy] != 0;
+                    bool hasTrap = region.Traps[cx, cy] != 0;
+                    bool isSelected = selectedCoord.HasValue &&
+                                    selectedCoord.Value.RegionID == region.RegionID &&
+                                    selectedCoord.Value.CellX == cx &&
+                                    selectedCoord.Value.CellY == cy;
+
+                    // Skip obstacles - they are transparent (let map image show through)
+                    if (hasObstacle && !isSelected)
+                        continue;
+
+                    // Skip drawing walkable cells when no map image (would fill entire screen with green)
+                    if (!hasTrap && !isSelected && _mapImage == null && !hasObstacle)
+                        continue;
+
                     int cellMapX = regionMapX + cx * cellMapWidth;
                     int cellMapY = regionMapY + cy * cellMapHeight;
 
                     int screenX = cellMapX - _viewOffsetX;
                     int screenY = cellMapY - _viewOffsetY;
 
-                    // Use MAP scale for rendering
-                    Rectangle cellRect = new Rectangle(screenX, screenY,
-                        cellMapWidth, cellMapHeight);
+                    Rectangle cellRect = new Rectangle(screenX, screenY, cellMapWidth, cellMapHeight);
 
-                    // Determine cell color - ALWAYS draw for visualization
-                    Color cellColor = _walkableCellColor; // Default: walkable (light green)
+                    // Determine cell color
+                    Color cellColor;
+                    if (hasTrap)
+                        cellColor = _trapColor; // Semi-transparent YELLOW
+                    else if (isSelected)
+                        cellColor = _selectedCellColor; // Bright GREEN
+                    else
+                        cellColor = _walkableCellColor; // Semi-transparent GREEN
 
-                    if (region.Obstacles[cx, cy] != 0)
-                    {
-                        cellColor = _obstacleColor; // Bright RED for obstacles
-                    }
-                    else if (region.Traps[cx, cy] != 0)
-                    {
-                        cellColor = _trapColor; // Bright YELLOW for traps
-                    }
-                    else if (_mapImage != null)
-                    {
-                        // If we have map image, use VERY transparent walkable color
-                        // This lets the background image show through clearly
-                        cellColor = Color.FromArgb(40, 180, 220, 180);
-                    }
-
-                    // Always draw cells for better visualization
+                    // Draw cell
                     using (SolidBrush brush = new SolidBrush(cellColor))
                     {
                         g.FillRectangle(brush, cellRect);
                     }
 
-                    // Highlight selected cell (draw on top)
-                    if (selectedCoord.HasValue &&
-                        selectedCoord.Value.RegionID == region.RegionID &&
-                        selectedCoord.Value.CellX == cx &&
-                        selectedCoord.Value.CellY == cy)
+                    // Draw border for selected cell
+                    if (isSelected)
                     {
-                        using (SolidBrush brush = new SolidBrush(_selectedCellColor))
-                        {
-                            g.FillRectangle(brush, cellRect);
-                        }
                         using (Pen pen = new Pen(Color.Lime, 2))
                         {
                             g.DrawRectangle(pen, cellRect);
                         }
                     }
-
-                    // Draw grid (draw last so it's visible)
-                    using (Pen pen = new Pen(_gridColor))
-                    {
-                        g.DrawRectangle(pen, cellRect);
-                    }
                 }
             }
 
-            // Draw region border
+            // Draw region border (subtle outline)
             Rectangle regionRect = new Rectangle(
                 regionMapX - _viewOffsetX,
                 regionMapY - _viewOffsetY,
                 MapConstants.MAP_REGION_PIXEL_WIDTH,
                 MapConstants.MAP_REGION_PIXEL_HEIGHT);
 
-            using (Pen pen = new Pen(_regionBorderColor, 2))
+            using (Pen pen = new Pen(_regionBorderColor, 1))
             {
                 g.DrawRectangle(pen, regionRect);
-            }
-
-            // Draw region label
-            using (Font font = new Font("Arial", 10, FontStyle.Bold))
-            using (SolidBrush brush = new SolidBrush(Color.White))
-            {
-                string label = $"R({region.RegionX},{region.RegionY})";
-                g.DrawString(label, font, brush, regionRect.X + 5, regionRect.Y + 5);
             }
         }
 
@@ -314,11 +299,24 @@ namespace MapTool.Rendering
         /// </summary>
         public MapCoordinate ScreenToMapCoordinate(int screenX, int screenY)
         {
-            // Adjust for zoom
-            int worldX = (int)(screenX / _zoom) + _viewOffsetX;
-            int worldY = (int)(screenY / _zoom) + _viewOffsetY;
+            // Step 1: Convert screen pixels to MAP coordinates (24.jpg pixel coordinates)
+            int mapX = (int)(screenX / _zoom) + _viewOffsetX;
+            int mapY = (int)(screenY / _zoom) + _viewOffsetY;
 
-            return CoordinateConverter.WorldToRegionCell(worldX, worldY);
+            // Step 2: Convert MAP coordinates to WORLD/LOGIC coordinates
+            // WorldX = MapX * MAP_SCALE_H (multiply by 16)
+            // WorldY = MapY * MAP_SCALE_V (multiply by 32)
+            int worldX = mapX * MapConstants.MAP_SCALE_H;
+            int worldY = mapY * MapConstants.MAP_SCALE_V;
+
+            // Step 3: Convert WORLD coordinates to Region/Cell
+            MapCoordinate result = CoordinateConverter.WorldToRegionCell(worldX, worldY);
+
+            // Debug logging
+            DebugLogger.Log($"[ScreenToMapCoordinate] Screen({screenX},{screenY}) → Map({mapX},{mapY}) → World({worldX},{worldY}) → Region({result.RegionX},{result.RegionY}) Cell({result.CellX},{result.CellY}) ID={result.RegionID}");
+            DebugLogger.Log($"  Zoom={_zoom:F2}, ViewOffset=({_viewOffsetX},{_viewOffsetY})");
+
+            return result;
         }
 
         /// <summary>

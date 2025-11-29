@@ -27,14 +27,38 @@ namespace MapTool.Export
         }
 
         /// <summary>
-        /// Add entry from coordinates
+        /// Add entry from coordinates with map config for local RegionID calculation
         /// </summary>
+        public void AddEntry(int mapId, MapCoordinate coord, MapConfig mapConfig, string scriptFile = null, int isLoad = 1)
+        {
+            // Calculate LOCAL RegionID (relative to map rect) for trap file format
+            int localRegionID = RegionData.MakeLocalRegionID(
+                coord.RegionX, coord.RegionY,
+                mapConfig.RegionLeft, mapConfig.RegionTop, mapConfig.RegionWidth);
+
+            TrapEntry entry = new TrapEntry
+            {
+                MapId = mapId,
+                RegionId = localRegionID,  // Use LOCAL RegionID for trap files
+                CellX = coord.CellX,
+                CellY = coord.CellY,
+                ScriptFile = scriptFile ?? $@"\script\maps\trap\{mapId}\1.lua",
+                IsLoad = isLoad
+            };
+
+            _entries.Add(entry);
+        }
+
+        /// <summary>
+        /// Add entry from coordinates (legacy - for backwards compatibility)
+        /// </summary>
+        [Obsolete("Use AddEntry with MapConfig parameter to ensure correct local RegionID")]
         public void AddEntry(int mapId, MapCoordinate coord, string scriptFile = null, int isLoad = 1)
         {
             TrapEntry entry = new TrapEntry
             {
                 MapId = mapId,
-                RegionId = coord.RegionID,
+                RegionId = coord.RegionID,  // WARNING: This is GLOBAL RegionID, may be wrong!
                 CellX = coord.CellX,
                 CellY = coord.CellY,
                 ScriptFile = scriptFile ?? $@"\script\maps\trap\{mapId}\1.lua",

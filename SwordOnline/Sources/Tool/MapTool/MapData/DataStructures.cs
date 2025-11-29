@@ -21,11 +21,13 @@ namespace MapTool.MapData
 
         // Map image rendering (24.jpg coordinates) - from client MAP_SCALE_H/V
         // Client uses scale factors: world / 16 (H) and world / 32 (V)
-        // Result: 1 region = 2048/16 x 4096/32 = 128x128 pixels on 24.jpg
+        // MapPixelX = (RegionX * REGION_PIXEL_WIDTH) / MAP_SCALE_H = (RegionX * 512) / 16 = RegionX * 32
+        // MapPixelY = (RegionY * REGION_PIXEL_HEIGHT) / MAP_SCALE_V = (RegionY * 1024) / 32 = RegionY * 32
+        // Result: 1 region = 32x32 pixels on 24.jpg (confirmed from client MAP_A_REGION_NUM_MAP_PIXEL_H/V)
         public const int MAP_SCALE_H = 16;
         public const int MAP_SCALE_V = 32;
-        public const int MAP_REGION_PIXEL_WIDTH = 128;   // 2048 / 16
-        public const int MAP_REGION_PIXEL_HEIGHT = 128;  // 4096 / 32
+        public const int MAP_REGION_PIXEL_WIDTH = 32;   // REGION_PIXEL_WIDTH / MAP_SCALE_H = 512 / 16 = 32
+        public const int MAP_REGION_PIXEL_HEIGHT = 32;  // REGION_PIXEL_HEIGHT / MAP_SCALE_V = 1024 / 32 = 32
 
         // File names
         public const string REGION_CLIENT_FILE = "Region_C.dat";
@@ -85,10 +87,23 @@ namespace MapTool.MapData
 
         public static int MakeRegionID(int x, int y)
         {
-            // CORRECT formula: Y * 256 + X
-            // This matches the game's trap file format and in-memory representation
-            // NOT the Windows MAKELONG formula (which would be x | (y << 16))
+            // GLOBAL formula: Y * 256 + X
+            // Used for dictionary keys and internal representation
+            // NOT for trap export files!
             return y * 256 + x;
+        }
+
+        public static int MakeLocalRegionID(int x, int y, int minX, int minY, int width)
+        {
+            // LOCAL formula: (Y - minY) * width + (X - minX)
+            // Used for trap export files that are relative to map rect
+            return (y - minY) * width + (x - minX);
+        }
+
+        public int GetLocalRegionID(int minX, int minY, int width)
+        {
+            // Calculate local RegionID for this region based on map rect
+            return MakeLocalRegionID(RegionX, RegionY, minX, minY, width);
         }
 
         public static void ParseRegionID(int regionID, out int x, out int y)
