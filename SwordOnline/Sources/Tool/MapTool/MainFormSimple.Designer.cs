@@ -280,18 +280,10 @@ namespace MapTool
             this.lstEntries.HorizontalScrollbar = true;
             this.lstEntries.Location = new System.Drawing.Point(10, 22);
             this.lstEntries.Name = "lstEntries";
-            this.lstEntries.Size = new System.Drawing.Size(320, 95);
+            this.lstEntries.Size = new System.Drawing.Size(320, 55);
             this.lstEntries.TabIndex = 0;
 
-            this.btnExport.Location = new System.Drawing.Point(10, 125);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(100, 25);
-            this.btnExport.TabIndex = 1;
-            this.btnExport.Text = "Export to File";
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-
-            this.btnExtractAllRegions.Location = new System.Drawing.Point(10, 95);
+            this.btnExtractAllRegions.Location = new System.Drawing.Point(10, 85);
             this.btnExtractAllRegions.Name = "btnExtractAllRegions";
             this.btnExtractAllRegions.Size = new System.Drawing.Size(320, 25);
             this.btnExtractAllRegions.TabIndex = 4;
@@ -299,7 +291,15 @@ namespace MapTool
             this.btnExtractAllRegions.UseVisualStyleBackColor = true;
             this.btnExtractAllRegions.Click += new System.EventHandler(this.btnExtractAllRegions_Click);
 
-            this.btnRemoveLast.Location = new System.Drawing.Point(120, 125);
+            this.btnExport.Location = new System.Drawing.Point(10, 118);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(100, 25);
+            this.btnExport.TabIndex = 1;
+            this.btnExport.Text = "Export to File";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+
+            this.btnRemoveLast.Location = new System.Drawing.Point(120, 118);
             this.btnRemoveLast.Name = "btnRemoveLast";
             this.btnRemoveLast.Size = new System.Drawing.Size(100, 25);
             this.btnRemoveLast.TabIndex = 2;
@@ -307,7 +307,7 @@ namespace MapTool
             this.btnRemoveLast.UseVisualStyleBackColor = true;
             this.btnRemoveLast.Click += new System.EventHandler(this.btnRemoveLast_Click);
 
-            this.btnClear.Location = new System.Drawing.Point(230, 125);
+            this.btnClear.Location = new System.Drawing.Point(230, 118);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(100, 25);
             this.btnClear.TabIndex = 3;
