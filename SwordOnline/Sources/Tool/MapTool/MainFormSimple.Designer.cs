@@ -9,6 +9,7 @@ namespace MapTool
         private System.Windows.Forms.Button btnBrowseFolder;
         private System.Windows.Forms.Button btnLoadMap;
         private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnExtractAllRegions;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnRemoveLast;
         private System.Windows.Forms.Button btnZoomIn;
@@ -50,6 +51,7 @@ namespace MapTool
             this.btnBrowseFolder = new System.Windows.Forms.Button();
             this.btnLoadMap = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
+            this.btnExtractAllRegions = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnRemoveLast = new System.Windows.Forms.Button();
             this.btnZoomIn = new System.Windows.Forms.Button();
@@ -264,6 +266,7 @@ namespace MapTool
             // grpEntries
             this.grpEntries.Controls.Add(this.lstEntries);
             this.grpEntries.Controls.Add(this.btnExport);
+            this.grpEntries.Controls.Add(this.btnExtractAllRegions);
             this.grpEntries.Controls.Add(this.btnClear);
             this.grpEntries.Controls.Add(this.btnRemoveLast);
             this.grpEntries.Location = new System.Drawing.Point(920, 526);
@@ -287,6 +290,14 @@ namespace MapTool
             this.btnExport.Text = "Export to File";
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+
+            this.btnExtractAllRegions.Location = new System.Drawing.Point(10, 95);
+            this.btnExtractAllRegions.Name = "btnExtractAllRegions";
+            this.btnExtractAllRegions.Size = new System.Drawing.Size(320, 25);
+            this.btnExtractAllRegions.TabIndex = 4;
+            this.btnExtractAllRegions.Text = "Extract All Loaded Regions";
+            this.btnExtractAllRegions.UseVisualStyleBackColor = true;
+            this.btnExtractAllRegions.Click += new System.EventHandler(this.btnExtractAllRegions_Click);
 
             this.btnRemoveLast.Location = new System.Drawing.Point(120, 125);
             this.btnRemoveLast.Name = "btnRemoveLast";

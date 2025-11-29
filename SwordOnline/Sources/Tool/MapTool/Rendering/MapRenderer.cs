@@ -299,10 +299,17 @@ namespace MapTool.Rendering
         /// </summary>
         public MapCoordinate ScreenToMapCoordinate(int screenX, int screenY)
         {
-            // Adjust for zoom
-            int worldX = (int)(screenX / _zoom) + _viewOffsetX;
-            int worldY = (int)(screenY / _zoom) + _viewOffsetY;
+            // Step 1: Convert screen pixels to MAP coordinates (24.jpg pixel coordinates)
+            int mapX = (int)(screenX / _zoom) + _viewOffsetX;
+            int mapY = (int)(screenY / _zoom) + _viewOffsetY;
 
+            // Step 2: Convert MAP coordinates to WORLD/LOGIC coordinates
+            // WorldX = MapX * MAP_SCALE_H (multiply by 16)
+            // WorldY = MapY * MAP_SCALE_V (multiply by 32)
+            int worldX = mapX * MapConstants.MAP_SCALE_H;
+            int worldY = mapY * MapConstants.MAP_SCALE_V;
+
+            // Step 3: Convert WORLD coordinates to Region/Cell
             return CoordinateConverter.WorldToRegionCell(worldX, worldY);
         }
 

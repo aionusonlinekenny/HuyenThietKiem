@@ -520,6 +520,103 @@ namespace MapTool
             UpdateTrapList();
         }
 
+        // Extract All Regions button - export all trap cells from loaded regions
+        private void btnExtractAllRegions_Click(object sender, EventArgs e)
+        {
+            if (_currentMap == null || _currentMap.Regions.Count == 0)
+            {
+                MessageBox.Show("No regions loaded!\n\nLoad a map first.",
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Ask user for save location
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                dialog.FileName = $"{_currentMap.MapId}_all_traps.txt";
+                dialog.DefaultExt = "txt";
+                dialog.Title = "Extract All Region Traps";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        Cursor = Cursors.WaitCursor;
+
+                        int trapCount = 0;
+                        int regionCount = 0;
+                        string scriptFile = txtScriptFile.Text;
+
+                        DebugLogger.LogSeparator();
+                        DebugLogger.Log($"📝 EXTRACTING ALL TRAPS FROM LOADED REGIONS");
+                        DebugLogger.Log($"   Output file: {dialog.FileName}");
+                        DebugLogger.Log($"   Map ID: {_currentMap.MapId}");
+                        DebugLogger.Log($"   Total loaded regions: {_currentMap.Regions.Count}");
+
+                        using (StreamWriter writer = new StreamWriter(dialog.FileName, false, System.Text.Encoding.UTF8))
+                        {
+                            // Write header
+                            writer.WriteLine("MapId\tRegionId\tCellX\tCellY\tScriptFile\tIsLoad");
+
+                            // Iterate through all loaded regions
+                            foreach (var region in _currentMap.Regions.Values)
+                            {
+                                if (!region.IsLoaded)
+                                    continue;
+
+                                int regionTrapCount = 0;
+
+                                // Scan all cells in region for traps
+                                for (int cy = 0; cy < MapConstants.REGION_GRID_HEIGHT; cy++)
+                                {
+                                    for (int cx = 0; cx < MapConstants.REGION_GRID_WIDTH; cx++)
+                                    {
+                                        if (region.Traps[cx, cy] != 0)
+                                        {
+                                            writer.WriteLine($"{_currentMap.MapId}\t{region.RegionID}\t{cx}\t{cy}\t{scriptFile}\t1");
+                                            trapCount++;
+                                            regionTrapCount++;
+                                        }
+                                    }
+                                }
+
+                                if (regionTrapCount > 0)
+                                {
+                                    regionCount++;
+                                    if (regionCount <= 5)
+                                        DebugLogger.Log($"   Region ({region.RegionX},{region.RegionY}) ID={region.RegionID}: {regionTrapCount} traps");
+                                }
+                            }
+                        }
+
+                        DebugLogger.Log($"✓ Extraction completed!");
+                        DebugLogger.Log($"   Total trap cells: {trapCount}");
+                        DebugLogger.Log($"   Regions with traps: {regionCount}/{_currentMap.Regions.Count}");
+                        DebugLogger.LogSeparator();
+
+                        MessageBox.Show($"Extracted successfully!\n\n" +
+                            $"File: {Path.GetFileName(dialog.FileName)}\n" +
+                            $"Total Trap Cells: {trapCount}\n" +
+                            $"Regions with Traps: {regionCount}/{_currentMap.Regions.Count}",
+                            "Extract Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        lblStatus.Text = $"Extracted {trapCount} trap cells from {regionCount} regions";
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to extract traps:\n{ex.Message}",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        DebugLogger.Log($"ERROR extracting all regions: {ex}");
+                    }
+                    finally
+                    {
+                        Cursor = Cursors.Default;
+                    }
+                }
+            }
+        }
+
         // Export all cells from all loaded regions
         private void ExportAllCellsToTxt()
         {
