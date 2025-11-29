@@ -366,10 +366,17 @@ namespace MapTool
                     scriptFile = $@"\script\maps\trap\{_currentMap.MapId}\1.lua";
                 }
 
-                _exporter.AddEntry(_currentMap.MapId, _selectedCoordinate.Value, scriptFile);
+                // Use LOCAL RegionID for trap export (relative to map rect)
+                _exporter.AddEntry(_currentMap.MapId, _selectedCoordinate.Value, _currentMap.Config, scriptFile);
                 UpdateTrapList();
 
-                lblStatus.Text = $"Added trap entry at ({_selectedCoordinate.Value.CellX}, {_selectedCoordinate.Value.CellY})";
+                // Calculate local RegionID for display
+                int localRegionID = RegionData.MakeLocalRegionID(
+                    _selectedCoordinate.Value.RegionX, _selectedCoordinate.Value.RegionY,
+                    _currentMap.Config.RegionLeft, _currentMap.Config.RegionTop, _currentMap.Config.RegionWidth);
+
+                lblStatus.Text = $"Added trap entry at Region({_selectedCoordinate.Value.RegionX},{_selectedCoordinate.Value.RegionY}) LocalID={localRegionID} Cell({_selectedCoordinate.Value.CellX},{_selectedCoordinate.Value.CellY})";
+                DebugLogger.Log($"[Trap Added] Region({_selectedCoordinate.Value.RegionX},{_selectedCoordinate.Value.RegionY}) GlobalID={_selectedCoordinate.Value.RegionID} LocalID={localRegionID} Cell({_selectedCoordinate.Value.CellX},{_selectedCoordinate.Value.CellY})");
             }
         }
 
@@ -559,12 +566,19 @@ namespace MapTool
                             // Write header
                             writer.WriteLine("MapId\tRegionId\tCellX\tCellY\tScriptFile\tIsLoad");
 
+                            // Get map rect for local RegionID calculation
+                            int minX = _currentMap.Config.RegionLeft;
+                            int minY = _currentMap.Config.RegionTop;
+                            int width = _currentMap.Config.RegionWidth;
+
                             // Iterate through all loaded regions
                             foreach (var region in _currentMap.Regions.Values)
                             {
                                 if (!region.IsLoaded)
                                     continue;
 
+                                // Calculate LOCAL RegionID (relative to map rect)
+                                int localRegionID = region.GetLocalRegionID(minX, minY, width);
                                 int regionTrapCount = 0;
 
                                 // Scan all cells in region for traps
@@ -574,7 +588,7 @@ namespace MapTool
                                     {
                                         if (region.Traps[cx, cy] != 0)
                                         {
-                                            writer.WriteLine($"{_currentMap.MapId}\t{region.RegionID}\t{cx}\t{cy}\t{scriptFile}\t1");
+                                            writer.WriteLine($"{_currentMap.MapId}\t{localRegionID}\t{cx}\t{cy}\t{scriptFile}\t1");
                                             trapCount++;
                                             regionTrapCount++;
                                         }
@@ -585,7 +599,7 @@ namespace MapTool
                                 {
                                     regionCount++;
                                     if (regionCount <= 5)
-                                        DebugLogger.Log($"   Region ({region.RegionX},{region.RegionY}) ID={region.RegionID}: {regionTrapCount} traps");
+                                        DebugLogger.Log($"   Region ({region.RegionX},{region.RegionY}) Global={region.RegionID} Local={localRegionID}: {regionTrapCount} traps");
                                 }
                             }
                         }

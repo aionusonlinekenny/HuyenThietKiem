@@ -87,10 +87,23 @@ namespace MapTool.MapData
 
         public static int MakeRegionID(int x, int y)
         {
-            // CORRECT formula: Y * 256 + X
-            // This matches the game's trap file format and in-memory representation
-            // NOT the Windows MAKELONG formula (which would be x | (y << 16))
+            // GLOBAL formula: Y * 256 + X
+            // Used for dictionary keys and internal representation
+            // NOT for trap export files!
             return y * 256 + x;
+        }
+
+        public static int MakeLocalRegionID(int x, int y, int minX, int minY, int width)
+        {
+            // LOCAL formula: (Y - minY) * width + (X - minX)
+            // Used for trap export files that are relative to map rect
+            return (y - minY) * width + (x - minX);
+        }
+
+        public int GetLocalRegionID(int minX, int minY, int width)
+        {
+            // Calculate local RegionID for this region based on map rect
+            return MakeLocalRegionID(RegionX, RegionY, minX, minY, width);
         }
 
         public static void ParseRegionID(int regionID, out int x, out int y)
