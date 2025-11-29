@@ -142,7 +142,7 @@ int KSubWorld::FindFreeRegion(int nX, int nY)
 			int nRegoinX = LOWORD(m_Region[i].m_RegionID);
 			int nRegoinY = HIWORD(m_Region[i].m_RegionID);
 
-			if ((nX - nRegoinX) * (nX - nRegoinX) + (nY - nRegoinY) * (nY - nRegoinY) > 2)	// ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½
+			if ((nX - nRegoinX) * (nX - nRegoinX) + (nY - nRegoinY) * (nY - nRegoinY) > 2)	// ²»ÔÚ¸½½ü
 				return i;
 		}
 	}
@@ -267,14 +267,14 @@ void KSubWorld::Mps2Map(int Rx, int Ry, int * nR, int * nX, int * nY, int *nDx, 
 	*nDx = 0;
 	*nDy = 0;
 #ifdef _SERVER
-	// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ·Ç·¨µÄ×ø±ê
 	if (x >= m_nWorldRegionWidth + m_nRegionBeginX || y >= m_nWorldRegionHeight + m_nRegionBeginY || x < m_nRegionBeginX || y < m_nRegionBeginY)
 	{
 		*nR = -1;
 		return;
 	}
 #endif
-	// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ·Ç·¨µÄ×ø±ê
 #ifdef _SERVER
 	*nR = GetRegionIndex(MAKELONG(x, y));
 #else
@@ -706,9 +706,7 @@ BOOL KSubWorld::LoadMap(int nId)
 			m_Region[nY * m_nWorldRegionWidth + nX].LoadObject(m_nIndex,nX + m_nRegionBeginX, nY + m_nRegionBeginY);
 		}
 	}
-
-	// Load trap text files from mapinfo.txt
-	LoadTrap();
+	
 
 	KIniFile MapListIni;
 	MapListIni.Load("\\settings\\MapList.ini");
@@ -917,76 +915,9 @@ BOOL KSubWorld::LoadMap(int nId, int nRegion)
 }
 #endif
 
-#ifdef _SERVER
 void KSubWorld::LoadTrap()
 {
-	// Load trap text files from settings/maps/[mapname]/
-	// This implementation scans for *trap.txt files in map settings directory
-
-	char szMapPath[FILE_NAME_LENGTH];
-	char szPattern[FILE_NAME_LENGTH];
-
-	// Get map name from MapList.ini
-	KIniFile IniFile;
-	char szKeyName[32];
-	char szPathName[FILE_NAME_LENGTH];
-
-	g_SetFilePath("\\settings");
-	if (!IniFile.Load("MapList.ini"))
-		return;
-
-	sprintf(szKeyName, "%d", m_SubWorldID);
-	IniFile.GetString("List", szKeyName, "", szPathName, sizeof(szPathName));
-
-	if (!szPathName[0])
-		return;
-
-	// Build path to settings/maps/[mapname]/
-	sprintf(szMapPath, "\\settings\\maps\\%s", szPathName);
-
-	// Try to load mapinfo.txt to get trap file definitions
-	char szMapInfoPath[FILE_NAME_LENGTH];
-	sprintf(szMapInfoPath, "%s\\mapinfo.txt", szMapPath);
-
-	KIniFile MapInfo;
-	g_SetFilePath(szMapPath);
-	if (!MapInfo.Load("mapinfo.txt"))
-		return;  // No mapinfo file, skip trap loading
-
-	// Read trap files from all areas
-	int nAreaCount = 0;
-	MapInfo.GetInteger("MapInfo", "Area_Count", 0, &nAreaCount);
-
-	for (int i = 1; i <= nAreaCount; i++)
-	{
-		char szSection[32];
-		char szTrapFile[FILE_NAME_LENGTH];
-
-		sprintf(szSection, "Area_%d", i);
-
-		// Try to load different trap types
-		const char* trapKeys[] = {"hometrap", "centertohometrap", "centertrap", NULL};
-
-		for (int j = 0; trapKeys[j] != NULL; j++)
-		{
-			szTrapFile[0] = 0;
-			MapInfo.GetString(szSection, trapKeys[j], "", szTrapFile, sizeof(szTrapFile));
-
-			if (szTrapFile[0])
-			{
-				// Load this trap file into all regions
-				for (int nRegionIdx = 0; nRegionIdx < m_nTotalRegion; nRegionIdx++)
-				{
-					if (m_Region[nRegionIdx].m_RegionID >= 0)
-					{
-						m_Region[nRegionIdx].LoadTrapFromText(szTrapFile);
-					}
-				}
-			}
-		}
-	}
 }
-#endif
 
 void KSubWorld::MessageLoop()
 {
@@ -1115,7 +1046,7 @@ void KSubWorld::NpcChangeRegion(int nSrcRnidx, int nDesRnIdx, int nIdx)
 	else if (nSrcRnidx >= 0)
 	{
 		SubWorld[Npc[nIdx].m_SubWorldIndex].m_Region[nSrcRnidx].RemoveNpc(nIdx);
-		if (nDesRnIdx != VOID_REGION)	// ï¿½ï¿½ï¿½Ç¼ï¿½ï¿½ëµ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		if (nDesRnIdx != VOID_REGION)	// ²»ÊÇ¼ÓÈëµ½ËÀÍöÖØÉúÁ´±í
 			Npc[nIdx].m_RegionIndex = -1;
 	}
 
@@ -1249,7 +1180,7 @@ void KSubWorld::PlayerChangeRegion(int nSrcRnidx, int nDesRnIdx, int nIdx)
 	{
 		AddPlayer(nDesRnIdx, nIdx);
 	}
-/* ï¿½ï¿½ÎªRemovePlayerï¿½ï¿½AddPlayerï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½Ë´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµã£¬ï¿½Þ¸ï¿½ï¿½Ü±ß¾Å¸ï¿½REGIONï¿½ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½
+/* ÒòÎªRemovePlayerºÍAddPlayerÒÑ¾­×öÁË´ÓÁ´±íÖÐÇå³ý½Úµã£¬ÐÞ¸ÄÖÜ±ß¾Å¸öREGIONµÄÒýÓÃ¼ÆÊýµÄ²Ù×÷ÁË
 	KIndexNode* pNode = &Player[nIdx].m_Node;
 	if (pNode->m_Ref > 0)
 	{
@@ -1298,7 +1229,7 @@ BOOL KSubWorld::SendSyncData(int nIdx, int nClient)
 {
 	WORLD_SYNC	WorldSync;
 	//
-	if (Npc[nIdx].m_RegionIndex < 0)	// Npcï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼
+	if (Npc[nIdx].m_RegionIndex < 0)	// NpcÉÐÎ´ÕæÕý¼ÓÈëµØÍ¼
 	{
 		INT nMapX	= 0;
 		INT nMapY	= 0;

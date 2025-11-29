@@ -60,7 +60,6 @@ public:
 	BOOL		LoadObject(int nSubWorld, int nX, int nY);
 	BOOL		LoadServerObstacle(KPakFile *pFile, DWORD dwDataSize);
 	BOOL		LoadServerTrap(KPakFile *pFile, DWORD dwDataSize);
-	BOOL		LoadTrapFromText(const char* szFilePath);
 	BOOL		LoadServerNpc(int nSubWorld, KPakFile *pFile, DWORD dwDataSize);
 	BOOL		LoadServerObj(int nSubWorld, KPakFile *pFile, DWORD dwDataSize);
 #endif
@@ -73,7 +72,7 @@ public:
 #endif
 	void		Close();
 	void		Activate();
-	BYTE		GetBarrier(int MapX, int MapY, int nDx, int nDy);	//	ï¿½ï¿½Í¼ï¿½ß¶ï¿½
+	BYTE		GetBarrier(int MapX, int MapY, int nDx, int nDy);	//	µØÍ¼¸ß¶È
 	BYTE		GetBarrierMin(int nGridX, int nGridY, int nOffX, int nOffY, BOOL bCheckNpc);
 	DWORD		GetTrap(int MapX, int MapY);
 	inline BOOL		IsActive()

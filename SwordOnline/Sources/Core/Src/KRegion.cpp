@@ -135,21 +135,21 @@ BOOL KRegion::Load(int nX, int nY)
 	m_nRegionX = nX * 512;
 	m_nRegionY = nY * 1024;
 
-	// ï¿½Â·ï¿½
+	// ÏÂ·½
 	m_nConRegionID[0] = MAKELONG(nX, nY + 1);
-	// ï¿½ï¿½ï¿½Â·ï¿½
+	// ×óÏÂ·½
 	m_nConRegionID[1] = MAKELONG(nX - 1, nY + 1);
-	// ï¿½ï¿½
+	// ×ó·½
 	m_nConRegionID[2] = MAKELONG(nX - 1, nY);
-	// ï¿½ï¿½ï¿½Ï·ï¿½
+	// ×óÉÏ·½
 	m_nConRegionID[3] = MAKELONG(nX - 1, nY - 1);
-	// ï¿½Ï·ï¿½
+	// ÉÏ·½
 	m_nConRegionID[4] = MAKELONG(nX, nY - 1);
-	// ï¿½ï¿½ï¿½Ï·ï¿½
+	// ÓÒÉÏ·½
 	m_nConRegionID[5] = MAKELONG(nX + 1, nY - 1);
-	// ï¿½Ò·ï¿½
+	// ÓÒ·½
 	m_nConRegionID[6] = MAKELONG(nX + 1, nY);
-	// ï¿½ï¿½ï¿½Â·ï¿½
+	// ÓÒÏÂ·½
 	m_nConRegionID[7] = MAKELONG(nX + 1, nY + 1);
 
 	return TRUE;
@@ -433,59 +433,6 @@ BOOL	KRegion::LoadServerTrap(KPakFile *pFile, DWORD dwDataSize)
 
 	return TRUE;
 }
-
-// Load trap from text file (Linux-style)
-BOOL KRegion::LoadTrapFromText(const char* szFilePath)
-{
-	if (!szFilePath || !szFilePath[0])
-		return FALSE;
-
-	KTabFile TabFile;
-	if (!TabFile.Load((char*)szFilePath))
-		return FALSE;
-
-	int nHeight = TabFile.GetHeight();
-	if (nHeight <= 1)  // First row is header
-	{
-		TabFile.Clear();
-		return TRUE;  // Empty file is ok
-	}
-
-	// Region size in map coordinates (32 pixels per cell)
-	int nRegionWidthInPixels = REGION_GRID_WIDTH * 32;
-	int nRegionHeightInPixels = REGION_GRID_HEIGHT * 32;
-
-	// Calculate region base coordinates (top-left corner in world coords)
-	int nRegionBaseX = m_nRegionX * nRegionWidthInPixels;
-	int nRegionBaseY = m_nRegionY * nRegionHeightInPixels;
-
-	// Read trap positions from text file
-	for (int i = 2; i <= nHeight; i++)  // Start from row 2 (skip header)
-	{
-		int nWorldX = 0, nWorldY = 0;
-
-		TabFile.GetInteger(i, 1, 0, &nWorldX);  // Column 1: XPOS
-		TabFile.GetInteger(i, 2, 0, &nWorldY);  // Column 2: YPOS
-
-		if (nWorldX == 0 && nWorldY == 0)
-			continue;
-
-		// Convert world coordinates to region grid coordinates
-		int nLocalX = (nWorldX - nRegionBaseX) / 32;
-		int nLocalY = (nWorldY - nRegionBaseY) / 32;
-
-		// Validate coordinates are within region bounds
-		if (nLocalX >= 0 && nLocalX < REGION_GRID_WIDTH &&
-		    nLocalY >= 0 && nLocalY < REGION_GRID_HEIGHT)
-		{
-			// Set trap ID to 1 (or could be script ID from file)
-			m_dwTrap[nLocalX][nLocalY] = 1;
-		}
-	}
-
-	TabFile.Clear();
-	return TRUE;
-}
 #endif
 
 #ifdef _SERVER
@@ -753,7 +700,7 @@ void KRegion::Activate()
 #endif
 
 #ifndef _SERVER
-	if (Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_RegionIndex == m_nIndex)	// ï¿½ï¿½Playerï¿½ï¿½ï¿½Úµï¿½Region
+	if (Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_RegionIndex == m_nIndex)	// ÊÇPlayerËùÔÚµÄRegion
 	{
 		Player[CLIENT_PLAYER_INDEX].Active();
 	}
