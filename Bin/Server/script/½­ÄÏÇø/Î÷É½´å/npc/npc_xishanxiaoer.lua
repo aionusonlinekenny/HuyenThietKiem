@@ -1,5 +1,11 @@
--- Î÷É½´å Î÷É½Ð¡¶þ ¶Ô»°½Å±¾
--- ÀîÐÀ 2005-01-25
+-- ï¿½ï¿½É½ï¿½ï¿½ ï¿½ï¿½É½Ð¡ï¿½ï¿½ ï¿½Ô»ï¿½ï¿½Å±ï¿½
+-- ï¿½ï¿½ï¿½ï¿½ 2005-01-25
+
+-- Stub for IncludeLib if not available
+if not IncludeLib then
+	function IncludeLib(szLibName) end
+end
+
 IncludeLib("SETTING")
 Include("\\script\\task\\newtask\\newtask_head.lua")
 Include("\\script\\task\\newtask\\xishancun\\xishancun_head.lua")
@@ -17,26 +23,26 @@ Include("\\script\\global\\vldoxanh\\vsd\\fucmain.lua")
 function main()
 --	Uworld1064 = nt_getTask(1064)
 --	local name = GetName()
---	if	( Uworld1064 < 2) then  -- ÅÐ¶ÏÃ»ÓÐÍê³ÉÎ÷É½ÓìÈÎÎñ
---		Talk(1,"","Î÷É½Ð¡¶þ£ºÕâ¼¸ÈÕÌìÆø·´¸´ÎÞ³££¬ÎÒ¶¼Ã»ÐÄË¼³öº£´òÓãÁË¡£")
---	elseif ( Uworld1064 == 2 ) then   -- ÅÐ¶ÏÒÑ¾­Íê³ÉÁËÎ÷É½ÓìÈÎÎñ£¬µ«ÉÐÎ´È¥Î÷É½Óì£¬²¢ÇÒÎ´ºÍÎ÷É½Ð¡¶þ¶Ô»°¹ý
---		-- Say("Î÷É½Ð¡¶þ£ºÄãÒªÈ¥Î÷É½Óì£¿¿ÉÏ§Î÷É½Óì»¹Ã»¿ª·Å£¬ÔÝÊ±²»ÄÜ¹ýÈ¥¡£²»¹ýÄã·ÅÐÄ£¬ÎÒÒÑ¾­¼Ç×¡ÄãÁË£¬¹ýÐ©ÈÕ×ÓÄãÖ±½ÓÀ´ÕÒÎÒºÃÁË£¬ÎÒ´øÄãÉÏÎ÷É½Óì¡£",0)
---		Describe(DescLink_XiShanXiaoEr.."<#>£ºÕâÎ»¿Í¹Ù£¬ÕÒÎÒÓÐºÎ¹ó¸É£¿ÊÇ²»ÊÇÒªÂòÓãÄØ£¿<enter>"
---		..name.."<#>£º²»ÊÇµÄ£¬ÊÇ²»ÐÑÈËÊ¿ÈÃÎÒÀ´ÕÒÄãµÄ¡£<enter>Î÷É½Ð¡¶þ£ºÊÇËû£¬ÎÒÖªµÀÁË¡£ÄãÒ²ÊÇÈ¥Î÷É½Óì°É£¬×ß°É£¬ÎÒÕâ¾Í´øÄãÈ¥¡£²»¹ýÎ÷É½ÓìÕâ¸öµØ·½À´È¥¿É²»ÊÇÄÇÃ´·½±ã£¬¶øÇÒÐ×ÏÕÒì³££¬ÄãÒª¶à¼ÓÐ¡ÐÄÓ´¡£<enter>",
---		2,"ÎÒÃÇÆô³Ì°É/task007","ÎÒ»¹ÊÇ¹ý»áÔÙÈ¥°É/task006")
---	elseif ( Uworld1064 == 3) then   -- ÅÐ¶ÏÒÑ¾­Íê³ÉÁËÎ÷É½ÓìÈÎÎñ£¬ÇÒºÍÎ÷É½Ð¡¶þ¶Ô»°¹ýÒ»´Î£¬µ«ÉÐÎ´È¥Î÷É½Óì
---		Say("Î÷É½Ð¡¶þ£ºÄãÏÖÔÚÒÑ¾­×¼±¸ºÃÈ¥Î÷É½ÓìÁËÂð£¿",2,"ÎÒÃÇÆô³Ì°É/task007","ÎÒ»¹ÊÇ¹ý»áÔÙÈ¥°É/task006");
+--	if	( Uworld1064 < 2) then  -- ï¿½Ð¶ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+--		Talk(1,"","ï¿½ï¿½É½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½â¼¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ³ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½Ã»ï¿½ï¿½Ë¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½")
+--	elseif ( Uworld1064 == 2 ) then   -- ï¿½Ð¶ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ñ£¬µï¿½ï¿½ï¿½Î´È¥ï¿½ï¿½É½ï¿½ì£¬ï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½É½Ð¡ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½
+--		-- Say("ï¿½ï¿½É½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÈ¥ï¿½ï¿½É½ï¿½ì£¿ï¿½ï¿½Ï§ï¿½ï¿½É½ï¿½ì»¹Ã»ï¿½ï¿½ï¿½Å£ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ü¹ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½×¡ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½Ð©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òºï¿½ï¿½Ë£ï¿½ï¿½Ò´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ì¡£",0)
+--		Describe(DescLink_XiShanXiaoEr.."<#>ï¿½ï¿½ï¿½ï¿½Î»ï¿½Í¹Ù£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÐºÎ¹ï¿½É£ï¿½ï¿½Ç²ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Ø£ï¿½<enter>"
+--		..name.."<#>ï¿½ï¿½ï¿½ï¿½ï¿½ÇµÄ£ï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½<enter>ï¿½ï¿½É½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öªï¿½ï¿½ï¿½Ë¡ï¿½ï¿½ï¿½Ò²ï¿½ï¿½È¥ï¿½ï¿½É½ï¿½ï¿½É£ï¿½ï¿½ß°É£ï¿½ï¿½ï¿½ï¿½ï¿½Í´ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø·ï¿½ï¿½ï¿½È¥ï¿½É²ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³£ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Ó´ï¿½ï¿½<enter>",
+--		2,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½/task007","ï¿½Ò»ï¿½ï¿½Ç¹ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½/task006")
+--	elseif ( Uworld1064 == 3) then   -- ï¿½Ð¶ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òºï¿½ï¿½ï¿½É½Ð¡ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½Ò»ï¿½Î£ï¿½ï¿½ï¿½ï¿½ï¿½Î´È¥ï¿½ï¿½É½ï¿½ï¿½
+--		Say("ï¿½ï¿½É½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½×¼ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",2,"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½/task007","ï¿½Ò»ï¿½ï¿½Ç¹ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½/task006");
 --	 end;
 	
 	local nNpcIndex = GetLastDiagNpc();
 	local szNpcName = GetNpcName(nNpcIndex);
 	if NpcName2Replace then szNpcName = NpcName2Replace(szNpcName) end
 	local tbDailog = DailogClass:new(szNpcName);
-	tbDailog.szTitleMsg = "T©y S¬n tiÓu nhÞ: §¹i hiÖp muèn ®i ®Õn Vi S¬n ®¶o? Tr­íc tiªn h·y giao nép LÖnh Bµi Vi S¥n §¶o míi cã thÓ ®i ®Õn Vi S¬n ®¶o ®­îc."
+	tbDailog.szTitleMsg = "Tï¿½y Sï¿½n tiï¿½u nhï¿½: ï¿½ï¿½i hiï¿½p muï¿½n ï¿½i ï¿½ï¿½n Vi Sï¿½n ï¿½ï¿½o? Trï¿½ï¿½c tiï¿½n hï¿½y giao nï¿½p Lï¿½nh Bï¿½i Vi Sï¿½n ï¿½ï¿½o mï¿½i cï¿½ thï¿½ ï¿½i ï¿½ï¿½n Vi Sï¿½n ï¿½ï¿½o ï¿½ï¿½ï¿½c."
 	
 
-	tbDailog:AddOptEntry("§ång ý! Ta sÏ t×m ngay.", task007, {}); 
-	tbDailog:AddOptEntry("NhËn nhiÖm vô Vi S¬n §¶o", VLMC_main2, {}); 
+	tbDailog:AddOptEntry("ï¿½ï¿½ng ï¿½! Ta sï¿½ tï¿½m ngay.", task007, {}); 
+	tbDailog:AddOptEntry("Nhï¿½n nhiï¿½m vï¿½ Vi Sï¿½n ï¿½ï¿½o", VLMC_main2, {}); 
 	
 	G_ACTIVITY:OnMessage("ClickNpc", tbDailog, nNpcIndex);
 	
@@ -50,17 +56,17 @@ end;
 	
 function task007()
 	if (GetLevel() < 100) then
-		Say("T©y S¬n tiÓu nhÞ: D­íi cÊp 100 kh«ng thÓ ®i Vi S¬n ®¶o ®­îc!",0);
+		Say("Tï¿½y Sï¿½n tiï¿½u nhï¿½: Dï¿½ï¿½i cï¿½p 100 khï¿½ng thï¿½ ï¿½i Vi Sï¿½n ï¿½ï¿½o ï¿½ï¿½ï¿½c!",0);
 		return
 	end
 	
-	GiveItemUI("Giao diÖn tr¶ phÝ.","Xin h·y bá lÖnh bµi vµo « bªn d­íi.", "task008", "no")
+	GiveItemUI("Giao diï¿½n trï¿½ phï¿½.","Xin hï¿½y bï¿½ lï¿½nh bï¿½i vï¿½o ï¿½ bï¿½n dï¿½ï¿½i.", "task008", "no")
 --	Uworld1064 = nt_getTask(1064)
 --	nt_setTask(1064,0)
 --	SetFightState(1);
 --	NewWorld(342,1177,2410);
---	DisabledUseTownP(1)	--ÏÞÖÆÆäÔÚÎ÷É½ÓìÄÚÊ¹ÓÃ»Ø³Ç·û
---	SetRevPos(175,1);		--ÉèÖÃÖØÉúµã
+--	DisabledUseTownP(1)	--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã»Ø³Ç·ï¿½
+--	SetRevPos(175,1);		--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 end;
 
 function task008(ncount)
@@ -79,15 +85,15 @@ function task008(ncount)
 		end
 	end
 	if (y ~= ncount) then
-		Talk(1,"","LÖnh bµi Vi S¬n §·o ch­a ®ñ, ng­¬i h·y kiÓm tra l¹i xem!")
+		Talk(1,"","Lï¿½nh bï¿½i Vi Sï¿½n ï¿½ï¿½o chï¿½a ï¿½ï¿½, ngï¿½ï¿½i hï¿½y kiï¿½m tra lï¿½i xem!")
 		return
 	end
 	if (scrollcount > 1) then
-		Talk(1,"","Ta chØ cÇn 1 lÖnh bµi Vi S¬n §¶o, ng­¬i ®õng ®­a cho ta nhiÒu nh­ vËy")
+		Talk(1,"","Ta chï¿½ cï¿½n 1 lï¿½nh bï¿½i Vi Sï¿½n ï¿½ï¿½o, ngï¿½ï¿½i ï¿½ï¿½ng ï¿½ï¿½a cho ta nhiï¿½u nhï¿½ vï¿½y")
 		return
 	end
 	if (scrollcount < 1) then
-		Talk(1,"","LÖnh bµi Vi S¬n §¶o ng­¬i giao cho ta kh«ng ®ñ th× ph¶i, kiÓm tra l¹i xem!")
+		Talk(1,"","Lï¿½nh bï¿½i Vi Sï¿½n ï¿½ï¿½o ngï¿½ï¿½i giao cho ta khï¿½ng ï¿½ï¿½ thï¿½ phï¿½i, kiï¿½m tra lï¿½i xem!")
 		return
 	end
 	if (scrollcount == 1) then

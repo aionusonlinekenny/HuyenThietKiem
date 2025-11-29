@@ -1,31 +1,37 @@
---ÖÐÔ­ÄÏÇø ÑïÖÝ¸® ³èÎïÀÏ°åÄï¶Ô»°
+--ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ï¿½Ô»ï¿½
+
+-- Stub for IncludeLib if not available
+if not IncludeLib then
+	function IncludeLib(szLibName) end
+end
+
 IncludeLib("SETTING")
 Include("\\script\\global\\titlefuncs.lua")
 Include("\\script\\lib\\awardtemplet.lua")
 Include("\\script\\dailogsys\\dailogsay.lua")
 Include("\\script\\global\\fuyuan.lua")
 Include("\\script\\lib\\log.lua")
-Include("\\script\\task\\newtask\\newtask_head.lua") --µ÷ÓÃ nt_getTask Í¬²½±äÁ¿µ½¿Í»§¶ËµÄÀµ
-Include("\\script\\task\\partner\\partner_head.lua") --°üº¬ÁËÍ¼Ïóµ÷ÓÃ
-Include("\\script\\task\\partner\\partner_problem.lua") --µ÷ÓÃ nt_getTask Í¬²½±äÁ¿µ½¿Í»§¶ËµÄÀµ
+Include("\\script\\task\\newtask\\newtask_head.lua") --ï¿½ï¿½ï¿½ï¿½ nt_getTask Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ëµï¿½ï¿½ï¿½
+Include("\\script\\task\\partner\\partner_head.lua") --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½
+Include("\\script\\task\\partner\\partner_problem.lua") --ï¿½ï¿½ï¿½ï¿½ nt_getTask Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ëµï¿½ï¿½ï¿½
 IncludeLib("PARTNER")
-IncludeLib("RELAYLADDER");	--ÅÅÐÐ°ñ
+IncludeLib("RELAYLADDER");	--ï¿½ï¿½ï¿½Ð°ï¿½
 
 function main()
-dofile("script/Ö?Ô­ÄÏÇø/ÑïÖ?/npc/ÑïÖ?_³èÎïÀÏ°åÄï¶Ô»°.lua")
+dofile("script/ï¿½?Ô­ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½?/npc/ï¿½ï¿½ï¿½?_ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ï¿½Ô»ï¿½.lua")
 dialog_main()
 end
 tbChat = 
 {
-	"<color=green>NhËn b¹n §ång hµnh b¬i vµo ®©y",
-	"<color=orange>Chóc ®¹i hiÖp ch¬i game vui vÎ, nhí like, share server vldoxanh.com nha!"
+	"<color=green>Nhï¿½n bï¿½n ï¿½ï¿½ng hï¿½nh bï¿½i vï¿½o ï¿½ï¿½y",
+	"<color=orange>Chï¿½c ï¿½ï¿½i hiï¿½p chï¿½i game vui vï¿½, nhï¿½ like, share server vldoxanh.com nha!"
 }
 function npcchat_npcmacdinh()
 	local nNpcIndex = GetLastDiagNpc();
 	local nTaskChat = GetNpcParam(nNpcIndex,1);
 	if nTaskChat == 0 then 
-		SetNpcParam(nNpcIndex,1,1); --set index ®Çu tiªn cña table npc chat.
-		SetNpcTimer(nNpcIndex,500); --Tuú chØnh thêi gian npc tù chat (20 s)
+		SetNpcParam(nNpcIndex,1,1); --set index ï¿½ï¿½u tiï¿½n cï¿½a table npc chat.
+		SetNpcTimer(nNpcIndex,500); --Tuï¿½ chï¿½nh thï¿½i gian npc tï¿½ chat (20 s)
 	end
 end
 function OnTimer(nNpcIndex,nTimeOut)
@@ -45,12 +51,12 @@ end
 
 function dialog_main()
 npcchat_npcmacdinh()
-local szTitle = "<npc> Xin chµo "..GetName().."! T­íng c«ng ta ®· qua ®êi tõ l©u, ®Ó l¹i cho ta tiÖm vËt nu«i nµy. Mét m×nh ta qu¸n xuyÕn trong ngoµi, võa nu«i d¹y con cai võa ph¶i tr«ng coi c¸i tiÖm nµy! ThËt mu«n phÇn vÊt v¶."
+local szTitle = "<npc> Xin chï¿½o "..GetName().."! Tï¿½ï¿½ng cï¿½ng ta ï¿½ï¿½ qua ï¿½ï¿½i tï¿½ lï¿½u, ï¿½ï¿½ lï¿½i cho ta tiï¿½m vï¿½t nuï¿½i nï¿½y. Mï¿½t mï¿½nh ta quï¿½n xuyï¿½n trong ngoï¿½i, vï¿½a nuï¿½i dï¿½y con cai vï¿½a phï¿½i trï¿½ng coi cï¿½i tiï¿½m nï¿½y! Thï¿½t muï¿½n phï¿½n vï¿½t vï¿½."
 tbOpt=
 {
-	{"NhËn Thó Nu«i", partner_givetodo},
-	{"NhËn S¸ch luyÖn cÊp ®ång hµnh", sachnv},
-	{"Th«i"},
+	{"Nhï¿½n Thï¿½ Nuï¿½i", partner_givetodo},
+	{"Nhï¿½n Sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh", sachnv},
+	{"Thï¿½i"},
 }
 CreateNewSayEx(szTitle, tbOpt)
 end
@@ -60,16 +66,16 @@ function partner_givetodo()
 	if ( partnercount == -1 ) then
 		Msg2player(".....................................")
 	elseif ( partnercount == 5 ) then
-		Describe("Bµ chñ tiÖm vËt nu«i: Ng­¬i ®· cã nhiÒu b¹n ®ång hµnh, ®õng cã tham n÷a",1, 
-                "KÕt thóc ®èi tho¹i /no")
+		Describe("Bï¿½ chï¿½ tiï¿½m vï¿½t nuï¿½i: Ngï¿½ï¿½i ï¿½ï¿½ cï¿½ nhiï¿½u bï¿½n ï¿½ï¿½ng hï¿½nh, ï¿½ï¿½ng cï¿½ tham nï¿½a",1, 
+                "Kï¿½t thï¿½c ï¿½ï¿½i thoï¿½i /no")
 	else
-		Describe("Bµ chñ tiÖm vËt nu«i: NÕu mµ ng­¬i ®· FA l©u n¨m nh­ thÕ th× ta gióp dc, lùa chän 1 ng­êi huynh ®Ö ®i nµo !",8, 
-               "NhËn b¹n ®ång hµnh hÖ kim/kim", 
-               "NhËn b¹n ®ång hµnh hÖ méc /moc", 
-               "NhËn b¹n ®ång hµnh hÖ thñy/thuy", 
-               "NhËn b¹n ®ång hµnh hÖ háa /hoa", 
-               "NhËn b¹n ®ång hµnh hÖ thæ /tho", 
-               "KÕt thóc ®èi tho¹i /no")
+		Describe("Bï¿½ chï¿½ tiï¿½m vï¿½t nuï¿½i: Nï¿½u mï¿½ ngï¿½ï¿½i ï¿½ï¿½ FA lï¿½u nï¿½m nhï¿½ thï¿½ thï¿½ ta giï¿½p dc, lï¿½a chï¿½n 1 ngï¿½ï¿½i huynh ï¿½ï¿½ ï¿½i nï¿½o !",8, 
+               "Nhï¿½n bï¿½n ï¿½ï¿½ng hï¿½nh hï¿½ kim/kim", 
+               "Nhï¿½n bï¿½n ï¿½ï¿½ng hï¿½nh hï¿½ mï¿½c /moc", 
+               "Nhï¿½n bï¿½n ï¿½ï¿½ng hï¿½nh hï¿½ thï¿½y/thuy", 
+               "Nhï¿½n bï¿½n ï¿½ï¿½ng hï¿½nh hï¿½ hï¿½a /hoa", 
+               "Nhï¿½n bï¿½n ï¿½ï¿½ng hï¿½nh hï¿½ thï¿½ /tho", 
+               "Kï¿½t thï¿½c ï¿½ï¿½i thoï¿½i /no")
 	end
 end
 
@@ -95,51 +101,51 @@ PARTNER_CallOutCurPartner(1)
 end
 
 function sachnv()
-local szTitle = "<npc> Xin chµo "..GetName().."! T­íng c«ng ta ®· qua ®êi tõ l©u, ®Ó l¹i cho ta tiÖm vËt nu«i nµy. Mét m×nh ta qu¸n xuyÕn trong ngoµi, võa nu«i d¹y con cai võa ph¶i tr«ng coi c¸i tiÖm nµy! ThËt mu«n phÇn vÊt v¶."
+local szTitle = "<npc> Xin chï¿½o "..GetName().."! Tï¿½ï¿½ng cï¿½ng ta ï¿½ï¿½ qua ï¿½ï¿½i tï¿½ lï¿½u, ï¿½ï¿½ lï¿½i cho ta tiï¿½m vï¿½t nuï¿½i nï¿½y. Mï¿½t mï¿½nh ta quï¿½n xuyï¿½n trong ngoï¿½i, vï¿½a nuï¿½i dï¿½y con cai vï¿½a phï¿½i trï¿½ng coi cï¿½i tiï¿½m nï¿½y! Thï¿½t muï¿½n phï¿½n vï¿½t vï¿½."
 local tbOpt =
 	{
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 1-20",sach20},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 20-40",sach40},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 40-60",sach60},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 60-80",sach80},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 80-100",sach100},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 100-120",sach120},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 1-20",sach20},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 20-40",sach40},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 40-60",sach60},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 60-80",sach80},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 80-100",sach100},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 100-120",sach120},
 		{"Trang Sau",sachnv2},
-		{"Tho¸t"},
+		{"Thoï¿½t"},
 	}
 	CreateNewSayEx(szTitle, tbOpt)
 end
 
 function sachnv2()
-local szTitle = "<npc> Xin chµo "..GetName().."! T­íng c«ng ta ®· qua ®êi tõ l©u, ®Ó l¹i cho ta tiÖm vËt nu«i nµy. Mét m×nh ta qu¸n xuyÕn trong ngoµi, võa nu«i d¹y con cai võa ph¶i tr«ng coi c¸i tiÖm nµy! ThËt mu«n phÇn vÊt v¶."
+local szTitle = "<npc> Xin chï¿½o "..GetName().."! Tï¿½ï¿½ng cï¿½ng ta ï¿½ï¿½ qua ï¿½ï¿½i tï¿½ lï¿½u, ï¿½ï¿½ lï¿½i cho ta tiï¿½m vï¿½t nuï¿½i nï¿½y. Mï¿½t mï¿½nh ta quï¿½n xuyï¿½n trong ngoï¿½i, vï¿½a nuï¿½i dï¿½y con cai vï¿½a phï¿½i trï¿½ng coi cï¿½i tiï¿½m nï¿½y! Thï¿½t muï¿½n phï¿½n vï¿½t vï¿½."
 local tbOpt =
 	{
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 120-140",sach140},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 140-160",sach160},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 160-180",sach180},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 180-200",sach200},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 200-220",sach220},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 220-240",sach240},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 120-140",sach140},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 140-160",sach160},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 160-180",sach180},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 180-200",sach200},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 200-220",sach220},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 220-240",sach240},
 		{"Trang Sau",sachnv3},
-		{"Trë l¹i",sachnv},
-		{"Tho¸t"},
+		{"Trï¿½ lï¿½i",sachnv},
+		{"Thoï¿½t"},
 	}
 	CreateNewSayEx(szTitle, tbOpt)
 end
 
 function sachnv3()
-local szTitle = "<npc> Xin chµo "..GetName().."! T­íng c«ng ta ®· qua ®êi tõ l©u, ®Ó l¹i cho ta tiÖm vËt nu«i nµy. Mét m×nh ta qu¸n xuyÕn trong ngoµi, võa nu«i d¹y con cai võa ph¶i tr«ng coi c¸i tiÖm nµy! ThËt mu«n phÇn vÊt v¶."
+local szTitle = "<npc> Xin chï¿½o "..GetName().."! Tï¿½ï¿½ng cï¿½ng ta ï¿½ï¿½ qua ï¿½ï¿½i tï¿½ lï¿½u, ï¿½ï¿½ lï¿½i cho ta tiï¿½m vï¿½t nuï¿½i nï¿½y. Mï¿½t mï¿½nh ta quï¿½n xuyï¿½n trong ngoï¿½i, vï¿½a nuï¿½i dï¿½y con cai vï¿½a phï¿½i trï¿½ng coi cï¿½i tiï¿½m nï¿½y! Thï¿½t muï¿½n phï¿½n vï¿½t vï¿½."
 local tbOpt =
 	{
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 240-260",sach260},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 260-280",sach280},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 280-300",sach300},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 300-320",sach320},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 320-340",sach340},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 340-360",sach360},
-		{"NhËn s¸ch luyÖn cÊp ®ång hµnh 340-381",sach380},
-		{"Trë l¹i",sachnv2},
-		{"Tho¸t"},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 240-260",sach260},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 260-280",sach280},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 280-300",sach300},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 300-320",sach320},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 320-340",sach340},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 340-360",sach360},
+		{"Nhï¿½n sï¿½ch luyï¿½n cï¿½p ï¿½ï¿½ng hï¿½nh 340-381",sach380},
+		{"Trï¿½ lï¿½i",sachnv2},
+		{"Thoï¿½t"},
 	}
 	CreateNewSayEx(szTitle, tbOpt)
 end

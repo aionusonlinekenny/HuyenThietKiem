@@ -1,23 +1,28 @@
+-- Stub for IncludeLib if not available
+if not IncludeLib then
+	function IncludeLib(szLibName) end
+end
+
 IncludeLib("FILESYS")
 tbaddJinShanDao_NpcAndTrap = {}
 
-tbaddJinShanDao_NpcAndTrap.npcfile		= "\\settings\\maps\\½­ÄÏÇø\\Î÷É½Óì\\npc.txt"
+tbaddJinShanDao_NpcAndTrap.npcfile		= "\\settings\\maps\\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\\ï¿½ï¿½É½ï¿½ï¿½\\npc.txt"
 
-tbaddJinShanDao_NpcAndTrap.trapfile_r	= "\\settings\\maps\\½­ÄÏÇø\\Î÷É½Óì\\trap_right.txt"
-tbaddJinShanDao_NpcAndTrap.trapscript_r	= "\\script\\½­ÄÏÇø\\½ðÉ½µº\\trap\\changestate1.lua"
+tbaddJinShanDao_NpcAndTrap.trapfile_r	= "\\settings\\maps\\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\\ï¿½ï¿½É½ï¿½ï¿½\\trap_right.txt"
+tbaddJinShanDao_NpcAndTrap.trapscript_r	= "\\script\\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\\ï¿½ï¿½É½ï¿½ï¿½\\trap\\changestate1.lua"
 
-tbaddJinShanDao_NpcAndTrap.trapfile_l	= "\\settings\\maps\\½­ÄÏÇø\\Î÷É½Óì\\trap_left.txt"
-tbaddJinShanDao_NpcAndTrap.trapscript_l	= "\\script\\½­ÄÏÇø\\½ðÉ½µº\\trap\\changestate2.lua"
+tbaddJinShanDao_NpcAndTrap.trapfile_l	= "\\settings\\maps\\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\\ï¿½ï¿½É½ï¿½ï¿½\\trap_left.txt"
+tbaddJinShanDao_NpcAndTrap.trapscript_l	= "\\script\\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\\ï¿½ï¿½É½ï¿½ï¿½\\trap\\changestate2.lua"
 
 tbaddJinShanDao_NpcAndTrap.nMapId		= 342
 
 tbaddJinShanDao_NpcAndTrap.tbDialogNpc	= 
 {
 	--npcid mapid nx ny script name
-	{199-2, tbaddJinShanDao_NpcAndTrap.nMapId, 44160/32, 89728/32, "\\script\\½­ÄÏÇø\\½ðÉ½µº\\npc\\npc_tiejiang.lua","Thî rÌn"},
-	{627-2, tbaddJinShanDao_NpcAndTrap.nMapId, 44864/32, 90496/32, "\\script\\½­ÄÏÇø\\½ðÉ½µº\\obj\\box.lua","R­¬ng chøa ®å"},
-	{205-2, tbaddJinShanDao_NpcAndTrap.nMapId, 45408/32, 89504/32, "\\script\\½­ÄÏÇø\\½ðÉ½µº\\npc\\npc_yaofan.lua","Chñ tiÖm thuèc"},	
-	-- {242-2, tbaddJinShanDao_NpcAndTrap.nMapId, 37216/32, 76576/32, "\\script\\½­ÄÏÇø\\½ðÉ½µº\\npc\\boatman.lua","ThuyÒn Phu"},
+	{199-2, tbaddJinShanDao_NpcAndTrap.nMapId, 44160/32, 89728/32, "\\script\\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\\ï¿½ï¿½É½ï¿½ï¿½\\npc\\npc_tiejiang.lua","Thï¿½ rï¿½n"},
+	{627-2, tbaddJinShanDao_NpcAndTrap.nMapId, 44864/32, 90496/32, "\\script\\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\\ï¿½ï¿½É½ï¿½ï¿½\\obj\\box.lua","Rï¿½ï¿½ng chï¿½a ï¿½ï¿½"},
+	{205-2, tbaddJinShanDao_NpcAndTrap.nMapId, 45408/32, 89504/32, "\\script\\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\\ï¿½ï¿½É½ï¿½ï¿½\\npc\\npc_yaofan.lua","Chï¿½ tiï¿½m thuï¿½c"},	
+	-- {242-2, tbaddJinShanDao_NpcAndTrap.nMapId, 37216/32, 76576/32, "\\script\\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\\ï¿½ï¿½É½ï¿½ï¿½\\npc\\boatman.lua","Thuyï¿½n Phu"},
 }
 
 function tbaddJinShanDao_NpcAndTrap:AddMons()
@@ -28,9 +33,9 @@ function tbaddJinShanDao_NpcAndTrap:AddMons()
 	end
 	local tbMon =
 	{
-		{713-2, "Phôc Ba"},
-		{714-2, "Ph¸ Lang"},
-		{715-2, "Thõa Phong"}
+		{713-2, "Phï¿½c Ba"},
+		{714-2, "Phï¿½ Lang"},
+		{715-2, "Thï¿½a Phong"}
 	}
 	local nRowCount = TabFile_GetRowCount(npcfile)
 	for i=2, nRowCount do
