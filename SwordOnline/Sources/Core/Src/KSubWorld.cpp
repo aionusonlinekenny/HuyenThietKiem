@@ -917,6 +917,7 @@ BOOL KSubWorld::LoadMap(int nId, int nRegion)
 }
 #endif
 
+#ifdef _SERVER
 void KSubWorld::LoadTrap()
 {
 	// Load trap text files from settings/maps/[mapname]/
@@ -985,6 +986,7 @@ void KSubWorld::LoadTrap()
 		}
 	}
 }
+#endif
 
 void KSubWorld::MessageLoop()
 {

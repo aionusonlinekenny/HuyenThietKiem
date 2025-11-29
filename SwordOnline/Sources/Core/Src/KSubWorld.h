@@ -145,10 +145,9 @@ public:
 	void		Screen2Mps(int *Rx, int *Ry);
 #endif
 private:
-	void		LoadTrap();
 	void		ProcessMsg(KWorldMsgNode *pMsg);
 #ifdef _SERVER
-
+	void		LoadTrap();
 #else
 	void		LoadCell();
 #endif
