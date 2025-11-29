@@ -310,7 +310,13 @@ namespace MapTool.Rendering
             int worldY = mapY * MapConstants.MAP_SCALE_V;
 
             // Step 3: Convert WORLD coordinates to Region/Cell
-            return CoordinateConverter.WorldToRegionCell(worldX, worldY);
+            MapCoordinate result = CoordinateConverter.WorldToRegionCell(worldX, worldY);
+
+            // Debug logging
+            DebugLogger.Log($"[ScreenToMapCoordinate] Screen({screenX},{screenY}) → Map({mapX},{mapY}) → World({worldX},{worldY}) → Region({result.RegionX},{result.RegionY}) Cell({result.CellX},{result.CellY}) ID={result.RegionID}");
+            DebugLogger.Log($"  Zoom={_zoom:F2}, ViewOffset=({_viewOffsetX},{_viewOffsetY})");
+
+            return result;
         }
 
         /// <summary>
