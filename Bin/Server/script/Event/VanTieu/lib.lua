@@ -69,3 +69,107 @@ KINH_NGHIEM_BASE = 1000000		-- 1 triệu exp base
 TASK_STATE_DONG = 4				-- Hoàn thành đồng tiêu xa
 TASK_STATE_BAC = 5				-- Hoàn thành bạc tiêu xa
 TASK_STATE_VANG = 6				-- Hoàn thành vàng tiêu xa
+
+-- ============================================================================
+-- HELPER FUNCTIONS FOR CART NPC TELEPORT
+-- ============================================================================
+
+-- Check if player has active Vận Tiêu quest
+function VanTieu_HasActiveQuest()
+	local nTaskValue = GetTask(TASK_VANTIEU)
+	local nTask = GetByte(nTaskValue, 1)
+
+	-- Task 1-3 = active quest (Đồng/Bạc/Vàng)
+	-- Task 4-6 = completed, waiting for reward
+	if nTask > 0 and nTask < TASK_STATE_DONG then
+		return 1
+	end
+	return 0
+end
+
+-- Find cart NPC belonging to player
+function VanTieu_FindCartNpc()
+	local dwCartID = GetTask(TASK_NPCVANTIEU)
+	if dwCartID <= 0 then
+		return 0
+	end
+
+	-- Try FindAroundNpc first
+	local nNpcIdx = FindAroundNpc(dwCartID)
+	if nNpcIdx == 1 then
+		-- Too close, try FindNearNpc
+		nNpcIdx = FindNearNpc(dwCartID)
+	end
+
+	return nNpcIdx or 0
+end
+
+-- Teleport cart NPC to player's new position
+-- Call this AFTER player has been teleported
+function VanTieu_TeleportCartToPlayer()
+	-- Check if player has active quest
+	if VanTieu_HasActiveQuest() == 0 then
+		return 0
+	end
+
+	-- Find cart NPC
+	local nCartIdx = VanTieu_FindCartNpc()
+	if nCartIdx <= 0 then
+		return 0
+	end
+
+	-- Get player's new position
+	local nPlayerW, nPlayerX, nPlayerY = GetWorldPos()
+
+	-- Teleport cart NPC to player position (offset slightly)
+	-- SetNpcWorldPos(nNpcIdx, subworld, x, y)
+	if SetNpcWorldPos then
+		SetNpcWorldPos(nCartIdx, nPlayerW, nPlayerX + 64, nPlayerY)
+		Msg2Player("Tiêu xa đã theo bạn qua map!")
+		return 1
+	else
+		-- Fallback: Delete old cart and spawn new one at player position
+		DelNpc(nCartIdx)
+
+		local nTaskValue = GetTask(TASK_VANTIEU)
+		local nTask = GetByte(nTaskValue, 1)
+		local nTemplateID = TIEUXA_TEMPLET[nTask][1]
+		local nPlayerName = GetName()
+
+		local nSubWorldIdx = SubWorldID2Idx(nPlayerW)
+		local nNewCart = AddNpc(nTemplateID, 1, nSubWorldIdx, nPlayerX + 64, nPlayerY, 1, "", 0, 0)
+
+		if nNewCart > 0 then
+			SetNpcScript(nNewCart, "\\script\\event\\VanTieu\\tieuxa.lua")
+			SetNpcName(nNewCart, nPlayerName .. " - " .. TIEUXA_TEMPLET[nTask][2])
+
+			-- Re-setup owner
+			if SetNpcOwner then
+				SetNpcOwner(nNewCart, 1)
+			end
+
+			-- Update task with new NPC ID
+			local dwNewCartID = GetNpcID(2, nNewCart)
+			SetTask(TASK_NPCVANTIEU, dwNewCartID)
+
+			Msg2Player("Tiêu xa đã theo bạn qua map!")
+			return 1
+		end
+	end
+
+	return 0
+end
+
+-- Helper function for trap scripts
+-- Usage: Include this lib, then call VanTieu_NewWorldWithCart(mapID, x, y)
+function VanTieu_NewWorldWithCart(nMapID, nX, nY)
+	-- Teleport player first
+	local nResult = NewWorld(nMapID, nX, nY)
+
+	-- If teleport succeeded and player has active quest, teleport cart too
+	if nResult == 1 then
+		VanTieu_TeleportCartToPlayer()
+	end
+
+	return nResult
+end
