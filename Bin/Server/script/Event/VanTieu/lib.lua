@@ -12,9 +12,9 @@ Include("\\script\\lib\\TaskLib.lua")
 -- NPC 1185 = Building model (for robbed cart)
 -- For now, use same model for all 3 types (can differentiate by name)
 TIEUXA_TEMPLET = {
-	{2085, "Ti�u Xa - [��ng]"},  -- Changed from 2085
-	{2086, "Ti�u Xa - [B�c]"},   -- Changed from 2086
-	{2087, "Ti�u Xa - [V�ng]"},  -- Changed from 2087
+	{2085, "Ti�u Xa - [��ng]"},  -- Changed from 2085
+	{2086, "Ti�u Xa - [B�c]"},   -- Changed from 2086
+	{2087, "Ti�u Xa - [V�ng]"},  -- Changed from 2087
 }
 
 -- Tỷ lệ spawn các loại tiêu xa (hiện tại chưa dùng)
@@ -42,17 +42,19 @@ NPC_HONG_TIEUXA = 1185		-- Tiêu Xa Hồng (robbed)
 NPC_RUONG_CUOP = 844		-- Rương cướp
 
 -- SubWorld IDs (HuyenThiet server)
--- Map 11 = Dương Châu (major city)
+-- Map 11 = Dương Châu (major city) - Start location
+-- Map 21 = Thanh Thành Sơn (dangerous zone) - End location
 SUBWORLD_START = 11			-- Map bắt đầu (Dương Châu)
+SUBWORLD_END = 21			-- Map kết thúc (Thanh Thành Sơn)
 
--- Coordinates (HuyenThiet - map 11)
--- Tiêu Đầu location: 98848, 164768 (updated - working position)
--- Tiêu Sư location: 98784, 164672
+-- Coordinates
+-- Tiêu Đầu location: Map 11 - Dương Châu (start NPC)
 POS_START_X = 98848 / 32		-- Vị trí spawn tiêu xa (near Tiêu Đầu)
 POS_START_Y = 164768 / 32
 
-POS_END_X = 104735 / 32			-- Vị trí giao tiêu (near Tiêu Sư)
-POS_END_Y = 159744 / 32
+-- Tiêu Sư location: Map 21 - Thanh Thành Sơn (end NPC)
+POS_END_X = 84000 / 32			-- Vị trí giao tiêu (Tiêu Sư at Map 21)
+POS_END_Y = 143872 / 32
 
 -- Costs & Limits
 COST_START_QUEST = 150000		-- 15 vạn lượng để bắt đầu

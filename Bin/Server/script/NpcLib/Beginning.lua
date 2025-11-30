@@ -53,7 +53,8 @@ function Begin_Init()
 	JPreLoadMap:OnLoadMaps(242) -- dao tay tuy -- demo code ad npc
 	JPreLoadMap:OnLoadMaps(342) -- tich tinh dong -- demo code ad npc
 	JPreLoadMap:OnLoadMaps(394) -- thien bao kho -- demo code ad npc
-	--JPreLoadMap:OnLoadMaps(21) -- thien bao kho -- demo code ad npc
+	JPreLoadMap:OnLoadMaps(21) -- thanh thanh son -- demo code ad npc
 	JPreLoadMap:KillerBoss()-- boss sat thu -- demo code ad npc
+	JPreLoadMap:LoadOldNpc()-- load NPCs from Npc_Load.txt (fight zones)
 end
 

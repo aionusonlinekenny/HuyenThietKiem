@@ -81,15 +81,15 @@ function main(NpcIndex)
 
 	local SubWorld = SubWorldID2Idx(SUBWORLD_START)
 	if (SubWorld < 0) then
-		Talk(1,"","Ai còng t­ëng nghÒ B¶o tiªu lµ sung s­íng! ThËt sù mçi lÇn ra ®i ®Òu kh«ng d¸m huaø hÑn tr­íc ngµy vÒ!")
+		Talk(1,"","Ai cï¿½ng tï¿½ï¿½ng nghï¿½ Bï¿½o tiï¿½u lï¿½ sung sï¿½ï¿½ng! Thï¿½t sï¿½ mï¿½i lï¿½n ra ï¿½i ï¿½ï¿½u khï¿½ng dï¿½m huaï¿½ hï¿½n trï¿½ï¿½c ngï¿½y vï¿½!")
 		return
 	end
 
-	Say("Thµnh §« tiªu côc cña chóng ta lu«n ®­îc sù tÝn nhiÖm cña giang hå",4,
-	"VËn tiªu/vantieu",
-	"§æi Hå Tiªu LÖnh/cuahang",
-	"T×m hiÓu vËn tiªu/timhieu",
-	"Ta chØ ghÐ qua/no")
+	Say("Thï¿½nh ï¿½ï¿½ tiï¿½u cï¿½c cï¿½a chï¿½ng ta luï¿½n ï¿½ï¿½ï¿½c sï¿½ tï¿½n nhiï¿½m cï¿½a giang hï¿½",4,
+	"Vï¿½n tiï¿½u/vantieu",
+	"ï¿½ï¿½i Hï¿½ Tiï¿½u Lï¿½nh/cuahang",
+	"Tï¿½m hiï¿½u vï¿½n tiï¿½u/timhieu",
+	"Ta chï¿½ ghï¿½ qua/no")
 end
 
 function vantieu()
@@ -97,9 +97,9 @@ function vantieu()
 	local nTask = GetByte(nTaskValue, 1)
 
 	if(nTask == 0) then
-		Say("GÇn ®©y c«ng viÖc nhiÒu, ®¹o tÆc hoµnh hµnh kh¾p n¬i, mµ nh©n lùc l¹i thiÕu. VËy ®©y cã muèn giñp ta mét chuyÕn không? SÏ cã thï lao xøng ®¸ng cho ng­¬i!",2,
-		"Ta ®ång ý ¸p tiªu/batdau",
-		"Ta ®ang rÊt bËn/no")
+		Say("Gï¿½n ï¿½ï¿½y cï¿½ng viï¿½c nhiï¿½u, ï¿½ï¿½o tï¿½c hoï¿½nh hï¿½nh khï¿½p nï¿½i, mï¿½ nhï¿½n lï¿½c lï¿½i thiï¿½u. Vï¿½y ï¿½ï¿½y cï¿½ muï¿½n giï¿½p ta mï¿½t chuyï¿½n khï¿½ng? Sï¿½ cï¿½ thï¿½ lao xï¿½ng ï¿½ï¿½ng cho ngï¿½ï¿½i!",2,
+		"Ta ï¿½ï¿½ng ï¿½ ï¿½p tiï¿½u/batdau",
+		"Ta ï¿½ang rï¿½t bï¿½n/no")
 	elseif(nTask < 4) then
 		-- Check if player was robbed
 		if(GetItemCountInBag(6, ITEM_TIEUKY, 1, -1, 0) > 0) then
@@ -107,11 +107,11 @@ function vantieu()
 			return
 		end
 
-		Say("Kh«ng ph¶i ng­êi ®ang ¸p tiªu sao? Sao l¹i ®Õn ®©y t×m ta?",4,
-		"Ta bÞ thÊt l¹c, giñp ta t×m tiªu xa/timxe",
-		"Reset tiªu xa (Test - MiÔn phÝ)/resettieuxatest",
-		"Ta kh«ng muèn lµm n÷a/huybo",
-		"Ta chØ ghÐ qua/no")
+		Say("Khï¿½ng phï¿½i ngï¿½ï¿½i ï¿½ang ï¿½p tiï¿½u sao? Sao lï¿½i ï¿½ï¿½n ï¿½ï¿½y tï¿½m ta?",4,
+		"Ta bï¿½ thï¿½t lï¿½c, giï¿½p ta tï¿½m tiï¿½u xa/timxe",
+		"Reset tiï¿½u xa (Test - Miï¿½n phï¿½)/resettieuxatest",
+		"Ta khï¿½ng muï¿½n lï¿½m nï¿½a/huybo",
+		"Ta chï¿½ ghï¿½ qua/no")
 	else
 		hoanthanh()
 	end
@@ -121,7 +121,7 @@ end
 function batdau()
 
 	if(GetLevel() < 120) then
-		Talk(1,"","H·y cè g¾ng luyÖn tËp ®¹t cËp 120 rèi ®Õn gËp ta")
+		Talk(1,"","Hï¿½y cï¿½ gï¿½ng luyï¿½n tï¿½p ï¿½ï¿½t cï¿½p 120 rï¿½i ï¿½ï¿½n gï¿½p ta")
 		return
 	end
 
@@ -131,13 +131,13 @@ function batdau()
 
 	if(nLan >= MAX_DAILY_RUNS) then
 		if(GetItemCountInBag(6, ITEM_UNLOCK_VANTIEU, 1, -1, 0) < 1) then
-			Talk(1,"","H«m nay ng­êi ®· ¸p tiªu nhiÒu lÇn råi. H·y nghØ ng¬i mai l¹i ®Õn gËp ta.")
+			Talk(1,"","Hï¿½m nay ngï¿½ï¿½i ï¿½ï¿½ ï¿½p tiï¿½u nhiï¿½u lï¿½n rï¿½i. Hï¿½y nghï¿½ ngï¿½i mai lï¿½i ï¿½ï¿½n gï¿½p ta.")
 			return
 		end
 	end
 
 	if(GetCash() < COST_START_QUEST) then
-		Talk(1,"","Ng­êi cÇn n¹p ".. (COST_START_QUEST / 10000) .." v¹n l­îng phÝ hao tèn tiªu xa!")
+		Talk(1,"","Ngï¿½ï¿½i cï¿½n nï¿½p ".. (COST_START_QUEST / 10000) .." vï¿½n lï¿½ï¿½ng phï¿½ hao tï¿½n tiï¿½u xa!")
 		return
 	end
 
@@ -148,7 +148,7 @@ function batdau()
 		SetTask(TASK_RESET_VANTIEU, SetByte(nResetTask, 6, nLan + 1))
 	end
 
-	-- Random cart type (1-3 -> §ång/B¹c/Vµng)
+	-- Random cart type (1-3 -> ï¿½ï¿½ng/Bï¿½c/Vï¿½ng)
 	local n = random(0, 2)
 	local nRand = n + 1
 
@@ -176,7 +176,7 @@ function batdau()
 	local nTeleportOK = NewWorld(SUBWORLD_START, POS_START_X, POS_START_Y)
 
 	if nTeleportOK ~= 1 then
-		Talk(1,"","Lçi: Kh«ng thÓ ®i chuyÓn ®Õn vÞ trÝ b¾t ®Çu!")
+		Talk(1,"","Lï¿½i: Khï¿½ng thï¿½ ï¿½i chuyï¿½n ï¿½ï¿½n vï¿½ trï¿½ bï¿½t ï¿½ï¿½u!")
 		return
 	end
 	-- Add teleport effect (18 frames * 3 = 54 frames ~= 2.7 seconds at 20fps)
@@ -220,7 +220,7 @@ function batdau()
 	end
 
 	if nId <= 0 then
-		Talk(1,"","Lçi: Kh«ng thÓ t¹o tiªu xa!")
+		Talk(1,"","Lï¿½i: Khï¿½ng thï¿½ tï¿½o tiï¿½u xa!")
 		return
 	end
 
@@ -257,38 +257,37 @@ function batdau()
 
 
 	-- Notify player
-
-	Msg2Player("H·y mau hé tèng tiªu xa ®Õn Long M«n Tiªu S­ ë Thanh Thµnh S¬n ("..POS_END_X.."/"..POS_END_Y..")")
+	Msg2Player("Hï¿½y mau hï¿½ tï¿½ng tiï¿½u xa ï¿½ï¿½n Tiï¿½u Sï¿½ ï¿½ Thanh Thï¿½nh Sï¿½n (Map 21 - "..POS_END_X.."/"..POS_END_Y..")")
 
 end
 
 
 function cuahang()
 	local nCount = GetItemCountInBag(6, ITEM_HO_TIEU_LENH, 1, -1, 0) or 0
-	Say("Ng­êi hiÖn cã: <color=red>"..nCount.."<color> Hå Tiªu LÖnh. H·y lùa chän vËt phÈm cÇn thiÕt cho tiªu xa:",4,
-	"T¨ng tãc (4 Hå Tiªu LÖnh)/buy_item("..ITEM_TANGTO..",4)",
-	"Hèi m¸u (3 Hå Tiªu LÖnh)/buy_item("..ITEM_HOIMAU..",3)",
-	"DÞch chuyÓn (3 Hå Tiªu LÖnh)/buy_item("..ITEM_DICHCHUYEN..",3)",
-	"Ta cha muèn ®æi/no")
+	Say("Ngï¿½ï¿½i hiï¿½n cï¿½: <color=red>"..nCount.."<color> Hï¿½ Tiï¿½u Lï¿½nh. Hï¿½y lï¿½a chï¿½n vï¿½t phï¿½m cï¿½n thiï¿½t cho tiï¿½u xa:",4,
+	"Tï¿½ng tï¿½c (4 Hï¿½ Tiï¿½u Lï¿½nh)/buy_item("..ITEM_TANGTO..",4)",
+	"Hï¿½i mï¿½u (3 Hï¿½ Tiï¿½u Lï¿½nh)/buy_item("..ITEM_HOIMAU..",3)",
+	"Dï¿½ch chuyï¿½n (3 Hï¿½ Tiï¿½u Lï¿½nh)/buy_item("..ITEM_DICHCHUYEN..",3)",
+	"Ta cha muï¿½n ï¿½ï¿½i/no")
 end
 
 function buy_item(nItemID, nCost)
 	if(CountFreeBagCell() < 1) then
-		Talk(1,"","Hµnh trang cña ng­êi kh«ng cßn chç trèng")
+		Talk(1,"","Hï¿½nh trang cï¿½a ngï¿½ï¿½i khï¿½ng cï¿½n chï¿½ trï¿½ng")
 		return
 	end
 
 	local nHave = GetItemCountInBag(6, ITEM_HO_TIEU_LENH, 1, -1, 0) or 0
 
 	if(nCost > nHave) then
-		Talk(1,"","Ng­êi kh«ng mang ®ñ Hå Tiªu LÖnh rïi")
+		Talk(1,"","Ngï¿½ï¿½i khï¿½ng mang ï¿½ï¿½ Hï¿½ Tiï¿½u Lï¿½nh rï¿½i")
 		return
 	end
 
 	AddTaskItem(nItemID)
 	DelTaskItem(ITEM_HO_TIEU_LENH, nCost)
 
-	Talk(1,"","Giao dÞch thµnh c«ng!")
+	Talk(1,"","Giao dï¿½ch thï¿½nh cï¿½ng!")
 end
 
 function hoanthanh()
@@ -299,7 +298,7 @@ function hoanthanh()
 	SetTask(TASK_NPCVANTIEU, 0)
 
 	phanthuong(nFinish)
-	Talk(1,"","Lµm tæt l¾m! ®©y lµ phÇn lao vô cña ng­êi!")
+	Talk(1,"","Lï¿½m tï¿½t lï¿½m! ï¿½ï¿½y lï¿½ phï¿½n lao vï¿½ cï¿½a ngï¿½ï¿½i!")
 end
 
 function bicuop()
@@ -323,7 +322,7 @@ function bicuop()
 	SetTask(TASK_NPCVANTIEU, 0)
 	DelTaskItem(ITEM_TIEUKY, 1)
 
-	Talk(1,"","Ng­¬i bÞ c­íp tiªu råi sao? Còng may ng­­¬i ®· ®o¹t l¹i TÝ tiªu Kú danh dô cña Thµnh §« tiªu côc. VÊt vá cho ng­êi rïi! ®©y lµ mét n÷a phÇn lao vô")
+	Talk(1,"","Ngï¿½ï¿½i bï¿½ cï¿½ï¿½p tiï¿½u rï¿½i sao? Cï¿½ng may ngï¿½ï¿½ï¿½i ï¿½ï¿½ ï¿½oï¿½t lï¿½i Tï¿½ tiï¿½u Kï¿½ danh dï¿½ cï¿½a Thï¿½nh ï¿½ï¿½ tiï¿½u cï¿½c. Vï¿½t vï¿½ cho ngï¿½ï¿½i rï¿½i! ï¿½ï¿½y lï¿½ mï¿½t nï¿½a phï¿½n lao vï¿½")
 end
 
 
@@ -344,13 +343,13 @@ function huybo()
 	SetTask(TASK_VANTIEU, 0)
 	SetTask(TASK_NPCVANTIEU, 0)
 
-	Talk(1,"","C«ng viÖc ¸p tiªu kh«ng ph¶i lµ ®¬n giÇn. Ng­êi ch¸n ®Æt ch¸n rµo b­íc vµo nªn còng khã tr¸ch! Sau nµy h·y cô g¾ng lªn!")
+	Talk(1,"","Cï¿½ng viï¿½c ï¿½p tiï¿½u khï¿½ng phï¿½i lï¿½ ï¿½ï¿½n giï¿½n. Ngï¿½ï¿½i chï¿½n ï¿½ï¿½t chï¿½n rï¿½o bï¿½ï¿½c vï¿½o nï¿½n cï¿½ng khï¿½ trï¿½ch! Sau nï¿½y hï¿½y cï¿½ gï¿½ng lï¿½n!")
 end
 
 
 function timxe()
 	if(GetCash() < COST_FIND_CART) then
-	 Talk(1,"","Ng­êi cÇn nép phÝ ".. (COST_FIND_CART / 10000) .." v¹n l­îng ®Ó ta cho ng­êi ®i t×m tiªu xa!")
+	 Talk(1,"","Ngï¿½ï¿½i cï¿½n nï¿½p phï¿½ ".. (COST_FIND_CART / 10000) .." vï¿½n lï¿½ï¿½ng ï¿½ï¿½ ta cho ngï¿½ï¿½i ï¿½i tï¿½m tiï¿½u xa!")
 	 return
 end
 
@@ -358,7 +357,7 @@ local dwCartID = GetTask(TASK_NPCVANTIEU)
 local nNpcIdx = FindAroundNpc(dwCartID)
 
 if (nNpcIdx == 1) then
-	 Talk(1,"","Kh«ng ph¶i tiªu xa cña ng­¬i ®ang ë ngay ®©y sao!")
+	 Talk(1,"","Khï¿½ng phï¿½i tiï¿½u xa cï¿½a ngï¿½ï¿½i ï¿½ang ï¿½ ngay ï¿½ï¿½y sao!")
 	 return
 end
 
@@ -368,9 +367,9 @@ if(nNpcIdx > 0) then
 	 local w, x, y = GetNpcPos(nNpcIdx)
 	 NewWorld(w, x, y)
 	 Pay(COST_FIND_CART)
-	 Talk(1,"","§· cã tin töc tiªu xa! Ta sÏ cho ng­êi ®Õn ®ã!")
+	 Talk(1,"","ï¿½ï¿½ cï¿½ tin tï¿½c tiï¿½u xa! Ta sï¿½ cho ngï¿½ï¿½i ï¿½ï¿½n ï¿½ï¿½!")
 else
-	 Talk(1,"","Kh«ng thÊy tin töc! Tiªu xa cña ng­­¬i cã lÎ ®· mÊt!")
+	 Talk(1,"","Khï¿½ng thï¿½y tin tï¿½c! Tiï¿½u xa cï¿½a ngï¿½ï¿½ï¿½i cï¿½ lï¿½ ï¿½ï¿½ mï¿½t!")
 end
 
 end
@@ -381,7 +380,7 @@ function resettieuxatest()
 	local nTask = GetByte(nTaskValue, 1)
 
 	if nTask == 0 or nTask >= 4 then
-		Talk(1,"","Ng­êi kh«ng cã nhiÖm vô vËn tiªu ®ang thùc hiÖn!")
+		Talk(1,"","Ngï¿½ï¿½i khï¿½ng cï¿½ nhiï¿½m vï¿½ vï¿½n tiï¿½u ï¿½ang thï¿½c hiï¿½n!")
 		return
 	end
 
@@ -391,7 +390,7 @@ function resettieuxatest()
 		local nNpcIdx = FindAroundNpc(dwCartID)
 		if nNpcIdx > 0 then
 			DelNpc(nNpcIdx)
-			Msg2Player("§· xóa tiªu xa cò")
+			Msg2Player("ï¿½ï¿½ xï¿½a tiï¿½u xa cï¿½")
 		end
 	end
 
@@ -400,7 +399,7 @@ function resettieuxatest()
 	local w, x, y = GetWorldPos()
 
 	-- Determine cart type from task
-	local nRand = nTask -- Task value 1/2/3 = Ð?ng/B?c/Vàng
+	local nRand = nTask -- Task value 1/2/3 = ï¿½?ng/B?c/Vï¿½ng
 	local nTemplateID = TIEUXA_TEMPLET[nRand][1]
 
 	-- Spawn new cart at player position
@@ -448,23 +447,23 @@ function resettieuxatest()
 		local dwNewCartID = GetNpcIDFromIndex(nId)
 		SetTask(TASK_NPCVANTIEU, dwNewCartID)
 
-		Msg2Player("§· reset tiªu xa thµnh c«ng! Xe míi xuÊt hiÖn t¹i vÞ trÝ cña ng­êi.")
+		Msg2Player("ï¿½ï¿½ reset tiï¿½u xa thï¿½nh cï¿½ng! Xe mï¿½i xuï¿½t hiï¿½n tï¿½i vï¿½ trï¿½ cï¿½a ngï¿½ï¿½i.")
 		else
-			Talk(1,"","Lçi: Kh«ng thÓ t¹o tiªu xa míi!")
+			Talk(1,"","Lï¿½i: Khï¿½ng thï¿½ tï¿½o tiï¿½u xa mï¿½i!")
 		end
 
 end
 
 function timhieu()
-	Talk(2,"","Con ®­êng hiÓm trë nhÊt lµ b¨ng qua Thanh Thµnh S¬n. N¬i ®ã ®Êy r·y thó d÷ vµ ®¹o tÆc hoµnh hµnh. Ng­êi ph¶i hå Tiªu an toµn ®Õn n¬i giao cho Tiªu S trung chuyÓn ®óng thêi gian!",
-	"Hµng ho¸ cÇn vËn chuyÓn cã 3 chñng lo¹i: vµng, b¹c, ®ång. Tiªu c«ng gi¸ trÞ thÕ bän ®¹o tÆc còng dÌ mÆt tµi nªn cµng khã kh¨n nh­ng thï lao ng­êi nhËn ®ùc còng t­¬ng xøng!")
+	Talk(2,"","Con ï¿½ï¿½ï¿½ng hiï¿½m trï¿½ nhï¿½t lï¿½ bï¿½ng qua Thanh Thï¿½nh Sï¿½n. Nï¿½i ï¿½ï¿½ ï¿½ï¿½y rï¿½y thï¿½ dï¿½ vï¿½ ï¿½ï¿½o tï¿½c hoï¿½nh hï¿½nh. Ngï¿½ï¿½i phï¿½i hï¿½ Tiï¿½u an toï¿½n ï¿½ï¿½n nï¿½i giao cho Tiï¿½u S trung chuyï¿½n ï¿½ï¿½ng thï¿½i gian!",
+	"Hï¿½ng hoï¿½ cï¿½n vï¿½n chuyï¿½n cï¿½ 3 chï¿½ng loï¿½i: vï¿½ng, bï¿½c, ï¿½ï¿½ng. Tiï¿½u cï¿½ng giï¿½ trï¿½ thï¿½ bï¿½n ï¿½ï¿½o tï¿½c cï¿½ng dï¿½ mï¿½t tï¿½i nï¿½n cï¿½ng khï¿½ khï¿½n nhï¿½ng thï¿½ lao ngï¿½ï¿½i nhï¿½n ï¿½ï¿½c cï¿½ng tï¿½ï¿½ng xï¿½ng!")
 end
 
 
 -- Reward function
 function phanthuong(nFinish)
 	local tbName = GetName()
-	if(nFinish == TASK_STATE_DONG) then	-- Ð?ng tiêu xa
+	if(nFinish == TASK_STATE_DONG) then	-- ï¿½?ng tiï¿½u xa
 		AddTaskItem(ITEM_HO_TIEU_LENH)
 		AddItem(0, 2, 34, 0, 0, 5, 0, 0) -- Ruong ho?t d?ng
 		AddOwnExp(5 * KINH_NGHIEM_BASE)
@@ -473,7 +472,7 @@ function phanthuong(nFinish)
 		for i=1,5 do
 			AddScriptItem(ITEM_RUONG_VANTIEU)
 		end
-		Msg2SubWorld("§¹i HiÖp <color=yellow>"..tbName.."<color> giao thµnh c«ng §ång Tiªu Xa nhËn ®­îc <color=yellow>5 triÖu ®iÓm<color> kinh nghiÖm vµ <color=yellow>5<color> ®iÓm Uy Danh!")
+		Msg2SubWorld("ï¿½ï¿½i Hiï¿½p <color=yellow>"..tbName.."<color> giao thï¿½nh cï¿½ng ï¿½ï¿½ng Tiï¿½u Xa nhï¿½n ï¿½ï¿½ï¿½c <color=yellow>5 triï¿½u ï¿½iï¿½m<color> kinh nghiï¿½m vï¿½ <color=yellow>5<color> ï¿½iï¿½m Uy Danh!")
 		elseif (nFinish == TASK_STATE_BAC) then
 		for i=1,4 do
 			AddTaskItem(ITEM_HO_TIEU_LENH)
@@ -484,8 +483,8 @@ function phanthuong(nFinish)
 		for i=1,10 do
 			AddScriptItem(ITEM_RUONG_VANTIEU)
 		end
-		Msg2SubWorld("§¹i HiÖp <color=yellow>"..tbName.."<color> giao thµnh c«ng B¹c Tiªu Xa nhËn ®­îc <color=yellow>10 triÖu ®iÓm<color> kinh nghiÖm vµ <color=yellow>10<color> ®iÓm Uy Danh!")
-	elseif(nFinish == TASK_STATE_VANG) then	-- Vàng tiêu xa
+		Msg2SubWorld("ï¿½ï¿½i Hiï¿½p <color=yellow>"..tbName.."<color> giao thï¿½nh cï¿½ng Bï¿½c Tiï¿½u Xa nhï¿½n ï¿½ï¿½ï¿½c <color=yellow>10 triï¿½u ï¿½iï¿½m<color> kinh nghiï¿½m vï¿½ <color=yellow>10<color> ï¿½iï¿½m Uy Danh!")
+	elseif(nFinish == TASK_STATE_VANG) then	-- Vï¿½ng tiï¿½u xa
 		for i=1,6 do
 			AddTaskItem(ITEM_HO_TIEU_LENH)
 		end
@@ -495,12 +494,12 @@ function phanthuong(nFinish)
 		for i=1,15 do
 			AddScriptItem(ITEM_RUONG_VANTIEU)
 		end
-		Msg2SubWorld("§¹i HiÖp <color=yellow>"..tbName.."<color> giao thµnh c«ng Vµng Tiªu Xa nhËn ®­îc <color=yellow>15 triÖu ®iÓm<color> kinh nghiÖm vµ <color=yellow>10<color> ®iÓm Uy Danh!")
+		Msg2SubWorld("ï¿½ï¿½i Hiï¿½p <color=yellow>"..tbName.."<color> giao thï¿½nh cï¿½ng Vï¿½ng Tiï¿½u Xa nhï¿½n ï¿½ï¿½ï¿½c <color=yellow>15 triï¿½u ï¿½iï¿½m<color> kinh nghiï¿½m vï¿½ <color=yellow>10<color> ï¿½iï¿½m Uy Danh!")
 	else
 		AddTaskItem(ITEM_HO_TIEU_LENH)
 		AddItem(0, 2, 34, 0, 0, 5, 0, 0)
 		AddOwnExp(2 * KINH_NGHIEM_BASE)
-		Msg2SubWorld("§¹i HiÖp <color=yellow>"..tbName.."<color> bÞ c­íp tiªu kh«ng hoµn thµnh nhiÖm vô!")
+		Msg2SubWorld("ï¿½ï¿½i Hiï¿½p <color=yellow>"..tbName.."<color> bï¿½ cï¿½ï¿½p tiï¿½u khï¿½ng hoï¿½n thï¿½nh nhiï¿½m vï¿½!")
 	end
 end
 
