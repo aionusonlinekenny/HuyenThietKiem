@@ -44,15 +44,19 @@ NPC_RUONG_CUOP = 844		-- Rương cướp
 -- SubWorld IDs (HuyenThiet server)
 -- Map 11 = Dương Châu (major city)
 SUBWORLD_START = 11			-- Map bắt đầu (Dương Châu)
-
+SUBWORLD_END = 21			-- Map k?t th�c (Thanh Th�nh Son)
 -- Coordinates (HuyenThiet - map 11)
 -- Tiêu Đầu location: 98848, 164768 (updated - working position)
 -- Tiêu Sư location: 98784, 164672
 POS_START_X = 98848 / 32		-- Vị trí spawn tiêu xa (near Tiêu Đầu)
 POS_START_Y = 164768 / 32
 
-POS_END_X = 104735 / 32			-- Vị trí giao tiêu (near Tiêu Sư)
-POS_END_Y = 159744 / 32
+
+-- Ti�u Su location: Map 21 - Thanh Th�nh Son (end NPC)
+
+
+POS_END_X = 89120 / 32			-- V? tr� giao ti�u (Ti�u Su at Map 21)
+POS_END_Y = 128192 / 32
 
 -- Costs & Limits
 COST_START_QUEST = 150000		-- 15 vạn lượng để bắt đầu

@@ -1,0 +1,2 @@
+NpcID	MapID	PosX	PosY	ScriptFile	NpcName	Level	IsLoad
+

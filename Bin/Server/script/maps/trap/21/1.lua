@@ -4,7 +4,7 @@
 ----------------------------------------
 Include("\\script\\maps\\trap\\libtrap.lua");
 function main()
-
+	print("TRAP 1");
 	-- local nIDMapsTrap = 11; --ID Map Trap Move
 	-- local nLevel = GetLevel(); -- Check Level Player
 	-- local nState = GetFightState(); -- Check Fight Sate Player

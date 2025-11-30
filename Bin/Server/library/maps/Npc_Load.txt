@@ -10,3 +10,4 @@ NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
 241	336	41248	93760	\script\missions\fengling_ferry\fldmap_boat2.lua	ThuyÒn Phu Gi¸p	1
 242	336	49120	89856	\script\missions\fengling_ferry\fldmap_boat3.lua	ThuyÒn Phu BÝnh	1
 108	2	83200	112640		Hoa S¬n L·o TÈu	1
+769	21	89120	128192	\script\event\vantieu\tieusu.lua	Tiªu s­	1

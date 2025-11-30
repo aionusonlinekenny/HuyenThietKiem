@@ -36,7 +36,6 @@ function Begin_Init()
 	JPreLoadMap:OnLoadMaps(142) -- duoc vuong dong 1 -> 2 -- demo code ad npc
 	JPreLoadMap:OnLoadMaps(319) -- lam du quan -- demo code ad npc
 	JPreLoadMap:OnLoadMaps(75) -- khoa lang dong  -- demo code ad npc
-	-- JPreLoadMap:OnLoadMaps(202) -- phu dung dong -- demo code ad npc
 	JPreLoadMap:OnLoadMaps(224) -- sa mac dia bieu -- demo code ad npc
 	JPreLoadMap:OnLoadMaps(320) -- chan nui truong bach -- demo code ad npc
 	JPreLoadMap:OnLoadMaps(225) -- sa mac 1 -- demo code ad npc
@@ -53,7 +52,8 @@ function Begin_Init()
 	JPreLoadMap:OnLoadMaps(242) -- dao tay tuy -- demo code ad npc
 	JPreLoadMap:OnLoadMaps(342) -- tich tinh dong -- demo code ad npc
 	JPreLoadMap:OnLoadMaps(394) -- thien bao kho -- demo code ad npc
-	--JPreLoadMap:OnLoadMaps(21) -- thien bao kho -- demo code ad npc
+	JPreLoadMap:OnLoadMaps(21) -- thien bao kho -- demo code ad npc
+	JPreLoadMap:LoadOldNpc() -- thien bao kho -- demo code ad npc
 	JPreLoadMap:KillerBoss()-- boss sat thu -- demo code ad npc
 end
 
