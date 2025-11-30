@@ -1,49 +1,60 @@
---Modified: Support V?n Tiêu (escort cart transport)
+--Modified: Support V?n Tiï¿½u (escort cart transport)
 ----------------------------------------
 Include("\\script\\maps\\libtrap.lua");
 Include("\\script\\lib\\TaskLib.lua");
 Include("\\script\\Event\\VanTieu\\lib.lua");
- 
+
 function main()
-	print("TRAP 4 - Qua Thanh Thành Son (Map 21)");
- 
+	-- CRITICAL FIX: Check current map first to prevent spam
+	-- Only process if player is actually on map 11 (source map)
+	local nCurrentMapID = GetWorldPos()
+	if nCurrentMapID ~= 11 then
+		-- Player not on map 11, don't process trap
+		return
+	end
+
+	print("TRAP 4 - Qua Thanh Thï¿½nh Son (Map 21)");
+
 	-- Check if player is doing escort quest
 	local nTaskValue = GetTask(TASK_VANTIEU)
-	local nTask = GetByte(nTaskValue, 1)  -- Cart type: 1=Ð?ng, 2=B?c, 3=Vàng
- 
+	local nTask = GetByte(nTaskValue, 1)  -- Cart type: 1=ï¿½?ng, 2=B?c, 3=Vï¿½ng
+
 	local nCartType = 0
 	local nCartTemplateID = 0
- 
+	local nNpcIdx = 0
+
 	-- If player has active escort quest (task value 1-3)
 	if nTask > 0 and nTask < 4 then
 		-- Get cart NPC ID
 		local dwCartID = GetTask(TASK_NPCVANTIEU)
- 
+
 		if dwCartID > 0 then
-			-- Find cart NPC
-			local nNpcIdx = FindAroundNpc(dwCartID)
+			-- Find cart NPC (only once before teleport)
+			nNpcIdx = FindAroundNpc(dwCartID)
 			if nNpcIdx <= 0 then
 				nNpcIdx = FindNearNpc(dwCartID)
 			end
- 
-			-- If cart found, prepare to transport it
+
+			-- If cart found, save info for spawning later
 			if nNpcIdx > 0 then
-				-- Save cart info
 				nCartType = nTask
 				nCartTemplateID = TIEUXA_TEMPLET[nTask][1]
- 
-				-- Delete old cart
-				DelNpc(nNpcIdx)
-				print("V?n Tiêu: Deleted old cart at map 11")
 			end
 		end
 	end
- 
-	-- Teleport player to Thanh Thành Son (map 21)
+
+	-- Teleport player to Thanh Thï¿½nh Son (map 21)
 	if (NewWorld(21, 2613,4490) == 1) then
+		-- Teleport successful
 		SetFightState(1)
 		AddSkillState(963, 1, 0, 18*3)
- 
+
+		-- Delete cart from OLD map (map 11) after successful teleport
+		if nNpcIdx > 0 then
+			DelNpc(nNpcIdx)
+			print("V?n Tiï¿½u: Deleted old cart at map 11")
+		end
+
 		-- If player had a cart, spawn it at new location
 		if nCartType > 0 and nCartTemplateID > 0 then
 			-- Get destination subworld index
@@ -116,10 +127,10 @@ function main()
 					local dwNewCartID = GetNpcID(2, nId)
 					SetTask(TASK_NPCVANTIEU, dwNewCartID)
  
-					Msg2Player("Tiêu xa dã theo b?n qua Thanh Thành Son!")
-					--print("V?n Tiêu: Spawned new cart at map 21, NPC ID: " .. dwNewCartID)
+					Msg2Player("Tiï¿½u xa dï¿½ theo b?n qua Thanh Thï¿½nh Son!")
+					--print("V?n Tiï¿½u: Spawned new cart at map 21, NPC ID: " .. dwNewCartID)
 				else
-					Msg2Player("L?i: Không th? t?o tiêu xa ? Thanh Thành Son!")
+					Msg2Player("L?i: Khï¿½ng th? t?o tiï¿½u xa ? Thanh Thï¿½nh Son!")
 					--print("ERROR: Failed to spawn cart at map 21")
 				end
 			end
