@@ -884,18 +884,16 @@ namespace MapTool
                 // Auto-load default sprite (NormalStand)
                 NpcAction action = NpcAction.NormalStand;
 
-                // Get SPR file path
-                string sprFilePath = _npcLoader.GetSprFilePathById(npcId, action);
-                if (string.IsNullOrEmpty(sprFilePath) || !File.Exists(sprFilePath))
+                // Load SPR file (from PAK or disk)
+                DebugLogger.Log($"   Loading sprite for action: {action}");
+                _currentNpcSprite = _npcLoader.LoadSpriteById(npcId, action);
+                if (_currentNpcSprite == null)
                 {
-                    MessageBox.Show($"SPR file not found:\n{sprFilePath}\n\nNPC: {_currentNpcResource.NpcName}",
+                    MessageBox.Show($"Failed to load sprite for NPC ID {npcId}\n\nAction: {action}\nNPC: {_currentNpcResource.NpcName}\n\nCheck debug log for details.",
                         "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    lblStatus.Text = $"SPR file not found";
+                    lblStatus.Text = $"Failed to load sprite";
                     return;
                 }
-
-                // Load SPR file
-                _currentNpcSprite = SpriteLoader.Load(sprFilePath);
 
                 // Render first frame to preview
                 if (_currentNpcSprite.FrameCount > 0)

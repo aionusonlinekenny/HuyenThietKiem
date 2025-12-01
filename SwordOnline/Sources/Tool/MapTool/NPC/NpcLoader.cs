@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using MapTool.PakFile;
+using MapTool.SPR;
 
 namespace MapTool.NPC
 {
@@ -9,7 +11,7 @@ namespace MapTool.NPC
     /// NPC resource loader
     /// Loads NPC data from client Settings files
     /// </summary>
-    public class NpcLoader
+    public class NpcLoader : IDisposable
     {
         private string _clientPath;
         private string _serverPath;
@@ -17,6 +19,7 @@ namespace MapTool.NPC
         private Dictionary<string, NpcResKind> _resKindCache;
         private Dictionary<string, NpcSpriteRes> _spriteResCache;
         private Dictionary<string, NpcSpriteInfo> _spriteInfoCache;
+        private PakManager _pakManager;
 
         public NpcLoader(string clientPath, string serverPath = null)
         {
@@ -26,6 +29,7 @@ namespace MapTool.NPC
             _resKindCache = new Dictionary<string, NpcResKind>(StringComparer.OrdinalIgnoreCase);
             _spriteResCache = new Dictionary<string, NpcSpriteRes>(StringComparer.OrdinalIgnoreCase);
             _spriteInfoCache = new Dictionary<string, NpcSpriteInfo>(StringComparer.OrdinalIgnoreCase);
+            _pakManager = null; // Initialized in LoadMappingFiles
         }
 
         /// <summary>
@@ -41,6 +45,19 @@ namespace MapTool.NPC
             if (_idMapper != null && !string.IsNullOrEmpty(_serverPath))
             {
                 _idMapper.LoadNpcDatabase(_serverPath);
+            }
+
+            // Initialize PAK manager for loading SPR files
+            try
+            {
+                _pakManager = new PakManager(_clientPath);
+                _pakManager.LoadPakFiles();
+            }
+            catch (Exception ex)
+            {
+                DebugLogger.Log($"         ⚠ Warning: Failed to initialize PAK manager: {ex.Message}");
+                DebugLogger.Log($"            Will fall back to disk files only");
+                _pakManager = null;
             }
         }
 
@@ -353,6 +370,67 @@ namespace MapTool.NPC
             // Convert to full path
             string fullPath = Path.Combine(_clientPath, relativePath);
             return fullPath;
+        }
+
+        /// <summary>
+        /// Load sprite data by NPC ID (from PAK or disk)
+        /// This is the main method to use - automatically tries PAK first, then disk
+        /// </summary>
+        public SpriteData LoadSpriteById(int npcId, NpcAction action)
+        {
+            DebugLogger.Log($"                  → LoadSpriteById: ID={npcId}, Action={action}");
+
+            NpcResource resource = GetNpcResourceById(npcId);
+            if (resource == null)
+            {
+                DebugLogger.Log($"                     ✗ ERROR: NPC resource not found for ID {npcId}");
+                return null;
+            }
+
+            string relativePath = resource.GetSprFilePath(action);
+            if (string.IsNullOrEmpty(relativePath))
+            {
+                DebugLogger.Log($"                     ✗ ERROR: SPR file path is empty for action {action}");
+                return null;
+            }
+
+            DebugLogger.Log($"                     SPR path: {relativePath}");
+
+            // Try PAK files first
+            if (_pakManager != null)
+            {
+                try
+                {
+                    byte[] pakData = _pakManager.ReadFile(relativePath);
+                    if (pakData != null)
+                    {
+                        DebugLogger.Log($"                     ✓ Found in PAK ({pakData.Length} bytes)");
+                        return SpriteLoader.LoadFromBytes(pakData, relativePath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    DebugLogger.Log($"                     ⚠ PAK load failed: {ex.Message}");
+                }
+            }
+
+            // Fall back to disk
+            string diskPath = Path.Combine(_clientPath, relativePath);
+            DebugLogger.Log($"                     Trying disk: {diskPath}");
+
+            if (File.Exists(diskPath))
+            {
+                DebugLogger.Log($"                     ✓ Found on disk");
+                return SpriteLoader.Load(diskPath);
+            }
+
+            DebugLogger.Log($"                     ✗ ERROR: SPR file not found in PAK or disk");
+            return null;
+        }
+
+        public void Dispose()
+        {
+            _pakManager?.Dispose();
         }
     }
 }

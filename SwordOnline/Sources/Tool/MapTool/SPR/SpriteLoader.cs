@@ -30,6 +30,23 @@ namespace MapTool.SPR
         }
 
         /// <summary>
+        /// Load SPR from byte array (from PAK file)
+        /// </summary>
+        public static SpriteData LoadFromBytes(byte[] data, string fileName = "")
+        {
+            if (data == null || data.Length == 0)
+            {
+                throw new ArgumentException("SPR data is null or empty");
+            }
+
+            using (MemoryStream ms = new MemoryStream(data))
+            using (BinaryReader reader = new BinaryReader(ms))
+            {
+                return LoadFromStream(reader, fileName);
+            }
+        }
+
+        /// <summary>
         /// Load SPR from stream
         /// </summary>
         public static SpriteData LoadFromStream(BinaryReader reader, string filePath = "")
