@@ -5,6 +5,9 @@ namespace MapTool
         private System.ComponentModel.IContainer components = null;
 
         // Controls
+        private System.Windows.Forms.TabControl tabMain;
+        private System.Windows.Forms.TabPage tabTrap;
+        private System.Windows.Forms.TabPage tabNPC;
         private System.Windows.Forms.Panel mapPanel;
         private System.Windows.Forms.Button btnBrowseFolder;
         private System.Windows.Forms.Button btnLoadMap;
@@ -47,6 +50,9 @@ namespace MapTool
 
         private void InitializeComponent()
         {
+            this.tabMain = new System.Windows.Forms.TabControl();
+            this.tabTrap = new System.Windows.Forms.TabPage();
+            this.tabNPC = new System.Windows.Forms.TabPage();
             this.mapPanel = new System.Windows.Forms.Panel();
             this.btnBrowseFolder = new System.Windows.Forms.Button();
             this.btnLoadMap = new System.Windows.Forms.Button();
@@ -78,6 +84,8 @@ namespace MapTool
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
 
+            this.tabMain.SuspendLayout();
+            this.tabTrap.SuspendLayout();
             this.grpGameFolder.SuspendLayout();
             this.grpMapLoad.SuspendLayout();
             this.grpMapInfo.SuspendLayout();
@@ -345,19 +353,47 @@ namespace MapTool
             this.lblStatus.Text = "Ready";
             this.statusStrip.Items.Add(this.lblStatus);
 
+            // tabMain
+            this.tabMain.Controls.Add(this.tabTrap);
+            this.tabMain.Controls.Add(this.tabNPC);
+            this.tabMain.Location = new System.Drawing.Point(0, 0);
+            this.tabMain.Name = "tabMain";
+            this.tabMain.SelectedIndex = 0;
+            this.tabMain.Size = new System.Drawing.Size(1272, 755);
+            this.tabMain.TabIndex = 0;
+
+            // tabTrap
+            this.tabTrap.BackColor = System.Drawing.SystemColors.Control;
+            this.tabTrap.Controls.Add(this.mapPanel);
+            this.tabTrap.Controls.Add(this.grpGameFolder);
+            this.tabTrap.Controls.Add(this.grpMapLoad);
+            this.tabTrap.Controls.Add(this.grpMapInfo);
+            this.tabTrap.Controls.Add(this.grpCoordinates);
+            this.tabTrap.Controls.Add(this.grpEntries);
+            this.tabTrap.Controls.Add(this.btnZoomIn);
+            this.tabTrap.Controls.Add(this.btnZoomOut);
+            this.tabTrap.Location = new System.Drawing.Point(4, 24);
+            this.tabTrap.Name = "tabTrap";
+            this.tabTrap.Padding = new System.Windows.Forms.Padding(3);
+            this.tabTrap.Size = new System.Drawing.Size(1264, 727);
+            this.tabTrap.TabIndex = 0;
+            this.tabTrap.Text = "Add Trap";
+
+            // tabNPC
+            this.tabNPC.BackColor = System.Drawing.SystemColors.Control;
+            this.tabNPC.Location = new System.Drawing.Point(4, 24);
+            this.tabNPC.Name = "tabNPC";
+            this.tabNPC.Padding = new System.Windows.Forms.Padding(3);
+            this.tabNPC.Size = new System.Drawing.Size(1264, 727);
+            this.tabNPC.TabIndex = 1;
+            this.tabNPC.Text = "Add NPC";
+
             // MainFormSimple
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1272, 777);
+            this.Controls.Add(this.tabMain);
             this.Controls.Add(this.statusStrip);
-            this.Controls.Add(this.btnZoomOut);
-            this.Controls.Add(this.btnZoomIn);
-            this.Controls.Add(this.grpEntries);
-            this.Controls.Add(this.grpCoordinates);
-            this.Controls.Add(this.grpMapInfo);
-            this.Controls.Add(this.grpMapLoad);
-            this.Controls.Add(this.grpGameFolder);
-            this.Controls.Add(this.mapPanel);
             this.Font = new System.Drawing.Font(".VnArial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -365,6 +401,8 @@ namespace MapTool
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Simple Map Tool - Auto Load";
 
+            this.tabMain.ResumeLayout(false);
+            this.tabTrap.ResumeLayout(false);
             this.grpGameFolder.ResumeLayout(false);
             this.grpGameFolder.PerformLayout();
             this.grpMapLoad.ResumeLayout(false);
