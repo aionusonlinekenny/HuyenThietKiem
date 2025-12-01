@@ -102,7 +102,34 @@ namespace MapTool.SPR
             long offsetTableSize = sprite.FrameOffsets.Length * Marshal.SizeOf<SpriteOffset>();
             long frameDataStart = headerSize + paletteSize + offsetTableSize;
 
-            uint posInFrameData = offset.Offset - (uint)frameDataStart;
+            // Debug logging
+            DebugLogger.Log($"                        [DecodeFrame] Frame {frameIndex}:");
+            DebugLogger.Log($"                           offset.Offset = {offset.Offset}");
+            DebugLogger.Log($"                           offset.Length = {offset.Length}");
+            DebugLogger.Log($"                           frameDataStart = {frameDataStart}");
+            DebugLogger.Log($"                           sprite.FrameData.Length = {sprite.FrameData.Length}");
+
+            // Check if offset is already relative to frame data start
+            long posInFrameData;
+            if (offset.Offset >= frameDataStart)
+            {
+                // Offset is from file start - subtract frame data start
+                posInFrameData = offset.Offset - (long)frameDataStart;
+                DebugLogger.Log($"                           Using absolute offset: posInFrameData = {posInFrameData}");
+            }
+            else
+            {
+                // Offset is already relative to frame data section
+                posInFrameData = offset.Offset;
+                DebugLogger.Log($"                           Using relative offset: posInFrameData = {posInFrameData}");
+            }
+
+            if (posInFrameData < 0 || posInFrameData >= sprite.FrameData.Length)
+            {
+                string error = $"Invalid frame offset: posInFrameData={posInFrameData}, FrameData.Length={sprite.FrameData.Length}";
+                DebugLogger.Log($"                           ✗ ERROR: {error}");
+                throw new ArgumentOutOfRangeException(nameof(frameIndex), error);
+            }
 
             using (MemoryStream ms = new MemoryStream(sprite.FrameData))
             using (BinaryReader reader = new BinaryReader(ms))
@@ -111,6 +138,8 @@ namespace MapTool.SPR
 
                 // Read frame header
                 FrameHeader frameHeader = ReadStructure<FrameHeader>(reader);
+
+                DebugLogger.Log($"                           Frame size: {frameHeader.Width}x{frameHeader.Height}");
 
                 // Decode RLE data
                 return DecodeRLE(reader, frameHeader.Width, frameHeader.Height);
