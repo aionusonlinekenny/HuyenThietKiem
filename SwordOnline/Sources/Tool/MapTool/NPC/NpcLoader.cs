@@ -261,11 +261,22 @@ namespace MapTool.NPC
             DebugLogger.Log($"         NPC name from Npcs.txt: '{npcName ?? "(null)"}'");
             if (!string.IsNullOrEmpty(npcName))
             {
-                resource.NpcName = $"{npcName} (ID: {npcId})";
-                DebugLogger.Log($"         Final resource name: '{resource.NpcName}'");
+                resource.NpcName = npcName; // Just the name, no ID suffix
+                DebugLogger.Log($"         NPC name set to: '{resource.NpcName}'");
             }
 
             return resource;
+        }
+
+        /// <summary>
+        /// Find NPC ID by name (partial match)
+        /// </summary>
+        public int? FindNpcIdByName(string searchName)
+        {
+            if (_idMapper == null)
+                return null;
+
+            return _idMapper.FindNpcByName(searchName);
         }
 
         /// <summary>

@@ -146,6 +146,34 @@ namespace MapTool.NPC
         }
 
         /// <summary>
+        /// Find NPC by name (partial match, case-insensitive)
+        /// Returns the first matching NPC ID, or null if not found
+        /// </summary>
+        public int? FindNpcByName(string searchName)
+        {
+            if (string.IsNullOrWhiteSpace(searchName))
+                return null;
+
+            searchName = searchName.Trim();
+
+            // Try exact match first
+            foreach (var kvp in _npcDatabase)
+            {
+                if (kvp.Value.NpcName != null && kvp.Value.NpcName.Equals(searchName, StringComparison.OrdinalIgnoreCase))
+                    return kvp.Key;
+            }
+
+            // Try partial match (contains)
+            foreach (var kvp in _npcDatabase)
+            {
+                if (kvp.Value.NpcName != null && kvp.Value.NpcName.IndexOf(searchName, StringComparison.OrdinalIgnoreCase) >= 0)
+                    return kvp.Key;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Check if NPC ID exists
         /// </summary>
         public bool HasNpc(int npcId)

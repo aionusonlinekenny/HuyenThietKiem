@@ -34,7 +34,7 @@ namespace MapTool
         private NpcResource _currentNpcResource;
         private SpriteData _currentNpcSprite;
         private int _currentAnimationFrame = 0;
-        private float _previewZoom = 2.0f; // Default 2x zoom for preview
+        private float _previewZoom = 1.0f; // Default 1.0x zoom (no zoom)
 
         public MainFormSimple()
         {
@@ -785,24 +785,30 @@ namespace MapTool
             DebugLogger.Log("--------------------------------------------------------------------------------");
             DebugLogger.Log("🎯 LOADING NPC PREVIEW");
 
-            string npcIdText = txtNpcId.Text.Trim();
-            DebugLogger.Log($"   NPC ID input: '{npcIdText}'");
+            string searchText = txtNpcId.Text.Trim();
+            DebugLogger.Log($"   Search input: '{searchText}'");
 
-            if (string.IsNullOrEmpty(npcIdText))
+            if (string.IsNullOrEmpty(searchText))
             {
-                MessageBox.Show("Please enter NPC ID!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                DebugLogger.Log("   ✗ ERROR: NPC ID is empty");
+                MessageBox.Show("Please enter NPC ID or Name!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DebugLogger.Log("   ✗ ERROR: Search text is empty");
                 return;
             }
 
-            if (!int.TryParse(npcIdText, out int npcId))
+            int npcId;
+            // Try parse as number first
+            if (!int.TryParse(searchText, out npcId))
             {
-                MessageBox.Show("Please enter a valid NPC ID (number)!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                DebugLogger.Log($"   ✗ ERROR: Invalid NPC ID format: '{npcIdText}'");
-                return;
+                // Not a number, search by name
+                DebugLogger.Log($"   Not a number, searching by name: '{searchText}'");
+                // Need to initialize loader first to search by name
+                // (will be done below, so we'll defer the search)
+                npcId = -1; // Mark as "search by name"
             }
-
-            DebugLogger.Log($"   Parsed NPC ID: {npcId}");
+            else
+            {
+                DebugLogger.Log($"   Parsed as NPC ID: {npcId}");
+            }
 
             // Get client and server paths
             string clientPath = _gameFolder;
@@ -870,6 +876,23 @@ namespace MapTool
                     DebugLogger.Log("   Using existing NPC Loader instance");
                 }
 
+                // If search was by name, find the NPC ID first
+                if (npcId == -1)
+                {
+                    DebugLogger.Log($"   Searching for NPC by name: '{searchText}'");
+                    int? foundId = _npcLoader.FindNpcIdByName(searchText);
+                    if (foundId == null)
+                    {
+                        MessageBox.Show($"NPC with name '{searchText}' not found!\n\nTry entering the NPC ID instead.",
+                            "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        lblStatus.Text = $"NPC '{searchText}' not found";
+                        DebugLogger.Log($"   ✗ ERROR: No NPC found with name '{searchText}'");
+                        return;
+                    }
+                    npcId = foundId.Value;
+                    DebugLogger.Log($"   ✓ Found NPC ID {npcId} for name '{searchText}'");
+                }
+
                 // Load NPC resource by ID
                 DebugLogger.Log($"   Calling GetNpcResourceById({npcId})...");
                 _currentNpcResource = _npcLoader.GetNpcResourceById(npcId);
@@ -899,21 +922,24 @@ namespace MapTool
 
                 // Render first frame to preview
                 _currentAnimationFrame = 0;
-                _previewZoom = 2.0f; // Reset zoom to default
+                _previewZoom = 1.0f; // Reset zoom to 1.0x (no zoom)
                 if (_currentNpcSprite.FrameCount > 0)
                 {
                     RenderNpcPreviewFrame(0);
                 }
 
-                // Update info labels - show ResType and NPC name
-                string npcDisplayName = _currentNpcResource.ResKind?.CharacterName ?? "Unknown";
-                if (!string.IsNullOrEmpty(_currentNpcResource.NpcName) && _currentNpcResource.NpcName != "0")
-                {
-                    npcDisplayName = $"{_currentNpcResource.ResKind?.CharacterName} ({_currentNpcResource.NpcName})";
-                }
-                lblNpcName.Text = $"ID {npcId}: {npcDisplayName} - {_currentNpcSprite.FrameCount} frames";
+                // Update info labels - show NPC Name first, then ResType
+                string npcName = _currentNpcResource.NpcName;
+                string resType = _currentNpcResource.ResKind?.CharacterName ?? "Unknown";
+
+                // Display format: "Name" (ResType) or just ResType if no name
+                string displayName = (!string.IsNullOrEmpty(npcName) && npcName != "0")
+                    ? $"{npcName} ({resType})"
+                    : resType;
+
+                lblNpcName.Text = $"ID {npcId}: {displayName} - {_currentNpcSprite.FrameCount} frames";
                 lblFrameInfo.Text = $"Frame: 1 / {_currentNpcSprite.FrameCount}";
-                lblStatus.Text = $"Loaded NPC ID {npcId}: {npcDisplayName}";
+                lblStatus.Text = $"Loaded NPC ID {npcId}: {displayName}";
 
                 // Enable play button if there are multiple frames
                 btnPlayAnimation.Enabled = _currentNpcSprite.FrameCount > 1;
