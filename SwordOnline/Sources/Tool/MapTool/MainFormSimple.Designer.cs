@@ -489,10 +489,12 @@ namespace MapTool
             this.btnRemoveLastNpc.Text = "Remove Last";
             this.btnRemoveLastNpc.UseVisualStyleBackColor = true;
             this.btnRemoveLastNpc.Click += new System.EventHandler(this.btnRemoveLastNpc_Click);
+            this.btnRemoveLastNpc.Visible = false;  // Hidden - overlaps with Save button
 
             this.btnClearNpcs.Location = new System.Drawing.Point(165, 245);
             this.btnClearNpcs.Name = "btnClearNpcs";
             this.btnClearNpcs.Size = new System.Drawing.Size(155, 25);
+            this.btnClearNpcs.Visible = false;  // Hidden - overlaps with Save button
             this.btnClearNpcs.TabIndex = 4;
             this.btnClearNpcs.Text = "Clear All";
             this.btnClearNpcs.UseVisualStyleBackColor = true;

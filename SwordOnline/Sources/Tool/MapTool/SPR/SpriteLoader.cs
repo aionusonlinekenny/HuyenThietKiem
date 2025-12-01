@@ -96,38 +96,13 @@ namespace MapTool.SPR
 
             SpriteOffset offset = sprite.FrameOffsets[frameIndex];
 
-            // Calculate position in frame data (offsets are from file start)
-            long headerSize = Marshal.SizeOf<SprHeader>();
-            long paletteSize = sprite.Palette.Length * Marshal.SizeOf<Palette24>();
-            long offsetTableSize = sprite.FrameOffsets.Length * Marshal.SizeOf<SpriteOffset>();
-            long frameDataStart = headerSize + paletteSize + offsetTableSize;
-
-            // Debug logging
-            DebugLogger.Log($"                        [DecodeFrame] Frame {frameIndex}:");
-            DebugLogger.Log($"                           offset.Offset = {offset.Offset}");
-            DebugLogger.Log($"                           offset.Length = {offset.Length}");
-            DebugLogger.Log($"                           frameDataStart = {frameDataStart}");
-            DebugLogger.Log($"                           sprite.FrameData.Length = {sprite.FrameData.Length}");
-
-            // Check if offset is already relative to frame data start
-            long posInFrameData;
-            if (offset.Offset >= frameDataStart)
-            {
-                // Offset is from file start - subtract frame data start
-                posInFrameData = offset.Offset - (long)frameDataStart;
-                DebugLogger.Log($"                           Using absolute offset: posInFrameData = {posInFrameData}");
-            }
-            else
-            {
-                // Offset is already relative to frame data section
-                posInFrameData = offset.Offset;
-                DebugLogger.Log($"                           Using relative offset: posInFrameData = {posInFrameData}");
-            }
+            // All offsets in SPR files are RELATIVE to the start of frame data section
+            // No conversion needed - use offset directly
+            long posInFrameData = offset.Offset;
 
             if (posInFrameData < 0 || posInFrameData >= sprite.FrameData.Length)
             {
-                string error = $"Invalid frame offset: posInFrameData={posInFrameData}, FrameData.Length={sprite.FrameData.Length}";
-                DebugLogger.Log($"                           ✗ ERROR: {error}");
+                string error = $"Invalid frame offset: offset={offset.Offset}, FrameData.Length={sprite.FrameData.Length}";
                 throw new ArgumentOutOfRangeException(nameof(frameIndex), error);
             }
 
@@ -211,23 +186,9 @@ namespace MapTool.SPR
 
             // Get frame dimensions from frame header
             SpriteOffset offset = sprite.FrameOffsets[frameIndex];
-            long headerSize = Marshal.SizeOf<SprHeader>();
-            long paletteSize = sprite.Palette.Length * Marshal.SizeOf<Palette24>();
-            long offsetTableSize = sprite.FrameOffsets.Length * Marshal.SizeOf<SpriteOffset>();
-            long frameDataStart = headerSize + paletteSize + offsetTableSize;
 
-            // Check if offset is already relative to frame data start
-            long posInFrameData;
-            if (offset.Offset >= frameDataStart)
-            {
-                // Offset is from file start - subtract frame data start
-                posInFrameData = offset.Offset - (long)frameDataStart;
-            }
-            else
-            {
-                // Offset is already relative to frame data section
-                posInFrameData = offset.Offset;
-            }
+            // All offsets are relative to frame data start
+            long posInFrameData = offset.Offset;
 
             FrameHeader frameHeader;
             using (MemoryStream ms = new MemoryStream(sprite.FrameData))
