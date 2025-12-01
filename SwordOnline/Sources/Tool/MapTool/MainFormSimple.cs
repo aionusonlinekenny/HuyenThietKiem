@@ -906,10 +906,10 @@ namespace MapTool
                 }
 
                 // Update info labels - show ResType and NPC name
-                string npcDisplayName = _currentNpcResource.ResType;
+                string npcDisplayName = _currentNpcResource.ResKind?.CharacterName ?? "Unknown";
                 if (!string.IsNullOrEmpty(_currentNpcResource.NpcName) && _currentNpcResource.NpcName != "0")
                 {
-                    npcDisplayName = $"{_currentNpcResource.ResType} ({_currentNpcResource.NpcName})";
+                    npcDisplayName = $"{_currentNpcResource.ResKind?.CharacterName} ({_currentNpcResource.NpcName})";
                 }
                 lblNpcName.Text = $"ID {npcId}: {npcDisplayName} - {_currentNpcSprite.FrameCount} frames";
                 lblFrameInfo.Text = $"Frame: 1 / {_currentNpcSprite.FrameCount}";

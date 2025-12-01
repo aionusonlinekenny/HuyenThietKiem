@@ -130,11 +130,9 @@ namespace MapTool.SPR
         private static byte[] DecodeRLE(BinaryReader reader, int width, int height)
         {
             byte[] pixels = new byte[width * height];
-            int pixelIndex = 0;
-            int totalPixels = width * height;
 
             // Initialize all pixels to 0 (transparent)
-            for (int i = 0; i < totalPixels; i++)
+            for (int i = 0; i < pixels.Length; i++)
             {
                 pixels[i] = 0;
             }
