@@ -399,27 +399,30 @@ namespace MapTool
                         return;
                     }
 
-                    string npcName = txtNpcId.Text.Trim();
-                    if (string.IsNullOrEmpty(npcName))
+                    string npcIdText = txtNpcId.Text.Trim();
+                    if (string.IsNullOrEmpty(npcIdText) || !int.TryParse(npcIdText, out int npcId))
                     {
-                        MessageBox.Show("Please enter NPC name!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Please enter a valid NPC ID!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
                     // Add NPC at selected position
                     _npcExporter.AddEntry(
-                        npcId: _currentNpcResource.NpcID,
+                        npcId: npcId,
                         mapId: _currentMap.MapId,
                         posX: _selectedCoordinate.Value.WorldX,
                         posY: _selectedCoordinate.Value.WorldY,
                         scriptFile: "",  // Empty script for NPCs
-                        name: npcName,
+                        name: _currentNpcResource.NpcName ?? $"NPC_{npcId}",
                         isLoad: 1
                     );
 
                     UpdateNpcList();
-                    lblStatus.Text = $"Added NPC '{npcName}' at World({_selectedCoordinate.Value.WorldX},{_selectedCoordinate.Value.WorldY})";
-                    DebugLogger.Log($"[NPC Added] {npcName} at World({_selectedCoordinate.Value.WorldX},{_selectedCoordinate.Value.WorldY})");
+                    lblStatus.Text = $"Added NPC ID {npcId} ({_currentNpcResource.NpcName}) at World({_selectedCoordinate.Value.WorldX},{_selectedCoordinate.Value.WorldY})";
+                    DebugLogger.Log($"[NPC Added] ID: {npcId}, Name: {_currentNpcResource.NpcName}, Pos: World({_selectedCoordinate.Value.WorldX},{_selectedCoordinate.Value.WorldY})");
+
+                    // Trigger map redraw to show new NPC
+                    mapPanel.Invalidate();
                 }
             }
         }
@@ -772,15 +775,23 @@ namespace MapTool
         // Load NPC preview button
         private void btnLoadNpcPreview_Click(object sender, EventArgs e)
         {
-            string npcName = txtNpcId.Text.Trim();
-            if (string.IsNullOrEmpty(npcName))
+            string npcIdText = txtNpcId.Text.Trim();
+            if (string.IsNullOrEmpty(npcIdText))
             {
-                MessageBox.Show("Please enter NPC name!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please enter NPC ID!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Check if we have client folder set
+            if (!int.TryParse(npcIdText, out int npcId))
+            {
+                MessageBox.Show("Please enter a valid NPC ID (number)!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Get client and server paths
             string clientPath = _gameFolder;
+            string serverPath = _gameFolder;
+
             if (_isServerMode)
             {
                 // If in server mode, try to find client folder
@@ -797,6 +808,22 @@ namespace MapTool
                     return;
                 }
             }
+            else
+            {
+                // If in client mode, try to find server folder
+                DirectoryInfo clientDir = new DirectoryInfo(_gameFolder);
+                string possibleServerPath = Path.Combine(clientDir.Parent.FullName, "Server");
+                if (Directory.Exists(possibleServerPath))
+                {
+                    serverPath = possibleServerPath;
+                }
+                else
+                {
+                    MessageBox.Show("Cannot find Server folder!\n\nNpcs.txt is in Server folder. Please make sure both Client and Server folders are accessible.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
 
             try
             {
@@ -806,17 +833,19 @@ namespace MapTool
                 // Initialize NPC loader if needed
                 if (_npcLoader == null)
                 {
-                    _npcLoader = new NpcLoader(clientPath);
+                    _npcLoader = new NpcLoader(clientPath, serverPath);
                     _npcLoader.LoadMappingFiles();
-                    DebugLogger.Log($"NPC Loader initialized with client path: {clientPath}");
+                    DebugLogger.Log($"NPC Loader initialized");
+                    DebugLogger.Log($"  Client path: {clientPath}");
+                    DebugLogger.Log($"  Server path: {serverPath}");
                 }
 
-                // Load NPC resource
-                _currentNpcResource = _npcLoader.GetNpcResource(npcName);
+                // Load NPC resource by ID
+                _currentNpcResource = _npcLoader.GetNpcResourceById(npcId);
                 if (_currentNpcResource == null)
                 {
-                    MessageBox.Show($"NPC '{npcName}' not found in NpcResKind.txt!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    lblStatus.Text = $"NPC '{npcName}' not found";
+                    MessageBox.Show($"NPC ID {npcId} not found in Npcs.txt!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    lblStatus.Text = $"NPC ID {npcId} not found";
                     return;
                 }
 
@@ -824,10 +853,11 @@ namespace MapTool
                 NpcAction action = (NpcAction)Enum.Parse(typeof(NpcAction), cmbNpcAction.SelectedItem.ToString());
 
                 // Get SPR file path
-                string sprFilePath = _npcLoader.GetSprFilePath(npcName, action);
+                string sprFilePath = _npcLoader.GetSprFilePathById(npcId, action);
                 if (string.IsNullOrEmpty(sprFilePath) || !File.Exists(sprFilePath))
                 {
-                    MessageBox.Show($"SPR file not found:\n{sprFilePath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"SPR file not found:\n{sprFilePath}\n\nNPC: {_currentNpcResource.NpcName}",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     lblStatus.Text = $"SPR file not found";
                     return;
                 }
@@ -843,16 +873,16 @@ namespace MapTool
                 }
 
                 // Update info label
-                lblNpcName.Text = $"{npcName} - {action} ({_currentNpcSprite.FrameCount} frames)";
-                lblStatus.Text = $"Loaded NPC: {npcName}";
+                lblNpcName.Text = $"{_currentNpcResource.NpcName} - {action} ({_currentNpcSprite.FrameCount} frames)";
+                lblStatus.Text = $"Loaded NPC ID {npcId}: {_currentNpcResource.NpcName}";
 
-                DebugLogger.Log($"[NPC Loaded] Name: {npcName}, Action: {action}, Frames: {_currentNpcSprite.FrameCount}, File: {sprFilePath}");
+                DebugLogger.Log($"[NPC Loaded] ID: {npcId}, Name: {_currentNpcResource.NpcName}, Action: {action}, Frames: {_currentNpcSprite.FrameCount}");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to load NPC:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 lblStatus.Text = "Failed to load NPC";
-                DebugLogger.Log($"ERROR loading NPC '{npcName}': {ex}");
+                DebugLogger.Log($"ERROR loading NPC ID {npcId}: {ex}");
             }
             finally
             {
@@ -860,13 +890,89 @@ namespace MapTool
             }
         }
 
+        // Load NPCs from server button
+        private void btnLoadNpcsFromServer_Click(object sender, EventArgs e)
+        {
+            if (_currentMap == null)
+            {
+                MessageBox.Show("Please load a map first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Ask user for Npc_Load.txt file
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                dialog.FileName = "Npc_Load.txt";
+                dialog.Title = "Load NPCs from Server";
+
+                // Try to default to server/library/maps folder
+                string defaultPath = Path.Combine(_gameFolder, "library", "maps", "Npc_Load.txt");
+                if (File.Exists(defaultPath))
+                {
+                    dialog.InitialDirectory = Path.GetDirectoryName(defaultPath);
+                    dialog.FileName = "Npc_Load.txt";
+                }
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        Cursor = Cursors.WaitCursor;
+
+                        // Import NPCs
+                        _npcExporter.ImportFromFile(dialog.FileName);
+
+                        // Filter for current map
+                        var mapNpcs = _npcExporter.GetEntriesForMap(_currentMap.MapId);
+
+                        // Update list
+                        UpdateNpcList();
+
+                        MessageBox.Show($"Loaded {_npcExporter.GetEntries().Count} NPCs total\n" +
+                                        $"{mapNpcs.Count} NPCs for map {_currentMap.MapId}",
+                            "NPCs Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        lblStatus.Text = $"Loaded {mapNpcs.Count} NPCs for map {_currentMap.MapId}";
+                        DebugLogger.Log($"[NPC Import] Loaded {_npcExporter.GetEntries().Count} NPCs, {mapNpcs.Count} for map {_currentMap.MapId}");
+
+                        // Trigger map redraw to show NPC positions
+                        mapPanel.Invalidate();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to load NPCs:\n{ex.Message}", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        DebugLogger.Log($"ERROR importing NPCs: {ex}");
+                    }
+                    finally
+                    {
+                        Cursor = Cursors.Default;
+                    }
+                }
+            }
+        }
+
         // Update NPC entry list
         private void UpdateNpcList()
         {
             lstNpcEntries.Items.Clear();
-            foreach (var entry in _npcExporter.GetEntries())
+
+            // Show only NPCs for current map
+            if (_currentMap != null)
             {
-                lstNpcEntries.Items.Add(entry);
+                var mapNpcs = _npcExporter.GetEntriesForMap(_currentMap.MapId);
+                foreach (var entry in mapNpcs)
+                {
+                    lstNpcEntries.Items.Add(entry);
+                }
+            }
+            else
+            {
+                foreach (var entry in _npcExporter.GetEntries())
+                {
+                    lstNpcEntries.Items.Add(entry);
+                }
             }
         }
 
