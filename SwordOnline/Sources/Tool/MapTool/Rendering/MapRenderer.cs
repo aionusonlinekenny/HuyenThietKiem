@@ -74,6 +74,15 @@ namespace MapTool.Rendering
         public void SetNpcMarkers(List<NpcEntry> npcs)
         {
             _npcMarkers = npcs ?? new List<NpcEntry>();
+
+            // Debug logging
+            DebugLogger.Log($"[MapRenderer] SetNpcMarkers: {_npcMarkers.Count} NPCs");
+            foreach (var npc in _npcMarkers)
+            {
+                int mapX = npc.PosX / MapConstants.MAP_SCALE_H;
+                int mapY = npc.PosY / MapConstants.MAP_SCALE_V;
+                DebugLogger.Log($"   NPC {npc.NpcID}: World({npc.PosX},{npc.PosY}) → Map({mapX},{mapY})");
+            }
         }
 
         /// <summary>
@@ -210,12 +219,19 @@ namespace MapTool.Rendering
 
             foreach (var npc in _npcMarkers)
             {
-                // Convert world coordinates to screen coordinates
-                int screenX = npc.PosX - _viewOffsetX;
-                int screenY = npc.PosY - _viewOffsetY;
+                // PosX/PosY from Npc_Load.txt are in WORLD coordinates (logic coordinates)
+                // Need to convert to MAP coordinates (24.jpg pixel coordinates)
+                // WorldX → MapX: divide by MAP_SCALE_H (16)
+                // WorldY → MapY: divide by MAP_SCALE_V (32)
+                int mapX = npc.PosX / MapConstants.MAP_SCALE_H;
+                int mapY = npc.PosY / MapConstants.MAP_SCALE_V;
 
-                // Draw NPC marker as a circle (6 pixel diameter)
-                int markerSize = 6;
+                // Convert MAP coordinates to screen coordinates
+                int screenX = mapX - _viewOffsetX;
+                int screenY = mapY - _viewOffsetY;
+
+                // Draw NPC marker as a larger circle (12 pixel diameter for visibility)
+                int markerSize = 12;
                 Rectangle markerRect = new Rectangle(
                     screenX - markerSize / 2,
                     screenY - markerSize / 2,
@@ -225,10 +241,27 @@ namespace MapTool.Rendering
 
                 // Draw filled circle with border
                 using (SolidBrush brush = new SolidBrush(_npcColor))
-                using (Pen pen = new Pen(Color.White, 1))
+                using (Pen pen = new Pen(Color.White, 2))
                 {
                     g.FillEllipse(brush, markerRect);
                     g.DrawEllipse(pen, markerRect);
+                }
+
+                // Debug: Draw NPC ID text next to marker
+                using (Font font = new Font("Arial", 8))
+                using (SolidBrush textBrush = new SolidBrush(Color.White))
+                using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, 0, 0, 0)))
+                {
+                    string npcText = $"NPC {npc.NpcID}";
+                    SizeF textSize = g.MeasureString(npcText, font);
+                    Rectangle textBg = new Rectangle(
+                        screenX + markerSize / 2 + 2,
+                        screenY - (int)textSize.Height / 2,
+                        (int)textSize.Width + 4,
+                        (int)textSize.Height
+                    );
+                    g.FillRectangle(bgBrush, textBg);
+                    g.DrawString(npcText, font, textBrush, screenX + markerSize / 2 + 4, screenY - textSize.Height / 2);
                 }
             }
         }
