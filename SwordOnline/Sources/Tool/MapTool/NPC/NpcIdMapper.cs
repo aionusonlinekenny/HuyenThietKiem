@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using MapTool.Utils;
 
 namespace MapTool.NPC
 {
@@ -34,8 +35,11 @@ namespace MapTool.NPC
         public void LoadNpcDatabase(string serverPath)
         {
             string npcsFile = Path.Combine(serverPath, "Settings", "Npcs.txt");
+            DebugLogger.Log($"         Loading NPC database from: {npcsFile}");
+
             if (!File.Exists(npcsFile))
             {
+                DebugLogger.Log($"         ✗ ERROR: Npcs.txt not found at: {npcsFile}");
                 throw new FileNotFoundException($"Npcs.txt not found at: {npcsFile}");
             }
 
@@ -45,11 +49,14 @@ namespace MapTool.NPC
             Encoding gb2312 = Encoding.GetEncoding("GB2312");
             string[] lines = File.ReadAllLines(npcsFile, gb2312);
 
+            DebugLogger.Log($"         Total lines in file: {lines.Length}");
+
             // Line 1 is header, Line 2+ are NPC data
             // lines[0] = line 1 (header)
             // lines[1] = line 2 → NPC ID 1
             // lines[2] = line 3 → NPC ID 2
             // lines[49] = line 50 → NPC ID 49
+            int loadedCount = 0;
             for (int i = 1; i < lines.Length; i++)
             {
                 string line = lines[i].Trim();
@@ -73,9 +80,20 @@ namespace MapTool.NPC
                 };
 
                 _npcDatabase[npcId] = info;
+                loadedCount++;
+
+                // Log first 5 and last 5 NPCs for verification
+                if (loadedCount <= 5 || i >= lines.Length - 5)
+                {
+                    DebugLogger.Log($"         [Line {i + 1}] ID={npcId}, Name='{info.NpcName}', ResType='{info.NpcResType}'");
+                }
+                else if (loadedCount == 6)
+                {
+                    DebugLogger.Log($"         ... ({lines.Length - 10} more NPCs) ...");
+                }
             }
 
-            Console.WriteLine($"Loaded {_npcDatabase.Count} NPCs from Npcs.txt");
+            DebugLogger.Log($"         ✓ Loaded {_npcDatabase.Count} NPCs from Npcs.txt");
         }
 
         /// <summary>
@@ -95,7 +113,27 @@ namespace MapTool.NPC
         /// </summary>
         public string GetNpcResType(int npcId)
         {
+            DebugLogger.Log($"            → GetNpcResType: Looking up ID {npcId} in database");
             NpcInfo info = GetNpcInfo(npcId);
+            if (info == null)
+            {
+                DebugLogger.Log($"               ✗ ERROR: NPC ID {npcId} not found in database");
+                DebugLogger.Log($"               Database contains {_npcDatabase.Count} NPCs");
+                if (_npcDatabase.Count > 0)
+                {
+                    // Show a few sample IDs for debugging
+                    int minId = int.MaxValue;
+                    int maxId = int.MinValue;
+                    foreach (int id in _npcDatabase.Keys)
+                    {
+                        if (id < minId) minId = id;
+                        if (id > maxId) maxId = id;
+                    }
+                    DebugLogger.Log($"               ID range: {minId} to {maxId}");
+                }
+                return null;
+            }
+            DebugLogger.Log($"               ✓ Found: ID={info.NpcId}, Name='{info.NpcName}', ResType='{info.NpcResType}'");
             return info?.NpcResType;
         }
 

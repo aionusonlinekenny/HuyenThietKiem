@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using MapTool.Utils;
 
 namespace MapTool.NPC
 {
@@ -186,27 +187,46 @@ namespace MapTool.NPC
         /// </summary>
         public NpcResource GetNpcResourceById(int npcId)
         {
+            DebugLogger.Log($"      → GetNpcResourceById: Looking up NPC ID {npcId}");
+
             if (_idMapper == null)
             {
+                DebugLogger.Log($"         ✗ ERROR: NPC ID mapper is null (not initialized)");
                 throw new InvalidOperationException("NPC ID mapper not initialized. Need server path.");
             }
 
+            DebugLogger.Log($"         NPC database count: {_idMapper.Count} NPCs loaded");
+
             // Get NpcResType from ID (e.g., ID 49 → "enemy003")
             string npcResType = _idMapper.GetNpcResType(npcId);
+            DebugLogger.Log($"         NpcResType for ID {npcId}: '{npcResType ?? "(null)"}'");
+
             if (string.IsNullOrEmpty(npcResType))
+            {
+                DebugLogger.Log($"         ✗ ERROR: NpcResType is null or empty for ID {npcId}");
                 return null;
+            }
 
             // Get resource using NpcResType
+            DebugLogger.Log($"         Calling GetNpcResource('{npcResType}')...");
             NpcResource resource = GetNpcResource(npcResType);
-            if (resource != null)
+
+            if (resource == null)
             {
-                resource.NpcID = npcId;
-                // Also set the display name from Npcs.txt
-                string npcName = _idMapper.GetNpcName(npcId);
-                if (!string.IsNullOrEmpty(npcName))
-                {
-                    resource.NpcName = $"{npcName} (ID: {npcId})";
-                }
+                DebugLogger.Log($"         ✗ ERROR: GetNpcResource returned null for '{npcResType}'");
+                return null;
+            }
+
+            DebugLogger.Log($"         ✓ NpcResource found for '{npcResType}'");
+
+            resource.NpcID = npcId;
+            // Also set the display name from Npcs.txt
+            string npcName = _idMapper.GetNpcName(npcId);
+            DebugLogger.Log($"         NPC name from Npcs.txt: '{npcName ?? "(null)"}'");
+            if (!string.IsNullOrEmpty(npcName))
+            {
+                resource.NpcName = $"{npcName} (ID: {npcId})";
+                DebugLogger.Log($"         Final resource name: '{resource.NpcName}'");
             }
 
             return resource;

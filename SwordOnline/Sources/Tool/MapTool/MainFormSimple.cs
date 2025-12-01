@@ -780,36 +780,51 @@ namespace MapTool
         // Load NPC preview button
         private void btnLoadNpcPreview_Click(object sender, EventArgs e)
         {
+            DebugLogger.Log("--------------------------------------------------------------------------------");
+            DebugLogger.Log("🎯 LOADING NPC PREVIEW");
+
             string npcIdText = txtNpcId.Text.Trim();
+            DebugLogger.Log($"   NPC ID input: '{npcIdText}'");
+
             if (string.IsNullOrEmpty(npcIdText))
             {
                 MessageBox.Show("Please enter NPC ID!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DebugLogger.Log("   ✗ ERROR: NPC ID is empty");
                 return;
             }
 
             if (!int.TryParse(npcIdText, out int npcId))
             {
                 MessageBox.Show("Please enter a valid NPC ID (number)!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DebugLogger.Log($"   ✗ ERROR: Invalid NPC ID format: '{npcIdText}'");
                 return;
             }
+
+            DebugLogger.Log($"   Parsed NPC ID: {npcId}");
 
             // Get client and server paths
             string clientPath = _gameFolder;
             string serverPath = _gameFolder;
+
+            DebugLogger.Log($"   Game folder: {_gameFolder}");
+            DebugLogger.Log($"   Mode: {(_isServerMode ? "Server" : "Client")}");
 
             if (_isServerMode)
             {
                 // If in server mode, try to find client folder
                 DirectoryInfo serverDir = new DirectoryInfo(_gameFolder);
                 string possibleClientPath = Path.Combine(serverDir.Parent.FullName, "Client");
+                DebugLogger.Log($"   Looking for Client folder: {possibleClientPath}");
                 if (Directory.Exists(possibleClientPath))
                 {
                     clientPath = possibleClientPath;
+                    DebugLogger.Log($"   ✓ Found Client folder: {clientPath}");
                 }
                 else
                 {
                     MessageBox.Show("Cannot find Client folder!\n\nNPC resources are in Client folder. Please select Client folder or switch to Client mode.",
                         "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DebugLogger.Log($"   ✗ ERROR: Client folder not found at {possibleClientPath}");
                     return;
                 }
             }
@@ -818,14 +833,17 @@ namespace MapTool
                 // If in client mode, try to find server folder
                 DirectoryInfo clientDir = new DirectoryInfo(_gameFolder);
                 string possibleServerPath = Path.Combine(clientDir.Parent.FullName, "Server");
+                DebugLogger.Log($"   Looking for Server folder: {possibleServerPath}");
                 if (Directory.Exists(possibleServerPath))
                 {
                     serverPath = possibleServerPath;
+                    DebugLogger.Log($"   ✓ Found Server folder: {serverPath}");
                 }
                 else
                 {
                     MessageBox.Show("Cannot find Server folder!\n\nNpcs.txt is in Server folder. Please make sure both Client and Server folders are accessible.",
                         "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DebugLogger.Log($"   ✗ ERROR: Server folder not found at {possibleServerPath}");
                     return;
                 }
             }
@@ -838,21 +856,30 @@ namespace MapTool
                 // Initialize NPC loader if needed
                 if (_npcLoader == null)
                 {
+                    DebugLogger.Log("   Initializing NPC Loader...");
                     _npcLoader = new NpcLoader(clientPath, serverPath);
                     _npcLoader.LoadMappingFiles();
-                    DebugLogger.Log($"NPC Loader initialized");
-                    DebugLogger.Log($"  Client path: {clientPath}");
-                    DebugLogger.Log($"  Server path: {serverPath}");
+                    DebugLogger.Log($"   ✓ NPC Loader initialized");
+                    DebugLogger.Log($"      Client path: {clientPath}");
+                    DebugLogger.Log($"      Server path: {serverPath}");
+                }
+                else
+                {
+                    DebugLogger.Log("   Using existing NPC Loader instance");
                 }
 
                 // Load NPC resource by ID
+                DebugLogger.Log($"   Calling GetNpcResourceById({npcId})...");
                 _currentNpcResource = _npcLoader.GetNpcResourceById(npcId);
                 if (_currentNpcResource == null)
                 {
                     MessageBox.Show($"NPC ID {npcId} not found in Npcs.txt!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     lblStatus.Text = $"NPC ID {npcId} not found";
+                    DebugLogger.Log($"   ✗ ERROR: GetNpcResourceById returned null for ID {npcId}");
                     return;
                 }
+
+                DebugLogger.Log($"   ✓ NPC resource loaded: {_currentNpcResource.NpcName}");
 
                 // Auto-load default sprite (NormalStand)
                 NpcAction action = NpcAction.NormalStand;
