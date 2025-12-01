@@ -416,13 +416,18 @@ namespace MapTool
                     }
 
                     // Add NPC at selected position
+                    // Get NPC name - fallback to NPC_{ID} if name is null, empty, or "0"
+                    string npcName = (!string.IsNullOrEmpty(_currentNpcResource.NpcName) && _currentNpcResource.NpcName != "0")
+                        ? _currentNpcResource.NpcName
+                        : $"NPC_{npcId}";
+
                     _npcExporter.AddEntry(
                         npcId: npcId,
                         mapId: _currentMap.MapId,
                         posX: _selectedCoordinate.Value.WorldX,
                         posY: _selectedCoordinate.Value.WorldY,
                         scriptFile: "",  // Empty script for NPCs
-                        name: _currentNpcResource.NpcName ?? $"NPC_{npcId}",
+                        name: npcName,
                         level: npcLevel,
                         isLoad: 1
                     );
