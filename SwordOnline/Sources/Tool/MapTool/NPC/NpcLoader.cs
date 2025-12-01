@@ -46,19 +46,28 @@ namespace MapTool.NPC
 
         /// <summary>
         /// Load NpcResKind.txt
-        /// Format: CharacterName | CharacterType | empty | empty | ResFilePath
+        /// Format: CharacterName | CharacterType | ResFilePath | [optional columns for SpecialNpc]
+        /// Two formats:
+        /// - NormalNpc: CharacterName [TAB] CharacterType [TAB] ResFilePath
+        /// - SpecialNpc: CharacterName [TAB] CharacterType [TAB] ResFilePath [TAB] PartFileName [TAB] ...
         /// </summary>
         private void LoadNpcResKind()
         {
             string filePath = Path.Combine(_clientPath, "Settings", "NpcRes", "NpcResKind.txt");
+            DebugLogger.Log($"         Loading NpcResKind.txt from: {filePath}");
+
             if (!File.Exists(filePath))
             {
+                DebugLogger.Log($"         ✗ ERROR: NpcResKind.txt not found at: {filePath}");
                 throw new FileNotFoundException($"NpcResKind.txt not found: {filePath}");
             }
 
             _resKindCache.Clear();
 
             string[] lines = File.ReadAllLines(filePath, Encoding.GetEncoding("GB2312"));
+            DebugLogger.Log($"         Total lines in NpcResKind.txt: {lines.Length}");
+
+            int loadedCount = 0;
             foreach (string line in lines)
             {
                 string trimmed = line.Trim();
@@ -66,22 +75,33 @@ namespace MapTool.NPC
                     continue;
 
                 string[] parts = trimmed.Split('\t');
-                if (parts.Length >= 5)
+
+                // Need at least 3 columns: CharacterName, CharacterType, ResFilePath
+                if (parts.Length >= 3)
                 {
                     string charName = parts[0].Trim();
-                    if (string.IsNullOrEmpty(charName))
+                    if (string.IsNullOrEmpty(charName) || charName.Equals("CharacterName", StringComparison.OrdinalIgnoreCase))
                         continue;
 
                     NpcResKind resKind = new NpcResKind
                     {
                         CharacterName = charName,
                         CharacterType = parts[1].Trim(),
-                        ResFilePath = parts[4].Trim()
+                        ResFilePath = parts[2].Trim()  // ResFilePath is column 3 (index 2)
                     };
 
                     _resKindCache[charName] = resKind;
+                    loadedCount++;
+
+                    // Log first 5 for verification
+                    if (loadedCount <= 5)
+                    {
+                        DebugLogger.Log($"         [NpcResKind] Name='{resKind.CharacterName}', Type='{resKind.CharacterType}', Path='{resKind.ResFilePath}'");
+                    }
                 }
             }
+
+            DebugLogger.Log($"         ✓ Loaded {_resKindCache.Count} NPC resource kinds");
         }
 
         /// <summary>
@@ -236,20 +256,47 @@ namespace MapTool.NPC
         /// </summary>
         public NpcResource GetNpcResource(string npcName)
         {
-            if (string.IsNullOrEmpty(npcName))
-                return null;
+            DebugLogger.Log($"               → GetNpcResource: Looking up '{npcName}'");
 
-            if (!_resKindCache.ContainsKey(npcName))
+            if (string.IsNullOrEmpty(npcName))
+            {
+                DebugLogger.Log($"                  ✗ ERROR: npcName is null or empty");
                 return null;
+            }
+
+            DebugLogger.Log($"                  ResKind cache contains {_resKindCache.Count} entries");
+            if (!_resKindCache.ContainsKey(npcName))
+            {
+                DebugLogger.Log($"                  ✗ ERROR: '{npcName}' not found in ResKind cache");
+                // Show a few sample entries for debugging
+                if (_resKindCache.Count > 0)
+                {
+                    int count = 0;
+                    DebugLogger.Log($"                  Sample entries in cache:");
+                    foreach (var key in _resKindCache.Keys)
+                    {
+                        DebugLogger.Log($"                     - '{key}'");
+                        if (++count >= 5) break;
+                    }
+                }
+                return null;
+            }
+
+            DebugLogger.Log($"                  ✓ Found '{npcName}' in ResKind cache");
+
+            bool hasSpriteRes = _spriteResCache.ContainsKey(npcName);
+            bool hasSpriteInfo = _spriteInfoCache.ContainsKey(npcName);
+            DebugLogger.Log($"                  Has SpriteRes: {hasSpriteRes}, Has SpriteInfo: {hasSpriteInfo}");
 
             NpcResource resource = new NpcResource
             {
                 NpcName = npcName,
                 ResKind = _resKindCache[npcName],
-                SpriteRes = _spriteResCache.ContainsKey(npcName) ? _spriteResCache[npcName] : null,
-                SpriteInfo = _spriteInfoCache.ContainsKey(npcName) ? _spriteInfoCache[npcName] : null
+                SpriteRes = hasSpriteRes ? _spriteResCache[npcName] : null,
+                SpriteInfo = hasSpriteInfo ? _spriteInfoCache[npcName] : null
             };
 
+            DebugLogger.Log($"                  ✓ Created NpcResource for '{npcName}'");
             return resource;
         }
 
