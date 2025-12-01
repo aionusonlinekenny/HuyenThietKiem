@@ -198,7 +198,19 @@ namespace MapTool.SPR
             long paletteSize = sprite.Palette.Length * Marshal.SizeOf<Palette24>();
             long offsetTableSize = sprite.FrameOffsets.Length * Marshal.SizeOf<SpriteOffset>();
             long frameDataStart = headerSize + paletteSize + offsetTableSize;
-            uint posInFrameData = offset.Offset - (uint)frameDataStart;
+
+            // Check if offset is already relative to frame data start
+            long posInFrameData;
+            if (offset.Offset >= frameDataStart)
+            {
+                // Offset is from file start - subtract frame data start
+                posInFrameData = offset.Offset - (long)frameDataStart;
+            }
+            else
+            {
+                // Offset is already relative to frame data section
+                posInFrameData = offset.Offset;
+            }
 
             FrameHeader frameHeader;
             using (MemoryStream ms = new MemoryStream(sprite.FrameData))
