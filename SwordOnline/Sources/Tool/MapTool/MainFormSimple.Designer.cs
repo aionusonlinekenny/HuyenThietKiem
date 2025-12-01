@@ -43,7 +43,6 @@ namespace MapTool
         private System.Windows.Forms.GroupBox grpNpcInput;
         private System.Windows.Forms.TextBox txtNpcId;
         private System.Windows.Forms.Button btnLoadNpcPreview;
-        private System.Windows.Forms.ComboBox cmbNpcAction;
         private System.Windows.Forms.GroupBox grpNpcPreview;
         private System.Windows.Forms.PictureBox picNpcPreview;
         private System.Windows.Forms.Label lblNpcName;
@@ -103,7 +102,6 @@ namespace MapTool
             this.grpNpcInput = new System.Windows.Forms.GroupBox();
             this.txtNpcId = new System.Windows.Forms.TextBox();
             this.btnLoadNpcPreview = new System.Windows.Forms.Button();
-            this.cmbNpcAction = new System.Windows.Forms.ComboBox();
             this.grpNpcPreview = new System.Windows.Forms.GroupBox();
             this.picNpcPreview = new System.Windows.Forms.PictureBox();
             this.lblNpcName = new System.Windows.Forms.Label();
@@ -363,37 +361,24 @@ namespace MapTool
             // grpNpcInput
             this.grpNpcInput.Controls.Add(new System.Windows.Forms.Label { Text = "NPC ID:", Location = new System.Drawing.Point(10, 25), AutoSize = true });
             this.grpNpcInput.Controls.Add(this.txtNpcId);
-            this.grpNpcInput.Controls.Add(new System.Windows.Forms.Label { Text = "Action:", Location = new System.Drawing.Point(10, 60), AutoSize = true });
-            this.grpNpcInput.Controls.Add(this.cmbNpcAction);
             this.grpNpcInput.Controls.Add(this.btnLoadNpcPreview);
             this.grpNpcInput.Location = new System.Drawing.Point(6, 6);
             this.grpNpcInput.Name = "grpNpcInput";
-            this.grpNpcInput.Size = new System.Drawing.Size(330, 130);
+            this.grpNpcInput.Size = new System.Drawing.Size(330, 90);
             this.grpNpcInput.TabIndex = 0;
             this.grpNpcInput.TabStop = false;
             this.grpNpcInput.Text = "NPC Selection";
 
-            this.txtNpcId.Location = new System.Drawing.Point(90, 22);
+            this.txtNpcId.Location = new System.Drawing.Point(70, 22);
             this.txtNpcId.Name = "txtNpcId";
-            this.txtNpcId.Size = new System.Drawing.Size(230, 23);
+            this.txtNpcId.Size = new System.Drawing.Size(250, 23);
             this.txtNpcId.TabIndex = 0;
-            this.txtNpcId.Text = "49";
+            this.txtNpcId.Text = "1";
 
-            this.cmbNpcAction.Location = new System.Drawing.Point(90, 57);
-            this.cmbNpcAction.Name = "cmbNpcAction";
-            this.cmbNpcAction.Size = new System.Drawing.Size(230, 23);
-            this.cmbNpcAction.TabIndex = 1;
-            this.cmbNpcAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbNpcAction.Items.AddRange(new object[] {
-                "FightStand", "NormalStand", "Walk", "Attack1", "Attack2",
-                "Attack3", "CastSkill", "Hurt", "Die", "Run"
-            });
-            this.cmbNpcAction.SelectedIndex = 0;
-
-            this.btnLoadNpcPreview.Location = new System.Drawing.Point(90, 92);
+            this.btnLoadNpcPreview.Location = new System.Drawing.Point(70, 52);
             this.btnLoadNpcPreview.Name = "btnLoadNpcPreview";
-            this.btnLoadNpcPreview.Size = new System.Drawing.Size(230, 28);
-            this.btnLoadNpcPreview.TabIndex = 2;
+            this.btnLoadNpcPreview.Size = new System.Drawing.Size(250, 28);
+            this.btnLoadNpcPreview.TabIndex = 1;
             this.btnLoadNpcPreview.Text = "Load NPC Preview";
             this.btnLoadNpcPreview.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnLoadNpcPreview.UseVisualStyleBackColor = true;
@@ -402,7 +387,7 @@ namespace MapTool
             // grpNpcPreview
             this.grpNpcPreview.Controls.Add(this.picNpcPreview);
             this.grpNpcPreview.Controls.Add(this.lblNpcName);
-            this.grpNpcPreview.Location = new System.Drawing.Point(6, 142);
+            this.grpNpcPreview.Location = new System.Drawing.Point(6, 102);
             this.grpNpcPreview.Name = "grpNpcPreview";
             this.grpNpcPreview.Size = new System.Drawing.Size(330, 280);
             this.grpNpcPreview.TabIndex = 1;
@@ -431,7 +416,7 @@ namespace MapTool
             this.grpNpcEntries.Controls.Add(this.btnExtractNpcList);
             this.grpNpcEntries.Controls.Add(this.btnRemoveLastNpc);
             this.grpNpcEntries.Controls.Add(this.btnClearNpcs);
-            this.grpNpcEntries.Location = new System.Drawing.Point(6, 428);
+            this.grpNpcEntries.Location = new System.Drawing.Point(6, 388);
             this.grpNpcEntries.Name = "grpNpcEntries";
             this.grpNpcEntries.Size = new System.Drawing.Size(330, 280);
             this.grpNpcEntries.TabIndex = 2;

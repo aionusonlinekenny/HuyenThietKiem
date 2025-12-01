@@ -418,6 +418,11 @@ namespace MapTool
                     );
 
                     UpdateNpcList();
+
+                    // Update renderer with current map's NPCs
+                    var mapNpcs = _npcExporter.GetEntriesForMap(_currentMap.MapId);
+                    _renderer.SetNpcMarkers(mapNpcs);
+
                     lblStatus.Text = $"Added NPC ID {npcId} ({_currentNpcResource.NpcName}) at World({_selectedCoordinate.Value.WorldX},{_selectedCoordinate.Value.WorldY})";
                     DebugLogger.Log($"[NPC Added] ID: {npcId}, Name: {_currentNpcResource.NpcName}, Pos: World({_selectedCoordinate.Value.WorldX},{_selectedCoordinate.Value.WorldY})");
 
@@ -849,8 +854,8 @@ namespace MapTool
                     return;
                 }
 
-                // Get action
-                NpcAction action = (NpcAction)Enum.Parse(typeof(NpcAction), cmbNpcAction.SelectedItem.ToString());
+                // Auto-load default sprite (NormalStand)
+                NpcAction action = NpcAction.NormalStand;
 
                 // Get SPR file path
                 string sprFilePath = _npcLoader.GetSprFilePathById(npcId, action);
@@ -873,10 +878,10 @@ namespace MapTool
                 }
 
                 // Update info label
-                lblNpcName.Text = $"{_currentNpcResource.NpcName} - {action} ({_currentNpcSprite.FrameCount} frames)";
+                lblNpcName.Text = $"{_currentNpcResource.NpcName} ({_currentNpcSprite.FrameCount} frames)";
                 lblStatus.Text = $"Loaded NPC ID {npcId}: {_currentNpcResource.NpcName}";
 
-                DebugLogger.Log($"[NPC Loaded] ID: {npcId}, Name: {_currentNpcResource.NpcName}, Action: {action}, Frames: {_currentNpcSprite.FrameCount}");
+                DebugLogger.Log($"[NPC Loaded] ID: {npcId}, Name: {_currentNpcResource.NpcName}, Frames: {_currentNpcSprite.FrameCount}");
             }
             catch (Exception ex)
             {
@@ -928,6 +933,9 @@ namespace MapTool
 
                         // Update list
                         UpdateNpcList();
+
+                        // Update renderer with NPC markers
+                        _renderer.SetNpcMarkers(mapNpcs);
 
                         MessageBox.Show($"Loaded {_npcExporter.GetEntries().Count} NPCs total\n" +
                                         $"{mapNpcs.Count} NPCs for map {_currentMap.MapId}",
