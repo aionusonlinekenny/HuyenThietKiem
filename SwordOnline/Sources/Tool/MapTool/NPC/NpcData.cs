@@ -5,7 +5,7 @@ namespace MapTool.NPC
 {
     /// <summary>
     /// NPC entry for export (matches Npc_Load.txt format)
-    /// Format: NpcID | MapID | PosX | PosY | ScriptFile | Name | IsLoad
+    /// Format: NpcID | MapID | PosX | PosY | ScriptFile | Name | Level | IsLoad
     /// </summary>
     public class NpcEntry
     {
@@ -15,11 +15,12 @@ namespace MapTool.NPC
         public int PosY { get; set; }
         public string ScriptFile { get; set; }
         public string Name { get; set; }
+        public int Level { get; set; }
         public int IsLoad { get; set; }
 
         public override string ToString()
         {
-            return $"{NpcID}\t{MapID}\t{PosX}\t{PosY}\t{ScriptFile}\t{Name}\t{IsLoad}";
+            return $"{NpcID}\t{MapID}\t{PosX}\t{PosY}\t{ScriptFile}\t{Name}\t{Level}\t{IsLoad}";
         }
     }
 

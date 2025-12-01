@@ -7,7 +7,7 @@ namespace MapTool.NPC
 {
     /// <summary>
     /// Export NPC data to file format compatible with game server
-    /// Format: NpcID | MapID | PosX | PosY | ScriptFile | Name | IsLoad
+    /// Format: NpcID | MapID | PosX | PosY | ScriptFile | Name | Level | IsLoad
     /// </summary>
     public class NpcExporter
     {
@@ -29,7 +29,7 @@ namespace MapTool.NPC
         /// <summary>
         /// Add entry from parameters
         /// </summary>
-        public void AddEntry(int npcId, int mapId, int posX, int posY, string scriptFile, string name, int isLoad = 1)
+        public void AddEntry(int npcId, int mapId, int posX, int posY, string scriptFile, string name, int level = 1, int isLoad = 1)
         {
             NpcEntry entry = new NpcEntry
             {
@@ -39,6 +39,7 @@ namespace MapTool.NPC
                 PosY = posY,
                 ScriptFile = scriptFile ?? "",
                 Name = name ?? "",
+                Level = level,
                 IsLoad = isLoad
             };
 
@@ -113,10 +114,12 @@ namespace MapTool.NPC
         /// </summary>
         public void ExportToFile(string filePath)
         {
-            using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
+            // Use GB2312 (ANSI) encoding for Chinese characters
+            Encoding encoding = Encoding.GetEncoding("GB2312");
+            using (StreamWriter writer = new StreamWriter(filePath, false, encoding))
             {
                 // Write header
-                writer.WriteLine("NpcID\tMapID\tPosX\tPosY\tScriptFile\tName\tIsLoad");
+                writer.WriteLine("NpcID\tMapID\tPosX\tPosY\tScriptFile\tName\tLevel\tIsLoad");
 
                 // Write entries
                 foreach (var entry in _entries)
@@ -137,7 +140,9 @@ namespace MapTool.NPC
             }
 
             _entries.Clear();
-            string[] lines = File.ReadAllLines(filePath, Encoding.UTF8);
+            // Use GB2312 (ANSI) encoding for Chinese characters
+            Encoding encoding = Encoding.GetEncoding("GB2312");
+            string[] lines = File.ReadAllLines(filePath, encoding);
 
             for (int i = 1; i < lines.Length; i++) // Skip header
             {
@@ -146,7 +151,7 @@ namespace MapTool.NPC
                     continue;
 
                 string[] parts = line.Split('\t');
-                if (parts.Length >= 7)
+                if (parts.Length >= 8)
                 {
                     NpcEntry entry = new NpcEntry
                     {
@@ -156,7 +161,8 @@ namespace MapTool.NPC
                         PosY = int.Parse(parts[3]),
                         ScriptFile = parts[4],
                         Name = parts[5],
-                        IsLoad = int.Parse(parts[6])
+                        Level = int.Parse(parts[6]),
+                        IsLoad = int.Parse(parts[7])
                     };
 
                     _entries.Add(entry);

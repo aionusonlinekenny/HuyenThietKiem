@@ -408,6 +408,13 @@ namespace MapTool
                         return;
                     }
 
+                    string npcLevelText = txtNpcLevel.Text.Trim();
+                    if (string.IsNullOrEmpty(npcLevelText) || !int.TryParse(npcLevelText, out int npcLevel))
+                    {
+                        MessageBox.Show("Please enter a valid Level (number)!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     // Add NPC at selected position
                     _npcExporter.AddEntry(
                         npcId: npcId,
@@ -416,6 +423,7 @@ namespace MapTool
                         posY: _selectedCoordinate.Value.WorldY,
                         scriptFile: "",  // Empty script for NPCs
                         name: _currentNpcResource.NpcName ?? $"NPC_{npcId}",
+                        level: npcLevel,
                         isLoad: 1
                     );
 

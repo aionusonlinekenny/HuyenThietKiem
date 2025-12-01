@@ -42,6 +42,7 @@ namespace MapTool
         // NPC Controls
         private System.Windows.Forms.GroupBox grpNpcInput;
         private System.Windows.Forms.TextBox txtNpcId;
+        private System.Windows.Forms.TextBox txtNpcLevel;
         private System.Windows.Forms.Button btnLoadNpcPreview;
         private System.Windows.Forms.GroupBox grpNpcPreview;
         private System.Windows.Forms.PictureBox picNpcPreview;
@@ -114,6 +115,7 @@ namespace MapTool
             // NPC Controls
             this.grpNpcInput = new System.Windows.Forms.GroupBox();
             this.txtNpcId = new System.Windows.Forms.TextBox();
+            this.txtNpcLevel = new System.Windows.Forms.TextBox();
             this.btnLoadNpcPreview = new System.Windows.Forms.Button();
             this.grpNpcPreview = new System.Windows.Forms.GroupBox();
             this.picNpcPreview = new System.Windows.Forms.PictureBox();
@@ -379,10 +381,12 @@ namespace MapTool
             // grpNpcInput
             this.grpNpcInput.Controls.Add(new System.Windows.Forms.Label { Text = "NPC ID:", Location = new System.Drawing.Point(10, 25), AutoSize = true });
             this.grpNpcInput.Controls.Add(this.txtNpcId);
+            this.grpNpcInput.Controls.Add(new System.Windows.Forms.Label { Text = "Level:", Location = new System.Drawing.Point(10, 55), AutoSize = true });
+            this.grpNpcInput.Controls.Add(this.txtNpcLevel);
             this.grpNpcInput.Controls.Add(this.btnLoadNpcPreview);
             this.grpNpcInput.Location = new System.Drawing.Point(6, 6);
             this.grpNpcInput.Name = "grpNpcInput";
-            this.grpNpcInput.Size = new System.Drawing.Size(330, 90);
+            this.grpNpcInput.Size = new System.Drawing.Size(330, 120);
             this.grpNpcInput.TabIndex = 0;
             this.grpNpcInput.TabStop = false;
             this.grpNpcInput.Text = "NPC Selection";
@@ -393,10 +397,16 @@ namespace MapTool
             this.txtNpcId.TabIndex = 0;
             this.txtNpcId.Text = "1";
 
-            this.btnLoadNpcPreview.Location = new System.Drawing.Point(70, 52);
+            this.txtNpcLevel.Location = new System.Drawing.Point(70, 52);
+            this.txtNpcLevel.Name = "txtNpcLevel";
+            this.txtNpcLevel.Size = new System.Drawing.Size(250, 23);
+            this.txtNpcLevel.TabIndex = 1;
+            this.txtNpcLevel.Text = "1";
+
+            this.btnLoadNpcPreview.Location = new System.Drawing.Point(70, 82);
             this.btnLoadNpcPreview.Name = "btnLoadNpcPreview";
             this.btnLoadNpcPreview.Size = new System.Drawing.Size(250, 28);
-            this.btnLoadNpcPreview.TabIndex = 1;
+            this.btnLoadNpcPreview.TabIndex = 2;
             this.btnLoadNpcPreview.Text = "Load NPC Preview";
             this.btnLoadNpcPreview.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnLoadNpcPreview.UseVisualStyleBackColor = true;
@@ -409,7 +419,7 @@ namespace MapTool
             this.grpNpcPreview.Controls.Add(this.lblFrameInfo);
             this.grpNpcPreview.Controls.Add(this.btnPreviewZoomIn);
             this.grpNpcPreview.Controls.Add(this.btnPreviewZoomOut);
-            this.grpNpcPreview.Location = new System.Drawing.Point(6, 102);
+            this.grpNpcPreview.Location = new System.Drawing.Point(6, 132);
             this.grpNpcPreview.Name = "grpNpcPreview";
             this.grpNpcPreview.Size = new System.Drawing.Size(330, 280);
             this.grpNpcPreview.TabIndex = 1;
@@ -475,7 +485,7 @@ namespace MapTool
             this.grpNpcEntries.Controls.Add(this.btnExtractNpcList);
             this.grpNpcEntries.Controls.Add(this.btnRemoveLastNpc);
             this.grpNpcEntries.Controls.Add(this.btnClearNpcs);
-            this.grpNpcEntries.Location = new System.Drawing.Point(6, 388);
+            this.grpNpcEntries.Location = new System.Drawing.Point(6, 418);
             this.grpNpcEntries.Name = "grpNpcEntries";
             this.grpNpcEntries.Size = new System.Drawing.Size(330, 280);
             this.grpNpcEntries.TabIndex = 2;
