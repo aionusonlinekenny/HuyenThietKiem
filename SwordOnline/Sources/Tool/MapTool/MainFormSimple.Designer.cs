@@ -271,7 +271,7 @@ namespace MapTool
             this.grpEntries.Controls.Add(this.btnRemoveLast);
             this.grpEntries.Location = new System.Drawing.Point(920, 526);
             this.grpEntries.Name = "grpEntries";
-            this.grpEntries.Size = new System.Drawing.Size(340, 160);
+            this.grpEntries.Size = new System.Drawing.Size(340, 190);
             this.grpEntries.TabIndex = 5;
             this.grpEntries.TabStop = false;
             this.grpEntries.Text = "Trap Entries (Double-click map to add)";
@@ -280,10 +280,10 @@ namespace MapTool
             this.lstEntries.HorizontalScrollbar = true;
             this.lstEntries.Location = new System.Drawing.Point(10, 22);
             this.lstEntries.Name = "lstEntries";
-            this.lstEntries.Size = new System.Drawing.Size(320, 55);
+            this.lstEntries.Size = new System.Drawing.Size(320, 85);
             this.lstEntries.TabIndex = 0;
 
-            this.btnExtractAllRegions.Location = new System.Drawing.Point(10, 85);
+            this.btnExtractAllRegions.Location = new System.Drawing.Point(10, 115);
             this.btnExtractAllRegions.Name = "btnExtractAllRegions";
             this.btnExtractAllRegions.Size = new System.Drawing.Size(320, 25);
             this.btnExtractAllRegions.TabIndex = 4;
@@ -291,7 +291,7 @@ namespace MapTool
             this.btnExtractAllRegions.UseVisualStyleBackColor = true;
             this.btnExtractAllRegions.Click += new System.EventHandler(this.btnExtractAllRegions_Click);
 
-            this.btnExport.Location = new System.Drawing.Point(10, 118);
+            this.btnExport.Location = new System.Drawing.Point(10, 148);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(100, 25);
             this.btnExport.TabIndex = 1;
@@ -299,7 +299,7 @@ namespace MapTool
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
 
-            this.btnRemoveLast.Location = new System.Drawing.Point(120, 118);
+            this.btnRemoveLast.Location = new System.Drawing.Point(120, 148);
             this.btnRemoveLast.Name = "btnRemoveLast";
             this.btnRemoveLast.Size = new System.Drawing.Size(100, 25);
             this.btnRemoveLast.TabIndex = 2;
@@ -307,7 +307,7 @@ namespace MapTool
             this.btnRemoveLast.UseVisualStyleBackColor = true;
             this.btnRemoveLast.Click += new System.EventHandler(this.btnRemoveLast_Click);
 
-            this.btnClear.Location = new System.Drawing.Point(230, 118);
+            this.btnClear.Location = new System.Drawing.Point(230, 148);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(100, 25);
             this.btnClear.TabIndex = 3;
@@ -358,6 +358,7 @@ namespace MapTool
             this.Controls.Add(this.grpMapLoad);
             this.Controls.Add(this.grpGameFolder);
             this.Controls.Add(this.mapPanel);
+            this.Font = new System.Drawing.Font(".VnArial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainFormSimple";
