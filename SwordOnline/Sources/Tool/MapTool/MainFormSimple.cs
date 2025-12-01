@@ -33,6 +33,7 @@ namespace MapTool
         private NpcExporter _npcExporter;
         private NpcResource _currentNpcResource;
         private SpriteData _currentNpcSprite;
+        private int _currentAnimationFrame = 0;
 
         public MainFormSimple()
         {
@@ -896,15 +897,20 @@ namespace MapTool
                 }
 
                 // Render first frame to preview
+                _currentAnimationFrame = 0;
                 if (_currentNpcSprite.FrameCount > 0)
                 {
                     Bitmap preview = SpriteLoader.FrameToBitmap(_currentNpcSprite, 0);
                     picNpcPreview.Image = preview;
                 }
 
-                // Update info label
+                // Update info labels
                 lblNpcName.Text = $"{_currentNpcResource.NpcName} ({_currentNpcSprite.FrameCount} frames)";
+                lblFrameInfo.Text = $"Frame: 1 / {_currentNpcSprite.FrameCount}";
                 lblStatus.Text = $"Loaded NPC ID {npcId}: {_currentNpcResource.NpcName}";
+
+                // Enable play button if there are multiple frames
+                btnPlayAnimation.Enabled = _currentNpcSprite.FrameCount > 1;
 
                 DebugLogger.Log($"[NPC Loaded] ID: {npcId}, Name: {_currentNpcResource.NpcName}, Frames: {_currentNpcSprite.FrameCount}");
             }
@@ -917,6 +923,64 @@ namespace MapTool
             finally
             {
                 Cursor = Cursors.Default;
+            }
+        }
+
+        // Play/Stop animation button
+        private void btnPlayAnimation_Click(object sender, EventArgs e)
+        {
+            if (_currentNpcSprite == null || _currentNpcSprite.FrameCount <= 1)
+                return;
+
+            if (animationTimer.Enabled)
+            {
+                // Stop animation
+                animationTimer.Stop();
+                btnPlayAnimation.Text = "▶ Play";
+            }
+            else
+            {
+                // Start animation
+                animationTimer.Start();
+                btnPlayAnimation.Text = "⏸ Stop";
+            }
+        }
+
+        // Animation timer tick - advance to next frame
+        private void animationTimer_Tick(object sender, EventArgs e)
+        {
+            if (_currentNpcSprite == null || _currentNpcSprite.FrameCount <= 1)
+            {
+                animationTimer.Stop();
+                return;
+            }
+
+            try
+            {
+                // Advance to next frame
+                _currentAnimationFrame = (_currentAnimationFrame + 1) % _currentNpcSprite.FrameCount;
+
+                // Render frame
+                Bitmap preview = SpriteLoader.FrameToBitmap(_currentNpcSprite, _currentAnimationFrame);
+
+                // Dispose old image
+                if (picNpcPreview.Image != null)
+                {
+                    var oldImage = picNpcPreview.Image;
+                    picNpcPreview.Image = null;
+                    oldImage.Dispose();
+                }
+
+                picNpcPreview.Image = preview;
+
+                // Update frame info
+                lblFrameInfo.Text = $"Frame: {_currentAnimationFrame + 1} / {_currentNpcSprite.FrameCount}";
+            }
+            catch (Exception ex)
+            {
+                animationTimer.Stop();
+                btnPlayAnimation.Text = "▶ Play";
+                DebugLogger.Log($"ERROR in animation: {ex.Message}");
             }
         }
 

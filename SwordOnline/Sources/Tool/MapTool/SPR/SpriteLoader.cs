@@ -148,7 +148,9 @@ namespace MapTool.SPR
 
         /// <summary>
         /// Decode RLE compressed sprite data
-        /// RLE format: [count][pixel] where count < 128 means repeat, count >= 128 means literal run
+        /// RLE format (from client DrawSpriteMP.inc): [Count][Alpha][Optional Pixel Data]
+        /// - Alpha == 0: Transparent run (skip 'count' pixels, no data follows)
+        /// - Alpha > 0: Opaque run (read 'count' pixel indices)
         /// </summary>
         private static byte[] DecodeRLE(BinaryReader reader, int width, int height)
         {
@@ -156,28 +158,43 @@ namespace MapTool.SPR
             int pixelIndex = 0;
             int totalPixels = width * height;
 
-            while (pixelIndex < totalPixels && reader.BaseStream.Position < reader.BaseStream.Length)
+            // Initialize all pixels to 0 (transparent)
+            for (int i = 0; i < totalPixels; i++)
             {
-                byte count = reader.ReadByte();
+                pixels[i] = 0;
+            }
 
-                if (count < 128)
+            // Line-based RLE decoding
+            for (int y = 0; y < height; y++)
+            {
+                int lineStart = y * width;
+                int x = 0;
+
+                while (x < width && reader.BaseStream.Position < reader.BaseStream.Length)
                 {
-                    // Repeat run: repeat next pixel 'count' times
-                    if (count == 0) count = 1;  // 0 means 1
-                    byte pixel = reader.ReadByte();
+                    byte count = reader.ReadByte();
 
-                    for (int i = 0; i < count && pixelIndex < totalPixels; i++)
+                    // Check for line terminator (count == 0 means end of line)
+                    if (count == 0)
                     {
-                        pixels[pixelIndex++] = pixel;
+                        break;
                     }
-                }
-                else
-                {
-                    // Literal run: copy next 'count - 128' pixels
-                    int literalCount = count - 128;
-                    for (int i = 0; i < literalCount && pixelIndex < totalPixels; i++)
+
+                    byte alpha = reader.ReadByte();
+
+                    if (alpha == 0)
                     {
-                        pixels[pixelIndex++] = reader.ReadByte();
+                        // Transparent run - skip 'count' pixels (leave as 0)
+                        x += count;
+                    }
+                    else
+                    {
+                        // Opaque run - read 'count' pixel indices
+                        for (int i = 0; i < count && x < width; i++)
+                        {
+                            pixels[lineStart + x] = reader.ReadByte();
+                            x++;
+                        }
                     }
                 }
             }
