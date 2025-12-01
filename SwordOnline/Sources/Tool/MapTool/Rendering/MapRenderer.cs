@@ -230,8 +230,8 @@ namespace MapTool.Rendering
                 int screenX = mapX - _viewOffsetX;
                 int screenY = mapY - _viewOffsetY;
 
-                // Draw NPC marker as a larger circle (12 pixel diameter for visibility)
-                int markerSize = 12;
+                // Draw NPC marker as a circle (8 pixel diameter)
+                int markerSize = 8;
                 Rectangle markerRect = new Rectangle(
                     screenX - markerSize / 2,
                     screenY - markerSize / 2,
@@ -241,14 +241,14 @@ namespace MapTool.Rendering
 
                 // Draw filled circle with border
                 using (SolidBrush brush = new SolidBrush(_npcColor))
-                using (Pen pen = new Pen(Color.White, 2))
+                using (Pen pen = new Pen(Color.White, 1))
                 {
                     g.FillEllipse(brush, markerRect);
                     g.DrawEllipse(pen, markerRect);
                 }
 
-                // Debug: Draw NPC ID text next to marker
-                using (Font font = new Font("Arial", 8))
+                // Draw NPC ID text next to marker (smaller font)
+                using (Font font = new Font("Arial", 6))
                 using (SolidBrush textBrush = new SolidBrush(Color.White))
                 using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, 0, 0, 0)))
                 {

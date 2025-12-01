@@ -34,6 +34,7 @@ namespace MapTool
         private NpcResource _currentNpcResource;
         private SpriteData _currentNpcSprite;
         private int _currentAnimationFrame = 0;
+        private float _previewZoom = 2.0f; // Default 2x zoom for preview
 
         public MainFormSimple()
         {
@@ -898,16 +899,21 @@ namespace MapTool
 
                 // Render first frame to preview
                 _currentAnimationFrame = 0;
+                _previewZoom = 2.0f; // Reset zoom to default
                 if (_currentNpcSprite.FrameCount > 0)
                 {
-                    Bitmap preview = SpriteLoader.FrameToBitmap(_currentNpcSprite, 0);
-                    picNpcPreview.Image = preview;
+                    RenderNpcPreviewFrame(0);
                 }
 
-                // Update info labels
-                lblNpcName.Text = $"{_currentNpcResource.NpcName} ({_currentNpcSprite.FrameCount} frames)";
+                // Update info labels - show ResType and NPC name
+                string npcDisplayName = _currentNpcResource.ResType;
+                if (!string.IsNullOrEmpty(_currentNpcResource.NpcName) && _currentNpcResource.NpcName != "0")
+                {
+                    npcDisplayName = $"{_currentNpcResource.ResType} ({_currentNpcResource.NpcName})";
+                }
+                lblNpcName.Text = $"ID {npcId}: {npcDisplayName} - {_currentNpcSprite.FrameCount} frames";
                 lblFrameInfo.Text = $"Frame: 1 / {_currentNpcSprite.FrameCount}";
-                lblStatus.Text = $"Loaded NPC ID {npcId}: {_currentNpcResource.NpcName}";
+                lblStatus.Text = $"Loaded NPC ID {npcId}: {npcDisplayName}";
 
                 // Enable play button if there are multiple frames
                 btnPlayAnimation.Enabled = _currentNpcSprite.FrameCount > 1;
@@ -924,6 +930,60 @@ namespace MapTool
             {
                 Cursor = Cursors.Default;
             }
+        }
+
+        // Render NPC preview frame with zoom
+        private void RenderNpcPreviewFrame(int frameIndex)
+        {
+            if (_currentNpcSprite == null || frameIndex < 0 || frameIndex >= _currentNpcSprite.FrameCount)
+                return;
+
+            try
+            {
+                // Get original frame
+                Bitmap originalFrame = SpriteLoader.FrameToBitmap(_currentNpcSprite, frameIndex);
+
+                // Apply zoom
+                int scaledWidth = (int)(originalFrame.Width * _previewZoom);
+                int scaledHeight = (int)(originalFrame.Height * _previewZoom);
+
+                Bitmap scaledFrame = new Bitmap(scaledWidth, scaledHeight);
+                using (Graphics g = Graphics.FromImage(scaledFrame))
+                {
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                    g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+                    g.DrawImage(originalFrame, 0, 0, scaledWidth, scaledHeight);
+                }
+
+                // Dispose old image
+                if (picNpcPreview.Image != null)
+                {
+                    var oldImage = picNpcPreview.Image;
+                    picNpcPreview.Image = null;
+                    oldImage.Dispose();
+                }
+
+                picNpcPreview.Image = scaledFrame;
+                originalFrame.Dispose();
+            }
+            catch (Exception ex)
+            {
+                DebugLogger.Log($"ERROR rendering preview frame: {ex.Message}");
+            }
+        }
+
+        // Preview zoom in button
+        private void btnPreviewZoomIn_Click(object sender, EventArgs e)
+        {
+            _previewZoom = Math.Min(8.0f, _previewZoom * 1.5f);
+            RenderNpcPreviewFrame(_currentAnimationFrame);
+        }
+
+        // Preview zoom out button
+        private void btnPreviewZoomOut_Click(object sender, EventArgs e)
+        {
+            _previewZoom = Math.Max(0.5f, _previewZoom / 1.5f);
+            RenderNpcPreviewFrame(_currentAnimationFrame);
         }
 
         // Play/Stop animation button
@@ -960,18 +1020,8 @@ namespace MapTool
                 // Advance to next frame
                 _currentAnimationFrame = (_currentAnimationFrame + 1) % _currentNpcSprite.FrameCount;
 
-                // Render frame
-                Bitmap preview = SpriteLoader.FrameToBitmap(_currentNpcSprite, _currentAnimationFrame);
-
-                // Dispose old image
-                if (picNpcPreview.Image != null)
-                {
-                    var oldImage = picNpcPreview.Image;
-                    picNpcPreview.Image = null;
-                    oldImage.Dispose();
-                }
-
-                picNpcPreview.Image = preview;
+                // Render frame with zoom
+                RenderNpcPreviewFrame(_currentAnimationFrame);
 
                 // Update frame info
                 lblFrameInfo.Text = $"Frame: {_currentAnimationFrame + 1} / {_currentNpcSprite.FrameCount}";

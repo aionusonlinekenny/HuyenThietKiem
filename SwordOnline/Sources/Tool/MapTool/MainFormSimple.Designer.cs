@@ -49,6 +49,8 @@ namespace MapTool
         private System.Windows.Forms.Button btnPlayAnimation;
         private System.Windows.Forms.Label lblFrameInfo;
         private System.Windows.Forms.Timer animationTimer;
+        private System.Windows.Forms.Button btnPreviewZoomIn;
+        private System.Windows.Forms.Button btnPreviewZoomOut;
         private System.Windows.Forms.GroupBox grpNpcEntries;
         private System.Windows.Forms.ListBox lstNpcEntries;
         private System.Windows.Forms.Button btnLoadNpcsFromServer;
@@ -119,6 +121,8 @@ namespace MapTool
             this.btnPlayAnimation = new System.Windows.Forms.Button();
             this.lblFrameInfo = new System.Windows.Forms.Label();
             this.animationTimer = new System.Windows.Forms.Timer();
+            this.btnPreviewZoomIn = new System.Windows.Forms.Button();
+            this.btnPreviewZoomOut = new System.Windows.Forms.Button();
             this.grpNpcEntries = new System.Windows.Forms.GroupBox();
             this.lstNpcEntries = new System.Windows.Forms.ListBox();
             this.btnLoadNpcsFromServer = new System.Windows.Forms.Button();
@@ -403,6 +407,8 @@ namespace MapTool
             this.grpNpcPreview.Controls.Add(this.lblNpcName);
             this.grpNpcPreview.Controls.Add(this.btnPlayAnimation);
             this.grpNpcPreview.Controls.Add(this.lblFrameInfo);
+            this.grpNpcPreview.Controls.Add(this.btnPreviewZoomIn);
+            this.grpNpcPreview.Controls.Add(this.btnPreviewZoomOut);
             this.grpNpcPreview.Location = new System.Drawing.Point(6, 102);
             this.grpNpcPreview.Name = "grpNpcPreview";
             this.grpNpcPreview.Size = new System.Drawing.Size(330, 280);
@@ -414,8 +420,8 @@ namespace MapTool
             this.picNpcPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picNpcPreview.Location = new System.Drawing.Point(10, 70);
             this.picNpcPreview.Name = "picNpcPreview";
-            this.picNpcPreview.Size = new System.Drawing.Size(310, 170);
-            this.picNpcPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picNpcPreview.Size = new System.Drawing.Size(310, 200);
+            this.picNpcPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picNpcPreview.TabIndex = 0;
             this.picNpcPreview.TabStop = false;
 
@@ -444,6 +450,24 @@ namespace MapTool
             // animationTimer
             this.animationTimer.Interval = 100;  // 100ms = 10 FPS
             this.animationTimer.Tick += new System.EventHandler(this.animationTimer_Tick);
+
+            // btnPreviewZoomIn
+            this.btnPreviewZoomIn.Location = new System.Drawing.Point(10, 245);
+            this.btnPreviewZoomIn.Name = "btnPreviewZoomIn";
+            this.btnPreviewZoomIn.Size = new System.Drawing.Size(70, 25);
+            this.btnPreviewZoomIn.TabIndex = 4;
+            this.btnPreviewZoomIn.Text = "Zoom +";
+            this.btnPreviewZoomIn.UseVisualStyleBackColor = true;
+            this.btnPreviewZoomIn.Click += new System.EventHandler(this.btnPreviewZoomIn_Click);
+
+            // btnPreviewZoomOut
+            this.btnPreviewZoomOut.Location = new System.Drawing.Point(85, 245);
+            this.btnPreviewZoomOut.Name = "btnPreviewZoomOut";
+            this.btnPreviewZoomOut.Size = new System.Drawing.Size(70, 25);
+            this.btnPreviewZoomOut.TabIndex = 5;
+            this.btnPreviewZoomOut.Text = "Zoom -";
+            this.btnPreviewZoomOut.UseVisualStyleBackColor = true;
+            this.btnPreviewZoomOut.Click += new System.EventHandler(this.btnPreviewZoomOut_Click);
 
             // grpNpcEntries
             this.grpNpcEntries.Controls.Add(this.lstNpcEntries);
