@@ -9,6 +9,7 @@
     <ApplicationIcon />
     <StartupObject>MapTool.Program</StartupObject>
     <LangVersion>8.0</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
