@@ -75,6 +75,40 @@ namespace MapTool.NPC
         }
 
         /// <summary>
+        /// Get entries for specific map
+        /// </summary>
+        public List<NpcEntry> GetEntriesForMap(int mapId)
+        {
+            return _entries.FindAll(e => e.MapID == mapId);
+        }
+
+        /// <summary>
+        /// Remove entry at index
+        /// </summary>
+        public bool RemoveAt(int index)
+        {
+            if (index >= 0 && index < _entries.Count)
+            {
+                _entries.RemoveAt(index);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Update entry at index
+        /// </summary>
+        public bool UpdateEntry(int index, NpcEntry entry)
+        {
+            if (index >= 0 && index < _entries.Count)
+            {
+                _entries[index] = entry;
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Export to file
         /// </summary>
         public void ExportToFile(string filePath)

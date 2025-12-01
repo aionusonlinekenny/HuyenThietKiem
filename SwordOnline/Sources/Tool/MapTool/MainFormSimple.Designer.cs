@@ -49,6 +49,7 @@ namespace MapTool
         private System.Windows.Forms.Label lblNpcName;
         private System.Windows.Forms.GroupBox grpNpcEntries;
         private System.Windows.Forms.ListBox lstNpcEntries;
+        private System.Windows.Forms.Button btnLoadNpcsFromServer;
         private System.Windows.Forms.Button btnExtractNpcList;
         private System.Windows.Forms.Button btnRemoveLastNpc;
         private System.Windows.Forms.Button btnClearNpcs;
@@ -108,6 +109,7 @@ namespace MapTool
             this.lblNpcName = new System.Windows.Forms.Label();
             this.grpNpcEntries = new System.Windows.Forms.GroupBox();
             this.lstNpcEntries = new System.Windows.Forms.ListBox();
+            this.btnLoadNpcsFromServer = new System.Windows.Forms.Button();
             this.btnExtractNpcList = new System.Windows.Forms.Button();
             this.btnRemoveLastNpc = new System.Windows.Forms.Button();
             this.btnClearNpcs = new System.Windows.Forms.Button();
@@ -359,7 +361,7 @@ namespace MapTool
             // ==== NPC CONTROLS ====
 
             // grpNpcInput
-            this.grpNpcInput.Controls.Add(new System.Windows.Forms.Label { Text = "NPC Name:", Location = new System.Drawing.Point(10, 25), AutoSize = true });
+            this.grpNpcInput.Controls.Add(new System.Windows.Forms.Label { Text = "NPC ID:", Location = new System.Drawing.Point(10, 25), AutoSize = true });
             this.grpNpcInput.Controls.Add(this.txtNpcId);
             this.grpNpcInput.Controls.Add(new System.Windows.Forms.Label { Text = "Action:", Location = new System.Drawing.Point(10, 60), AutoSize = true });
             this.grpNpcInput.Controls.Add(this.cmbNpcAction);
@@ -375,7 +377,7 @@ namespace MapTool
             this.txtNpcId.Name = "txtNpcId";
             this.txtNpcId.Size = new System.Drawing.Size(230, 23);
             this.txtNpcId.TabIndex = 0;
-            this.txtNpcId.Text = "enemy003";
+            this.txtNpcId.Text = "49";
 
             this.cmbNpcAction.Location = new System.Drawing.Point(90, 57);
             this.cmbNpcAction.Name = "cmbNpcAction";
@@ -425,6 +427,7 @@ namespace MapTool
 
             // grpNpcEntries
             this.grpNpcEntries.Controls.Add(this.lstNpcEntries);
+            this.grpNpcEntries.Controls.Add(this.btnLoadNpcsFromServer);
             this.grpNpcEntries.Controls.Add(this.btnExtractNpcList);
             this.grpNpcEntries.Controls.Add(this.btnRemoveLastNpc);
             this.grpNpcEntries.Controls.Add(this.btnClearNpcs);
@@ -437,32 +440,40 @@ namespace MapTool
 
             this.lstNpcEntries.FormattingEnabled = true;
             this.lstNpcEntries.HorizontalScrollbar = true;
-            this.lstNpcEntries.Location = new System.Drawing.Point(10, 22);
+            this.lstNpcEntries.Location = new System.Drawing.Point(10, 50);
             this.lstNpcEntries.Name = "lstNpcEntries";
-            this.lstNpcEntries.Size = new System.Drawing.Size(310, 200);
+            this.lstNpcEntries.Size = new System.Drawing.Size(310, 175);
             this.lstNpcEntries.TabIndex = 0;
 
-            this.btnExtractNpcList.Location = new System.Drawing.Point(10, 230);
+            this.btnLoadNpcsFromServer.Location = new System.Drawing.Point(10, 20);
+            this.btnLoadNpcsFromServer.Name = "btnLoadNpcsFromServer";
+            this.btnLoadNpcsFromServer.Size = new System.Drawing.Size(310, 25);
+            this.btnLoadNpcsFromServer.TabIndex = 1;
+            this.btnLoadNpcsFromServer.Text = "Load NPCs from Npc_Load.txt";
+            this.btnLoadNpcsFromServer.UseVisualStyleBackColor = true;
+            this.btnLoadNpcsFromServer.Click += new System.EventHandler(this.btnLoadNpcsFromServer_Click);
+
+            this.btnExtractNpcList.Location = new System.Drawing.Point(10, 233);
             this.btnExtractNpcList.Name = "btnExtractNpcList";
             this.btnExtractNpcList.Size = new System.Drawing.Size(310, 28);
-            this.btnExtractNpcList.TabIndex = 1;
-            this.btnExtractNpcList.Text = "Extract NPC List to File";
+            this.btnExtractNpcList.TabIndex = 2;
+            this.btnExtractNpcList.Text = "Save NPCs to File";
             this.btnExtractNpcList.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnExtractNpcList.UseVisualStyleBackColor = true;
             this.btnExtractNpcList.Click += new System.EventHandler(this.btnExtractNpcList_Click);
 
-            this.btnRemoveLastNpc.Location = new System.Drawing.Point(10, 238);
+            this.btnRemoveLastNpc.Location = new System.Drawing.Point(10, 245);
             this.btnRemoveLastNpc.Name = "btnRemoveLastNpc";
             this.btnRemoveLastNpc.Size = new System.Drawing.Size(150, 25);
-            this.btnRemoveLastNpc.TabIndex = 2;
+            this.btnRemoveLastNpc.TabIndex = 3;
             this.btnRemoveLastNpc.Text = "Remove Last";
             this.btnRemoveLastNpc.UseVisualStyleBackColor = true;
             this.btnRemoveLastNpc.Click += new System.EventHandler(this.btnRemoveLastNpc_Click);
 
-            this.btnClearNpcs.Location = new System.Drawing.Point(165, 238);
+            this.btnClearNpcs.Location = new System.Drawing.Point(165, 245);
             this.btnClearNpcs.Name = "btnClearNpcs";
             this.btnClearNpcs.Size = new System.Drawing.Size(155, 25);
-            this.btnClearNpcs.TabIndex = 3;
+            this.btnClearNpcs.TabIndex = 4;
             this.btnClearNpcs.Text = "Clear All";
             this.btnClearNpcs.UseVisualStyleBackColor = true;
             this.btnClearNpcs.Click += new System.EventHandler(this.btnClearNpcs_Click);

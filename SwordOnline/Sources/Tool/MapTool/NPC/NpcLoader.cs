@@ -12,13 +12,17 @@ namespace MapTool.NPC
     public class NpcLoader
     {
         private string _clientPath;
+        private string _serverPath;
+        private NpcIdMapper _idMapper;
         private Dictionary<string, NpcResKind> _resKindCache;
         private Dictionary<string, NpcSpriteRes> _spriteResCache;
         private Dictionary<string, NpcSpriteInfo> _spriteInfoCache;
 
-        public NpcLoader(string clientPath)
+        public NpcLoader(string clientPath, string serverPath = null)
         {
             _clientPath = clientPath;
+            _serverPath = serverPath;
+            _idMapper = serverPath != null ? new NpcIdMapper() : null;
             _resKindCache = new Dictionary<string, NpcResKind>(StringComparer.OrdinalIgnoreCase);
             _spriteResCache = new Dictionary<string, NpcSpriteRes>(StringComparer.OrdinalIgnoreCase);
             _spriteInfoCache = new Dictionary<string, NpcSpriteInfo>(StringComparer.OrdinalIgnoreCase);
@@ -32,6 +36,12 @@ namespace MapTool.NPC
             LoadNpcResKind();
             LoadNpcSpriteRes();
             LoadNpcSpriteInfo();
+
+            // Load NPC ID database if server path is available
+            if (_idMapper != null && !string.IsNullOrEmpty(_serverPath))
+            {
+                _idMapper.LoadNpcDatabase(_serverPath);
+            }
         }
 
         /// <summary>
@@ -172,7 +182,38 @@ namespace MapTool.NPC
         }
 
         /// <summary>
-        /// Get NPC resource by NPC name
+        /// Get NPC resource by NPC ID (from Npcs.txt)
+        /// </summary>
+        public NpcResource GetNpcResourceById(int npcId)
+        {
+            if (_idMapper == null)
+            {
+                throw new InvalidOperationException("NPC ID mapper not initialized. Need server path.");
+            }
+
+            // Get NpcResType from ID (e.g., ID 49 → "enemy003")
+            string npcResType = _idMapper.GetNpcResType(npcId);
+            if (string.IsNullOrEmpty(npcResType))
+                return null;
+
+            // Get resource using NpcResType
+            NpcResource resource = GetNpcResource(npcResType);
+            if (resource != null)
+            {
+                resource.NpcID = npcId;
+                // Also set the display name from Npcs.txt
+                string npcName = _idMapper.GetNpcName(npcId);
+                if (!string.IsNullOrEmpty(npcName))
+                {
+                    resource.NpcName = $"{npcName} (ID: {npcId})";
+                }
+            }
+
+            return resource;
+        }
+
+        /// <summary>
+        /// Get NPC resource by NPC name (ResType like "enemy003")
         /// </summary>
         public NpcResource GetNpcResource(string npcName)
         {
@@ -194,6 +235,17 @@ namespace MapTool.NPC
         }
 
         /// <summary>
+        /// Get NPC info by ID from Npcs.txt
+        /// </summary>
+        public NpcIdMapper.NpcInfo GetNpcInfo(int npcId)
+        {
+            if (_idMapper == null)
+                return null;
+
+            return _idMapper.GetNpcInfo(npcId);
+        }
+
+        /// <summary>
         /// Get all loaded NPC names
         /// </summary>
         public List<string> GetAllNpcNames()
@@ -202,11 +254,29 @@ namespace MapTool.NPC
         }
 
         /// <summary>
-        /// Get full SPR file path on disk
+        /// Get full SPR file path on disk by NPC name
         /// </summary>
         public string GetSprFilePath(string npcName, NpcAction action)
         {
             NpcResource resource = GetNpcResource(npcName);
+            if (resource == null)
+                return null;
+
+            string relativePath = resource.GetSprFilePath(action);
+            if (string.IsNullOrEmpty(relativePath))
+                return null;
+
+            // Convert to full path
+            string fullPath = Path.Combine(_clientPath, relativePath);
+            return fullPath;
+        }
+
+        /// <summary>
+        /// Get full SPR file path on disk by NPC ID
+        /// </summary>
+        public string GetSprFilePathById(int npcId, NpcAction action)
+        {
+            NpcResource resource = GetNpcResourceById(npcId);
             if (resource == null)
                 return null;
 
