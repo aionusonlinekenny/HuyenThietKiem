@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using MapTool.Utils;
 
 namespace MapTool.NPC
 {
