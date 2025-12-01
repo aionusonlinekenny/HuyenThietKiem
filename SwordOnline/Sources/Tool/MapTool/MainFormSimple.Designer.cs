@@ -420,8 +420,8 @@ namespace MapTool
             this.picNpcPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picNpcPreview.Location = new System.Drawing.Point(10, 70);
             this.picNpcPreview.Name = "picNpcPreview";
-            this.picNpcPreview.Size = new System.Drawing.Size(310, 200);
-            this.picNpcPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picNpcPreview.Size = new System.Drawing.Size(310, 165);
+            this.picNpcPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picNpcPreview.TabIndex = 0;
             this.picNpcPreview.TabStop = false;
 

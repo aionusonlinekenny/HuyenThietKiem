@@ -155,21 +155,39 @@ namespace MapTool.NPC
                 return null;
 
             searchName = searchName.Trim();
+            DebugLogger.Log($"      [FindNpcByName] Searching for: '{searchName}'");
+            DebugLogger.Log($"         Database contains {_npcDatabase.Count} NPCs");
 
             // Try exact match first
             foreach (var kvp in _npcDatabase)
             {
                 if (kvp.Value.NpcName != null && kvp.Value.NpcName.Equals(searchName, StringComparison.OrdinalIgnoreCase))
+                {
+                    DebugLogger.Log($"         ✓ Exact match found: ID={kvp.Key}, Name='{kvp.Value.NpcName}'");
                     return kvp.Key;
+                }
             }
 
+            DebugLogger.Log($"         No exact match, trying partial match...");
+
             // Try partial match (contains)
+            int matchCount = 0;
             foreach (var kvp in _npcDatabase)
             {
                 if (kvp.Value.NpcName != null && kvp.Value.NpcName.IndexOf(searchName, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    DebugLogger.Log($"         ✓ Partial match found: ID={kvp.Key}, Name='{kvp.Value.NpcName}'");
                     return kvp.Key;
+                }
+                // Show first few NPC names for debugging
+                if (matchCount < 5 && !string.IsNullOrEmpty(kvp.Value.NpcName))
+                {
+                    DebugLogger.Log($"         Sample NPC: ID={kvp.Key}, Name='{kvp.Value.NpcName}'");
+                    matchCount++;
+                }
             }
 
+            DebugLogger.Log($"         ✗ No match found for '{searchName}'");
             return null;
         }
 
