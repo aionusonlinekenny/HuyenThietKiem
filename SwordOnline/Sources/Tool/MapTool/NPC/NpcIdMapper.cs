@@ -46,7 +46,10 @@ namespace MapTool.NPC
             string[] lines = File.ReadAllLines(npcsFile, gb2312);
 
             // Line 1 is header, Line 2+ are NPC data
-            // Line 2 = ID 1, Line 3 = ID 2, etc. (line index - 1 = NPC ID)
+            // lines[0] = line 1 (header)
+            // lines[1] = line 2 → NPC ID 1
+            // lines[2] = line 3 → NPC ID 2
+            // lines[49] = line 50 → NPC ID 49
             for (int i = 1; i < lines.Length; i++)
             {
                 string line = lines[i].Trim();
@@ -57,7 +60,7 @@ namespace MapTool.NPC
                 if (columns.Length < 12)
                     continue;  // Need at least 12 columns for NpcResType
 
-                int npcId = i - 1; // Line 2 = ID 1, Line 3 = ID 2
+                int npcId = i; // lines[1] = line 2 = ID 1, lines[49] = line 50 = ID 49
 
                 NpcInfo info = new NpcInfo
                 {
