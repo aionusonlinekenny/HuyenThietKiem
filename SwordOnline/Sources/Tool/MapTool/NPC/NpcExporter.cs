@@ -114,8 +114,8 @@ namespace MapTool.NPC
         /// </summary>
         public void ExportToFile(string filePath)
         {
-            // Use GB2312 (ANSI) encoding for Chinese characters
-            Encoding encoding = Encoding.GetEncoding("GB2312");
+            // Use Windows-1252 (ANSI) encoding for Vietnamese TCVN3 characters
+            Encoding encoding = Encoding.GetEncoding("Windows-1252");
             using (StreamWriter writer = new StreamWriter(filePath, false, encoding))
             {
                 // Write header
@@ -140,8 +140,8 @@ namespace MapTool.NPC
             }
 
             _entries.Clear();
-            // Use GB2312 (ANSI) encoding for Chinese characters
-            Encoding encoding = Encoding.GetEncoding("GB2312");
+            // Use Windows-1252 (ANSI) encoding for Vietnamese TCVN3 characters
+            Encoding encoding = Encoding.GetEncoding("Windows-1252");
             string[] lines = File.ReadAllLines(filePath, encoding);
 
             for (int i = 1; i < lines.Length; i++) // Skip header

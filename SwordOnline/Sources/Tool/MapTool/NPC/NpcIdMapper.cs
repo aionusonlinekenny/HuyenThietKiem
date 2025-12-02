@@ -44,9 +44,9 @@ namespace MapTool.NPC
 
             _npcDatabase.Clear();
 
-            // Read with GB2312 encoding (Chinese encoding)
-            Encoding gb2312 = Encoding.GetEncoding("GB2312");
-            string[] lines = File.ReadAllLines(npcsFile, gb2312);
+            // Read with Windows-1252 encoding (ANSI - compatible with TCVN3 Vietnamese)
+            Encoding encoding = Encoding.GetEncoding("Windows-1252");
+            string[] lines = File.ReadAllLines(npcsFile, encoding);
 
             DebugLogger.Log($"         Total lines in file: {lines.Length}");
 
