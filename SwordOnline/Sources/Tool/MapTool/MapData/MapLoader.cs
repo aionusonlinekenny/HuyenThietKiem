@@ -30,14 +30,34 @@ namespace MapTool.MapData
 
         private void TryOpenPakFile()
         {
-            // Try multiple possible pak file locations
-            string[] possiblePaths = new[]
+            // Determine possible pak file locations based on mode
+            string[] possiblePaths;
+
+            if (_isServerMode)
             {
-                Path.Combine(_gameFolder, "pak", "maps.pak"),              // Server: Bin/Server/pak/maps.pak
-                Path.Combine(_gameFolder, "..", "pak", "maps.pak"),         // Bin/Client/../pak/maps.pak (if exists)
-                Path.Combine(_gameFolder, "..", "Server", "pak", "maps.pak"), // Client: Bin/Client/../Server/pak/maps.pak
-                Path.Combine(_gameFolder, "maps.pak"),                     // Direct: Bin/maps.pak
-            };
+                // Server mode: Only try Server pak locations
+                possiblePaths = new[]
+                {
+                    Path.Combine(_gameFolder, "pak", "maps.pak"),              // Server: Bin/Server/pak/maps.pak
+                    Path.Combine(_gameFolder, "maps.pak"),                     // Direct: Bin/maps.pak
+                };
+            }
+            else
+            {
+                // Client mode: Only try Client pak locations (NOT Server fallback)
+                // Client uses different PAK format (jxhangnga1.pak) which is not supported
+                // Client must extract PAK contents to disk first
+                possiblePaths = new[]
+                {
+                    Path.Combine(_gameFolder, "pak", "maps.pak"),              // Client: Bin/Client/pak/maps.pak (if exists)
+                    Path.Combine(_gameFolder, "..", "pak", "maps.pak"),         // Bin/Client/../pak/maps.pak (if exists)
+                };
+
+                Console.WriteLine($"ℹ Client mode: PAK files are not supported");
+                Console.WriteLine($"  Client uses different PAK format (jxhangnga1.pak, settings.pak)");
+                Console.WriteLine($"  Please extract PAK contents to disk using PAK extraction tool");
+                Console.WriteLine($"  Or switch to Server mode if you have Server files");
+            }
 
             foreach (string pakPath in possiblePaths)
             {
@@ -61,11 +81,14 @@ namespace MapTool.MapData
                 }
             }
 
-            Console.WriteLine($"ℹ No pak file found at any location, will read from disk");
-            Console.WriteLine($"  Tried paths:");
-            foreach (string path in possiblePaths)
+            Console.WriteLine($"ℹ No pak file found, will read from disk only");
+            if (_isServerMode)
             {
-                Console.WriteLine($"    - {path}");
+                Console.WriteLine($"  Tried paths:");
+                foreach (string path in possiblePaths)
+                {
+                    Console.WriteLine($"    - {path}");
+                }
             }
         }
 
