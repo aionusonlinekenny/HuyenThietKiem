@@ -16,7 +16,8 @@ namespace MapTool.MapData
         private string _gameFolder;
         private bool _isServerMode;
         private MapListParser _mapListParser;
-        private PakFileReader _pakReader;
+        private PakFileReader _pakReader;      // For Server mode (maps.pak)
+        private PakManager _pakManager;        // For Client mode (data/*.pak)
 
         public MapLoader(string gameFolder, bool isServerMode = true)
         {
@@ -24,70 +25,65 @@ namespace MapTool.MapData
             _isServerMode = isServerMode;
             _mapListParser = new MapListParser(gameFolder);
 
-            // Try to open maps.pak
+            // Try to open PAK files
             TryOpenPakFile();
         }
 
         private void TryOpenPakFile()
         {
-            // Determine possible pak file locations based on mode
-            string[] possiblePaths;
-
             if (_isServerMode)
             {
-                // Server mode: Only try Server pak locations
-                possiblePaths = new[]
+                // Server mode: Use PakFileReader for maps.pak
+                string[] possiblePaths = new[]
                 {
                     Path.Combine(_gameFolder, "pak", "maps.pak"),              // Server: Bin/Server/pak/maps.pak
                     Path.Combine(_gameFolder, "maps.pak"),                     // Direct: Bin/maps.pak
                 };
-            }
-            else
-            {
-                // Client mode: Only try Client pak locations (NOT Server fallback)
-                // Client uses different PAK format (jxhangnga1.pak) which is not supported
-                // Client must extract PAK contents to disk first
-                possiblePaths = new[]
+
+                foreach (string pakPath in possiblePaths)
                 {
-                    Path.Combine(_gameFolder, "pak", "maps.pak"),              // Client: Bin/Client/pak/maps.pak (if exists)
-                    Path.Combine(_gameFolder, "..", "pak", "maps.pak"),         // Bin/Client/../pak/maps.pak (if exists)
-                };
-
-                Console.WriteLine($"ℹ Client mode: PAK files are not supported");
-                Console.WriteLine($"  Client uses different PAK format (jxhangnga1.pak, settings.pak)");
-                Console.WriteLine($"  Please extract PAK contents to disk using PAK extraction tool");
-                Console.WriteLine($"  Or switch to Server mode if you have Server files");
-            }
-
-            foreach (string pakPath in possiblePaths)
-            {
-                if (File.Exists(pakPath))
-                {
-                    try
+                    if (File.Exists(pakPath))
                     {
-                        _pakReader = new PakFileReader(pakPath);
-                        Console.WriteLine($"✓ Opened pak file: {pakPath}");
+                        try
+                        {
+                            _pakReader = new PakFileReader(pakPath);
+                            Console.WriteLine($"✓ Opened pak file: {pakPath}");
 
-                        // Show pak statistics
-                        var stats = _pakReader.GetStatistics();
-                        Console.WriteLine($"✓ Pak contains {stats.TotalFiles} files");
-                        return; // Success!
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"⚠ Warning: Could not open pak file {pakPath}: {ex.Message}");
-                        _pakReader = null;
+                            // Show pak statistics
+                            var stats = _pakReader.GetStatistics();
+                            Console.WriteLine($"✓ Pak contains {stats.TotalFiles} files");
+                            return; // Success!
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"⚠ Warning: Could not open pak file {pakPath}: {ex.Message}");
+                            _pakReader = null;
+                        }
                     }
                 }
-            }
 
-            Console.WriteLine($"ℹ No pak file found, will read from disk only");
-            if (_isServerMode)
-            {
+                Console.WriteLine($"ℹ No pak file found, will read from disk only");
                 Console.WriteLine($"  Tried paths:");
                 foreach (string path in possiblePaths)
                 {
                     Console.WriteLine($"    - {path}");
+                }
+            }
+            else
+            {
+                // Client mode: Use PakManager for multiple PAK files (jxhangnga1.pak, settings.pak, etc.)
+                try
+                {
+                    Console.WriteLine($"ℹ Client mode: Loading PAK files using PakManager...");
+                    _pakManager = new PakManager(_gameFolder);
+                    _pakManager.LoadPakFiles();
+                    Console.WriteLine($"✓ PakManager initialized successfully");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"⚠ Warning: Failed to initialize PAK manager: {ex.Message}");
+                    Console.WriteLine($"  Will fall back to disk files only");
+                    _pakManager = null;
                 }
             }
         }
@@ -97,8 +93,13 @@ namespace MapTool.MapData
         /// </summary>
         private bool FileExists(string relativePath)
         {
-            // Try pak first
+            // Try pak first (Server mode: PakFileReader, Client mode: PakManager)
             if (_pakReader != null && _pakReader.FileExists(relativePath))
+            {
+                return true;
+            }
+
+            if (_pakManager != null && _pakManager.FileExists(relativePath))
             {
                 return true;
             }
@@ -231,7 +232,7 @@ namespace MapTool.MapData
         /// </summary>
         private byte[] ReadFileBytes(string relativePath)
         {
-            // Try pak first
+            // Try Server PAK first (maps.pak)
             if (_pakReader != null)
             {
                 try
@@ -258,7 +259,24 @@ namespace MapTool.MapData
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"⚠ Failed to read from pak: {ex.Message}");
+                    Console.WriteLine($"⚠ Failed to read from Server pak: {ex.Message}");
+                }
+            }
+
+            // Try Client PAK (jxhangnga1.pak, settings.pak, etc.)
+            if (_pakManager != null)
+            {
+                try
+                {
+                    byte[] data = _pakManager.ReadFile(relativePath);
+                    if (data != null)
+                    {
+                        return data;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"⚠ Failed to read from Client pak: {ex.Message}");
                 }
             }
 
@@ -795,6 +813,12 @@ namespace MapTool.MapData
             {
                 _pakReader.Dispose();
                 _pakReader = null;
+            }
+
+            if (_pakManager != null)
+            {
+                _pakManager.Dispose();
+                _pakManager = null;
             }
         }
     }
