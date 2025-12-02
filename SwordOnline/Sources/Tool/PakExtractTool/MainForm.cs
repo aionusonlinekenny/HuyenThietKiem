@@ -1,0 +1,589 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using MapTool.PakFile;
+
+namespace PakExtractTool
+{
+    public partial class MainForm : Form
+    {
+        private PakFileReader _currentPakReader;
+        private string _currentPakPath;
+        private TreeView treeViewFiles;
+        private ListView listViewDetails;
+        private Button btnOpenPak;
+        private Button btnExtractSelected;
+        private Button btnExtractAll;
+        private StatusStrip statusStrip;
+        private ToolStripStatusLabel statusLabel;
+        private SplitContainer splitContainer;
+        private Label lblPakInfo;
+
+        public MainForm()
+        {
+            InitializeComponent();
+        }
+
+        private void InitializeComponent()
+        {
+            this.Text = "PAK Extract Tool - Huyền Thiết Kiếm";
+            this.Size = new Size(1000, 700);
+            this.StartPosition = FormStartPosition.CenterScreen;
+
+            // Top panel with buttons and PAK info
+            var topPanel = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 80,
+                Padding = new Padding(10)
+            };
+
+            btnOpenPak = new Button
+            {
+                Text = "📂 Open PAK File",
+                Location = new Point(10, 10),
+                Size = new Size(150, 30),
+                Font = new Font("Segoe UI", 9F, FontStyle.Regular)
+            };
+            btnOpenPak.Click += BtnOpenPak_Click;
+
+            btnExtractSelected = new Button
+            {
+                Text = "📤 Extract Selected",
+                Location = new Point(170, 10),
+                Size = new Size(150, 30),
+                Enabled = false,
+                Font = new Font("Segoe UI", 9F, FontStyle.Regular)
+            };
+            btnExtractSelected.Click += BtnExtractSelected_Click;
+
+            btnExtractAll = new Button
+            {
+                Text = "📦 Extract All",
+                Location = new Point(330, 10),
+                Size = new Size(150, 30),
+                Enabled = false,
+                Font = new Font("Segoe UI", 9F, FontStyle.Regular)
+            };
+            btnExtractAll.Click += BtnExtractAll_Click;
+
+            lblPakInfo = new Label
+            {
+                Text = "No PAK file loaded",
+                Location = new Point(10, 45),
+                Size = new Size(800, 25),
+                Font = new Font("Segoe UI", 9F, FontStyle.Regular),
+                ForeColor = Color.Gray
+            };
+
+            topPanel.Controls.AddRange(new Control[] { btnOpenPak, btnExtractSelected, btnExtractAll, lblPakInfo });
+
+            // Split container for tree and details
+            splitContainer = new SplitContainer
+            {
+                Dock = DockStyle.Fill,
+                Orientation = Orientation.Horizontal,
+                SplitterDistance = 350,
+                Panel1MinSize = 200,
+                Panel2MinSize = 150
+            };
+
+            // TreeView for file hierarchy
+            treeViewFiles = new TreeView
+            {
+                Dock = DockStyle.Fill,
+                Font = new Font("Segoe UI", 9F),
+                HideSelection = false,
+                CheckBoxes = true
+            };
+            treeViewFiles.AfterSelect += TreeViewFiles_AfterSelect;
+            treeViewFiles.AfterCheck += TreeViewFiles_AfterCheck;
+
+            var lblTree = new Label
+            {
+                Text = "Files in PAK (check to extract):",
+                Dock = DockStyle.Top,
+                Height = 25,
+                Padding = new Padding(5),
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold)
+            };
+
+            splitContainer.Panel1.Controls.Add(treeViewFiles);
+            splitContainer.Panel1.Controls.Add(lblTree);
+
+            // ListView for file details
+            listViewDetails = new ListView
+            {
+                Dock = DockStyle.Fill,
+                View = View.Details,
+                FullRowSelect = true,
+                GridLines = true,
+                Font = new Font("Segoe UI", 9F)
+            };
+
+            listViewDetails.Columns.Add("Property", 150);
+            listViewDetails.Columns.Add("Value", 500);
+
+            var lblDetails = new Label
+            {
+                Text = "File Details:",
+                Dock = DockStyle.Top,
+                Height = 25,
+                Padding = new Padding(5),
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold)
+            };
+
+            splitContainer.Panel2.Controls.Add(listViewDetails);
+            splitContainer.Panel2.Controls.Add(lblDetails);
+
+            // Status bar
+            statusStrip = new StatusStrip();
+            statusLabel = new ToolStripStatusLabel("Ready");
+            statusStrip.Items.Add(statusLabel);
+
+            // Add all controls to form
+            this.Controls.Add(splitContainer);
+            this.Controls.Add(topPanel);
+            this.Controls.Add(statusStrip);
+        }
+
+        private void BtnOpenPak_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "PAK Files (*.pak)|*.pak|All Files (*.*)|*.*";
+                dialog.Title = "Select PAK File";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    LoadPakFile(dialog.FileName);
+                }
+            }
+        }
+
+        private void LoadPakFile(string pakPath)
+        {
+            try
+            {
+                treeViewFiles.Nodes.Clear();
+                listViewDetails.Items.Clear();
+                UpdateStatus("Loading PAK file...");
+
+                // Dispose previous reader
+                _currentPakReader?.Dispose();
+
+                // Load new PAK file
+                _currentPakReader = new PakFileReader(pakPath);
+                _currentPakPath = pakPath;
+
+                var stats = _currentPakReader.GetStatistics();
+                var allFiles = _currentPakReader.GetAllFileNames();
+
+                // Update UI
+                lblPakInfo.Text = $"📦 {Path.GetFileName(pakPath)} - " +
+                                  $"{stats.TotalFiles:N0} files " +
+                                  $"({stats.TotalSize / 1024 / 1024:N1} MB) - " +
+                                  $"{allFiles.Count:N0} named files";
+                lblPakInfo.ForeColor = Color.DarkGreen;
+
+                // Build tree structure
+                BuildFileTree(allFiles);
+
+                // Enable buttons
+                btnExtractSelected.Enabled = true;
+                btnExtractAll.Enabled = true;
+
+                UpdateStatus($"Loaded {allFiles.Count:N0} files from {Path.GetFileName(pakPath)}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading PAK file:\n\n{ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UpdateStatus("Error loading PAK file");
+            }
+        }
+
+        private void BuildFileTree(List<string> allFiles)
+        {
+            treeViewFiles.BeginUpdate();
+            treeViewFiles.Nodes.Clear();
+
+            // Create root node
+            var rootNode = new TreeNode("Root")
+            {
+                Tag = null
+            };
+            treeViewFiles.Nodes.Add(rootNode);
+
+            // Group files by directory
+            var filesByDir = new Dictionary<string, List<string>>();
+
+            foreach (var filePath in allFiles.OrderBy(f => f))
+            {
+                var normalizedPath = filePath.TrimStart('\\', '/').Replace('/', '\\');
+                var dir = Path.GetDirectoryName(normalizedPath) ?? "";
+
+                if (!filesByDir.ContainsKey(dir))
+                {
+                    filesByDir[dir] = new List<string>();
+                }
+                filesByDir[dir].Add(normalizedPath);
+            }
+
+            // Build tree hierarchy
+            foreach (var kvp in filesByDir.OrderBy(k => k.Key))
+            {
+                var dirPath = kvp.Key;
+                var files = kvp.Value;
+
+                // Find or create directory node
+                TreeNode parentNode = rootNode;
+
+                if (!string.IsNullOrEmpty(dirPath))
+                {
+                    var dirParts = dirPath.Split('\\');
+                    foreach (var part in dirParts)
+                    {
+                        var existingNode = parentNode.Nodes.Cast<TreeNode>()
+                            .FirstOrDefault(n => n.Text == part && n.Tag == null);
+
+                        if (existingNode == null)
+                        {
+                            existingNode = new TreeNode(part)
+                            {
+                                Tag = null, // null = directory
+                                ImageIndex = 0
+                            };
+                            parentNode.Nodes.Add(existingNode);
+                        }
+                        parentNode = existingNode;
+                    }
+                }
+
+                // Add files to this directory
+                foreach (var file in files)
+                {
+                    var fileName = Path.GetFileName(file);
+                    var fileNode = new TreeNode(fileName)
+                    {
+                        Tag = "\\" + file, // Full path with leading backslash
+                        ImageIndex = 1
+                    };
+                    parentNode.Nodes.Add(fileNode);
+                }
+            }
+
+            rootNode.Expand();
+            treeViewFiles.EndUpdate();
+        }
+
+        private void TreeViewFiles_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            listViewDetails.Items.Clear();
+
+            if (e.Node.Tag == null) // Directory node
+            {
+                // Show directory info
+                int fileCount = CountFiles(e.Node);
+                AddDetail("Type", "Directory");
+                AddDetail("Path", GetNodePath(e.Node));
+                AddDetail("Files", fileCount.ToString("N0"));
+            }
+            else // File node
+            {
+                string filePath = e.Node.Tag.ToString();
+                ShowFileDetails(filePath);
+            }
+        }
+
+        private void TreeViewFiles_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            // Prevent recursive calls
+            if (e.Action != TreeViewAction.Unknown)
+            {
+                CheckAllChildNodes(e.Node, e.Node.Checked);
+                UpdateParentNodeCheck(e.Node);
+            }
+
+            UpdateSelectedFilesCount();
+        }
+
+        private void CheckAllChildNodes(TreeNode node, bool isChecked)
+        {
+            foreach (TreeNode child in node.Nodes)
+            {
+                child.Checked = isChecked;
+                CheckAllChildNodes(child, isChecked);
+            }
+        }
+
+        private void UpdateParentNodeCheck(TreeNode node)
+        {
+            if (node.Parent == null) return;
+
+            bool allChecked = node.Parent.Nodes.Cast<TreeNode>().All(n => n.Checked);
+            bool anyChecked = node.Parent.Nodes.Cast<TreeNode>().Any(n => n.Checked);
+
+            if (allChecked)
+            {
+                node.Parent.Checked = true;
+            }
+            else if (!anyChecked)
+            {
+                node.Parent.Checked = false;
+            }
+
+            UpdateParentNodeCheck(node.Parent);
+        }
+
+        private void ShowFileDetails(string filePath)
+        {
+            try
+            {
+                var fileInfo = _currentPakReader.GetFileInfo(filePath);
+                if (fileInfo != null)
+                {
+                    AddDetail("Type", "File");
+                    AddDetail("Path", filePath);
+                    AddDetail("File ID", $"0x{fileInfo.FileId:X8}");
+                    AddDetail("Size", $"{fileInfo.Size:N0} bytes ({fileInfo.Size / 1024.0:N2} KB)");
+                    AddDetail("Compressed Size", $"{fileInfo.CompressedSize:N0} bytes ({fileInfo.CompressedSize / 1024.0:N2} KB)");
+                    AddDetail("Compression", fileInfo.IsCompressed ?
+                        $"{fileInfo.CompressionMethod} ({fileInfo.CompressionRatio:F1}%)" : "None");
+                }
+            }
+            catch (Exception ex)
+            {
+                AddDetail("Error", ex.Message);
+            }
+        }
+
+        private void AddDetail(string property, string value)
+        {
+            listViewDetails.Items.Add(new ListViewItem(new[] { property, value }));
+        }
+
+        private string GetNodePath(TreeNode node)
+        {
+            var path = new List<string>();
+            var current = node;
+            while (current != null && current.Parent != null)
+            {
+                path.Insert(0, current.Text);
+                current = current.Parent;
+            }
+            return string.Join("\\", path);
+        }
+
+        private int CountFiles(TreeNode node)
+        {
+            int count = 0;
+            foreach (TreeNode child in node.Nodes)
+            {
+                if (child.Tag != null) // File
+                {
+                    count++;
+                }
+                else // Directory
+                {
+                    count += CountFiles(child);
+                }
+            }
+            return count;
+        }
+
+        private void UpdateSelectedFilesCount()
+        {
+            int selectedCount = CountCheckedFiles(treeViewFiles.Nodes[0]);
+            btnExtractSelected.Text = selectedCount > 0 ?
+                $"📤 Extract Selected ({selectedCount})" :
+                "📤 Extract Selected";
+        }
+
+        private int CountCheckedFiles(TreeNode node)
+        {
+            int count = 0;
+            foreach (TreeNode child in node.Nodes)
+            {
+                if (child.Checked && child.Tag != null) // File
+                {
+                    count++;
+                }
+                count += CountCheckedFiles(child);
+            }
+            return count;
+        }
+
+        private void BtnExtractSelected_Click(object sender, EventArgs e)
+        {
+            var checkedFiles = GetCheckedFiles(treeViewFiles.Nodes[0]);
+            if (checkedFiles.Count == 0)
+            {
+                MessageBox.Show("Please select files to extract by checking them in the tree.",
+                    "No Files Selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            ExtractFiles(checkedFiles);
+        }
+
+        private void BtnExtractAll_Click(object sender, EventArgs e)
+        {
+            var allFiles = _currentPakReader.GetAllFileNames();
+            ExtractFiles(allFiles);
+        }
+
+        private List<string> GetCheckedFiles(TreeNode node)
+        {
+            var files = new List<string>();
+            foreach (TreeNode child in node.Nodes)
+            {
+                if (child.Checked && child.Tag != null) // File
+                {
+                    files.Add(child.Tag.ToString());
+                }
+                files.AddRange(GetCheckedFiles(child));
+            }
+            return files;
+        }
+
+        private void ExtractFiles(List<string> filesToExtract)
+        {
+            using (var dialog = new FolderBrowserDialog())
+            {
+                dialog.Description = "Select output folder for extracted files";
+                dialog.ShowNewFolderButton = true;
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    ExtractFilesToFolder(filesToExtract, dialog.SelectedPath);
+                }
+            }
+        }
+
+        private void ExtractFilesToFolder(List<string> files, string outputFolder)
+        {
+            var progressForm = new ProgressForm();
+            progressForm.Show(this);
+
+            int extracted = 0;
+            int skipped = 0;
+            int errors = 0;
+
+            try
+            {
+                foreach (var filePath in files)
+                {
+                    try
+                    {
+                        progressForm.UpdateProgress(extracted + skipped + errors, files.Count,
+                            $"Extracting: {Path.GetFileName(filePath)}");
+                        Application.DoEvents();
+
+                        byte[] data = _currentPakReader.ReadFile(filePath);
+
+                        if (data == null)
+                        {
+                            skipped++;
+                            continue;
+                        }
+
+                        string relativePath = filePath.TrimStart('\\', '/');
+                        string outputPath = Path.Combine(outputFolder, relativePath);
+                        string outputDir = Path.GetDirectoryName(outputPath);
+
+                        if (!string.IsNullOrEmpty(outputDir))
+                        {
+                            Directory.CreateDirectory(outputDir);
+                        }
+
+                        File.WriteAllBytes(outputPath, data);
+                        extracted++;
+                    }
+                    catch (NotImplementedException)
+                    {
+                        skipped++;
+                    }
+                    catch (Exception)
+                    {
+                        errors++;
+                    }
+                }
+
+                progressForm.Close();
+
+                string message = $"Extraction complete!\n\n" +
+                                 $"✓ Extracted: {extracted:N0} files\n" +
+                                 $"⚠ Skipped: {skipped:N0} files (compressed)\n" +
+                                 $"❌ Errors: {errors:N0} files\n\n" +
+                                 $"Output: {outputFolder}";
+
+                MessageBox.Show(message, "Extraction Complete",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                UpdateStatus($"Extracted {extracted:N0} files to {outputFolder}");
+            }
+            catch (Exception ex)
+            {
+                progressForm.Close();
+                MessageBox.Show($"Error during extraction:\n\n{ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void UpdateStatus(string message)
+        {
+            statusLabel.Text = $"{DateTime.Now:HH:mm:ss} - {message}";
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            _currentPakReader?.Dispose();
+            base.OnFormClosing(e);
+        }
+    }
+
+    // Simple progress form
+    public class ProgressForm : Form
+    {
+        private ProgressBar progressBar;
+        private Label lblStatus;
+
+        public ProgressForm()
+        {
+            this.Text = "Extracting Files...";
+            this.Size = new Size(500, 120);
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+
+            lblStatus = new Label
+            {
+                Text = "Preparing...",
+                Location = new Point(10, 10),
+                Size = new Size(460, 20)
+            };
+
+            progressBar = new ProgressBar
+            {
+                Location = new Point(10, 40),
+                Size = new Size(460, 25),
+                Style = ProgressBarStyle.Continuous
+            };
+
+            this.Controls.Add(lblStatus);
+            this.Controls.Add(progressBar);
+        }
+
+        public void UpdateProgress(int current, int total, string status)
+        {
+            progressBar.Maximum = total;
+            progressBar.Value = Math.Min(current, total);
+            lblStatus.Text = $"{current}/{total} - {status}";
+        }
+    }
+}
