@@ -419,14 +419,6 @@ namespace MapTool.PakFile
             return stats;
         }
 
-        /// <summary>
-        /// Get all file names from the PAK file
-        /// </summary>
-        public List<string> GetAllFileNames()
-        {
-            return _nameToId.Keys.ToList();
-        }
-
         public void Dispose()
         {
             if (_pakStream != null)
