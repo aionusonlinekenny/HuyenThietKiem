@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 using System.IO;
-using MapTool.MapData;
+using MapTool;
 
 namespace PakExtractTool
 {

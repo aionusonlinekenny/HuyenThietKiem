@@ -4,8 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using MapTool;
 using MapTool.PakFile;
-using MapTool.MapData;
 
 namespace PakExtractTool
 {
