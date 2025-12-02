@@ -110,7 +110,7 @@ namespace MapTool.Export
         /// </summary>
         public void ExportToTrapFile(string filePath)
         {
-            using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
+            using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.GetEncoding("Windows-1252")))
             {
                 // Write header
                 writer.WriteLine("MapId\tRegionId\tCellX\tCellY\tScriptFile\tIsLoad");
@@ -128,7 +128,7 @@ namespace MapTool.Export
         /// </summary>
         public void ExportToObjectFile(string filePath, int objId = 1, int direction = 0, int state = 0)
         {
-            using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
+            using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.GetEncoding("Windows-1252")))
             {
                 // Write header
                 writer.WriteLine("ObjID\tMapID\tPosX\tPosY\tDir\tState\tScriptFile\tIsLoad");
@@ -157,7 +157,7 @@ namespace MapTool.Export
             }
 
             _entries.Clear();
-            string[] lines = File.ReadAllLines(filePath, Encoding.UTF8);
+            string[] lines = File.ReadAllLines(filePath, Encoding.GetEncoding("Windows-1252"));
 
             for (int i = 1; i < lines.Length; i++) // Skip header
             {

@@ -628,7 +628,7 @@ namespace MapTool
                         DebugLogger.Log($"   Map ID: {_currentMap.MapId}");
                         DebugLogger.Log($"   Total loaded regions: {_currentMap.Regions.Count}");
 
-                        using (StreamWriter writer = new StreamWriter(dialog.FileName, false, System.Text.Encoding.UTF8))
+                        using (StreamWriter writer = new StreamWriter(dialog.FileName, false, System.Text.Encoding.GetEncoding("Windows-1252")))
                         {
                             // Write header
                             writer.WriteLine("MapId\tRegionId\tCellX\tCellY\tScriptFile\tIsLoad");
@@ -733,7 +733,7 @@ namespace MapTool
                     int totalCells = 0;
                     int regionCount = 0;
 
-                    using (StreamWriter writer = new StreamWriter(dialog.FileName, false, System.Text.Encoding.UTF8))
+                    using (StreamWriter writer = new StreamWriter(dialog.FileName, false, System.Text.Encoding.GetEncoding("Windows-1252")))
                     {
                         // Write header - MapId RegionId CellX CellY ScriptFile IsLoad format
                         writer.WriteLine("MapId\tRegionId\tCellX\tCellY\tScriptFile\tIsLoad");

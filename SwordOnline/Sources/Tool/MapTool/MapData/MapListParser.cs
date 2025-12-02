@@ -34,8 +34,8 @@ namespace MapTool.MapData
 
             _mapEntries.Clear();
 
-            // Read with GB2312 encoding (Chinese characters)
-            string[] lines = File.ReadAllLines(mapListPath, Encoding.GetEncoding("GB2312"));
+            // Read with Windows-1252 encoding (ANSI - compatible with TCVN3 Vietnamese)
+            string[] lines = File.ReadAllLines(mapListPath, Encoding.GetEncoding("Windows-1252"));
             string currentSection = "";
 
             foreach (string line in lines)
