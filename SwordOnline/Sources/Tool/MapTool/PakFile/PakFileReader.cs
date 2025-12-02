@@ -281,6 +281,16 @@ namespace MapTool.PakFile
             // Method 2: Calculate hash using game's algorithm (fallback)
             // This ensures we can find files even if .pak.txt is missing or incomplete
             uint calculatedId = FileNameHasher.CalculateFileId(fileName);
+
+            // DEBUG: Log hash calculation for background images
+            if (fileName.Contains("background") || fileName.Contains("游戏资源"))
+            {
+                DebugLogger.Log($"            [PAK: {System.IO.Path.GetFileName(_pakFilePath)}] Checking file: {fileName}");
+                DebugLogger.Log($"            Calculated hash: 0x{calculatedId:X8}");
+                DebugLogger.Log($"            Hash exists in index: {_fileIndex.ContainsKey(calculatedId)}");
+                DebugLogger.Log($"            Total files in PAK: {_fileIndex.Count}");
+            }
+
             if (_fileIndex.ContainsKey(calculatedId))
             {
                 // Found by calculated hash! Cache it for future lookups

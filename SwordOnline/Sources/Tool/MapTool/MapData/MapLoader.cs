@@ -647,8 +647,7 @@ namespace MapTool.MapData
             DebugLogger.Log($"   Folder Path: {mapEntry.FolderPath}");
             DebugLogger.Log($"   Image Path: {mapImageRelativePath}");
 
-            // Debug: Show bytes of the path for PAK hash debugging
-            if (_pakReader != null)
+            // Debug: Show bytes of the path for PAK hash debugging (both Client and Server modes)
             {
                 byte[] pathBytes = Encoding.GetEncoding("GB2312").GetBytes(mapImageRelativePath);
                 string hexBytes = BitConverter.ToString(pathBytes).Replace("-", " ");
@@ -901,6 +900,11 @@ namespace MapTool.MapData
                     // Try Client PAK first
                     if (_pakManager != null)
                     {
+                        DebugLogger.Log($"      🔍 Searching in Client PAK files...");
+                        DebugLogger.Log($"         Path to find: {mapImageRelativePath}");
+                        DebugLogger.Log($"         Normalized: {MapTool.PakFile.FileNameHasher.NormalizePath(mapImageRelativePath)}");
+                        DebugLogger.Log($"         Hash: 0x{MapTool.PakFile.FileNameHasher.CalculateFileId(mapImageRelativePath):X8}");
+
                         bool existsInClientPak = _pakManager.FileExists(mapImageRelativePath);
                         DebugLogger.Log($"      File exists in Client PAK: {existsInClientPak}");
 
