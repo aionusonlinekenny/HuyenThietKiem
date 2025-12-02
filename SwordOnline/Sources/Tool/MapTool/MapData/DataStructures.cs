@@ -177,5 +177,18 @@ namespace MapTool.MapData
         {
             return $"{MapId}\t{RegionId}\t{CellX}\t{CellY}\t{ScriptFile}\t{IsLoad}";
         }
+
+        /// <summary>
+        /// Convert RegionId + Cell to World coordinates
+        /// </summary>
+        public void GetWorldCoordinates(MapConfig mapConfig, out int worldX, out int worldY)
+        {
+            // Convert local RegionID back to region X,Y
+            RegionData.ParseLocalRegionID(RegionId, mapConfig.RegionLeft, mapConfig.RegionTop,
+                mapConfig.RegionWidth, out int regionX, out int regionY);
+
+            // Convert region + cell to world
+            CoordinateConverter.RegionCellToWorld(regionX, regionY, CellX, CellY, out worldX, out worldY);
+        }
     }
 }
