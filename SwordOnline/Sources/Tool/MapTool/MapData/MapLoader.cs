@@ -632,8 +632,24 @@ namespace MapTool.MapData
             if (!string.IsNullOrEmpty(config.BackgroundImagePath))
             {
                 // Use background image path from .ini file (Client mode)
-                mapImageRelativePath = config.BackgroundImagePath;
-                DebugLogger.Log($"🎨 Using background image from .ini file: {mapImageRelativePath}");
+                // .ini files contain paths like: \游戏资源\background\背景图.jpg
+                // But PAK files store them as: \maps\游戏资源\background\背景图.jpg
+                string iniPath = config.BackgroundImagePath.TrimStart('\\', '/');
+
+                // If the path doesn't start with "maps\", prepend it
+                if (!iniPath.StartsWith("maps\\", StringComparison.OrdinalIgnoreCase) &&
+                    !iniPath.StartsWith("maps/", StringComparison.OrdinalIgnoreCase))
+                {
+                    mapImageRelativePath = $"\\maps\\{iniPath}";
+                    DebugLogger.Log($"🎨 Using background image from .ini file:");
+                    DebugLogger.Log($"   Original: {config.BackgroundImagePath}");
+                    DebugLogger.Log($"   Adjusted: {mapImageRelativePath}");
+                }
+                else
+                {
+                    mapImageRelativePath = config.BackgroundImagePath;
+                    DebugLogger.Log($"🎨 Using background image from .ini file: {mapImageRelativePath}");
+                }
             }
             else
             {
