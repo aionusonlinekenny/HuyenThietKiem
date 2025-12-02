@@ -442,15 +442,26 @@ namespace MapTool.MapData
 
             // Step 5: Try to load map image (24.jpg)
             // NEW: Simple and correct image path construction with encoding fallback
-            // FolderPath format: "西北南区\成都\成都"
+            // FolderPath format: "西北南区\成都\成都" (may or may not have trailing backslash)
             // Image path: "\maps\西北南区\成都\成都24.jpg"
 
-            string mapImageRelativePath = $"\\maps\\{mapEntry.FolderPath}24.jpg";
+            // Ensure FolderPath doesn't have trailing backslash
+            string folderPath = mapEntry.FolderPath.TrimEnd('\\', '/');
+            string mapImageRelativePath = $"\\maps\\{folderPath}24.jpg";
 
             DebugLogger.Log($"🖼️  LOADING MAP IMAGE");
             DebugLogger.Log($"   Map ID: {mapId}");
             DebugLogger.Log($"   Folder Path: {mapEntry.FolderPath}");
             DebugLogger.Log($"   Image Path: {mapImageRelativePath}");
+
+            // Debug: Show bytes of the path for PAK hash debugging
+            if (_pakReader != null)
+            {
+                byte[] pathBytes = Encoding.GetEncoding("GB2312").GetBytes(mapImageRelativePath);
+                string hexBytes = BitConverter.ToString(pathBytes).Replace("-", " ");
+                DebugLogger.Log($"   Path GB2312 bytes (for PAK hash): {hexBytes.Substring(0, Math.Min(100, hexBytes.Length))}...");
+                DebugLogger.Log($"   PAK file hash: 0x{MapTool.PakFile.FileNameHasher.CalculateFileId(mapImageRelativePath):X8}");
+            }
 
             // Try disk first (preferred for user-uploaded images)
             string diskPath = Path.Combine(_gameFolder, mapImageRelativePath.TrimStart('\\', '/'));
