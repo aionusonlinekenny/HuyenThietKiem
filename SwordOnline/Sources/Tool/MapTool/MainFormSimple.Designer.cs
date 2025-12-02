@@ -426,8 +426,8 @@ namespace MapTool
             this.grpNpcPreview.TabStop = false;
             this.grpNpcPreview.Text = "NPC Preview";
 
-            this.picNpcPreview.BackColor = System.Drawing.Color.FromArgb(32, 32, 32);
-            this.picNpcPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picNpcPreview.BackColor = System.Drawing.SystemColors.Control;
+            this.picNpcPreview.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picNpcPreview.Location = new System.Drawing.Point(10, 70);
             this.picNpcPreview.Name = "picNpcPreview";
             this.picNpcPreview.Size = new System.Drawing.Size(310, 165);

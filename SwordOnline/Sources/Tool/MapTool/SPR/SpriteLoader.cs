@@ -239,6 +239,10 @@ namespace MapTool.SPR
             }
 
             bmp.UnlockBits(bmpData);
+
+            // Make magenta pixels transparent
+            bmp.MakeTransparent(Color.Magenta);
+
             return bmp;
         }
 

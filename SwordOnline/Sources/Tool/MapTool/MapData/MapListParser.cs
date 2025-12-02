@@ -34,8 +34,11 @@ namespace MapTool.MapData
 
             _mapEntries.Clear();
 
-            // Read with Windows-1252 encoding (ANSI - compatible with TCVN3 Vietnamese)
-            string[] lines = File.ReadAllLines(mapListPath, Encoding.GetEncoding("Windows-1252"));
+            // Read with GB2312 encoding to preserve Chinese folder paths
+            // Map names (_name) will be re-encoded from Windows-1252
+            Encoding gb2312 = Encoding.GetEncoding("GB2312");
+            Encoding win1252 = Encoding.GetEncoding("Windows-1252");
+            string[] lines = File.ReadAllLines(mapListPath, gb2312);
             string currentSection = "";
 
             foreach (string line in lines)
@@ -82,7 +85,8 @@ namespace MapTool.MapData
                 }
                 else if (key.EndsWith("_name"))
                 {
-                    // Map name
+                    // Map name is in TCVN3/Windows-1252, but was read as GB2312
+                    // Re-encode: Get original bytes back → decode as Windows-1252
                     string mapIdStr = key.Substring(0, key.Length - 5);
                     if (int.TryParse(mapIdStr, out mapId))
                     {
@@ -90,7 +94,10 @@ namespace MapTool.MapData
                         {
                             _mapEntries[mapId] = new MapListEntry { MapId = mapId };
                         }
-                        _mapEntries[mapId].Name = value;
+                        // Convert from GB2312 bytes back to Windows-1252 string
+                        byte[] nameBytes = gb2312.GetBytes(value);
+                        string correctName = win1252.GetString(nameBytes);
+                        _mapEntries[mapId].Name = correctName;
                     }
                 }
                 else if (key.EndsWith("_MapType"))
