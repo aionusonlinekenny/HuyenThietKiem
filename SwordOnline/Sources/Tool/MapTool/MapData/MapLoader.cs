@@ -7,22 +7,20 @@ using MapTool.PakFile;
 namespace MapTool.MapData
 {
     /// <summary>
-    /// Auto-loads complete map data from game folder
+    /// Auto-loads complete map data from Server game folder
     /// Workflow: GameFolder + MapID → Auto load all regions
     /// Supports both .pak files and disk files
+    /// Server mode only - reads from Bin/Server/pak/maps.pak
     /// </summary>
     public class MapLoader : IDisposable
     {
         private string _gameFolder;
-        private bool _isServerMode;
         private MapListParser _mapListParser;
-        private PakFileReader _pakReader;      // For Server mode (maps.pak)
-        private PakManager _pakManager;        // For Client mode (data/*.pak)
+        private PakFileReader _pakReader;      // Server PAK (maps.pak)
 
         public MapLoader(string gameFolder, bool isServerMode = true)
         {
             _gameFolder = gameFolder;
-            _isServerMode = isServerMode;
             _mapListParser = new MapListParser(gameFolder);
 
             // Try to open PAK files
@@ -31,60 +29,40 @@ namespace MapTool.MapData
 
         private void TryOpenPakFile()
         {
-            if (_isServerMode)
+            // Server mode: Use PakFileReader for maps.pak
+            string[] possiblePaths = new[]
             {
-                // Server mode: Use PakFileReader for maps.pak
-                string[] possiblePaths = new[]
-                {
-                    Path.Combine(_gameFolder, "pak", "maps.pak"),              // Server: Bin/Server/pak/maps.pak
-                    Path.Combine(_gameFolder, "maps.pak"),                     // Direct: Bin/maps.pak
-                };
+                Path.Combine(_gameFolder, "pak", "maps.pak"),              // Server: Bin/Server/pak/maps.pak
+                Path.Combine(_gameFolder, "maps.pak"),                     // Direct: Bin/maps.pak
+            };
 
-                foreach (string pakPath in possiblePaths)
+            foreach (string pakPath in possiblePaths)
+            {
+                if (File.Exists(pakPath))
                 {
-                    if (File.Exists(pakPath))
+                    try
                     {
-                        try
-                        {
-                            _pakReader = new PakFileReader(pakPath);
-                            Console.WriteLine($"✓ Opened pak file: {pakPath}");
+                        _pakReader = new PakFileReader(pakPath);
+                        Console.WriteLine($"✓ Opened pak file: {pakPath}");
 
-                            // Show pak statistics
-                            var stats = _pakReader.GetStatistics();
-                            Console.WriteLine($"✓ Pak contains {stats.TotalFiles} files");
-                            return; // Success!
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"⚠ Warning: Could not open pak file {pakPath}: {ex.Message}");
-                            _pakReader = null;
-                        }
+                        // Show pak statistics
+                        var stats = _pakReader.GetStatistics();
+                        Console.WriteLine($"✓ Pak contains {stats.TotalFiles} files");
+                        return; // Success!
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"⚠ Warning: Could not open pak file {pakPath}: {ex.Message}");
+                        _pakReader = null;
                     }
                 }
-
-                Console.WriteLine($"ℹ No pak file found, will read from disk only");
-                Console.WriteLine($"  Tried paths:");
-                foreach (string path in possiblePaths)
-                {
-                    Console.WriteLine($"    - {path}");
-                }
             }
-            else
+
+            Console.WriteLine($"ℹ No pak file found, will read from disk only");
+            Console.WriteLine($"  Tried paths:");
+            foreach (string path in possiblePaths)
             {
-                // Client mode: Use PakManager for multiple PAK files (jxhangnga1.pak, settings.pak, etc.)
-                try
-                {
-                    Console.WriteLine($"ℹ Client mode: Loading PAK files using PakManager...");
-                    _pakManager = new PakManager(_gameFolder);
-                    _pakManager.LoadPakFiles();
-                    Console.WriteLine($"✓ PakManager initialized successfully");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"⚠ Warning: Failed to initialize PAK manager: {ex.Message}");
-                    Console.WriteLine($"  Will fall back to disk files only");
-                    _pakManager = null;
-                }
+                Console.WriteLine($"    - {path}");
             }
         }
 
@@ -93,22 +71,12 @@ namespace MapTool.MapData
         /// </summary>
         private bool FileExists(string relativePath)
         {
-            // Try pak first (Server mode: PakFileReader, Client mode: PakManager)
+            // Try Server PAK first
             if (_pakReader != null)
             {
-                bool existsInServerPak = _pakReader.FileExists(relativePath);
-                DebugLogger.Log($"      Checking Server PAK: {existsInServerPak}");
-                if (existsInServerPak)
-                {
-                    return true;
-                }
-            }
-
-            if (_pakManager != null)
-            {
-                bool existsInClientPak = _pakManager.FileExists(relativePath);
-                DebugLogger.Log($"      Checking Client PAK: {existsInClientPak}");
-                if (existsInClientPak)
+                bool existsInPak = _pakReader.FileExists(relativePath);
+                DebugLogger.Log($"      Checking Server PAK: {existsInPak}");
+                if (existsInPak)
                 {
                     return true;
                 }
@@ -275,23 +243,6 @@ namespace MapTool.MapData
                 }
             }
 
-            // Try Client PAK (jxhangnga1.pak, settings.pak, etc.)
-            if (_pakManager != null)
-            {
-                try
-                {
-                    byte[] data = _pakManager.ReadFile(relativePath);
-                    if (data != null)
-                    {
-                        return data;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"⚠ Failed to read from Client pak: {ex.Message}");
-                }
-            }
-
             // Try direct disk path first (for non-GB2312 paths)
             string diskPath = Path.Combine(_gameFolder, relativePath.TrimStart('\\', '/'));
             if (File.Exists(diskPath))
@@ -335,7 +286,7 @@ namespace MapTool.MapData
             DebugLogger.Log($"   .wor Relative Path: {worRelativePath}");
 
             // Debug: Show hash calculation for PAK lookup
-            if (_pakReader != null || _pakManager != null)
+            if (_pakReader != null)
             {
                 byte[] pathBytes = Encoding.GetEncoding("GB2312").GetBytes(worRelativePath);
                 string hexBytes = BitConverter.ToString(pathBytes).Replace("-", " ");
@@ -376,84 +327,7 @@ namespace MapTool.MapData
                 }
                 else
                 {
-                    // Client mode: Try to load Client .map or .ini file as fallback
-                    if (!_isServerMode)
-                    {
-                        DebugLogger.Log($"   ✗ .wor not found, trying Client .map file...");
-
-                        // Try 1: Client .map files are stored as: maps/{mapId}.map
-                        string clientMapPath = Path.Combine(_gameFolder, "maps", $"{mapId}.map");
-                        string clientMapRelativePath = $"\\maps\\{mapId}.map";
-
-                        DebugLogger.Log($"   Client .map path: {clientMapPath}");
-                        DebugLogger.Log($"   Client .map relative: {clientMapRelativePath}");
-
-                        // Try PAK first
-                        byte[] mapBytes = null;
-                        if (_pakManager != null && _pakManager.FileExists(clientMapRelativePath))
-                        {
-                            DebugLogger.Log($"   ✓ Found in Client PAK");
-                            mapBytes = _pakManager.ReadFile(clientMapRelativePath);
-                        }
-
-                        // Fallback to disk
-                        if (mapBytes == null && File.Exists(clientMapPath))
-                        {
-                            DebugLogger.Log($"   ✓ Found on disk");
-                            mapBytes = File.ReadAllBytes(clientMapPath);
-                        }
-
-                        if (mapBytes != null)
-                        {
-                            DebugLogger.Log($"✓ Parsing Client .map file ({mapBytes.Length} bytes)");
-                            config = ClientMapParser.ParseClientMapFromBytes(mapBytes, mapEntry.Name);
-                        }
-                        else
-                        {
-                            // Try 2: Client .ini files are stored as: maps/{mapId}.ini
-                            DebugLogger.Log($"   ✗ .map not found, trying Client .ini file...");
-
-                            string clientIniPath = Path.Combine(_gameFolder, "maps", $"{mapId}.ini");
-                            string clientIniRelativePath = $"\\maps\\{mapId}.ini";
-
-                            DebugLogger.Log($"   Client .ini path: {clientIniPath}");
-                            DebugLogger.Log($"   Client .ini relative: {clientIniRelativePath}");
-
-                            // Try PAK first
-                            byte[] iniBytes = null;
-                            if (_pakManager != null && _pakManager.FileExists(clientIniRelativePath))
-                            {
-                                DebugLogger.Log($"   ✓ Found in Client PAK");
-                                iniBytes = _pakManager.ReadFile(clientIniRelativePath);
-                            }
-
-                            // Fallback to disk
-                            if (iniBytes == null && File.Exists(clientIniPath))
-                            {
-                                DebugLogger.Log($"   ✓ Found on disk");
-                                iniBytes = File.ReadAllBytes(clientIniPath);
-                            }
-
-                            if (iniBytes != null)
-                            {
-                                DebugLogger.Log($"✓ Parsing Client .ini file ({iniBytes.Length} bytes)");
-                                config = ClientIniParser.ParseClientIniFromBytes(iniBytes, mapEntry.Name);
-                            }
-                            else
-                            {
-                                throw new FileNotFoundException(
-                                    $"Map config not found:\n" +
-                                    $"  .wor: {worRelativePath} (Server format)\n" +
-                                    $"  .map: {clientMapRelativePath} (Client region format)\n" +
-                                    $"  .ini: {clientIniRelativePath} (Client background format)\n" +
-                                    $"None found in PAK or disk");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        throw new FileNotFoundException($".wor file not found in pak ({worRelativePath}) or disk ({worPath})");
-                    }
+                    throw new FileNotFoundException($".wor file not found in pak ({worRelativePath}) or disk ({worPath})");
                 }
             }
 
@@ -475,38 +349,27 @@ namespace MapTool.MapData
                 Regions = new Dictionary<int, RegionData>()
             };
 
-            string regionSuffix = _isServerMode ? "Region_S.dat" : "Region_C.dat";
+            string regionSuffix = "Region_S.dat";  // Server mode only
 
             int loadedCount = 0;
             int attemptedCount = 0;
             List<string> existingRegions = new List<string>();
             List<string> missingRegions = new List<string>();
 
-            // Client mode: Skip full region scan (regions not available in PAK)
-            // Only scan a small sample to check availability
-            bool scanAllRegions = _isServerMode || totalRegions < 100;
-            int maxRegionsToScan = scanAllRegions ? totalRegions : Math.Min(10, totalRegions);
+            // Scan all regions
+            int maxRegionsToScan = totalRegions;
 
             DebugLogger.LogSeparator();
             DebugLogger.Log($"🔍 SCANNING FOR REGION FILES");
-            DebugLogger.Log($"   Mode: {(_isServerMode ? "Server" : "Client")}");
+            DebugLogger.Log($"   Mode: Server");
             DebugLogger.Log($"   Total regions: {totalRegions}");
-            DebugLogger.Log($"   Will scan: {(scanAllRegions ? "all" : $"sample of {maxRegionsToScan}")}");
             DebugLogger.Log($"   Looking for regions from ({config.RegionLeft},{config.RegionTop}) to ({config.RegionRight},{config.RegionBottom})");
 
-            int scannedCount = 0;
             for (int y = config.RegionTop; y <= config.RegionBottom; y++)
             {
                 for (int x = config.RegionLeft; x <= config.RegionRight; x++)
                 {
-                    if (!scanAllRegions && scannedCount >= maxRegionsToScan)
-                    {
-                        DebugLogger.Log($"   ... skipping remaining {totalRegions - scannedCount} regions (Client mode)");
-                        goto EndRegionScan;
-                    }
-
                     attemptedCount++;
-                    scannedCount++;
 
                     // Build region file path: \maps\<mapfolder>\v_YYY\XXX_Region_S.dat
                     string regionRelativePath = Path.Combine(
@@ -561,7 +424,6 @@ namespace MapTool.MapData
                 }
             }
 
-            EndRegionScan:
             DebugLogger.LogSeparator();
             DebugLogger.Log($"📊 REGION SCAN SUMMARY");
             DebugLogger.Log($"   Attempted: {attemptedCount} regions");
@@ -579,27 +441,16 @@ namespace MapTool.MapData
             // Check for data mismatch - warn if most regions are missing
             if (loadedCount == 0)
             {
-                if (_isServerMode)
-                {
-                    DebugLogger.LogSeparator();
-                    DebugLogger.Log($"❌ CRITICAL: NO REGIONS LOADED!");
-                    DebugLogger.Log($"   The .wor file says regions should exist at ({config.RegionLeft},{config.RegionTop}) to ({config.RegionRight},{config.RegionBottom})");
-                    DebugLogger.Log($"   But NO region files were found at these coordinates!");
-                    DebugLogger.Log($"");
-                    DebugLogger.Log($"   Possible causes:");
-                    DebugLogger.Log($"   1. Map files not extracted from pak");
-                    DebugLogger.Log($"   2. Wrong game folder selected");
-                    DebugLogger.Log($"   3. .wor file doesn't match actual region files (different version)");
-                    DebugLogger.LogSeparator();
-                }
-                else
-                {
-                    DebugLogger.LogSeparator();
-                    DebugLogger.Log($"ℹ️ CLIENT MODE: No regions loaded (expected)");
-                    DebugLogger.Log($"   Client PAK files typically don't contain all region files");
-                    DebugLogger.Log($"   Map will render without obstacle data");
-                    DebugLogger.LogSeparator();
-                }
+                DebugLogger.LogSeparator();
+                DebugLogger.Log($"❌ CRITICAL: NO REGIONS LOADED!");
+                DebugLogger.Log($"   The .wor file says regions should exist at ({config.RegionLeft},{config.RegionTop}) to ({config.RegionRight},{config.RegionBottom})");
+                DebugLogger.Log($"   But NO region files were found at these coordinates!");
+                DebugLogger.Log($"");
+                DebugLogger.Log($"   Possible causes:");
+                DebugLogger.Log($"   1. Map files not extracted from pak");
+                DebugLogger.Log($"   2. Wrong game folder selected");
+                DebugLogger.Log($"   3. .wor file doesn't match actual region files (different version)");
+                DebugLogger.LogSeparator();
             }
             else if ((double)loadedCount / attemptedCount < 0.1) // Less than 10% loaded
             {
@@ -893,71 +744,33 @@ namespace MapTool.MapData
                     DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
                     DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
                 }
-                // PRIORITY 3 & 4: Try PAK files (Client then Server)
-                else
+                // PRIORITY 3: Try Server PAK
+                else if (_pakReader != null)
                 {
-                    DebugLogger.Log($"   💾 Checking PAK files for image...");
-                    DebugLogger.Log($"      PakManager available: {_pakManager != null}");
-                    DebugLogger.Log($"      PakReader available: {_pakReader != null}");
+                    DebugLogger.Log($"   💾 Checking Server PAK for image...");
+                    bool existsInServerPak = FileExists(mapImageRelativePath);
+                    DebugLogger.Log($"      File exists in Server PAK: {existsInServerPak}");
 
-                    // Try Client PAK first
-                    if (_pakManager != null)
+                    if (existsInServerPak)
                     {
-                        DebugLogger.Log($"      🔍 Searching in Client PAK files...");
-                        DebugLogger.Log($"         Path to find: {mapImageRelativePath}");
-                        DebugLogger.Log($"         Normalized: {MapTool.PakFile.FileNameHasher.NormalizePath(mapImageRelativePath)}");
-                        DebugLogger.Log($"         Hash: 0x{MapTool.PakFile.FileNameHasher.CalculateFileId(mapImageRelativePath):X8}");
-
-                        bool existsInClientPak = _pakManager.FileExists(mapImageRelativePath);
-                        DebugLogger.Log($"      File exists in Client PAK: {existsInClientPak}");
-
-                        if (existsInClientPak)
+                        DebugLogger.Log($"✓ Loading image from Server PAK");
+                        mapData.MapImageData = ReadFileBytes(mapImageRelativePath);
+                        if (mapData.MapImageData != null)
                         {
-                            DebugLogger.Log($"✓ Found in Client PAK, loading image...");
-                            mapData.MapImageData = _pakManager.ReadFile(mapImageRelativePath);
-                            if (mapData.MapImageData != null)
-                            {
-                                mapData.MapImagePath = mapImageRelativePath;
-                                mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
-                                mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+                            mapData.MapImagePath = mapImageRelativePath;
+                            mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                            mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
 
-                                DebugLogger.Log($"✓ Loaded map image from Client PAK: {mapImageRelativePath}");
-                                DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
-                                DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
-                            }
-                            else
-                            {
-                                DebugLogger.Log($"⚠ Image data is null after reading from Client PAK");
-                            }
+                            DebugLogger.Log($"✓ Loaded map image from Server PAK: {mapImageRelativePath}");
+                            DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
+                            DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
+                        }
+                        else
+                        {
+                            DebugLogger.Log($"⚠ Image data is null after reading from Server PAK");
                         }
                     }
-
-                    // Try Server PAK if Client PAK didn't work
-                    if (mapData.MapImageData == null && _pakReader != null)
-                    {
-                        bool existsInServerPak = FileExists(mapImageRelativePath);
-                        DebugLogger.Log($"      File exists in Server PAK: {existsInServerPak}");
-
-                        if (existsInServerPak)
-                        {
-                            DebugLogger.Log($"✓ Loading image from Server PAK");
-                            mapData.MapImageData = ReadFileBytes(mapImageRelativePath);
-                            if (mapData.MapImageData != null)
-                            {
-                                mapData.MapImagePath = mapImageRelativePath;
-                                mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
-                                mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
-
-                                DebugLogger.Log($"✓ Loaded map image from Server PAK: {mapImageRelativePath}");
-                                DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
-                                DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
-                            }
-                            else
-                            {
-                                DebugLogger.Log($"⚠ Image data is null after reading from Server PAK");
-                            }
-                        }
-                    }
+                }
 
                     // Final fallback if nothing worked
                     if (mapData.MapImageData == null)
@@ -1015,12 +828,6 @@ namespace MapTool.MapData
             {
                 _pakReader.Dispose();
                 _pakReader = null;
-            }
-
-            if (_pakManager != null)
-            {
-                _pakManager.Dispose();
-                _pakManager = null;
             }
         }
     }

@@ -18,7 +18,6 @@ namespace MapTool
     public partial class MainFormSimple : Form
     {
         private string _gameFolder;
-        private bool _isServerMode = true;
         private MapLoader _mapLoader;
         private CompleteMapData _currentMap;
         private MapRenderer _renderer;
@@ -75,7 +74,7 @@ namespace MapTool
         {
             using (FolderBrowserDialog dialog = new FolderBrowserDialog())
             {
-                dialog.Description = "Select game folder (Bin/Server or Bin/Client)";
+                dialog.Description = "Select Server game folder (Bin/Server)";
                 if (!string.IsNullOrEmpty(txtGameFolder.Text))
                 {
                     dialog.SelectedPath = txtGameFolder.Text;
@@ -85,26 +84,8 @@ namespace MapTool
                 {
                     txtGameFolder.Text = dialog.SelectedPath;
                     _gameFolder = dialog.SelectedPath;
-
-                    // Update mode based on folder name
-                    if (dialog.SelectedPath.ToLower().Contains("server"))
-                    {
-                        rdoServer.Checked = true;
-                        _isServerMode = true;
-                    }
-                    else if (dialog.SelectedPath.ToLower().Contains("client"))
-                    {
-                        rdoClient.Checked = true;
-                        _isServerMode = false;
-                    }
                 }
             }
-        }
-
-        // Mode changed
-        private void rdoServer_CheckedChanged(object sender, EventArgs e)
-        {
-            _isServerMode = rdoServer.Checked;
         }
 
         // Load map button clicked
@@ -137,10 +118,10 @@ namespace MapTool
                 DebugLogger.Log($"📂 LOADING MAP");
                 DebugLogger.Log($"   Map ID: {mapId}");
                 DebugLogger.Log($"   Game Folder: {_gameFolder}");
-                DebugLogger.Log($"   Mode: {(_isServerMode ? "Server" : "Client")}");
+                DebugLogger.Log($"   Mode: Server");
                 DebugLogger.LogSeparator();
 
-                _mapLoader = new MapLoader(_gameFolder, _isServerMode);
+                _mapLoader = new MapLoader(_gameFolder, isServerMode: true);
 
                 // Auto-load complete map
                 _currentMap = _mapLoader.LoadMap(mapId);
@@ -825,50 +806,26 @@ namespace MapTool
             }
 
             // Get client and server paths
-            string clientPath = _gameFolder;
+            // In Server mode, server path is the game folder
             string serverPath = _gameFolder;
 
-            DebugLogger.Log($"   Game folder: {_gameFolder}");
-            DebugLogger.Log($"   Mode: {(_isServerMode ? "Server" : "Client")}");
+            // Try to find Client folder (needed for NPC resources)
+            DirectoryInfo serverDir = new DirectoryInfo(_gameFolder);
+            string clientPath = Path.Combine(serverDir.Parent.FullName, "Client");
 
-            if (_isServerMode)
+            DebugLogger.Log($"   Server folder: {serverPath}");
+            DebugLogger.Log($"   Looking for Client folder: {clientPath}");
+
+            if (!Directory.Exists(clientPath))
             {
-                // If in server mode, try to find client folder
-                DirectoryInfo serverDir = new DirectoryInfo(_gameFolder);
-                string possibleClientPath = Path.Combine(serverDir.Parent.FullName, "Client");
-                DebugLogger.Log($"   Looking for Client folder: {possibleClientPath}");
-                if (Directory.Exists(possibleClientPath))
-                {
-                    clientPath = possibleClientPath;
-                    DebugLogger.Log($"   ✓ Found Client folder: {clientPath}");
-                }
-                else
-                {
-                    MessageBox.Show("Cannot find Client folder!\n\nNPC resources are in Client folder. Please select Client folder or switch to Client mode.",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    DebugLogger.Log($"   ✗ ERROR: Client folder not found at {possibleClientPath}");
-                    return;
-                }
+                MessageBox.Show("Cannot find Client folder!\n\nNPC resources (SPR files) are in Client folder.\n" +
+                    "Please make sure both Server and Client folders exist in the same parent directory.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DebugLogger.Log($"   ✗ ERROR: Client folder not found at {clientPath}");
+                return;
             }
-            else
-            {
-                // If in client mode, try to find server folder
-                DirectoryInfo clientDir = new DirectoryInfo(_gameFolder);
-                string possibleServerPath = Path.Combine(clientDir.Parent.FullName, "Server");
-                DebugLogger.Log($"   Looking for Server folder: {possibleServerPath}");
-                if (Directory.Exists(possibleServerPath))
-                {
-                    serverPath = possibleServerPath;
-                    DebugLogger.Log($"   ✓ Found Server folder: {serverPath}");
-                }
-                else
-                {
-                    MessageBox.Show("Cannot find Server folder!\n\nNpcs.txt is in Server folder. Please make sure both Client and Server folders are accessible.",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    DebugLogger.Log($"   ✗ ERROR: Server folder not found at {possibleServerPath}");
-                    return;
-                }
-            }
+
+            DebugLogger.Log($"   ✓ Found Client folder: {clientPath}");
 
             try
             {

@@ -30,8 +30,6 @@ namespace MapTool
         private System.Windows.Forms.Label lblMapInfo;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.ListBox lstEntries;
-        private System.Windows.Forms.RadioButton rdoServer;
-        private System.Windows.Forms.RadioButton rdoClient;
         private System.Windows.Forms.GroupBox grpGameFolder;
         private System.Windows.Forms.GroupBox grpMapLoad;
         private System.Windows.Forms.GroupBox grpMapInfo;
@@ -102,8 +100,6 @@ namespace MapTool
             this.txtScriptFile = new System.Windows.Forms.TextBox();
             this.lblMapInfo = new System.Windows.Forms.Label();
             this.lstEntries = new System.Windows.Forms.ListBox();
-            this.rdoServer = new System.Windows.Forms.RadioButton();
-            this.rdoClient = new System.Windows.Forms.RadioButton();
             this.grpGameFolder = new System.Windows.Forms.GroupBox();
             this.grpMapLoad = new System.Windows.Forms.GroupBox();
             this.grpMapInfo = new System.Windows.Forms.GroupBox();
@@ -162,17 +158,15 @@ namespace MapTool
             this.mapPanel.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.mapPanel_MouseDoubleClick);
 
             // grpGameFolder
-            this.grpGameFolder.Controls.Add(new System.Windows.Forms.Label { Text = "Game Folder:", Location = new System.Drawing.Point(10, 25), AutoSize = true });
+            this.grpGameFolder.Controls.Add(new System.Windows.Forms.Label { Text = "Server Folder:", Location = new System.Drawing.Point(10, 25), AutoSize = true });
             this.grpGameFolder.Controls.Add(this.txtGameFolder);
             this.grpGameFolder.Controls.Add(this.btnBrowseFolder);
-            this.grpGameFolder.Controls.Add(this.rdoServer);
-            this.grpGameFolder.Controls.Add(this.rdoClient);
             this.grpGameFolder.Location = new System.Drawing.Point(6, 6);
             this.grpGameFolder.Name = "grpGameFolder";
-            this.grpGameFolder.Size = new System.Drawing.Size(330, 100);
+            this.grpGameFolder.Size = new System.Drawing.Size(330, 75);
             this.grpGameFolder.TabIndex = 1;
             this.grpGameFolder.TabStop = false;
-            this.grpGameFolder.Text = "1. Select Game Folder";
+            this.grpGameFolder.Text = "1. Select Server Folder";
 
             this.txtGameFolder.Location = new System.Drawing.Point(10, 45);
             this.txtGameFolder.Name = "txtGameFolder";
@@ -187,30 +181,11 @@ namespace MapTool
             this.btnBrowseFolder.UseVisualStyleBackColor = true;
             this.btnBrowseFolder.Click += new System.EventHandler(this.btnBrowseFolder_Click);
 
-            this.rdoServer.AutoSize = true;
-            this.rdoServer.Checked = true;
-            this.rdoServer.Location = new System.Drawing.Point(10, 73);
-            this.rdoServer.Name = "rdoServer";
-            this.rdoServer.Size = new System.Drawing.Size(60, 19);
-            this.rdoServer.TabIndex = 2;
-            this.rdoServer.TabStop = true;
-            this.rdoServer.Text = "Server";
-            this.rdoServer.UseVisualStyleBackColor = true;
-            this.rdoServer.CheckedChanged += new System.EventHandler(this.rdoServer_CheckedChanged);
-
-            this.rdoClient.AutoSize = true;
-            this.rdoClient.Location = new System.Drawing.Point(80, 73);
-            this.rdoClient.Name = "rdoClient";
-            this.rdoClient.Size = new System.Drawing.Size(57, 19);
-            this.rdoClient.TabIndex = 3;
-            this.rdoClient.Text = "Client";
-            this.rdoClient.UseVisualStyleBackColor = true;
-
             // grpMapLoad
             this.grpMapLoad.Controls.Add(new System.Windows.Forms.Label { Text = "Map ID:", Location = new System.Drawing.Point(10, 30), AutoSize = true });
             this.grpMapLoad.Controls.Add(this.txtMapId);
             this.grpMapLoad.Controls.Add(this.btnLoadMap);
-            this.grpMapLoad.Location = new System.Drawing.Point(6, 112);
+            this.grpMapLoad.Location = new System.Drawing.Point(6, 87);
             this.grpMapLoad.Name = "grpMapLoad";
             this.grpMapLoad.Size = new System.Drawing.Size(330, 70);
             this.grpMapLoad.TabIndex = 2;
@@ -234,7 +209,7 @@ namespace MapTool
 
             // grpMapInfo
             this.grpMapInfo.Controls.Add(this.lblMapInfo);
-            this.grpMapInfo.Location = new System.Drawing.Point(6, 188);
+            this.grpMapInfo.Location = new System.Drawing.Point(6, 163);
             this.grpMapInfo.Name = "grpMapInfo";
             this.grpMapInfo.Size = new System.Drawing.Size(330, 140);
             this.grpMapInfo.TabIndex = 3;
@@ -248,7 +223,7 @@ namespace MapTool
             this.lblMapInfo.Text = "No map loaded";
 
             // grpCoordinates
-            this.grpCoordinates.Location = new System.Drawing.Point(6, 334);
+            this.grpCoordinates.Location = new System.Drawing.Point(6, 309);
             this.grpCoordinates.Name = "grpCoordinates";
             this.grpCoordinates.Size = new System.Drawing.Size(330, 180);
             this.grpCoordinates.TabIndex = 4;
@@ -330,7 +305,7 @@ namespace MapTool
             this.grpEntries.Controls.Add(this.btnExtractAllRegions);
             this.grpEntries.Controls.Add(this.btnClear);
             this.grpEntries.Controls.Add(this.btnRemoveLast);
-            this.grpEntries.Location = new System.Drawing.Point(6, 520);
+            this.grpEntries.Location = new System.Drawing.Point(6, 495);
             this.grpEntries.Name = "grpEntries";
             this.grpEntries.Size = new System.Drawing.Size(330, 190);
             this.grpEntries.TabIndex = 5;
