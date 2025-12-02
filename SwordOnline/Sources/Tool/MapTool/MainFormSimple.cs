@@ -1203,22 +1203,62 @@ namespace MapTool
             }
         }
 
-        // Remove last NPC button
+        // Remove selected NPC button
         private void btnRemoveLastNpc_Click(object sender, EventArgs e)
         {
-            if (_npcExporter.RemoveLast())
+            if (lstNpcEntries.SelectedIndex >= 0)
             {
-                UpdateNpcList();
-                lblStatus.Text = "Removed last NPC entry";
+                int selectedIndex = lstNpcEntries.SelectedIndex;
+                if (_npcExporter.RemoveAt(selectedIndex))
+                {
+                    UpdateNpcList();
+
+                    // Update renderer with current map's NPCs
+                    if (_currentMap != null)
+                    {
+                        var mapNpcs = _npcExporter.GetEntriesForMap(_currentMap.MapId);
+                        _renderer.SetNpcMarkers(mapNpcs);
+                        mapPanel.Invalidate();
+                    }
+
+                    lblStatus.Text = $"Removed NPC entry at index {selectedIndex}";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an NPC entry to remove!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         // Clear all NPCs button
         private void btnClearNpcs_Click(object sender, EventArgs e)
         {
-            _npcExporter.Clear();
-            UpdateNpcList();
-            lblStatus.Text = "Cleared all NPC entries";
+            if (_npcExporter.GetEntries().Count == 0)
+            {
+                MessageBox.Show("No NPC entries to clear!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DialogResult result = MessageBox.Show(
+                $"Are you sure you want to remove all {_npcExporter.GetEntries().Count} NPC entries?",
+                "Confirm Clear All",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                _npcExporter.Clear();
+                UpdateNpcList();
+
+                // Update renderer with current map's NPCs (should be empty now)
+                if (_currentMap != null)
+                {
+                    _renderer.SetNpcMarkers(new List<NpcEntry>());
+                    mapPanel.Invalidate();
+                }
+
+                lblStatus.Text = "Cleared all NPC entries";
+            }
         }
     }
 }

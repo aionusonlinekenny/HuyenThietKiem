@@ -516,19 +516,17 @@ namespace MapTool
             this.btnExtractNpcList.UseVisualStyleBackColor = true;
             this.btnExtractNpcList.Click += new System.EventHandler(this.btnExtractNpcList_Click);
 
-            this.btnRemoveLastNpc.Location = new System.Drawing.Point(10, 245);
+            this.btnRemoveLastNpc.Location = new System.Drawing.Point(10, 268);
             this.btnRemoveLastNpc.Name = "btnRemoveLastNpc";
             this.btnRemoveLastNpc.Size = new System.Drawing.Size(150, 25);
             this.btnRemoveLastNpc.TabIndex = 3;
-            this.btnRemoveLastNpc.Text = "Remove Last";
+            this.btnRemoveLastNpc.Text = "Remove Selected";
             this.btnRemoveLastNpc.UseVisualStyleBackColor = true;
             this.btnRemoveLastNpc.Click += new System.EventHandler(this.btnRemoveLastNpc_Click);
-            this.btnRemoveLastNpc.Visible = false;  // Hidden - overlaps with Save button
 
-            this.btnClearNpcs.Location = new System.Drawing.Point(165, 245);
+            this.btnClearNpcs.Location = new System.Drawing.Point(165, 268);
             this.btnClearNpcs.Name = "btnClearNpcs";
             this.btnClearNpcs.Size = new System.Drawing.Size(155, 25);
-            this.btnClearNpcs.Visible = false;  // Hidden - overlaps with Save button
             this.btnClearNpcs.TabIndex = 4;
             this.btnClearNpcs.Text = "Clear All";
             this.btnClearNpcs.UseVisualStyleBackColor = true;
