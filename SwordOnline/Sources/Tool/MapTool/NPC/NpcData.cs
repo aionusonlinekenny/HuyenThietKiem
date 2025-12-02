@@ -25,6 +25,45 @@ namespace MapTool.NPC
     }
 
     /// <summary>
+    /// Object entry (matches Obj format)
+    /// Format: ObjID | MapID | PosX | PosY | Dir | State | ScriptFile | IsLoad
+    /// </summary>
+    public class ObjectEntry
+    {
+        public int ObjID { get; set; }
+        public int MapID { get; set; }
+        public int PosX { get; set; }
+        public int PosY { get; set; }
+        public int Dir { get; set; }
+        public int State { get; set; }
+        public string ScriptFile { get; set; }
+        public int IsLoad { get; set; }
+
+        public override string ToString()
+        {
+            return $"{ObjID}\t{MapID}\t{PosX}\t{PosY}\t{Dir}\t{State}\t{ScriptFile}\t{IsLoad}";
+        }
+
+        /// <summary>
+        /// Convert to NpcEntry for display on map
+        /// </summary>
+        public NpcEntry ToNpcEntry()
+        {
+            return new NpcEntry
+            {
+                NpcID = ObjID,
+                MapID = MapID,
+                PosX = PosX,
+                PosY = PosY,
+                ScriptFile = ScriptFile,
+                Name = $"Obj_{ObjID}",
+                Level = 1,
+                IsLoad = IsLoad
+            };
+        }
+    }
+
+    /// <summary>
     /// NPC resource information from NpcResKind.txt
     /// </summary>
     public class NpcResKind

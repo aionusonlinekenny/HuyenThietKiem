@@ -130,7 +130,7 @@ namespace MapTool.NPC
         }
 
         /// <summary>
-        /// Import from file
+        /// Import from file (auto-detects Normal/Dialoger/Object format)
         /// </summary>
         public void ImportFromFile(string filePath)
         {
@@ -144,6 +144,13 @@ namespace MapTool.NPC
             Encoding encoding = Encoding.GetEncoding("Windows-1252");
             string[] lines = File.ReadAllLines(filePath, encoding);
 
+            if (lines.Length < 2)
+                return;
+
+            // Detect format from header
+            string header = lines[0].ToLower();
+            bool isObjectFormat = header.Contains("objid") && header.Contains("dir") && header.Contains("state");
+
             for (int i = 1; i < lines.Length; i++) // Skip header
             {
                 string line = lines[i].Trim();
@@ -151,21 +158,49 @@ namespace MapTool.NPC
                     continue;
 
                 string[] parts = line.Split('\t');
-                if (parts.Length >= 8)
-                {
-                    NpcEntry entry = new NpcEntry
-                    {
-                        NpcID = int.Parse(parts[0]),
-                        MapID = int.Parse(parts[1]),
-                        PosX = int.Parse(parts[2]),
-                        PosY = int.Parse(parts[3]),
-                        ScriptFile = parts[4],
-                        Name = parts[5],
-                        Level = int.Parse(parts[6]),
-                        IsLoad = int.Parse(parts[7])
-                    };
 
-                    _entries.Add(entry);
+                if (isObjectFormat)
+                {
+                    // Object format: ObjID MapID PosX PosY Dir State ScriptFile IsLoad (8 fields)
+                    if (parts.Length >= 8)
+                    {
+                        ObjectEntry objEntry = new ObjectEntry
+                        {
+                            ObjID = int.Parse(parts[0]),
+                            MapID = int.Parse(parts[1]),
+                            PosX = int.Parse(parts[2]),
+                            PosY = int.Parse(parts[3]),
+                            Dir = int.Parse(parts[4]),
+                            State = int.Parse(parts[5]),
+                            ScriptFile = parts[6],
+                            IsLoad = int.Parse(parts[7])
+                        };
+
+                        // Convert to NpcEntry for display
+                        _entries.Add(objEntry.ToNpcEntry());
+                    }
+                }
+                else
+                {
+                    // NPC format: Support two variants
+                    // Normal NPC: NpcID MapID PosX PosY ScriptFile Name Level IsLoad (8 fields)
+                    // Dialoger: NpcID MapID PosX PosY ScriptFile Name IsLoad (7 fields, no Level)
+                    if (parts.Length >= 7)
+                    {
+                        NpcEntry entry = new NpcEntry
+                        {
+                            NpcID = int.Parse(parts[0]),
+                            MapID = int.Parse(parts[1]),
+                            PosX = int.Parse(parts[2]),
+                            PosY = int.Parse(parts[3]),
+                            ScriptFile = parts[4],
+                            Name = parts[5],
+                            Level = parts.Length >= 8 ? int.Parse(parts[6]) : 1,  // Default level 1 for Dialoger
+                            IsLoad = int.Parse(parts[parts.Length - 1])  // Last field is always IsLoad
+                        };
+
+                        _entries.Add(entry);
+                    }
                 }
             }
         }

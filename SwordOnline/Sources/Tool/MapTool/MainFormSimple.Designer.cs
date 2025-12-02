@@ -487,7 +487,7 @@ namespace MapTool
             this.grpNpcEntries.Controls.Add(this.btnClearNpcs);
             this.grpNpcEntries.Location = new System.Drawing.Point(6, 418);
             this.grpNpcEntries.Name = "grpNpcEntries";
-            this.grpNpcEntries.Size = new System.Drawing.Size(330, 280);
+            this.grpNpcEntries.Size = new System.Drawing.Size(330, 320);
             this.grpNpcEntries.TabIndex = 2;
             this.grpNpcEntries.TabStop = false;
             this.grpNpcEntries.Text = "NPC Entries (Double-click map to add)";
@@ -496,7 +496,7 @@ namespace MapTool
             this.lstNpcEntries.HorizontalScrollbar = true;
             this.lstNpcEntries.Location = new System.Drawing.Point(10, 50);
             this.lstNpcEntries.Name = "lstNpcEntries";
-            this.lstNpcEntries.Size = new System.Drawing.Size(310, 175);
+            this.lstNpcEntries.Size = new System.Drawing.Size(310, 210);
             this.lstNpcEntries.TabIndex = 0;
 
             this.btnLoadNpcsFromServer.Location = new System.Drawing.Point(10, 20);
