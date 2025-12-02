@@ -71,10 +71,10 @@ namespace MapTool.NPC
                 NpcInfo info = new NpcInfo
                 {
                     NpcId = npcId,
-                    NpcName = columns.Length > 1 ? columns[1] : "",
-                    Kind = columns.Length > 2 ? columns[2] : "",
-                    Camp = columns.Length > 3 ? columns[3] : "",
-                    Series = columns.Length > 4 ? columns[4] : "",
+                    NpcName = columns[0].Trim(),  // Column 1 (0-indexed = 0) is Name
+                    Kind = columns.Length > 1 ? columns[1] : "",
+                    Camp = columns.Length > 2 ? columns[2] : "",
+                    Series = columns.Length > 3 ? columns[3] : "",
                     NpcResType = columns[11].Trim()  // Column 12 (0-indexed = 11)
                 };
 
