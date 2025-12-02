@@ -16,6 +16,7 @@ namespace PakExtractTool
         private TreeView treeViewFiles;
         private ListView listViewDetails;
         private Button btnOpenPak;
+        private Button btnGenerateIndex;
         private Button btnExtractSelected;
         private Button btnExtractAll;
         private StatusStrip statusStrip;
@@ -66,18 +67,29 @@ namespace PakExtractTool
 
             btnOpenPak = new Button
             {
-                Text = "📂 Open PAK File",
+                Text = "📂 Open PAK",
                 Location = new Point(10, 10),
-                Size = new Size(150, 30),
+                Size = new Size(120, 30),
                 Font = new Font("Segoe UI", 9F, FontStyle.Regular)
             };
             btnOpenPak.Click += BtnOpenPak_Click;
 
+            btnGenerateIndex = new Button
+            {
+                Text = "🔧 Generate Index",
+                Location = new Point(140, 10),
+                Size = new Size(130, 30),
+                Enabled = false,
+                Font = new Font("Segoe UI", 9F, FontStyle.Regular),
+                BackColor = Color.FromArgb(255, 255, 200)
+            };
+            btnGenerateIndex.Click += BtnGenerateIndex_Click;
+
             btnExtractSelected = new Button
             {
                 Text = "📤 Extract Selected",
-                Location = new Point(170, 10),
-                Size = new Size(150, 30),
+                Location = new Point(280, 10),
+                Size = new Size(140, 30),
                 Enabled = false,
                 Font = new Font("Segoe UI", 9F, FontStyle.Regular)
             };
@@ -86,8 +98,8 @@ namespace PakExtractTool
             btnExtractAll = new Button
             {
                 Text = "📦 Extract All",
-                Location = new Point(330, 10),
-                Size = new Size(150, 30),
+                Location = new Point(430, 10),
+                Size = new Size(120, 30),
                 Enabled = false,
                 Font = new Font("Segoe UI", 9F, FontStyle.Regular)
             };
@@ -95,14 +107,14 @@ namespace PakExtractTool
 
             lblPakInfo = new Label
             {
-                Text = "No PAK file loaded",
+                Text = "No PAK file loaded. Use 'Open PAK' to load a PAK file, then 'Generate Index' if no file names shown.",
                 Location = new Point(10, 45),
-                Size = new Size(800, 25),
+                Size = new Size(950, 25),
                 Font = new Font("Segoe UI", 9F, FontStyle.Regular),
                 ForeColor = Color.Gray
             };
 
-            topPanel.Controls.AddRange(new Control[] { btnOpenPak, btnExtractSelected, btnExtractAll, lblPakInfo });
+            topPanel.Controls.AddRange(new Control[] { btnOpenPak, btnGenerateIndex, btnExtractSelected, btnExtractAll, lblPakInfo });
 
             // Split container for tree and details
             splitContainer = new SplitContainer
@@ -239,21 +251,46 @@ namespace PakExtractTool
                 var allFiles = _currentPakReader.GetAllFileNames();
                 DebugLogger.Log($"   ✓ Got {allFiles.Count} named files");
 
-                // Update UI
-                lblPakInfo.Text = $"📦 {Path.GetFileName(pakPath)} - " +
-                                  $"{stats.TotalFiles:N0} files " +
-                                  $"({stats.TotalSize / 1024 / 1024:N1} MB) - " +
-                                  $"{allFiles.Count:N0} named files";
-                lblPakInfo.ForeColor = Color.DarkGreen;
+                // Update UI based on whether we have named files
+                btnGenerateIndex.Enabled = true;
 
-                // Build tree structure
-                DebugLogger.Log("   Building file tree...");
-                BuildFileTree(allFiles);
-                DebugLogger.Log("   ✓ File tree built successfully");
+                if (allFiles.Count > 0)
+                {
+                    // Has index file
+                    lblPakInfo.Text = $"📦 {Path.GetFileName(pakPath)} - " +
+                                      $"{stats.TotalFiles:N0} files " +
+                                      $"({stats.TotalSize / 1024 / 1024:N1} MB) - " +
+                                      $"✓ {allFiles.Count:N0} named files";
+                    lblPakInfo.ForeColor = Color.DarkGreen;
 
-                // Enable buttons
-                btnExtractSelected.Enabled = true;
-                btnExtractAll.Enabled = true;
+                    // Build tree structure
+                    DebugLogger.Log("   Building file tree...");
+                    BuildFileTree(allFiles);
+                    DebugLogger.Log("   ✓ File tree built successfully");
+
+                    // Enable extract buttons
+                    btnExtractSelected.Enabled = true;
+                    btnExtractAll.Enabled = true;
+                }
+                else
+                {
+                    // No index file - show warning
+                    lblPakInfo.Text = $"📦 {Path.GetFileName(pakPath)} - " +
+                                      $"{stats.TotalFiles:N0} files " +
+                                      $"({stats.TotalSize / 1024 / 1024:N1} MB) - " +
+                                      $"⚠ No .pak.txt index found! Click 'Generate Index' to create one.";
+                    lblPakInfo.ForeColor = Color.DarkOrange;
+
+                    // Highlight generate index button
+                    btnGenerateIndex.BackColor = Color.FromArgb(255, 200, 100);
+
+                    DebugLogger.Log("   ⚠ No filename index found (.pak.txt missing)");
+                    DebugLogger.Log("   User needs to generate index to see file names");
+
+                    // Don't enable extract buttons without index
+                    btnExtractSelected.Enabled = false;
+                    btnExtractAll.Enabled = false;
+                }
 
                 UpdateStatus($"Loaded {allFiles.Count:N0} files from {Path.GetFileName(pakPath)}");
                 DebugLogger.Log($"✓ PAK file loaded successfully");
@@ -274,6 +311,296 @@ namespace PakExtractTool
                 MessageBox.Show($"Error loading PAK file:\n\n{ex.Message}\n\nCheck log file for details:\n{DebugLogger.GetLogFilePath()}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 UpdateStatus("Error loading PAK file");
+            }
+        }
+
+        private void BtnGenerateIndex_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_currentPakReader == null || string.IsNullOrEmpty(_currentPakPath))
+                {
+                    MessageBox.Show("Please open a PAK file first!", "No PAK File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                DebugLogger.LogSeparator();
+                DebugLogger.Log("🔧 USER CLICKED: Generate Index");
+
+                // Ask user to select scan folder
+                using (var dialog = new FolderBrowserDialog())
+                {
+                    dialog.Description = "Select folder to scan for matching files\n\n" +
+                        "For Client PAK files: Select the Client folder\n" +
+                        "For Server PAK files: Select the Server folder\n" +
+                        "Not sure? Select the game's root folder (parent of Client/Server)";
+
+                    // Try to suggest a default folder
+                    string pakFolder = Path.GetDirectoryName(_currentPakPath);
+                    if (!string.IsNullOrEmpty(pakFolder))
+                    {
+                        // Try to go up to parent folder
+                        DirectoryInfo pakDir = new DirectoryInfo(pakFolder);
+                        if (pakDir.Parent != null && pakDir.Parent.Parent != null)
+                        {
+                            dialog.SelectedPath = pakDir.Parent.Parent.FullName; // Up 2 levels
+                        }
+                    }
+
+                    if (dialog.ShowDialog() != DialogResult.OK)
+                    {
+                        DebugLogger.Log("   User cancelled folder selection");
+                        return;
+                    }
+
+                    string scanFolder = dialog.SelectedPath;
+                    DebugLogger.Log($"   Scan folder: {scanFolder}");
+
+                    // Generate index with progress dialog
+                    GenerateIndexWithProgress(scanFolder);
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugLogger.Log($"❌ ERROR in BtnGenerateIndex_Click: {ex.Message}");
+                DebugLogger.Log($"   Stack trace: {ex.StackTrace}");
+                MessageBox.Show($"Error generating index:\n\n{ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void GenerateIndexWithProgress(string scanFolder)
+        {
+            // Create progress dialog
+            var progressForm = new Form
+            {
+                Text = "Generating PAK Index...",
+                Size = new Size(500, 250),
+                StartPosition = FormStartPosition.CenterParent,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                MaximizeBox = false,
+                MinimizeBox = false
+            };
+
+            var lblStep = new Label
+            {
+                Text = "Initializing...",
+                Location = new Point(20, 20),
+                Size = new Size(460, 20),
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold)
+            };
+
+            var lblProgress = new Label
+            {
+                Text = "",
+                Location = new Point(20, 50),
+                Size = new Size(460, 20),
+                Font = new Font("Segoe UI", 9F)
+            };
+
+            var progressBar = new ProgressBar
+            {
+                Location = new Point(20, 80),
+                Size = new Size(460, 25),
+                Style = ProgressBarStyle.Continuous
+            };
+
+            var lblStats = new Label
+            {
+                Text = "",
+                Location = new Point(20, 115),
+                Size = new Size(460, 80),
+                Font = new Font("Consolas", 9F)
+            };
+
+            var btnClose = new Button
+            {
+                Text = "Close",
+                Location = new Point(200, 170),
+                Size = new Size(100, 30),
+                Enabled = false
+            };
+            btnClose.Click += (s, e) => progressForm.Close();
+
+            progressForm.Controls.AddRange(new Control[] { lblStep, lblProgress, progressBar, lblStats, btnClose });
+
+            // Run generation in background
+            var worker = new System.ComponentModel.BackgroundWorker
+            {
+                WorkerReportsProgress = true
+            };
+
+            worker.DoWork += (s, e) =>
+            {
+                try
+                {
+                    // Get all file IDs from PAK
+                    worker.ReportProgress(0, new { Step = "Step 1/4: Loading PAK file...", Progress = "" });
+                    var pakFileIds = _currentPakReader.GetAllFileIds();
+
+                    worker.ReportProgress(10, new { Step = "Step 2/4: Scanning folder for files...", Progress = $"Found {pakFileIds.Count} hashes in PAK" });
+                    var allFiles = ScanFolderRecursive(scanFolder, worker);
+
+                    worker.ReportProgress(40, new { Step = "Step 3/4: Matching file paths with PAK hashes...", Progress = $"Scanning {allFiles.Count:N0} files..." });
+                    var matches = MatchFilesWithPak(allFiles, pakFileIds, scanFolder, worker);
+
+                    worker.ReportProgress(90, new { Step = "Step 4/4: Generating .pak.txt file...", Progress = $"Matched {matches.Count:N0}/{pakFileIds.Count:N0} files" });
+                    string txtFile = _currentPakPath + ".txt";
+                    GeneratePakTxtFile(txtFile, matches);
+
+                    e.Result = new { TotalPakFiles = pakFileIds.Count, MatchedFiles = matches.Count, TxtFile = txtFile };
+                }
+                catch (Exception ex)
+                {
+                    e.Result = ex;
+                }
+            };
+
+            worker.ProgressChanged += (s, e) =>
+            {
+                var data = e.UserState as dynamic;
+                lblStep.Text = data.Step;
+                lblProgress.Text = data.Progress;
+                progressBar.Value = e.ProgressPercentage;
+            };
+
+            worker.RunWorkerCompleted += (s, e) =>
+            {
+                if (e.Result is Exception ex)
+                {
+                    lblStep.Text = "❌ Error occurred!";
+                    lblProgress.Text = ex.Message;
+                    lblStats.Text = $"Error: {ex.Message}\n\nSee log file for details.";
+                    lblStats.ForeColor = Color.Red;
+                    DebugLogger.Log($"❌ ERROR generating index: {ex.Message}");
+                    DebugLogger.Log($"   Stack trace: {ex.StackTrace}");
+                }
+                else
+                {
+                    var result = e.Result as dynamic;
+                    int totalPakFiles = result.TotalPakFiles;
+                    int matchedFiles = result.MatchedFiles;
+                    string txtFile = result.TxtFile;
+                    double matchRate = (double)matchedFiles / totalPakFiles * 100;
+
+                    lblStep.Text = "✓ Index generation complete!";
+                    lblProgress.Text = $"Generated: {Path.GetFileName(txtFile)}";
+                    lblStats.Text = $"Total PAK files:  {totalPakFiles:N0}\n" +
+                                    $"Matched files:    {matchedFiles:N0}\n" +
+                                    $"Unmatched files:  {(totalPakFiles - matchedFiles):N0}\n" +
+                                    $"Match rate:       {matchRate:F1}%";
+                    lblStats.ForeColor = matchRate > 50 ? Color.DarkGreen : Color.DarkOrange;
+                    progressBar.Value = 100;
+
+                    DebugLogger.Log($"✓ Index generation complete!");
+                    DebugLogger.Log($"   Generated: {txtFile}");
+                    DebugLogger.Log($"   Match rate: {matchRate:F1}%");
+
+                    // Auto-reload PAK to show new index
+                    MessageBox.Show(
+                        $"Index file generated successfully!\n\n" +
+                        $"Match rate: {matchRate:F1}% ({matchedFiles:N0}/{totalPakFiles:N0} files)\n\n" +
+                        $"The PAK will now reload to show file names.",
+                        "Success",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+                    progressForm.Close();
+
+                    // Reload PAK file
+                    LoadPakFile(_currentPakPath);
+                }
+
+                btnClose.Enabled = true;
+            };
+
+            worker.RunWorkerAsync();
+            progressForm.ShowDialog(this);
+        }
+
+        private List<string> ScanFolderRecursive(string folder, System.ComponentModel.BackgroundWorker worker)
+        {
+            var files = new List<string>();
+            try
+            {
+                var allFiles = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories);
+                for (int i = 0; i < allFiles.Length; i++)
+                {
+                    files.Add(allFiles[i]);
+                    if (i % 500 == 0)
+                    {
+                        worker.ReportProgress(20 + (i * 20 / allFiles.Length),
+                            new { Step = "Step 2/4: Scanning folder for files...", Progress = $"Found {i:N0} files..." });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugLogger.Log($"⚠ Warning scanning folder: {ex.Message}");
+            }
+            return files;
+        }
+
+        private Dictionary<uint, string> MatchFilesWithPak(List<string> allFiles, List<uint> pakFileIds, string scanFolder, System.ComponentModel.BackgroundWorker worker)
+        {
+            var matches = new Dictionary<uint, string>();
+            var pakHashSet = new HashSet<uint>(pakFileIds);
+
+            for (int i = 0; i < allFiles.Count; i++)
+            {
+                string filePath = allFiles[i];
+                string relativePath = GetRelativePath(scanFolder, filePath);
+
+                // Normalize to backslash and prepend \
+                relativePath = relativePath.Replace('/', '\\');
+                if (!relativePath.StartsWith("\\"))
+                {
+                    relativePath = "\\" + relativePath;
+                }
+
+                // Calculate hash
+                uint hash = FileNameHasher.CalculateFileId(relativePath);
+
+                // Check if this hash exists in PAK
+                if (pakHashSet.Contains(hash) && !matches.ContainsKey(hash))
+                {
+                    matches[hash] = relativePath;
+                }
+
+                if (i % 1000 == 0)
+                {
+                    worker.ReportProgress(40 + (i * 50 / allFiles.Count),
+                        new { Step = "Step 3/4: Matching file paths...", Progress = $"Checked {i:N0}/{allFiles.Count:N0} - Matched {matches.Count:N0}" });
+                }
+            }
+
+            return matches;
+        }
+
+        private string GetRelativePath(string basePath, string fullPath)
+        {
+            Uri baseUri = new Uri(basePath.TrimEnd('\\', '/') + "\\");
+            Uri fullUri = new Uri(fullPath);
+            return Uri.UnescapeDataString(baseUri.MakeRelativeUri(fullUri).ToString());
+        }
+
+        private void GeneratePakTxtFile(string txtFile, Dictionary<uint, string> matches)
+        {
+            using (StreamWriter writer = new StreamWriter(txtFile, false, Encoding.GetEncoding("GB2312")))
+            {
+                // Write header
+                writer.WriteLine($"Total Files: {matches.Count}");
+                writer.WriteLine("Index\tID\tTime\tFileName\tSize\tCompressedSize\tRatio");
+
+                // Write each match
+                int index = 0;
+                foreach (var kvp in matches.OrderBy(x => x.Value))
+                {
+                    uint hash = kvp.Key;
+                    string fileName = kvp.Value;
+                    writer.WriteLine($"{index}\t{hash:X8}\t0\t{fileName}\t0\t0\t0.00%");
+                    index++;
+                }
             }
         }
 
