@@ -772,13 +772,12 @@ namespace MapTool.MapData
                     }
                 }
 
-                    // Final fallback if nothing worked
-                    if (mapData.MapImageData == null)
-                    {
-                        DebugLogger.Log($"ℹ️  No map image found");
-                        DebugLogger.Log($"   This is normal - not all maps have 24.jpg files");
-                        DebugLogger.Log($"   Tool will render using obstacle data instead");
-                    }
+                // Final fallback if nothing worked
+                if (mapData.MapImageData == null)
+                {
+                    DebugLogger.Log($"ℹ️  No map image found");
+                    DebugLogger.Log($"   This is normal - not all maps have 24.jpg files");
+                    DebugLogger.Log($"   Tool will render using obstacle data instead");
                 }
             }
             catch (Exception ex)
