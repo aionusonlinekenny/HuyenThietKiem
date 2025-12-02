@@ -94,19 +94,31 @@ namespace MapTool.MapData
         private bool FileExists(string relativePath)
         {
             // Try pak first (Server mode: PakFileReader, Client mode: PakManager)
-            if (_pakReader != null && _pakReader.FileExists(relativePath))
+            if (_pakReader != null)
             {
-                return true;
+                bool existsInServerPak = _pakReader.FileExists(relativePath);
+                DebugLogger.Log($"      Checking Server PAK: {existsInServerPak}");
+                if (existsInServerPak)
+                {
+                    return true;
+                }
             }
 
-            if (_pakManager != null && _pakManager.FileExists(relativePath))
+            if (_pakManager != null)
             {
-                return true;
+                bool existsInClientPak = _pakManager.FileExists(relativePath);
+                DebugLogger.Log($"      Checking Client PAK: {existsInClientPak}");
+                if (existsInClientPak)
+                {
+                    return true;
+                }
             }
 
             // Try disk
             string diskPath = Path.Combine(_gameFolder, relativePath.TrimStart('\\', '/'));
-            return File.Exists(diskPath);
+            bool existsOnDisk = File.Exists(diskPath);
+            DebugLogger.Log($"      Checking Disk: {existsOnDisk} ({diskPath})");
+            return existsOnDisk;
         }
 
         /// <summary>
@@ -312,16 +324,36 @@ namespace MapTool.MapData
             }
 
             // Step 2: Load .wor file to get region grid
+            DebugLogger.LogSeparator();
+            DebugLogger.Log($"📄 LOADING MAP CONFIG (.wor)");
+            DebugLogger.Log($"   Map ID: {mapId}");
+            DebugLogger.Log($"   Map Name: {mapEntry.Name}");
+            DebugLogger.Log($"   Folder Path: {mapEntry.FolderPath}");
+
             MapConfig config;
             string worRelativePath = _mapListParser.GetMapWorRelativePath(mapId);
+            DebugLogger.Log($"   .wor Relative Path: {worRelativePath}");
+
+            // Debug: Show hash calculation for PAK lookup
+            if (_pakReader != null || _pakManager != null)
+            {
+                byte[] pathBytes = Encoding.GetEncoding("GB2312").GetBytes(worRelativePath);
+                string hexBytes = BitConverter.ToString(pathBytes).Replace("-", " ");
+                DebugLogger.Log($"   Path GB2312 bytes: {hexBytes.Substring(0, Math.Min(100, hexBytes.Length))}...");
+                DebugLogger.Log($"   PAK file hash: 0x{MapTool.PakFile.FileNameHasher.CalculateFileId(worRelativePath):X8}");
+            }
 
             // Try to read from pak first, then disk
-            if (FileExists(worRelativePath))
+            bool foundInPak = FileExists(worRelativePath);
+            DebugLogger.Log($"   File exists in PAK: {foundInPak}");
+
+            if (foundInPak)
             {
+                DebugLogger.Log($"   ✓ Found in PAK, reading...");
                 byte[] worBytes = ReadFileBytes(worRelativePath);
                 if (worBytes != null)
                 {
-                    Console.WriteLine($"✓ Loaded .wor from pak: {worRelativePath}");
+                    DebugLogger.Log($"✓ Loaded .wor from pak: {worRelativePath} ({worBytes.Length} bytes)");
                     config = MapFileParser.LoadMapConfigFromBytes(worBytes, mapEntry.Name);
                 }
                 else
@@ -331,11 +363,15 @@ namespace MapTool.MapData
             }
             else
             {
+                DebugLogger.Log($"   ✗ Not found in PAK, trying disk...");
                 // Fallback to disk
                 string worPath = _mapListParser.GetMapWorPath(mapId);
+                DebugLogger.Log($"   Disk path: {worPath}");
+                DebugLogger.Log($"   File exists on disk: {File.Exists(worPath)}");
+
                 if (File.Exists(worPath))
                 {
-                    Console.WriteLine($"✓ Loaded .wor from disk: {worPath}");
+                    DebugLogger.Log($"✓ Loaded .wor from disk: {worPath}");
                     config = MapFileParser.LoadMapConfig(worPath);
                 }
                 else
