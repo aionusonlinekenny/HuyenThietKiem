@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using MapTool;
 using MapTool.PakFile;
@@ -435,20 +436,20 @@ namespace PakExtractTool
                 try
                 {
                     // Get all file IDs from PAK
-                    worker.ReportProgress(0, new { Step = "Step 1/4: Loading PAK file...", Progress = "" });
+                    worker.ReportProgress(0, new ProgressData { Step = "Step 1/4: Loading PAK file...", Progress = "" });
                     var pakFileIds = _currentPakReader.GetAllFileIds();
 
-                    worker.ReportProgress(10, new { Step = "Step 2/4: Scanning folder for files...", Progress = $"Found {pakFileIds.Count} hashes in PAK" });
+                    worker.ReportProgress(10, new ProgressData { Step = "Step 2/4: Scanning folder for files...", Progress = $"Found {pakFileIds.Count} hashes in PAK" });
                     var allFiles = ScanFolderRecursive(scanFolder, worker);
 
-                    worker.ReportProgress(40, new { Step = "Step 3/4: Matching file paths with PAK hashes...", Progress = $"Scanning {allFiles.Count:N0} files..." });
+                    worker.ReportProgress(40, new ProgressData { Step = "Step 3/4: Matching file paths with PAK hashes...", Progress = $"Scanning {allFiles.Count:N0} files..." });
                     var matches = MatchFilesWithPak(allFiles, pakFileIds, scanFolder, worker);
 
-                    worker.ReportProgress(90, new { Step = "Step 4/4: Generating .pak.txt file...", Progress = $"Matched {matches.Count:N0}/{pakFileIds.Count:N0} files" });
+                    worker.ReportProgress(90, new ProgressData { Step = "Step 4/4: Generating .pak.txt file...", Progress = $"Matched {matches.Count:N0}/{pakFileIds.Count:N0} files" });
                     string txtFile = _currentPakPath + ".txt";
                     GeneratePakTxtFile(txtFile, matches);
 
-                    e.Result = new { TotalPakFiles = pakFileIds.Count, MatchedFiles = matches.Count, TxtFile = txtFile };
+                    e.Result = new GenerateIndexResult { TotalPakFiles = pakFileIds.Count, MatchedFiles = matches.Count, TxtFile = txtFile };
                 }
                 catch (Exception ex)
                 {
@@ -458,9 +459,12 @@ namespace PakExtractTool
 
             worker.ProgressChanged += (s, e) =>
             {
-                var data = e.UserState as dynamic;
-                lblStep.Text = data.Step;
-                lblProgress.Text = data.Progress;
+                var data = e.UserState as ProgressData;
+                if (data != null)
+                {
+                    lblStep.Text = data.Step;
+                    lblProgress.Text = data.Progress;
+                }
                 progressBar.Value = e.ProgressPercentage;
             };
 
@@ -475,9 +479,8 @@ namespace PakExtractTool
                     DebugLogger.Log($"❌ ERROR generating index: {ex.Message}");
                     DebugLogger.Log($"   Stack trace: {ex.StackTrace}");
                 }
-                else
+                else if (e.Result is GenerateIndexResult result)
                 {
-                    var result = e.Result as dynamic;
                     int totalPakFiles = result.TotalPakFiles;
                     int matchedFiles = result.MatchedFiles;
                     string txtFile = result.TxtFile;
@@ -530,7 +533,7 @@ namespace PakExtractTool
                     if (i % 500 == 0)
                     {
                         worker.ReportProgress(20 + (i * 20 / allFiles.Length),
-                            new { Step = "Step 2/4: Scanning folder for files...", Progress = $"Found {i:N0} files..." });
+                            new ProgressData { Step = "Step 2/4: Scanning folder for files...", Progress = $"Found {i:N0} files..." });
                     }
                 }
             }
@@ -570,7 +573,7 @@ namespace PakExtractTool
                 if (i % 1000 == 0)
                 {
                     worker.ReportProgress(40 + (i * 50 / allFiles.Count),
-                        new { Step = "Step 3/4: Matching file paths...", Progress = $"Checked {i:N0}/{allFiles.Count:N0} - Matched {matches.Count:N0}" });
+                        new ProgressData { Step = "Step 3/4: Matching file paths...", Progress = $"Checked {i:N0}/{allFiles.Count:N0} - Matched {matches.Count:N0}" });
                 }
             }
 
@@ -942,6 +945,21 @@ namespace PakExtractTool
             _currentPakReader?.Dispose();
             base.OnFormClosing(e);
         }
+    }
+
+    // Progress data class for BackgroundWorker
+    internal class ProgressData
+    {
+        public string Step { get; set; }
+        public string Progress { get; set; }
+    }
+
+    // Result data class for BackgroundWorker completion
+    internal class GenerateIndexResult
+    {
+        public int TotalPakFiles { get; set; }
+        public int MatchedFiles { get; set; }
+        public string TxtFile { get; set; }
     }
 
     // Simple progress form
