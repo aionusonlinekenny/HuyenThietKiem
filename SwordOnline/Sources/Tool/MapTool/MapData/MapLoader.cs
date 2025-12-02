@@ -891,51 +891,74 @@ namespace MapTool.MapData
                     DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
                     DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
                 }
-                // PRIORITY 3: Try Client PAK (for Client mode with PakManager)
-                else if (_pakManager != null && _pakManager.FileExists(mapImageRelativePath))
-                {
-                    DebugLogger.Log($"✓ Loading image from Client PAK");
-                    mapData.MapImageData = _pakManager.ReadFile(mapImageRelativePath);
-                    if (mapData.MapImageData != null)
-                    {
-                        mapData.MapImagePath = mapImageRelativePath;
-                        mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
-                        mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
-
-                        DebugLogger.Log($"✓ Loaded map image from Client PAK: {mapImageRelativePath}");
-                        DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
-                        DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
-                    }
-                    else
-                    {
-                        DebugLogger.Log($"⚠ Image data is null after reading from Client PAK");
-                    }
-                }
-                // PRIORITY 4: Try Server PAK (for Server mode with single PAK)
-                else if (_pakReader != null && FileExists(mapImageRelativePath))
-                {
-                    DebugLogger.Log($"✓ Loading image from Server PAK");
-                    mapData.MapImageData = ReadFileBytes(mapImageRelativePath);
-                    if (mapData.MapImageData != null)
-                    {
-                        mapData.MapImagePath = mapImageRelativePath;
-                        mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
-                        mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
-
-                        DebugLogger.Log($"✓ Loaded map image from Server PAK: {mapImageRelativePath}");
-                        DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
-                        DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
-                    }
-                    else
-                    {
-                        DebugLogger.Log($"⚠ Image data is null after reading from Server PAK");
-                    }
-                }
+                // PRIORITY 3 & 4: Try PAK files (Client then Server)
                 else
                 {
-                    DebugLogger.Log($"ℹ️  No map image found");
-                    DebugLogger.Log($"   This is normal - not all maps have 24.jpg files");
-                    DebugLogger.Log($"   Tool will render using obstacle data instead");
+                    DebugLogger.Log($"   💾 Checking PAK files for image...");
+                    DebugLogger.Log($"      PakManager available: {_pakManager != null}");
+                    DebugLogger.Log($"      PakReader available: {_pakReader != null}");
+
+                    // Try Client PAK first
+                    if (_pakManager != null)
+                    {
+                        bool existsInClientPak = _pakManager.FileExists(mapImageRelativePath);
+                        DebugLogger.Log($"      File exists in Client PAK: {existsInClientPak}");
+
+                        if (existsInClientPak)
+                        {
+                            DebugLogger.Log($"✓ Found in Client PAK, loading image...");
+                            mapData.MapImageData = _pakManager.ReadFile(mapImageRelativePath);
+                            if (mapData.MapImageData != null)
+                            {
+                                mapData.MapImagePath = mapImageRelativePath;
+                                mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                                mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+
+                                DebugLogger.Log($"✓ Loaded map image from Client PAK: {mapImageRelativePath}");
+                                DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
+                                DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
+                            }
+                            else
+                            {
+                                DebugLogger.Log($"⚠ Image data is null after reading from Client PAK");
+                            }
+                        }
+                    }
+
+                    // Try Server PAK if Client PAK didn't work
+                    if (mapData.MapImageData == null && _pakReader != null)
+                    {
+                        bool existsInServerPak = FileExists(mapImageRelativePath);
+                        DebugLogger.Log($"      File exists in Server PAK: {existsInServerPak}");
+
+                        if (existsInServerPak)
+                        {
+                            DebugLogger.Log($"✓ Loading image from Server PAK");
+                            mapData.MapImageData = ReadFileBytes(mapImageRelativePath);
+                            if (mapData.MapImageData != null)
+                            {
+                                mapData.MapImagePath = mapImageRelativePath;
+                                mapData.MapImageOffsetX = config.RegionLeft * MapConstants.MAP_REGION_PIXEL_WIDTH;
+                                mapData.MapImageOffsetY = config.RegionTop * MapConstants.MAP_REGION_PIXEL_HEIGHT;
+
+                                DebugLogger.Log($"✓ Loaded map image from Server PAK: {mapImageRelativePath}");
+                                DebugLogger.Log($"   Size: {mapData.MapImageData.Length:N0} bytes");
+                                DebugLogger.Log($"   Offset: ({mapData.MapImageOffsetX}, {mapData.MapImageOffsetY}) pixels");
+                            }
+                            else
+                            {
+                                DebugLogger.Log($"⚠ Image data is null after reading from Server PAK");
+                            }
+                        }
+                    }
+
+                    // Final fallback if nothing worked
+                    if (mapData.MapImageData == null)
+                    {
+                        DebugLogger.Log($"ℹ️  No map image found");
+                        DebugLogger.Log($"   This is normal - not all maps have 24.jpg files");
+                        DebugLogger.Log($"   Tool will render using obstacle data instead");
+                    }
                 }
             }
             catch (Exception ex)
