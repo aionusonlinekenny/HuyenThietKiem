@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MapTool.PakFile;
+using MapTool.MapData;
 
 namespace PakExtractTool
 {
@@ -24,7 +25,29 @@ namespace PakExtractTool
 
         public MainForm()
         {
-            InitializeComponent();
+            try
+            {
+                // Initialize debug logger FIRST
+                DebugLogger.Initialize();
+                DebugLogger.Log("=== PAK Extract Tool Started ===");
+                DebugLogger.Log($"Executable: {System.Reflection.Assembly.GetExecutingAssembly().Location}");
+                DebugLogger.Log($"Working Directory: {Environment.CurrentDirectory}");
+                DebugLogger.Log($"Log file: {DebugLogger.GetLogFilePath()}");
+                DebugLogger.LogSeparator();
+
+                InitializeComponent();
+
+                DebugLogger.Log("✓ GUI initialized successfully");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Failed to initialize PAK Extract Tool:\n\n{ex.Message}\n\nStack trace:\n{ex.StackTrace}",
+                    "Initialization Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                throw;
+            }
         }
 
         private void InitializeComponent()
@@ -152,15 +175,32 @@ namespace PakExtractTool
 
         private void BtnOpenPak_Click(object sender, EventArgs e)
         {
-            using (var dialog = new OpenFileDialog())
+            try
             {
-                dialog.Filter = "PAK Files (*.pak)|*.pak|All Files (*.*)|*.*";
-                dialog.Title = "Select PAK File";
+                DebugLogger.Log("📂 User clicked 'Open PAK File' button");
 
-                if (dialog.ShowDialog() == DialogResult.OK)
+                using (var dialog = new OpenFileDialog())
                 {
-                    LoadPakFile(dialog.FileName);
+                    dialog.Filter = "PAK Files (*.pak)|*.pak|All Files (*.*)|*.*";
+                    dialog.Title = "Select PAK File";
+
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        DebugLogger.Log($"   Selected file: {dialog.FileName}");
+                        LoadPakFile(dialog.FileName);
+                    }
+                    else
+                    {
+                        DebugLogger.Log("   User cancelled file selection");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                DebugLogger.Log($"❌ ERROR in BtnOpenPak_Click: {ex.Message}");
+                DebugLogger.Log($"   Stack trace: {ex.StackTrace}");
+                MessageBox.Show($"Error opening file dialog:\n\n{ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -168,19 +208,36 @@ namespace PakExtractTool
         {
             try
             {
+                DebugLogger.LogSeparator();
+                DebugLogger.Log($"🔄 LOADING PAK FILE");
+                DebugLogger.Log($"   Path: {pakPath}");
+                DebugLogger.Log($"   File exists: {File.Exists(pakPath)}");
+                DebugLogger.Log($"   File size: {new FileInfo(pakPath).Length:N0} bytes");
+
                 treeViewFiles.Nodes.Clear();
                 listViewDetails.Items.Clear();
                 UpdateStatus("Loading PAK file...");
 
                 // Dispose previous reader
-                _currentPakReader?.Dispose();
+                if (_currentPakReader != null)
+                {
+                    DebugLogger.Log("   Disposing previous PAK reader...");
+                    _currentPakReader.Dispose();
+                }
 
                 // Load new PAK file
+                DebugLogger.Log("   Creating new PakFileReader...");
                 _currentPakReader = new PakFileReader(pakPath);
                 _currentPakPath = pakPath;
+                DebugLogger.Log("   ✓ PakFileReader created successfully");
 
+                DebugLogger.Log("   Getting statistics...");
                 var stats = _currentPakReader.GetStatistics();
+                DebugLogger.Log($"   ✓ Statistics: {stats.TotalFiles} files, {stats.TotalSize:N0} bytes");
+
+                DebugLogger.Log("   Getting all file names...");
                 var allFiles = _currentPakReader.GetAllFileNames();
+                DebugLogger.Log($"   ✓ Got {allFiles.Count} named files");
 
                 // Update UI
                 lblPakInfo.Text = $"📦 {Path.GetFileName(pakPath)} - " +
@@ -190,17 +247,31 @@ namespace PakExtractTool
                 lblPakInfo.ForeColor = Color.DarkGreen;
 
                 // Build tree structure
+                DebugLogger.Log("   Building file tree...");
                 BuildFileTree(allFiles);
+                DebugLogger.Log("   ✓ File tree built successfully");
 
                 // Enable buttons
                 btnExtractSelected.Enabled = true;
                 btnExtractAll.Enabled = true;
 
                 UpdateStatus($"Loaded {allFiles.Count:N0} files from {Path.GetFileName(pakPath)}");
+                DebugLogger.Log($"✓ PAK file loaded successfully");
+                DebugLogger.LogSeparator();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading PAK file:\n\n{ex.Message}",
+                DebugLogger.Log($"❌ ERROR loading PAK file: {ex.Message}");
+                DebugLogger.Log($"   Exception type: {ex.GetType().FullName}");
+                DebugLogger.Log($"   Stack trace: {ex.StackTrace}");
+                if (ex.InnerException != null)
+                {
+                    DebugLogger.Log($"   Inner exception: {ex.InnerException.Message}");
+                    DebugLogger.Log($"   Inner stack trace: {ex.InnerException.StackTrace}");
+                }
+                DebugLogger.LogSeparator();
+
+                MessageBox.Show($"Error loading PAK file:\n\n{ex.Message}\n\nCheck log file for details:\n{DebugLogger.GetLogFilePath()}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 UpdateStatus("Error loading PAK file");
             }
