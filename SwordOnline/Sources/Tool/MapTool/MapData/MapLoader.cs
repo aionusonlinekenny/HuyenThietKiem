@@ -449,15 +449,31 @@ namespace MapTool.MapData
             List<string> existingRegions = new List<string>();
             List<string> missingRegions = new List<string>();
 
+            // Client mode: Skip full region scan (regions not available in PAK)
+            // Only scan a small sample to check availability
+            bool scanAllRegions = _isServerMode || totalRegions < 100;
+            int maxRegionsToScan = scanAllRegions ? totalRegions : Math.Min(10, totalRegions);
+
             DebugLogger.LogSeparator();
             DebugLogger.Log($"🔍 SCANNING FOR REGION FILES");
+            DebugLogger.Log($"   Mode: {(_isServerMode ? "Server" : "Client")}");
+            DebugLogger.Log($"   Total regions: {totalRegions}");
+            DebugLogger.Log($"   Will scan: {(scanAllRegions ? "all" : $"sample of {maxRegionsToScan}")}");
             DebugLogger.Log($"   Looking for regions from ({config.RegionLeft},{config.RegionTop}) to ({config.RegionRight},{config.RegionBottom})");
 
+            int scannedCount = 0;
             for (int y = config.RegionTop; y <= config.RegionBottom; y++)
             {
                 for (int x = config.RegionLeft; x <= config.RegionRight; x++)
                 {
+                    if (!scanAllRegions && scannedCount >= maxRegionsToScan)
+                    {
+                        DebugLogger.Log($"   ... skipping remaining {totalRegions - scannedCount} regions (Client mode)");
+                        goto EndRegionScan;
+                    }
+
                     attemptedCount++;
+                    scannedCount++;
 
                     // Build region file path: \maps\<mapfolder>\v_YYY\XXX_Region_S.dat
                     string regionRelativePath = Path.Combine(
@@ -512,6 +528,7 @@ namespace MapTool.MapData
                 }
             }
 
+            EndRegionScan:
             DebugLogger.LogSeparator();
             DebugLogger.Log($"📊 REGION SCAN SUMMARY");
             DebugLogger.Log($"   Attempted: {attemptedCount} regions");
@@ -529,16 +546,27 @@ namespace MapTool.MapData
             // Check for data mismatch - warn if most regions are missing
             if (loadedCount == 0)
             {
-                DebugLogger.LogSeparator();
-                DebugLogger.Log($"❌ CRITICAL: NO REGIONS LOADED!");
-                DebugLogger.Log($"   The .wor file says regions should exist at ({config.RegionLeft},{config.RegionTop}) to ({config.RegionRight},{config.RegionBottom})");
-                DebugLogger.Log($"   But NO region files were found at these coordinates!");
-                DebugLogger.Log($"");
-                DebugLogger.Log($"   Possible causes:");
-                DebugLogger.Log($"   1. Map files not extracted from pak");
-                DebugLogger.Log($"   2. Wrong game folder selected");
-                DebugLogger.Log($"   3. .wor file doesn't match actual region files (different version)");
-                DebugLogger.LogSeparator();
+                if (_isServerMode)
+                {
+                    DebugLogger.LogSeparator();
+                    DebugLogger.Log($"❌ CRITICAL: NO REGIONS LOADED!");
+                    DebugLogger.Log($"   The .wor file says regions should exist at ({config.RegionLeft},{config.RegionTop}) to ({config.RegionRight},{config.RegionBottom})");
+                    DebugLogger.Log($"   But NO region files were found at these coordinates!");
+                    DebugLogger.Log($"");
+                    DebugLogger.Log($"   Possible causes:");
+                    DebugLogger.Log($"   1. Map files not extracted from pak");
+                    DebugLogger.Log($"   2. Wrong game folder selected");
+                    DebugLogger.Log($"   3. .wor file doesn't match actual region files (different version)");
+                    DebugLogger.LogSeparator();
+                }
+                else
+                {
+                    DebugLogger.LogSeparator();
+                    DebugLogger.Log($"ℹ️ CLIENT MODE: No regions loaded (expected)");
+                    DebugLogger.Log($"   Client PAK files typically don't contain all region files");
+                    DebugLogger.Log($"   Map will render without obstacle data");
+                    DebugLogger.LogSeparator();
+                }
             }
             else if ((double)loadedCount / attemptedCount < 0.1) // Less than 10% loaded
             {
