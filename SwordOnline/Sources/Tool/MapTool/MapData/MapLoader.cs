@@ -376,12 +376,12 @@ namespace MapTool.MapData
                 }
                 else
                 {
-                    // Client mode: Try to load Client .map file as fallback
+                    // Client mode: Try to load Client .map or .ini file as fallback
                     if (!_isServerMode)
                     {
                         DebugLogger.Log($"   ✗ .wor not found, trying Client .map file...");
 
-                        // Client .map files are stored as: maps/{mapId}.map
+                        // Try 1: Client .map files are stored as: maps/{mapId}.map
                         string clientMapPath = Path.Combine(_gameFolder, "maps", $"{mapId}.map");
                         string clientMapRelativePath = $"\\maps\\{mapId}.map";
 
@@ -410,11 +410,44 @@ namespace MapTool.MapData
                         }
                         else
                         {
-                            throw new FileNotFoundException(
-                                $"Map config not found:\n" +
-                                $"  .wor: {worRelativePath} (Server format)\n" +
-                                $"  .map: {clientMapRelativePath} (Client format)\n" +
-                                $"Neither found in PAK or disk");
+                            // Try 2: Client .ini files are stored as: maps/{mapId}.ini
+                            DebugLogger.Log($"   ✗ .map not found, trying Client .ini file...");
+
+                            string clientIniPath = Path.Combine(_gameFolder, "maps", $"{mapId}.ini");
+                            string clientIniRelativePath = $"\\maps\\{mapId}.ini";
+
+                            DebugLogger.Log($"   Client .ini path: {clientIniPath}");
+                            DebugLogger.Log($"   Client .ini relative: {clientIniRelativePath}");
+
+                            // Try PAK first
+                            byte[] iniBytes = null;
+                            if (_pakManager != null && _pakManager.FileExists(clientIniRelativePath))
+                            {
+                                DebugLogger.Log($"   ✓ Found in Client PAK");
+                                iniBytes = _pakManager.ReadFile(clientIniRelativePath);
+                            }
+
+                            // Fallback to disk
+                            if (iniBytes == null && File.Exists(clientIniPath))
+                            {
+                                DebugLogger.Log($"   ✓ Found on disk");
+                                iniBytes = File.ReadAllBytes(clientIniPath);
+                            }
+
+                            if (iniBytes != null)
+                            {
+                                DebugLogger.Log($"✓ Parsing Client .ini file ({iniBytes.Length} bytes)");
+                                config = ClientIniParser.ParseClientIniFromBytes(iniBytes, mapEntry.Name);
+                            }
+                            else
+                            {
+                                throw new FileNotFoundException(
+                                    $"Map config not found:\n" +
+                                    $"  .wor: {worRelativePath} (Server format)\n" +
+                                    $"  .map: {clientMapRelativePath} (Client region format)\n" +
+                                    $"  .ini: {clientIniRelativePath} (Client background format)\n" +
+                                    $"None found in PAK or disk");
+                            }
                         }
                     }
                     else
@@ -589,14 +622,25 @@ namespace MapTool.MapData
 
             mapData.LoadedRegionCount = loadedCount;
 
-            // Step 5: Try to load map image (24.jpg)
-            // NEW: Simple and correct image path construction with encoding fallback
-            // FolderPath format: "西北南区\成都\成都" (may or may not have trailing backslash)
-            // Image path: "\maps\西北南区\成都\成都24.jpg"
+            // Step 5: Try to load map image (24.jpg or from .ini BackgroundImagePath)
+            // Two possible formats:
+            // 1. Server/.wor/.map format: "\maps\{FolderPath}24.jpg"
+            // 2. Client/.ini format: "\游戏资源\background\{ImageName}.jpg" (from BackgroundImagePath)
 
-            // Ensure FolderPath doesn't have trailing backslash
-            string folderPath = mapEntry.FolderPath.TrimEnd('\\', '/');
-            string mapImageRelativePath = $"\\maps\\{folderPath}24.jpg";
+            string mapImageRelativePath;
+
+            if (!string.IsNullOrEmpty(config.BackgroundImagePath))
+            {
+                // Use background image path from .ini file (Client mode)
+                mapImageRelativePath = config.BackgroundImagePath;
+                DebugLogger.Log($"🎨 Using background image from .ini file: {mapImageRelativePath}");
+            }
+            else
+            {
+                // Use default 24.jpg path (Server mode or .wor/.map files)
+                string folderPath = mapEntry.FolderPath.TrimEnd('\\', '/');
+                mapImageRelativePath = $"\\maps\\{folderPath}24.jpg";
+            }
 
             DebugLogger.Log($"🖼️  LOADING MAP IMAGE");
             DebugLogger.Log($"   Map ID: {mapId}");

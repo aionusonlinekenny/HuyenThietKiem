@@ -140,6 +140,9 @@ namespace MapTool.MapData
         public int RegionRight { get; set; }
         public int RegionBottom { get; set; }
 
+        // Background image path (for Client .ini files)
+        public string BackgroundImagePath { get; set; }
+
         public int RegionWidth => RegionRight - RegionLeft + 1;
         public int RegionHeight => RegionBottom - RegionTop + 1;
         public int TotalRegions => RegionWidth * RegionHeight;
