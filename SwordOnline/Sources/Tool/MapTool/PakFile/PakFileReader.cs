@@ -391,6 +391,14 @@ namespace MapTool.PakFile
         }
 
         /// <summary>
+        /// Get all file IDs (hashes) from PAK index
+        /// </summary>
+        public List<uint> GetAllFileIds()
+        {
+            return _fileIndex.Keys.ToList();
+        }
+
+        /// <summary>
         /// Get pak statistics
         /// </summary>
         public PakStatistics GetStatistics()
