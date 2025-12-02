@@ -376,7 +376,51 @@ namespace MapTool.MapData
                 }
                 else
                 {
-                    throw new FileNotFoundException($".wor file not found in pak ({worRelativePath}) or disk ({worPath})");
+                    // Client mode: Try to load Client .map file as fallback
+                    if (!_isServerMode)
+                    {
+                        DebugLogger.Log($"   ✗ .wor not found, trying Client .map file...");
+
+                        // Client .map files are stored as: maps/{mapId}.map
+                        string clientMapPath = Path.Combine(_gameFolder, "maps", $"{mapId}.map");
+                        string clientMapRelativePath = $"\\maps\\{mapId}.map";
+
+                        DebugLogger.Log($"   Client .map path: {clientMapPath}");
+                        DebugLogger.Log($"   Client .map relative: {clientMapRelativePath}");
+
+                        // Try PAK first
+                        byte[] mapBytes = null;
+                        if (_pakManager != null && _pakManager.FileExists(clientMapRelativePath))
+                        {
+                            DebugLogger.Log($"   ✓ Found in Client PAK");
+                            mapBytes = _pakManager.ReadFile(clientMapRelativePath);
+                        }
+
+                        // Fallback to disk
+                        if (mapBytes == null && File.Exists(clientMapPath))
+                        {
+                            DebugLogger.Log($"   ✓ Found on disk");
+                            mapBytes = File.ReadAllBytes(clientMapPath);
+                        }
+
+                        if (mapBytes != null)
+                        {
+                            DebugLogger.Log($"✓ Parsing Client .map file ({mapBytes.Length} bytes)");
+                            config = ClientMapParser.ParseClientMapFromBytes(mapBytes, mapEntry.Name);
+                        }
+                        else
+                        {
+                            throw new FileNotFoundException(
+                                $"Map config not found:\n" +
+                                $"  .wor: {worRelativePath} (Server format)\n" +
+                                $"  .map: {clientMapRelativePath} (Client format)\n" +
+                                $"Neither found in PAK or disk");
+                        }
+                    }
+                    else
+                    {
+                        throw new FileNotFoundException($".wor file not found in pak ({worRelativePath}) or disk ({worPath})");
+                    }
                 }
             }
 
