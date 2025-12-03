@@ -626,13 +626,23 @@ namespace PakExtractTool
                             var matches = System.Text.RegularExpressions.Regex.Matches(content, pattern);
                             foreach (System.Text.RegularExpressions.Match match in matches)
                             {
-                                string path = match.Value;
-                                // Normalize path
-                                path = path.Replace('/', '\\');
+                                string path = match.Value.Trim();
+
+                                // Normalize path to backslash format with leading backslash
+                                path = path.Replace('/', '\\');  // Convert forward slash to backslash
+
+                                // Ensure leading backslash
                                 if (!path.StartsWith("\\"))
                                     path = "\\" + path;
 
-                                paths.Add(path);
+                                // Remove trailing whitespace/quotes that might be captured
+                                path = path.TrimEnd(' ', '\t', '"', '\'');
+
+                                // Add to set if valid
+                                if (path.Length > 3 && path.Contains('.'))  // Min: \a.b
+                                {
+                                    paths.Add(path);
+                                }
                             }
                         }
                     }
