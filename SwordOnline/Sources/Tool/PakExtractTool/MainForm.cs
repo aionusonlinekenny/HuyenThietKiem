@@ -939,28 +939,37 @@ namespace PakExtractTool
 
                         // Also do generic regex extraction for all files
                         string content = null;
+                        string usedEncoding = null;
 
                         // Try multiple encodings to handle Chinese and Vietnamese characters
-                        // Priority order: Chinese (GBK, GB2312), Vietnamese (Windows-1258, TCVN3), then fallbacks
-                        var encodings = new List<Encoding>();
+                        // Priority order: Comprehensive Chinese encodings first, then Vietnamese, then fallbacks
+                        var encodings = new List<(string Name, Encoding Enc)>();
 
-                        try { encodings.Add(Encoding.GetEncoding("GBK")); } catch { }          // 1. GBK (Chinese - superset of GB2312)
-                        try { encodings.Add(Encoding.GetEncoding("GB2312")); } catch { }       // 2. GB2312 (Simplified Chinese)
-                        try { encodings.Add(Encoding.GetEncoding("windows-1258")); } catch { } // 3. Vietnamese ANSI standard
-                        try { encodings.Add(Encoding.GetEncoding(1258)); } catch { }           // 4. Vietnamese codepage
-                        try { encodings.Add(Encoding.GetEncoding("TCVN")); } catch { }         // 5. TCVN3 Vietnamese encoding
-                        try { encodings.Add(Encoding.GetEncoding("x-TCVN")); } catch { }       // 5b. Alternative TCVN name
-                        encodings.Add(Encoding.UTF8);                                          // 6. UTF-8
-                        encodings.Add(Encoding.Default);                                       // 7. System default
-                        encodings.Add(Encoding.ASCII);                                         // 8. ASCII fallback
+                        try { encodings.Add(("GB18030", Encoding.GetEncoding("GB18030"))); } catch { }   // 1. GB18030 (Most comprehensive Chinese - includes all CJK)
+                        try { encodings.Add(("GBK", Encoding.GetEncoding("GBK"))); } catch { }           // 2. GBK (Extended GB2312, common in Mainland China)
+                        try { encodings.Add(("Big5", Encoding.GetEncoding("Big5"))); } catch { }         // 3. Big5 (Traditional Chinese, Taiwan/Hong Kong)
+                        try { encodings.Add(("GB2312", Encoding.GetEncoding("GB2312"))); } catch { }     // 4. GB2312 (Simplified Chinese, older standard)
+                        try { encodings.Add(("Windows-1258", Encoding.GetEncoding("windows-1258"))); } catch { } // 5. Vietnamese ANSI standard
+                        try { encodings.Add(("CP1258", Encoding.GetEncoding(1258))); } catch { }         // 6. Vietnamese codepage
+                        try { encodings.Add(("TCVN", Encoding.GetEncoding("TCVN"))); } catch { }         // 7. TCVN3 Vietnamese encoding
+                        try { encodings.Add(("x-TCVN", Encoding.GetEncoding("x-TCVN"))); } catch { }     // 8. Alternative TCVN name
+                        encodings.Add(("UTF-8", Encoding.UTF8));                                         // 9. UTF-8
+                        encodings.Add(("Default", Encoding.Default));                                    // 10. System default
+                        encodings.Add(("ASCII", Encoding.ASCII));                                        // 11. ASCII fallback
 
-                        foreach (var encoding in encodings)
+                        foreach (var (name, encoding) in encodings)
                         {
                             try
                             {
                                 content = File.ReadAllText(filePath, encoding);
-                                // Successfully read, use this encoding
-                                break;
+
+                                // Validate content - check if it contains expected patterns
+                                // If file has Chinese paths but content looks broken, try next encoding
+                                if (!string.IsNullOrWhiteSpace(content))
+                                {
+                                    usedEncoding = name;
+                                    break;
+                                }
                             }
                             catch
                             {
@@ -968,10 +977,17 @@ namespace PakExtractTool
                             }
                         }
 
+                        // Log encoding detection for debugging (only for first few files)
+                        if (i < 5 && usedEncoding != null)
+                        {
+                            DebugLogger.Log($"      File {i}: {Path.GetFileName(filePath)} -> Encoding: {usedEncoding}");
+                        }
+
                         if (content == null)
                             continue; // Skip this file
 
                         // Extract all path references using regex
+                        int pathsBeforeExtraction = paths.Count;
                         foreach (var pattern in pathPatterns)
                         {
                             var matches = System.Text.RegularExpressions.Regex.Matches(content, pattern);
@@ -988,6 +1004,7 @@ namespace PakExtractTool
                                     path = "\\" + path;
 
                                 // Lowercase ONLY A-Z → a-z (match game engine g_StrLower)
+                                // IMPORTANT: Chinese characters are preserved as-is
                                 path = LowercaseAsciiOnly(path);
 
                                 // Remove trailing whitespace/quotes that might be captured
@@ -996,6 +1013,12 @@ namespace PakExtractTool
                                 // Add to set if valid
                                 if (path.Length > 3 && path.Contains('.'))  // Min: \a.b
                                 {
+                                    // Log first few Chinese paths for debugging
+                                    if (paths.Count < pathsBeforeExtraction + 3 && ContainsChinese(path))
+                                    {
+                                        DebugLogger.Log($"      Chinese path found: {path}");
+                                    }
+
                                     paths.Add(path);
                                 }
                             }
@@ -1017,6 +1040,21 @@ namespace PakExtractTool
                 }
 
                 DebugLogger.Log($"   ✓ Extracted {paths.Count:N0} unique path references from source code (including generated paths)");
+
+                // Log statistics about Chinese paths
+                int chinesePathCount = paths.Count(p => ContainsChinese(p));
+                if (chinesePathCount > 0)
+                {
+                    DebugLogger.Log($"   📊 Chinese paths: {chinesePathCount:N0} ({(double)chinesePathCount / paths.Count * 100:F1}%)");
+
+                    // Log sample Chinese paths
+                    var sampleChinese = paths.Where(p => ContainsChinese(p)).Take(5).ToList();
+                    DebugLogger.Log($"   Sample Chinese paths:");
+                    foreach (var path in sampleChinese)
+                    {
+                        DebugLogger.Log($"      {path}");
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -1309,12 +1347,41 @@ namespace PakExtractTool
             return new string(chars);
         }
 
+        /// <summary>
+        /// Check if string contains Chinese characters (CJK Unified Ideographs)
+        /// Unicode ranges: 4E00-9FFF (common), 3400-4DBF (extension A), F900-FAFF (compatibility)
+        /// </summary>
+        private static bool ContainsChinese(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return false;
+
+            foreach (char c in input)
+            {
+                // Check CJK Unified Ideographs ranges
+                if ((c >= 0x4E00 && c <= 0x9FFF) ||   // CJK Unified Ideographs (common Chinese)
+                    (c >= 0x3400 && c <= 0x4DBF) ||   // CJK Extension A
+                    (c >= 0xF900 && c <= 0xFAFF))     // CJK Compatibility Ideographs
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private Dictionary<uint, string> MatchFilesWithPak(List<string> pathReferences, List<uint> pakFileIds, string scanFolder, System.ComponentModel.BackgroundWorker worker)
         {
             var matches = new Dictionary<uint, string>();
             var pakHashSet = new HashSet<uint>(pakFileIds);
 
             DebugLogger.Log($"🔍 Matching {pathReferences.Count:N0} path references with PAK hashes...");
+
+            // Count and log Chinese paths
+            int chinesePathsToMatch = pathReferences.Count(p => ContainsChinese(p));
+            if (chinesePathsToMatch > 0)
+            {
+                DebugLogger.Log($"   📊 Chinese paths to match: {chinesePathsToMatch:N0} ({(double)chinesePathsToMatch / pathReferences.Count * 100:F1}%)");
+            }
 
             // Log first 10 sample paths
             if (pathReferences.Count > 0)
@@ -1326,9 +1393,11 @@ namespace PakExtractTool
                 }
             }
 
+            int chineseMatches = 0;
             for (int i = 0; i < pathReferences.Count; i++)
             {
                 string path = pathReferences[i];
+                bool isChinese = ContainsChinese(path);
 
                 // Calculate hash for this path
                 uint hash = FileNameHasher.CalculateFileId(path);
@@ -1337,11 +1406,13 @@ namespace PakExtractTool
                 if (pakHashSet.Contains(hash) && !matches.ContainsKey(hash))
                 {
                     matches[hash] = path;
+                    if (isChinese) chineseMatches++;
 
                     if (matches.Count <= 20)
                     {
                         // Log first 20 matches for debugging
-                        DebugLogger.Log($"   ✓ Match #{matches.Count}: {path} -> 0x{hash:X8}");
+                        string chineseMarker = isChinese ? " [CHINESE]" : "";
+                        DebugLogger.Log($"   ✓ Match #{matches.Count}: {path} -> 0x{hash:X8}{chineseMarker}");
                     }
                 }
 
@@ -1353,6 +1424,11 @@ namespace PakExtractTool
             }
 
             DebugLogger.Log($"   ✓ Final match result: {matches.Count:N0}/{pakFileIds.Count:N0} ({(double)matches.Count / pakFileIds.Count * 100:F1}%)");
+
+            if (chineseMatches > 0)
+            {
+                DebugLogger.Log($"   📊 Chinese path matches: {chineseMatches:N0} ({(double)chineseMatches / matches.Count * 100:F1}% of matches)");
+            }
 
             return matches;
         }
