@@ -568,10 +568,14 @@ namespace PakExtractTool
             var matches = new Dictionary<uint, string>();
             var pakHashSet = new HashSet<uint>(pakFileIds);
 
+            // Detect if we're scanning from inside a known folder (Settings, Spr, etc.)
+            // and need to ADD prefix instead of strip
+            string scanFolderName = Path.GetFileName(scanFolder.TrimEnd('\\', '/'));
+            var pathPrefixesToAdd = new[] { "", $"{scanFolderName}\\", $"{scanFolderName.ToLower()}\\" };
+
             // Try to detect common folder prefixes to strip
             // e.g., if user selected "Server" folder, we need to strip "pak\" prefix
-            // Also handle cases where we need to KEEP certain prefixes like "settings\"
-            var pathPrefixesToTry = new[]
+            var pathPrefixesToStrip = new[]
             {
                 "",
                 "pak\\",
@@ -580,13 +584,16 @@ namespace PakExtractTool
                 "data\\",
                 "bin\\client\\",
                 "bin\\server\\",
-                "bin\\client\\settings\\",  // Strip to get \settings\file.ini
+                "bin\\client\\settings\\",
                 "bin\\server\\settings\\",
-                "client\\settings\\",        // Strip to get \settings\file.ini
+                "client\\settings\\",
                 "server\\settings\\"
             };
 
-            DebugLogger.Log($"🔍 Testing path matching with {pathPrefixesToTry.Length} prefix variations...");
+            int totalVariations = pathPrefixesToStrip.Length * pathPrefixesToAdd.Length * 2;
+            DebugLogger.Log($"🔍 Testing path matching with {totalVariations} variations...");
+            DebugLogger.Log($"   Scan folder name: {scanFolderName}");
+            DebugLogger.Log($"   Will try adding prefixes: {string.Join(", ", pathPrefixesToAdd.Select(p => string.IsNullOrEmpty(p) ? "(none)" : p))}");
 
             // Debug: Test first file with all variations
             if (allFiles.Count > 0)
@@ -599,32 +606,43 @@ namespace PakExtractTool
                 DebugLogger.Log($"   Relative path: {relativePath}");
                 DebugLogger.Log($"   Testing all path variations:");
 
-                foreach (var prefix in pathPrefixesToTry)
+                // First strip prefixes
+                foreach (var stripPrefix in pathPrefixesToStrip)
                 {
-                    string testPath = relativePath;
-                    if (!string.IsNullOrEmpty(prefix) && testPath.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                    string strippedPath = relativePath;
+                    if (!string.IsNullOrEmpty(stripPrefix) && strippedPath.StartsWith(stripPrefix, StringComparison.OrdinalIgnoreCase))
                     {
-                        testPath = testPath.Substring(prefix.Length);
+                        strippedPath = strippedPath.Substring(stripPrefix.Length);
                     }
 
-                    // Try both with and without leading backslash
-                    foreach (bool withLeadingSlash in new[] { true, false })
+                    // Then try adding prefixes
+                    foreach (var addPrefix in pathPrefixesToAdd)
                     {
-                        string finalPath = testPath;
+                        string testPath = addPrefix + strippedPath;
 
-                        if (withLeadingSlash)
+                        // Try both with and without leading backslash
+                        foreach (bool withLeadingSlash in new[] { true, false })
                         {
-                            if (!finalPath.StartsWith("\\"))
-                                finalPath = "\\" + finalPath;
-                        }
-                        else
-                        {
-                            finalPath = finalPath.TrimStart('\\');
-                        }
+                            string finalPath = testPath;
 
-                        uint hash = FileNameHasher.CalculateFileId(finalPath);
-                        bool exists = pakHashSet.Contains(hash);
-                        DebugLogger.Log($"      {finalPath} -> 0x{hash:X8} {(exists ? "✓ MATCH" : "✗")}");
+                            if (withLeadingSlash)
+                            {
+                                if (!finalPath.StartsWith("\\"))
+                                    finalPath = "\\" + finalPath;
+                            }
+                            else
+                            {
+                                finalPath = finalPath.TrimStart('\\');
+                            }
+
+                            uint hash = FileNameHasher.CalculateFileId(finalPath);
+                            bool exists = pakHashSet.Contains(hash);
+                            if (exists || (pathPrefixesToAdd.Length <= 3 && Array.IndexOf(pathPrefixesToAdd, addPrefix) < 2))
+                            {
+                                // Only log important ones to reduce noise
+                                DebugLogger.Log($"      {finalPath} -> 0x{hash:X8} {(exists ? "✓ MATCH" : "✗")}");
+                            }
+                        }
                     }
                 }
             }
@@ -639,43 +657,55 @@ namespace PakExtractTool
 
                 // Try different path formats to find a match
                 bool foundMatch = false;
-                foreach (var prefix in pathPrefixesToTry)
+
+                // First strip prefixes
+                foreach (var stripPrefix in pathPrefixesToStrip)
                 {
                     if (foundMatch) break;
 
-                    string testPath = relativePath;
-
-                    // Strip the prefix if path starts with it
-                    if (!string.IsNullOrEmpty(prefix) && testPath.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                    string strippedPath = relativePath;
+                    if (!string.IsNullOrEmpty(stripPrefix) && strippedPath.StartsWith(stripPrefix, StringComparison.OrdinalIgnoreCase))
                     {
-                        testPath = testPath.Substring(prefix.Length);
+                        strippedPath = strippedPath.Substring(stripPrefix.Length);
                     }
 
-                    // Try both with and without leading backslash
-                    foreach (bool withLeadingSlash in new[] { true, false })
+                    // Then try adding prefixes
+                    foreach (var addPrefix in pathPrefixesToAdd)
                     {
-                        string finalPath = testPath;
+                        if (foundMatch) break;
 
-                        if (withLeadingSlash)
-                        {
-                            if (!finalPath.StartsWith("\\"))
-                                finalPath = "\\" + finalPath;
-                        }
-                        else
-                        {
-                            finalPath = finalPath.TrimStart('\\');
-                        }
+                        string testPath = addPrefix + strippedPath;
 
-                        // Calculate hash
-                        uint hash = FileNameHasher.CalculateFileId(finalPath);
-
-                        // Check if this hash exists in PAK
-                        if (pakHashSet.Contains(hash) && !matches.ContainsKey(hash))
+                        // Try both with and without leading backslash
+                        foreach (bool withLeadingSlash in new[] { true, false })
                         {
-                            matches[hash] = finalPath;
-                            DebugLogger.Log($"   ✓ Match: {finalPath} -> 0x{hash:X8}");
-                            foundMatch = true;
-                            break;
+                            string finalPath = testPath;
+
+                            if (withLeadingSlash)
+                            {
+                                if (!finalPath.StartsWith("\\"))
+                                    finalPath = "\\" + finalPath;
+                            }
+                            else
+                            {
+                                finalPath = finalPath.TrimStart('\\');
+                            }
+
+                            // Calculate hash
+                            uint hash = FileNameHasher.CalculateFileId(finalPath);
+
+                            // Check if this hash exists in PAK
+                            if (pakHashSet.Contains(hash) && !matches.ContainsKey(hash))
+                            {
+                                matches[hash] = finalPath;
+                                if (matches.Count <= 10)
+                                {
+                                    // Log first 10 matches for debugging
+                                    DebugLogger.Log($"   ✓ Match #{matches.Count}: {finalPath} -> 0x{hash:X8}");
+                                }
+                                foundMatch = true;
+                                break;
+                            }
                         }
                     }
                 }
