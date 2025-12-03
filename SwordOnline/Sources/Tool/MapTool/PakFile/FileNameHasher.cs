@@ -12,18 +12,27 @@ namespace MapTool.PakFile
         /// <summary>
         /// Calculate hash ID for a filename (ANSI encoding required)
         /// Matches: ENGINE_API DWORD g_FileName2Id(LPSTR lpFileName)
-        /// Note: Game engine calls g_GetPackPath() first which removes leading slash!
+        ///
+        /// CRITICAL: Paths are hashed WITH leading backslash!
+        /// From KPakList::FindElemFile():
+        ///   szPackName[0] = '\\';
+        ///   g_GetPackPath(szPackName + 1, pszFileName);  // Writes normalized path after leading \
+        ///   FileNameToId(szPackName);  // Hashes with leading \
+        ///
+        /// Example: "\\spr\\Ui\\file.spr" -> hash("\\spr\\ui\\file.spr")
         /// </summary>
-        /// <param name="fileName">Filename with path (e.g., "\maps\场景地图\城市\成都\成都.wor")</param>
+        /// <param name="fileName">Filename with path (e.g., "\\maps\\场景地图\\城市\\成都\\成都.wor")</param>
         /// <returns>Hash ID used in pak file index</returns>
         public static uint CalculateFileId(string fileName)
         {
-            // Match game engine g_GetPackPath() behavior: remove leading slash/backslash
-            // From KFilePath.cpp: if (lpFileName[0] == '\\') g_StrCpy(lpPathName, lpFileName + 1);
-            while (fileName.StartsWith("\\") || fileName.StartsWith("/"))
+            // Ensure path has leading backslash (match szPackName[0] = '\\' in FindElemFile)
+            if (!fileName.StartsWith("\\") && !fileName.StartsWith("/"))
             {
-                fileName = fileName.Substring(1);
+                fileName = "\\" + fileName;
             }
+
+            // Normalize slashes to backslash
+            fileName = fileName.Replace('/', '\\');
 
             // Convert to ANSI bytes using GB2312 encoding (same as game)
             byte[] ansiBytes = Encoding.GetEncoding("GB2312").GetBytes(fileName);
