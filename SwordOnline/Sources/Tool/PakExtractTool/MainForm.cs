@@ -578,13 +578,17 @@ namespace PakExtractTool
                     {
                         string content = null;
 
-                        // Try multiple encodings to handle Chinese characters
+                        // Try multiple encodings to handle Chinese and Vietnamese characters
                         var encodings = new List<Encoding>();
 
-                        try { encodings.Add(Encoding.GetEncoding("GBK")); } catch { }      // GBK (best for Chinese)
-                        try { encodings.Add(Encoding.GetEncoding("GB2312")); } catch { }   // GB2312
-                        encodings.Add(Encoding.UTF8);                                      // UTF-8
-                        encodings.Add(Encoding.Default);                                   // System default
+                        try { encodings.Add(Encoding.GetEncoding("GBK")); } catch { }          // GBK (Chinese)
+                        try { encodings.Add(Encoding.GetEncoding("GB2312")); } catch { }       // GB2312 (Chinese)
+                        try { encodings.Add(Encoding.GetEncoding("windows-1258")); } catch { } // Vietnamese ANSI
+                        try { encodings.Add(Encoding.GetEncoding(1258)); } catch { }           // Vietnamese codepage
+                        try { encodings.Add(Encoding.GetEncoding("TCVN")); } catch { }         // TCVN3 (if available)
+                        encodings.Add(Encoding.UTF8);                                          // UTF-8
+                        encodings.Add(Encoding.Default);                                       // System default
+                        encodings.Add(Encoding.ASCII);                                         // ASCII fallback
 
                         foreach (var encoding in encodings)
                         {
