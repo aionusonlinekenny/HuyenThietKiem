@@ -551,7 +551,7 @@ namespace PakExtractTool
                 string basePath = null;
                 int count = 0;
 
-                var lines = File.ReadAllLines(filePath, Encoding.GetEncoding("GB2312"));
+                var lines = File.ReadAllLines(filePath, Encoding.GetEncoding("GBK"));
 
                 foreach (var line in lines)
                 {
@@ -625,7 +625,7 @@ namespace PakExtractTool
         {
             try
             {
-                var lines = File.ReadAllLines(filePath, Encoding.GetEncoding("GB2312"));
+                var lines = File.ReadAllLines(filePath, Encoding.GetEncoding("GBK"));
 
                 foreach (var line in lines)
                 {
@@ -782,13 +782,12 @@ namespace PakExtractTool
                         string content = null;
 
                         // Try multiple encodings to handle Chinese and Vietnamese characters
+                        // Priority: GBK first (most compatible for Chinese), then others
                         var encodings = new List<Encoding>();
 
-                        try { encodings.Add(Encoding.GetEncoding("GBK")); } catch { }          // GBK (Chinese)
-                        try { encodings.Add(Encoding.GetEncoding("GB2312")); } catch { }       // GB2312 (Chinese)
+                        try { encodings.Add(Encoding.GetEncoding("GBK")); } catch { }          // GBK (Chinese - superset of GB2312)
                         try { encodings.Add(Encoding.GetEncoding("windows-1258")); } catch { } // Vietnamese ANSI
                         try { encodings.Add(Encoding.GetEncoding(1258)); } catch { }           // Vietnamese codepage
-                        try { encodings.Add(Encoding.GetEncoding("TCVN")); } catch { }         // TCVN3 (if available)
                         encodings.Add(Encoding.UTF8);                                          // UTF-8
                         encodings.Add(Encoding.Default);                                       // System default
                         encodings.Add(Encoding.ASCII);                                         // ASCII fallback
@@ -862,7 +861,192 @@ namespace PakExtractTool
                 DebugLogger.Log($"⚠ Warning scanning folder: {ex.Message}");
             }
 
+            // Generate additional calculated paths based on client logic patterns
+            int beforeCalculated = paths.Count;
+            GenerateCalculatedPaths(paths, worker);
+            DebugLogger.Log($"   ✓ Generated {paths.Count - beforeCalculated:N0} additional calculated paths");
+
             return paths.ToList();
+        }
+
+        /// <summary>
+        /// Generate paths based on CLIENT LOGIC patterns (not just extraction)
+        /// This calculates paths the same way the client generates them at runtime
+        /// </summary>
+        private void GenerateCalculatedPaths(HashSet<string> paths, System.ComponentModel.BackgroundWorker worker)
+        {
+            DebugLogger.Log($"📐 Calculating paths based on client patterns...");
+
+            // 1. Player character sprites - based on series × gender × equipment
+            // From client code: sprintf(pszName, "%s_%s_%s_%d.spr", pszPrefix, pszAttribute, pszGender, nIndex)
+            GeneratePlayerSprites(paths);
+
+            // 2. Numbered UI sprite sequences (icons, pics, effects)
+            GenerateNumberedSpriteSequences(paths);
+
+            // 3. Equipment and item sprites with standard naming
+            GenerateEquipmentSprites(paths);
+
+            // 4. Map-related sprites and overlays
+            GenerateMapRelatedSprites(paths);
+        }
+
+        /// <summary>
+        /// Generate player character sprites: series × gender × body parts
+        /// Example: \spr\players\金_男_1.spr (Metal-Male-1)
+        /// </summary>
+        private void GeneratePlayerSprites(HashSet<string> paths)
+        {
+            // 5 Series (五行): Metal, Wood, Water, Fire, Earth
+            var series = new[] { "金", "木", "水", "火", "土" };
+            var seriesEn = new[] { "metal", "wood", "water", "fire", "earth" };
+
+            // 2 Genders: Male, Female
+            var genders = new[] { "남", "녀" };  // Korean: nam (male), nyeo (female)
+            var gendersEn = new[] { "male", "female" };
+            var gendersCn = new[] { "男", "女" };  // Chinese
+
+            // Body parts and equipment slots
+            var bodyParts = new[] { "body", "head", "hand", "foot", "weapon", "horse" };
+
+            // Generate combinations
+            for (int s = 0; s < series.Length; s++)
+            {
+                for (int g = 0; g < genders.Length; g++)
+                {
+                    // Korean naming: 금_남_1.spr, 금_녀_1.spr
+                    for (int i = 1; i <= 20; i++)
+                    {
+                        string path = $"\\spr\\players\\{series[s]}_{genders[g]}_{i}.spr";
+                        paths.Add(LowercaseAsciiOnly(path));
+                    }
+
+                    // English naming: metal_male_1.spr
+                    for (int i = 1; i <= 20; i++)
+                    {
+                        string path = $"\\spr\\players\\{seriesEn[s]}_{gendersEn[g]}_{i}.spr";
+                        paths.Add(LowercaseAsciiOnly(path));
+                    }
+
+                    // Chinese naming: 金_男_1.spr
+                    for (int i = 1; i <= 20; i++)
+                    {
+                        string path = $"\\spr\\players\\{series[s]}_{gendersCn[g]}_{i}.spr";
+                        paths.Add(LowercaseAsciiOnly(path));
+                    }
+
+                    // Body part variations
+                    foreach (var part in bodyParts)
+                    {
+                        for (int i = 1; i <= 10; i++)
+                        {
+                            string path = $"\\spr\\players\\{seriesEn[s]}_{gendersEn[g]}_{part}_{i}.spr";
+                            paths.Add(LowercaseAsciiOnly(path));
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Generate numbered sprite sequences: icon001-icon999, pic001-pic999, etc.
+        /// Common pattern in UI and effects
+        /// </summary>
+        private void GenerateNumberedSpriteSequences(HashSet<string> paths)
+        {
+            // Common base paths and prefixes
+            var sequences = new[]
+            {
+                ("\\spr\\ui\\icon", "icon", 1, 500),           // UI icons
+                ("\\spr\\ui\\pic", "pic", 1, 200),             // UI pictures
+                ("\\spr\\ui\\button", "button", 1, 100),       // Buttons
+                ("\\spr\\ui\\frame", "frame", 1, 50),          // Frames
+                ("\\spr\\skill\\icon", "icon", 1, 200),        // Skill icons
+                ("\\spr\\item\\icon", "icon", 1, 500),         // Item icons
+                ("\\spr\\effect", "effect", 1, 300),           // Effects
+                ("\\spr\\ui3\\common", "common", 1, 100),      // UI3 common
+            };
+
+            foreach (var (basePath, prefix, start, end) in sequences)
+            {
+                for (int i = start; i <= end; i++)
+                {
+                    // Try multiple number formats
+                    paths.Add(LowercaseAsciiOnly($"{basePath}\\{prefix}{i}.spr"));         // icon1.spr
+                    paths.Add(LowercaseAsciiOnly($"{basePath}\\{prefix}{i:D2}.spr"));      // icon01.spr
+                    paths.Add(LowercaseAsciiOnly($"{basePath}\\{prefix}{i:D3}.spr"));      // icon001.spr
+                    paths.Add(LowercaseAsciiOnly($"{basePath}\\{prefix}{i:D4}.spr"));      // icon0001.spr
+                    paths.Add(LowercaseAsciiOnly($"{basePath}\\{prefix}_{i}.spr"));        // icon_1.spr
+                    paths.Add(LowercaseAsciiOnly($"{basePath}\\{prefix}_{i:D2}.spr"));     // icon_01.spr
+                    paths.Add(LowercaseAsciiOnly($"{basePath}\\{prefix}_{i:D3}.spr"));     // icon_001.spr
+                    paths.Add(LowercaseAsciiOnly($"{basePath}\\{i:D2}.spr"));              // 01.spr
+                    paths.Add(LowercaseAsciiOnly($"{basePath}\\{i:D3}.spr"));              // 001.spr
+                }
+            }
+        }
+
+        /// <summary>
+        /// Generate equipment sprites with standard naming conventions
+        /// Based on item type and ID
+        /// </summary>
+        private void GenerateEquipmentSprites(HashSet<string> paths)
+        {
+            var equipTypes = new[]
+            {
+                "armor", "helmet", "weapon", "melee", "range", "ring", "amulet", "boots", "belt",
+                "shield", "horse", "cuff", "pendant", "mask"
+            };
+
+            var equipTypesShort = new[] { "ar", "he", "wp", "ml", "rg", "ri", "am", "bo", "be", "sh", "ho", "cu", "pe", "ma" };
+
+            foreach (var type in equipTypes)
+            {
+                for (int i = 1; i <= 200; i++)
+                {
+                    // Standard formats
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\obj_{type}{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\obj_{type}{i:D3}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\obj_{type}_{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\{type}{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\{type}_{i:D2}.spr"));
+                }
+            }
+
+            // Short form equipment codes
+            for (int t = 0; t < equipTypesShort.Length; t++)
+            {
+                for (int i = 1; i <= 200; i++)
+                {
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\obj_{equipTypesShort[t]}_{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\obj_{equipTypesShort[t]}{i:D3}.spr"));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Generate map-related sprites (minimap icons, overlays, etc.)
+        /// </summary>
+        private void GenerateMapRelatedSprites(HashSet<string> paths)
+        {
+            // Minimap icons
+            for (int i = 1; i <= 100; i++)
+            {
+                paths.Add(LowercaseAsciiOnly($"\\spr\\maps\\minimap\\icon{i:D2}.spr"));
+                paths.Add(LowercaseAsciiOnly($"\\spr\\maps\\minimap\\icon_{i:D2}.spr"));
+                paths.Add(LowercaseAsciiOnly($"\\spr\\ui\\map\\icon{i:D2}.spr"));
+            }
+
+            // Map overlays and markers
+            var mapElements = new[] { "marker", "flag", "arrow", "dot", "line", "circle" };
+            foreach (var elem in mapElements)
+            {
+                for (int i = 1; i <= 20; i++)
+                {
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\maps\\{elem}{i}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\maps\\{elem}_{i}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui\\map\\{elem}{i}.spr"));
+                }
+            }
         }
 
         private void ExtractAndGenerateFormattedPaths(string content, HashSet<string> paths)
@@ -1020,7 +1204,7 @@ namespace PakExtractTool
 
         private void GeneratePakTxtFile(string txtFile, Dictionary<uint, string> matches)
         {
-            using (StreamWriter writer = new StreamWriter(txtFile, false, Encoding.GetEncoding("GB2312")))
+            using (StreamWriter writer = new StreamWriter(txtFile, false, Encoding.GetEncoding("GBK")))
             {
                 // Write header line 1 - matching original format
                 string pakTime = DateTime.Now.ToString("yyyy-M-d H:m:s");

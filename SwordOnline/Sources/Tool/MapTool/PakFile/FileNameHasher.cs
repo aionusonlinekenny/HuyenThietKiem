@@ -34,8 +34,9 @@ namespace MapTool.PakFile
             // Normalize slashes to backslash
             fileName = fileName.Replace('/', '\\');
 
-            // Convert to ANSI bytes using GB2312 encoding (same as game)
-            byte[] ansiBytes = Encoding.GetEncoding("GB2312").GetBytes(fileName);
+            // Convert to ANSI bytes using GBK encoding (superset of GB2312, supports more Chinese chars)
+            // GBK is what Windows Chinese systems use, more compatible than GB2312
+            byte[] ansiBytes = Encoding.GetEncoding("GBK").GetBytes(fileName);
             return CalculateFileIdFromBytes(ansiBytes);
         }
 
