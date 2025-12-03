@@ -542,180 +542,124 @@ namespace PakExtractTool
 
         private List<string> ScanFolderRecursive(string folder, System.ComponentModel.BackgroundWorker worker)
         {
-            var files = new List<string>();
+            var paths = new HashSet<string>();
+
             try
             {
-                var allFiles = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories);
-                for (int i = 0; i < allFiles.Length; i++)
+                DebugLogger.Log($"📂 Scanning source files for path references...");
+
+                // Scan text-based source files
+                var sourceExtensions = new[] { "*.txt", "*.ini", "*.cpp", "*.h", "*.lua", "*.c" };
+                var allFiles = new List<string>();
+
+                foreach (var ext in sourceExtensions)
                 {
-                    files.Add(allFiles[i]);
-                    if (i % 500 == 0)
+                    allFiles.AddRange(Directory.GetFiles(folder, ext, SearchOption.AllDirectories));
+                }
+
+                DebugLogger.Log($"   Found {allFiles.Count:N0} source files to parse");
+
+                // Regex patterns to find file paths
+                var pathPatterns = new[]
+                {
+                    @"\\[Ss]pr\\[^\s""']+\.spr",           // \Spr\...\file.spr
+                    @"\\[Ss]ettings\\[^\s""']+\.(ini|txt)", // \Settings\...\file.ini
+                    @"\\[Mm]aps\\[^\s""']+\.(dat|wor)",    // \Maps\...\file.dat
+                    @"\\[Uu]i\\[^\s""']+\.(jpg|bmp|tga|spr)", // \Ui\...\file.jpg
+                    @"\\[^\s""'\\]+\\[^\s""']+\.(spr|ini|txt|dat|wor|jpg|bmp|tga)", // Generic: \folder\...\file.ext
+                };
+
+                for (int i = 0; i < allFiles.Count; i++)
+                {
+                    string filePath = allFiles[i];
+
+                    try
                     {
-                        worker.ReportProgress(20 + (i * 20 / allFiles.Length),
-                            new ProgressData { Step = "Step 2/4: Scanning folder for files...", Progress = $"Found {i:N0} files..." });
+                        // Read file content with GB2312 encoding
+                        string content = File.ReadAllText(filePath, Encoding.GetEncoding("GB2312"));
+
+                        // Extract all path references
+                        foreach (var pattern in pathPatterns)
+                        {
+                            var matches = System.Text.RegularExpressions.Regex.Matches(content, pattern);
+                            foreach (System.Text.RegularExpressions.Match match in matches)
+                            {
+                                string path = match.Value;
+                                // Normalize path
+                                path = path.Replace('/', '\\');
+                                if (!path.StartsWith("\\"))
+                                    path = "\\" + path;
+
+                                paths.Add(path);
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        // Skip files that can't be read
+                    }
+
+                    if (i % 100 == 0)
+                    {
+                        worker.ReportProgress(20 + (i * 20 / allFiles.Count),
+                            new ProgressData { Step = "Step 2/4: Extracting path references from source files...", Progress = $"Parsed {i:N0}/{allFiles.Count:N0} files - Found {paths.Count:N0} unique paths" });
                     }
                 }
+
+                DebugLogger.Log($"   ✓ Extracted {paths.Count:N0} unique path references from source code");
             }
             catch (Exception ex)
             {
                 DebugLogger.Log($"⚠ Warning scanning folder: {ex.Message}");
             }
-            return files;
+
+            return paths.ToList();
         }
 
-        private Dictionary<uint, string> MatchFilesWithPak(List<string> allFiles, List<uint> pakFileIds, string scanFolder, System.ComponentModel.BackgroundWorker worker)
+        private Dictionary<uint, string> MatchFilesWithPak(List<string> pathReferences, List<uint> pakFileIds, string scanFolder, System.ComponentModel.BackgroundWorker worker)
         {
             var matches = new Dictionary<uint, string>();
             var pakHashSet = new HashSet<uint>(pakFileIds);
 
-            // Detect if we're scanning from inside a known folder (Settings, Spr, etc.)
-            // and need to ADD prefix instead of strip
-            string scanFolderName = Path.GetFileName(scanFolder.TrimEnd('\\', '/'));
-            var pathPrefixesToAdd = new[] { "", $"{scanFolderName}\\", $"{scanFolderName.ToLower()}\\" };
+            DebugLogger.Log($"🔍 Matching {pathReferences.Count:N0} path references with PAK hashes...");
 
-            // Try to detect common folder prefixes to strip
-            // e.g., if user selected "Server" folder, we need to strip "pak\" prefix
-            var pathPrefixesToStrip = new[]
+            // Log first 10 sample paths
+            if (pathReferences.Count > 0)
             {
-                "",
-                "pak\\",
-                "client\\",
-                "server\\",
-                "data\\",
-                "bin\\client\\",
-                "bin\\server\\",
-                "bin\\client\\settings\\",
-                "bin\\server\\settings\\",
-                "client\\settings\\",
-                "server\\settings\\"
-            };
-
-            int totalVariations = pathPrefixesToStrip.Length * pathPrefixesToAdd.Length * 2;
-            DebugLogger.Log($"🔍 Testing path matching with {totalVariations} variations...");
-            DebugLogger.Log($"   Scan folder name: {scanFolderName}");
-            DebugLogger.Log($"   Will try adding prefixes: {string.Join(", ", pathPrefixesToAdd.Select(p => string.IsNullOrEmpty(p) ? "(none)" : p))}");
-
-            // Debug: Test first file with all variations
-            if (allFiles.Count > 0)
-            {
-                string firstFile = allFiles[0];
-                string relativePath = GetRelativePath(scanFolder, firstFile);
-                relativePath = relativePath.Replace('/', '\\');
-
-                DebugLogger.Log($"   Example file: {firstFile}");
-                DebugLogger.Log($"   Relative path: {relativePath}");
-                DebugLogger.Log($"   Testing all path variations:");
-
-                // First strip prefixes
-                foreach (var stripPrefix in pathPrefixesToStrip)
+                DebugLogger.Log($"   Sample path references (first 10):");
+                for (int i = 0; i < Math.Min(10, pathReferences.Count); i++)
                 {
-                    string strippedPath = relativePath;
-                    if (!string.IsNullOrEmpty(stripPrefix) && strippedPath.StartsWith(stripPrefix, StringComparison.OrdinalIgnoreCase))
-                    {
-                        strippedPath = strippedPath.Substring(stripPrefix.Length);
-                    }
-
-                    // Then try adding prefixes
-                    foreach (var addPrefix in pathPrefixesToAdd)
-                    {
-                        string testPath = addPrefix + strippedPath;
-
-                        // Try both with and without leading backslash
-                        foreach (bool withLeadingSlash in new[] { true, false })
-                        {
-                            string finalPath = testPath;
-
-                            if (withLeadingSlash)
-                            {
-                                if (!finalPath.StartsWith("\\"))
-                                    finalPath = "\\" + finalPath;
-                            }
-                            else
-                            {
-                                finalPath = finalPath.TrimStart('\\');
-                            }
-
-                            uint hash = FileNameHasher.CalculateFileId(finalPath);
-                            bool exists = pakHashSet.Contains(hash);
-                            if (exists || (pathPrefixesToAdd.Length <= 3 && Array.IndexOf(pathPrefixesToAdd, addPrefix) < 2))
-                            {
-                                // Only log important ones to reduce noise
-                                DebugLogger.Log($"      {finalPath} -> 0x{hash:X8} {(exists ? "✓ MATCH" : "✗")}");
-                            }
-                        }
-                    }
+                    DebugLogger.Log($"      {pathReferences[i]}");
                 }
             }
 
-            for (int i = 0; i < allFiles.Count; i++)
+            for (int i = 0; i < pathReferences.Count; i++)
             {
-                string filePath = allFiles[i];
-                string relativePath = GetRelativePath(scanFolder, filePath);
+                string path = pathReferences[i];
 
-                // Normalize to backslash
-                relativePath = relativePath.Replace('/', '\\');
+                // Calculate hash for this path
+                uint hash = FileNameHasher.CalculateFileId(path);
 
-                // Try different path formats to find a match
-                bool foundMatch = false;
-
-                // First strip prefixes
-                foreach (var stripPrefix in pathPrefixesToStrip)
+                // Check if this hash exists in PAK
+                if (pakHashSet.Contains(hash) && !matches.ContainsKey(hash))
                 {
-                    if (foundMatch) break;
+                    matches[hash] = path;
 
-                    string strippedPath = relativePath;
-                    if (!string.IsNullOrEmpty(stripPrefix) && strippedPath.StartsWith(stripPrefix, StringComparison.OrdinalIgnoreCase))
+                    if (matches.Count <= 20)
                     {
-                        strippedPath = strippedPath.Substring(stripPrefix.Length);
-                    }
-
-                    // Then try adding prefixes
-                    foreach (var addPrefix in pathPrefixesToAdd)
-                    {
-                        if (foundMatch) break;
-
-                        string testPath = addPrefix + strippedPath;
-
-                        // Try both with and without leading backslash
-                        foreach (bool withLeadingSlash in new[] { true, false })
-                        {
-                            string finalPath = testPath;
-
-                            if (withLeadingSlash)
-                            {
-                                if (!finalPath.StartsWith("\\"))
-                                    finalPath = "\\" + finalPath;
-                            }
-                            else
-                            {
-                                finalPath = finalPath.TrimStart('\\');
-                            }
-
-                            // Calculate hash
-                            uint hash = FileNameHasher.CalculateFileId(finalPath);
-
-                            // Check if this hash exists in PAK
-                            if (pakHashSet.Contains(hash) && !matches.ContainsKey(hash))
-                            {
-                                matches[hash] = finalPath;
-                                if (matches.Count <= 10)
-                                {
-                                    // Log first 10 matches for debugging
-                                    DebugLogger.Log($"   ✓ Match #{matches.Count}: {finalPath} -> 0x{hash:X8}");
-                                }
-                                foundMatch = true;
-                                break;
-                            }
-                        }
+                        // Log first 20 matches for debugging
+                        DebugLogger.Log($"   ✓ Match #{matches.Count}: {path} -> 0x{hash:X8}");
                     }
                 }
 
                 if (i % 1000 == 0)
                 {
-                    worker.ReportProgress(40 + (i * 50 / allFiles.Count),
-                        new ProgressData { Step = "Step 3/4: Matching file paths...", Progress = $"Checked {i:N0}/{allFiles.Count:N0} - Matched {matches.Count:N0}" });
+                    worker.ReportProgress(40 + (i * 50 / pathReferences.Count),
+                        new ProgressData { Step = "Step 3/4: Matching paths with PAK...", Progress = $"Checked {i:N0}/{pathReferences.Count:N0} - Matched {matches.Count:N0}" });
                 }
             }
+
+            DebugLogger.Log($"   ✓ Final match result: {matches.Count:N0}/{pakFileIds.Count:N0} ({(double)matches.Count / pakFileIds.Count * 100:F1}%)");
 
             return matches;
         }
