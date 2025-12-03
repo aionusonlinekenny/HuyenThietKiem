@@ -625,6 +625,21 @@ namespace PakExtractTool
         {
             try
             {
+                // Check if this is Skills.txt or Missles.txt - they have special column structure
+                string fileName = Path.GetFileName(filePath).ToLower();
+
+                if (fileName == "skills.txt")
+                {
+                    ParseSkillsTxt(filePath, paths);
+                    return;
+                }
+                else if (fileName == "missles.txt")
+                {
+                    ParseMisslesTxt(filePath, paths);
+                    return;
+                }
+
+                // Generic parsing for other settings files
                 var lines = File.ReadAllLines(filePath, Encoding.GetEncoding("GBK"));
 
                 foreach (var line in lines)
@@ -710,6 +725,131 @@ namespace PakExtractTool
             catch
             {
                 // Skip files that can't be parsed
+            }
+        }
+
+        /// <summary>
+        /// Parse Skills.txt with column structure
+        /// Column 6: SkillIcon - skill icon sprite paths
+        /// Column 7: PreCastSpr - pre-cast effect sprites
+        /// </summary>
+        private void ParseSkillsTxt(string filePath, HashSet<string> paths)
+        {
+            try
+            {
+                var lines = File.ReadAllLines(filePath, Encoding.GetEncoding("GBK"));
+                bool headerSkipped = false;
+
+                foreach (var line in lines)
+                {
+                    // Skip header row
+                    if (!headerSkipped)
+                    {
+                        headerSkipped = true;
+                        continue;
+                    }
+
+                    // Skip comments and empty lines
+                    if (string.IsNullOrWhiteSpace(line) || line.TrimStart().StartsWith("//"))
+                        continue;
+
+                    // Split by tab
+                    var fields = line.Split('\t');
+
+                    // Column 6: SkillIcon (0-indexed = index 5)
+                    if (fields.Length > 5 && !string.IsNullOrWhiteSpace(fields[5]))
+                    {
+                        string iconPath = fields[5].Trim();
+                        if (iconPath.Contains(".spr") || iconPath.Contains(".tga"))
+                        {
+                            iconPath = iconPath.Replace('/', '\\');
+                            if (!iconPath.StartsWith("\\")) iconPath = "\\" + iconPath;
+                            iconPath = LowercaseAsciiOnly(iconPath);
+                            paths.Add(iconPath);
+                        }
+                    }
+
+                    // Column 7: PreCastSpr (0-indexed = index 6)
+                    if (fields.Length > 6 && !string.IsNullOrWhiteSpace(fields[6]))
+                    {
+                        string preCastPath = fields[6].Trim();
+                        if (preCastPath.Contains(".spr"))
+                        {
+                            preCastPath = preCastPath.Replace('/', '\\');
+                            if (!preCastPath.StartsWith("\\")) preCastPath = "\\" + preCastPath;
+                            preCastPath = LowercaseAsciiOnly(preCastPath);
+                            paths.Add(preCastPath);
+                        }
+                    }
+
+                    // Also check other columns for .spr or .wav paths
+                    for (int i = 0; i < fields.Length; i++)
+                    {
+                        string field = fields[i].Trim();
+                        if ((field.Contains(".spr") || field.Contains(".wav") || field.Contains(".lua")) && field.Contains("\\"))
+                        {
+                            string resourcePath = field.Replace('/', '\\');
+                            if (!resourcePath.StartsWith("\\")) resourcePath = "\\" + resourcePath;
+                            resourcePath = LowercaseAsciiOnly(resourcePath);
+                            paths.Add(resourcePath);
+                        }
+                    }
+                }
+
+                DebugLogger.Log($"   Parsed Skills.txt: extracted skill icon and effect paths");
+            }
+            catch (Exception ex)
+            {
+                DebugLogger.Log($"   ⚠ Error parsing Skills.txt: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Parse Missles.txt with column structure
+        /// Contains AnimFile1-4, AnimFileB1-4 columns with skill effect sprites
+        /// </summary>
+        private void ParseMisslesTxt(string filePath, HashSet<string> paths)
+        {
+            try
+            {
+                var lines = File.ReadAllLines(filePath, Encoding.GetEncoding("GBK"));
+                bool headerSkipped = false;
+
+                foreach (var line in lines)
+                {
+                    // Skip header row
+                    if (!headerSkipped)
+                    {
+                        headerSkipped = true;
+                        continue;
+                    }
+
+                    // Skip comments and empty lines
+                    if (string.IsNullOrWhiteSpace(line) || line.TrimStart().StartsWith("//"))
+                        continue;
+
+                    // Split by tab
+                    var fields = line.Split('\t');
+
+                    // Parse all fields for sprite paths
+                    foreach (var field in fields)
+                    {
+                        string trimmed = field.Trim();
+                        if (trimmed.Contains(".spr") || trimmed.Contains(".wav"))
+                        {
+                            string resourcePath = trimmed.Replace('/', '\\');
+                            if (!resourcePath.StartsWith("\\")) resourcePath = "\\" + resourcePath;
+                            resourcePath = LowercaseAsciiOnly(resourcePath);
+                            paths.Add(resourcePath);
+                        }
+                    }
+                }
+
+                DebugLogger.Log($"   Parsed Missles.txt: extracted projectile and effect paths");
+            }
+            catch (Exception ex)
+            {
+                DebugLogger.Log($"   ⚠ Error parsing Missles.txt: {ex.Message}");
             }
         }
 
