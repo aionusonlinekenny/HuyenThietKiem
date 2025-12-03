@@ -13,15 +13,24 @@ namespace PakExtractTool
         [STAThread]
         static void Main()
         {
-            // Set up global exception handlers
+            // Set up global exception handlers FIRST
             Application.ThreadException += Application_ThreadException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             try
             {
+                // Initialize DebugLogger early (before MainForm constructor)
+                DebugLogger.Initialize();
+                DebugLogger.Log("=== PAK Extract Tool Starting ===");
+                DebugLogger.Log($"Executable: {System.Reflection.Assembly.GetExecutingAssembly().Location}");
+                DebugLogger.Log($"Working Directory: {Environment.CurrentDirectory}");
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+
+                DebugLogger.Log("Creating MainForm...");
                 Application.Run(new MainForm());
+                DebugLogger.Log("Application exited normally");
             }
             catch (Exception ex)
             {

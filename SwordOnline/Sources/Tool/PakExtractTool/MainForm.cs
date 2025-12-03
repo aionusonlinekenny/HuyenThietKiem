@@ -29,20 +29,20 @@ namespace PakExtractTool
         {
             try
             {
-                // Initialize debug logger FIRST
-                DebugLogger.Initialize();
-                DebugLogger.Log("=== PAK Extract Tool Started ===");
-                DebugLogger.Log($"Executable: {System.Reflection.Assembly.GetExecutingAssembly().Location}");
-                DebugLogger.Log($"Working Directory: {Environment.CurrentDirectory}");
+                // DebugLogger already initialized in Program.Main()
+                DebugLogger.Log("MainForm constructor called");
                 DebugLogger.Log($"Log file: {DebugLogger.GetLogFilePath()}");
                 DebugLogger.LogSeparator();
 
+                DebugLogger.Log("Initializing GUI components...");
                 InitializeComponent();
 
                 DebugLogger.Log("✓ GUI initialized successfully");
             }
             catch (Exception ex)
             {
+                DebugLogger.Log($"❌ ERROR in MainForm constructor: {ex.Message}");
+                DebugLogger.Log($"   Stack trace: {ex.StackTrace}");
                 MessageBox.Show(
                     $"Failed to initialize PAK Extract Tool:\n\n{ex.Message}\n\nStack trace:\n{ex.StackTrace}",
                     "Initialization Error",
@@ -439,8 +439,18 @@ namespace PakExtractTool
                     worker.ReportProgress(0, new ProgressData { Step = "Step 1/4: Loading PAK file...", Progress = "" });
                     var pakFileIds = _currentPakReader.GetAllFileIds();
 
+                    // Log some sample hashes for debugging
+                    DebugLogger.Log($"📊 PAK contains {pakFileIds.Count} file hashes");
+                    DebugLogger.Log($"   Sample hashes (first 10):");
+                    for (int i = 0; i < Math.Min(10, pakFileIds.Count); i++)
+                    {
+                        DebugLogger.Log($"      0x{pakFileIds[i]:X8}");
+                    }
+
                     worker.ReportProgress(10, new ProgressData { Step = "Step 2/4: Scanning folder for files...", Progress = $"Found {pakFileIds.Count} hashes in PAK" });
                     var allFiles = ScanFolderRecursive(scanFolder, worker);
+
+                    DebugLogger.Log($"📂 Scanned {allFiles.Count:N0} files from: {scanFolder}");
 
                     worker.ReportProgress(40, new ProgressData { Step = "Step 3/4: Matching file paths with PAK hashes...", Progress = $"Scanning {allFiles.Count:N0} files..." });
                     var matches = MatchFilesWithPak(allFiles, pakFileIds, scanFolder, worker);
@@ -549,25 +559,45 @@ namespace PakExtractTool
             var matches = new Dictionary<uint, string>();
             var pakHashSet = new HashSet<uint>(pakFileIds);
 
+            // Try to detect common folder prefixes to strip
+            // e.g., if user selected "Server" folder, we need to strip "pak\" prefix
+            var pathPrefixesToTry = new[] { "", "pak\\", "client\\", "server\\", "data\\" };
+
             for (int i = 0; i < allFiles.Count; i++)
             {
                 string filePath = allFiles[i];
                 string relativePath = GetRelativePath(scanFolder, filePath);
 
-                // Normalize to backslash and prepend \
+                // Normalize to backslash
                 relativePath = relativePath.Replace('/', '\\');
-                if (!relativePath.StartsWith("\\"))
-                {
-                    relativePath = "\\" + relativePath;
-                }
 
-                // Calculate hash
-                uint hash = FileNameHasher.CalculateFileId(relativePath);
-
-                // Check if this hash exists in PAK
-                if (pakHashSet.Contains(hash) && !matches.ContainsKey(hash))
+                // Try different path formats to find a match
+                foreach (var prefix in pathPrefixesToTry)
                 {
-                    matches[hash] = relativePath;
+                    string testPath = relativePath;
+
+                    // Strip the prefix if path starts with it
+                    if (!string.IsNullOrEmpty(prefix) && testPath.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                    {
+                        testPath = testPath.Substring(prefix.Length);
+                    }
+
+                    // Ensure leading backslash
+                    if (!testPath.StartsWith("\\"))
+                    {
+                        testPath = "\\" + testPath;
+                    }
+
+                    // Calculate hash
+                    uint hash = FileNameHasher.CalculateFileId(testPath);
+
+                    // Check if this hash exists in PAK
+                    if (pakHashSet.Contains(hash) && !matches.ContainsKey(hash))
+                    {
+                        matches[hash] = testPath;
+                        DebugLogger.Log($"   ✓ Match: {testPath} -> 0x{hash:X8}");
+                        break; // Found match, no need to try other prefixes
+                    }
                 }
 
                 if (i % 1000 == 0)
@@ -591,9 +621,13 @@ namespace PakExtractTool
         {
             using (StreamWriter writer = new StreamWriter(txtFile, false, Encoding.GetEncoding("GB2312")))
             {
-                // Write header
-                writer.WriteLine($"Total Files: {matches.Count}");
-                writer.WriteLine("Index\tID\tTime\tFileName\tSize\tCompressedSize\tRatio");
+                // Write header line 1 - matching original format
+                string pakTime = DateTime.Now.ToString("yyyy-M-d H:m:s");
+                string pakTimeSave = ((uint)DateTime.Now.Ticks).ToString("x");
+                writer.WriteLine($"TotalFile:{matches.Count}\tPakTime:{pakTime}\tPakTimeSave:{pakTimeSave}\tCRC:00000000");
+
+                // Write header line 2 - column names
+                writer.WriteLine("Index\tID\tTime\tFileName\tSize\tInPakSize\tComprFlag\tCRC");
 
                 // Write each match
                 int index = 0;
@@ -601,7 +635,8 @@ namespace PakExtractTool
                 {
                     uint hash = kvp.Key;
                     string fileName = kvp.Value;
-                    writer.WriteLine($"{index}\t{hash:X8}\t0\t{fileName}\t0\t0\t0.00%");
+                    string fileTime = "2000-1-1 0:0:0";
+                    writer.WriteLine($"{index}\t{hash:x}\t{fileTime}\t{fileName}\t0\t0\t0\t0");
                     index++;
                 }
             }
