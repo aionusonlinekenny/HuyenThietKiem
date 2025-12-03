@@ -645,6 +645,9 @@ namespace PakExtractTool
                                 }
                             }
                         }
+
+                        // Extract sprintf/printf format strings and generate paths
+                        ExtractAndGenerateFormattedPaths(content, paths);
                     }
                     catch
                     {
@@ -658,7 +661,7 @@ namespace PakExtractTool
                     }
                 }
 
-                DebugLogger.Log($"   ✓ Extracted {paths.Count:N0} unique path references from source code");
+                DebugLogger.Log($"   ✓ Extracted {paths.Count:N0} unique path references from source code (including generated paths)");
             }
             catch (Exception ex)
             {
@@ -666,6 +669,77 @@ namespace PakExtractTool
             }
 
             return paths.ToList();
+        }
+
+        private void ExtractAndGenerateFormattedPaths(string content, HashSet<string> paths)
+        {
+            // Regex to find sprintf/wsprintf/Format calls with format strings
+            var formatPatterns = new[]
+            {
+                @"[ws]?printf\s*\([^,]+,\s*""([^""]+)""",  // sprintf/wsprintf(buf, "format", ...)
+                @"Format\s*\(\s*""([^""]+)""",             // Format("format", ...)
+                @"""(\\[^\s""]+\\[^""]*%\d*[ds][^""]*\.[a-z]{2,4})""", // Direct format strings with path structure
+            };
+
+            foreach (var pattern in formatPatterns)
+            {
+                var matches = System.Text.RegularExpressions.Regex.Matches(content, pattern);
+                foreach (System.Text.RegularExpressions.Match match in matches)
+                {
+                    if (match.Groups.Count < 2) continue;
+                    string formatString = match.Groups[1].Value;
+
+                    // Check if this looks like a file path (contains backslash and extension)
+                    if (!formatString.Contains('\\') || !formatString.Contains('.'))
+                        continue;
+
+                    // Generate paths from format string
+                    GeneratePathsFromFormat(formatString, paths);
+                }
+            }
+        }
+
+        private void GeneratePathsFromFormat(string formatString, HashSet<string> paths)
+        {
+            // Detect format specifiers: %d, %02d, %03d, %04d, etc.
+            var formatMatch = System.Text.RegularExpressions.Regex.Match(formatString, @"%0?(\d*)d");
+
+            if (!formatMatch.Success)
+                return; // No numeric format specifier
+
+            int width = 0;
+            if (formatMatch.Groups[1].Success && !string.IsNullOrEmpty(formatMatch.Groups[1].Value))
+            {
+                int.TryParse(formatMatch.Groups[1].Value, out width);
+            }
+
+            // Determine range based on width
+            int maxValue = 99; // Default for %d
+            if (width == 2) maxValue = 99;   // %02d → 00-99
+            else if (width == 3) maxValue = 999;  // %03d → 000-999
+            else if (width == 4) maxValue = 9999; // %04d → 0000-9999
+
+            // Limit to reasonable range to avoid too many combinations
+            maxValue = Math.Min(maxValue, 999);
+
+            // Generate paths
+            string formatSpec = formatMatch.Value; // e.g., %03d
+
+            for (int i = 0; i <= maxValue; i++)
+            {
+                string path = formatString.Replace(formatSpec, i.ToString(new string('0', width)));
+
+                // Normalize path
+                path = path.Replace('/', '\\');
+                if (!path.StartsWith("\\"))
+                    path = "\\" + path;
+
+                // Add if valid
+                if (path.Length > 3 && path.Contains('.'))
+                {
+                    paths.Add(path);
+                }
+            }
         }
 
         private Dictionary<uint, string> MatchFilesWithPak(List<string> pathReferences, List<uint> pakFileIds, string scanFolder, System.ComponentModel.BackgroundWorker worker)
