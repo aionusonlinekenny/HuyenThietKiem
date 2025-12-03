@@ -570,7 +570,21 @@ namespace PakExtractTool
 
             // Try to detect common folder prefixes to strip
             // e.g., if user selected "Server" folder, we need to strip "pak\" prefix
-            var pathPrefixesToTry = new[] { "", "pak\\", "client\\", "server\\", "data\\", "settings\\", "bin\\client\\", "bin\\server\\" };
+            // Also handle cases where we need to KEEP certain prefixes like "settings\"
+            var pathPrefixesToTry = new[]
+            {
+                "",
+                "pak\\",
+                "client\\",
+                "server\\",
+                "data\\",
+                "bin\\client\\",
+                "bin\\server\\",
+                "bin\\client\\settings\\",  // Strip to get \settings\file.ini
+                "bin\\server\\settings\\",
+                "client\\settings\\",        // Strip to get \settings\file.ini
+                "server\\settings\\"
+            };
 
             DebugLogger.Log($"🔍 Testing path matching with {pathPrefixesToTry.Length} prefix variations...");
 
