@@ -628,12 +628,13 @@ namespace PakExtractTool
                             {
                                 string path = match.Value.Trim();
 
-                                // Normalize path to backslash format with leading backslash
+                                // Normalize path: match game engine g_GetPackPath() behavior
                                 path = path.Replace('/', '\\');  // Convert forward slash to backslash
 
-                                // Ensure leading backslash
-                                if (!path.StartsWith("\\"))
-                                    path = "\\" + path;
+                                // REMOVE leading backslash/slash (game engine removes it before hashing!)
+                                // From g_GetPackPath(): if (lpFileName[0] == '\\') g_StrCpy(lpPathName, lpFileName + 1);
+                                while (path.StartsWith("\\") || path.StartsWith("/"))
+                                    path = path.Substring(1);
 
                                 // Lowercase ONLY A-Z → a-z (match game engine g_StrLower)
                                 path = LowercaseAsciiOnly(path);
@@ -642,7 +643,7 @@ namespace PakExtractTool
                                 path = path.TrimEnd(' ', '\t', '"', '\'');
 
                                 // Add to set if valid
-                                if (path.Length > 3 && path.Contains('.'))  // Min: \a.b
+                                if (path.Length > 2 && path.Contains('.'))  // Min: a.b
                                 {
                                     paths.Add(path);
                                 }
@@ -732,16 +733,18 @@ namespace PakExtractTool
             {
                 string path = formatString.Replace(formatSpec, i.ToString(new string('0', width)));
 
-                // Normalize path
+                // Normalize path: match game engine g_GetPackPath() behavior
                 path = path.Replace('/', '\\');
-                if (!path.StartsWith("\\"))
-                    path = "\\" + path;
+
+                // REMOVE leading backslash/slash (game engine removes it before hashing!)
+                while (path.StartsWith("\\") || path.StartsWith("/"))
+                    path = path.Substring(1);
 
                 // Lowercase ONLY A-Z → a-z (match game engine g_StrLower)
                 path = LowercaseAsciiOnly(path);
 
                 // Add if valid
-                if (path.Length > 3 && path.Contains('.'))
+                if (path.Length > 2 && path.Contains('.'))
                 {
                     paths.Add(path);
                 }
@@ -843,6 +846,11 @@ namespace PakExtractTool
                 {
                     uint hash = kvp.Key;
                     string fileName = kvp.Value;
+
+                    // Add leading backslash for .pak.txt display format (matches original format)
+                    if (!fileName.StartsWith("\\"))
+                        fileName = "\\" + fileName;
+
                     string fileTime = "2000-1-1 0:0:0";
                     writer.WriteLine($"{index}\t{hash:x}\t{fileTime}\t{fileName}\t0\t0\t0\t0");
                     index++;
