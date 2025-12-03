@@ -560,13 +560,14 @@ namespace PakExtractTool
                 DebugLogger.Log($"   Found {allFiles.Count:N0} source files to parse");
 
                 // Regex patterns to find file paths
+                // Use .+? (non-greedy) to match any character including Chinese
                 var pathPatterns = new[]
                 {
-                    @"\\[Ss]pr\\[^\s""']+\.spr",           // \Spr\...\file.spr
-                    @"\\[Ss]ettings\\[^\s""']+\.(ini|txt)", // \Settings\...\file.ini
-                    @"\\[Mm]aps\\[^\s""']+\.(dat|wor)",    // \Maps\...\file.dat
-                    @"\\[Uu]i\\[^\s""']+\.(jpg|bmp|tga|spr)", // \Ui\...\file.jpg
-                    @"\\[^\s""'\\]+\\[^\s""']+\.(spr|ini|txt|dat|wor|jpg|bmp|tga)", // Generic: \folder\...\file.ext
+                    @"\\[Ss]pr\\.+?\.spr",           // \Spr\...\file.spr (Chinese OK)
+                    @"\\[Ss]ettings\\.+?\.(ini|txt)", // \Settings\...\file.ini (Chinese OK)
+                    @"\\[Mm]aps\\.+?\.(dat|wor)",    // \Maps\...\file.dat (Chinese OK)
+                    @"\\[Uu]i\\.+?\.(jpg|bmp|tga|spr)", // \Ui\...\file.jpg (Chinese OK)
+                    @"\\[^\\\s]+\\.+?\.(spr|ini|txt|dat|wor|jpg|bmp|tga|png)", // Generic with Chinese
                 };
 
                 for (int i = 0; i < allFiles.Count; i++)
@@ -575,8 +576,32 @@ namespace PakExtractTool
 
                     try
                     {
-                        // Read file content with GB2312 encoding
-                        string content = File.ReadAllText(filePath, Encoding.GetEncoding("GB2312"));
+                        string content = null;
+
+                        // Try multiple encodings to handle Chinese characters
+                        var encodings = new List<Encoding>();
+
+                        try { encodings.Add(Encoding.GetEncoding("GBK")); } catch { }      // GBK (best for Chinese)
+                        try { encodings.Add(Encoding.GetEncoding("GB2312")); } catch { }   // GB2312
+                        encodings.Add(Encoding.UTF8);                                      // UTF-8
+                        encodings.Add(Encoding.Default);                                   // System default
+
+                        foreach (var encoding in encodings)
+                        {
+                            try
+                            {
+                                content = File.ReadAllText(filePath, encoding);
+                                // Successfully read, use this encoding
+                                break;
+                            }
+                            catch
+                            {
+                                // Try next encoding
+                            }
+                        }
+
+                        if (content == null)
+                            continue; // Skip this file
 
                         // Extract all path references
                         foreach (var pattern in pathPatterns)
