@@ -14,10 +14,12 @@ namespace PakExtractTool
     {
         private PakFileReader _currentPakReader;
         private string _currentPakPath;
+        private List<string> _lastGeneratedPaths; // Store paths from last generation
         private TreeView treeViewFiles;
         private ListView listViewDetails;
         private Button btnOpenPak;
         private Button btnGenerateIndex;
+        private Button btnExportPaths;
         private Button btnExtractSelected;
         private Button btnExtractAll;
         private StatusStrip statusStrip;
@@ -86,10 +88,21 @@ namespace PakExtractTool
             };
             btnGenerateIndex.Click += BtnGenerateIndex_Click;
 
+            btnExportPaths = new Button
+            {
+                Text = "💾 Export Paths",
+                Location = new Point(280, 10),
+                Size = new Size(130, 30),
+                Enabled = false,
+                Font = new Font("Segoe UI", 9F, FontStyle.Regular),
+                BackColor = Color.FromArgb(200, 230, 255)
+            };
+            btnExportPaths.Click += BtnExportPaths_Click;
+
             btnExtractSelected = new Button
             {
                 Text = "📤 Extract Selected",
-                Location = new Point(280, 10),
+                Location = new Point(420, 10),
                 Size = new Size(140, 30),
                 Enabled = false,
                 Font = new Font("Segoe UI", 9F, FontStyle.Regular)
@@ -99,7 +112,7 @@ namespace PakExtractTool
             btnExtractAll = new Button
             {
                 Text = "📦 Extract All",
-                Location = new Point(430, 10),
+                Location = new Point(570, 10),
                 Size = new Size(120, 30),
                 Enabled = false,
                 Font = new Font("Segoe UI", 9F, FontStyle.Regular)
@@ -115,7 +128,7 @@ namespace PakExtractTool
                 ForeColor = Color.Gray
             };
 
-            topPanel.Controls.AddRange(new Control[] { btnOpenPak, btnGenerateIndex, btnExtractSelected, btnExtractAll, lblPakInfo });
+            topPanel.Controls.AddRange(new Control[] { btnOpenPak, btnGenerateIndex, btnExportPaths, btnExtractSelected, btnExtractAll, lblPakInfo });
 
             // Split container for tree and details
             splitContainer = new SplitContainer
@@ -450,6 +463,9 @@ namespace PakExtractTool
                     worker.ReportProgress(10, new ProgressData { Step = "Step 2/4: Scanning folder for files...", Progress = $"Found {pakFileIds.Count} hashes in PAK" });
                     var allFiles = ScanFolderRecursive(scanFolder, worker);
 
+                    // Store paths for export functionality
+                    _lastGeneratedPaths = allFiles;
+
                     DebugLogger.Log($"📂 Scanned {allFiles.Count:N0} files from: {scanFolder}");
 
                     // Log sample file paths for debugging
@@ -517,6 +533,9 @@ namespace PakExtractTool
                     DebugLogger.Log($"✓ Index generation complete!");
                     DebugLogger.Log($"   Generated: {txtFile}");
                     DebugLogger.Log($"   Match rate: {matchRate:F1}%");
+
+                    // Enable export button now that paths are generated
+                    btnExportPaths.Enabled = true;
 
                     // Auto-reload PAK to show new index
                     MessageBox.Show(
@@ -1597,6 +1616,44 @@ namespace PakExtractTool
         {
             var allFiles = _currentPakReader.GetAllFileNames();
             ExtractFiles(allFiles);
+        }
+
+        private void BtnExportPaths_Click(object sender, EventArgs e)
+        {
+            if (_lastGeneratedPaths == null || _lastGeneratedPaths.Count == 0)
+            {
+                MessageBox.Show("No paths generated yet. Please run 'Generate Index' first.",
+                    "No Paths Available", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            using (var dialog = new SaveFileDialog())
+            {
+                dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                dialog.FileName = $"generated_paths_{DateTime.Now:yyyyMMdd_HHmmss}.txt";
+                dialog.Title = "Export Generated Paths";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        // Write all paths to file with UTF-8 encoding (supports Chinese characters)
+                        File.WriteAllLines(dialog.FileName, _lastGeneratedPaths, Encoding.UTF8);
+
+                        DebugLogger.Log($"💾 Exported {_lastGeneratedPaths.Count:N0} paths to: {dialog.FileName}");
+
+                        MessageBox.Show(
+                            $"Successfully exported {_lastGeneratedPaths.Count:N0} paths to:\n\n{dialog.FileName}",
+                            "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        DebugLogger.Log($"❌ Error exporting paths: {ex.Message}");
+                        MessageBox.Show($"Error exporting paths:\n\n{ex.Message}",
+                            "Export Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
 
         private List<string> GetCheckedFiles(TreeNode node)
