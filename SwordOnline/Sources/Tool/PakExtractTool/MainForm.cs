@@ -560,14 +560,27 @@ namespace PakExtractTool
                 DebugLogger.Log($"   Found {allFiles.Count:N0} source files to parse");
 
                 // Regex patterns to find file paths
-                // Use .+? (non-greedy) to match any character including Chinese
+                // Use .+? (non-greedy) to match any character including Chinese/Vietnamese
                 var pathPatterns = new[]
                 {
-                    @"\\[Ss]pr\\.+?\.spr",           // \Spr\...\file.spr (Chinese OK)
-                    @"\\[Ss]ettings\\.+?\.(ini|txt)", // \Settings\...\file.ini (Chinese OK)
-                    @"\\[Mm]aps\\.+?\.(dat|wor)",    // \Maps\...\file.dat (Chinese OK)
-                    @"\\[Uu]i\\.+?\.(jpg|bmp|tga|spr)", // \Ui\...\file.jpg (Chinese OK)
-                    @"\\[^\\\s]+\\.+?\.(spr|ini|txt|dat|wor|jpg|bmp|tga|png)", // Generic with Chinese
+                    // Backslash paths
+                    @"\\[Ss]pr\\.+?\.spr",                  // \Spr\...\file.spr
+                    @"\\[Ss]ettings\\.+?\.(ini|txt)",       // \Settings\...\file.ini
+                    @"\\[Mm]aps\\.+?\.(dat|wor)",           // \Maps\...\file.dat
+                    @"\\[Uu]i\\.+?\.(jpg|bmp|tga|spr|png)", // \Ui\...\file.jpg
+                    @"\\[^\\\s]+\\.+?\.(spr|ini|txt|dat|wor|jpg|bmp|tga|png)", // Generic
+
+                    // Forward slash paths (Unix style)
+                    @"/[Ss]pr/.+?\.spr",                    // /Spr/.../file.spr
+                    @"/[Ss]ettings/.+?\.(ini|txt)",         // /Settings/.../file.ini
+                    @"/[Mm]aps/.+?\.(dat|wor)",             // /Maps/.../file.dat
+                    @"/[Uu]i/.+?\.(jpg|bmp|tga|spr|png)",   // /Ui/.../file.jpg
+                    @"/[^/\s]+/.+?\.(spr|ini|txt|dat|wor|jpg|bmp|tga|png)", // Generic
+
+                    // Without leading slash
+                    @"[Ss]pr\\.+?\.spr(?=\s|""|'|$)",       // Spr\...\file.spr
+                    @"[Ss]ettings\\.+?\.(ini|txt)(?=\s|""|'|$)", // Settings\...\file.ini
+                    @"[Mm]aps\\.+?\.(dat|wor)(?=\s|""|'|$)", // Maps\...\file.dat
                 };
 
                 for (int i = 0; i < allFiles.Count; i++)
