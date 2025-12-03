@@ -540,6 +540,179 @@ namespace PakExtractTool
             progressForm.ShowDialog(this);
         }
 
+        /// <summary>
+        /// Parse INI files with Count/Path/enumeration format
+        /// Example: ChatPics.ini has Count=911, Path=\spr\Ui3\聊天, 0=01.spr, 1=02.spr, etc.
+        /// </summary>
+        private void ParseIniFileForPaths(string filePath, HashSet<string> paths)
+        {
+            try
+            {
+                string basePath = null;
+                int count = 0;
+
+                var lines = File.ReadAllLines(filePath, Encoding.GetEncoding("GB2312"));
+
+                foreach (var line in lines)
+                {
+                    var trimmed = line.Trim();
+
+                    // Parse Count=
+                    if (trimmed.StartsWith("Count=", StringComparison.OrdinalIgnoreCase))
+                    {
+                        int.TryParse(trimmed.Substring(6), out count);
+                    }
+                    // Parse Path=
+                    else if (trimmed.StartsWith("Path=", StringComparison.OrdinalIgnoreCase))
+                    {
+                        basePath = trimmed.Substring(5).Trim();
+                    }
+                    // Parse numeric entries like 0=01.spr, 1=02.spr
+                    else if (trimmed.Contains("=") && !trimmed.StartsWith("["))
+                    {
+                        var parts = trimmed.Split('=');
+                        if (parts.Length == 2 && int.TryParse(parts[0], out _))
+                        {
+                            string fileName = parts[1].Trim();
+                            if (!string.IsNullOrEmpty(basePath) && !string.IsNullOrEmpty(fileName))
+                            {
+                                string fullPath = basePath + "\\" + fileName;
+                                fullPath = fullPath.Replace('/', '\\');
+                                if (!fullPath.StartsWith("\\")) fullPath = "\\" + fullPath;
+                                fullPath = LowercaseAsciiOnly(fullPath);
+                                paths.Add(fullPath);
+                            }
+                        }
+                    }
+                }
+
+                // If we found Count but no enumerated entries, generate them
+                if (count > 0 && !string.IsNullOrEmpty(basePath))
+                {
+                    for (int i = 0; i <= count; i++)
+                    {
+                        // Try common patterns: 01.spr, 001.spr, icon_01.spr, etc.
+                        var patterns = new[] {
+                            $"{i:D2}.spr",      // 01.spr, 02.spr
+                            $"{i:D3}.spr",      // 001.spr, 002.spr
+                            $"{i:D4}.spr",      // 0001.spr, 0002.spr
+                            $"icon_{i:D2}.spr", // icon_01.spr
+                            $"pic_{i:D2}.spr",  // pic_01.spr
+                        };
+
+                        foreach (var pattern in patterns)
+                        {
+                            string fullPath = basePath + "\\" + pattern;
+                            fullPath = fullPath.Replace('/', '\\');
+                            if (!fullPath.StartsWith("\\")) fullPath = "\\" + fullPath;
+                            fullPath = LowercaseAsciiOnly(fullPath);
+                            paths.Add(fullPath);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // Skip files that can't be parsed
+            }
+        }
+
+        /// <summary>
+        /// Parse Settings TXT files with tabular format containing sprite paths
+        /// Example: NpcNormalRes.txt has columns with sprite filenames
+        /// </summary>
+        private void ParseSettingsTxtForPaths(string filePath, HashSet<string> paths)
+        {
+            try
+            {
+                var lines = File.ReadAllLines(filePath, Encoding.GetEncoding("GB2312"));
+
+                foreach (var line in lines)
+                {
+                    // Skip comments and empty lines
+                    if (string.IsNullOrWhiteSpace(line) || line.TrimStart().StartsWith("//") || line.TrimStart().StartsWith("#"))
+                        continue;
+
+                    // Split by tab or multiple spaces
+                    var fields = line.Split(new[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var field in fields)
+                    {
+                        var trimmed = field.Trim();
+
+                        // Check if field looks like a sprite path or filename
+                        if (trimmed.Contains(".spr") || trimmed.Contains(".ini") || trimmed.Contains(".txt"))
+                        {
+                            string path = trimmed;
+
+                            // If it's just a filename, try to infer the directory from the settings file path
+                            if (!path.Contains("\\") && !path.Contains("/"))
+                            {
+                                // For NpcRes files, sprites are usually in \spr\npcres\...
+                                if (filePath.Contains("NpcRes") || filePath.Contains("npcres"))
+                                {
+                                    // Try to extract NPC ID or name from the filename
+                                    // Format: enemy003_st.spr -> \spr\npcres\enemy\enemy003\enemy003_st.spr
+                                    var match = System.Text.RegularExpressions.Regex.Match(trimmed, @"([a-z]+)(\d+)_");
+                                    if (match.Success)
+                                    {
+                                        string npcType = match.Groups[1].Value;  // enemy, npc, boss, etc.
+                                        string npcNum = match.Groups[2].Value;   // 003
+                                        string npcId = npcType + npcNum;         // enemy003
+                                        path = $"\\spr\\npcres\\{npcType}\\{npcId}\\{trimmed}";
+                                    }
+                                    else
+                                    {
+                                        path = $"\\spr\\npcres\\{trimmed}";
+                                    }
+                                }
+                                else if (filePath.Contains("Item") || filePath.Contains("item"))
+                                {
+                                    path = $"\\spr\\item\\{trimmed}";
+                                }
+                                else if (filePath.Contains("Skill") || filePath.Contains("skill"))
+                                {
+                                    path = $"\\spr\\skill\\{trimmed}";
+                                }
+                                else
+                                {
+                                    path = $"\\spr\\{trimmed}";
+                                }
+                            }
+
+                            path = path.Replace('/', '\\');
+                            if (!path.StartsWith("\\")) path = "\\" + path;
+                            path = LowercaseAsciiOnly(path);
+                            paths.Add(path);
+
+                            // For NPC sprites, also generate action variations
+                            if (path.Contains("\\npcres\\") && path.EndsWith(".spr"))
+                            {
+                                // Generate common action suffixes
+                                var baseName = path.Substring(0, path.LastIndexOf("_"));
+                                var actions = new[] { "_st.spr", "_wlk.spr", "_run.spr", "_bat.spr", "_die.spr",
+                                                     "_at.spr", "_pst.spr", "_sit.spr", "_magic.spr" };
+                                foreach (var action in actions)
+                                {
+                                    paths.Add(baseName + action);
+                                }
+
+                                // Generate shadow variants (add 'b' before .spr)
+                                foreach (var action in actions)
+                                {
+                                    paths.Add(baseName + action.Replace(".spr", "b.spr"));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // Skip files that can't be parsed
+            }
+        }
+
         private List<string> ScanFolderRecursive(string folder, System.ComponentModel.BackgroundWorker worker)
         {
             var paths = new HashSet<string>();
@@ -589,6 +762,23 @@ namespace PakExtractTool
 
                     try
                     {
+                        string fileExt = Path.GetExtension(filePath).ToLower();
+
+                        // Use specialized parsers for INI and Settings TXT files
+                        if (fileExt == ".ini")
+                        {
+                            ParseIniFileForPaths(filePath, paths);
+                        }
+
+                        if (fileExt == ".txt" && (filePath.Contains("Settings") || filePath.Contains("settings") ||
+                                                   filePath.Contains("NpcRes") || filePath.Contains("npcres") ||
+                                                   filePath.Contains("Item") || filePath.Contains("item") ||
+                                                   filePath.Contains("Skill") || filePath.Contains("skill")))
+                        {
+                            ParseSettingsTxtForPaths(filePath, paths);
+                        }
+
+                        // Also do generic regex extraction for all files
                         string content = null;
 
                         // Try multiple encodings to handle Chinese and Vietnamese characters
@@ -620,7 +810,7 @@ namespace PakExtractTool
                         if (content == null)
                             continue; // Skip this file
 
-                        // Extract all path references
+                        // Extract all path references using regex
                         foreach (var pattern in pathPatterns)
                         {
                             var matches = System.Text.RegularExpressions.Regex.Matches(content, pattern);
