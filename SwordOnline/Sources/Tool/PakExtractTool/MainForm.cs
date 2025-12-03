@@ -635,6 +635,9 @@ namespace PakExtractTool
                                 if (!path.StartsWith("\\"))
                                     path = "\\" + path;
 
+                                // Lowercase ONLY A-Z → a-z (match game engine g_StrLower)
+                                path = LowercaseAsciiOnly(path);
+
                                 // Remove trailing whitespace/quotes that might be captured
                                 path = path.TrimEnd(' ', '\t', '"', '\'');
 
@@ -734,12 +737,37 @@ namespace PakExtractTool
                 if (!path.StartsWith("\\"))
                     path = "\\" + path;
 
+                // Lowercase ONLY A-Z → a-z (match game engine g_StrLower)
+                path = LowercaseAsciiOnly(path);
+
                 // Add if valid
                 if (path.Length > 3 && path.Contains('.'))
                 {
                     paths.Add(path);
                 }
             }
+        }
+
+        /// <summary>
+        /// Lowercase ONLY ASCII A-Z characters to a-z, preserving all other characters.
+        /// Matches the game engine's g_StrLower() function behavior.
+        /// Chinese, Vietnamese, and other non-ASCII characters are preserved.
+        /// </summary>
+        private static string LowercaseAsciiOnly(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return input;
+
+            char[] chars = input.ToCharArray();
+            for (int i = 0; i < chars.Length; i++)
+            {
+                // Only convert A-Z to a-z (ASCII 65-90 → 97-122)
+                if (chars[i] >= 'A' && chars[i] <= 'Z')
+                {
+                    chars[i] = (char)(chars[i] + 32); // 'a' - 'A' = 32
+                }
+            }
+            return new string(chars);
         }
 
         private Dictionary<uint, string> MatchFilesWithPak(List<string> pathReferences, List<uint> pakFileIds, string scanFolder, System.ComponentModel.BackgroundWorker worker)
