@@ -570,7 +570,27 @@ namespace PakExtractTool
                 string basePath = null;
                 int count = 0;
 
-                var lines = File.ReadAllLines(filePath, Encoding.GetEncoding("GBK"));
+                // Try multiple encodings for Chinese characters (Traditional and Simplified)
+                string[] lines = null;
+                var encodings = new[] { "Big5", "GBK", "GB2312", "UTF-8" };
+
+                foreach (var encName in encodings)
+                {
+                    try
+                    {
+                        lines = File.ReadAllLines(filePath, Encoding.GetEncoding(encName));
+                        break; // Successfully read
+                    }
+                    catch
+                    {
+                        // Try next encoding
+                    }
+                }
+
+                if (lines == null)
+                {
+                    try { lines = File.ReadAllLines(filePath, Encoding.Default); } catch { return; }
+                }
 
                 foreach (var line in lines)
                 {
@@ -659,7 +679,27 @@ namespace PakExtractTool
                 }
 
                 // Generic parsing for other settings files
-                var lines = File.ReadAllLines(filePath, Encoding.GetEncoding("GBK"));
+                // Try multiple encodings for Chinese characters (Traditional and Simplified)
+                string[] lines = null;
+                var encodings = new[] { "Big5", "GBK", "GB2312", "UTF-8" };
+
+                foreach (var encName in encodings)
+                {
+                    try
+                    {
+                        lines = File.ReadAllLines(filePath, Encoding.GetEncoding(encName));
+                        break; // Successfully read
+                    }
+                    catch
+                    {
+                        // Try next encoding
+                    }
+                }
+
+                if (lines == null)
+                {
+                    try { lines = File.ReadAllLines(filePath, Encoding.Default); } catch { return; }
+                }
 
                 foreach (var line in lines)
                 {
@@ -756,7 +796,28 @@ namespace PakExtractTool
         {
             try
             {
-                var lines = File.ReadAllLines(filePath, Encoding.GetEncoding("GBK"));
+                // Try multiple encodings for Chinese characters (Traditional and Simplified)
+                string[] lines = null;
+                var encodings = new[] { "Big5", "GBK", "GB2312", "UTF-8" };
+
+                foreach (var encName in encodings)
+                {
+                    try
+                    {
+                        lines = File.ReadAllLines(filePath, Encoding.GetEncoding(encName));
+                        break; // Successfully read
+                    }
+                    catch
+                    {
+                        // Try next encoding
+                    }
+                }
+
+                if (lines == null)
+                {
+                    try { lines = File.ReadAllLines(filePath, Encoding.Default); } catch { return; }
+                }
+
                 bool headerSkipped = false;
 
                 foreach (var line in lines)
@@ -831,7 +892,28 @@ namespace PakExtractTool
         {
             try
             {
-                var lines = File.ReadAllLines(filePath, Encoding.GetEncoding("GBK"));
+                // Try multiple encodings for Chinese characters (Traditional and Simplified)
+                string[] lines = null;
+                var encodings = new[] { "Big5", "GBK", "GB2312", "UTF-8" };
+
+                foreach (var encName in encodings)
+                {
+                    try
+                    {
+                        lines = File.ReadAllLines(filePath, Encoding.GetEncoding(encName));
+                        break; // Successfully read
+                    }
+                    catch
+                    {
+                        // Try next encoding
+                    }
+                }
+
+                if (lines == null)
+                {
+                    try { lines = File.ReadAllLines(filePath, Encoding.Default); } catch { return; }
+                }
+
                 bool headerSkipped = false;
 
                 foreach (var line in lines)
@@ -880,39 +962,60 @@ namespace PakExtractTool
             {
                 DebugLogger.Log($"📂 Scanning source files for path references...");
 
-                // Scan text-based source files
-                var sourceExtensions = new[] { "*.txt", "*.ini", "*.cpp", "*.h", "*.lua", "*.c" };
+                // Scan text-based source files and script files
+                // Include more extensions to find path references
+                var sourceExtensions = new[] {
+                    "*.txt", "*.ini", "*.cfg", "*.conf",  // Config files
+                    "*.cpp", "*.h", "*.c", "*.cc", "*.cxx", // C/C++ source
+                    "*.lua", "*.py", "*.js",              // Script files
+                    "*.xml", "*.json",                    // Data files
+                    "*.bat", "*.cmd", "*.sh"              // Batch/shell scripts
+                };
                 var allFiles = new List<string>();
 
                 foreach (var ext in sourceExtensions)
                 {
-                    allFiles.AddRange(Directory.GetFiles(folder, ext, SearchOption.AllDirectories));
+                    try
+                    {
+                        allFiles.AddRange(Directory.GetFiles(folder, ext, SearchOption.AllDirectories));
+                    }
+                    catch
+                    {
+                        // Skip folders we can't access
+                    }
                 }
 
                 DebugLogger.Log($"   Found {allFiles.Count:N0} source files to parse");
 
                 // Regex patterns to find file paths
-                // Use .+? (non-greedy) to match any character including Chinese/Vietnamese
+                // Use .+? (non-greedy) to match any character including Chinese/Vietnamese/Korean
+                // Extended to capture more file types: spr, ini, txt, dat, wor, jpg, bmp, tga, png, wav, mp3, lua
                 var pathPatterns = new[]
                 {
-                    // Backslash paths
-                    @"\\[Ss]pr\\.+?\.spr",                  // \Spr\...\file.spr
-                    @"\\[Ss]ettings\\.+?\.(ini|txt)",       // \Settings\...\file.ini
-                    @"\\[Mm]aps\\.+?\.(dat|wor)",           // \Maps\...\file.dat
-                    @"\\[Uu]i\\.+?\.(jpg|bmp|tga|spr|png)", // \Ui\...\file.jpg
-                    @"\\[^\\\s]+\\.+?\.(spr|ini|txt|dat|wor|jpg|bmp|tga|png)", // Generic
+                    // Backslash paths - common game resource folders
+                    @"\\[Ss]pr\\.+?\.(spr|ini|txt)",                      // \Spr\...\file.spr/ini/txt
+                    @"\\[Ss]ettings\\.+?\.(ini|txt|cfg)",                 // \Settings\...\file.ini/txt/cfg
+                    @"\\[Mm]aps\\.+?\.(dat|wor|map)",                     // \Maps\...\file.dat/wor/map
+                    @"\\[Uu]i\\.+?\.(jpg|bmp|tga|spr|png|ini)",           // \Ui\...\file.jpg/bmp/etc
+                    @"\\[Ss]ound\\.+?\.(wav|mp3|ogg)",                    // \Sound\...\file.wav/mp3
+                    @"\\[Ss]cript\\.+?\.(lua|txt)",                       // \Script\...\file.lua/txt
+                    @"\\[Dd]ata\\.+?\.(dat|txt|ini|bin)",                 // \Data\...\file.dat/txt
+                    @"\\[^\\\s""']+\\.+?\.(spr|ini|txt|dat|wor|jpg|bmp|tga|png|wav|mp3|lua)", // Generic backslash
 
-                    // Forward slash paths (Unix style)
-                    @"/[Ss]pr/.+?\.spr",                    // /Spr/.../file.spr
-                    @"/[Ss]ettings/.+?\.(ini|txt)",         // /Settings/.../file.ini
-                    @"/[Mm]aps/.+?\.(dat|wor)",             // /Maps/.../file.dat
-                    @"/[Uu]i/.+?\.(jpg|bmp|tga|spr|png)",   // /Ui/.../file.jpg
-                    @"/[^/\s]+/.+?\.(spr|ini|txt|dat|wor|jpg|bmp|tga|png)", // Generic
+                    // Forward slash paths (Unix style) - for cross-platform code
+                    @"/[Ss]pr/.+?\.(spr|ini|txt)",                        // /Spr/.../file.spr
+                    @"/[Ss]ettings/.+?\.(ini|txt|cfg)",                   // /Settings/.../file.ini
+                    @"/[Mm]aps/.+?\.(dat|wor|map)",                       // /Maps/.../file.dat
+                    @"/[Uu]i/.+?\.(jpg|bmp|tga|spr|png|ini)",             // /Ui/.../file.jpg
+                    @"/[Ss]ound/.+?\.(wav|mp3|ogg)",                      // /Sound/.../file.wav
+                    @"/[Ss]cript/.+?\.(lua|txt)",                         // /Script/.../file.lua
+                    @"/[^/\s""']+/.+?\.(spr|ini|txt|dat|wor|jpg|bmp|tga|png|wav|mp3|lua)", // Generic forward slash
 
-                    // Without leading slash
-                    @"[Ss]pr\\.+?\.spr(?=\s|""|'|$)",       // Spr\...\file.spr
-                    @"[Ss]ettings\\.+?\.(ini|txt)(?=\s|""|'|$)", // Settings\...\file.ini
-                    @"[Mm]aps\\.+?\.(dat|wor)(?=\s|""|'|$)", // Maps\...\file.dat
+                    // Without leading slash - for embedded paths in code
+                    @"[Ss]pr\\.+?\.(spr|ini|txt)(?=\s|""|'|$|,)",        // Spr\...\file.spr (with lookahead)
+                    @"[Ss]ettings\\.+?\.(ini|txt)(?=\s|""|'|$|,)",       // Settings\...\file.ini
+                    @"[Mm]aps\\.+?\.(dat|wor)(?=\s|""|'|$|,)",           // Maps\...\file.dat
+                    @"[Uu]i\\.+?\.(jpg|bmp|spr)(?=\s|""|'|$|,)",         // Ui\...\file.jpg
                 };
 
                 for (int i = 0; i < allFiles.Count; i++)
@@ -940,11 +1043,13 @@ namespace PakExtractTool
                         // Also do generic regex extraction for all files
                         string content = null;
 
-                        // Try multiple encodings to handle Chinese and Vietnamese characters
-                        // Priority: GBK first (most compatible for Chinese), then others
+                        // Try multiple encodings to handle Chinese (Traditional & Simplified) and Vietnamese characters
+                        // Priority: Big5 first (Traditional Chinese), then GBK (Simplified Chinese)
                         var encodings = new List<Encoding>();
 
-                        try { encodings.Add(Encoding.GetEncoding("GBK")); } catch { }          // GBK (Chinese - superset of GB2312)
+                        try { encodings.Add(Encoding.GetEncoding("Big5")); } catch { }         // Big5 (Traditional Chinese)
+                        try { encodings.Add(Encoding.GetEncoding("GBK")); } catch { }          // GBK (Simplified Chinese - superset of GB2312)
+                        try { encodings.Add(Encoding.GetEncoding("GB2312")); } catch { }       // GB2312 (Simplified Chinese fallback)
                         try { encodings.Add(Encoding.GetEncoding("windows-1258")); } catch { } // Vietnamese ANSI
                         try { encodings.Add(Encoding.GetEncoding(1258)); } catch { }           // Vietnamese codepage
                         encodings.Add(Encoding.UTF8);                                          // UTF-8
@@ -1048,6 +1153,9 @@ namespace PakExtractTool
 
             // 4. Map-related sprites and overlays
             GenerateMapRelatedSprites(paths);
+
+            // 5. Chinese UI paths - common Chinese character folders
+            GenerateChineseUIPaths(paths);
         }
 
         /// <summary>
@@ -1206,6 +1314,102 @@ namespace PakExtractTool
                     paths.Add(LowercaseAsciiOnly($"\\spr\\ui\\map\\{elem}{i}.spr"));
                 }
             }
+        }
+
+        /// <summary>
+        /// Generate common Chinese UI paths
+        /// Many Chinese MMORPGs have UI folders with Chinese names
+        /// Example: \spr\ui3\聊天 (Chat), \spr\ui3\物品 (Items), etc.
+        /// </summary>
+        private void GenerateChineseUIPaths(HashSet<string> paths)
+        {
+            // Common Chinese UI folder names (both Simplified and Traditional)
+            var chineseFolders = new[]
+            {
+                // Simplified Chinese (简体中文)
+                ("聊天", "chat"),      // Chat
+                ("物品", "item"),      // Items
+                ("技能", "skill"),     // Skills
+                ("任务", "quest"),     // Quests
+                ("地图", "map"),       // Map
+                ("商店", "shop"),      // Shop
+                ("交易", "trade"),     // Trade
+                ("组队", "team"),      // Team/Party
+                ("好友", "friend"),    // Friends
+                ("帮会", "guild"),     // Guild
+                ("背包", "bag"),       // Bag/Inventory
+                ("装备", "equip"),     // Equipment
+                ("系统", "system"),    // System
+                ("设置", "setting"),   // Settings
+                ("帮助", "help"),      // Help
+                ("邮件", "mail"),      // Mail
+                ("拍卖", "auction"),   // Auction
+                ("排行", "rank"),      // Ranking
+                ("宠物", "pet"),       // Pet
+                ("坐骑", "mount"),     // Mount
+
+                // Traditional Chinese (繁體中文)
+                ("聊天", "chat"),      // Chat (same)
+                ("物品", "item"),      // Items (same)
+                ("技能", "skill"),     // Skills (same)
+                ("任務", "quest"),     // Quests
+                ("地圖", "map"),       // Map
+                ("商店", "shop"),      // Shop (same)
+                ("交易", "trade"),     // Trade (same)
+                ("組隊", "team"),      // Team/Party
+                ("好友", "friend"),    // Friends (same)
+                ("幫會", "guild"),     // Guild
+                ("背包", "bag"),       // Bag (same)
+                ("裝備", "equip"),     // Equipment
+                ("系統", "system"),    // System
+                ("設置", "setting"),   // Settings
+                ("幫助", "help"),      // Help (same)
+                ("郵件", "mail"),      // Mail
+                ("拍賣", "auction"),   // Auction
+                ("排行", "rank"),      // Ranking (same)
+                ("寵物", "pet"),       // Pet
+                ("坐騎", "mount"),     // Mount
+            };
+
+            // Generate paths for each Chinese folder
+            foreach (var (chName, enName) in chineseFolders)
+            {
+                // UI3 style paths (common in Chinese games)
+                for (int i = 1; i <= 200; i++)
+                {
+                    // With Chinese folder names
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{chName}\\{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{chName}\\{i:D3}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{chName}\\icon{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{chName}\\pic{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{chName}\\btn{i:D2}.spr"));
+
+                    // With English folder names (fallback)
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{enName}\\{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{enName}\\{i:D3}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{enName}\\icon{i:D2}.spr"));
+
+                    // UI2 style
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui2\\{chName}\\{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui2\\{enName}\\{i:D2}.spr"));
+
+                    // UI style
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui\\{chName}\\{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui\\{enName}\\{i:D2}.spr"));
+                }
+
+                // Common UI filenames with Chinese
+                var commonFiles = new[] { "background.spr", "frame.spr", "button.spr", "icon.spr", "title.spr" };
+                foreach (var file in commonFiles)
+                {
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{chName}\\{file}"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui2\\{chName}\\{file}"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui\\{chName}\\{file}"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{enName}\\{file}"));
+                }
+            }
+
+            DebugLogger.Log($"   ✓ Generated Chinese UI paths for {chineseFolders.Length} folder types");
         }
 
         private void ExtractAndGenerateFormattedPaths(string content, HashSet<string> paths)
