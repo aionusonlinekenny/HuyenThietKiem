@@ -468,15 +468,26 @@ namespace PakExtractTool
 
                     DebugLogger.Log($"📂 Scanned {allFiles.Count:N0} files from: {scanFolder}");
 
+                    // Filter paths based on PAK file type
+                    // spr.pak → only \spr\ paths, sound.pak → only \sound\ paths, etc.
+                    string pakFileName = System.IO.Path.GetFileNameWithoutExtension(_currentPakPath).ToLower();
+                    string pathPrefix = $"\\{pakFileName}\\";
+                    var filteredFiles = allFiles.Where(p => p.StartsWith(pathPrefix, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                    DebugLogger.Log($"📋 Filtered paths for PAK type '{pakFileName}':");
+                    DebugLogger.Log($"   Before filter: {allFiles.Count:N0} paths");
+                    DebugLogger.Log($"   After filter:  {filteredFiles.Count:N0} paths (prefix: {pathPrefix})");
+                    DebugLogger.Log($"   Filtered out:  {allFiles.Count - filteredFiles.Count:N0} paths from other PAKs");
+
                     // Log sample file paths for debugging
-                    DebugLogger.Log($"   Sample scanned files (first 10):");
-                    for (int i = 0; i < Math.Min(10, allFiles.Count); i++)
+                    DebugLogger.Log($"   Sample filtered files (first 10):");
+                    for (int i = 0; i < Math.Min(10, filteredFiles.Count); i++)
                     {
-                        DebugLogger.Log($"      {allFiles[i]}");
+                        DebugLogger.Log($"      {filteredFiles[i]}");
                     }
 
-                    worker.ReportProgress(40, new ProgressData { Step = "Step 3/4: Matching file paths with PAK hashes...", Progress = $"Scanning {allFiles.Count:N0} files..." });
-                    var matches = MatchFilesWithPak(allFiles, pakFileIds, scanFolder, worker);
+                    worker.ReportProgress(40, new ProgressData { Step = "Step 3/4: Matching file paths with PAK hashes...", Progress = $"Scanning {filteredFiles.Count:N0} files..." });
+                    var matches = MatchFilesWithPak(filteredFiles, pakFileIds, scanFolder, worker);
 
                     DebugLogger.Log($"🎯 Match result: {matches.Count:N0}/{pakFileIds.Count:N0} files matched");
 
