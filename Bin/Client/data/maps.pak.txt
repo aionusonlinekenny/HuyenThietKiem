@@ -1,0 +1,4 @@
+TotalFile:2	PakTime:2025-12-3 11:10:31	PakTimeSave:92e18b21	CRC:00000000
+Index	ID	Time	FileName	Size	InPakSize	ComprFlag	CRC
+0	dbf22ecd	2000-1-1 0:0:0	\maps\西北南区\华山\v_110\145_region_s.dat	0	0	0	0
+1	57a895a0	2000-1-1 0:0:0	\settings\maps\partner\northwest_1.txt	0	0	0	0

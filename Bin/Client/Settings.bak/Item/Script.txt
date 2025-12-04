@@ -1,0 +1,147 @@
+Name	ItemGenre	DetailType	ParticularType	Icon	ObjID	Width	Height	Intro	ScriptFile	Stack	TaskID	MaxTaskId
+TÈy Tñy Kinh	7	0	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"PhËt gia b¶o ®iÓn, nÕu cã thÓ ®äc hiÓu sÏ t¨ng kinh nghiÖm rÊt nhanh."	\script\item\luascript\xisui-jing.lua	0		
+ThiÕt La H¸n	7	1	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"Mét ng­êi s¾t La H¸n di ®éng, ®¸nh ng· sÏ thu ®­îc kinh nghiÖm thùc chiÕn."	\script\item\luascript\tie-luohan.lua	0		
+Vâ L©m MËt TŞch	7	2	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"Bİ quyÕt vâ c«ng, cã İch cho c¸c hiÖp kh¸ch Vâ L©m."	\script\item\luascript\wulin-miji.lua	0		
+Tiªn Th¶o Lé 	7	3	1	\spr\item\medecine\xiancaolu.spr	370	1	1	"Néi 1 giê, kinh nghiÖm t¨ng gÊp ®«i (t¸i sö dông v« hiÖu) "	\script\item\luascript\xiancaolu.lua	0		
+Tiªn Th¶o Lé [§Æc biÖt]	7	4	1	\spr\item\medecine\xiancaolu_sp.spr	370	1	1	"Tiªn Th¶o Lé cã hiÖu qu¶ ®Æc biÖt, cã t¸c dông nh©n ®«i kinh nghiÖm trong 8 giê (sö dông nhiÒu c¸i mét lóc sÏ kh«ng cã t¸c dông)."	\script\item\luascript\xiancaolu.lua	0		
+Thiªn S¬n B¶o Lé 	7	5	1	\spr\item\medecine\tianshanyulu.spr	370	1	1	"Néi 30 phót, May m¾n t¨ng 10 ®iÓm. (t¸i sö dông v« hiÖu) "	\script\item\luascript\thiensonbaolo.lua	0		
+QuÕ Hoa Töu	7	6	1	\spr\item\medecine\zq_icon_004.spr	376	1	1	"Néi 30 phót, m×nh cïng ®ång ®éi t¨ng 20 ®iÓm May m¾n."	\script\item\luascript\quehoatuu.lua	0		
+Qu¶ Huy Hoµng (s¬) 	7	7	1	\spr\item\questkey\huihuangzhiguo.spr	377	1	1	¡n vµo sÏ t¨ng gÊp ®«i c«ng lùc	\script\item\luascript\huihuangzhiguo.lua	0		
+Qu¶ Huy Hoµng (trung) 	7	8	1	\spr\item\questkey\huihuangzhiguo.spr	377	1	1	¡n vµo sÏ t¨ng gÊp ®«i c«ng lùc	\script\item\luascript\huihuangzhiguo.lua	0		
+Qu¶ Huy Hoµng (cao) 	7	9	1	\spr\item\questkey\huihuangzhiguo.spr	377	1	1	¡n vµo sÏ t¨ng gÊp ®«i c«ng lùc	\script\item\luascript\huihuangzhiguo.lua	0		
+Qu¶ Hoµng Kim	7	10	1	\spr\item\questkey\huangjinzhiguo.spr	377	1	1	¡n vµo sÏ t¨ng gÊp ®«i c«ng lùc	\script\item\luascript\huihuangzhiguo.lua	0		
+Phóc Duyªn Lé (tiÓu)	7	11	1	\spr\item\medecine\fuyuanlu_small.spr	370	1	1	Sö dông nhËn ®­îc 10 ®iÓm phóc duyªn	\script\item\luascript\phucduyenlo.lua	0		
+Phóc Duyªn Lé (trung)	7	12	1	\spr\item\medecine\fuyuanlu_middle.spr	370	1	1	Sö dông nhËn ®­îc 20 ®iÓm phóc duyªn	\script\item\luascript\phucduyenlo.lua	0		
+Phóc Duyªn Lé (®¹i)	7	13	1	\spr\item\medecine\fuyuanlu_big.spr	370	1	1	Sö dông nhËn ®­îc 50 ®iÓm phóc duyªn	\script\item\luascript\phucduyenlo.lua	0		
+N÷ Nhi Hång	7	14	1	\spr\item\questkey\taskobj072.spr	41	1	1	"Néi 8 giê, kinh nghiÖm luyÖn kü n¨ng t¨ng gÊp ®«i (t¸i sö dông v« hiÖu) "	\script\item\luascript\nhandoikynang.lua	0		
+§¹i Thµnh Bİ Kİp 90	7	15	1	\spr\item\questkey\quyuanmifang.spr	368	1	1	Sö dông cã thÓ häc ®­îc mét kü n¨ng 90 cã ®¼ng cÊp 20.	\script\item\luascript\dachengmiji_90.lua	0		
+§¹i Thµnh Bİ Kİp 120	7	16	1	\spr\item\questkey\quyuanmifang.spr	368	1	1	Sö dông cã thÓ häc ®­îc mét kü n¨ng 120 cã ®¼ng cÊp 20.	\script\item\luascript\dachengmiji_120.lua	0		
+LÖnh Bµi Admin	7	17	1	\spr\item\questkey\006.spr	385	1	1	"LÖnh bµi admin, lo¹i lÖnh bµi chØ cã admin míi cã thÓ sö dông ®­îc bao gåm tÊt c¶ chøc n¨ng qu¶n lı §¹i thæ Thñy Hµnh"	\script\item\luascript\lenhbaiadmin.lua	0		
+Thæ §Şa Phï	7	18	1	\spr\item\special\Obj_TownPortal.spr	38	1	1	"Mét lo¹i bïa ph¸p, gióp b¹n mau chãng ®Õn n¬i muèn ®Õn"	\script\item\luascript\townportal.lua	0		
+Thæ §Şa phï (sö dông v« h¹n)	7	19	1	\spr\item\special\Obj_TownPortal.spr	38	1	1	"Mét lo¹i bïa ph¸p, gióp b¹n mau chãng ®Õn n¬i muèn ®Õn"	\script\item\luascript\townportal_ever.lua	0		
+ThÇn Hµnh Phï	7	20	1	\spr\item\script\thp.spr	38	1	1	"ThÇn Hµnh ThuËt, phi th©n ®¹i hiÖp ®i bÊt cø thµnh thŞ th«n trÊn chØ ®Şnh nµo"	\script\item\luascript\townportal_l.lua	0		
+S­ ®å ThiÕp	7	21	1	\spr\item\questkey\taskobj091.spr	38	1	1	"Ng­êi ch¬i d­íi cÊp 80 dïng ®Ó nhËn s­ phô, trªn cÊp 80 dïng ®Ó nhËn ®Ö tö."	\script\item\luascript\sudothiep.lua	0		
+Tèng Kim Chiªu Th­	7	22	1	\spr\item\songjin\rescript.spr	383	1	1	Cã thÓ tù lùa chän khu vùc ®Ó ®Õn b¸o danh	\script\item\battles\rescript.lua	0		
+Long HuyÕt Hoµn	7	23	1	\spr\item\questkey\taskobj018.spr	41	1	1	"T­¬ng truyÒn ®©y lµ tİn vËt ®İnh h«n cña Nhİp nhİ trÇn, sö dông cã nã cã thÓ t¨ng thªm mét lÇn tham gia ho¹t ®éng <color=green>  v­ît ¶I <color> trong ngµy."	\script\item\luascript\longhuyethoan.lua	50		
+Bµn Nh­îc T©m Kinh	7	24	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"PhËt gia b¶o ®iÓn, nÕu cã thÓ ®äc hiÓu sÏ tÈy ®­îc ®iÓm kinh nghiÖm ©m."	\script\item\luascript\bannhuoctamkinh.lua	0		
+ThÇn bİ ®Şa ®å chİ	7	25	1	\spr\item\questkey\5545.spr	424	1	1	NhÆt ®­îc sö dông ngay	\script\item\luascript\dochi.lua	0		
+ThÇn bİ mËt chİ	7	26	1	\spr\item\questkey\0053.spr	424	1	1	NhÆt ®­îc sö dông ngay	\script\item\luascript\matchi.lua	0		
+ThŞt Heo rõng	7	27	1	\spr\item\questkey\taskobj398.spr	364	1	1	§Õn gÆp vâ s­ trong lµng ®æi lÊy ng©n l­îng	\script\item\luascript\thitheo.lua	0		
+X¸ lîi T©m Kinh (TiÓu)	7	28	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	ChŞu khã tu t©m tông niÖm sÏ gi¶m 1 trŞ PK.	\script\item\luascript\xaloikimdon1.lua	0		
+X¸ lîi T©m Kinh (Trung)	7	29	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	ChŞu khã tu t©m tông niÖm sÏ gi¶m 2 trŞ PK.	\script\item\luascript\xaloikimdon2.lua	0		
+X¸ lîi T©m Kinh (§¹i)	7	30	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	ChŞu khã tu t©m tông niÖm sÏ gi¶m 3 trŞ PK.	\script\item\luascript\xaloikimdon3.lua	0		
+ThiÕu L©m QuyÒn Ph¸p. QuyÓn 1	7	31	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"ThiÕu L©m QuyÒn Ph¸p, luyÖn tËp sÏ thuÇn thôc <§¹t Ma §é Giang>kü n¨ng."	\script\item\luascript\factionbox.lua	0		
+ThiÕu L©m §ao ph¸p. QuyÓn 3	7	32	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"ThiÕu L©m §ao ph¸p, luyÖn tËp sÏ thuÇn thôc <V« T­íng Tr¶m>."	\script\item\luascript\factionbox.lua	0		
+ThiÕu L©m C«n ph¸p. QuyÓn 2	7	33	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"ThiÕu L©m C«n ph¸p, luyÖn tËp sÏ thuÇn thôc <Hoµnh T¶o Thiªn Qu©n>."	\script\item\luascript\factionbox.lua	0		
+Thiªn V­¬ng Th­¬ng ph¸p. QuyÓn 2	7	34	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	Bªn trong ghi l¹i nh÷ng tuyÖt kü Truy Tinh Trôc NguyÖt	\script\item\luascript\factionbox.lua	0		
+Thiªn V­¬ng Chïy Ph¸p. QuyÓn 1	7	35	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"MËt TŞch Thiªn V­¬ng bang, th­êng xuyªn luyÖn tËp sÏ thuÇn thôc"	\script\item\luascript\factionbox.lua	0		
+Thiªn V­¬ng §ao ph¸p.QuyÓn 3	7	36	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"Thiªn V­¬ng §ao Ph¸p, QuyÓn 3, häc thuéc sÏ thuÇn thôc Truy phong QuyÕt"	\script\item\luascript\factionbox.lua	0		
+Tô TiÔn thuËt. B¹o Vò Lª Hoa	7	37	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"YÕu quyÕt B¹o Vò Lª Hoa, siªng luyÖn tËp sÏ thuÇn thôc kü n¨ng B¹o Vò Lª Hoa."	\script\item\luascript\factionbox.lua	0		
+Phi §ao thuËt. NhiÕp Hån NguyÖt ¶nh	7	38	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"§­êng m«n Phi §ao thuËt, th­êng xuyªn luyÖn tËp sÏ thuÇn thôc NhiÕp hån NguyÖt ¶nh"	\script\item\luascript\factionbox.lua	0		
+Phi Tiªu thuËt. Cöu Cung Phi Tinh	7	39	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"§­êng m«n Phi Tiªu thuËt, th­êng xuyªn luyÖn tËp sÏ thuÇn thôc"	\script\item\luascript\factionbox.lua	0		
+H·m TÜnh thuËt.Lo¹n Hoµn Kİch	7	40	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"bİ truyÒn cña §­êng m«n, siªng luyÖn tËp sÏ thuÇn thôc kü n¨ng Lo¹n Hoµn Kİch."	\script\item\luascript\factionbox.lua	0		
+Ngò §éc Ch­ëng Ph¸p. QuyÓn 1	7	41	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"Ngò §éc Ch­ëng Ph¸p, th­êng xuyªn luyÖn tËp sÏ thuÇn thôc ¢m Phong Thùc Cèt"	\script\item\luascript\factionbox.lua	0		
+Ngò §éc §ao ph¸p. QuyÓn 2	7	42	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"Ngò §éc §ao Ph¸p, th­êng xuyªn luyÖn tËp sÏ thuÇn thôc HuyÒn ¢m Tr¶m"	\script\item\luascript\factionbox.lua	0		
+Ngò §éc NhiÕp T©m thuËt. QuyÓn 3	7	43	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"Ngò §éc t©m ph¸p, luyÖn tËp sÏ thuÇn thôc <§o©n C©n Hñ Cèt >"	\script\item\luascript\factionbox.lua	0		
+Nga Mi  PhËt Quang Ch­ëng MËt TŞch	7	44	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"Nga Mi MËt tŞch, h­íng dÉn luyÖn tËp <Phong S­¬ng To¸i ¶nh>."	\script\item\luascript\factionbox.lua	0		
+DiÖt KiÕm MËt TŞch	7	45	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"Nga Mi MËt TŞch, ghi l¹i nh÷ng chiªu kiÕm tuyÖt kü cña Nga Mi"	\script\item\luascript\factionbox.lua	0		
+Phæ §é MËt TŞch	7	46	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"Phæ §é MËt TŞch, ghi chó chiªu thøc <Phæ §é Chóng Sinh>"	\script\item\luascript\factionbox.lua	0		
+Thóy Yªn §ao ph¸p	7	47	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"MËt TŞch Thóy Yªn m«n, th­êng xuyªn luyÖn tËp sÏ thuÇn thôc"	\script\item\luascript\factionbox.lua	0		
+Thóy Yªn Song ®ao	7	48	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"MËt TŞch  song ®ao, th­êng xuyªn luyÖn tËp sÏ thuÇn thôc"	\script\item\luascript\factionbox.lua	0		
+C¸i Bang Ch­ëng Ph¸p	7	49	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"C¸i Bang Ch­ëng Ph¸p,luyÖn tËp sÏ thuÇn thôc <Phi Long T¹i Thiªn>"	\script\item\luascript\factionbox.lua	0		
+C¸i Bang C«n ph¸p	7	50	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"C¸i Bang C«n ph¸p,luyÖn tËp sÏ thuÇn thôc <Thiªn H¹ V« CÈu>."	\script\item\luascript\factionbox.lua	0		
+L­u Tinh. §ao ph¸p	7	51	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"MËt TŞch Thiªn NhÉn, th­êng xuyªn luyÖn tËp sÏ thuÇn thôc"	\script\item\luascript\factionbox.lua	0		
+V©n Long Kİch. M©u ph¸p	7	52	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"Ghi l¹i chiªu thøc cao cÊp cña Thiªn NhÉn m©u ph¸p, häc xong sÏ lÜnh héi ®­îc chiªu thøc <V©n Long Kİch>."	\script\item\luascript\factionbox.lua	0		
+NhiÕp Hån. Chó thuËt	7	53	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"Chiªu thøc bïa chó cao cÊp cña Thiªn nhÉn, häc xong sÏ lÜnh héi ®­îc <NhiÕp hån lo¹n t©m>."	\script\item\luascript\factionbox.lua	0		
+Th¸i Cùc QuyÒn Phæ. QuyÓn 3	7	54	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"MËt TŞch  Vâ §ang, xem tõ tõ cã thÓ hiÓu"	\script\item\luascript\factionbox.lua	0		
+Th¸i Cùc KiÕm Phæ. QuyÓn 2	7	55	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"MËt TŞch kü n¨ng Vâ §ang, th­êng xuyªn luyÖn tËp sÏ thuÇn thôc"	\script\item\luascript\factionbox.lua	0		
+Ngù L«i thuËt	7	56	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"C«n L«n KiÕm Ph¸p, th­êng xuyªn luyÖn tËp sÏ thuÇn thôc L«i ®éng Cöu Thiªn"	\script\item\luascript\factionbox.lua	0		
+Ngù Phong thuËt	7	57	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"C«n L«n §ao Ph¸p, th­êng xuyªn luyÖn tËp sÏ thuÇn thôc Ng¹o TuyÕt Tiªu Phong"	\script\item\luascript\factionbox.lua	0		
+Ngù T©m thuËt	7	58	1	\spr\item\questkey\obj_item_lection.spr	341	1	1	"C«n L«n t©m Ph¸p, th­êng xuyªn luyÖn tËp sÏ thuÇn thôc Tóy Tiªn T¸ Cèt"	\script\item\luascript\factionbox.lua	0		
+Lu©n håi. BÕ NguyÖt PhÊt TrÇn tuyÖt kü	7	59	1	\spr\item\task\stunt.spr	374	1	1	T©m ph¸p Nga Mi ph¸i n©ng cao hç trî kü n¨ng	\script\item\luascript\factionbox.lua	0		
+DŞch Cèt Kinh. HÊp Tinh YÓm tuyÖt kü	7	60	1	\spr\item\task\stunt.spr	374	1	1	T©m ph¸p Ngò §éc gi¸o n©ng cao hç trî kü n¨ng	\script\item\luascript\factionbox.lua	0		
+§¹i Bi Chó.  §¹i Thõa Nh­ Lai Chó tuyÖt kü	7	61	1	\spr\item\task\stunt.spr	374	1	1	T©m ph¸p ThiÕu L©m ph¸i n©ng cao hç trî kü n¨ng	\script\item\luascript\factionbox.lua	0		
+Tİnh Ng¹o Tam §«ng. Hçn Thiªn Khİ C«ng tuyÖt kü	7	62	1	\spr\item\task\stunt.spr	374	1	1	T©m ph¸p C¸i Bang  n©ng cao hç trî kü n¨ng	\script\item\luascript\factionbox.lua	0		
+B¨ng TuyÕt S¬ Dung. Ngù TuyÕt Èn tuyÖt kü	7	63	1	\spr\item\task\stunt.spr	374	1	1	T©m ph¸p Thóy yªn m«n n©ng cao hç trî kü n¨ng	\script\item\luascript\factionbox.lua	0		
+L­u Quang Phi Vò. Mª ¶nh Tung tuyÖt kü	7	64	1	\spr\item\task\stunt.spr	374	1	1	T©m ph¸p §­êng m«n  n©ng cao hç trî kü n¨ng	\script\item\luascript\factionbox.lua	0		
+Tam Sinh H÷u H¹nh. L­ìng Nghi Ch©n Khİ tuyÖt kü	7	65	1	\spr\item\task\stunt.spr	374	1	1	T©m ph¸p C«n L«n ph¸i n©ng cao hç trî kü n¨ng	\script\item\luascript\factionbox.lua	0		
+Ng­ng ¢m Quy Nguyªn. Ma ©m phÖ Ph¸ch tuyÖt kü	7	66	1	\spr\item\task\stunt.spr	374	1	1	T©m ph¸p Thiªn NhÉn  n©ng cao hç trî kü n¨ng	\script\item\luascript\factionbox.lua	0		
+Tam Phôc Chi Khİ. §¶o H­ Thiªn tuyÖt kü	7	67	1	\spr\item\task\stunt.spr	374	1	1	T©m ph¸p Thiªn V­¬ng Bang  n©ng cao hç trî kü n¨ng	\script\item\luascript\factionbox.lua	0		
+ThuÇn D­¬ng V« Cùc. Xu©n ­ BÊt NhiÔm tuyÖt kü	7	68	1	\spr\item\task\stunt.spr	374	1	1	T©m ph¸p Vâ §ang ph¸i n©ng cao hç trî kü n¨ng	\script\item\luascript\factionbox.lua	0		
+CÈm nang t©n thñ	7	69	1	\spr\item\script\jingniangshijian.spr	41	1	1	"Giang hå chØ nam, S¬ nhËp giang hå rÊt cÇn ®Õn nã bªn trong ch­a ®ùng nh÷ng bİ mËt ®­îc ghi chĞp mét c¸ch kü l­ìng"	\script\item\luascript\newbiecard.lua	0		
+Tói m¸u 	7	70	1	\spr\item\questkey\tuimauxanh.spr	347	1	1	"Bªn trong cã ch­a v« vµng th©n d­îc quı hiÕp, lµ mét lo¹i vËt phÈm ®Æc biÖt kh«ng thÓ thiÕu trong qu¸ tr×nh b«n tÈu cña nh©n sÜ giang hå"	\script\item\luascript\bloodbox.lua	0		
+M¶nh b¶n ®å s¬n hµ x· t¾c (1000 m¶nh)	7	71	1	\spr\item\questkey\obj_item_shanhe.spr	351	1	1	Chuét ph¶i sö dông ®Ó nhËn ®­îc 1000 m¶nh b¶n ®å s¬n hµ x· t¾c.	\script\item\luascript\shanhe-canpian.lua	1000		
+Danh väng lé	7	72	1	\spr\item\questkey\taskobj072.spr	370	1	1	Sö dông nhËn ®­îc ngay 50 ®iÓm danh väng	\script\item\luascript\repute.lua	0		
+Phi Phong	7	73	1	\spr\item\obj_item_mantle.spr	370	1	1	"Lo¹i ¸o kho¸c trang trİ, cã thÓ kho¸c lªn bÊt cø lo¹i y phôc nµo"	\script\item\luascript\mantle.lua	0		
+M· bµi - Xİch thè	7	74	1	\spr\item\songjin\token.spr	385	1	1	BÊm chuét ph¶i sö dông ®Ó nhËn ®­îc 1 Xİch Thè	\script\item\luascript\horselib.lua	0		
+M· bµi - §İch L«	7	75	1	\spr\item\songjin\token.spr	385	1	1	BÊm chuét ph¶i sö dông ®Ó nhËn ®­îc 1 §İch L«	\script\item\luascript\horselib.lua	0		
+M· bµi - TuyÖt ¶nh	7	76	1	\spr\item\songjin\token.spr	385	1	1	BÊm chuét ph¶i sö dông ®Ó nhËn ®­îc 1 TuyÖt ¶nh	\script\item\luascript\horselib.lua	0		
+M· bµi - ¤ V©n §¹p TuyÕt	7	77	1	\spr\item\songjin\token.spr	385	1	1	BÊm chuét ph¶i ®Ó sö dông ®Ó nhËn ®­îc 1 ¤ V©n §¹p TuyÕt	\script\item\luascript\horselib.lua	0		
+M· bµi - ChiÕu D¹ Ngäc S­ Tö	7	78	1	\spr\item\songjin\token.spr	385	1	1	BÊm chuét ph¶i ®Ó sö dông ®Ó nhËn ®­îc 1 ChiÕu D¹ Ngäc S­ Tö	\script\item\luascript\horselib.lua	0		
+M· bµi - B«n Tiªu	7	79	1	\spr\item\songjin\token.spr	385	1	1	BÊm chuét ph¶i ®Ó nhËn ®­îc 1 B«n Tiªu	\script\item\luascript\horselib.lua	0		
+M· bµi - Phiªn Vò	7	80	1	\spr\item\songjin\token.spr	385	1	1	BÊm chuét ph¶i ®Ó nhËn ®­îc 1 Phiªn Vò	\script\item\luascript\horselib.lua	0		
+ChiÕn cæ 	7	81	1	\spr\item\songjin\wardrum.spr	384	1	1	"Néi trong 3 phót, ®ång ®éi xung quanh t¨ng 30% Sinh lùc+ Phßng thñ "	\script\item\battles\wardrum.lua	50		
+LÖnh bµi	7	82	1	\spr\item\songjin\token.spr	385	1	1	"Néi trong 3 phót, ®ång ®éi xung quanh t¨ng 30% di chuyÓn, xuÊt chiªu t¨ng 50%."	\script\item\battles\token.lua	50		
+Binh SÜ hiÖu phï 	7	83	1	\spr\item\songjin\clarion.spr	386	1	1	Gäi thªm 2 NPC hç trî chiÕn ®Êu	\script\item\battles\clarion.lua	50		
+Cê hiÖu 	7	84	1	\spr\item\songjin\warflag.spr	387	1	1	"Sau khi chuyÓn So¸i Kú ®Õn môc tiªu, NhÊn chuét ph¶i vµo Cê hiÖu ®Ó hoµn thµnh nhiÖm vô "	\script\item\battles\useflagitem.lua	50		
+Kim Chi ChiÕn Hån 	7	85	1	\spr\item\questkey\003.spr	388	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\pneuma_jin.lua	50		
+Méc Chi ChiÕn Hån 	7	86	1	\spr\item\questkey\003.spr	389	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\pneuma_mu.lua	50		
+Thñy Chi ChiÕn Hån 	7	87	1	\spr\item\questkey\003.spr	390	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\pneuma_shui.lua	50		
+Háa Chi ChiÕn Hån 	7	88	1	\spr\item\questkey\003.spr	391	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\pneuma_huo.lua	50		
+Thæ Chi ChiÕn Hån 	7	89	1	\spr\item\questkey\003.spr	392	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\pneuma_tu.lua	50		
+Kim Chi Hé gi¸p  	7	90	1	\spr\item\questkey\003.spr	393	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\armor_jin.lua	50		
+Méc Chi Hé gi¸p  	7	91	1	\spr\item\questkey\003.spr	394	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\armor_mu.lua	50		
+Thñy Chi Hé gi¸p  	7	92	1	\spr\item\questkey\003.spr	395	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\armor_shui.lua	50		
+Háa Chi Hé gi¸p  	7	93	1	\spr\item\questkey\003.spr	396	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\armor_huo.lua	50		
+Thæ Chi Hé gi¸p  	7	94	1	\spr\item\questkey\003.spr	397	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\armor_tu.lua	50		
+Kim Chi Lîi NhËn	7	95	1	\spr\item\questkey\003.spr	398	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\weapon_jin.lua	50		
+Méc Chi Lîi NhËn	7	96	1	\spr\item\questkey\003.spr	399	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\weapon_mu.lua	50		
+Thñy Chi Lîi NhËn	7	97	1	\spr\item\questkey\003.spr	400	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\weapon_shui.lua	50		
+Háa Chi Lîi NhËn	7	98	1	\spr\item\questkey\003.spr	401	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\weapon_huo.lua	50		
+Thæ Chi Lîi NhËn	7	99	1	\spr\item\questkey\003.spr	402	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\weapon_tu.lua	50		
+Hµnh qu©n ®¬n 	7	100	1	\spr\item\questkey\003.spr	403	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\sj_xingjundan.lua	50		
+TiÓu hoµn ®¬n 	7	101	1	\spr\item\questkey\003.spr	404	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\sj_xiaohuandan.lua	50		
+Ngò Hoa Lé 	7	102	1	\spr\item\questkey\003.spr	405	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\sj_wuhualu.lua	50		
+Tèng Kim Ngo¹i Phæ hoµn	7	103	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, s¸t th­¬ng vËt lı hÖ ngo¹i c«ng t¨ng 50%."	\script\item\battles\sj_waipuwan.lua	50		
+Tèng Kim Ngo¹i §éc hoµn	7	104	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, s¸t th­¬ng vËt lı hÖ §éc ngo¹i c«ng t¨ng 50 ®iÓm."	\script\item\battles\sj_waiduwan.lua	50		
+Tèng Kim Ngo¹i B¨ng hoµn	7	105	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, s¸t th­¬ng vËt lı hÖ B¨ng ngo¹i c«ng t¨ng 100 ®iÓm."	\script\item\battles\sj_waibingwan.lua	50		
+Tèng Kim Néi Phæ hoµn	7	106	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, s¸t th­¬ng vËt lı hÖ Néi c«ng t¨ng 100 ®iÓm."	\script\item\battles\sj_neipuwan.lua	50		
+Tèng Kim Néi §éc hoµn	7	107	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, s¸t th­¬ng §éc hÖ Néi c«ng t¨ng 50 ®iÓm."	\script\item\battles\sj_neiduwan.lua	50		
+Tèng Kim Néi B¨ng hoµn	7	108	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, B¨ng s¸t hÖ Néi c«ng t¨ng 100 ®iÓm."	\script\item\battles\sj_neibingwan.lua	50		
+Tèng Kim Néi Háa hoµn	7	109	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, Ho¶ s¸t hÖ Néi c«ng t¨ng 100 ®iÓm."	\script\item\battles\sj_neihuowan.lua	50		
+Tèng Kim Néi L«i hoµn	7	110	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, L«i s¸t hÖ Néi c«ng t¨ng 100 ®iÓm."	\script\item\battles\sj_neidianwan.lua	50		
+Tèng Kim Tr­êng MÖnh hoµn	7	111	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, sinh mÖnh t¨ng 500 ®iÓm."	\script\item\battles\sj_changmingwan.lua	50		
+Tèng Kim Gia Bµo hoµn	7	112	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, tèc ®é di chuyÓn t¨ng 20%"	\script\item\battles\sj_jiapaowan.lua	50		
+Tèng Kim Cao ThiÓm hoµn	7	113	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, nĞ tr¸ch t¨ng 500 ®iÓm."	\script\item\battles\sj_gaoshanwan.lua	50		
+Tèng Kim Cao Trung hoµn	7	114	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, nĞ tr¸ch t¨ng 500 ®iÓm."	\script\item\battles\sj_gaozhongwan.lua	50		
+Tèng Kim Phi Tèc hoµn	7	115	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, tèc ®é c«ng kİch t¨ng 50%."	\script\item\battles\sj_feisuwan.lua	50		
+Tèng Kim Phæ Phßng hoµn	7	116	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, phßng Ngù t¨ng 50%."	\script\item\battles\sj_pufangwan.lua	50		
+Tèng Kim B¨ng Phßng hoµn	7	117	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, phßng B¨ng t¨ng 50%."	\script\item\battles\sj_bingfangwan.lua	50		
+Tèng Kim L«i Phßng hoµn	7	118	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, phßng L«i t¨ng 50%."	\script\item\battles\sj_leifangwan.lua	50		
+Tèng Kim Háa Phßng hoµn	7	119	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, phßng Háa t¨ng 50%."	\script\item\battles\sj_huofangwan.lua	50		
+Tèng Kim §éc Phßng hoµn	7	120	1	\spr\item\medecine\obj-potion15.spr	19	1	1	"Néi trong 3 phót, phßng §éc t¨ng 50%."	\script\item\battles\sj_dufangwan.lua	50		
+TËt phong ngoa 	7	121	1	\spr\item\questkey\003.spr	406	1	1	NhÆt ®­îc sö dông ngay 	\script\item\battles\sj_boot.lua	0		
+Tam Thanh Chi Khİ 	7	122	1	\spr\item\questkey\003.spr	407	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\sj_sanqingzhiqi.lua	0		
+B¹ch C©u Hé uyÓn	7	123	1	\spr\item\questkey\003.spr	408	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\sj_cuff.lua	0		
+HËu NghÖ Chi Nh·n 	7	124	1	\spr\item\questkey\003.spr	409	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\sj_eye.lua	0		
+ThÇn bİ vËt phÈm 	7	125	1	\spr\item\questkey\003.spr	410	1	1	NhÆt ®­îc sö dông ngay	\script\item\battles\sj_question.lua	0		
+Bå c©u 	7	126	1	\spr\item\songjin\dove.spr	411	1	1	Dïng th«ng b¸o cho ®ång ®éi biÕt täa ®é cña m×nh.	\script\item\battles\dove.lua	0		
+Kh¸ng §¬n Chi Gi¸c 	7	127	1	\spr\item\songjin\clarion.spr	386	1	1	"Néi trong 3 phót, c¸c ®èi thñ xung quanh bŞ gi¶m kh¶ n¨ng ph¶n ®ßn 20%."	\script\item\battles\reboundclarion.lua	0		
+Hép lÔ vËt v­ît ¶i	7	128	1	\spr\item\obj_item_giftb.spr	344	1	1	"B¶o hép lÔ vËt v­ît ¶I chøa nhiÒu phÇn th­ëng quı hiÕm, h·y gi÷ g×n cÇn thËn."	\script\item\luascript\baoruongvuotai.lua	50		
+B¶o r­¬ng tèng kim	7	129	1	\spr\item\birthday_jieri\200905\tiancibaoxiang.spr	344	1	1	"B¶o r­¬ng tèng kim lµ phÈn th­ëng chinh ph¹t tèng kim r¬I ra, h·y cÊt gi÷ thËn träng."	\script\item\luascript\baoruongtongkim.lua	50		
+KiÕm HiÖp LÖnh Bµi	7	130	1	\spr\item\questkey\taskobj119.spr	41	1	1	"TriÖu håi t­íng lÜnh t¹i phong l¨ng ®é, chØ sö dông ®­îc t¹i t¹i phong l¨ng ®é."	\script\item\luascript\kiemhieplenh.lua	100		
+S¸t Thñ Gi¶n lÔ hép	7	131	1	\spr\item\script\item_chrismasbox.spr	377	1	1	"Chuét ph¶i sö dông ®Ó nhËn ®­îc 5 s¸t thñ gi¶n, ho¹t ®éng v­ît ¶I nhiÕp nhİ trÇn cÇn nã ®Ó më ho¹t ®éng."	\script\item\luascript\satthugianlehop.lua	0		
+Nh¹c V­¬ng KiÕm lÔ bao	7	132	1	\spr\item\obj_item_jixiang.spr	347	1	1	"BÊm chuét ph¶i sö dông ®Ó nhËn ®­îc 1 Nh¹c V­¬ng KiÕm, thµnh lËp bang héi chinh ph¹t Trung Nguyªn"	\script\item\luascript\nhacvuongkiem.lua	0		
+B¸nh tĞt	7	133	1	\spr\item\event\event_banhchung\banhtet.spr	439	1	1	"VËt phÈm sö kiÖn, bÊm chuét ph¶I cã thÓ nhËn ®­îc <color=green> 1.000.000<color> kinh nghiÖm vµ nhiÒu vËt phÈm hÊp dÉn"	\script\item\luascript\event\banhtet.lua	100		
+B¸nh ch­ng	7	134	1	\spr\item\event\event_banhchung\banhchung.spr	440	1	1	"VËt phÈm sö kiÖn, bÊm chuét ph¶I cã thÓ nhËn ®­îc <color=orange> 500.000<color> kinh nghiÖm vµ nhiÒu vËt phÈm gi¸ trŞ kh¸c"	\script\item\luascript\event\banhchung.lua	100		
+Hép quµ sù kiÖn	7	135	1	\spr\item\event\event_banhchung\hopqua.spr	347	1	1	"VËt phÈm sù kiÖn, bªn trong cã chøa ngÉu nhiªn nguyªn liÖu ghĞp b¸nh tĞt hoÆc b¸nh ch­ng"	\script\item\luascript\event\hopqua.lua	100		
+Tï vµ triÖu håi Boss HK	7	136	1	\spr\item\script\whelk.spr	41	1	1	"VËt phÈm triÖu håi cao thñ vâ l©m, cao thñ nµy mang trªn ng­êi rÊt nhiÒu c¸c vËt phÈm gi¸ trŞ"	\script\item\luascript\lenhbaigoiboss.lua	50		
+H¶i long ch©u	7	137	1	\spr\item\medecine\obj-potion30.spr	41	1	1	"T­¬ng truyÒn ®©y lµ long ch©u cña Long v­¬ng, sö dông cã nã cã thÓ t¨ng thªm mét lÇn tham gia ho¹t ®éng  <color=green>  Phong l¨ng ®é <color> trong ngµy."	\script\item\luascript\hailongchau.lua	50		
+B¶o r­¬ng trang bŞ hång ¶nh	7	138	1	\spr\item\oldbox\oldbox.spr	433	1	1	VËt phÇm quı hiÕm bªn trong r­¬ng nµy cã chøa <color=green> 1 Trang bŞ hång ¶nh <color>.	\script\item\luascript\baoruongtrangbihonganh.lua	1		
+B¶o r­¬ng hång ¶nh	7	139	1	\spr\item\script\item_goldenbox.spr	433	2	2	Bªn trong r­¬ng nµy chã chøa <color=green> Mét bé trang bŞ hång ¶nh <color>.	\script\item\luascript\baoruonghonganh.lua	1		
+B¶o r­¬ng an bang	7	140	1	\spr\item\script\item_silverbox.spr	433	2	2	Bªn trong r­¬ng nµy cã chøa <color=yellow> Mét bé trang bŞ an bang <color>	\script\item\luascript\baoruonganbang.lua	1		
+LÖnh bµi Tİn sø	7	141	1	\spr\item\questkey\obj_item_lection02.spr	374	1	1	"T­¬ng truyÒn trong giang hå, lo¹i lÖnh bµi nµy cã thÓ t¨ng sè lÇn tham gia kh¶o nghiÖm <color=green>Thiªn b¶o khè cña tİn sø <color>. "	\script\item\luascript\lenhbaitinsu.lua	1		
+Giá Hoa Quèc Kh¸nh	7	142	1	\spr\vng\item\womenday2011\bunchofroses.spr	41	1	1	VËt PhÈm Sù KiÖn Quèc Kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	\script\item\event\event0324.lua	500		
+Bã Hoa Quèc Kh¸nh	7	143	1	\spr\item\funvjie_jieri\200803\shumeigui.spr	41	1	2	VËt PhÈm Sù KiÖn Quèc Kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	\script\item\event\event0323.lua	500		
+Tói Mõng Quèc Kh¸nh	7	144	1	\spr\vng\item\120530_lua_nuoc\tuihuong.spr	387	1	1	Sù kiÖn mõng quèc kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	\script\Event\quockhanh\tuinguyenlieu.lua	500		
+R­¬ng VËn Tiªu	7	145	1	\spr\item\script\songjinmibao.spr	41	1	1	PhÇn th­ëng cho VËn Tiªu. Më ra ®Ó nhËn ®­îc vËt phÈm quı gi¸.	\script\item\luascript\ruongvantieu.lua	999		

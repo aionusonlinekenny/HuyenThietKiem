@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using MapTool.MapData;
 using MapTool.Rendering;
 using MapTool.Export;
+using MapTool.NPC;
+using MapTool.SPR;
 
 namespace MapTool
 {
@@ -26,6 +29,14 @@ namespace MapTool
         private bool _isPanning;
         private Point _lastMousePosition;
 
+        // NPC functionality
+        private NpcLoader _npcLoader;
+        private NpcExporter _npcExporter;
+        private NpcResource _currentNpcResource;
+        private SpriteData _currentNpcSprite;
+        private int _currentAnimationFrame = 0;
+        private float _previewZoom = 1.0f; // Default 1.0x zoom (no zoom)
+
         public MainFormSimple()
         {
             InitializeComponent();
@@ -45,6 +56,7 @@ namespace MapTool
 
             _renderer = new MapRenderer();
             _exporter = new TrapExporter();
+            _npcExporter = new NpcExporter();
 
             // Set default game folder if exists
             string defaultFolder = @"D:\HuyenThietKiem\Bin\Server";
@@ -354,29 +366,85 @@ namespace MapTool
             }
         }
 
-        // Map panel double-click to add trap entry
+        // Map panel double-click to add entry (trap or NPC based on active tab)
         private void mapPanel_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && _selectedCoordinate.HasValue && _currentMap != null)
             {
-                // Add to trap list
-                string scriptFile = txtScriptFile.Text;
-                if (string.IsNullOrWhiteSpace(scriptFile))
+                // Check which tab is active
+                if (tabMain.SelectedTab == tabTrap)
                 {
-                    scriptFile = $@"\script\maps\trap\{_currentMap.MapId}\1.lua";
+                    // Add trap entry
+                    string scriptFile = txtScriptFile.Text;
+                    if (string.IsNullOrWhiteSpace(scriptFile))
+                    {
+                        scriptFile = $@"\script\maps\trap\{_currentMap.MapId}\1.lua";
+                    }
+
+                    // Use LOCAL RegionID for trap export (relative to map rect)
+                    _exporter.AddEntry(_currentMap.MapId, _selectedCoordinate.Value, _currentMap.Config, scriptFile);
+                    UpdateTrapList();
+
+                    // Calculate local RegionID for display
+                    int localRegionID = RegionData.MakeLocalRegionID(
+                        _selectedCoordinate.Value.RegionX, _selectedCoordinate.Value.RegionY,
+                        _currentMap.Config.RegionLeft, _currentMap.Config.RegionTop, _currentMap.Config.RegionWidth);
+
+                    lblStatus.Text = $"Added trap entry at Region({_selectedCoordinate.Value.RegionX},{_selectedCoordinate.Value.RegionY}) LocalID={localRegionID} Cell({_selectedCoordinate.Value.CellX},{_selectedCoordinate.Value.CellY})";
+                    DebugLogger.Log($"[Trap Added] Region({_selectedCoordinate.Value.RegionX},{_selectedCoordinate.Value.RegionY}) GlobalID={_selectedCoordinate.Value.RegionID} LocalID={localRegionID} Cell({_selectedCoordinate.Value.CellX},{_selectedCoordinate.Value.CellY})");
                 }
+                else if (tabMain.SelectedTab == tabNPC)
+                {
+                    // Add NPC entry
+                    if (_currentNpcResource == null)
+                    {
+                        MessageBox.Show("Please load an NPC preview first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
 
-                // Use LOCAL RegionID for trap export (relative to map rect)
-                _exporter.AddEntry(_currentMap.MapId, _selectedCoordinate.Value, _currentMap.Config, scriptFile);
-                UpdateTrapList();
+                    string npcIdText = txtNpcId.Text.Trim();
+                    if (string.IsNullOrEmpty(npcIdText) || !int.TryParse(npcIdText, out int npcId))
+                    {
+                        MessageBox.Show("Please enter a valid NPC ID!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
 
-                // Calculate local RegionID for display
-                int localRegionID = RegionData.MakeLocalRegionID(
-                    _selectedCoordinate.Value.RegionX, _selectedCoordinate.Value.RegionY,
-                    _currentMap.Config.RegionLeft, _currentMap.Config.RegionTop, _currentMap.Config.RegionWidth);
+                    string npcLevelText = txtNpcLevel.Text.Trim();
+                    if (string.IsNullOrEmpty(npcLevelText) || !int.TryParse(npcLevelText, out int npcLevel))
+                    {
+                        MessageBox.Show("Please enter a valid Level (number)!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
 
-                lblStatus.Text = $"Added trap entry at Region({_selectedCoordinate.Value.RegionX},{_selectedCoordinate.Value.RegionY}) LocalID={localRegionID} Cell({_selectedCoordinate.Value.CellX},{_selectedCoordinate.Value.CellY})";
-                DebugLogger.Log($"[Trap Added] Region({_selectedCoordinate.Value.RegionX},{_selectedCoordinate.Value.RegionY}) GlobalID={_selectedCoordinate.Value.RegionID} LocalID={localRegionID} Cell({_selectedCoordinate.Value.CellX},{_selectedCoordinate.Value.CellY})");
+                    // Add NPC at selected position
+                    // Get NPC name - fallback to NPC_{ID} if name is null, empty, or "0"
+                    string npcName = (!string.IsNullOrEmpty(_currentNpcResource.NpcName) && _currentNpcResource.NpcName != "0")
+                        ? _currentNpcResource.NpcName
+                        : $"NPC_{npcId}";
+
+                    _npcExporter.AddEntry(
+                        npcId: npcId,
+                        mapId: _currentMap.MapId,
+                        posX: _selectedCoordinate.Value.WorldX,
+                        posY: _selectedCoordinate.Value.WorldY,
+                        scriptFile: "",  // Empty script for NPCs
+                        name: npcName,
+                        level: npcLevel,
+                        isLoad: 1
+                    );
+
+                    UpdateNpcList();
+
+                    // Update renderer with current map's NPCs
+                    var mapNpcs = _npcExporter.GetEntriesForMap(_currentMap.MapId);
+                    _renderer.SetNpcMarkers(mapNpcs);
+
+                    lblStatus.Text = $"Added NPC ID {npcId} ({_currentNpcResource.NpcName}) at World({_selectedCoordinate.Value.WorldX},{_selectedCoordinate.Value.WorldY})";
+                    DebugLogger.Log($"[NPC Added] ID: {npcId}, Name: {_currentNpcResource.NpcName}, Pos: World({_selectedCoordinate.Value.WorldX},{_selectedCoordinate.Value.WorldY})");
+
+                    // Trigger map redraw to show new NPC
+                    mapPanel.Invalidate();
+                }
             }
         }
 
@@ -561,7 +629,7 @@ namespace MapTool
                         DebugLogger.Log($"   Map ID: {_currentMap.MapId}");
                         DebugLogger.Log($"   Total loaded regions: {_currentMap.Regions.Count}");
 
-                        using (StreamWriter writer = new StreamWriter(dialog.FileName, false, System.Text.Encoding.UTF8))
+                        using (StreamWriter writer = new StreamWriter(dialog.FileName, false, System.Text.Encoding.GetEncoding("Windows-1252")))
                         {
                             // Write header
                             writer.WriteLine("MapId\tRegionId\tCellX\tCellY\tScriptFile\tIsLoad");
@@ -666,7 +734,7 @@ namespace MapTool
                     int totalCells = 0;
                     int regionCount = 0;
 
-                    using (StreamWriter writer = new StreamWriter(dialog.FileName, false, System.Text.Encoding.UTF8))
+                    using (StreamWriter writer = new StreamWriter(dialog.FileName, false, System.Text.Encoding.GetEncoding("Windows-1252")))
                     {
                         // Write header - MapId RegionId CellX CellY ScriptFile IsLoad format
                         writer.WriteLine("MapId\tRegionId\tCellX\tCellY\tScriptFile\tIsLoad");
@@ -720,6 +788,477 @@ namespace MapTool
                 {
                     Cursor = Cursors.Default;
                 }
+            }
+        }
+
+        // ===== NPC EVENT HANDLERS =====
+
+        // Load NPC preview button
+        private void btnLoadNpcPreview_Click(object sender, EventArgs e)
+        {
+            DebugLogger.Log("--------------------------------------------------------------------------------");
+            DebugLogger.Log("🎯 LOADING NPC PREVIEW");
+
+            string searchText = txtNpcId.Text.Trim();
+            DebugLogger.Log($"   Search input: '{searchText}'");
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                MessageBox.Show("Please enter NPC ID or Name!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DebugLogger.Log("   ✗ ERROR: Search text is empty");
+                return;
+            }
+
+            int npcId;
+            // Try parse as number first
+            if (!int.TryParse(searchText, out npcId))
+            {
+                // Not a number, search by name
+                DebugLogger.Log($"   Not a number, searching by name: '{searchText}'");
+                // Need to initialize loader first to search by name
+                // (will be done below, so we'll defer the search)
+                npcId = -1; // Mark as "search by name"
+            }
+            else
+            {
+                DebugLogger.Log($"   Parsed as NPC ID: {npcId}");
+            }
+
+            // Get client and server paths
+            string clientPath = _gameFolder;
+            string serverPath = _gameFolder;
+
+            DebugLogger.Log($"   Game folder: {_gameFolder}");
+            DebugLogger.Log($"   Mode: {(_isServerMode ? "Server" : "Client")}");
+
+            if (_isServerMode)
+            {
+                // If in server mode, try to find client folder
+                DirectoryInfo serverDir = new DirectoryInfo(_gameFolder);
+                string possibleClientPath = Path.Combine(serverDir.Parent.FullName, "Client");
+                DebugLogger.Log($"   Looking for Client folder: {possibleClientPath}");
+                if (Directory.Exists(possibleClientPath))
+                {
+                    clientPath = possibleClientPath;
+                    DebugLogger.Log($"   ✓ Found Client folder: {clientPath}");
+                }
+                else
+                {
+                    MessageBox.Show("Cannot find Client folder!\n\nNPC resources are in Client folder. Please select Client folder or switch to Client mode.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DebugLogger.Log($"   ✗ ERROR: Client folder not found at {possibleClientPath}");
+                    return;
+                }
+            }
+            else
+            {
+                // If in client mode, try to find server folder
+                DirectoryInfo clientDir = new DirectoryInfo(_gameFolder);
+                string possibleServerPath = Path.Combine(clientDir.Parent.FullName, "Server");
+                DebugLogger.Log($"   Looking for Server folder: {possibleServerPath}");
+                if (Directory.Exists(possibleServerPath))
+                {
+                    serverPath = possibleServerPath;
+                    DebugLogger.Log($"   ✓ Found Server folder: {serverPath}");
+                }
+                else
+                {
+                    MessageBox.Show("Cannot find Server folder!\n\nNpcs.txt is in Server folder. Please make sure both Client and Server folders are accessible.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DebugLogger.Log($"   ✗ ERROR: Server folder not found at {possibleServerPath}");
+                    return;
+                }
+            }
+
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+                lblStatus.Text = "Loading NPC resource...";
+
+                // Initialize NPC loader if needed
+                if (_npcLoader == null)
+                {
+                    DebugLogger.Log("   Initializing NPC Loader...");
+                    _npcLoader = new NpcLoader(clientPath, serverPath);
+                    _npcLoader.LoadMappingFiles();
+                    DebugLogger.Log($"   ✓ NPC Loader initialized");
+                    DebugLogger.Log($"      Client path: {clientPath}");
+                    DebugLogger.Log($"      Server path: {serverPath}");
+                }
+                else
+                {
+                    DebugLogger.Log("   Using existing NPC Loader instance");
+                }
+
+                // If search was by name, find the NPC ID first
+                if (npcId == -1)
+                {
+                    DebugLogger.Log($"   Searching for NPC by name: '{searchText}'");
+                    int? foundId = _npcLoader.FindNpcIdByName(searchText);
+                    if (foundId == null)
+                    {
+                        MessageBox.Show($"NPC with name '{searchText}' not found!\n\nTry entering the NPC ID instead.",
+                            "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        lblStatus.Text = $"NPC '{searchText}' not found";
+                        DebugLogger.Log($"   ✗ ERROR: No NPC found with name '{searchText}'");
+                        return;
+                    }
+                    npcId = foundId.Value;
+                    DebugLogger.Log($"   ✓ Found NPC ID {npcId} for name '{searchText}'");
+                }
+
+                // Load NPC resource by ID
+                DebugLogger.Log($"   Calling GetNpcResourceById({npcId})...");
+                _currentNpcResource = _npcLoader.GetNpcResourceById(npcId);
+                if (_currentNpcResource == null)
+                {
+                    MessageBox.Show($"NPC ID {npcId} not found in Npcs.txt!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    lblStatus.Text = $"NPC ID {npcId} not found";
+                    DebugLogger.Log($"   ✗ ERROR: GetNpcResourceById returned null for ID {npcId}");
+                    return;
+                }
+
+                DebugLogger.Log($"   ✓ NPC resource loaded: {_currentNpcResource.NpcName}");
+
+                // Auto-load default sprite (NormalStand)
+                NpcAction action = NpcAction.NormalStand;
+
+                // Load SPR file (from PAK or disk)
+                DebugLogger.Log($"   Loading sprite for action: {action}");
+                _currentNpcSprite = _npcLoader.LoadSpriteById(npcId, action);
+                if (_currentNpcSprite == null)
+                {
+                    MessageBox.Show($"Failed to load sprite for NPC ID {npcId}\n\nAction: {action}\nNPC: {_currentNpcResource.NpcName}\n\nCheck debug log for details.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    lblStatus.Text = $"Failed to load sprite";
+                    return;
+                }
+
+                // Render first frame to preview
+                _currentAnimationFrame = 0;
+                _previewZoom = 1.0f; // Reset zoom to 1.0x (no zoom)
+                if (_currentNpcSprite.FrameCount > 0)
+                {
+                    RenderNpcPreviewFrame(0);
+                }
+
+                // Update info labels - show NPC Name first, then ResType
+                string npcName = _currentNpcResource.NpcName;
+                string resType = _currentNpcResource.ResKind?.CharacterName ?? "Unknown";
+
+                // Display format: "Name" (ResType) or just ResType if no name
+                string displayName = (!string.IsNullOrEmpty(npcName) && npcName != "0")
+                    ? $"{npcName} ({resType})"
+                    : resType;
+
+                lblNpcName.Text = $"ID {npcId}: {displayName} - {_currentNpcSprite.FrameCount} frames";
+                lblFrameInfo.Text = $"Frame: 1 / {_currentNpcSprite.FrameCount}";
+                lblStatus.Text = $"Loaded NPC ID {npcId}: {displayName}";
+
+                // Enable play button if there are multiple frames
+                btnPlayAnimation.Enabled = _currentNpcSprite.FrameCount > 1;
+
+                DebugLogger.Log($"[NPC Loaded] ID: {npcId}, Name: {_currentNpcResource.NpcName}, Frames: {_currentNpcSprite.FrameCount}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load NPC:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                lblStatus.Text = "Failed to load NPC";
+                DebugLogger.Log($"ERROR loading NPC ID {npcId}: {ex}");
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+        }
+
+        // Render NPC preview frame with zoom
+        private void RenderNpcPreviewFrame(int frameIndex)
+        {
+            if (_currentNpcSprite == null || frameIndex < 0 || frameIndex >= _currentNpcSprite.FrameCount)
+                return;
+
+            try
+            {
+                // Get original frame
+                Bitmap originalFrame = SpriteLoader.FrameToBitmap(_currentNpcSprite, frameIndex);
+
+                // Apply zoom
+                int scaledWidth = (int)(originalFrame.Width * _previewZoom);
+                int scaledHeight = (int)(originalFrame.Height * _previewZoom);
+
+                Bitmap scaledFrame = new Bitmap(scaledWidth, scaledHeight);
+                using (Graphics g = Graphics.FromImage(scaledFrame))
+                {
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                    g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+                    g.DrawImage(originalFrame, 0, 0, scaledWidth, scaledHeight);
+                }
+
+                // Dispose old image
+                if (picNpcPreview.Image != null)
+                {
+                    var oldImage = picNpcPreview.Image;
+                    picNpcPreview.Image = null;
+                    oldImage.Dispose();
+                }
+
+                picNpcPreview.Image = scaledFrame;
+                originalFrame.Dispose();
+            }
+            catch (Exception ex)
+            {
+                DebugLogger.Log($"ERROR rendering preview frame: {ex.Message}");
+            }
+        }
+
+        // Preview zoom in button
+        private void btnPreviewZoomIn_Click(object sender, EventArgs e)
+        {
+            _previewZoom = Math.Min(8.0f, _previewZoom * 1.5f);
+            RenderNpcPreviewFrame(_currentAnimationFrame);
+        }
+
+        // Preview zoom out button
+        private void btnPreviewZoomOut_Click(object sender, EventArgs e)
+        {
+            _previewZoom = Math.Max(0.5f, _previewZoom / 1.5f);
+            RenderNpcPreviewFrame(_currentAnimationFrame);
+        }
+
+        // Play/Stop animation button
+        private void btnPlayAnimation_Click(object sender, EventArgs e)
+        {
+            if (_currentNpcSprite == null || _currentNpcSprite.FrameCount <= 1)
+                return;
+
+            if (animationTimer.Enabled)
+            {
+                // Stop animation
+                animationTimer.Stop();
+                btnPlayAnimation.Text = "▶ Play";
+            }
+            else
+            {
+                // Start animation
+                animationTimer.Start();
+                btnPlayAnimation.Text = "⏸ Stop";
+            }
+        }
+
+        // Animation timer tick - advance to next frame
+        private void animationTimer_Tick(object sender, EventArgs e)
+        {
+            if (_currentNpcSprite == null || _currentNpcSprite.FrameCount <= 1)
+            {
+                animationTimer.Stop();
+                return;
+            }
+
+            try
+            {
+                // Advance to next frame
+                _currentAnimationFrame = (_currentAnimationFrame + 1) % _currentNpcSprite.FrameCount;
+
+                // Render frame with zoom
+                RenderNpcPreviewFrame(_currentAnimationFrame);
+
+                // Update frame info
+                lblFrameInfo.Text = $"Frame: {_currentAnimationFrame + 1} / {_currentNpcSprite.FrameCount}";
+            }
+            catch (Exception ex)
+            {
+                animationTimer.Stop();
+                btnPlayAnimation.Text = "▶ Play";
+                DebugLogger.Log($"ERROR in animation: {ex.Message}");
+            }
+        }
+
+        // Load NPCs from server button
+        private void btnLoadNpcsFromServer_Click(object sender, EventArgs e)
+        {
+            if (_currentMap == null)
+            {
+                MessageBox.Show("Please load a map first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Ask user for Npc_Load.txt file
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                dialog.FileName = "Npc_Load.txt";
+                dialog.Title = "Load NPCs from Server";
+
+                // Try to default to server/library/maps folder
+                string defaultPath = Path.Combine(_gameFolder, "library", "maps", "Npc_Load.txt");
+                if (File.Exists(defaultPath))
+                {
+                    dialog.InitialDirectory = Path.GetDirectoryName(defaultPath);
+                    dialog.FileName = "Npc_Load.txt";
+                }
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        Cursor = Cursors.WaitCursor;
+
+                        // Import NPCs
+                        _npcExporter.ImportFromFile(dialog.FileName);
+
+                        // Filter for current map
+                        var mapNpcs = _npcExporter.GetEntriesForMap(_currentMap.MapId);
+
+                        // Update list
+                        UpdateNpcList();
+
+                        // Update renderer with NPC markers
+                        _renderer.SetNpcMarkers(mapNpcs);
+
+                        MessageBox.Show($"Loaded {_npcExporter.GetEntries().Count} NPCs total\n" +
+                                        $"{mapNpcs.Count} NPCs for map {_currentMap.MapId}",
+                            "NPCs Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        lblStatus.Text = $"Loaded {mapNpcs.Count} NPCs for map {_currentMap.MapId}";
+                        DebugLogger.Log($"[NPC Import] Loaded {_npcExporter.GetEntries().Count} NPCs, {mapNpcs.Count} for map {_currentMap.MapId}");
+
+                        // Trigger map redraw to show NPC positions
+                        mapPanel.Invalidate();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to load NPCs:\n{ex.Message}", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        DebugLogger.Log($"ERROR importing NPCs: {ex}");
+                    }
+                    finally
+                    {
+                        Cursor = Cursors.Default;
+                    }
+                }
+            }
+        }
+
+        // Update NPC entry list
+        private void UpdateNpcList()
+        {
+            lstNpcEntries.Items.Clear();
+
+            // Show only NPCs for current map
+            if (_currentMap != null)
+            {
+                var mapNpcs = _npcExporter.GetEntriesForMap(_currentMap.MapId);
+                foreach (var entry in mapNpcs)
+                {
+                    lstNpcEntries.Items.Add(entry);
+                }
+            }
+            else
+            {
+                foreach (var entry in _npcExporter.GetEntries())
+                {
+                    lstNpcEntries.Items.Add(entry);
+                }
+            }
+        }
+
+        // Extract NPC list button
+        private void btnExtractNpcList_Click(object sender, EventArgs e)
+        {
+            if (_npcExporter.GetEntries().Count == 0)
+            {
+                MessageBox.Show("No NPC entries to export!\n\nDouble-click on the map to add NPCs to the list first.",
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Ask user for save location
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                dialog.FileName = _currentMap != null ? $"Npc_Load_{_currentMap.MapId}.txt" : "Npc_Load.txt";
+                dialog.DefaultExt = "txt";
+                dialog.Title = "Export NPC List";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        _npcExporter.ExportToFile(dialog.FileName);
+
+                        string stats = _npcExporter.GetStatistics();
+                        MessageBox.Show($"Exported successfully!\n\nFile: {dialog.FileName}\n\n{stats}",
+                            "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        lblStatus.Text = $"Exported {_npcExporter.GetEntries().Count} NPCs to {Path.GetFileName(dialog.FileName)}";
+                        DebugLogger.Log($"[NPC Export] {_npcExporter.GetEntries().Count} entries to {dialog.FileName}");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to export:\n{ex.Message}", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        DebugLogger.Log($"ERROR exporting NPCs: {ex}");
+                    }
+                }
+            }
+        }
+
+        // Remove selected NPC button
+        private void btnRemoveLastNpc_Click(object sender, EventArgs e)
+        {
+            if (lstNpcEntries.SelectedIndex >= 0)
+            {
+                int selectedIndex = lstNpcEntries.SelectedIndex;
+                if (_npcExporter.RemoveAt(selectedIndex))
+                {
+                    UpdateNpcList();
+
+                    // Update renderer with current map's NPCs
+                    if (_currentMap != null)
+                    {
+                        var mapNpcs = _npcExporter.GetEntriesForMap(_currentMap.MapId);
+                        _renderer.SetNpcMarkers(mapNpcs);
+                        mapPanel.Invalidate();
+                    }
+
+                    lblStatus.Text = $"Removed NPC entry at index {selectedIndex}";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an NPC entry to remove!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        // Clear all NPCs button
+        private void btnClearNpcs_Click(object sender, EventArgs e)
+        {
+            if (_npcExporter.GetEntries().Count == 0)
+            {
+                MessageBox.Show("No NPC entries to clear!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DialogResult result = MessageBox.Show(
+                $"Are you sure you want to remove all {_npcExporter.GetEntries().Count} NPC entries?",
+                "Confirm Clear All",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                _npcExporter.Clear();
+                UpdateNpcList();
+
+                // Update renderer with current map's NPCs (should be empty now)
+                if (_currentMap != null)
+                {
+                    _renderer.SetNpcMarkers(new List<NpcEntry>());
+                    mapPanel.Invalidate();
+                }
+
+                lblStatus.Text = "Cleared all NPC entries";
             }
         }
     }

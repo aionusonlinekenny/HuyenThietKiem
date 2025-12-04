@@ -112,6 +112,17 @@ namespace MapTool.MapData
             x = regionID % 256;
             y = regionID / 256;
         }
+
+        public static void ParseLocalRegionID(int localRegionID, int minX, int minY, int width, out int x, out int y)
+        {
+            // Parse LOCAL RegionID back to region coordinates
+            // LOCAL formula: (y - minY) * width + (x - minX) = localRegionID
+            // Inverse:
+            int localY = localRegionID / width;
+            int localX = localRegionID % width;
+            x = localX + minX;
+            y = localY + minY;
+        }
     }
 
     /// <summary>
@@ -176,6 +187,19 @@ namespace MapTool.MapData
         public override string ToString()
         {
             return $"{MapId}\t{RegionId}\t{CellX}\t{CellY}\t{ScriptFile}\t{IsLoad}";
+        }
+
+        /// <summary>
+        /// Convert RegionId + Cell to World coordinates
+        /// </summary>
+        public void GetWorldCoordinates(MapConfig mapConfig, out int worldX, out int worldY)
+        {
+            // Convert local RegionID back to region X,Y
+            RegionData.ParseLocalRegionID(RegionId, mapConfig.RegionLeft, mapConfig.RegionTop,
+                mapConfig.RegionWidth, out int regionX, out int regionY);
+
+            // Convert region + cell to world
+            CoordinateConverter.RegionCellToWorld(regionX, regionY, CellX, CellY, out worldX, out worldY);
         }
     }
 }

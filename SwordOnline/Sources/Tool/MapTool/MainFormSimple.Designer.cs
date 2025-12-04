@@ -5,6 +5,9 @@ namespace MapTool
         private System.ComponentModel.IContainer components = null;
 
         // Controls
+        private System.Windows.Forms.TabControl tabMain;
+        private System.Windows.Forms.TabPage tabTrap;
+        private System.Windows.Forms.TabPage tabNPC;
         private System.Windows.Forms.Panel mapPanel;
         private System.Windows.Forms.Button btnBrowseFolder;
         private System.Windows.Forms.Button btnLoadMap;
@@ -36,17 +39,48 @@ namespace MapTool
         private System.Windows.Forms.GroupBox grpEntries;
         private System.Windows.Forms.StatusStrip statusStrip;
 
+        // NPC Controls
+        private System.Windows.Forms.GroupBox grpNpcInput;
+        private System.Windows.Forms.TextBox txtNpcId;
+        private System.Windows.Forms.TextBox txtNpcLevel;
+        private System.Windows.Forms.Button btnLoadNpcPreview;
+        private System.Windows.Forms.GroupBox grpNpcPreview;
+        private System.Windows.Forms.PictureBox picNpcPreview;
+        private System.Windows.Forms.Label lblNpcName;
+        private System.Windows.Forms.Button btnPlayAnimation;
+        private System.Windows.Forms.Label lblFrameInfo;
+        private System.Windows.Forms.Timer animationTimer;
+        private System.Windows.Forms.Button btnPreviewZoomIn;
+        private System.Windows.Forms.Button btnPreviewZoomOut;
+        private System.Windows.Forms.GroupBox grpNpcEntries;
+        private System.Windows.Forms.ListBox lstNpcEntries;
+        private System.Windows.Forms.Button btnLoadNpcsFromServer;
+        private System.Windows.Forms.Button btnExtractNpcList;
+        private System.Windows.Forms.Button btnRemoveLastNpc;
+        private System.Windows.Forms.Button btnClearNpcs;
+
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                if (animationTimer != null)
+                {
+                    animationTimer.Stop();
+                    animationTimer.Dispose();
+                }
+                if (components != null)
+                {
+                    components.Dispose();
+                }
             }
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
+            this.tabMain = new System.Windows.Forms.TabControl();
+            this.tabTrap = new System.Windows.Forms.TabPage();
+            this.tabNPC = new System.Windows.Forms.TabPage();
             this.mapPanel = new System.Windows.Forms.Panel();
             this.btnBrowseFolder = new System.Windows.Forms.Button();
             this.btnLoadMap = new System.Windows.Forms.Button();
@@ -78,11 +112,38 @@ namespace MapTool
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
 
+            // NPC Controls
+            this.grpNpcInput = new System.Windows.Forms.GroupBox();
+            this.txtNpcId = new System.Windows.Forms.TextBox();
+            this.txtNpcLevel = new System.Windows.Forms.TextBox();
+            this.btnLoadNpcPreview = new System.Windows.Forms.Button();
+            this.grpNpcPreview = new System.Windows.Forms.GroupBox();
+            this.picNpcPreview = new System.Windows.Forms.PictureBox();
+            this.lblNpcName = new System.Windows.Forms.Label();
+            this.btnPlayAnimation = new System.Windows.Forms.Button();
+            this.lblFrameInfo = new System.Windows.Forms.Label();
+            this.animationTimer = new System.Windows.Forms.Timer();
+            this.btnPreviewZoomIn = new System.Windows.Forms.Button();
+            this.btnPreviewZoomOut = new System.Windows.Forms.Button();
+            this.grpNpcEntries = new System.Windows.Forms.GroupBox();
+            this.lstNpcEntries = new System.Windows.Forms.ListBox();
+            this.btnLoadNpcsFromServer = new System.Windows.Forms.Button();
+            this.btnExtractNpcList = new System.Windows.Forms.Button();
+            this.btnRemoveLastNpc = new System.Windows.Forms.Button();
+            this.btnClearNpcs = new System.Windows.Forms.Button();
+
+            this.tabMain.SuspendLayout();
+            this.tabTrap.SuspendLayout();
+            this.tabNPC.SuspendLayout();
             this.grpGameFolder.SuspendLayout();
             this.grpMapLoad.SuspendLayout();
             this.grpMapInfo.SuspendLayout();
             this.grpCoordinates.SuspendLayout();
             this.grpEntries.SuspendLayout();
+            this.grpNpcInput.SuspendLayout();
+            this.grpNpcPreview.SuspendLayout();
+            this.grpNpcEntries.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picNpcPreview)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
 
@@ -106,9 +167,9 @@ namespace MapTool
             this.grpGameFolder.Controls.Add(this.btnBrowseFolder);
             this.grpGameFolder.Controls.Add(this.rdoServer);
             this.grpGameFolder.Controls.Add(this.rdoClient);
-            this.grpGameFolder.Location = new System.Drawing.Point(920, 12);
+            this.grpGameFolder.Location = new System.Drawing.Point(6, 6);
             this.grpGameFolder.Name = "grpGameFolder";
-            this.grpGameFolder.Size = new System.Drawing.Size(340, 100);
+            this.grpGameFolder.Size = new System.Drawing.Size(330, 100);
             this.grpGameFolder.TabIndex = 1;
             this.grpGameFolder.TabStop = false;
             this.grpGameFolder.Text = "1. Select Game Folder";
@@ -149,9 +210,9 @@ namespace MapTool
             this.grpMapLoad.Controls.Add(new System.Windows.Forms.Label { Text = "Map ID:", Location = new System.Drawing.Point(10, 30), AutoSize = true });
             this.grpMapLoad.Controls.Add(this.txtMapId);
             this.grpMapLoad.Controls.Add(this.btnLoadMap);
-            this.grpMapLoad.Location = new System.Drawing.Point(920, 118);
+            this.grpMapLoad.Location = new System.Drawing.Point(6, 112);
             this.grpMapLoad.Name = "grpMapLoad";
-            this.grpMapLoad.Size = new System.Drawing.Size(340, 70);
+            this.grpMapLoad.Size = new System.Drawing.Size(330, 70);
             this.grpMapLoad.TabIndex = 2;
             this.grpMapLoad.TabStop = false;
             this.grpMapLoad.Text = "2. Load Map";
@@ -167,15 +228,15 @@ namespace MapTool
             this.btnLoadMap.Size = new System.Drawing.Size(150, 28);
             this.btnLoadMap.TabIndex = 1;
             this.btnLoadMap.Text = "Load Map";
-            this.btnLoadMap.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnLoadMap.Font = new System.Drawing.Font(".VnArial", 9F, System.Drawing.FontStyle.Bold);
             this.btnLoadMap.UseVisualStyleBackColor = true;
             this.btnLoadMap.Click += new System.EventHandler(this.btnLoadMap_Click);
 
             // grpMapInfo
             this.grpMapInfo.Controls.Add(this.lblMapInfo);
-            this.grpMapInfo.Location = new System.Drawing.Point(920, 194);
+            this.grpMapInfo.Location = new System.Drawing.Point(6, 188);
             this.grpMapInfo.Name = "grpMapInfo";
-            this.grpMapInfo.Size = new System.Drawing.Size(340, 140);
+            this.grpMapInfo.Size = new System.Drawing.Size(330, 140);
             this.grpMapInfo.TabIndex = 3;
             this.grpMapInfo.TabStop = false;
             this.grpMapInfo.Text = "Map Information";
@@ -187,9 +248,9 @@ namespace MapTool
             this.lblMapInfo.Text = "No map loaded";
 
             // grpCoordinates
-            this.grpCoordinates.Location = new System.Drawing.Point(920, 340);
+            this.grpCoordinates.Location = new System.Drawing.Point(6, 334);
             this.grpCoordinates.Name = "grpCoordinates";
-            this.grpCoordinates.Size = new System.Drawing.Size(340, 180);
+            this.grpCoordinates.Size = new System.Drawing.Size(330, 180);
             this.grpCoordinates.TabIndex = 4;
             this.grpCoordinates.TabStop = false;
             this.grpCoordinates.Text = "Selected Coordinates";
@@ -269,9 +330,9 @@ namespace MapTool
             this.grpEntries.Controls.Add(this.btnExtractAllRegions);
             this.grpEntries.Controls.Add(this.btnClear);
             this.grpEntries.Controls.Add(this.btnRemoveLast);
-            this.grpEntries.Location = new System.Drawing.Point(920, 526);
+            this.grpEntries.Location = new System.Drawing.Point(6, 520);
             this.grpEntries.Name = "grpEntries";
-            this.grpEntries.Size = new System.Drawing.Size(340, 160);
+            this.grpEntries.Size = new System.Drawing.Size(330, 190);
             this.grpEntries.TabIndex = 5;
             this.grpEntries.TabStop = false;
             this.grpEntries.Text = "Trap Entries (Double-click map to add)";
@@ -280,26 +341,26 @@ namespace MapTool
             this.lstEntries.HorizontalScrollbar = true;
             this.lstEntries.Location = new System.Drawing.Point(10, 22);
             this.lstEntries.Name = "lstEntries";
-            this.lstEntries.Size = new System.Drawing.Size(320, 55);
+            this.lstEntries.Size = new System.Drawing.Size(310, 85);
             this.lstEntries.TabIndex = 0;
 
-            this.btnExtractAllRegions.Location = new System.Drawing.Point(10, 85);
+            this.btnExtractAllRegions.Location = new System.Drawing.Point(10, 115);
             this.btnExtractAllRegions.Name = "btnExtractAllRegions";
-            this.btnExtractAllRegions.Size = new System.Drawing.Size(320, 25);
+            this.btnExtractAllRegions.Size = new System.Drawing.Size(310, 25);
             this.btnExtractAllRegions.TabIndex = 4;
             this.btnExtractAllRegions.Text = "Extract All Loaded Regions";
             this.btnExtractAllRegions.UseVisualStyleBackColor = true;
             this.btnExtractAllRegions.Click += new System.EventHandler(this.btnExtractAllRegions_Click);
 
-            this.btnExport.Location = new System.Drawing.Point(10, 118);
+            this.btnExport.Location = new System.Drawing.Point(10, 148);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(100, 25);
+            this.btnExport.Size = new System.Drawing.Size(95, 25);
             this.btnExport.TabIndex = 1;
             this.btnExport.Text = "Export to File";
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
 
-            this.btnRemoveLast.Location = new System.Drawing.Point(120, 118);
+            this.btnRemoveLast.Location = new System.Drawing.Point(110, 148);
             this.btnRemoveLast.Name = "btnRemoveLast";
             this.btnRemoveLast.Size = new System.Drawing.Size(100, 25);
             this.btnRemoveLast.TabIndex = 2;
@@ -307,15 +368,171 @@ namespace MapTool
             this.btnRemoveLast.UseVisualStyleBackColor = true;
             this.btnRemoveLast.Click += new System.EventHandler(this.btnRemoveLast_Click);
 
-            this.btnClear.Location = new System.Drawing.Point(230, 118);
+            this.btnClear.Location = new System.Drawing.Point(215, 148);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(100, 25);
+            this.btnClear.Size = new System.Drawing.Size(105, 25);
             this.btnClear.TabIndex = 3;
             this.btnClear.Text = "Clear All";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
 
-            // Zoom buttons
+            // ==== NPC CONTROLS ====
+
+            // grpNpcInput
+            this.grpNpcInput.Controls.Add(new System.Windows.Forms.Label { Text = "NPC ID:", Location = new System.Drawing.Point(10, 25), AutoSize = true });
+            this.grpNpcInput.Controls.Add(this.txtNpcId);
+            this.grpNpcInput.Controls.Add(new System.Windows.Forms.Label { Text = "Level:", Location = new System.Drawing.Point(10, 55), AutoSize = true });
+            this.grpNpcInput.Controls.Add(this.txtNpcLevel);
+            this.grpNpcInput.Controls.Add(this.btnLoadNpcPreview);
+            this.grpNpcInput.Location = new System.Drawing.Point(6, 6);
+            this.grpNpcInput.Name = "grpNpcInput";
+            this.grpNpcInput.Size = new System.Drawing.Size(330, 120);
+            this.grpNpcInput.TabIndex = 0;
+            this.grpNpcInput.TabStop = false;
+            this.grpNpcInput.Text = "NPC Selection";
+
+            this.txtNpcId.Location = new System.Drawing.Point(70, 22);
+            this.txtNpcId.Name = "txtNpcId";
+            this.txtNpcId.Size = new System.Drawing.Size(250, 23);
+            this.txtNpcId.TabIndex = 0;
+            this.txtNpcId.Text = "1";
+
+            this.txtNpcLevel.Location = new System.Drawing.Point(70, 52);
+            this.txtNpcLevel.Name = "txtNpcLevel";
+            this.txtNpcLevel.Size = new System.Drawing.Size(250, 23);
+            this.txtNpcLevel.TabIndex = 1;
+            this.txtNpcLevel.Text = "1";
+
+            this.btnLoadNpcPreview.Location = new System.Drawing.Point(70, 82);
+            this.btnLoadNpcPreview.Name = "btnLoadNpcPreview";
+            this.btnLoadNpcPreview.Size = new System.Drawing.Size(250, 28);
+            this.btnLoadNpcPreview.TabIndex = 2;
+            this.btnLoadNpcPreview.Text = "Load NPC Preview";
+            this.btnLoadNpcPreview.Font = new System.Drawing.Font(".VnArial", 9F, System.Drawing.FontStyle.Bold);
+            this.btnLoadNpcPreview.UseVisualStyleBackColor = true;
+            this.btnLoadNpcPreview.Click += new System.EventHandler(this.btnLoadNpcPreview_Click);
+
+            // grpNpcPreview
+            this.grpNpcPreview.Controls.Add(this.picNpcPreview);
+            this.grpNpcPreview.Controls.Add(this.lblNpcName);
+            this.grpNpcPreview.Controls.Add(this.btnPlayAnimation);
+            this.grpNpcPreview.Controls.Add(this.lblFrameInfo);
+            this.grpNpcPreview.Controls.Add(this.btnPreviewZoomIn);
+            this.grpNpcPreview.Controls.Add(this.btnPreviewZoomOut);
+            this.grpNpcPreview.Location = new System.Drawing.Point(6, 132);
+            this.grpNpcPreview.Name = "grpNpcPreview";
+            this.grpNpcPreview.Size = new System.Drawing.Size(330, 280);
+            this.grpNpcPreview.TabIndex = 1;
+            this.grpNpcPreview.TabStop = false;
+            this.grpNpcPreview.Text = "NPC Preview";
+
+            this.picNpcPreview.BackColor = System.Drawing.SystemColors.Control;
+            this.picNpcPreview.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.picNpcPreview.Location = new System.Drawing.Point(10, 70);
+            this.picNpcPreview.Name = "picNpcPreview";
+            this.picNpcPreview.Size = new System.Drawing.Size(310, 165);
+            this.picNpcPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picNpcPreview.TabIndex = 0;
+            this.picNpcPreview.TabStop = false;
+
+            this.lblNpcName.Location = new System.Drawing.Point(10, 20);
+            this.lblNpcName.Name = "lblNpcName";
+            this.lblNpcName.Size = new System.Drawing.Size(310, 20);
+            this.lblNpcName.TabIndex = 1;
+            this.lblNpcName.Text = "No NPC loaded";
+            this.lblNpcName.Font = new System.Drawing.Font(".VnArial", 9F, System.Drawing.FontStyle.Bold);
+
+            this.lblFrameInfo.Location = new System.Drawing.Point(10, 45);
+            this.lblFrameInfo.Name = "lblFrameInfo";
+            this.lblFrameInfo.Size = new System.Drawing.Size(200, 20);
+            this.lblFrameInfo.TabIndex = 2;
+            this.lblFrameInfo.Text = "Frame: 0 / 0";
+
+            this.btnPlayAnimation.Location = new System.Drawing.Point(220, 42);
+            this.btnPlayAnimation.Name = "btnPlayAnimation";
+            this.btnPlayAnimation.Size = new System.Drawing.Size(100, 25);
+            this.btnPlayAnimation.TabIndex = 3;
+            this.btnPlayAnimation.Text = "▶ Play";
+            this.btnPlayAnimation.UseVisualStyleBackColor = true;
+            this.btnPlayAnimation.Enabled = false;
+            this.btnPlayAnimation.Click += new System.EventHandler(this.btnPlayAnimation_Click);
+
+            // animationTimer
+            this.animationTimer.Interval = 100;  // 100ms = 10 FPS
+            this.animationTimer.Tick += new System.EventHandler(this.animationTimer_Tick);
+
+            // btnPreviewZoomIn
+            this.btnPreviewZoomIn.Location = new System.Drawing.Point(10, 245);
+            this.btnPreviewZoomIn.Name = "btnPreviewZoomIn";
+            this.btnPreviewZoomIn.Size = new System.Drawing.Size(70, 25);
+            this.btnPreviewZoomIn.TabIndex = 4;
+            this.btnPreviewZoomIn.Text = "Zoom +";
+            this.btnPreviewZoomIn.UseVisualStyleBackColor = true;
+            this.btnPreviewZoomIn.Click += new System.EventHandler(this.btnPreviewZoomIn_Click);
+
+            // btnPreviewZoomOut
+            this.btnPreviewZoomOut.Location = new System.Drawing.Point(85, 245);
+            this.btnPreviewZoomOut.Name = "btnPreviewZoomOut";
+            this.btnPreviewZoomOut.Size = new System.Drawing.Size(70, 25);
+            this.btnPreviewZoomOut.TabIndex = 5;
+            this.btnPreviewZoomOut.Text = "Zoom -";
+            this.btnPreviewZoomOut.UseVisualStyleBackColor = true;
+            this.btnPreviewZoomOut.Click += new System.EventHandler(this.btnPreviewZoomOut_Click);
+
+            // grpNpcEntries
+            this.grpNpcEntries.Controls.Add(this.lstNpcEntries);
+            this.grpNpcEntries.Controls.Add(this.btnLoadNpcsFromServer);
+            this.grpNpcEntries.Controls.Add(this.btnExtractNpcList);
+            this.grpNpcEntries.Controls.Add(this.btnRemoveLastNpc);
+            this.grpNpcEntries.Controls.Add(this.btnClearNpcs);
+            this.grpNpcEntries.Location = new System.Drawing.Point(6, 418);
+            this.grpNpcEntries.Name = "grpNpcEntries";
+            this.grpNpcEntries.Size = new System.Drawing.Size(330, 320);
+            this.grpNpcEntries.TabIndex = 2;
+            this.grpNpcEntries.TabStop = false;
+            this.grpNpcEntries.Text = "NPC Entries (Double-click map to add)";
+
+            this.lstNpcEntries.FormattingEnabled = true;
+            this.lstNpcEntries.HorizontalScrollbar = true;
+            this.lstNpcEntries.Location = new System.Drawing.Point(10, 50);
+            this.lstNpcEntries.Name = "lstNpcEntries";
+            this.lstNpcEntries.Size = new System.Drawing.Size(310, 210);
+            this.lstNpcEntries.TabIndex = 0;
+
+            this.btnLoadNpcsFromServer.Location = new System.Drawing.Point(10, 20);
+            this.btnLoadNpcsFromServer.Name = "btnLoadNpcsFromServer";
+            this.btnLoadNpcsFromServer.Size = new System.Drawing.Size(310, 25);
+            this.btnLoadNpcsFromServer.TabIndex = 1;
+            this.btnLoadNpcsFromServer.Text = "Load NPCs from Npc_Load.txt";
+            this.btnLoadNpcsFromServer.UseVisualStyleBackColor = true;
+            this.btnLoadNpcsFromServer.Click += new System.EventHandler(this.btnLoadNpcsFromServer_Click);
+
+            this.btnExtractNpcList.Location = new System.Drawing.Point(10, 233);
+            this.btnExtractNpcList.Name = "btnExtractNpcList";
+            this.btnExtractNpcList.Size = new System.Drawing.Size(310, 28);
+            this.btnExtractNpcList.TabIndex = 2;
+            this.btnExtractNpcList.Text = "Save NPCs to File";
+            this.btnExtractNpcList.Font = new System.Drawing.Font(".VnArial", 9F, System.Drawing.FontStyle.Bold);
+            this.btnExtractNpcList.UseVisualStyleBackColor = true;
+            this.btnExtractNpcList.Click += new System.EventHandler(this.btnExtractNpcList_Click);
+
+            this.btnRemoveLastNpc.Location = new System.Drawing.Point(10, 268);
+            this.btnRemoveLastNpc.Name = "btnRemoveLastNpc";
+            this.btnRemoveLastNpc.Size = new System.Drawing.Size(150, 25);
+            this.btnRemoveLastNpc.TabIndex = 3;
+            this.btnRemoveLastNpc.Text = "Remove Selected";
+            this.btnRemoveLastNpc.UseVisualStyleBackColor = true;
+            this.btnRemoveLastNpc.Click += new System.EventHandler(this.btnRemoveLastNpc_Click);
+
+            this.btnClearNpcs.Location = new System.Drawing.Point(165, 268);
+            this.btnClearNpcs.Name = "btnClearNpcs";
+            this.btnClearNpcs.Size = new System.Drawing.Size(155, 25);
+            this.btnClearNpcs.TabIndex = 4;
+            this.btnClearNpcs.Text = "Clear All";
+            this.btnClearNpcs.UseVisualStyleBackColor = true;
+            this.btnClearNpcs.Click += new System.EventHandler(this.btnClearNpcs_Click);
+
+            // Zoom buttons (shared, outside tabs)
             this.btnZoomIn.Location = new System.Drawing.Point(12, 718);
             this.btnZoomIn.Name = "btnZoomIn";
             this.btnZoomIn.Size = new System.Drawing.Size(75, 28);
@@ -345,25 +562,60 @@ namespace MapTool
             this.lblStatus.Text = "Ready";
             this.statusStrip.Items.Add(this.lblStatus);
 
+            // tabMain - positioned on the right side
+            this.tabMain.Controls.Add(this.tabTrap);
+            this.tabMain.Controls.Add(this.tabNPC);
+            this.tabMain.Location = new System.Drawing.Point(920, 0);
+            this.tabMain.Name = "tabMain";
+            this.tabMain.SelectedIndex = 0;
+            this.tabMain.Size = new System.Drawing.Size(352, 755);
+            this.tabMain.TabIndex = 0;
+
+            // tabTrap - trap controls only (map panel is shared outside)
+            this.tabTrap.BackColor = System.Drawing.SystemColors.Control;
+            this.tabTrap.Controls.Add(this.grpGameFolder);
+            this.tabTrap.Controls.Add(this.grpMapLoad);
+            this.tabTrap.Controls.Add(this.grpMapInfo);
+            this.tabTrap.Controls.Add(this.grpCoordinates);
+            this.tabTrap.Controls.Add(this.grpEntries);
+            this.tabTrap.Location = new System.Drawing.Point(4, 24);
+            this.tabTrap.Name = "tabTrap";
+            this.tabTrap.Padding = new System.Windows.Forms.Padding(3);
+            this.tabTrap.Size = new System.Drawing.Size(344, 727);
+            this.tabTrap.TabIndex = 0;
+            this.tabTrap.Text = "Add Trap";
+
+            // tabNPC - NPC controls
+            this.tabNPC.BackColor = System.Drawing.SystemColors.Control;
+            this.tabNPC.Controls.Add(this.grpNpcInput);
+            this.tabNPC.Controls.Add(this.grpNpcPreview);
+            this.tabNPC.Controls.Add(this.grpNpcEntries);
+            this.tabNPC.Location = new System.Drawing.Point(4, 24);
+            this.tabNPC.Name = "tabNPC";
+            this.tabNPC.Padding = new System.Windows.Forms.Padding(3);
+            this.tabNPC.Size = new System.Drawing.Size(344, 727);
+            this.tabNPC.TabIndex = 1;
+            this.tabNPC.Text = "Add NPC";
+
             // MainFormSimple
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1272, 777);
-            this.Controls.Add(this.statusStrip);
-            this.Controls.Add(this.btnZoomOut);
-            this.Controls.Add(this.btnZoomIn);
-            this.Controls.Add(this.grpEntries);
-            this.Controls.Add(this.grpCoordinates);
-            this.Controls.Add(this.grpMapInfo);
-            this.Controls.Add(this.grpMapLoad);
-            this.Controls.Add(this.grpGameFolder);
             this.Controls.Add(this.mapPanel);
+            this.Controls.Add(this.btnZoomIn);
+            this.Controls.Add(this.btnZoomOut);
+            this.Controls.Add(this.tabMain);
+            this.Controls.Add(this.statusStrip);
+            this.Font = new System.Drawing.Font(".VnArial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainFormSimple";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Simple Map Tool - Auto Load";
 
+            this.tabMain.ResumeLayout(false);
+            this.tabTrap.ResumeLayout(false);
+            this.tabNPC.ResumeLayout(false);
             this.grpGameFolder.ResumeLayout(false);
             this.grpGameFolder.PerformLayout();
             this.grpMapLoad.ResumeLayout(false);
@@ -372,6 +624,11 @@ namespace MapTool
             this.grpCoordinates.ResumeLayout(false);
             this.grpCoordinates.PerformLayout();
             this.grpEntries.ResumeLayout(false);
+            this.grpNpcInput.ResumeLayout(false);
+            this.grpNpcInput.PerformLayout();
+            this.grpNpcPreview.ResumeLayout(false);
+            this.grpNpcEntries.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picNpcPreview)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);

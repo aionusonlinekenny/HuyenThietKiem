@@ -1,0 +1,5 @@
+TypeName	SellID
+Sù kiÖn	24
+B¶o th¹ch	25
+Th­ tÞch	26
+MÆc n¹	27

@@ -217,7 +217,7 @@ namespace MapTool
                     scriptFile = $@"\script\maps\trap\{_currentMapId}\1.lua";
                 }
 
-                _exporter.AddEntry(_currentMapId, _selectedCoordinate.Value, scriptFile);
+                _exporter.AddEntry(_currentMapId, _selectedCoordinate.Value, _currentMapConfig, scriptFile);
                 UpdateEntryList();
                 UpdateStatistics();
 

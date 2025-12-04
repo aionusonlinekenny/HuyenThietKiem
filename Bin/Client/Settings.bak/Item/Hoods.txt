@@ -1,0 +1,77 @@
+Ãû³Æ	µÀ¾ßÖÖÀà	¾ßÌåÀà±ğ	ÏêÏ¸Àà±ğ	¶¯»­ÎÄ¼şÃû	¶ÔÓ¦Îï¼şË÷Òı	¿í¶È	¸ß¶È	ËµÃ÷ÎÄ×Ö	ÎåĞĞÊôĞÔ	¼Û¸ñ	µÈ¼¶	»ù´¡ÊôĞÔ1ÀàĞÍ	»ù´¡ÊôĞÔ1×îĞ¡Öµ	»ù´¡ÊôĞÔ1×î´óÖµ	»ù´¡ÊôĞÔ2ÀàĞÍ	»ù´¡ÊôĞÔ2×îĞ¡Öµ	»ù´¡ÊôĞÔ2×î´óÖµ	»ù´¡ÊôĞÔ3ÀàĞÍ	»ù´¡ÊôĞÔ3×îĞ¡Öµ	»ù´¡ÊôĞÔ3×î´óÖµ	»ù´¡ÊôĞÔ4ÀàĞÍ	»ù´¡ÊôĞÔ4×îĞ¡Öµ	»ù´¡ÊôĞÔ4×î´óÖµ	»ù´¡ÊôĞÔ5ÀàĞÍ	»ù´¡ÊôĞÔ5×îĞ¡Öµ	»ù´¡ÊôĞÔ5×î´óÖµ	»ù´¡ÊôĞÔ6ÀàĞÍ	»ù´¡ÊôĞÔ6×îĞ¡Öµ	»ù´¡ÊôĞÔ6×î´óÖµ	»ù´¡ÊôĞÔ7ÀàĞÍ	»ù´¡ÊôĞÔ7×îĞ¡Öµ	»ù´¡ÊôĞÔ7×î´óÖµ	ĞèÇóÊôĞÔ1ÀàĞÍ	ĞèÇóÊôĞÔ1ÊıÖµ	ĞèÇóÊôĞÔ2ÀàĞÍ	ĞèÇóÊôĞÔ2ÊıÖµ	ĞèÇóÊôĞÔ3ÀàĞÍ	ĞèÇóÊôĞÔ3ÊıÖµ	ĞèÇóÊôĞÔ4ÀàĞÍ	ĞèÇóÊôĞÔ4ÊıÖµ	ĞèÇóÊôĞÔ5ÀàĞÍ	ĞèÇóÊôĞÔ5ÊıÖµ	ĞèÇóÊôĞÔ6ÀàĞÍ	ĞèÇóÊôĞÔ6ÊıÖµ
+Sa Di-ngo¹i trang	0	15	0	\spr\item\equip\cap\obj-ma-cap01-1.spr	41	2	2	§ai cña c¸c tiÓu Sa Di th­êng ®eo		100	1																						38	0										
+Phï Dung-ngo¹i trang	0	15	1	\spr\item\equip\cap\obj-ma-cap02-3.spr	41	2	2	C¸c T¨ng L÷ trung ®¼ng th­êng ®eo, lµm b»ng thø lôa th­îng ®¼ng		100	1																						38	0										
+Tú L«-ngo¹i trang	0	15	2	\spr\item\equip\cap\obj-ma-cap03-3.spr	41	2	2	C¸c T¨ng L÷ th­îng ®¼ng th­êng ®eo, trªn cã Ên PhËt, §­êng T¨ng th­êng ®eo nã		100	1																						38	0										
+Cµn Kh«n-ngo¹i trang	0	15	3	\spr\item\equip\cap\obj-ma-cap04-3.spr	41	2	2	Lo¹i ®ai C¸c §¹o sÜ th­êng ®eo		100	1																						38	0										
+B¸t Qu¸i-ngo¹i trang	0	15	4	\spr\item\equip\cap\obj-ma-cap05-3.spr	41	2	2	Lo¹i kh¨n §¹o sÜ th­êng quÊn, lµm b»ng lôa th­îng ®¼ng		100	1																						38	0										
+Th­îng Thanh-ngo¹i trang	0	15	5	\spr\item\equip\cap\obj-ma-cap06-3.spr	41	2	2	ChØ cã nh÷ng ®¹o sÜ nµo ®· tu luyÖn ®Õn mét tr×nh ®é nhÊt ®Şnh th× míi cã thÓ ®éi		100	1																						38	0										
+Tróc L¹p-ngo¹i trang	0	15	6	\spr\item\equip\cap\obj-ma-cap07-3.spr	41	2	2	Lo¹i mò th­êng thÊy ë vïng Giang Nam		100	1																						38	0										
+Nh©n B×-ngo¹i trang	0	15	7	\spr\item\equip\cap\obj-ma-cap08-3.spr	41	2	2	Nghe nãi sau khi giÕt ng­êi th× lét da lµm ¸o, o¸n khİ cuån cuén		100	1																						38	0										
+Tu La-ngo¹i trang	0	15	8	\spr\item\equip\cap\obj-ma-cap09-3.spr	41	2	2	Lµ mét dŞ vËt trªn thÕ gian, s¸t khİ táa ra ngïn ngôt		100	1																						38	0										
+Phi YÕn-ngo¹i trang	0	15	9	\spr\item\equip\cap\obj-ma-cap10-3.spr	41	2	2	Lo¹i mò rÊt ®Ñp, danh sÜ ­a dïng		100	1																						38	0										
+Anh L¹c-ngo¹i trang	0	15	10	\spr\item\equip\cap\obj-ma-cap11-3.spr	41	2	2	Lo¹i mò rÊt ®Ñp, ®­îc kh¶m b»ng cá Anh L¹c, c¸c v¨n nh©n Nho sÜ th­êng thİch ®éi		100	1																						38	0										
+Th«ng Thiªn-ngo¹i trang	0	15	11	\spr\item\equip\cap\obj-ma-cap12-3.spr	41	2	2	Lµ lo¹i mò cao quı, chØ cã Hoµng Th­îng míi ®­îc ®éi		100	1																						38	0										
+ThiÕt Kh«i-ngo¹i trang	0	15	12	\spr\item\equip\cap\obj-ma-cap13-3.spr	41	2	2	Lo¹i kh«i lµm b»ng tinh thĞp th­îng ®¼ng		100	1																						38	0										
+Ng©n Kh«i-ngo¹i trang	0	15	13	\spr\item\equip\cap\obj-ma-cap14-3.spr	41	2	2	Lo¹i kh«i b»ng b¹c nguyªn chÊt		100	1																						38	0										
+YÓm NhËt-ngo¹i trang	0	15	14	\spr\item\equip\cap\obj-ma-cap15-3.spr	41	2	2	Lo¹i kh«i gi¸p b»ng vµng, kh¶ n¨ng phßng ngù rÊt cao		100	1																						38	0										
+Ph¸ Bè-ngo¹i trang	0	15	15	\spr\item\equip\cap\obj-ma-cap16-3.spr	41	2	2	Lo¹i kh¨n nh÷ng ng­êi an mµy th­êng quÊn trªn ®Çu, rÊt r¸ch n¸t		100	1																						38	0
+Song TÇng-ngo¹i trang	0	15	16	\spr\item\equip\cap\obj-ma-cap17-3.spr	41	2	2	Lo¹i vßng ®eo cã kh¶m nhiÒu ngäc L­u Ly, cã hai líp		100	1																						38	0
+Trİch Tinh-ngo¹i trang	0	15	17	\spr\item\equip\cap\obj-ma-cap18-3.spr	41	2	2	Lo¹i vßng ®eo cã kh¶m nhiÒu ngäc L­u Ly, b¶o vËt cña C¸i Bang		100	1																						38	0
+Bè C©n-ngo¹i trang	0	15	18	\spr\item\equip\cap\obj-ma-cap19-1.spr	41	2	2	Lo¹i kh¨n th­êng ®éi cña nh÷ng ng­êi b×nh d©n		100	1																						38	0
+Chu Khëi-ngo¹i trang	0	15	19	\spr\item\equip\cap\obj-ma-cap20-3.spr	41	2	2	Lo¹i mò dÖt b»ng t¬ th­îng phÈm, kiÓu d¸ng rÊt ®Ñp		100	1																						38	0
+¤ Tµm-ngo¹i trang	0	15	20	\spr\item\equip\cap\obj-ma-cap21-3.spr	41	2	2	Lo¹i mò dÖt b»ng t¬ ¤ TÇm th­îng phÈm, phong c¸ch quı ph¸i		100	1																						38	0
+Thİch Ni-ngo¹i trang	0	15	21	\spr\item\equip\cap\obj-fm-cap01-1.spr	41	2	2	Lo¹i mò c¸c ni c« th­êng ®éi		100	1																						38	1
+Thiªn Thanh-ngo¹i trang	0	15	22	\spr\item\equip\cap\obj-fm-cap02-3.spr	41	2	2	Lo¹i mò mµu xanh cña PhËt gia, thanh tho¸t cao quı		100	1																						38	1
+Xİch ¶nh-ngo¹i trang	0	15	23	\spr\item\equip\cap\obj-fm-cap03-3.spr	41	2	2	Lo¹i mò cao cÊp cña PhËt gia, dïng trong nh÷ng lóc nghiªm trang		100	1																						38	1
+Ng©n Thoa-ngo¹i trang	0	15	24	\spr\item\equip\cap\obj-fm-cap04-3.spr	41	2	2	Lo¹i tr©m cµi tãc b»ng b¹c		100	1																						38	1
+Ng©n Hoµn-ngo¹i trang	0	15	25	\spr\item\equip\cap\obj-fm-cap05-3.spr	41	2	2	Lo¹i tr©m cµi tãc b»ng b¹c		100	1																						38	1
+Th¸i cùc-ngo¹i trang	0	15	26	\spr\item\equip\cap\obj-fm-cap06-3.spr	41	2	2	Lµ Mét lo¹i mò cña c¸c ®¹o sÜ th­êng ®éi, cã thÓ trõ yªu diÖt qu¸i		100	1																						38	1
+B× Trô-ngo¹i trang	0	15	27	\spr\item\equip\cap\obj-fm-cap07-3.spr	41	2	2	Lo¹i mò b¶o hé ®­îc tinh chÕ tõ nh÷ng lo¹i da thó, cã kh¶ n¨ng tÊn c«ng vµ phßng ngù rÊt tèt		100	1																						38	1
+Thó Cèt-ngo¹i trang	0	15	28	\spr\item\equip\cap\obj-fm-cap08-3.spr	41	2	2	Lo¹i Tr©m lµm b»ng x­¬ng thó		100	1																						38	1
+HuyÒn Tª-ngo¹i trang	0	15	29	\spr\item\equip\cap\obj-fm-cap09-3.spr	41	2	2	Lo¹i mò phßng hé th­îng ®¼ng b»ng da tª gi¸c, cùc kú quı hiÕm		100	1																						38	1
+Th« ThiÕt-ngo¹i trang	0	15	30	\spr\item\equip\cap\obj-fm-cap10-3.spr	41	2	2	Lo¹i mò b¶o hé tinh chÕ tõ thĞp, kh¶ n¨ng phßng ngù rÊt cao		100	1																						38	1
+Kª VÜ-ngo¹i trang	0	15	31	\spr\item\equip\cap\obj-fm-cap11-3.spr	41	2	2	Lo¹i thoa ®­îc lµm tõ ®u«i chim, rÊt n÷ tİnh		100	1																						38	1
+Long HuyÕt-ngo¹i trang	0	15	32	\spr\item\equip\cap\obj-fm-cap12-3.spr	41	2	2	Lo¹i mò b¶o hé tinhchÕ tõ vµng cùc kú quı hiÕm		100	1																						38	1
+Viªn M·o-ngo¹i trang	0	15	33	\spr\item\equip\cap\obj-fm-cap13-3.spr	41	2	2	Mét lo¹i mò th«ng th­êng		100	1																						38	1
+Song Phông-ngo¹i trang	0	15	34	\spr\item\equip\cap\obj-fm-cap14-3.spr	41	2	2	Lo¹i mò b¶o hé tinh chÕ tõ vµng, trïm kİn c¶ ®Çu		100	1																						38	1
+Long L©n-ngo¹i trang	0	15	35	\spr\item\equip\cap\obj-fm-cap15-3.spr	41	2	2	Kh«i ph¸t ra hµo quang nh­ rång l©n uèn l­în, Võa nh×n ®· biÕt ngay lµ mét phÈm vËt cùc kú quı hiÕm		100	1																						38	1
+Bè M·o-ngo¹i trang	0	15	36	\spr\item\equip\cap\obj-fm-cap16-3.spr	41	2	2	Lo¹i mò th«ng th­êng		100	1																						38	1
+L­u Ly-ngo¹i trang	0	15	37	\spr\item\equip\cap\obj-fm-cap17-3.spr	41	2	2	Thoa lµm tõ ngäc L­u Ly, cùc kú quı hiÕm		100	1																						38	1
+Thanh Tinh-ngo¹i trang	0	15	38	\spr\item\equip\cap\obj-fm-cap18-3.spr	41	2	2	Thoa cã kh¶m thñy tinh xanh, ¸nh s¸ng huyÒn ¶o, cùc kú quı hiÕm		100	1																						38	1
+Hoµng Bè-ngo¹i trang	0	15	39	\spr\item\equip\cap\obj-fm-cap19-1.spr	41	2	2	Mét lo¹i ®ai th¾t th«ng th­êng		100	1																						38	1
+Thanh L­u Ly-ngo¹i trang	0	15	40	\spr\item\equip\cap\obj-fm-cap20-3.spr	41	2	2	Lo¹i tr©m cµi b»ng L­u Ly pha lÉn nhiÒu lo¹i b¶o th¹ch		100	1																						38	1
+Kim Phông-ngo¹i trang	0	15	41	\spr\item\equip\cap\obj-fm-cap21-3.spr	41	2	2	Lo¹i kh«i gi¸p cã h×nh d¸ng nh­ ®Çu chim phông, chØ dµnh cho t­íng lÜnh		100	1																						38	1
+ThÊt TŞch-ngo¹i trang 1	0	15	42	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1																							
+ThÊt TŞch-ngo¹i trang 2	0	15	43	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1																							
+ThÊt TŞch-ngo¹i trang 3	0	15	44	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1																							
+ThÊt TŞch-ngo¹i trang 4	0	15	45	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1																							
+ThÊt TŞch-ngo¹i trang 5	0	15	46	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1																							
+ThÊt TŞch-ngo¹i trang 6	0	15	47	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 7	0	15	48	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 8	0	15	49	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 9	0	15	50	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 10	0	15	51	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 11	0	15	52	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 12	0	15	53	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 13	0	15	54	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 14	0	15	55	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 15	0	15	56	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 16	0	15	57	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 17	0	15	58	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 18	0	15	59	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 19	0	15	60	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 20	0	15	61	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 21	0	15	62	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 22	0	15	63	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 23	0	15	64	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 24	0	15	65	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 25	0	15	66	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 26	0	15	67	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 27	0	15	68	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 28	0	15	69	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 29	0	15	70	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 30	0	15	71	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 31	0	15	72	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 32	0	15	73	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 33	0	15	74	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 34	0	15	75	\spr\item\equip\cap\obj-ma-cap81.spr	41	2	2	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1

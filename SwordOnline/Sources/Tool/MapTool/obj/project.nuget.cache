@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BCmvTSHVRwo=",
+  "dgSpecHash": "lkhWf5AbKgw=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Administrator\\Downloads\\HuyenThietKiem-claude-fix-map-loading-01Ljy9dmd8n9d8Gh1uvcEZN9(3)\\HuyenThietKiem-claude-fix-map-loading-01Ljy9dmd8n9d8Gh1uvcEZN9\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj",
+  "projectFilePath": "D:\\HuyenThietKiem\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.3\\microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net48\\1.0.3\\microsoft.netframework.referenceassemblies.net48.1.0.3.nupkg.sha512"

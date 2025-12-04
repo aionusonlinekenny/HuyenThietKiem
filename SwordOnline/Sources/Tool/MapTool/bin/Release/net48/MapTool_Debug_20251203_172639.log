@@ -1,0 +1,718 @@
+﻿================================================================================
+MapTool Debug Log - 2025-12-03 17:26:39
+================================================================================
+
+[17:26:39.499] ✓ Debug log initialized: D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48\MapTool_Debug_20251203_172639.log
+[17:26:39.499] === MapTool Started ===
+[17:26:39.499] Executable: D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48\MapTool.exe
+[17:26:39.499] Working Directory: D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48
+[17:26:39.499] Log file: D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48\MapTool_Debug_20251203_172639.log
+[17:26:39.499] --------------------------------------------------------------------------------
+[17:26:39.499] Default folder set: D:\HuyenThietKiem\Bin\Server
+[17:26:41.299] --------------------------------------------------------------------------------
+[17:26:41.299] 📂 LOADING MAP
+[17:26:41.299]    Map ID: 11
+[17:26:41.299]    Game Folder: D:\HuyenThietKiem\Bin\Server
+[17:26:41.299]    Mode: Server
+[17:26:41.299] --------------------------------------------------------------------------------
+[17:26:41.523] --------------------------------------------------------------------------------
+[17:26:41.523] 🔍 PARSED RECT FROM .WOR FILE
+[17:26:41.523]    rect = 165,142,215,172
+[17:26:41.523]    Grid size: 51 x 31 regions
+[17:26:41.523]    First region coords: (165, 142)
+[17:26:41.523]    First RegionID (Y*256+X): 142*256 + 165 = 36517
+[17:26:41.527] --------------------------------------------------------------------------------
+[17:26:41.527] --------------------------------------------------------------------------------
+[17:26:41.527] 🔍 SCANNING FOR REGION FILES
+[17:26:41.527]    Looking for regions from (165,142) to (215,172)
+[17:26:41.527]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\165_Region_S.dat
+[17:26:41.527]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\166_Region_S.dat
+[17:26:41.527]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\167_Region_S.dat
+[17:26:41.527]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\168_Region_S.dat
+[17:26:41.527]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\169_Region_S.dat
+[17:26:41.529]    ✓ Found region (3d,3d) → RegionID=36557 | File: maps\西南北区\成都\成都\v_142\205_Region_S.dat
+[17:26:41.529]    ✓ Found region (3d,3d) → RegionID=36558 | File: maps\西南北区\成都\成都\v_142\206_Region_S.dat
+[17:26:41.529]    ✓ Found region (3d,3d) → RegionID=36559 | File: maps\西南北区\成都\成都\v_142\207_Region_S.dat
+[17:26:41.529]    ✓ Found region (3d,3d) → RegionID=36807 | File: maps\西南北区\成都\成都\v_143\199_Region_S.dat
+[17:26:41.529]    ✓ Found region (3d,3d) → RegionID=36808 | File: maps\西南北区\成都\成都\v_143\200_Region_S.dat
+[17:26:41.529]    ⚠ Error loading (206,143): Unable to read beyond the end of the stream.
+[17:26:41.529]    ⚠ Error loading (206,144): Unable to read beyond the end of the stream.
+[17:26:41.529]    ⚠ Error loading (175,149): Unable to read beyond the end of the stream.
+[17:26:41.529]    ⚠ Error loading (176,149): Unable to read beyond the end of the stream.
+[17:26:41.529]    ⚠ Error loading (175,150): Unable to read beyond the end of the stream.
+[17:26:41.529]    ⚠ Error loading (176,150): Unable to read beyond the end of the stream.
+[17:26:41.539]    ⚠ Error loading (188,154): Unable to read beyond the end of the stream.
+[17:26:41.541]    ⚠ Error loading (205,155): Unable to read beyond the end of the stream.
+[17:26:41.541]    ⚠ Error loading (205,156): Unable to read beyond the end of the stream.
+[17:26:41.541]    ⚠ Error loading (177,158): Unable to read beyond the end of the stream.
+[17:26:41.541]    ⚠ Error loading (203,158): Unable to read beyond the end of the stream.
+[17:26:41.541]    ⚠ Error loading (177,159): Unable to read beyond the end of the stream.
+[17:26:41.541]    ⚠ Error loading (186,160): Unable to read beyond the end of the stream.
+[17:26:41.549]    ⚠ Error loading (200,163): Unable to read beyond the end of the stream.
+[17:26:41.549]    ⚠ Error loading (201,163): Unable to read beyond the end of the stream.
+[17:26:41.549]    ⚠ Error loading (212,165): Unable to read beyond the end of the stream.
+[17:26:41.549]    ⚠ Error loading (213,165): Unable to read beyond the end of the stream.
+[17:26:41.549]    ⚠ Error loading (169,166): Unable to read beyond the end of the stream.
+[17:26:41.549]    ⚠ Error loading (212,166): Unable to read beyond the end of the stream.
+[17:26:41.549]    ⚠ Error loading (213,166): Unable to read beyond the end of the stream.
+[17:26:41.549]    ⚠ Error loading (169,167): Unable to read beyond the end of the stream.
+[17:26:41.556]    ⚠ Error loading (202,169): Unable to read beyond the end of the stream.
+[17:26:41.556]    ⚠ Error loading (201,170): Unable to read beyond the end of the stream.
+[17:26:41.556]    ⚠ Error loading (202,170): Unable to read beyond the end of the stream.
+[17:26:41.559] --------------------------------------------------------------------------------
+[17:26:41.559] 📊 REGION SCAN SUMMARY
+[17:26:41.559]    Attempted: 1581 regions
+[17:26:41.559]    Loaded: 803 regions
+[17:26:41.559]    Missing: 778 regions
+[17:26:41.559]    First missing: (165,142), (166,142), (167,142), (168,142), (169,142)
+[17:26:41.560]    First existing: (205,142), (206,142), (207,142), (199,143), (200,143)
+[17:26:41.560] --------------------------------------------------------------------------------
+[17:26:41.560] 🖼️  LOADING MAP IMAGE
+[17:26:41.560]    Map ID: 11
+[17:26:41.560]    Folder Path: 西南北区\成都\成都
+[17:26:41.560]    Image Path: \maps\西南北区\成都\成都24.jpg
+[17:26:41.560]    Disk Path (Unicode): D:\HuyenThietKiem\Bin\Server\maps\西南北区\成都\成都24.jpg
+[17:26:41.560]    Disk Exists (direct): False
+[17:26:41.560]    🔍 Searching with filesystem enumeration (handles GB2312 encoding)...
+[17:26:41.560]       Expected directory: maps\西南北区\成都
+[17:26:41.560]       Expected filename: 成都24.jpg
+[17:26:41.560]       🔍 Match strategy: Direct Unicode
+[17:26:41.560]       ✓ Found: maps → maps
+[17:26:41.560]       🔍 Match strategy: GB2312 re-decode (Default→GB2312)
+[17:26:41.560]          Original: 'Î÷ÄÏ±±Çø' → Decoded: '西南北区'
+[17:26:41.560]       ✓ Found: 西南北区 → Î÷ÄÏ±±Çø
+[17:26:41.560]       🔍 Match strategy: GB2312 re-decode (Default→GB2312)
+[17:26:41.560]          Original: '³É¶¼' → Decoded: '成都'
+[17:26:41.560]       ✓ Found: 成都 → ³É¶¼
+[17:26:41.560]       📁 Navigated to: D:\HuyenThietKiem\Bin\Server\maps\Î÷ÄÏ±±Çø\³É¶¼
+[17:26:41.560]       🔍 Looking for file: 成都24.jpg
+[17:26:41.560]       ✓ File match: GB2312 re-decode
+[17:26:41.560]          Original: '³É¶¼24.jpg' → Decoded: '成都24.jpg'
+[17:26:41.560]    ✓ Found image via enumeration: D:\HuyenThietKiem\Bin\Server\maps\Î÷ÄÏ±±Çø\³É¶¼\³É¶¼24.jpg
+[17:26:41.560] ✓ Loading image from DISK (via filesystem enumeration)
+[17:26:41.560] ✓ Loaded map image from disk (enumerated): D:\HuyenThietKiem\Bin\Server\maps\Î÷ÄÏ±±Çø\³É¶¼\³É¶¼24.jpg
+[17:26:41.560]    Size: 572,772 bytes
+[17:26:41.560]    Offset: (5280, 4544) pixels
+[17:26:41.560] --------------------------------------------------------------------------------
+[17:26:41.560] ✓ Map loaded successfully!
+[17:26:41.560]    Name: Thµnh §«
+[17:26:41.560]    Folder: 西南北区\成都\成都
+[17:26:41.560]    Regions loaded: 803
+[17:26:41.560]    First region: (205, 142) RegionID=36557
+[17:26:41.560] --------------------------------------------------------------------------------
+[17:26:45.759] --------------------------------------------------------------------------------
+[17:26:45.759] 🎯 LOADING NPC PREVIEW
+[17:26:45.759]    Search input: '1'
+[17:26:45.759]    Parsed as NPC ID: 1
+[17:26:45.759]    Game folder: D:\HuyenThietKiem\Bin\Server
+[17:26:45.759]    Mode: Server
+[17:26:45.759]    Looking for Client folder: D:\HuyenThietKiem\Bin\Client
+[17:26:45.759]    ✓ Found Client folder: D:\HuyenThietKiem\Bin\Client
+[17:26:45.759]    Initializing NPC Loader...
+[17:26:45.759]          Loading NpcResKind.txt from: D:\HuyenThietKiem\Bin\Client\Settings\NpcRes\NpcResKind.txt
+[17:26:45.764]          Total lines in NpcResKind.txt: 939
+[17:26:45.764]          [NpcResKind] Name='MainMan', Type='SpecialNpc', Path='spr\npcres\man'
+[17:26:45.764]          [NpcResKind] Name='MainLady', Type='SpecialNpc', Path='spr\npcres\woman'
+[17:26:45.764]          [NpcResKind] Name='enemy003', Type='NormalNpc', Path='spr\npcres\enemy\enemy003'
+[17:26:45.764]          [NpcResKind] Name='enemy004', Type='NormalNpc', Path='spr\npcres\enemy\enemy004'
+[17:26:45.764]          [NpcResKind] Name='enemy005', Type='NormalNpc', Path='spr\npcres\enemy\enemy005'
+[17:26:45.764]          ✓ Loaded 938 NPC resource kinds
+[17:26:45.774]          Loading NPC database from: D:\HuyenThietKiem\Bin\Server\Settings\Npcs.txt
+[17:26:45.774]          Total lines in file: 2188
+[17:26:45.774]          [Line 2] ID=1, Name='§«ng B¾c hæ', ResType='ani001'
+[17:26:45.774]          [Line 3] ID=2, Name='Hoa Nam hæ', ResType='ani002'
+[17:26:45.774]          [Line 4] ID=3, Name='B¹ch Hæ', ResType='ani003'
+[17:26:45.774]          [Line 5] ID=4, Name='Kim TiÒn b¸o', ResType='ani005'
+[17:26:45.774]          [Line 6] ID=5, Name='TuyÕt B¸o', ResType='ani006'
+[17:26:45.774]          ... (2178 more NPCs) ...
+[17:26:45.779]          [Line 2184] ID=2183, Name='ÁúÀÏ»¢£¨ÐÂ£©', ResType='boss077'
+[17:26:45.779]          [Line 2185] ID=2184, Name='²ÔåâåË£¨ÐÂ£©', ResType='boss078'
+[17:26:45.779]          [Line 2186] ID=2185, Name='nangongjue', ResType='boss132'
+[17:26:45.779]          [Line 2187] ID=2186, Name='linhaotian', ResType='boss130'
+[17:26:45.779]          [Line 2188] ID=2187, Name='Tiªn N÷ Gi÷ Trµ', ResType='boss093'
+[17:26:45.779]          ✓ Loaded 2185 NPCs from Npcs.txt
+[17:26:45.779]          Loading PAK files from: D:\HuyenThietKiem\Bin\Client
+[17:26:45.779]             ✓ Loaded PAK: adultpermit.pak
+[17:26:45.779]             ✓ Loaded PAK: font.pak
+[17:26:45.779]             ✓ Loaded PAK: jxck.pak
+[17:26:45.779]             ✓ Loaded PAK: jxhangnga1.pak
+[17:26:45.794]             ✓ Loaded PAK: maps.pak
+[17:26:45.825]             ✓ Loaded PAK: maps1.pak
+[17:26:45.829]             ✓ Loaded PAK: resource.pak
+[17:26:45.829]             ✓ Loaded PAK: serverlist.pak
+[17:26:45.829]             ✓ Loaded PAK: serverlistfree.pak
+[17:26:45.829]             ✓ Loaded PAK: settings.pak
+[17:26:45.829]             ✓ Loaded PAK: skills.pak
+[17:26:45.829]             ✓ Loaded PAK: slistcache.pak
+[17:26:45.829]             ✓ Loaded PAK: slistfree.pak
+[17:26:45.829]             ✓ Loaded PAK: sound.pak
+[17:26:45.835]             ✓ Loaded PAK: spr.pak
+[17:26:45.836]             ✓ Loaded PAK: update.pak
+[17:26:45.849]             ✓ Loaded PAK: update01.pak
+[17:26:45.849]             ✓ Loaded PAK: update02.pak
+[17:26:45.849]             ✓ Loaded PAK: update03.pak
+[17:26:45.849]             ✓ Loaded PAK: update04.pak
+[17:26:45.849]             ✓ Loaded PAK: updatejx01.pak
+[17:26:45.849]             ✓ Loaded PAK: updatejx02.pak
+[17:26:45.849]             ✓ Loaded PAK: updatejx03.pak
+[17:26:45.849]             ✓ Loaded PAK: updatejx04.pak
+[17:26:45.854]             ✓ Loaded PAK: updatejx05.pak
+[17:26:45.854]             ✓ Loaded PAK: updatejx06.pak
+[17:26:45.854]             ✓ Loaded PAK: updatejx07_jxf06.pak
+[17:26:45.854]             ✓ Loaded PAK: updatejx08.pak
+[17:26:45.855]             ✓ Loaded PAK: updatejx09.pak
+[17:26:45.855]             ✓ Loaded PAK: updatejx10.pak
+[17:26:45.855]             ✓ Loaded PAK: updatejx11.pak
+[17:26:45.855]             ✓ Loaded PAK: updatejx12.pak
+[17:26:45.855]             ✓ Loaded PAK: updatejx13.pak
+[17:26:45.859]             ✓ Loaded PAK: updatejx14.pak
+[17:26:45.859]             ✓ Loaded PAK: vltkcache.pak
+[17:26:45.859]             ✓ Loaded PAK: vng.pak
+[17:26:45.859]             ✓ Loaded PAK: volamtest1.pak
+[17:26:45.859]             ✓ Loaded PAK: adultpermit.pak
+[17:26:45.859]             ✓ Loaded PAK: font.pak
+[17:26:45.859]             ✓ Loaded PAK: jxhangnga1.pak
+[17:26:45.869]             ✓ Loaded PAK: maps.pak
+[17:26:45.869]             ✓ Loaded PAK: resource.pak
+[17:26:45.869]             ✓ Loaded PAK: serverlist.pak
+[17:26:45.869]             ✓ Loaded PAK: serverlistfree.pak
+[17:26:45.869]             ✓ Loaded PAK: settings.pak
+[17:26:45.869]             ✓ Loaded PAK: skills.pak
+[17:26:45.869]             ✓ Loaded PAK: slistcache.pak
+[17:26:45.869]             ✓ Loaded PAK: slistfree.pak
+[17:26:45.869]             ✓ Loaded PAK: sound.pak
+[17:26:45.869]             ✓ Loaded PAK: spr.pak
+[17:26:45.869]             ✓ Loaded PAK: update.pak
+[17:26:45.879]             ✓ Loaded PAK: update01.pak
+[17:26:45.879]             ✓ Loaded PAK: update02.pak
+[17:26:45.879]             ✓ Loaded PAK: update03.pak
+[17:26:45.879]             ✓ Loaded PAK: update04.pak
+[17:26:45.879]             ✓ Loaded PAK: updatejx01.pak
+[17:26:45.879]             ✓ Loaded PAK: updatejx02.pak
+[17:26:45.879]             ✓ Loaded PAK: updatejx03.pak
+[17:26:45.879]             ✓ Loaded PAK: updatejx04.pak
+[17:26:45.889]             ✓ Loaded PAK: updatejx05.pak
+[17:26:45.889]             ✓ Loaded PAK: updatejx06.pak
+[17:26:45.889]             ✓ Loaded PAK: updatejx07_jxf06.pak
+[17:26:45.889]             ✓ Loaded PAK: updatejx08.pak
+[17:26:45.889]             ✓ Loaded PAK: updatejx09.pak
+[17:26:45.889]             ✓ Loaded PAK: updatejx10.pak
+[17:26:45.889]             ✓ Loaded PAK: updatejx11.pak
+[17:26:45.889]             ✓ Loaded PAK: updatejx12.pak
+[17:26:45.889]             ✓ Loaded PAK: updatejx13.pak
+[17:26:45.889]             ✓ Loaded PAK: updatejx14.pak
+[17:26:45.900]             ✓ Loaded PAK: updatejx15.pak
+[17:26:45.902]             ✓ Loaded PAK: updatejx16.pak
+[17:26:45.902]             ✓ Loaded PAK: vltkcache.pak
+[17:26:45.902]             ✓ Loaded PAK: vng.pak
+[17:26:45.902]             ✓ Loaded PAK: vng00.pak
+[17:26:45.902]             ✓ Loaded PAK: volam2005.pak
+[17:26:45.902]             ✓ Loaded PAK: volam2005ctc.pak
+[17:26:45.902]          ✓ Loaded 76 PAK files
+[17:26:45.902]    ✓ NPC Loader initialized
+[17:26:45.902]       Client path: D:\HuyenThietKiem\Bin\Client
+[17:26:45.902]       Server path: D:\HuyenThietKiem\Bin\Server
+[17:26:45.902]    Calling GetNpcResourceById(1)...
+[17:26:45.902]       → GetNpcResourceById: Looking up NPC ID 1
+[17:26:45.902]          NPC database count: 2185 NPCs loaded
+[17:26:45.902]             → GetNpcResType: Looking up ID 1 in database
+[17:26:45.902]                ✓ Found: ID=1, Name='§«ng B¾c hæ', ResType='ani001'
+[17:26:45.902]          NpcResType for ID 1: 'ani001'
+[17:26:45.902]          Calling GetNpcResource('ani001')...
+[17:26:45.902]                → GetNpcResource: Looking up 'ani001'
+[17:26:45.902]                   ResKind cache contains 938 entries
+[17:26:45.902]                   ✓ Found 'ani001' in ResKind cache
+[17:26:45.902]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:26:45.902]                   ✓ Created NpcResource for 'ani001'
+[17:26:45.902]          ✓ NpcResource found for 'ani001'
+[17:26:45.902]          NPC name from Npcs.txt: '§«ng B¾c hæ'
+[17:26:45.902]          NPC name set to: '§«ng B¾c hæ'
+[17:26:45.902]    ✓ NPC resource loaded: §«ng B¾c hæ
+[17:26:45.902]    Loading sprite for action: NormalStand
+[17:26:45.909]                   → LoadSpriteById: ID=1, Action=NormalStand
+[17:26:45.909]       → GetNpcResourceById: Looking up NPC ID 1
+[17:26:45.909]          NPC database count: 2185 NPCs loaded
+[17:26:45.909]             → GetNpcResType: Looking up ID 1 in database
+[17:26:45.909]                ✓ Found: ID=1, Name='§«ng B¾c hæ', ResType='ani001'
+[17:26:45.909]          NpcResType for ID 1: 'ani001'
+[17:26:45.909]          Calling GetNpcResource('ani001')...
+[17:26:45.909]                → GetNpcResource: Looking up 'ani001'
+[17:26:45.909]                   ResKind cache contains 938 entries
+[17:26:45.909]                   ✓ Found 'ani001' in ResKind cache
+[17:26:45.909]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:26:45.909]                   ✓ Created NpcResource for 'ani001'
+[17:26:45.909]          ✓ NpcResource found for 'ani001'
+[17:26:45.909]          NPC name from Npcs.txt: '§«ng B¾c hæ'
+[17:26:45.909]          NPC name set to: '§«ng B¾c hæ'
+[17:26:45.909]                      SPR path: spr\npcres\animal\ani001\ani001_st.spr
+[17:26:45.916]                      ✓ Found in PAK (339647 bytes)
+[17:26:45.919]                            Frame size: 28x76
+[17:26:45.919] [NPC Loaded] ID: 1, Name: §«ng B¾c hæ, Frames: 96
+[17:26:51.152] [MapRenderer] SetNpcMarkers: 84 NPCs
+[17:26:51.152]    NPC 62: World(96524,158372) → Map(6032,4949)
+[17:26:51.152]    NPC 62: World(96358,158559) → Map(6022,4954)
+[17:26:51.152]    NPC 238: World(96892,158668) → Map(6055,4958)
+[17:26:51.152]    NPC 259: World(101749,158223) → Map(6359,4944)
+[17:26:51.152]    NPC 366: World(102536,158407) → Map(6408,4950)
+[17:26:51.152]    NPC 313: World(103486,159514) → Map(6467,4984)
+[17:26:51.152]    NPC 62: World(105000,159626) → Map(6562,4988)
+[17:26:51.152]    NPC 309: World(98291,160094) → Map(6143,5002)
+[17:26:51.152]    NPC 335: World(98649,160396) → Map(6165,5012)
+[17:26:51.152]    NPC 318: World(99533,160309) → Map(6220,5009)
+[17:26:51.152]    NPC 323: World(103654,160140) → Map(6478,5004)
+[17:26:51.152]    NPC 238: World(104395,160114) → Map(6524,5003)
+[17:26:51.152]    NPC 62: World(105173,159820) → Map(6573,4994)
+[17:26:51.152]    NPC 377: World(100034,159783) → Map(6252,4993)
+[17:26:51.152]    NPC 353: World(98316,161535) → Map(6144,5047)
+[17:26:51.152]    NPC 326: World(99395,161180) → Map(6212,5036)
+[17:26:51.152]    NPC 327: World(99350,161200) → Map(6209,5037)
+[17:26:51.152]    NPC 256: World(99835,161591) → Map(6239,5049)
+[17:26:51.152]    NPC 287: World(100148,161488) → Map(6259,5046)
+[17:26:51.152]    NPC 308: World(100294,161434) → Map(6268,5044)
+[17:26:51.152]    NPC 51: World(100861,161614) → Map(6303,5050)
+[17:26:51.152]    NPC 51: World(100768,161523) → Map(6298,5047)
+[17:26:51.152]    NPC 305: World(103359,161130) → Map(6459,5035)
+[17:26:51.152]    NPC 309: World(103208,161346) → Map(6450,5042)
+[17:26:51.152]    NPC 308: World(96468,161862) → Map(6029,5058)
+[17:26:51.152]    NPC 377: World(96622,162761) → Map(6038,5086)
+[17:26:51.152]    NPC 269: World(97015,162290) → Map(6063,5071)
+[17:26:51.152]    NPC 209: World(98633,162061) → Map(6164,5064)
+[17:26:51.152]    NPC 211: World(98548,161985) → Map(6159,5062)
+[17:26:51.152]    NPC 210: World(98715,162163) → Map(6169,5067)
+[17:26:51.152]    NPC 108: World(100922,162096) → Map(6307,5065)
+[17:26:51.152]    NPC 358: World(101964,162561) → Map(6372,5080)
+[17:26:51.152]    NPC 275: World(102277,162212) → Map(6392,5069)
+[17:26:51.152]    NPC 238: World(96559,162841) → Map(6034,5088)
+[17:26:51.152]    NPC 309: World(97297,163101) → Map(6081,5096)
+[17:26:51.152]    NPC 363: World(98120,163192) → Map(6132,5099)
+[17:26:51.152]    NPC 361: World(98162,163154) → Map(6135,5098)
+[17:26:51.152]    NPC 197: World(99314,163834) → Map(6207,5119)
+[17:26:51.152]    NPC 200: World(99369,163784) → Map(6210,5118)
+[17:26:51.152]    NPC 212: World(99938,163454) → Map(6246,5107)
+[17:26:51.152]    NPC 345: World(99990,163402) → Map(6249,5106)
+[17:26:51.152]    NPC 331: World(100418,162848) → Map(6276,5089)
+[17:26:51.152]    NPC 230: World(101236,163064) → Map(6327,5095)
+[17:26:51.152]    NPC 233: World(101219,162968) → Map(6326,5092)
+[17:26:51.152]    NPC 378: World(101686,163637) → Map(6355,5113)
+[17:26:51.152]    NPC 351: World(102911,163496) → Map(6431,5109)
+[17:26:51.152]    NPC 189: World(103331,163598) → Map(6458,5112)
+[17:26:51.152]    NPC 385: World(103061,163646) → Map(6441,5113)
+[17:26:51.152]    NPC 64: World(103218,163444) → Map(6451,5107)
+[17:26:51.152]    NPC 62: World(95402,164709) → Map(5962,5147)
+[17:26:51.152]    NPC 62: World(95260,164562) → Map(5953,5142)
+[17:26:51.152]    NPC 206: World(96693,164070) → Map(6043,5127)
+[17:26:51.152]    NPC 205: World(96797,164156) → Map(6049,5129)
+[17:26:51.152]    NPC 336: World(98587,164730) → Map(6161,5147)
+[17:26:51.152]    NPC 357: World(99001,164350) → Map(6187,5135)
+[17:26:51.152]    NPC 204: World(100206,164019) → Map(6262,5125)
+[17:26:51.152]    NPC 203: World(100552,164296) → Map(6284,5134)
+[17:26:51.152]    NPC 285: World(102142,164008) → Map(6383,5125)
+[17:26:51.152]    NPC 376: World(102945,163967) → Map(6434,5123)
+[17:26:51.152]    NPC 221: World(98292,165048) → Map(6143,5157)
+[17:26:51.152]    NPC 355: World(98243,165161) → Map(6140,5161)
+[17:26:51.152]    NPC 383: World(98256,164904) → Map(6141,5153)
+[17:26:51.152]    NPC 329: World(99601,165811) → Map(6225,5181)
+[17:26:51.152]    NPC 224: World(99633,165766) → Map(6227,5180)
+[17:26:51.152]    NPC 339: World(100854,165783) → Map(6303,5180)
+[17:26:51.152]    NPC 218: World(101357,165592) → Map(6334,5174)
+[17:26:51.152]    NPC 365: World(101153,165019) → Map(6322,5156)
+[17:26:51.152]    NPC 196: World(101185,165069) → Map(6324,5158)
+[17:26:51.152]    NPC 217: World(101658,165537) → Map(6353,5173)
+[17:26:51.152]    NPC 346: World(98842,166161) → Map(6177,5192)
+[17:26:51.152]    NPC 321: World(99526,166806) → Map(6220,5212)
+[17:26:51.152]    NPC 309: World(101332,166253) → Map(6333,5195)
+[17:26:51.152]    NPC 238: World(102326,166191) → Map(6395,5193)
+[17:26:51.152]    NPC 11: World(105920,166400) → Map(6620,5200)
+[17:26:51.159]    NPC 11: World(105734,166598) → Map(6608,5206)
+[17:26:51.159]    NPC 12: World(105611,166674) → Map(6600,5208)
+[17:26:51.159]    NPC 11: World(106454,166330) → Map(6653,5197)
+[17:26:51.159]    NPC 359: World(100151,167601) → Map(6259,5237)
+[17:26:51.159]    NPC 62: World(102922,167437) → Map(6432,5232)
+[17:26:51.175]    NPC 62: World(103062,167313) → Map(6441,5228)
+[17:26:51.175]    NPC 332: World(103478,167610) → Map(6467,5237)
+[17:26:51.175]    NPC 769: World(102688,159136) → Map(6418,4973)
+[17:26:51.175]    NPC 769: World(98720,164544) → Map(6170,5142)
+[17:26:51.175]    NPC 769: World(104735,159744) → Map(6545,4992)
+[17:26:52.289] [NPC Import] Loaded 84 NPCs, 84 for map 11
+[17:26:52.409] [ScreenToMapCoordinate] Screen(662,468) → Map(5942,5012) → World(95072,160384) → Region(185,156) Cell(11,20) ID=40121
+[17:26:52.409]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.411] [ScreenToMapCoordinate] Screen(659,477) → Map(5939,5021) → World(95024,160672) → Region(185,156) Cell(9,29) ID=40121
+[17:26:52.411]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.619] [ScreenToMapCoordinate] Screen(658,477) → Map(5938,5021) → World(95008,160672) → Region(185,156) Cell(9,29) ID=40121
+[17:26:52.619]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.629] [ScreenToMapCoordinate] Screen(657,475) → Map(5937,5019) → World(94992,160608) → Region(185,156) Cell(8,27) ID=40121
+[17:26:52.629]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.629] [ScreenToMapCoordinate] Screen(657,472) → Map(5937,5016) → World(94992,160512) → Region(185,156) Cell(8,24) ID=40121
+[17:26:52.629]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.641] [ScreenToMapCoordinate] Screen(656,470) → Map(5936,5014) → World(94976,160448) → Region(185,156) Cell(8,22) ID=40121
+[17:26:52.641]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.649] [ScreenToMapCoordinate] Screen(655,468) → Map(5935,5012) → World(94960,160384) → Region(185,156) Cell(7,20) ID=40121
+[17:26:52.649]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.649] [ScreenToMapCoordinate] Screen(653,468) → Map(5933,5012) → World(94928,160384) → Region(185,156) Cell(6,20) ID=40121
+[17:26:52.649]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.659] [ScreenToMapCoordinate] Screen(651,468) → Map(5931,5012) → World(94896,160384) → Region(185,156) Cell(5,20) ID=40121
+[17:26:52.659]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.672] [ScreenToMapCoordinate] Screen(648,468) → Map(5928,5012) → World(94848,160384) → Region(185,156) Cell(4,20) ID=40121
+[17:26:52.672]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.679] [ScreenToMapCoordinate] Screen(645,468) → Map(5925,5012) → World(94800,160384) → Region(185,156) Cell(2,20) ID=40121
+[17:26:52.679]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.689] [ScreenToMapCoordinate] Screen(643,469) → Map(5923,5013) → World(94768,160416) → Region(185,156) Cell(1,21) ID=40121
+[17:26:52.689]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.689] [ScreenToMapCoordinate] Screen(641,470) → Map(5921,5014) → World(94736,160448) → Region(185,156) Cell(0,22) ID=40121
+[17:26:52.689]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.702] [ScreenToMapCoordinate] Screen(640,472) → Map(5920,5016) → World(94720,160512) → Region(185,156) Cell(0,24) ID=40121
+[17:26:52.702]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.729] [ScreenToMapCoordinate] Screen(640,473) → Map(5920,5017) → World(94720,160544) → Region(185,156) Cell(0,25) ID=40121
+[17:26:52.729]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.733] [ScreenToMapCoordinate] Screen(640,474) → Map(5920,5018) → World(94720,160576) → Region(185,156) Cell(0,26) ID=40121
+[17:26:52.733]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.739] [ScreenToMapCoordinate] Screen(641,474) → Map(5921,5018) → World(94736,160576) → Region(185,156) Cell(0,26) ID=40121
+[17:26:52.739]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.749] [ScreenToMapCoordinate] Screen(642,474) → Map(5922,5018) → World(94752,160576) → Region(185,156) Cell(1,26) ID=40121
+[17:26:52.749]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.759] [ScreenToMapCoordinate] Screen(643,474) → Map(5923,5018) → World(94768,160576) → Region(185,156) Cell(1,26) ID=40121
+[17:26:52.759]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.763] [ScreenToMapCoordinate] Screen(645,474) → Map(5925,5018) → World(94800,160576) → Region(185,156) Cell(2,26) ID=40121
+[17:26:52.763]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.769] [ScreenToMapCoordinate] Screen(647,474) → Map(5927,5018) → World(94832,160576) → Region(185,156) Cell(3,26) ID=40121
+[17:26:52.769]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.779] [ScreenToMapCoordinate] Screen(650,474) → Map(5930,5018) → World(94880,160576) → Region(185,156) Cell(5,26) ID=40121
+[17:26:52.779]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.789] [ScreenToMapCoordinate] Screen(656,474) → Map(5936,5018) → World(94976,160576) → Region(185,156) Cell(8,26) ID=40121
+[17:26:52.789]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.793] [ScreenToMapCoordinate] Screen(661,474) → Map(5941,5018) → World(95056,160576) → Region(185,156) Cell(10,26) ID=40121
+[17:26:52.799]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.799] [ScreenToMapCoordinate] Screen(666,474) → Map(5946,5018) → World(95136,160576) → Region(185,156) Cell(13,26) ID=40121
+[17:26:52.799]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.812] [ScreenToMapCoordinate] Screen(673,476) → Map(5953,5020) → World(95248,160640) → Region(186,156) Cell(0,28) ID=40122
+[17:26:52.812]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.819] [ScreenToMapCoordinate] Screen(682,478) → Map(5962,5022) → World(95392,160704) → Region(186,156) Cell(5,30) ID=40122
+[17:26:52.819]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.829] [ScreenToMapCoordinate] Screen(690,480) → Map(5970,5024) → World(95520,160768) → Region(186,157) Cell(9,0) ID=40378
+[17:26:52.829]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.839] [ScreenToMapCoordinate] Screen(698,482) → Map(5978,5026) → World(95648,160832) → Region(186,157) Cell(13,2) ID=40378
+[17:26:52.839]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.839] [ScreenToMapCoordinate] Screen(707,485) → Map(5987,5029) → World(95792,160928) → Region(187,157) Cell(1,5) ID=40379
+[17:26:52.839]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.849] [ScreenToMapCoordinate] Screen(714,489) → Map(5994,5033) → World(95904,161056) → Region(187,157) Cell(5,9) ID=40379
+[17:26:52.849]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.859] [ScreenToMapCoordinate] Screen(720,492) → Map(6000,5036) → World(96000,161152) → Region(187,157) Cell(8,12) ID=40379
+[17:26:52.859]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.869] [ScreenToMapCoordinate] Screen(726,494) → Map(6006,5038) → World(96096,161216) → Region(187,157) Cell(11,14) ID=40379
+[17:26:52.869]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.869] [ScreenToMapCoordinate] Screen(730,496) → Map(6010,5040) → World(96160,161280) → Region(187,157) Cell(13,16) ID=40379
+[17:26:52.869]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.879] [ScreenToMapCoordinate] Screen(735,498) → Map(6015,5042) → World(96240,161344) → Region(187,157) Cell(15,18) ID=40379
+[17:26:52.879]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.889] [ScreenToMapCoordinate] Screen(737,499) → Map(6017,5043) → World(96272,161376) → Region(188,157) Cell(0,19) ID=40380
+[17:26:52.889]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.889] [ScreenToMapCoordinate] Screen(740,501) → Map(6020,5045) → World(96320,161440) → Region(188,157) Cell(2,21) ID=40380
+[17:26:52.899]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.899] [ScreenToMapCoordinate] Screen(743,501) → Map(6023,5045) → World(96368,161440) → Region(188,157) Cell(3,21) ID=40380
+[17:26:52.899]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.912] [ScreenToMapCoordinate] Screen(745,502) → Map(6025,5046) → World(96400,161472) → Region(188,157) Cell(4,22) ID=40380
+[17:26:52.915]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.919] [ScreenToMapCoordinate] Screen(747,502) → Map(6027,5046) → World(96432,161472) → Region(188,157) Cell(5,22) ID=40380
+[17:26:52.919]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.929] [ScreenToMapCoordinate] Screen(748,502) → Map(6028,5046) → World(96448,161472) → Region(188,157) Cell(6,22) ID=40380
+[17:26:52.929]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.944] [ScreenToMapCoordinate] Screen(749,502) → Map(6029,5046) → World(96464,161472) → Region(188,157) Cell(6,22) ID=40380
+[17:26:52.944]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.945] [ScreenToMapCoordinate] Screen(751,501) → Map(6031,5045) → World(96496,161440) → Region(188,157) Cell(7,21) ID=40380
+[17:26:52.945]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.949] [ScreenToMapCoordinate] Screen(752,500) → Map(6032,5044) → World(96512,161408) → Region(188,157) Cell(8,20) ID=40380
+[17:26:52.949]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.959] [ScreenToMapCoordinate] Screen(754,498) → Map(6034,5042) → World(96544,161344) → Region(188,157) Cell(9,18) ID=40380
+[17:26:52.959]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.959] [ScreenToMapCoordinate] Screen(755,497) → Map(6035,5041) → World(96560,161312) → Region(188,157) Cell(9,17) ID=40380
+[17:26:52.969]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.976] [ScreenToMapCoordinate] Screen(756,496) → Map(6036,5040) → World(96576,161280) → Region(188,157) Cell(10,16) ID=40380
+[17:26:52.976]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.979] [ScreenToMapCoordinate] Screen(758,495) → Map(6038,5039) → World(96608,161248) → Region(188,157) Cell(11,15) ID=40380
+[17:26:52.979]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.990] [ScreenToMapCoordinate] Screen(759,493) → Map(6039,5037) → World(96624,161184) → Region(188,157) Cell(11,13) ID=40380
+[17:26:52.990]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:52.999] [ScreenToMapCoordinate] Screen(761,492) → Map(6041,5036) → World(96656,161152) → Region(188,157) Cell(12,12) ID=40380
+[17:26:52.999]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.006] [ScreenToMapCoordinate] Screen(762,490) → Map(6042,5034) → World(96672,161088) → Region(188,157) Cell(13,10) ID=40380
+[17:26:53.006]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.012] [ScreenToMapCoordinate] Screen(764,489) → Map(6044,5033) → World(96704,161056) → Region(188,157) Cell(14,9) ID=40380
+[17:26:53.012]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.019] [ScreenToMapCoordinate] Screen(765,488) → Map(6045,5032) → World(96720,161024) → Region(188,157) Cell(14,8) ID=40380
+[17:26:53.019]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.029] [ScreenToMapCoordinate] Screen(766,486) → Map(6046,5030) → World(96736,160960) → Region(188,157) Cell(15,6) ID=40380
+[17:26:53.029]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.036] [ScreenToMapCoordinate] Screen(768,485) → Map(6048,5029) → World(96768,160928) → Region(189,157) Cell(0,5) ID=40381
+[17:26:53.036]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.045] [ScreenToMapCoordinate] Screen(768,483) → Map(6048,5027) → World(96768,160864) → Region(189,157) Cell(0,3) ID=40381
+[17:26:53.045]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.049] [ScreenToMapCoordinate] Screen(769,483) → Map(6049,5027) → World(96784,160864) → Region(189,157) Cell(0,3) ID=40381
+[17:26:53.049]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.059] [ScreenToMapCoordinate] Screen(770,482) → Map(6050,5026) → World(96800,160832) → Region(189,157) Cell(1,2) ID=40381
+[17:26:53.059]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.079] [ScreenToMapCoordinate] Screen(771,482) → Map(6051,5026) → World(96816,160832) → Region(189,157) Cell(1,2) ID=40381
+[17:26:53.079]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.090] [ScreenToMapCoordinate] Screen(772,482) → Map(6052,5026) → World(96832,160832) → Region(189,157) Cell(2,2) ID=40381
+[17:26:53.097]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.099] [ScreenToMapCoordinate] Screen(773,482) → Map(6053,5026) → World(96848,160832) → Region(189,157) Cell(2,2) ID=40381
+[17:26:53.099]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.112] [ScreenToMapCoordinate] Screen(775,482) → Map(6055,5026) → World(96880,160832) → Region(189,157) Cell(3,2) ID=40381
+[17:26:53.112]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.119] [ScreenToMapCoordinate] Screen(779,483) → Map(6059,5027) → World(96944,160864) → Region(189,157) Cell(5,3) ID=40381
+[17:26:53.119]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.127] [ScreenToMapCoordinate] Screen(785,485) → Map(6065,5029) → World(97040,160928) → Region(189,157) Cell(8,5) ID=40381
+[17:26:53.127]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.129] [ScreenToMapCoordinate] Screen(793,486) → Map(6073,5030) → World(97168,160960) → Region(189,157) Cell(12,6) ID=40381
+[17:26:53.129]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.139] [ScreenToMapCoordinate] Screen(804,488) → Map(6084,5032) → World(97344,161024) → Region(190,157) Cell(2,8) ID=40382
+[17:26:53.139]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.149] [ScreenToMapCoordinate] Screen(818,490) → Map(6098,5034) → World(97568,161088) → Region(190,157) Cell(9,10) ID=40382
+[17:26:53.149]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.158] [ScreenToMapCoordinate] Screen(831,492) → Map(6111,5036) → World(97776,161152) → Region(190,157) Cell(15,12) ID=40382
+[17:26:53.159]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.159] [ScreenToMapCoordinate] Screen(844,493) → Map(6124,5037) → World(97984,161184) → Region(191,157) Cell(6,13) ID=40383
+[17:26:53.159]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.169] [ScreenToMapCoordinate] Screen(856,493) → Map(6136,5037) → World(98176,161184) → Region(191,157) Cell(12,13) ID=40383
+[17:26:53.169]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:53.179] [ScreenToMapCoordinate] Screen(870,493) → Map(6150,5037) → World(98400,161184) → Region(192,157) Cell(3,13) ID=40384
+[17:26:53.179]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.369] [ScreenToMapCoordinate] Screen(846,479) → Map(6126,5023) → World(98016,160736) → Region(191,156) Cell(7,31) ID=40127
+[17:26:58.369]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.379] [ScreenToMapCoordinate] Screen(798,486) → Map(6078,5030) → World(97248,160960) → Region(189,157) Cell(15,6) ID=40381
+[17:26:58.379]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.389] [ScreenToMapCoordinate] Screen(759,492) → Map(6039,5036) → World(96624,161152) → Region(188,157) Cell(11,12) ID=40380
+[17:26:58.389]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.399] [ScreenToMapCoordinate] Screen(725,495) → Map(6005,5039) → World(96080,161248) → Region(187,157) Cell(10,15) ID=40379
+[17:26:58.399]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.399] [ScreenToMapCoordinate] Screen(698,495) → Map(5978,5039) → World(95648,161248) → Region(186,157) Cell(13,15) ID=40378
+[17:26:58.399]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.409] [ScreenToMapCoordinate] Screen(670,495) → Map(5950,5039) → World(95200,161248) → Region(185,157) Cell(15,15) ID=40377
+[17:26:58.409]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.419] [ScreenToMapCoordinate] Screen(642,491) → Map(5922,5035) → World(94752,161120) → Region(185,157) Cell(1,11) ID=40377
+[17:26:58.419]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.423] [ScreenToMapCoordinate] Screen(613,488) → Map(5893,5032) → World(94288,161024) → Region(184,157) Cell(2,8) ID=40376
+[17:26:58.423]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.429] [ScreenToMapCoordinate] Screen(584,483) → Map(5864,5027) → World(93824,160864) → Region(183,157) Cell(4,3) ID=40375
+[17:26:58.429]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.439] [ScreenToMapCoordinate] Screen(558,477) → Map(5838,5021) → World(93408,160672) → Region(182,156) Cell(7,29) ID=40118
+[17:26:58.439]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.453] [ScreenToMapCoordinate] Screen(532,468) → Map(5812,5012) → World(92992,160384) → Region(181,156) Cell(10,20) ID=40117
+[17:26:58.453]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.459] [ScreenToMapCoordinate] Screen(507,456) → Map(5787,5000) → World(92592,160000) → Region(180,156) Cell(13,8) ID=40116
+[17:26:58.459]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.459] [ScreenToMapCoordinate] Screen(483,446) → Map(5763,4990) → World(92208,159680) → Region(180,155) Cell(1,30) ID=39860
+[17:26:58.469]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.469] [ScreenToMapCoordinate] Screen(471,439) → Map(5751,4983) → World(92016,159456) → Region(179,155) Cell(11,23) ID=39859
+[17:26:58.469]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.483] [ScreenToMapCoordinate] Screen(458,432) → Map(5738,4976) → World(91808,159232) → Region(179,155) Cell(5,16) ID=39859
+[17:26:58.483]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.489] [ScreenToMapCoordinate] Screen(449,425) → Map(5729,4969) → World(91664,159008) → Region(179,155) Cell(0,9) ID=39859
+[17:26:58.489]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.489] [ScreenToMapCoordinate] Screen(443,419) → Map(5723,4963) → World(91568,158816) → Region(178,155) Cell(13,3) ID=39858
+[17:26:58.499]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.499] [ScreenToMapCoordinate] Screen(438,413) → Map(5718,4957) → World(91488,158624) → Region(178,154) Cell(11,29) ID=39602
+[17:26:58.499]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.514] [ScreenToMapCoordinate] Screen(434,406) → Map(5714,4950) → World(91424,158400) → Region(178,154) Cell(9,22) ID=39602
+[17:26:58.514]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.522] [ScreenToMapCoordinate] Screen(432,397) → Map(5712,4941) → World(91392,158112) → Region(178,154) Cell(8,13) ID=39602
+[17:26:58.522]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.529] [ScreenToMapCoordinate] Screen(430,390) → Map(5710,4934) → World(91360,157888) → Region(178,154) Cell(7,6) ID=39602
+[17:26:58.529]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.529] [ScreenToMapCoordinate] Screen(429,382) → Map(5709,4926) → World(91344,157632) → Region(178,153) Cell(6,30) ID=39346
+[17:26:58.529]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.544] [ScreenToMapCoordinate] Screen(428,374) → Map(5708,4918) → World(91328,157376) → Region(178,153) Cell(6,22) ID=39346
+[17:26:58.544]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.549] [ScreenToMapCoordinate] Screen(426,366) → Map(5706,4910) → World(91296,157120) → Region(178,153) Cell(5,14) ID=39346
+[17:26:58.549]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.559] [ScreenToMapCoordinate] Screen(423,356) → Map(5703,4900) → World(91248,156800) → Region(178,153) Cell(3,4) ID=39346
+[17:26:58.559]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.559] [ScreenToMapCoordinate] Screen(417,347) → Map(5697,4891) → World(91152,156512) → Region(178,152) Cell(0,27) ID=39090
+[17:26:58.569]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.575] [ScreenToMapCoordinate] Screen(410,339) → Map(5690,4883) → World(91040,156256) → Region(177,152) Cell(13,19) ID=39089
+[17:26:58.575]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.584] [ScreenToMapCoordinate] Screen(404,331) → Map(5684,4875) → World(90944,156000) → Region(177,152) Cell(10,11) ID=39089
+[17:26:58.584]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.589] [ScreenToMapCoordinate] Screen(397,325) → Map(5677,4869) → World(90832,155808) → Region(177,152) Cell(6,5) ID=39089
+[17:26:58.589]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.589] [ScreenToMapCoordinate] Screen(391,320) → Map(5671,4864) → World(90736,155648) → Region(177,152) Cell(3,0) ID=39089
+[17:26:58.589]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.605] [ScreenToMapCoordinate] Screen(385,317) → Map(5665,4861) → World(90640,155552) → Region(177,151) Cell(0,29) ID=38833
+[17:26:58.605]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.609] [ScreenToMapCoordinate] Screen(380,315) → Map(5660,4859) → World(90560,155488) → Region(176,151) Cell(14,27) ID=38832
+[17:26:58.609]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.623] [ScreenToMapCoordinate] Screen(373,313) → Map(5653,4857) → World(90448,155424) → Region(176,151) Cell(10,25) ID=38832
+[17:26:58.623]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.629] [ScreenToMapCoordinate] Screen(366,313) → Map(5646,4857) → World(90336,155424) → Region(176,151) Cell(7,25) ID=38832
+[17:26:58.629]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.639] [ScreenToMapCoordinate] Screen(358,313) → Map(5638,4857) → World(90208,155424) → Region(176,151) Cell(3,25) ID=38832
+[17:26:58.639]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.639] [ScreenToMapCoordinate] Screen(351,313) → Map(5631,4857) → World(90096,155424) → Region(175,151) Cell(15,25) ID=38831
+[17:26:58.639]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.649] [ScreenToMapCoordinate] Screen(343,314) → Map(5623,4858) → World(89968,155456) → Region(175,151) Cell(11,26) ID=38831
+[17:26:58.649]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.659] [ScreenToMapCoordinate] Screen(335,316) → Map(5615,4860) → World(89840,155520) → Region(175,151) Cell(7,28) ID=38831
+[17:26:58.659]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.669] [ScreenToMapCoordinate] Screen(324,318) → Map(5604,4862) → World(89664,155584) → Region(175,151) Cell(2,30) ID=38831
+[17:26:58.669]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.669] [ScreenToMapCoordinate] Screen(310,319) → Map(5590,4863) → World(89440,155616) → Region(174,151) Cell(11,31) ID=38830
+[17:26:58.669]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.679] [ScreenToMapCoordinate] Screen(297,322) → Map(5577,4866) → World(89232,155712) → Region(174,152) Cell(4,2) ID=39086
+[17:26:58.679]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.689] [ScreenToMapCoordinate] Screen(282,324) → Map(5562,4868) → World(88992,155776) → Region(173,152) Cell(13,4) ID=39085
+[17:26:58.689]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.699] [ScreenToMapCoordinate] Screen(259,327) → Map(5539,4871) → World(88624,155872) → Region(173,152) Cell(1,7) ID=39085
+[17:26:58.699]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.699] [ScreenToMapCoordinate] Screen(236,330) → Map(5516,4874) → World(88256,155968) → Region(172,152) Cell(6,10) ID=39084
+[17:26:58.699]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.716] [ScreenToMapCoordinate] Screen(213,333) → Map(5493,4877) → World(87888,156064) → Region(171,152) Cell(10,13) ID=39083
+[17:26:58.716]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.722] [ScreenToMapCoordinate] Screen(190,335) → Map(5470,4879) → World(87520,156128) → Region(170,152) Cell(15,15) ID=39082
+[17:26:58.722]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.729] [ScreenToMapCoordinate] Screen(166,338) → Map(5446,4882) → World(87136,156224) → Region(170,152) Cell(3,18) ID=39082
+[17:26:58.729]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.729] [ScreenToMapCoordinate] Screen(150,338) → Map(5430,4882) → World(86880,156224) → Region(169,152) Cell(11,18) ID=39081
+[17:26:58.729]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.739] [ScreenToMapCoordinate] Screen(138,339) → Map(5418,4883) → World(86688,156256) → Region(169,152) Cell(5,19) ID=39081
+[17:26:58.739]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.749] [ScreenToMapCoordinate] Screen(130,342) → Map(5410,4886) → World(86560,156352) → Region(169,152) Cell(1,22) ID=39081
+[17:26:58.749]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.759] [ScreenToMapCoordinate] Screen(121,344) → Map(5401,4888) → World(86416,156416) → Region(168,152) Cell(12,24) ID=39080
+[17:26:58.759]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.769] [ScreenToMapCoordinate] Screen(114,345) → Map(5394,4889) → World(86304,156448) → Region(168,152) Cell(9,25) ID=39080
+[17:26:58.769]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.779] [ScreenToMapCoordinate] Screen(109,345) → Map(5389,4889) → World(86224,156448) → Region(168,152) Cell(6,25) ID=39080
+[17:26:58.779]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.779] [ScreenToMapCoordinate] Screen(103,346) → Map(5383,4890) → World(86128,156480) → Region(168,152) Cell(3,26) ID=39080
+[17:26:58.779]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.790] [ScreenToMapCoordinate] Screen(99,346) → Map(5379,4890) → World(86064,156480) → Region(168,152) Cell(1,26) ID=39080
+[17:26:58.790]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.799] [ScreenToMapCoordinate] Screen(92,346) → Map(5372,4890) → World(85952,156480) → Region(167,152) Cell(14,26) ID=39079
+[17:26:58.799]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.799] [ScreenToMapCoordinate] Screen(87,344) → Map(5367,4888) → World(85872,156416) → Region(167,152) Cell(11,24) ID=39079
+[17:26:58.799]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.817] [ScreenToMapCoordinate] Screen(81,342) → Map(5361,4886) → World(85776,156352) → Region(167,152) Cell(8,22) ID=39079
+[17:26:58.817]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.823] [ScreenToMapCoordinate] Screen(74,339) → Map(5354,4883) → World(85664,156256) → Region(167,152) Cell(5,19) ID=39079
+[17:26:58.823]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.829] [ScreenToMapCoordinate] Screen(68,337) → Map(5348,4881) → World(85568,156192) → Region(167,152) Cell(2,17) ID=39079
+[17:26:58.829]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.839] [ScreenToMapCoordinate] Screen(61,335) → Map(5341,4879) → World(85456,156128) → Region(166,152) Cell(14,15) ID=39078
+[17:26:58.839]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.839] [ScreenToMapCoordinate] Screen(54,333) → Map(5334,4877) → World(85344,156064) → Region(166,152) Cell(11,13) ID=39078
+[17:26:58.839]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.850] [ScreenToMapCoordinate] Screen(48,330) → Map(5328,4874) → World(85248,155968) → Region(166,152) Cell(8,10) ID=39078
+[17:26:58.850]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.859] [ScreenToMapCoordinate] Screen(40,328) → Map(5320,4872) → World(85120,155904) → Region(166,152) Cell(4,8) ID=39078
+[17:26:58.859]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.869] [ScreenToMapCoordinate] Screen(31,325) → Map(5311,4869) → World(84976,155808) → Region(165,152) Cell(15,5) ID=39077
+[17:26:58.869]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.879] [ScreenToMapCoordinate] Screen(23,322) → Map(5303,4866) → World(84848,155712) → Region(165,152) Cell(11,2) ID=39077
+[17:26:58.879]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.879] [ScreenToMapCoordinate] Screen(15,320) → Map(5295,4864) → World(84720,155648) → Region(165,152) Cell(7,0) ID=39077
+[17:26:58.879]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.890] [ScreenToMapCoordinate] Screen(8,319) → Map(5288,4863) → World(84608,155616) → Region(165,151) Cell(4,31) ID=38821
+[17:26:58.890]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.899] [ScreenToMapCoordinate] Screen(2,319) → Map(5282,4863) → World(84512,155616) → Region(165,151) Cell(1,31) ID=38821
+[17:26:58.899]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:58.908] [ScreenToMapCoordinate] Screen(0,319) → Map(5280,4863) → World(84480,155616) → Region(165,151) Cell(0,31) ID=38821
+[17:26:58.909]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.159] [ScreenToMapCoordinate] Screen(1,497) → Map(5281,5041) → World(84496,161312) → Region(165,157) Cell(0,17) ID=40357
+[17:26:59.159]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.191] [ScreenToMapCoordinate] Screen(3,497) → Map(5283,5041) → World(84528,161312) → Region(165,157) Cell(1,17) ID=40357
+[17:26:59.191]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.199] [ScreenToMapCoordinate] Screen(4,499) → Map(5284,5043) → World(84544,161376) → Region(165,157) Cell(2,19) ID=40357
+[17:26:59.199]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.280] [ScreenToMapCoordinate] Screen(7,499) → Map(5287,5043) → World(84592,161376) → Region(165,157) Cell(3,19) ID=40357
+[17:26:59.280]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.280] [ScreenToMapCoordinate] Screen(9,498) → Map(5289,5042) → World(84624,161344) → Region(165,157) Cell(4,18) ID=40357
+[17:26:59.280]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.309] [ScreenToMapCoordinate] Screen(10,497) → Map(5290,5041) → World(84640,161312) → Region(165,157) Cell(5,17) ID=40357
+[17:26:59.309]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.319] [ScreenToMapCoordinate] Screen(12,492) → Map(5292,5036) → World(84672,161152) → Region(165,157) Cell(6,12) ID=40357
+[17:26:59.319]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.324] [ScreenToMapCoordinate] Screen(13,486) → Map(5293,5030) → World(84688,160960) → Region(165,157) Cell(6,6) ID=40357
+[17:26:59.324]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.329] [ScreenToMapCoordinate] Screen(14,480) → Map(5294,5024) → World(84704,160768) → Region(165,157) Cell(7,0) ID=40357
+[17:26:59.329]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.339] [ScreenToMapCoordinate] Screen(15,479) → Map(5295,5023) → World(84720,160736) → Region(165,156) Cell(7,31) ID=40101
+[17:26:59.339]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.349] [ScreenToMapCoordinate] Screen(15,478) → Map(5295,5022) → World(84720,160704) → Region(165,156) Cell(7,30) ID=40101
+[17:26:59.349]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.359] [ScreenToMapCoordinate] Screen(16,478) → Map(5296,5022) → World(84736,160704) → Region(165,156) Cell(8,30) ID=40101
+[17:26:59.359]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.369] [ScreenToMapCoordinate] Screen(17,479) → Map(5297,5023) → World(84752,160736) → Region(165,156) Cell(8,31) ID=40101
+[17:26:59.369]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.379] [ScreenToMapCoordinate] Screen(18,484) → Map(5298,5028) → World(84768,160896) → Region(165,157) Cell(9,4) ID=40357
+[17:26:59.379]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.379] [ScreenToMapCoordinate] Screen(25,491) → Map(5305,5035) → World(84880,161120) → Region(165,157) Cell(12,11) ID=40357
+[17:26:59.379]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.395] [ScreenToMapCoordinate] Screen(29,498) → Map(5309,5042) → World(84944,161344) → Region(165,157) Cell(14,18) ID=40357
+[17:26:59.395]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.399] [ScreenToMapCoordinate] Screen(39,506) → Map(5319,5050) → World(85104,161600) → Region(166,157) Cell(3,26) ID=40358
+[17:26:59.399]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.399] [ScreenToMapCoordinate] Screen(52,516) → Map(5332,5060) → World(85312,161920) → Region(166,158) Cell(10,4) ID=40614
+[17:26:59.399]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.409] [ScreenToMapCoordinate] Screen(69,536) → Map(5349,5080) → World(85584,162560) → Region(167,158) Cell(2,24) ID=40615
+[17:26:59.409]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.424] [ScreenToMapCoordinate] Screen(86,556) → Map(5366,5100) → World(85856,163200) → Region(167,159) Cell(11,12) ID=40871
+[17:26:59.424]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.429] [ScreenToMapCoordinate] Screen(102,578) → Map(5382,5122) → World(86112,163904) → Region(168,160) Cell(3,2) ID=41128
+[17:26:59.429]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.439] [ScreenToMapCoordinate] Screen(115,595) → Map(5395,5139) → World(86320,164448) → Region(168,160) Cell(9,19) ID=41128
+[17:26:59.439]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.449] [ScreenToMapCoordinate] Screen(127,618) → Map(5407,5162) → World(86512,165184) → Region(168,161) Cell(15,10) ID=41384
+[17:26:59.449]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.457] [ScreenToMapCoordinate] Screen(140,642) → Map(5420,5186) → World(86720,165952) → Region(169,162) Cell(6,2) ID=41641
+[17:26:59.457]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:26:59.459] [ScreenToMapCoordinate] Screen(153,668) → Map(5433,5212) → World(86928,166784) → Region(169,162) Cell(12,28) ID=41641
+[17:26:59.459]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:27:20.899] [ScreenToMapCoordinate] Screen(500,118) → Map(5780,4662) → World(92480,149184) → Region(180,145) Cell(10,22) ID=37300
+[17:27:20.899]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:27:20.904] [ScreenToMapCoordinate] Screen(485,101) → Map(5765,4645) → World(92240,148640) → Region(180,145) Cell(2,5) ID=37300
+[17:27:20.904]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:27:20.914] [ScreenToMapCoordinate] Screen(471,84) → Map(5751,4628) → World(92016,148096) → Region(179,144) Cell(11,20) ID=37043
+[17:27:20.914]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:27:20.919] [ScreenToMapCoordinate] Screen(453,66) → Map(5733,4610) → World(91728,147520) → Region(179,144) Cell(2,2) ID=37043
+[17:27:20.919]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:27:20.929] [ScreenToMapCoordinate] Screen(438,48) → Map(5718,4592) → World(91488,146944) → Region(178,143) Cell(11,16) ID=36786
+[17:27:20.929]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:27:20.938] [ScreenToMapCoordinate] Screen(428,34) → Map(5708,4578) → World(91328,146496) → Region(178,143) Cell(6,2) ID=36786
+[17:27:20.938]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:27:20.939] [ScreenToMapCoordinate] Screen(421,21) → Map(5701,4565) → World(91216,146080) → Region(178,142) Cell(2,21) ID=36530
+[17:27:20.939]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:27:20.949] [ScreenToMapCoordinate] Screen(415,10) → Map(5695,4554) → World(91120,145728) → Region(177,142) Cell(15,10) ID=36529
+[17:27:20.949]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:27:20.959] [ScreenToMapCoordinate] Screen(413,0) → Map(5693,4544) → World(91088,145408) → Region(177,142) Cell(14,0) ID=36529
+[17:27:20.959]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.278] [ScreenToMapCoordinate] Screen(595,634) → Map(5875,5178) → World(94000,165696) → Region(183,161) Cell(9,26) ID=41399
+[17:32:05.278]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.285] [ScreenToMapCoordinate] Screen(609,583) → Map(5889,5127) → World(94224,164064) → Region(184,160) Cell(0,7) ID=41144
+[17:32:05.285]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.291] [ScreenToMapCoordinate] Screen(625,532) → Map(5905,5076) → World(94480,162432) → Region(184,158) Cell(8,20) ID=40632
+[17:32:05.291]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.299] [ScreenToMapCoordinate] Screen(641,485) → Map(5921,5029) → World(94736,160928) → Region(185,157) Cell(0,5) ID=40377
+[17:32:05.301]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.305] [ScreenToMapCoordinate] Screen(656,436) → Map(5936,4980) → World(94976,159360) → Region(185,155) Cell(8,20) ID=39865
+[17:32:05.305]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.314] [ScreenToMapCoordinate] Screen(669,395) → Map(5949,4939) → World(95184,158048) → Region(185,154) Cell(14,11) ID=39609
+[17:32:05.314]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.322] [ScreenToMapCoordinate] Screen(689,351) → Map(5969,4895) → World(95504,156640) → Region(186,152) Cell(8,31) ID=39098
+[17:32:05.322]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.329] [ScreenToMapCoordinate] Screen(702,310) → Map(5982,4854) → World(95712,155328) → Region(186,151) Cell(15,22) ID=38842
+[17:32:05.329]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.337] [ScreenToMapCoordinate] Screen(718,276) → Map(5998,4820) → World(95968,154240) → Region(187,150) Cell(7,20) ID=38587
+[17:32:05.337]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.345] [ScreenToMapCoordinate] Screen(731,245) → Map(6011,4789) → World(96176,153248) → Region(187,149) Cell(13,21) ID=38331
+[17:32:05.345]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.353] [ScreenToMapCoordinate] Screen(745,219) → Map(6025,4763) → World(96400,152416) → Region(188,148) Cell(4,27) ID=38076
+[17:32:05.353]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.361] [ScreenToMapCoordinate] Screen(763,192) → Map(6043,4736) → World(96688,151552) → Region(188,148) Cell(13,0) ID=38076
+[17:32:05.361]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.369] [ScreenToMapCoordinate] Screen(787,166) → Map(6067,4710) → World(97072,150720) → Region(189,147) Cell(9,6) ID=37821
+[17:32:05.369]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.376] [ScreenToMapCoordinate] Screen(813,145) → Map(6093,4689) → World(97488,150048) → Region(190,146) Cell(6,17) ID=37566
+[17:32:05.376]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.385] [ScreenToMapCoordinate] Screen(840,129) → Map(6120,4673) → World(97920,149536) → Region(191,146) Cell(4,1) ID=37567
+[17:32:05.385]   Zoom=1.00, ViewOffset=(5280,4544)
+[17:32:05.389] [ScreenToMapCoordinate] Screen(870,107) → Map(6150,4651) → World(98400,148832) → Region(192,145) Cell(3,11) ID=37312
+[17:32:05.389]   Zoom=1.00, ViewOffset=(5280,4544)

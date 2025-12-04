@@ -1,0 +1,2 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	Level	IsLoad
+26	21	62512	114560		Th­¬ng ­ng	10	1

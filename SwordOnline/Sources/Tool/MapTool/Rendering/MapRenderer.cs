@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using MapTool.MapData;
+using MapTool.NPC;
 using MapRegionData = MapTool.MapData.RegionData;
 
 namespace MapTool.Rendering
@@ -24,11 +25,16 @@ namespace MapTool.Rendering
         private int _mapImageOffsetX = 0;
         private int _mapImageOffsetY = 0;
 
+        // NPC markers
+        private List<NpcEntry> _npcMarkers = new List<NpcEntry>();
+
         // Colors - Simple overlay visualization
         private Color _gridColor = Color.FromArgb(80, 100, 100, 120);  // Subtle grid
         private Color _regionBorderColor = Color.FromArgb(150, 80, 120, 255);  // Semi-transparent border
         private Color _walkableCellColor = Color.FromArgb(60, 0, 255, 0);       // Semi-transparent GREEN for walkable areas
-        private Color _trapColor = Color.FromArgb(120, 255, 220, 0);            // Semi-transparent YELLOW for traps
+        private Color _trapColor = Color.FromArgb(200, 255, 0, 0);              // RED for traps
+        private Color _npcColor = Color.FromArgb(200, 200, 0, 255);             // PURPLE for NPCs
+        private Color _objectColor = Color.FromArgb(200, 255, 255, 0);          // YELLOW for objects
         private Color _selectedCellColor = Color.FromArgb(200, 0, 255, 0);      // Bright green selection
         private Color _backgroundColor = Color.FromArgb(255, 140, 180, 140);     // Green background like terrain
 
@@ -60,6 +66,31 @@ namespace MapTool.Rendering
         public void ClearRegions()
         {
             _loadedRegions.Clear();
+        }
+
+        /// <summary>
+        /// Set NPC markers to display on map
+        /// </summary>
+        public void SetNpcMarkers(List<NpcEntry> npcs)
+        {
+            _npcMarkers = npcs ?? new List<NpcEntry>();
+
+            // Debug logging
+            DebugLogger.Log($"[MapRenderer] SetNpcMarkers: {_npcMarkers.Count} NPCs");
+            foreach (var npc in _npcMarkers)
+            {
+                int mapX = npc.PosX / MapConstants.MAP_SCALE_H;
+                int mapY = npc.PosY / MapConstants.MAP_SCALE_V;
+                DebugLogger.Log($"   NPC {npc.NpcID}: World({npc.PosX},{npc.PosY}) → Map({mapX},{mapY})");
+            }
+        }
+
+        /// <summary>
+        /// Clear NPC markers
+        /// </summary>
+        public void ClearNpcMarkers()
+        {
+            _npcMarkers.Clear();
         }
 
         /// <summary>
@@ -170,9 +201,69 @@ namespace MapTool.Rendering
                 RenderRegion(g, region, selectedCoord);
             }
 
+            // Draw NPC markers
+            RenderNpcMarkers(g);
+
             // Draw coordinate info
             g.ResetTransform();
             DrawCoordinateInfo(g, width, height, selectedCoord);
+        }
+
+        /// <summary>
+        /// Render NPC markers at their world positions
+        /// </summary>
+        private void RenderNpcMarkers(Graphics g)
+        {
+            if (_npcMarkers == null || _npcMarkers.Count == 0)
+                return;
+
+            foreach (var npc in _npcMarkers)
+            {
+                // PosX/PosY from Npc_Load.txt are in WORLD coordinates (logic coordinates)
+                // Need to convert to MAP coordinates (24.jpg pixel coordinates)
+                // WorldX → MapX: divide by MAP_SCALE_H (16)
+                // WorldY → MapY: divide by MAP_SCALE_V (32)
+                int mapX = npc.PosX / MapConstants.MAP_SCALE_H;
+                int mapY = npc.PosY / MapConstants.MAP_SCALE_V;
+
+                // Convert MAP coordinates to screen coordinates
+                int screenX = mapX - _viewOffsetX;
+                int screenY = mapY - _viewOffsetY;
+
+                // Draw NPC marker as a circle (8 pixel diameter)
+                int markerSize = 8;
+                Rectangle markerRect = new Rectangle(
+                    screenX - markerSize / 2,
+                    screenY - markerSize / 2,
+                    markerSize,
+                    markerSize
+                );
+
+                // Draw filled circle with border
+                using (SolidBrush brush = new SolidBrush(_npcColor))
+                using (Pen pen = new Pen(Color.White, 1))
+                {
+                    g.FillEllipse(brush, markerRect);
+                    g.DrawEllipse(pen, markerRect);
+                }
+
+                // Draw NPC ID text next to marker (smaller font)
+                using (Font font = new Font("Arial", 6))
+                using (SolidBrush textBrush = new SolidBrush(Color.White))
+                using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, 0, 0, 0)))
+                {
+                    string npcText = $"NPC {npc.NpcID}";
+                    SizeF textSize = g.MeasureString(npcText, font);
+                    Rectangle textBg = new Rectangle(
+                        screenX + markerSize / 2 + 2,
+                        screenY - (int)textSize.Height / 2,
+                        (int)textSize.Width + 4,
+                        (int)textSize.Height
+                    );
+                    g.FillRectangle(bgBrush, textBg);
+                    g.DrawString(npcText, font, textBrush, screenX + markerSize / 2 + 4, screenY - textSize.Height / 2);
+                }
+            }
         }
 
         /// <summary>

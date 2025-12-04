@@ -1,0 +1,34 @@
+TotalFile:32	PakTime:2025-12-3 15:21:8	PakTimeSave:95b3fd10	CRC:00000000
+Index	ID	Time	FileName	Size	InPakSize	ComprFlag	CRC
+0	34fc6dbe	2000-1-1 0:0:0	\settings\droprate\goldennpc\80_01234droprate.ini	0	0	0	0
+1	5279948e	2000-1-1 0:0:0	\settings\droprate\goldennpc\80_02droprate.ini	0	0	0	0
+2	50f700a4	2000-1-1 0:0:0	\settings\droprate\goldennpc\80_04droprate.ini	0	0	0	0
+3	1d57f5e4	2000-1-1 0:0:0	\settings\droprate\goldennpc\80_12droprate.ini	0	0	0	0
+4	85227802	2000-1-1 0:0:0	\settings\droprate\goldennpc\80_13droprate.ini	0	0	0	0
+5	7dfe4062	2000-1-1 0:0:0	\settings\droprate\goldennpc\80_34droprate.ini	0	0	0	0
+6	61ff76b	2000-1-1 0:0:0	\settings\droprate\goldennpc\90_01234droprate.ini	0	0	0	0
+7	c65736ab	2000-1-1 0:0:0	\settings\droprate\goldennpc\90_02droprate.ini	0	0	0	0
+8	391f9a2f	2000-1-1 0:0:0	\settings\droprate\goldennpc\90_13droprate.ini	0	0	0	0
+9	5ab9b16f	2000-1-1 0:0:0	\settings\droprate\goldennpc\90_34droprate.ini	0	0	0	0
+10	4d4d7bed	2000-1-1 0:0:0	\settings\droprate\goldennpc\golden_lv40.ini	0	0	0	0
+11	dd850b5b	2000-1-1 0:0:0	\settings\droprate\goldennpc\golden_lv60.ini	0	0	0	0
+12	15f92292	2000-1-1 0:0:0	\settings\droprate\goldennpc\golden_lv70.ini	0	0	0	0
+13	f4e9062b	2000-1-1 0:0:0	\settings\droprate\goldennpc\goldendroprate_jinshandao.ini	0	0	0	0
+14	251fb8ae	2000-1-1 0:0:0	\settings\droprate\goldennpc\goldendroprate_mobeicaoyuan.ini	0	0	0	0
+15	1430ce0d	2000-1-1 0:0:0	\settings\droprate\npcdroprate10.ini	0	0	0	0
+16	20aa634c	2000-1-1 0:0:0	\settings\droprate\npcdroprate20.ini	0	0	0	0
+17	4d03878b	2000-1-1 0:0:0	\settings\droprate\npcdroprate30.ini	0	0	0	0
+18	99e538ca	2000-1-1 0:0:0	\settings\droprate\npcdroprate40.ini	0	0	0	0
+19	aa5f5d09	2000-1-1 0:0:0	\settings\droprate\npcdroprate50.ini	0	0	0	0
+20	f730fe48	2000-1-1 0:0:0	\settings\droprate\npcdroprate60.ini	0	0	0	0
+21	3aa1297	2000-1-1 0:0:0	\settings\droprate\npcdroprate70.ini	0	0	0	0
+22	2c03b7d6	2000-1-1 0:0:0	\settings\droprate\npcdroprate80.ini	0	0	0	0
+23	78e52815	2000-1-1 0:0:0	\settings\droprate\npcdroprate90.ini	0	0	0	0
+24	f14fefc	2000-1-1 0:0:0	\settings\droprate\satthu.ini	0	0	0	0
+25	751dc110	2000-1-1 0:0:0	\settings\item\npcdroprate.ini	0	0	0	0
+26	57a895a0	2000-1-1 0:0:0	\settings\maps\partner\northwest_1.txt	0	0	0	0
+27	28d06afb	2000-1-1 0:0:0	\settings\npc\player\level_add.txt	0	0	0	0
+28	b9a66697	2000-1-1 0:0:0	\settings\npc\player\level_exp.txt	0	0	0	0
+29	dc7d041c	2000-1-1 0:0:0	\settings\npc\player\level_lead_exp.txt	0	0	0	0
+30	8b07df01	2000-1-1 0:0:0	\settings\npc\player\revivalid.ini	0	0	0	0
+31	38ebcb17	2000-1-1 0:0:0	\settings\npcs.txt	0	0	0	0

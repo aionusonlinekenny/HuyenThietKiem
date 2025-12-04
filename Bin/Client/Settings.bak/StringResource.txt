@@ -1,0 +1,580 @@
+ID	STRING
+10001	*********Vâ L©m TruyÒn Kú************
+10002	<color=green>B¸o víi GM ®Ó söa lçi.<color>
+10003	<color=red>Thao t¸c phi ph¸p.<color>
+10004	ThiÕu l©m ph¸i lu«n ®­îc xem lµ Vâ l©m ®Ö nhÊt m«n ph¸i, mÖnh danh 'Th¸i s¬n b¾c ®Èu' cña Trung nguyªn vâ l©m
+10005	C¨n b¶n cña ng­¬i cßn kĞm l¾m! H·y ®i luyÖn tËp thªm, bao giê ®Õn <color=red>cÊp 10<color> l¹i ®Õn t×m ta!
+10006	Tªn ch÷ tr¾ng míi cã thÓ gia nhËp m«n ph¸i!
+10007	Thuéc tİnh ngò hµnh kh«ng phï hîp! Kh«ng thÓ gia nhËp m«n ph¸i!
+10008	ThiÕu L©m thanh tŞnh kh«ng thÓ thu n¹p n÷ giíi!
+10009	ThiÕu L©m kh«ng hæ danh lµ danh m«n chİnh ph¸i! Huynh ®Ö cã muèn gia nhËp kh«ng?
+10010	Quı m«n lÊy vò luyÖn vâ! UyÓn chuyÓn mµ tinh diÖu! TiÓu t¨ng v« cïng béi phôc!
+10011	Thanh HiÓu S­ Th¸i cña quı ph¸i tinh th«ng phËt häc, vâ nghÖ cao c­êng, tiÓu t¨ng ng­ìng mé ®· l©u!
+10012	Nghe nãi tõ §­êng m«n ®æi ¸m khİ thµnh minh khİ, h¹ thñ xuÊt thÇn! T¹i h¹ rÊt kh©m phôc!
+10013	§éc M«n cña quı gi¸o thiªn h¹ ®Òu o¸n ghĞt! BÇn t¨ng m¹o muéi khuyªn c¸c ng­¬i nªn tu söa PhËt tËp! Quay ®Çu lµ bê!
+10014	Nghe nãi Kim quèc ®ang muèn tiªu diÖt quı bang tËn gèc! Xin c¸c vŞ v« cïng thËn träng!
+10015	Xin chuyÓn lêi hái th¨m cu¶ bÇn t¨ng ®Õn §¹o NhÊt Ch©n Nh©n! Cã dŞp sÏ ®Õn ®Ó thØnh gi¸o ng­êi!
+10016	Ng­êi luyÖn vâ kş nhÊt lµ h¸m danh vµ ®è kŞ! A Di ®µ PhËt!
+10017	Quı gi¸o tuy ®­îc Kim quèc b¶o hé, nh­ng giang hå cã quy t¾c cña giang hå. Kh«ng ph¶i muèn lµm g× th× lµm.
+10018	D­íi sù l·nh ®¹o cña quı bang, d©n chóng ®· cã nh÷ng ngµy yªn b×nh h¹nh phóc! V¹n lÇn béi phôc! Béi phôc!
+10019	Ng­¬i thùc sù cho m×nh ®· ®ñ b¶n lÜnh ®Ó xuÊt s­ xuèng nói sao? H·y suy nghÜ cho thËt thÊu ®¸o!<enter>§Ó xuÊt s­ ng­¬i cÇn ®¹t <color=green>®¼ng cÊp 60<color> vµ giao nép <color=gold>1 v¹n ng©n l­îng<color>
+10020	Ng­¬i luyÖn tËp ch­a ®ñ! Kh«ng thÓ xuÊt s­!
+10021	Ng­¬i kh«ng cã ®ñ <color=red>1 v¹n ng©n l­¬ng<color>! Kh«ng thÓ xuÊt s­!
+10022	Huynh ®Ö ®· ch¸n cuéc sèng cña ®Ö tö tôc gia muèn trë l¹i ThiÕu L©m Tù sao? Tuy nhiªn ®· lµ mét m«n ph¸i lín th× ph¶i cã phĞp t¾c râ rµng. §©u thª nãi ®Õn lµ ®Õn, ®i lµ ®i dÔ dµng ®­îc! §Ó trë vÒ cÇn ph¶i cã <color=gold>1 v¹n ng©n l­îng<color>. Huynh ®Ö cã mang theo chø?
+10023	Ng­¬i kh«ng cã ®ñ <color=red>1 v¹n ng©n l­îng<color>! Kh«ng thÓ quay trê l¹i m«n ph¸i!
+10024	Ng­¬i ®· trê thµnh ®Ö tö ThiÕu L©m ph¸i! H·y còng nhau trau dåi vâ häc, cøu nh©n ®é thÕ, tiªu trõ c¸i ¸c cña b¶n th©n vµ toµn thiªn h¹!
+10025	Ng­ìi ®· trë thµnh ®Ö tö ThiÕu L©m tôc gia! Dï sau nµy cã ®i trªn con ®­êng nµo th× h·y cè g¾ng ph¸t d­¬ng quan ®¹i ThiÕu L©m ph¸i chóng ta. §õng ®Ó cho ThiÕu L©m ph¶i hæ thÑn trong thiªn h¹.
+10026	Cuéc sèng trÇn tôc kh«ng hîp víi s­ ®Ö ­? Haha! Dï sao còng chµo mõng ng­¬i trá l¹i ThiÕu L©m Tù. Huynh ®Ö ta l¹i cã thÓ cïng nhau trau dåi vâ häc vµ phËt ph¸p råi.
+10027	§èi víi <color=metal>ThiÕu L©m Ph¸i<color> vâ nghÖ ®¹i kh¸i chia lµm ba lo¹i
+10028	Thø nhÊt lµ ThiÕu L©m quyÒn ph¸p së h÷u <color=metal>Hµng Long BÊt Vò <color>, <color=metal>Long Tr¶o Hæ Tr¶o<color>, <color=metal>§¹t Ma §é Giang<color>
+10029	Thø hai lµ ThiÕu L©m c«n ph¸p së h÷u <color=metal>Kim Cang Phôc Ma<color>, <color=metal>Hoµnh T¶o Lôc Hîp<color>, <color=metal>Hoµnh T¶o Thiªn Qu©n<color>
+10030	Thø ba lµ ThiÕu L©m ®ao ph¸p së h÷u <color=metal>Ma Ha V« L­îng<color>, <color=metal>V« T­íng Tr¶m<color>
+10031	Ngoµi c¸c chiªu thøc ®ã ra cßn cã <color=metal>BÊt §éng Minh V­¬ng<color>, <color=metal>La H¸n TrËn<color>, <color=metal>S­ Tö Hèng<color>, <color=metal>DŞch C©n Kinh<color>, <color=metal>Nh­ Lai Thiªn §iÖp<color>, <color=metal>§¹i Thõa Nh­ Lai Chó <color>
+10032	Bang chñ D­¬ng Anh vâ nghÖ cao c­êng, gan d¹ h¬n ng­êi, kh«ng kĞm g× th©n nam tö!
+10033	Bæn bang quy luËt uy nghiªm, ng­êi ®«ng thÕ m¹nh! Kh«ng ai trong thiªn h¹ d¸m coi khinh!
+10034	Bæn bang võa chèng Kim võa kh¸ng Tèng! Huynh ®Ö ®Òu xuÊt th©n lµ d©n nghÌo, phiªu b¹t giang hå lµ v× kÕ sinh nhai! Ai lµm vua kh«ng cÇn quan t©m tíi.
+10035	Thanh HiÓu S­ Th¸i cña quı ph¸i tinh th«ng phËt häc, vâ nghÖ cao c­êng, bæn bang ng­ìng mé ®· l©u!
+10036	N÷ nh©n vèn ®· phiÒn, n÷ nh©n biÕt vâ c«ng l¹i cµng phiÒn h¬n! Ng­êi cña quı ph¸i chóng ta kh«ng d¸m trªu vµo!
+10037	Ng­êi häc vâ cÇn ph¶i quang minh lçi l¹c! Ta ghĞt nhÊt bän ng­êi dïng ¸m khİ h¹ ®éc thñ ng­êi kh¸c!
+10038	Tuy bæn bang kh«ng mª muéi tİn nhiÖm bÊt cø danh m«n chİnh ph¸i nµo nh­ng còng coi khinh bän h¹ ®éc ®ª hÌn!
+10039	C«ng phu ThiÕu L©m th× cã g× hay ho? Hßa th­îng ®äc kinh giái míi lµ ®óng, häc ng­êi ta ®¸nh nhau ®Ó lµm gi?
+10040	Xin chuyÓn lêi hái th¨m cña t¹i h¹ ®Õn §¹o NhÊt Ch©n Nh©n! Cã dŞp sÏ ®Õn ®Ó thØnh gi¸o ng­êi!
+10041	Quı ph¸i gÇn ®©y ph¸t triÓn thÇn tèc! Qu¶ kh«ng ph¶i h­ danh! Nh­ng còng ®õng qu¸ xem th­êng vâ l©m Trung nguyªn!
+10042	Chóng ta quyÕt kh«ng giao h¶o víi bän ng­êi Kim!
+10043	Quı bang vµ bæn bang hîp thµnh Thiªn h¹ l­ìng ®¹i bang, cã c¬ héi chóng ta nªn th©n thiÕt h¬n n÷a!
+10044	ThÕ giíi bªn ngoµi ®Çy rÉy c¹m bÉy, hiÓm nguy. Ng­¬i cã ch¾c r»ng m×nh ®ñ b¶n lÜnh chèng chŞu hay kh«ng? H·y suy nghÜ cho thËt kü! §Ó rêi khái ®¶o t­ chÊt ph¶i ®¹t <color=green>®¼ng cÊp 60<color> vµ <color=gold>1 v¹n ng©n l­îng<color> ®Ó ta thu xÕp hµnh tr×nh!
+10045	Ng­¬i ®· rêi khái Thiªn V­¬ng Bang, h·y cè g¾ng b¶o träng, tu luyÖn cho thËt tèt ®õng lµm mÊt mÆt bæn bang! Sau nµy cã g× khã kh¨n cÇn gióp ®ì cø t×m huynh ®Ö Thiªn V­¬ng!
+10046	§¶o Thiªn V­¬ng néi quy nghiªm ngÆt, ®Şa h×nh nguy hiÓm. kh«ng thÓ tù ı x«ng vµo! §Ó ®­a ng­¬i trë vÒ ta cÇn <color=gold>1 v¹n ng©n l­îng<color> ®Ó s¾p xÕp lé tr×nh!
+10047	Chµo mõng ng­¬i trë l¹i víi bæn bang! Cè g¾ng tu luyÖn cho thËt tèt ®Ó cïng nhau gióp søc triÒu ®×nh tiªu diÖt ngo¹i bang Kim Quèc!
+10048	Ng­¬i hiÖn ®· trë thµnh ®Ö tö Thiªn V­¬ng Bang! H·y xem nhau nh­ ng­êi mét nhµ, cïng nhau trau dåi kiÕn thøc! Cã ®iÒu g× kh«ng hiÓu cø ®Õn t×m ta!
+10049	§Ö tö Thiªn V­¬ng Bang ngoµi trau dåi vâ häc cßn ph¶i gãp søc tiªu diÖt giÆc ngo¹i x©m. Ng­¬i muèn gia nhËp chø?
+10050	§èi víi <color=metal>Thiªn V­¬ng Bang<color> vâ nghÖ chia lµm ba ®­êng riªng biÖt
+10051	§­êng thø nhÊt Thiªn V­¬ng ®ao ph¸p së h÷u <color=metal>Kinh L«i Tr¶m<color>, <color=metal>B¸t Phong Tr¶m<color>, <color=metal>V« T©m Tr¶m<color>, <color=metal>Ph¸ Thiªn Tr¶m<color>
+10052	§­êng thø hai Thiªn V­¬ng th­¬ng ph¸p së h÷u <color=metal>Håi Phong L¹c Nh¹n<color>, <color=metal>D­¬ng Quan Tam §iÖp<color>, <color=metal>HuyÕt ChiÕn B¸t Ph­¬ng<color>, <color=metal>Truy Tinh Trôc NguyÖt<color>
+10053	§­êng thø ba Thiªn V­¬ng chïy ph¸p së h÷u <color=metal>Tr¶m Long QuyÕt<color>, <color=metal>Hµng V©n QuyÕt<color>, <color=metal>Thõa Long QuyÕt<color>, <color=metal>Truy Phong QuyÕt<color>
+10054	Ngoµi ra cßn sì h÷u c¸c kü n¨ng kh¸c nh­ <color=metal>TÜnh T©m QuyÕt<color>, <color=metal>§o¹n Hån Thİch<color>, <color=metal>Kim Chung Tr¸o<color>, <color=metal>Thiªn V­¬ng ChiÕn ı <color>, <color=metal>§¶o H­ Thiªn<color>
+10055	§­êng m«n hïng cø Xuyªn Thôc, ¸m khİ vµ háa khİ ®· lõng danh thiªn h¹. Ng­êi trong giang hå nghe ®Õn §­êng m«n th¶y ®Òu biÕn s¾c, ®ñ thÊy sù lîi h¹i cña bæn m«n.
+10056	C¸i g× lµ Vâ l©m chİnh ®¹o, d©n téc ®¹i nghÜa? Toµn lµ bän l¸o toĞt. Bæn m«n kh«ng ­a bän chİnh ®¹o, còng ch¼ng kÕt giao víi tµ ®¹o. Muèn gia nhËp bæn m«n kh«ng ph¶i lµ chuyÖn ®¬n gi¶n!
+10057	Bæn m«n tinh th«ng ¸m khİ, c¹m bÉy. §i kh«ng ai biÕt ë kh«ng ai hay. Cã muèn gia nhËp bæn m«n kh«ng?
+10058	Quı ph¸i ®èi vµ bæn m«n tr­íc tíi nay ch­a hÒ qua l¹i! Kh«ng biÕt cã g× chØ gi¸o!
+10059	Bæn m«n hµnh sù tuy kh«ng theo luËt lÖ, nh­ng còng kh«ng bao giê b¾t n¹t nh÷ng phô n÷ yÕu ®uèi!
+10060	§éc d­îc cña Ngò ®éc gi¸o tuy lîi h¹i nh­ng còng ch­a ch¾c ®· th¾ng ®­îc ¸m khİ cña §­êng m«n! Lóc nµo r¶nh rçi ta xin thØnh gi¸o vµi chiªu!
+10061	Quı bang xa tËn §éng §×nh Hå, tr­íc giê h×nh nh­ ch­a qua l¹i víi bæn bang! Xin hái cã g× chØ gi¸o?!
+10062	Bæn m«n x­a nay vèn ch¼ng ­a g× c¸i bän tù x­ng lµ danh m«n chİnh ph¸i c¸c ng­¬i!
+10063	Cã g× chØ gi¸o?
+10064	Ta ng­¬i vèn kh«ng ®Şch thï, còng ch­a kÕt qua b»ng h÷u! Kh«ng biÕt ph¶i ®èi ®·i thÕ nµo cho tiÖn ®©y!
+10065	Kh«ng ngê c¸i bän ¨n mµy ®ã mµ còng cã thÓ vang danh thiªn h¹! T¹i h¹ thËt mu«n phÇn b¸i phôc!
+10066	Trë thµnh ®Ö tö §­êng M«n ng­êi ph¶i tr¶i qua nh÷ng quy tr×nh khæ luyÖn rÊt kinh khñng! H·y chuÈn bŞ cho thËt tèt!
+10067	MÆc dï bæn m«n hµnh sù kh«ng cã nguyªn t¾c nh­ng ®©u thÓ nãi ®Õn lµ ®Õn, ®i lµ ®i. Ch­a kÓ ta kh«ng ch¾c r»ng ng­¬i ®· ®ñ n¨ng lùc ®Ó ®éc b­íc trong thiªn h¹. H·y tu luyÖn khi nµo ®at <color=green>®¼ng cÊp 60<color> vµ giao nép <color=gold>1 v¹n ng©n l­îng<color> ®Ó chøng tá thùc lùc.
+10068	Hy väng quyÕt ®Şnh rêi khái bæn m«n lµ ®óng ®¾n! H·y cè g¾ng ph¸t huy tinh hoa cña §­êng M«n. Lµm r¹ng danh bæn m«n trong thiªn h¹!
+10069	Ta buéc ph¶i thu phİ <color=gold>1 v¹n ng©n l­îng<color> míi cã thÓ ®­a ng­¬i trá vÒ. Xem nh­ lµ lé phİ ®i ®­êng!
+10070	H·y cè g¾ng tu luyÖn cho thËt tèt! Tinh th«ng tÊt c¶ tinh hoa ¸m khİ vµ c¹m bÉy th× trong thiªn h¹ rÊt İt tªn ®­îc xem lµ ®èi thñ!
+10071	§èi víi <color=wood>§­êng m«n<color> vâ nghÖ chia lµm bèn h­íng riªng biÖt
+10072	H­íng thø nhÊt sö dông phi ®ao së h÷u c¸c tuyÖt kü nh­ <color=wood>Tİch LŞch §¬n<color>, <color=wood>Truy T©m TiÔn<color>, <color=wood>TiÓu Lı Phi §ao<color>, <color=wood>NhiÕp Hån NguyÖt ¶nh<color>
+10073	H­íng thø hai sö dông phi tiªu së h÷u c¸c kü n¨ng <color=wood>Tİch LŞch §¬n<color>, <color=wood>§o¹t Hån Tiªu<color>, <color=wood>T¸n Hoa Tiªu<color>, <color=wood>Cöu Cung Phi Tinh<color>
+10074	H­íng thø ba sñ dông tô tiÔn së h÷u c¸c kü n¨ng <color=wood>Tİch LŞch §¬n<color>, <color=wood>M¹n Thiªn Hoa Vò, <color=wood>Thiªn La §Şa Vâng, <color=wood>B¹o Vò Lª Hoa<color>
+10075	H­íng thø t­ sö dông bÉy së h÷u c¸c kü n¨ng <color=wood>§Şa DiÖm Háa<color>, <color=wood>§éc Thİch Cèt<color>, <color=wood>Xuyªn T©m Thİch<color>, <color=wood>Hµn B¨ng Thİch<color>, <color=wood>L«i Kİch ThuËt<color>, <color=wood>Lo¹n Hoµn Kİch<color>
+10076	Ngoµi ra cßn cã c¸c kü n¨ng hç trî nh­ <color=wood>T©m Nh·n<color>, <color=wood>Mª ¶nh Tung<color>
+10077	Ngò §éc gi¸o hiÖn nay ®ang lóc h­ng thŞnh, l¹i liªn kÕt víi Thiªn NhÉn gi¸o hç trî §¹i Kim nam h¹! Ngµy sau vinh hoa phó quı sÏ cïng h­ëng!
+10078	Ni c« thói! ThËt lµ xui xÎo! Cø ®i ®i l¹i l¹i! Ph× ph× ph×! §¹i c¸t ®¹i lîi!
+10079	TiÓu mü n÷! §Õn th¨m ca ca nµy ­? Cho ta th¬m mét c¸i nµo! Hi hi!
+10080	§õng t­ëng Phi ®ao cña c¸c ng­¬i lµ ®Ö nhÊt thiªn h¹,®éc thuËt cña bæn gi¸o v« h×nh v« ¶nh, giÕt ng­êi trong nh¸y m¾t!
+10081	§èi ®Çu víi §¹i Kim sÏ ch¼ng İch lîi g× ®©u! Sím muén g× Kim quèc còng b×nh ®Şnh Trung Nguyªn, lóc ®ã c¸c ng­¬i hèi hËn còng muén råi!
+10082	Bän ®Çu träc c¸c ng­¬i th©n ë Kim Quèc nh­ng hån l¹i h­íng vÒ Nam triÒu! NÕu ®Ó lät vµo tay ta th× c¸c ng­¬i mét manh gi¸p còng kh«ng cßn! Ha! Ha! Ha!
+10083	Vâ §ang ®¹i hiÖp l¹i muèn chØ gi¸o cho t¹i h¹ ­? ThËt lµ nùc c­êi!
+10084	Bän c¸c ng­¬i qu¶ lµ kh«ng biÕt nh×n thêi thÕ! Dùa vµo søc c¸c ng­¬i mµ còng ®ßi chèng ®èi víi §¹i kim ­?
+10085	Chóng ta l­ìng ph¸i liªn minh, Nam c«ng B¾c kİch, sang s¬n hoa lÖ nµy sím muén g× còng thuéc vÒ chóng ta th«i! Ha! Ha! Ha!
+10086	¡n mµy thói! §i ®i! §õng cã lµm bÈn ¸o cña ®¹i gia!
+10087	Sao h¶? Cã muèn gia nhËp bæn gi¸o kh«ng?
+10088	Ng­¬i ®· trë thµnh ®Ö tö Ngò §éc gi¸o! H·y tİch cùc tu luyÖn ®éc thuËt, cïng chóng ta m­u cÇu ®¹i sù! 
+10089	§Ö tö tinh anh cña bæn gi¸o ®­îc ph¸i ®i kh¾p n¬i ®Ó chuÈn bŞ cho ®¹i sù! Ng­¬i c¶m thÊy m×nh cã ®ñ kh¶ n¨ng ®ã hay kh«ng? Muèn trë thµnh s¸t thñ tiªn phong ph¶i ®¹t <color=green>®¼ng cÊp 60<color> vµ mang theo <color=gold>1 v¹n ng©n l­îng<color>!
+10090	Hy väng sau khi xuèng nói ng­¬i sÏ gãp søc phôc vô cho ®¹i sù cña bæn gi¸o! KÕ thõa tinh thÇn Kim Quèc! Cho bän tù x­ng lµ danh m«n chİnh ph¸i kia mét bµi häc nhí ®êi!
+10091	§éc thuËt cña ng­¬i vÉn cßn kĞm! Kh«ng thÓ ®¬n th©n ®éc m· chiÕn ®Êu! Ta cÇn <color=gold>1 v¹n ng©n l­îng<color> ®Ó mua nguyªn liÖu bµo chÕ gióp ng­¬i n©ng cao nguyªn khİ! Cã mang theo bªn m×nh kh«ng?
+10092	Nguyªn khİ ®¹i t¨ng, nh­ng ch­a æn ®Şnh! Ng­¬i nªn tËp trung tu luyÖn ®Ó luyÖn hãa hoµn toµn! Cã g× th¾c m¾c cø quay l¹i t×m ta!
+10093	§èi víi <color=wood>Ngò §éc gi¸o<color> vâ c«ng chia lµm ba h­íng kh¸c nhau
+10094	H­íng thø nhÊt lµ ch­ëng ph¸p së h÷u c¸c kü n¨ng <color=wood>§éc Sa Ch­ëng<color>, <color=wood>U Minh Kh« L©u<color>, <color=wood>Thiªn C­¬ng §Şa S¸t<color>, <color=wood>¢m Phong Thùc Cèt<color>
+10095	H­íng thø hai lµ ®ao ph¸p së h÷u kü n¨ng <color=wood>HuyÕt §ao §éc S¸t<color>, <color=wood>B¸ch §éc Xuyªn T©m<color>, <color=wood>Chu C¸p Thanh Minh<color>, <color=wood>HuyÒn ¢m Tr¶m<color>
+10096	H­íng thø ba sö dông bïa chó së h÷u c¸c tuyÖt kü <color=wood>Cöu Thiªn Cuång L«i<color>, <color=wood>Xİch DiÖn Thùc Thiªn<color>, <color=wood>B¨ng Lam HuyÒn Tinh<color>, <color=wood>Xuyªn Y Ph¸ Gi¸p<color>, <color=wood>V¹n cèt Thùc T©m<color>, <color=wood>Xuyªn T©m §éc Thİch<color>, <color=wood>§o¹n C©n Hñ Cèt<color>
+10097	Ngoµi ra cßn së h÷u mét sè tuyÖt kü hæ trî nh­ <color=wood>T¹p Nan D­îc Kinh<color>, <color=wood>V« H×nh §éc<color>, <color=wood>Ngò §éc K× Kinh<color>, <color=wood>HÊp Tinh YÓm<color>
+10098	Trong thiªn h¹ c¸c m«n ph¸i do n÷ nhi s¸ng lËp th× bæn ph¸i ®øng ®Çu! §Ö tö bæn ph¸i kh«ng nh÷ng vâ nghÖ cao c­êng, cÇm kú thi häa ®Òu tinh th«ng! Ai nãi giang hå lµ thÕ giíi cña nam nh©n th× cø nh×n bæn ph¸i mµ lµm g­¬ng!
+10099	Quı m«n danh chÊn V©n Nam. Tr­íc giê ch­a cïng bæn ph¸i qua l¹i. Kh«ng biÕt cã g× chØ gi¸o!
+10100	Ng­¬i lµ ng­êi cña Thôc Nam §­êng M«n? Bæn ph¸i lµ danh m«n ch¸nh ph¸i, tr­íc giê kh«ng qua l¹i víi nh÷ng ng­êi cã t­ t­ëng kh«ng chİnh thèng!
+10101	Bän tµ ma ngo¹i ®¹o c¸c ng­¬i! Ai ai còng muèn tiªu diÖt!
+10102	Quı bang bang chñ D­¬ng Anh lµ mét bËc n÷ trung hµo kiÖt! BÇn ni tõ l©u ng­ìng mé! Mong sÏ cã ngµy diÖn kiÕn!
+10103	A di ®µ phËt! Th× ra lµ hßa th­îng ThiÕu l©m, kh«ng biÕt HuyÒn Nh©n ®¹i s­ gÇn ®©y cã kháe kh«ng?
+10104	Vâ ®ang hiÖp nghÜa, danh chÊn thiªn h¹. §¹o NhÊt Ch©n Nh©n cña quı ph¸i vµ ch­ëng m«n cña bæn ph¸i giao t×nh th©m s©u. Hai ph¸i chóng ta cã thÓ nãi lµ anh em mét nhµ.
+10105	TÖ ph¸i vµ quı ph¸i ch­a hÒ qua l¹i, kh«ng biÕt cã g× chØ gi¸o?
+10106	C¸c ng­¬i phô thuéc Kim quèc, lu«n dßm ngã giang s¬n §¹i Tèng ta. Vâ l©m chİnh ph¸i chóng ta vµ c¸c ng­¬i thÒ kh«ng ®éi trêi chung!
+10107	Quı bang ng­êi ®«ng thÕ m¹nh, hµo khİ xung thiªn, bæn ph¸i rÊt vui ®­îc kÕt giao víi nh÷ng b»ng h÷u nh­ vËy!
+10108	Gia nhËp Nga My ph¸i, chóng ta sÏ lµ tû muéi 1 nhµ! Häa phóc cïng h­ëng!
+10109	Nam nh©n kh«ng thÓ gia nhËp Nga My ph¸i! Ph¶i ch¨ng ng­¬i muèn bën cît chóng ta!
+10110	TiÓu muéi! Chóng ta ®· lµ ng­êi mét nhµ! Sau nµy cã phóc cïng h­ëng cã häa cïng chia! Cã viÖc g× cø ®Õn t×m ta!
+10111	Rêi khái nói Nga My ra thÕ giíi bªn ngoµi rÊt phøc t¹p! Muéi ®· suy nghÜ kü ch­a! C¨n b¶n tèi thiÓu ph¶i ®¹t <color=green>®¼ng cÊp 60<color>, mang theo <color=gold>1 v¹n ng©n l­îng<color> bªn ng­êi ®Ó phßng th©n!
+10112	Ta sÏ tiÔn muéi xuèng nói! Hy väng sÏ cã ngµy chóng ta gÆp l¹i!
+10113	Trªn ®­êng trë l¹i nói ®­êng ®i hiÓm trë, s¬n tÆc hoµnh hµnh! Muéi h·y chuÈn bŞ <color=gold>1 v¹n ng©n l­îng<color> ®Ó ®Ò phßng bÊt tr¾c!
+10114	Tèt chóng ta ®i th«i nµo!
+10115	§èi víi <color=water>Nga My ph¸i<color> vâ c«ng chia lµm ba h­íng kh¸c nhau
+10116	H­íng thø nhÊt lµ kiÕm ph¸p së h÷u c¸c kü n¨ng <color=water>NhÊt DiÖp Tri Thu<color>, <color=water>Th«i Song Väng NguyÖt<color>, <color=water>BÊt DiÖt BÊt TuyÖt, <color=water>Tam Nga TÒ TuyÕt<color>
+10117	H­íng thø hai lµ ch­ëng ph¸p së h÷u kü n¨ng <color=water>Phiªu TuyÕt Xuyªn V©n<color>, <color=water>Tø T­îng §ång Quy<color>, <color=water>PhËt Quang Phæ ChiÕu<color>, <color=water>Phong S­¬ng To¸i ¶nh<color>
+10118	H­íng thø ba nghiªn vÒ hç trî víi c¸c kü n¨ng nh­ <color=water>Tõ Hµng Phæ §é<color>, <color=water>Méng §iÖp<color>, <color=water>L­u Thñy<color>, <color=water>PhËt T©m Tõ Hùu<color>, <color=water>Thanh ¢m Ph¹n X­íng<color>, <color=water>Phæ §é Chóng Sinh<color>
+10119	Ngoµi ra cßn cã c¸c kü n¨ng nh­ <color=water>PhËt Ph¸p V« Biªn<color>, <color=water>BÕ NguyÖt PhÊt TrÇn<color>
+10120	Thóy Yªn m«n chóng ta tuy toµn lµ n÷, nh­ng vâ nghÖ lÊy 'Khinh, Kho¸i, Kú, Mü' mµ næi tiÕng giang hå. Tû muéi tÒ t©m! Trong giang hå kh«ng ai d¸m coi khinh!
+10121	§ao ph¸p kú ¶o! Th©n ¶nh nh­ m©y tuyÕt ¶o diÖu v« cïng? TiÓu muéi muèn gia nhËp bæn m«n chø?
+10122	Xinh ®Ñp nh­ hoa t­¬i mµ h»ng ngµy cø ®èi diÖn víi Thanh §¨ng Cæ PhËt! Ta kh«ng thİch c¸c ng­¬i ë ®iÓm nµy!
+10123	Hai ph¸i chóng ta liªn minh l¹i, kh«ng cÇn ph¶i ph©n tranh n÷a! Ch¼ng ph¶i lµ hû sù ­?
+10124	Ta ghĞt nhÊt lµ c¸i bän len lĞn h¹ ®éc h¹i ng­êi! Êy! Kh«ng ph¶i ta nãi ng­¬i!
+10125	D­¬ng Hå cña Thiªn V­¬ng bang c¸c ng­¬i cßn kĞm xa tû tû cña ta, thiªn h¹ nam nh©n qu¶ nhiªn ch¼ng ra g× hÕt!
+10126	Hßa th­îng ®Çu träc sao l¹i ®Õn n¬i cña c¸c n÷ nhi thÕ nµy?
+10127	Quı ph¸i lÊy hiÖp nghÜa lµm träng, nh­ng kh«ng biÕt §¬n T­ Nam cã biÕt hæ thÑn hay kh«ng mµ cø b¸m theo c¸c s­ tû xinh ®Ñp cña chóng ta!
+10128	C«n L«n ph¸i ph¸t triÓn thÇn tèc! TiÓu n÷ rÊt ng­ìng mé!
+10129	Ai lµm hoµng ®Õ th× còng mÆc! Nh­ng c¸c ng­¬i tµn s¸t sinh linh th× bæn c« n­¬ng kh«ng bá qua!
+10130	§¹i hiÖp! §õng qua ®©y!
+10131	N÷ hiÖp! §õng qua ®©y!
+10132	¸! Bä chĞt!
+10133	N¬i nµy kh«ng thÓ cho nam nh©n gia nhËp! Nªu ng­¬i biÕt ®iÒu th× nªn ®i ®i!
+10134	Chµo mõng tiÓu muéi trë thµnh mét phÇn trong ®¹i gia ®×nh Thóy Yªn m«n! Sau nµy cã g× kh«ng hiÓu cø ®Õn t×m ta!
+10135	Con ng­êi bªn ngoµi rÊt İch kû! NhÊt lµ nam nh©n, muéi h·y cÈn thËn! C¨n b¶n ph¶i ®¹t <color=green>®¼ng cÊp 60<color>, mang theo <color=gold>1 v¹n ng©n l­îng<color> míi cã thÓ xuèng nói!
+10136	TiÓu muéi! Ta sÏ nhí muéi l¾m! H·y gi÷ m×nh! Nhí nghe lêi s­ phô ®õng tin vµo lò nam nh©n h¸o s¾c!
+10137	Quay vÒ Thóy Yªn m«n cÇn ph¶i cã <color=gold>1 v¹n ng©n l­îng<color> ®Ó lµm lé phİ vµ chuÈn bŞ phßng èc khi ®Õn n¬i! Muéi cã mang theo chø?
+10138	TiÓu muéi! Muéi ®· quay l¹i! Cïng ta trß chuyÖn vÒ thÕ giíi bªn ngoµi nµo!
+10139	§èi víi <color=water>Thóy Yªn m«n<color> vâ nghÖ chia lµm hai h­íng kh¸c nhau
+10140	H­íng thø nhÊt lµ ®ao ph¸p së h÷u <color=water>Phong Hoa TuyÕt NguyÖt<color>, <color=water>Vò §µ Lª Hoa<color>, <color=water>Môc D· L­u Tinh<color>, <color=water>B¨ng Tung V« ¶nh<color>
+10141	H­íng thø hai lµ song ®ao ph¸p së h÷u <color=water>Phong QuyÓn Tµn TuyÕt<color>, <color=water>Phï V©n Tµn TuyÕt<color>, <color=water>Bİch H¶i TriÒu Sinh<color>, <color=water>B¨ng T©m Tiªn Tö <color>
+10142	Ngoµi ra cßn hç trî c¸c kü n¨ng kh¸c nh­ <color=water>B¨ng T©m Tr¸i ¶nh<color>, <color=water>Hé ThÓ Hµn B¨ng<color>, <color=water>TuyÕt ¶nh<color>, <color=water>B¨ng Cèt TuyÕt T©m<color>, <color=water>Ngù TuyÕt Èn<color>
+10143	Bæn bang ®· cã danh x­ng Thiªn h¹ ®Ö nhÊt bang, danh chÊn giang hå. Nh©n tµi ngäa Hæ tµng Long, thêi nµo còng cã!
+10144	Cã høng thó gia nhËp C¸i bang kh«ng? Mäi ng­êi cã c¬m cïng ¨n, cã r­îu cïng uèng!
+10145	Tõ nay ng­¬i ®· lµ ®Ö tö cña Thiªn h¹ ®Ö nhÊt bang! Xem nhau nh­ ng­êi mét nhµ! Sau nµy cã g× kh«ng hiÓu cø ®Õn t×m ta!
+10146	Tõ l©u nghe tiÕng c¸c c« n­¬ng Thóy Yªn ®Ñp nh­ tiªn n÷, vŞ c« n­¬ng nµy cho ¨n mµy ta İt tiÒn uèng r­îu ®­îc ch¨ng?
+10147	KÎ ¨n mµy nµy vèn tõ l©u ng­ìng mé Nga My kiÕm thuËt. H«m nay ®­îc gÆp n÷ hiÖp ®©y, thËt tháa lßng mong ­íc!
+10148	¸m khİ §­êng m«n khiÕn nhiÒu kÎ võa nghe danh ®· biÕn s¾c. §ao ph¸p cña quı m«n còng lîi h¹i kh«ng kĞm!
+10149	X­a nay tµ chİnh ph©n minh, bän tiÓu nh©n dïng ®éc nh­ c¸c ng­¬i còng d¸m khoe danh ­?
+10150	Bæn bang vµ quı bang hîp thµnh Thiªn h¹ l­ìng ®¹i ph¸i, chóng ta nªn gióp ®ì nhau nhiÒu h¬n ®Ó thèng lÜnh vâ l©m! Ha! Ha! Ha!
+10151	Quı ph¸i v× sù tån vong cña Vâ l©m Trung Nguyªn, d¸m ®­¬ng ®Çu víi Kim quèc hïng m¹nh! KÎ ¨n mµy nµy mu«n phÇn béi phôc.
+10152	Vâ §ang hiÖp kh¸ch lõng danh thiªn h¹, xøng lµ danh m«n chİnh ph¸i! Xin cho kÎ ¨n mµy nµy göi lêi hái th¨m ®Õn §¹o NhÊt Ch©n Nh©n vµ c¸c vŞ §¹o tr­ëng!
+10153	Th× ra lµ ®Ö tö cña C«n L«n ph¸i. Th¶o nµo cèt c¸ch bÊt phµm! Râ mÆt anh tµi!
+10154	MÆc dï quı gi¸o lµ chñ, nh­ng C¸i bang vµ Thiªn NhÉn x­a nay vèn kh«ng ®éi trêi chung. Chóng ta kh«ng cÇn ph¶i nhiÒu lêi. HÑn gÆp nhau trªn sa tr­êng!
+10155	§Ó rêi khái tæng ®µ ng­¬i cÇn ®¹t <color=green>®¼ng cÊp 60<color> vµ lËn l­ng <color=gold>1 v¹n ng©n l­îng<color>! Ng­¬i ®· suy nghÜ kü ch­a!
+10156	Chóc ng­¬i th­îng lé b×nh an! Sau nµy cã g× h·y t×m ta cïng uèng r­îu!
+10157	Quay vÒ tæng ®µ cÇn giao nép <color=gold>1 v¹n ng©n l­îng<color> ®Ó ph©n ph¸t cho huynh ®Ö lµm t×nh b¸o! Ng­¬i cã mang theo chø?
+10158	Tèt l¾m! Ng­¬i ®· quay vÒ! Nµo vµo ®©y chóng ta cïng uèng r­îu! Haha!
+10159	§èi víi <color=fire>C¸i bang<color> vâ nghÖ chia lµm hai ®­êng kh¸c nhau
+10160	H­íng thø nhÊt lµ ch­ëng ph¸p së h÷u kü n¨ng <color=fire>KiÕn Nh©n ThÇn Thñ <color>, <color=fire>Gi¸ng long ch­ëng<color>, <color=fire>Kh¸ng Long H÷u Hèi<color>, <color=fire>Phi Long T¹i Thiªn<color>
+10161	H­íng thø hai lµ bæng ph¸p së h÷u kü n¨ng <color=fire>Diªn M«n Th¸c B¸t, <color=fire>§¶ CÈu Bæng<color>, <color=fire>Bæng §· ¸c CÈu<color>, <color=fire>Thiªn H¹ V« CÈu<color>
+10162	Ngoµi ra cßn së h÷u mét sè kü n¨ng nh­ <color=fire>Hãa HiÓm Vi Di<color>, <color=fire>Ho¹t BÊt L­u Thñ <color>, <color=fire>Tiªu Diªu C«ng<color>, <color=fire>Tóy §iÖp Cuång Vò <color>, <color=fire>Hçn Thiªn Khİ C«ng<color>
+10163	Gi¸o chñ cña bæn gi¸o lµ Hoµn Nhan Hïng LiÖt. Danh chÊn thiªn h¹! Hoµng ®Õ Kim quèc còng ph¶i nh­êng 3 phÇn. Cao thñ cña bæn gi¸o nhiÒu v« sè! Nh©n tµi ngäa hæ tµng long.
+10164	Cã muèn gia nhËp bæn gi¸o kh«ng?
+10165	Chóc mõng ng­¬i trë thµnh ®Ö tö cña bæn gi¸o! H·y thao luyÖn cho tèt phông sù cho ®¹i sù cña gi¸o chñ sau nµy!
+10166	NÕu Nga My ph¸i chŞu gia nhËp bæn gi¸o, vËy th× bän ta suèt ngµy ®Òu ®­îc ng¾m nh×n ng­êi ®Ñp! ¤i! Sung s­íng chÕt ®i th«i!
+10167	Sím ®· nghe con g¸i ph­¬ng Nam s¾c ®Ñp nghiªng thµnh, h«m nay ®­îc gÆp ®©y, qu¶ lµ tiÕng ®ån kh«ng ngoa!
+10168	Gi¸o chñ cña bæn gi¸o lu«n cã lßng mong mái quı m«n cïng gia nhËp, vinh hoa phó quı, cao quan bæng léc, h­ëng c¶ ®êi kh«ng hÕt!
+10169	Thiªn NhÉn vµ Ngò §éc gi¸o mµ hîp thµnh Nam c«ng B¾c kİch, Trung Nguyªn sím muén còng r¬i vµo tay chóng ta!
+10170	Kh«ng ai cã thÓ ng¨n c¶n ®­îc sù nghiÖp hïng b¸ Trung Nguyªn cña Thiªn NhÉn gi¸o!
+10171	Cao thñ ThiÕu L©m ph¸i cña c¸c ng­¬i ®· s¾p quy tiªn hÕt råi! Nh©n tµi trÎ tuæi l¹i ch¼ng cã mÊy ng­êi! Xem ra ThiÕu L©m còng ®· s¾p ®Õn ngµy tËn nghiÖp! Ha! Ha! Ha!
+10172	Ta ®· nghe Néi c«ng, kiÕm thuËt cña Vâ §ang lõng danh Trung Nguyªn! Cã c¬ héi nhÊt ®Şnh ph¶i thØnh gi¸o!
+10173	C«n L«n ph¸i c¸c ng­¬i hïng cø T©y Vùc, cã d· t©m dßm ngã Trung Nguyªn ®· l©u. SÏ cã mét ngµy bæn gi¸o vµ c¸c ng­¬i ph©n chia cao thÊp t¹i Trung Nguyªn.
+10174	Tªn ¨n mµy nµy muèn trµ trén vµo ®©y lµm gian tÕ ­?
+10175	§Ó rêi khái n¬i nµy c¨n b¶n ng­¬i ph¶i ®¹t tèi thiÓu <color=green>®¼ng cÊp 60<color>, giao nép cho ta <color=gold>1 v¹n ng©n l­îng<color>. Ng­¬i ®ång ı chø!
+10176	Chóc ng­¬i th­îng lé b×nh an! Ha!Ha!Ha
+10177	Muèn trë vÒ ­? §©u thÓ nãi dÔ dµng nh­ vËy! Mau ®­a ta <color=gold>1 v¹n ng©n l­îng<color> tù kh¾c ng­¬i sÏ ®­îc trë vÒ! Xem ng­¬i cã mang theo ®ñ kh«ng! HaHa!
+10178	RÊt tèt! Sau nay cã g× cÇn cø t×m ta n÷a nhĞ! Haha!
+10179	§èi víi <color=fire>Thiªn NhÉn gi¸o<color> vâ c«ng chia lµm ba lo¹i kh¸c nhau
+10180	§­êng thø nhÊt lµ m©u ph¸p së h÷u tuyÖt kü <color=fire>Tµn D­¬ng Nh­ HuyÕt<color>, <color=fire>LiÖt Háa T×nh Thiªn<color>, <color=fire>Th©u Thiªn Ho¸n NhËt<color>, <color=fire>V©n Long Kİch<color>
+10181	§­êng thø hai lµ ®ao ph¸p së h÷u tuyÖt kü <color=fire>§¬n ChØ LiÖt DiÖm<color>, <color=fire>Th«i S¬n §iÒn H¶i<color>, <color=fire>Ma DiÖm ThÊt S¸t<color>, <color=fire>Thiªn Ngo¹i L­u Tinh<color>
+10182	§­êng thø ba lµ bïa chó së h÷u c¸c kü n¨ng nh­ <color=fire>Háa Liªn PhÇn Háa<color>, <color=fire>¶o ¶nh Phi Hå <color>, <color=fire>Phi Hång V« Tİch<color>, <color=fire>Bİ T« Thanh Phong<color>, <color=fire>LŞch Ma §o¹t Hån<color>, <color=fire>NhiÕp Hån Lo¹n T©m<color>
+10183	Ngoµi ra cßn cã c¸c kü n¨ng hç trî nh­ <color=fire>Thiªn Ma Gi¶i ThÓ <color>, <color=fire>Ma ¢m PhÖ Ph¸ch<color>
+10184	Thiªn h¹ vâ häc, B¾c t«n ThiÕu l©m, nam sïng Vâ §ang. Ch¾c ng­¬i ®· tõng nghe qua?
+10185	Vâ c«ng bæn ph¸i lÊy tÜnh chÕ ®éng, lÊy nhu kh¾c c­¬ng, lÊy ng¾n th¾ng dµi, lÊy chËm ®¸nh nhanh, lÊy ı vËn khİ, lÊy khİ vËn th©n, ®¸nh sau tíi tr­íc. Khiªm tèn ®iÒm ®¹m, lÊy v« h×nh th¾ng h÷u h×nh, ®ã lµ c¶nh giíi vâ häc tèi cao!
+10186	Vâ nghÖ bæn ph¸i cã 'ngò bÊt truyÒn': yÕu ®uèi, hiÓm ®éc, h¸o th¾ng, cuång töu, gian d©m sÏ kh«ng truyÒn vâ c«ng
+10187	NÕu muèn gia nhËp bæn ph¸i ph¶i thay ®æi t©m tİnh, chuyÓn t©m tu hµnh, t­¬ng lai cã rÊt nhiÒu c¬ héi chê ®ãn ng­¬i!
+10188	Ng­¬i ®· trë thµnh ®Ö tö Vâ §ang! H·y chuyªn t©m tu luyÖn sÏ cã ngµy tinh th«ng vâ häc nh­ c¸c ®¹o tr­ëng!
+10189	Nga My n÷ hiÖp! TiÓu ®¹o xin kİnh lÔ! S­ phô Thanh HiÓu S­ Th¸i cã kháe kh«ng?
+10190	TiÓu ®¹o rÊt béi phôc c«ng phu Thóy Yªn m«n! Kh«ng biÕt c« n­¬ng cã g× chØ gi¸o?
+10191	Tuy ch­ëng m«n quı ph¸i tİnh t×nh nãng n¶y, hµnh sù kh«ng theo qui t¾c, nh­ng rÊt th¼ng th¾n! Kh«ng hæ danh ch©n qu©n tö!
+10192	B¶n lÜnh dïng ®éc cao siªu th× cuèi cïng còng lµ h¹ ®¼ng ®ª hÌn! Kh«ng cã tinh thÇn vâ häc!
+10193	Sím nghe nãi huynh ®Ö Thiªn V­¬ng bang ai còng lµ anh hïng h¶o h¸n! H«m nay gÆp mÆt qu¶ nhiªn danh bÊt h­ truyÒn!
+10194	Th× ra lµ tiÓu s­ phô ThiÕu l©m! Kh«ng biÕt cã g× chØ gi¸o?
+10195	Th× ra lµ ®Ö tö C«n L«n ph¸i! Kh«ng biÕt cã g× chØ gi¸o?
+10196	Bang chñ cña quı bang vµ ch­ëng m«n cña tÖ ph¸i vèn lµ b»ng h÷u tri giao! Quı bang cã viÖc g× tÖ ph¸i nhÊt ®Şnh lËp tøc gióp ®ì!
+10197	Th× ra lµ ®Ö tö Thiªn NhÉn gi¸o cña Kim Quèc! Bæn ph¸i x­a nay kh«ng kÕt giao víi bän tµ m«n ngo¹i ®¹o! Mau ®i ®i!
+10198	§Ó cã thÓ xuÊt s­ xuèng nói c¨n b¶n cÇn ®¹t <color=green>®¼ng cÊp 60<color>, lé phİ <color=gold>1 v¹n ng©n l­îng<color>! Ng­êi ®· chuÈn bŞ ®Çy ®ñ ch­a? H·y suy nghÜ cho thËt kü!
+10199	Sau khi xuèng nói nhí kh«ng ®­îc lµm g× x»ng bËy ¶nh h­ëng ®Õn thanh danh Vâ §ang ph¸i chóng ta! Ng­¬i h·y nhí cho kü!
+10200	§­êng lªn nói gËp ghÒnh hiÓm trë, l­¬ng thùc khan hiÕm! Ng­¬i h·y chuÈn bŞ <color=gold>1 v¹n ng©n l­îng<color> lµm lé phİ!
+10201	Nµo! Chóng ta cïng xuÊt ph¸t! Nói Vâ §ang th¼ng tiÕn!
+10202	§èi víi <color=earth>Vâ §ang ph¸i<color> vâ c«ng chia lµm hai h­íng kh¸c nhau
+10203	H­íng thø nhÊt lµ quyÒn ph¸p së h÷u c¸c tuyÖt kü nh­ <color=earth>Néi L«i ChØ <color>, <color=earth>B¸c CÊp Nhi Phôc<color>, <color=earth>V« Ng· V« KiÕm<color>, <color=earth>Thiªn §Şa V« Cùc<color>
+10204	H­íng thø hai lµ kiÕm ph¸p së h÷u c¸c kü n¨ng nh­ <color=earth>Th­îng H¶i Minh NguyÖt<color>, <color=earth>KiÕm Phi Kinh Thiªn<color>, <color=earth>Tam Hoµn Thao NguyÖt<color>, <color=earth>Nh©n KiÕm Hîp NhÊt<color>
+10205	Ngoµi ra Vâ §ang cßn së h÷u mét sè tuyÖt kü nh­ <color=earth>ThÊt Tinh TrËn<color>, <color=earth>ThÕ V©n Tung<color>, <color=earth>Täa Vâng V« Ng· <color>, <color=earth>Th¸i Cùc ThÇn C«ng<color>, <color=earth>XuÊt ø BÊt NhiÔm<color>
+10206	C«n L«n ph¸i ë T©y Vùc xa x«i, rÊt İt giao h¶o víi Trung Nguyªn. Tr¶i qua mÊy ®êi ch­ëng m«n ®· dÇn trë thµnh mét trong NhÊt ®¹i m«n ph¸i.
+10207	Bæn ph¸i tinh th«ng ®¹o chó kiÕm thuËt. Bän Vâ §ang lµ c¸i thø g× chø! Cã muèn gia nhËp bæn ph¸i kh«ng?
+10208	Ng­¬i ®· trë thµnh ®Ö tö C«n L«n! H·y tu luyÖn cho thËt tèt! Cã g× kh«ng hiÓu cø ®Õn t×m ta!
+10209	N÷ l­u th× nªn häc c¸ch ch¨m sãc chång con! Vung g­¬m móa kiÕm ch¼ng ra thÓ thèng g×! §óng lµ thêi thÕ ®¶o lo¹n!
+10210	Qu¶ ®óng lµ mü n÷! Ng­êi xø T©y B¾c khæ hµn khã mµ s¸nh ®­îc!
+10211	§­êng m«n ¸m khİ lµm sao cã thÓ so s¸nh víi chó thuËt ®¹o ph¸p thiªn t«n cña bän ta!
+10212	A! Tµ ma ngo¹i ®¹o l¹i d¸m xuÊt hiÖn ë ®©y! H·y xem thanh kiÕm cña l·o gia ®©y!
+10213	Thiªn V­¬ng bang tuy hiÖn nay kh¸ m¹nh, nh­ng do mét n÷ l­u l·nh ®¹o! Råi còng cã ngµy lµm tiªu tan c¬ nghiÖp.
+10214	Ai còng b¶o ThiÕu L©m lµ vâ häc chİnh t«ng nh­ng s¸nh sao ®­îc víi Thiªn s­ ®¹o thuËt cña C«n L«n ta?
+10215	Hai ph¸i chóng ta cïng thuéc ®¹o gia! ViÖc g× cø ph¶i ph©n tranh cao thÊp!
+10216	DiÖt s¹ch cÈu Kim chİnh lµ bæn phËn c¶ ®êi ta! L¹i ®©y nÕm thö mét kiÕm cña l·o gia nµo!
+10217	C¸i bang anh hïng! Hõ! Thùc chÊt chØ lµ mét bän « hîp ch¶ ra g×!
+10218	Tõ T©y Vùc muèn ®Õn Trung Nguyªn ®­êng s¸ xa x«i mu«n trïng nguy hiÓm! Muèn ®i th× c¨n b¶n ph¶i ®¹t tèi thiÓu <color=green>®¼ng cÊp 60<color>, <color=gold>1 v¹n ng©n l­îng<color> trong ng­êi míi cã thÓ an toµn xuÊt ph¸i!
+10219	T¹m biÖt! Sau nµy r·nh rçi nhí quay l¹i th¨m chóng ta!
+10220	Quay vÒ T©y Vùc ­! NÕu kh«ng cã <color=gold>1 v¹n ng©n l­îng<color> trong ng­êi ta thËt kh«ng d¸m ®­a ng­¬i ®i!
+10221	Tèt! Chóng ta xuÊt ph¸t th«i!
+10222	§èi víi <color=earth>C«n L«n ph¸i<color> vâ c«ng chia lµm ba ®­êng
+10223	§­êng thø nhÊt lµ ®ao ph¸p së h÷u kü n¨ng <color=earth>H« Phong Ph¸p<color>, <color=earth>NhÊt Khİ Tam Thanh<color>, <color=earth>Cuång Phong S©u §iÖn<color>, <color=earth>Ng¹o TuyÕt Tiªu Phong<color>
+10224	§­êng thø hai lµ kiÕm ph¸p së h÷u c¸c kü n¨ng <color=earth>Cuång L«i ChÊn §Şa<color>, <color=earth>Thiªn TÕ TÊn L«i<color>, <color=earth>Ngò L«i Chİnh Ph¸p<color>, <color=earth>L«i §éng Cöu Thiªn<color>
+10225	§­êng thø ba lµ bïa chó së h÷u c¸c kü n¨ng <color=earth>Thóc Ph­îc Chó<color>, <color=earth>Thanh Phong Phï<color>, <color=earth>K× bµn Phï<color>, <color=earth>B¾c Minh §¸o H¶i<color>, <color=earth>Thiªn Thanh §Şa Träc<color>, <color=earth>Mª Tung ¶o ¶nh<color>, <color=earth>Tóy Tiªn T¸ Cèt<color>
+10226	Ngoµi ra cßn cã c¸c kü n¨ng hç trî nh­ <color=earth>L­ìng Nghi Ch©n Khİ<color>
+10227	<color=gold>Thî rÌn<color>: ViÖc bu«n b¸n ë ®©y rÊt thuËn lîi, ®Õn ngay c¶ c¸c huynh ®Ö cña Thiªn V­¬ng Bang còng th­êng ®Õn ®©y nhê ta chÕ t¹o binh khİ.
+10228	<color=gold>Chñ tiÖm t¹p hãa<color>: Tr­íc ®©y ta lµ ng­êi b¸n hµng rong, tİch cãp ®­îc İt vèn më tiÖm t¹p hãa nhá nµy.
+10229	<color=gold>Ng« ThÇn Y<color>: Bæn tiÖm ®Òu lµ thÇn d­îc! Cã bÖnh khái bÖnh, kh«ng bÖnh sÏ kháe, gi¸ c¶ ph¶i ch¨ng. Mua mét İt chø?
+10230	<color=gold>Ng­ d©n<color>: C¸ t­¬i võa míi ®¸nh lªn ®©y! §Õn ®©y mau ®i!
+10231	<color=gold>TiÓu Ng­ <color>: Hu! Hu! Hu! Cha ch¸u h«m qua ®i ®¸nh c¸ gÆp ph¶i m­a lín, b©y giê l©m bÖnh råi, cßn lªn c¬n sèt n÷a. Cha kh«ng khái bÖnh, kh«ng thÓ ®i ®¸nh c¸, chóng ch¸u biÕt ¨n g×? Chó cã thÓ gióp ch¸u ®Õn cÇu cøu Ng« thÇn y kh«ng? ¤ng Êy lµ mét ng­êi tèt, ch¾c ch¾n sÏ gióp!
+10232	<color=gold>TiÓu Ng­ <color>: Hu! Hu! Hu! Cha ch¸u h«m qua ®i ®¸nh c¸ gÆp ph¶i m­a lín, b©y giê l©m bÖnh råi, cßn lªn c¬n sèt n÷a. Cha kh«ng khái bÖnh, kh«ng thÓ ®i ®¸nh c¸, chóng ch¸u biÕt ¨n g×? C« cã thÓ gióp ch¸u ®Õn cÇu cøu Ng« thÇn y kh«ng? ¤ng Êy lµ mét ng­êi tèt, ch¾c ch¾n sÏ gióp!
+10233	Ch¸u ph¶i ë ®©y tiÕp tôc chê nh÷ng ng­êi h¶o t©m.
+10234	C¸c ng­ d©n thËt lµ khæ! Ta cã 2 ®øa con ®i ®¸nh c¸ trªn hå ®Òu bŞ sãng lín d×m chÕt.
+10235	§Õn ng­êi ®¸nh c¸ còng kh«ng cã c¸ mµ ¨n, kh«ng ®¸nh c¸ th× ngay c¶ c¬m ¨n còng kh«ng cã!
+10236	Con g¸i cña ng­ d©n, cuèi cïng còng g¶ vµo nhµ cña ng­ d©n, lµm vî cña ng­ d©n.
+10237	Cha mÑ ®· s¾p xÕp h«n sù cho muéi, muéi kh«ng muèn lµm vî mét ng­ d©n, nh­ng kh«ng cßn c¸ch nµo kh¸c, lêi cha mÑ kh«ng thÓ c·i l¹i.
+10238	<color=gold>Ph­¬ng Kh¶ VŞ <color>: Ba L¨ng HuyÖn cña chóng ta lµ mét vïng ®Êt nhá nh­ng cuéc sèng cña mäi ng­êi rÊt an b×nh.
+10239	<color=gold>Cöu c©n l·o gia<color>: Giang hå l­ìng h¹i! ThËp niªn cöu tai! Mçi n¨m cø ®Õn mïa m­a, §éng §×nh Hå l¹i d©ng n­íc, Ba L¨ng HuyÖn biÕn thµnh ®ª gi÷a biÓn n­íc, kh«ng biÕt ®· cã bao nhiªu ng­êi chÕt!
+10240	<color=gold>Du Cöu Ch©u<color>: Ngµy tr­íc §¹i Th¸nh Thiªn V­¬ng khëi binh t¹i §éng §×nh Hå, thÕ thiªn hµnh ®¹o, diÖt b¹o cøu chóng sinh, ®­îc d©n yªu mÕn, lµm triÒu ®×nh rÊt lo sî ph¸i binh tiªu diÖt. Thiªn V­¬ng qu©n İt ®Şch ®«ng, bŞ b¾t sau ®ã ®· hy sinh!
+10241	Ta tõ Tø Xuyªn ®Õn, trªn ®­êng cã rÊt nhiÒu thæ phØ, thËt nguy hiÓm!
+10242	Kh«ng ngê ta cã thÓ ®Õn khu vùc §éng §×nh Hå nµy mµ kh«ng hÒ bŞ c­íp! Ng­¬i cã thÊy l¹ kh«ng?
+10243	Ta nghe ng­êi ta nãi míi biÕt ë ®©y kh«ng chŞu sù qu¶n lı cña quan phñ, mµ tõ mét m«n ph¸i tªn Thiªn V­¬ng Bang g× ®ã, hÌn g× ë ®©y thËt yªn b×nh!
+10244	<color=gold>La gia ThÈm Tö <color>: Thêi thanh xu©n ta còng cã kha kh¸ nhan s¾c, nÕu lóc ®ã cã thÓ xuÊt gi¸ vµo nhµ giµu cã, th× cuéc sèng cã lÏ kh«ng cßn ph¶i lo n÷a.
+10245	<color=gold>ThuËn Thñy<color>: Ta tªn lµ ThuËn Thñy v× cha mÑ hi väng cuéc ®êi cña ta sÏ lu«n thuËn buåm xu«i giã, kh«ng gÆp bÊt cø tai ­¬ng nµo!
+10246	N¬i ®©y chóng ta cã ®ñ thøc ¨n, h¶i s¶n phong phó. Kh¸ch quan muèn ¨n g×? Muèn uèng r­îu g×?
+10247	<color=gold>Ng­ d©n<color>: C¶ ®êi ta ®Òu sèng víi s«ng n­íc! §éng §×nh hå kh«ng chç nµo ta kh«ng biÕt. Kh¸ch quan muèn ®i ®©u?
+10248	Ph¹m V¨n Chİnh C«ng trong bµi 'Nh¹c V­¬ng lÇu kı' cè viÕt 'D÷ quan phu Ba L¨ng th¾ng tr¹ng, t¹i §éng §×nh nhÊt hå. Hµm viÔn s¬n, Th«n tr­êng giang. h¹o h¹o thang thang, hoµnh v« tÕ nhai, triÒu huy tŞnh ©m, khİ t­îng v¹n thiªn'.
+10249	Mäi th¾c m¾c vÒ c«ng thµnh chiÕn cã thÓ ®Õn NPC <color=red>Xa phu c«ng thµnh<color> gÇn xa phu c¸c thµnh thŞ ®Ó t×m hiÓu!
+10250	Bªn ngoµi th«n lo¹n l¹c, xem ng­¬i trãi gµ kh«ng chÆt! Ra bªn ngoµi ta e kh«ng gi÷ ®­îc m¹ng ®©u!
+10251	<color=gold>ThuyÒn Phu<color>: Ta cã biÖt hiÖu lµ 'L·ng Lı B¹ch §iÒu', ba ®êi ®iÒu sèng dùa vµo s«ng n­íc! Kh¾p Ba L¨ng HuyÖn nµy kh«ng cã ai lµ ®èi thñ! Kh¸ch quan muèn ®i ®©u?
+10252	Muèn ®i ®©u nhí quay l¹i t×m ta nhĞ!
+10253	<color=gold>Vâ S­ <color>: Giang hå hiÓm ¸c, ta th× ®· giµ, kh«ng nh­ ®¸m hËu sinh ®­îc, ®êi ng­êi lµ vËy, nhiÒu suy tõ tr¨n trë... Th«i kh«ng bµn n÷a, t×m ta cã viÖc g× kh«ng?
+10254	Kh«ng cã danh s­ chØ ®iÓm th× cã häc c¶ ®êi còng kh«ng ®Õn ®­îc c¶nh giíi cao nhÊt cña vâ häc!
+10255	Vâ häc ngoµi 'luyÖn g©n cèt, trong luyÖn khİ c«ng'. Häc vâ ph¶i tËp c¶ trong lÉn ngoµi! Xem ng­¬i t­ chÊt th«ng minh, cã muèn häc vµi chiªu phßng th©n kh«ng? Häc phİ chØ cã <color=gold>100 l­îng<color>.
+10256	T×m ®ñ ng©n l­îng råi h·y ®Õn häc vâ!
+10257	LuyÖn vâ ph¶i b¾t ®Çu tõ c¨n b¶n! Ng­¬i h·y ®i ®¸nh cäc gç ®i!
+10258	Ngo¹i lùc cµng m¹nh th× kh¶ n¨ng chiÕn ®Êu cña ng­¬i cµng cao. TiÕp theo ng­¬i h·y ®i ®¸nh bao c¸t. Chó ı tèc ®é xuÊt chiªu! 
+10259	LuyÖn quyÒn kh«ng luyÖn c«ng, ®Õn giµ còng b»ng kh«ng. Néi c«ng sung m·n th× cã thÓ häc vâ c«ng cao th©m! B©y giê h·y ®i ®¸nh méc nh©n!
+10260	Ta kh«ng cßn g× ®Ó d¹y ng­¬i n÷a! Nªn nhí siªng n¨ng khæ luyÖn! Sau nµy cã thÓ tïy ı ®Õn ®©y luyÖn tËp!
+10261	§¼ng cÊp ch­a ®¹t <color=red>20<color>. Kh«ng thÓ ®i ®Õn n¬i nµy.
+10262	Ba L¨ng HuyÖn
+10263	Ba L¨ng huyÖn<---->Nam Nh¹c trÊn
+10264	Ba L¨ng huyÖn<---->Vò L¨ng s¬n
+10265	Ba L¨ng huyÖn<---->Miªu LÜnh
+10266	Nha m«n th«ng c¸o
+10267	<color=red>Trªn tay cã vËt phÈm, kh«ng thÓ thao t¸c.<color>
+10268	Ch¸u nhí lóc tr­íc cã nghe ®¹i phu nãi uèng thuèc <color=green>Tú Bµ Hoµn<color> sÏ hÕt sèt, nh­ng nhµ ch¸u nghÌo qu¸ kh«ng thÓ mua ®­îc.
+10269	Chó vÉn ch­a t×m ®­îc <color=green>Tú Bµ Hoµn<color> ­? BÖnh t×nh cña cha ch¸u biÕt tİnh sao b©y giê? Hu hu hu...
+10270	C« vÉn ch­a t×m ®­îc <color=green>Tú Bµ Hoµn<color> ­? BÖnh t×nh cña cha ch¸u biÕt tİnh sao b©y giê? Hu hu hu...
+10271	§©y lµ thuèc <color=green>Tú Bµ Hoµn<color> sao? Nh­ vËy bÖnh t×nh cña cha ch¸u nhÊt ®Şnh sÏ khái. Chó thËt lµ mét ng­êi tèt, h·y nhËn lÊy ®«i giµy nµy, mÑ cña ch¸u lµm ®Êy ¹!
+10272	§©y lµ thuèc <color=green>Tú Bµ Hoµn<color> sao? Nh­ vËy bÖnh t×nh cña cha ch¸u nhÊt ®Şnh sÏ khái. C« thËt lµ mét ng­êi tèt, h·y nhËn lÊy ®«i giµy nµy, mÑ cña ch¸u lµm ®Êy ¹!
+10273	Ch¸u rÊt lo cho cha, nÕu ch¸u lµ con trai th× tèt qu¸, lóc ®ã th× ch¸u sÏ gióp cha ®¸nh c¸!
+10274	Sao? Cha cña <color=gold>TiÓu Ng­ <color> l©m bÖnh µ? Ng­¬i ®Õn chËm råi! Ta võa b¸n viªn <color=green>Tú Bµ Hoµn<color> cuèi cïng cho ®Ö tö <color=metal>Thiªn V­¬ng Bang<color>. Hay lµ ng­¬i hái thö «ng ta xem!
+10275	<color=green>Tú Bµ Hoµn<color>? DÜ nhiªn lµ ®Ó cøu ng­êi! TÆng ng­¬i mét viªn! Mau ®i cøu ng­êi ®i!
+10276	<color=gold>A Ph­¬ng<color>: Cha mÑ ®· s¾p xÕp h«n sù cho muéi, nh­ng nhµ muéi nghÌo qu¸, ®Õn mét mãn cña håi m«n cho ra d¸ng còng kh«ng cã! GÇn ®©y trong trÊn xuÊt hiÖn mét ng­êi th­¬ng nh©n tõ ph­¬ng xa ®Õn. Huynh cã thÓ gióp muéi xem cã mãn nµo gi¸ rÎ mét chót kh«ng?
+10277	<color=gold>A Ph­¬ng<color>: Cha mÑ ®· s¾p xÕp h«n sù cho muéi, nh­ng nhµ muéi nghÌo qu¸, ®Õn mét mãn cña håi m«n cho ra d¸ng còng kh«ng cã! GÇn ®©y trong trÊn xuÊt hiÖn mét ng­êi th­¬ng nh©n tõ ph­¬ng xa ®Õn. Tû cã thÓ gióp muéi xem cã mãn nµo gi¸ rÎ mét chót kh«ng?
+10278	Ng­êi th­¬ng nh©n ®ã ë phİa T©y huyÖn, lµm phiÒn huynh hái gióp muéi víi!
+10279	Ng­êi th­¬ng nh©n ®ã ë phİa T©y huyÖn, lµm phiÒn tû hái gióp muéi víi!
+10280	A! §«i khuyªn tai nµy ®Ñp qu¸! Cã lÏ ®· tèn cña huynh kh«ng İt ng©n l­îng! §©y lµ chiÕc nãn muéi tù lµm, tÆng cho huynh!
+10281	A! §«i khuyªn tai nµy ®Ñp qu¸! Cã lÏ ®· tèn cña tû kh«ng İt ng©n l­îng! §©y lµ chiÕc nãn muéi tù lµm, tÆng cho tû!
+10282	<color=gold>ThÈm Cöu<color>: Muèn mua gióp c« n­¬ng Êy cña håi m«n ­? Hµng hãa cßn l¹i cña ta kh«ng nhiÒu, chØ cßn l¹i ®«i khuyªn tai vµng nµy gi¸ kh¸ rÎ, chØ <color=gold>200 l­îng<color>. Cã muèn mua hay kh«ng?
+10283	Kh«ng cã ®ñ ng©n l­îng lµm sao ta giao hµng ®­îc!
+10284	Khuyªn tai ®· gãi råi! Xin gi÷ lÊy!
+10285	<color=gold>Cæ l·o th¸i<color>: Con trai cña l·o ®i ®¸nh c¸ ®· 3 ngµy kh«ng thÊy vÒ. L·o giµ råi, kh«ng thÓ tù ®i t×m ®­îc. VŞ ®¹i hiÖp nµy cã thÓ gióp l·o ra hå t×m nã ®­îc ko?
+10286	<color=gold>Cæ l·o th¸i<color>: Con trai cña l·o ®i ®¸nh c¸ ®· 3 ngµy kh«ng thÊy vÒ. L·o giµ råi, kh«ng thÓ tù ®i t×m ®­îc. VŞ n÷ hiÖp nµy cã thÓ gióp l·o ra hå t×m nã ®­îc ko?
+10287	Ng­¬i thÊy ®Êy! ta ®· giµ c¶ råi, quªn nãi cho ng­¬i biÕt con ta h×nh d¸ng thÕ nµo, khô khô... trªn cæ nã cã ®eo mét miÕng ngäc béi, rÊt dÔ ®Ó nhËn ra.
+10288	BÕn ®ß ë phİa ®«ng thŞ trÊn, c¸c ng­ d©n th­êng cËp thuyÒn ë ®ã, nÕu ng­¬i thÊy nã th× nãi víi nã ta ®ang ë nhµ rÊt mong chê nã vÒ! Khô... Khô... 
+10289	§©y ch¼ng ph¶i lµ ngäc béi cña con l·o sao? LÏ nµo .. lÏ nµo .. huhuhu... Con cña l·o chÕt th¶m qua, thö hái mét bµ giµ nh­ l·o sÏ sèng sao ®©y...
+10290	§a t¹ ®¹i hiÖp ®· gióp l·o t×m ®­îc miÕng ngäc béi nµy, nh×n nã l·o c¶m gi¸c con trai ta ®ang ë bªn c¹nh! Bøc th­ ph¸p nµy lµ cña gia truyÒn, l·o th× mét ch÷ kh«ng biÕt, th«i th× tÆng ng­¬i vËy...
+10291	§a t¹ n÷ hiÖp ®· gióp l·o t×m ®­îc miÕng ngäc béi nµy, nh×n nã l·o c¶m gi¸c con trai ta ®ang ë bªn c¹nh! Bøc th­ ph¸p nµy lµ cña gia truyÒn, l·o th× mét ch÷ kh«ng biÕt, th«i th× tÆng ng­¬i vËy...
+10292	¤ « «! C¸i g× kia! B¹n trÎ cã bøc th­ ph¸p kia, cã thÓ nh­îng l¹i cho ta ®­îc ko, gi¸ c¶ cã thÓ th­¬ng l­îng, Bøc th­ ph¸p nµy lµ cña Ph¹m V¨n Chİnh C«ng næi tiÕng ®Êy!
+10293	¤i!... Bao giê th× ta míi cã thÓ t×m ®­îc mét bøc th­ ph¸p quı nh­ thÕ nµy?
+10294	§éng §×nh Hå nµy con ®­îc gäi lµ 'V©n Méng Tr¹ch', phİa B¾c gi¸p Tr­êng Giang, phİa Nam gi¸p 4 con s«ng T­¬ng, T­, Nguyªn, Phong danh hiÖu lµ 'B¸t B¸ch Lı §éng §×nh Hå'.
+10295	§éng ®×nh hå réng mªnh m«ng, nói non chãt vãt, ®Æc ®iÓm lín nhÊt lµ ngoµi hå cã hå, trong hå cã nói, c¸ nhiÒu v« sè, lau sËy um tïm, n­íc trêi mét s¾c, h¶i ©u bay l­în. Xu©n thu tø quı lu«n thay ®æi.
+10296	NÕu ng­¬i ®· ®ång ı b¸n cho ta th× kh«ng ®­îc ®æi ı ®©u ®Êy! §Ó xem ta cßn bao nhiªu ng©n l­îng... 5,10,15,20,...
+10297	<color=gold>La tiªn sinh<color>: L­u l¹c giang hå c¶ nña ®êi, cuèi cïng còng chØ lµ mét kÎ bÇn hµn mµ th«i!
+10298	<color=gold>¤ng chñ d­îc ®iÕm<color>: Ng­¬i ®· ¨n 5 cèc t¹p l­¬ng, kh«ng ph¸t háa nhøc ®Çu míi l¹! Chç ta tuy nhá nh­ng tuyÖt ®èi kh«ng thiÕu thø g×! Ng­¬i cã muèn mua İt thuèc kh«ng?
+10299	<color=gold>Thî rÌn<color>: Gian hµng cña ta binh khİ tinh x¶o mµ gi¸ c¶ l¹i võa ph¶i, ®¹i hiÖp hµnh tÈu giang hå mµ kh«ng cã mét mãn binh khİ cho võa tay sao? Mua mét mãn ®i nµo?
+10300	<color=gold>Chñ tiÖm t¹p hãa<color>: Hµng chÊt ®Çy trong tiÓu ®iÕm! Kh¸ch quan muèn mua g× nµo? GhĞ vµo xem thö ®i!
+10301	<color=gold>Chñ töu ®iÕm<color>: Qu¸n r­îu nµy ®­îc truyÒn l¹i tõ tay «ng néi ta. Kh¸ch trong th«n th­êng lui tíi uèng vµi chung r­îu gi¶i khu©y.
+10302	<color=gold>Ng« l·o th¸i<color>: Tuy ta kh«ng cã con trai nh­ng ®· cã mét ®øa con g¸i ngoan hiÒn, hiÕu thuËn, ng­êi ta ®Òu nãi «ng nhµ ta cã phóc!
+10303	<color=gold>Hæ Tö N­¬ng<color>: Hång Mai qu¶ lµ mét c« g¸i hiÒn lµnh, hiÕu thuËn! Ai lÊy ®­îc c« ta thËt cã phóc! C« n­¬ng tèt nh­ vËy, ta nhÊt ®Şnh sÏ gióp c« Êy t×m ®­îc chång thËt tèt!
+10304	<color=gold>Qu¸ch Dòng<color>: ThËt t×nh ta rÊt thİch Hång Mai nh­ng l¹i ng¹i ngïng kh«ng d¸m ngá lêi. NÕu Hång Mai hiÓu ®­îc lßng ta th× thËt lµ diÔm phóc cho ta! Chñ tiÖm t¹p hãa ë bê s«ng cã ®å trang søc quı míi nhËp vÒ. Chi b»ng ta mua cho Hång Mai 1 chiÕc tr©m cµi tãc. C« Êy nhÊt ®Şnh sÏ rÊt thİch!
+10305	<color=gold>Thiªn Thiªn N­¬ng<color>: ¤ng nhµ ta ®· ra ngoµi lµm ¨n, th­êng xuyªn v¾ng nhµ. Ta thËt rÊt lo l¾ng! ChuyÖn lµm ¨n bu«n b¸n chØ lµ mua gi¸ thÊp b¸n gi¸ cao! 
+10306	Hæ Tö ca lu«n g¹t gÉm ch¸u! Ch¸u ph¶i mĞc mÑ huynh Êy!
+10307	Søc kháe ta vµ bµ nhµ ®Òu kh«ng tèt, khuª n÷ v× ch¨m sãc vî chång ta mµ vÉn ch­a lÊy chång, bËc lµm cha mÑ nh­ ta thËt kh«ng ph¶i víi con c¸i m×nh.
+10308	Ai da! Kh«ng biÕt thóc thóc thî rÌn ®· lµm n¸ xong ch­a? Tay nghÒ cña ®¹i thóc rÊt giái. TiÖm thiÕt kiÕm cña «ng gÇn xa ®Òu biÕt tiÕng, t¹o ra nh­ng thø binh khİ tuyÖt vêi!
+10309	T¹i sao tuyÕt vÉn ch­a r¬i nhØ? Ta thİch nhÊt lµ ch¹y ®ïa trªn tuyÕt!
+10310	MÑ ta muèn ¨n thŞt heo luéc tái, nh­ng kh«ng thÊy ng­êi b¸n thŞt ®©u, lµm thÕ nµo b©y giê ®©y?
+10311	<color=gold>Phô th©n Hæ Tö <color>: Vâ s­ bªn ngoµi th«n rÊt cã danh tiÕng. Hæ Tö nhµ ta tõ nhá ®· rÊt mª häc vâ. NÕu cã thÓ b¸i vŞ vâ s­ ®ã lµm thÇy th× thËt tèt qu¸! Nhµ ta lµ gia ®×nh rÊt b×nh th­êng, kh«ng biÕt häc vâ cã tèn nhiÒu ng©n l­îng kh«ng? §¹i hiÖp cã thÓ ®i hái vŞ vâ s­ ®ã giïm ta kh«ng?
+10312	<color=gold>Phô th©n Hæ Tö <color>: Vâ s­ bªn ngoµi th«n rÊt cã danh tiÕng. Hæ Tö nhµ ta tõ nhá ®· rÊt mª häc vâ. NÕu cã thÓ b¸i vŞ vâ s­ ®ã lµm thÇy th× thËt tèt qu¸! Nhµ ta lµ gia ®×nh rÊt b×nh th­êng, kh«ng biÕt häc vâ cã tèn nhiÒu ng©n l­îng kh«ng? N÷ hiÖp cã thÓ ®i hái vŞ vâ s­ ®ã giïm ta kh«ng?
+10313	<color=gold>NguyÖt H¹ l·o nh©n<color>: Thùc ra l·o giµ nµy suèt ngµy bËn rén, nh­ng cã thÓ xem vµ gi¶i quyÕt ®­îc t×nh duyªn cña ng­êi trÎ tuæi.
+10314	Cha mÑ ta mÊt sím, nhê ng­êi cËu nu«i nÊng nªn ng­êi, cËu lµ ng­êi th©n thuéc nhÊt cña ta.
+10315	Ta kh«ng cã con c¸i, chØ cã 1 ®øa ch¸u ®ang häc vâ t¹i §­êng M«n
+10316	Qu¶ng tr­êng nhá.
+10317	VŞ vâ s­ Êy cã më vâ ®­êng trong mét ng«i nhµ l¸ ë phİa §«ng th«n
+10318	VÒ ¨n nãi, nhµ ta ai ai còng giái. RÊt thİch lµm mai mèi cho ng­êi ta!
+10319	Hmm! Hæ Tö muèn häc vâ µ? §øa trÎ nµy ngµy th­êng rÊt hiÕu ®éng, xem ra t­ chÊt kh«ng tåi. §­îc, vÒ nãi víi cha nã, ta thu nhËn Hæ Tö lµm ®å ®Ö. §Òu lµ ng­êi cïng th«n c¶, ®õng tİnh tíi chuyÖn tiÒn nong! Mçi dŞp lÔ tÕt mang lªn x©u thŞt sÊy lµ ®­îc.
+10320	Sao? ¤ng Êy ®· ®ång ı råi ­? C¸i mò nµy nhµ ta lµm ra. Tuy kh«ng ®¸ng gi¸ bao nhiªu, nh­ng ®Ó bµy tá lßng biÕt ¬n mong ng­¬i nhËn lÊy!
+10321	<color=gold>Hæ Tö <color>: §¹i ca! Thî rÌn høa tÆng ®Ö mét c©y n¸, kh«ng biÕt ®· lµm xong ch­a, h·y hái «ng Êy giïm ®Ö!
+10322	<color=gold>Hæ Tö <color>: Tû tû! Thî rÌn høa tÆng ®Ö mét c©y n¸, kh«ng biÕt ®· lµm xong ch­a, h·y hái «ng Êy giïm ®Ö!
+10323	TiÖm cña thóc thóc Thî rÌn n»m ngay cña th«n, rÊt dÔ t×m!
+10324	Ng­¬i ®Õn hái chiÕc n¸ cho tiÓu Hæ Tö µ? Ta ch­a ®éng tay tíi! §å cÇn thiÕt ta cßn ch­a ®i t×m. Ta l¹i kh«ng thÓ rêi tiÖm. ThÕ nµy nhĞ! Ng­¬i gióp ta ®i t×m ch¹c c©y vµ da tr©u. Cã ®ñ råi ta sÏ lËp tøc lµm ngay!
+10325	Sao nhanh thÕ? §­a ch¹c c©y vµ da tr©u cho ta! Ta lµm ngay!
+10326	§©y! §· lµm xong. Thay ta ®­a c©y n¸ cho tiÓu Hæ Tö nhĞ!
+10327	<color=gold>Thî rÌn<color>: ChØ cÇn mang ch¹c vµ da tr©u ®Õn cho ta th× sÏ cã ngay c©y n¸ cho TiÓu Hæ, chØ cÇn ®îi mét lóc lµ xong. Ng­¬i muèn lo¹i vò khİ kh¸c kh«ng?
+10328	H·y gióp ®Ö t×m nh÷ng nguyªn liÖu ®ã nhĞ! C¶m ¬n ®¹i ca nhiÒu l¾m!
+10329	H·y gióp ®Ö t×m nh÷ng nguyªn liÖu ®ã nhĞ! C¶m ¬n tû tû nhiÒu l¾m!
+10330	Tèt qu¸, tèt qu¸! Chót n÷a ®Ö sÏ ®i t×m Thiªn Thiªn ch¬i. Thanh vò khİ nµy ta t×m ®­îc ngoµi th«n, ®Ö gi÷ ë ®©y ch¼ng lµm g×, th«i th× göi tÆng ®¹i ca!
+10331	Tèt qu¸, tèt qu¸! Chót n÷a ®Ö sÏ ®i t×m Thiªn Thiªn ch¬i. Thanh vò khİ nµy ta t×m ®­îc ngoµi th«n, ®Ö gi÷ ë ®©y ch¼ng lµm g×, th«i th× göi tÆng tû tû!
+10332	<color=gold>Ng« l·o gia<color>: L·o cø ho m·i kh«ng ngít. Kh«ng biÕt khi nµo Hång Mai míi trë vÒ, tíi lóc ph¶i ®Õn D­îc ®iÕm hèt thuèc th«i...khÆc...khÆc..."
+10333	§¹i hiÖp cã thÓ ®Õn d­îc phßng hái xem. Tõ ®©y ®i vÒ h­íng T©y vµ b­íc lµ tíi råi! KhÆc...khÆc...h·y nhí lµ 10 viªn Xuyªn Bèi Hoµn, phiÒn ®¹i hiÖp gióp l·o!
+10334	N÷ hiÖp cã thÓ ®Õn d­îc phßng hái xem. Tõ ®©y ®i vÒ h­íng T©y vµ b­íc lµ tíi råi! KhÆc...khÆc...h·y nhí lµ 10 viªn Xuyªn Bèi Hoµn, phiÒn n÷ hiÖp gióp l·o!
+10335	<color=gold>¤ng chñ d­îc ®iÕm<color>: Ng« l·o gia nhê ng­¬i ®Õn mua thuèc µ? Ta ®· chuÈn bŞ s½n cho ng­¬i <color=red>10 viªn<color> <color=green>Xuyªn Bèi Hoµn<color>, tæng céng <color=gold>200 l­îng<color>. Nh¾n víi Ng« l·o gia h·y gi÷ g×n søc kháe!
+10336	Khi nµo cã ®ñ tiÒn th× h·y quay l¹i!
+10337	§a t¹ ®¹i hiÖp! Mét ngµy nµo ®ã, ta b¶o Hång Mai lµm cho ng­¬i 1 ®«i giµy!
+10338	§a t¹ n÷ hiÖp! Mét ngµy nµo ®ã, ta b¶o Hång Mai lµm cho c« n­¬ng 1 ®«i giµy!
+10339	§a t¹ huynh ®· hèt thuèc cho cha muéi! §©y lµ ®«i giµy muéi míi võa may xong, nÕu huynh kh«ng chª xin h·y cÇm lÊy!
+10340	§a t¹ tû ®· hèt thuèc cho cha muéi! §©y lµ ®«i giµy muéi míi võa may xong, nÕu tû kh«ng chª xin h·y cÇm lÊy!
+10341	<color=gold>¤ng chñ d­îc ®iÕm<color>: Thuèc cña bæn tiÖm toµn lµ thø th­îng h¹ng, cã bÖnh trŞ bÖnh, kh«ng bÖnh c­êng th©n, cã muèn mua mét İt kh«ng?
+10342	<color=gold>Thî rÌn<color>: Muèn mua lo¹i vò khİ nµo? Xin mêi xem vµ chän tù nhiªn!
+10343	<color=gold>Chñ tiÖm t¹p hãa<color>: Bæn tiÖm tuy nhá nh­ng thø g× còng cã! Kh¸ch quan muèn mua g×?
+10344	<color=gold>B¸n ngùa<color>: Ng­êi hµnh tÈu giang hå ®Òu cÇn ph¶i cã mét con ngùa tèt, ngùa cña ta tuy kh«ng ph¶i lµ danh c©u nh­ng søc chŞu ®ùng cña nã thËt kinh ng­êi! Tİnh nã l¹i «n hßa mµ gi¸ tiÒn còng kh«ng ®¾t l¾m!
+10345	<color=gold>Xa phu<color>: Kh¸ch quan muèn ®i ®©u?
+10346	<color=gold>Xa phu<color>: Muèn ngåi xe ®i ®©u?
+10347	<color=gold>V­¬ng ThiÕt T­îng<color>: §¹i h¹ gi¸ ®©y vµo xem nhanh nµo!
+10348	<color=gold>Khóc ThiÕt T­îng<color>: Tr­íc kia tiÖm thî rÌn nµy rÊt ¨n nªn lµm ra, rÊt nhiÒu vâ l©m cao thñ ®Õn ®©y ®Æt lµm binh khİ, b©y giê th×... Th«i kh«ng nãi cho xong! Muèn xem lo¹i binh khİ g×?
+10349	<color=gold>¤ng chñ d­îc ®iÕm<color>: TiÖm ta thuèc nµo còng cã, d­ìng th©n kiÖn thÓ, kĞo dµi tuæi thä, bæ m¸u İch khİ, ng­¬i muèn mua g×?
+10350	<color=gold>Chñ tiÖm t¹p hãa<color>: Kh¸ch quan cÇn g×? HiÖn giê thÕ ®¹o hçn lo¹n, sèng ®­îc qua ngµy thËt kh«ng dÔ, tiÖm ta thø g× còng rÎ, muèn mua thø g×?
+10351	<color=gold>B¸n ngùa<color>: Ngùa cña ta cao lín, c­íc lùc l¹i tèt! Cã thÓ ch¹y liÒn mét ngµy mét ®ªm kh«ng nghØ, ch¾c ch¾n lµ ngùa tèt! Mua mét con ®i!
+10352	<color=gold>Thî rÌn<color>: T¹i ®©y chuyªn lµm binh khİ cho qu©n ®éi nªn rÊt bËn rén. CÇn lo¹i vò khİ g× th× cø chän tù nhiªn nhĞ!
+10353	<color=gold>¤ng chñ d­îc ®iÕm<color>: C¸c lo¹i thuèc trŞ ®· th­¬ng, trËt th­¬ng, trµng th­¬ng, vÕt c¾t, báng ®Çy ®ñ h¬n nh­ng chç kh¸c, ng­¬i muèn mua thuèc g×?
+10354	<color=gold>Chñ tiÖm t¹p hãa<color>: Kh¸ch quan muèn mua thø g×? §å ¨n, ®å mÆc, hay ®å dïng?
+10355	<color=gold>B¸n ngùa<color>: Cho dï lµ Thiªn Lı M· còng cÇn ph¶i chän lùa míi ®­îc. TiÕc r»ng ®êi cã nhiÒu kÎ chØ nh×n bÒ ngoµi mµ chän lùa. ThËt gi¶ bÊt ph©n, thŞ phi bÊt minh, thËt ®¸ng buån c­êi!
+10356	<color=gold>Xa phu<color>: Ng­¬i muèn ®i ®©u? §i xe cña ta, b¶o ®¶m võa nhanh võa tiÖn!
+10357	<color=gold>VÖ binh thµnh m«n<color>: Tuy kh«ng ph¶i lµ ng­êi trong giang hå, nh­ng hµng ngµy ta thÊy c¸c ng­¬i qua l¹i rÊt nhiÒu lÇn. Kh«ng ph¶i kho¸c l¸c v× hoµn c¶nh c¸c ng­¬i ta hiÓu rÊt râ!
+10358	Kh¶m n¹m thñy tinh cã liªn quan tíi sù thay ®æi ngò hµnh, phĞp vËn chuyÓn linh khİ, søc ng­êi kh«ng thÓ ®o¸n ®­îc, ch­a ch¾c t¹o ra mét vËt phÈm cao siªu nh­ ta hy väng; nh­ng cßn ®å phæ vò khİ vµ kú tr©n dŞ b¶o th× cã thÓ thay ®æi ®¼ng cÊp cña trang bŞ. Cã ph¶i kh¸ch quan muèn kh¶m n¹m trang bŞ nµy kh«ng?
+10359	Danh dù cña TiÒn Trang chóng ta rÊt quan träng, tuyÖt ®èi kh«ng g¹t ng­êi!
+10360	<color=gold>Chñ TiÒn Trang<color>: ThiÕu hiÖp cÇn g×?
+10361	Xem t­íng m¹o ng­¬i phong trÇn thÕ nµy, ch¾c tõ xa ®Õn µ?
+10362	Ph­îng T­êng phñ lµ thŞ trÊn lín ë T©y B¾c, tuy kh«ng phån vinh hoa lÖ nh­ Giang Nam, nh­ng thŞ trÊn còng ®«ng ®óc n¸o nhiÖt l¾m!
+10363	Ng­¬i ®Õn lµm ¨n hay tham quan vËy?
+10364	§Õn Ph­îng T­îng ®õng quªn l¹i chç LiÔu L©m Töu Ph­êng th­ëng thøc T©y Phông Töu!
+10365	<color=gold>Vâ l©m truyÒn nh©n<color>: Thêi thÕ lo¹n l¹c, ch­ vŞ nªn gi÷ ®¹o chİnh ph¸i, t¹o phóc chóng sinh. Cã thÕ míi hi väng trë thµnh mét ®¹i hiÖp ®­îc mäi ng­êi ng­ìng mé!
+10366	<color=gold>DŞch quan<color>: ViÖc qu©n c¬ cña TriÒu ®×nh gÇn ®©y lu«n bŞ giÆc Kim biÕt tr­íc, ta nghi ngê cã néi gi¸n. Nh­ng tr­íc khi mÊy tªn b¹i lo¹i nµy bŞ ph¸t hiÖn, ta muèn r»ng tin nµy kh¾p n¬i ®Òu biÕt, ng­¬i cã muèn gãp mét phÇn søc cho Quèc gia kh«ng?
+10367	<color=gold>DŞch quan<color>: Trong ¶i <color=violet>Phong Kú <color>, ng­¬i cã thÓ chän ®Õn cæng ra, nh­ thÕ coi nh­ hoµn thµnh nhiÖm vô nh­ng chØ nhËn ®­îc ®iÓm danh väng. Trong ¶i, chóng ta cã lËp nh÷ng môc tiªu nhiÖm vô ®¬n gi¶n: Däc ®­êng ng­¬i sÏ thÊy nhiÒu kı hiÖu cña qu©n ta ®Ó l¹i, cïng lóc cã nhiÒu gian tÕ Kim Quèc. Ng­¬i chØ cÇn tiÕp xóc 5 täa ®é trong b¶n ®å cã thÓ ®Õn cæng ra t×m B¹ch Dùc T­íng Qu©n qua ¶i. Nh­ng biÓu hiÖn cña ng­¬i ®Òu n»m trong tÇm m¾t cña trinh s¸t ta ph¸i ®Õn. §èi víi viÖc t¨ng ®¼ng cÊp Yªu bµi cña ng­¬i sÏ rÊt cã lîi.
+10368	<color=gold>DŞch quan<color>: Hñy bá nhiÖm vô <color=violet>Phong Kú <color> sÏ kh«ng ®­îc nhËn th­ëng, bao nhiªu cè g¾ng sÏ tan thµnh m©y khãi. Ng­¬i ®ång ı hñy bá chø?
+10369	<color=gold>DŞch quan<color>: Chóc mõng ng­¬i ®· hoµn thµnh nhiÖm vô! ThÓ hiÖn rÊt tèt!
+10370	<color=gold>DŞch quan<color>: Ch­a tiÕp nhËn nhiÖm vô nµo ng­¬i cßn l¹i tr¶ nhiÖm vô! Ng­êi ®©u? B»m c¸i tªn nµy lµm nh©n b¸nh bao cho ta!
+10371	<color=gold>DŞch quan<color>: §· l©u ta kh«ng mµng ®Õn nh÷ng chuyÖn trªn giang hå, thêi cuéc lóc nµy qu¸ hçn lo¹n, ¾t h¼n triÒu ®×nh sÏ cã nhiÒu viÖc ph¶i lµm.
+10372	§¹i hiÖp muèn ®i ®©u?
+10373	N÷ hiÖp muèn ®i ®©u?
+10374	§­êng ®i ®Õn c¸c thµnh thŞ lín thÕ nµy rÊt xa. Cã khi ph¶i mÊt vµi ngµy ®­êng míi tíi n¬i.
+10375	Kh«ng tiÒn kh«ng thÓ ngåi xe!
+10376	<color=gold>Nha dŞch<color>: Quèc cã quèc ph¸p, gia cã gia quy. Ng­êi hai tay dİnh ®Çy m¸u tanh ch¹y trèn tíi ch©n trêi gãc biÓn còng kh«ng thÓ tho¸t khái luËt ph¸p!
+10377	Ta v« t×nh lµm bŞ th­¬ng ng­êi kh¸c, nay ®Õn tù thó!
+10378	Bæn phñ ®· ®iÒu tra, ng­¬i chØ lµ phßng vÖ chİnh ®¸ng mµ th«i! Sau nµy cÈn thËn mét chót! Ng­¬i ®i ®i!
+10379	Nî m¸u cña ng­¬i qu¸ s©u nÆng råi! Cßn muèn tù thó? Hõ! Chê ng­êi ®uæi giÕt ®i!
+10380	<color=gold>Nha dŞch<color>: Mau ®i chç kh¸c! Nh×n c¸i g×? Cã ph¶i lµ ®ång bän kh«ng?
+10381	Hõm! B»ng h÷u cña ng­¬i ë ®¹i lao ng· bÖnh sao? NÕu nh­ vËy, cho ng­¬i vµo th¨m mét chót còng lµ lÏ th­êng t×nh! Nhí kh«ng ®­îc lµm g× lĞn lót!
+10382	Mau tr¸nh ra cho ta! Cã muèn ta b¾t lu«n v× téi ®ång ®¶ng kh«ng h¶?
+10383	<color=gold>Lao ®Çu<color>: Ng­¬i th¨m xong ch­a? §i nhanh mét chót ®i!
+10384	Téi nghiÖt cña ng­¬i ®· hÕt, cã thÓ xuÊt ngôc ra ngoµi råi!
+10385	§a ta ®¹i ca! NÕu ®· nh­ vËy th× ta ®i ®©y.
+10386	<color=gold>Lao ®Çu<color>: Ph¹m nh©n kh«ng ®­îc tù ı ®i lung tung!
+10387	Ta chØ muèn hái mét chót, b©y giê ®· lµ giê g×?
+10388	Hái hái c¸i g×? Ngøa ®ßn ph¶i kh«ng? Cßn kh«ng mau trë l¹i chç ngåi! Ta l¹i lµm cho vµi roi b©y giê!
+10389	Ng­¬i cã thÓ cã nhiÒu ng©n l­îng nh­ vËy sao? Hõ! BiÕt vËy ta ®· ra gi¸ cao h¬n!
+10390	Kh«ng cã <color=gold>ng©n l­îng<color> mµ tİnh lõa ta sao? Cót ®i! Cã tin ta l¹i quÊt ng­¬i vµi roi kh«ng h¶?
+10391	Ha! Ha! LuËt ph¸p còng cã thÓ l¸ch ®­îc! ChØ cÇn cã ng©n l­îng! Nªn nhí ®­îc ra ngoµi råi th× ®õng t¸i ph¹m n÷a kÎo l¹i mÊt tiÒn ngu! Ha! Ha
+10392	ThËt lµ nhøc ®Çu! Ng­¬i muèn ra khái ®©y th× cÇn <color=green>1 Kim Nguyªn B¶o<color>! Cã muèn ra ngoµi hay kh«ng lµ do ng­¬i quyÕt ®Şnh.
+10393	Kh«ng cã <color=green>Kim Nguyªn B¶o<color> mµ tİnh lõa ta sao? Cót ®i! Cã tin ta l¹i quÊt ng­¬i vµi roi kh«ng h¶?
+10394	<color=gold>C«ng B×nh Tö <color>: §©y lµ ®Êu tr­êng thi ®Êu l«i ®µi, n¬i c¸c nh©n sÜ trªn giang hå ®¬n ®Êu hoÆc tæ chøc thi ®Êu ®éi. HiÖn t¹i ch­a cã ai b¸o danh thi ®Êu, c¸c h¹ cã muèn b¸o danh kh«ng? <color=yellow>HiÖn t¹i më miÔn phİ l«i ®µi<color>!
+10395	<color=red>Kh«ng t×m thÊy y phôc trªn ng­êi, kh«ng thÓ ®İnh phi phong.<color>
+10396	Trang bŞ <color=gold>Hoµng Kim<color> kh«ng thÓ ®İnh phi phong.
+10397	<color=red>Y phôc ®· ®İnh phi phong råi, kh«ng thÓ tiÕp tôc ®İnh.<color>
+10398	Y phôc ®· ®­îc <color=green>®İnh phi phong<color> thµnh c«ng.
+10399	Xin lçi! Ta chØ cã thÓ ®­a ng­¬i ®Õn nh÷ng n¬i ®· ®i qua nh­ng ng­¬i ch­a ®i ®©u c¶!
+10400	§¼ng cÊp ph¶i ®¹t tõ <color=red>80 trë lªn<color> míi cã thÓ tham gia chiÕn tr­êng <color=lightsalmon>Tèng<color> <color=yellow>Kim<color>.
+10401	ChiÕn tr­êng lµ n¬i khèc liÖt cã thÓ cã ®i mµ kh«ng cã vÒ! Ng­¬i c¶m thÊy chİnh m×nh cã ®ñ can ®¶m vµ søc lùc ®Ó lªn ®­êng hay kh«ng? Nªn nhí cÊp ®é tèi thiÓu ®Ó chŞu ®ùng ®­îc ë n¬i nµy lµ <color=green>80 cÊp<color>!
+10402	Khu vùc nµy kh«ng thÓ sö dông <color=green>Tèng Kim chiªu th­ <color>!
+10403	Muèn ghi danh ph¶i lµ <color=yellow>§éi tr­ëng<color>! §éi cña c¸c h¹ kh«ng ®ñ <color=yellow>2<color> ng­êi.
+10404	Ng­êi b¸o danh ph¶i lµ <color=yellow>§éi tr­ëng<color>!
+10405	C¸c h¹ muèn thi ®Êu l«i ®µi? Sè ng­êi nhiÒu nhÊt mçi bªn lµ bao nhiªu?
+10406	§· cã ng­êi ghi danh thi ®Êu! Xin chê gi©y l¸t...
+10407	L«i ®µi lµ n¬i ®Ó häc hái kinh nghiÖm lÉn nhau. Muèn tham gia l«i ®µi, tr­íc hÕt ph¶i ®Õn chç ta ghi danh.	
+10408	V× thêi gian cã giíi h¹n, sau khi ghi danh th× lËp tøc b¾t ®Çu trËn chiÕn. §ang cã ng­êi thi ®Êu th× kh«ng thÓ ghi danh.
+10409	Sau khi ghi danh, cã thÓ ®Õn khu chuÈn bŞ. Thêi gian chuÈn bŞ lµ <color=yellow>2 phót<color>. Thêi gian thi ®Êu lµ <color=yellow>10 phót<color>.
+10410	L«i ®µi <color=yellow>1 vs 1<color> cã thÓ trùc tiÕp thi ®Êu, kh«ng cÇn thiÕt m· trËn ®Êu.
+10411	C¸c h¹ kh«ng ph¶i <color=yellow>®éi tr­ëng<color> trong chiÕn ®éi! Ta kh«ng thÓ tïy tiÖn th«ng b¸o m· trËn ®Êu!
+10412	Kh«ng cã m· trËn ®Êu kh«ng thÓ th­îng ®µi! Ng­¬i cã kh«ng?
+10413	C¸c h¹ kh«ng ph¶i lµ tuyÓn thñ ®· b¸o danh v× vËy kh«ng thÓ vµo l«i ®µi, xin h·y ®øng ngoµi xem!
+10414	C¸c h¹ ®· nhËp sai, hái <color=yellow>®éi tr­ëng<color> ®Ó x¸c ®Şnh l¹i, xin c¸m ¬n!
+10415	Sè ng­êi thi ®Êu ®· ®ñ!
+10416	Xin chµo, c¸c h¹ cÇn ta gióp ®ì g× kh«ng???.
+10417	Xem bé thÇn s¾c ng­¬i nhît nh¹t thÕ! Cã cÇn mua İt thuèc kh«ng?
+10418	<color=gold>ThiÕu L©m ph¶n t¨ng<color>: Ng­êi muèn rÌn luyÖn g©n cèt, ®¶ th«ng l¹i kinh m¹ch sao? TÊt nhiªn ta cã thÓ gióp ®ì!
+10419	BÕn thuyÒn Giang T©n Th«n.
+10420	Tİnh n¨ng nµy hiÖn ®ang t¹m ®ãng. Vui lßng quay l¹i sau!
+10421	<color=gold>NhiÕp Thİ TrÇn<color>: NÕu ai cã thÓ hoµn thµnh 160 nhiÖm vô s¸t thñ liªn hoµn, th× cã thÓ ®­îc coi lµ s¸t thñ thùc thô. Mçi ngµy chØ cÇn hoµn thµnh <color=yellow>8 nhiÖm vô <color>lµ ®­îc.<enter>H·y nhanh tay nhËn nhiÖm vô, cïng víi nhãm cña m×nh ®Ó thÓ hiÖn n¨ng lùc s¸t thñ ®i.
+10422	§¼ng cÊp ch­a ®¹t <color=red>cÊp 90<color>, kh«ng thÓ tham gia thİ luyÖn s¸t thñ!
+10423	<color=gold>NhiÕp Thİ TrÇn<color>: Cã 20 tªn s¸t thñ, mçi tªn ®Òu cã ®«i bµn tay nhuém ®Çy m¸u t­¬i, ng­¬i muèn thİ luyÖn víi tªn nµo?
+10424	<color=gold>NhiÕp Thİ TrÇn<color>: Ng­¬i ch­a nhËn nhiÖm vô sao l¹i ®Õn xin hñy bá? Cã g× nhÇm lÉn ë ®©y ch¨ng!
+10425	<color=gold>NhiÕp Thİ TrÇn<color>: Ng­¬i ®· hñy bá nhiÖm vô. Lµm s¸t thñ tr­íc tiªn ph¶i cã thñ ph¸p siªu phµm, hai lµ h¹ thñ v« t×nh, xem ra ng­¬i kh«ng thİch hîp, kh«ng ®i còng kh«ng sao.
+10426	<color=gold>NhiÕp Thİ TrÇn<color>: S¸t thñ ph¶i cã mét tè chÊt quan träng lµ khinh bØ kÎ yÕu. H«m nay ng­¬i ®¹ tiªu diÖt <color=yellow>8 tªn<color> råi, ngµy mai h·y quay l¹i!
+15654	L¸ cê Mü cã bao nhiªu ng«i sao?
+15655	Hµnh Tinh nµo kh«ng cã bÇu khİ quyÓn?
+15656	ViÖt Nam ë mòi mÊy giê nµo?
+15657	Mét n¨m Cã NhiÒu NhÊt Bao Nhiªu Ngµy Chñ NhËt?
+15658	Mét ngµy Cã Bao Nhiªu Giê?
+15659	§«ng Nam ¸ Cã Bao Nhiªu Quèc Gia?
+15660	C¶ng lín nhÊt §«ng Nam ¸ lµ c¶ng nµo?
+15661	Mét ph©n tö metan cã bao nhiªu hidr«?
+15662	Tim ng­êi b×nh th­êng ®Ëp bao nhiªu nhŞp 1 ngµy?
+15663	CÇu Mü ThuËn b¾c qua con s«ng nµo?
+15664	Mét kú Worldcup cã bao nhiªu n¨m ?
+15665	§­êng Lªn §Ønh Olympia §­îc §Şnh Kú Vµo Ngµy Thø MÊy?
+15666	Quèc Kh¸nh ViÖt Nam Lµ Ngµy Nµo?
+15667	Quèc TÕ ThiÕu Nhi Lµ Ngµy Nµo?
+15668	Mét n¨m cã bao nhiªu ngµy?
+15669	ViÖt Nam lµ thµnh viªn thø mÊy cña WTO ?
+15670	CÇu thang lªn chïa Mét Cét hiÖn nay lµm b»ng g× ?
+15671	¢m thanh ®­îc ph¸t ra tõ bé phËn c¬ thÓ nµo ?
+15672	Tªn tiÕng anh viÕt t¾t hÖ thèng tiÒn tÖ ch©u ¢u lµ g×?
+15673	B¹n §ang Tham Gia Envet G×?
+15674	Ngµy 8-3 Lµ Ngµy G×?
+15675	§µn Guitar th­êng cã mÊy d©y ?
+15676	Kim lo¹i nµo cã nhiÒu nhÊt trong líp vá Tr¸i §Êt?
+15677	Mét mĞt Khèi = Bao Nhiªu Lİt?
+15678	Con èc Sªn cã mÊy c¸i mòi?
+15679	World Cup 2014 ®­îc Tæ Chøc ë §©u?
+15680	Ai Lµ ng­êi T×m Ra Ch©u Mü ?
+15681	TØnh Nµo Cã DiÖn Tİch Lín NhÊt ViÖt Nam?
+15682	Con VËt To NhÊt ThÕ Giíi?
+15683	HiÖn Giê Liªn Hîp Quèc Cã Bao Nhiªu Thµnh Viªn?
+15684	B¶ng TuÇn Hoµn Cã Bao Nhiªu Nguyªn Tè?
+15685	Ch÷ ®Çu tiªn trong b¶ng ch÷ c¸i tiÕng Anh:
+15686	Gi¶i Grand Slam ®Çu tiªn trong n¨m lµ gi¶i nµo?
+15687	AFC Asian Cup 2011 ®­îc tæ chøc t¹i quèc gia nµo?
+15688	§éi nµo lªn ng«i v« ®Şch AFC Asian Cup 2011 tæ chøc t¹i Qatar?
+15689	S«ng BÕn H¶i vµ s«ng Th¹ch H·n n»m ë tØnh nµo?
+15690	§¹i Ngu lµ quèc hiÖu cña triÒu ®¹i nµo?
+15691	An D­¬ng V­¬ng ®Æt quèc hiÖu n­íc ta lµ g×?
+15692	§iªu tµn lµ tËp th¬ ®Çu tiªn cña nhµ th¬ nµo?
+15693	Ai ®­îc bÇu lµm Tæng bİ th­ §¶ng céng s¶n ViÖt Nam t¹i §¹i héi XI ?
+15694	TØnh nµo ®¨ng cai tæ chøc N¨m du lŞch Quèc gia 2012 ?
+15695	Cóm vµ sëi lµ nh÷ng bÖnh l©y truyÒn qua ®­êng nµo ?
+15696	Virus sëi l©y truyÒn qua ®­êng nµo ?
+15697	T­îng ®µi MÑ Suèt n»m bªn c¹nh con s«ng nµo?
+15698	Bé c©u hái hoa ®¨ng hiªn t¹i do ai biªn so¹n:
+15699	ViÖt Nam lÇn ®Çu tiªn v« ®Şch AFF Cup lµ vµo n¨m nµo ?
+15700	Gi¸o s­ TrÇn V¨n Khª næi tiÕng ë lÜnh vùc nµo ?
+15701	CLB nµo v« ®Şch FIFA Club World Cup 2010 tæ chøc t¹i Qatar ?
+15702	Phó Yªn-tØnh ®¨ng cai N¨m du lŞch quèc gia 2011 ë khu vùc nµo ?
+15703	LÔ Héi Giãng chİnh thøc ®­îc nhËn b»ng Di s¶n v¨n ho¸ thÕ giíi vµo n¨m nµo ?
+15704	Trong c¸c hµm sè l­îng gi¸c c¬ b¶n, hµm sè nµo lµ hµm sè ch½n ?
+15705	Lo¹i vitamin nµo mµ c¬ thÓ con ng­êi cã thÓ tù tæng hîp ®­îc nhê ¸nh s¸ng MÆt Trêi ?
+15706	Paracetamol thuéc nhãm thuèc nµo sau ®©y ?
+15707	Thµnh cæ S¬n T©y do vŞ vua nµo x©y dùng nªn vµo n¨m 1822?
+15708	TËp hîp c¸c sè thùc ®­îc kı hiÖu b»ng ch÷ c¸i nµo ?
+15709	ViÖt Nam ®· ®¨ng cai cuéc thi s¾c ®Ñp nµo trong n¨m 2010 ?
+15710	Loµi hoa nµo ®­îc chän lµ Quèc hoa cña ViÖt Nam ?
+15711	B¸nh pİa lµ ®Æc s¶n cã nguån gèc tõ tØnh nµo ?
+15712	V¹n Th¾ng V­¬ng lµ ai ?
+15713	Tæ chøc th­¬ng m¹i thÕ giíi cã trô së ®Æt t¹i quèc gia nµo ?
+15714	Gi¶i ®ua xe ®¹p vßng quanh n­íc Ph¸p n¨m 2001 cã mÊy chÆng ®ua ?
+15715	Tõ nµo sau ®©y chØ tÕ bµo m¸u ?
+15716	§©u kh«ng ph¶i lµ mét lo¹i tÕ bµo m¸u ?
+15717	Con sè nµo ®­îc xem lµ sè xui xÎo víi ng­êi Trung Quèc?
+15718	ThÕ vËn héi mïa hÌ 2012 sÏ ®­îc tæ chøc ë ®©u?
+15719	IPHONE X do h·ng nµo s¶n xuÊt ra ?
+15720	Vâ L©m TruyÒn Kú ph¸t hµnh ë ViÖt Nam n¨m nµo?
+15721	Ng­êi yªu cña Chİ PhÌo lµ ai ?
+15722	Tr­êng Sa do tØnh nµo cña ViÖt Nam qu¶n lı ?
+15723	Hoµng Sa do tØnh nµo cña ViÖt Nam qu¶n lı 
+15724	Th¸p Rïa ®­îc x©y dùng vµo thÕ kû nµo ?
+15725	Thñ ®« n­íc nµo l©u ®êi nhÊt §«ng Nam ¸ ?
+15726	§Êt n­íc nµo lµ quª h­¬ng cña «ng giµ tuyÕt ?
+15727	Tr­êng Sa - Hoµng Sa lµ cña n­íc nµo ?
+15728	ViÖt Nam tham gia Asian n¨m nµo ?
+15729	Quèc hiÖu n­íc ta thêi Minh M¹ng lµ g× ?
+15730	Ngµy thµnh lËp tæ chøc Liªn Hîp Quèc ?
+15731	NguyÔn Phóc VÜnh San lµ tªn hóy cña vua nµo triÒu NguyÔn?
+15732	Trong c¸c n­íc d­íi ®©y, n­íc nµo thuéc B¾c Ch©u ¢u ?
+15733	§¶o lín nhÊt §Şa Trung H¶i ?
+15734	L¸ cê ®á sao vµng lÇn ®Çu tiªn xuÊt hiÖn trong ?
+15735	Con ng­êi ®Æt ch©n lÇn ®Çu tiªn ®Õn mÆt tr¨ng vµo n¨m nµo ?
+15736	Quèc hiÖu do Hïng V­¬ng ®Æt lµ ?
+15737	Bé LuËt thµnh v¨n ®Çu tiªn cña n­íc ta lµ bé luËt nµo ?
+15738	§Òn thê vua Hïng thuéc tØnh nµo ?
+15739	N­íc nµo nhiÒu dÇu má nhÊt T©y Nam ¸ ?
+15740	Hå nµo kh«ng n»m ë Hµ Néi ?
+15741	Ai lµ ng­êi ®¸nh th¾ng trËn ®Çu tiªn trªn s«ng B¹ch §»ng ?
+15742	Thñ ®« Canada lµ g× ?
+15743	Ng«n ng÷ chİnh thøc cña Cuba lµ tiÕng g× ?
+15744	Quèc gia nµo lín nhÊt Ch©u Phi ?
+15745	§¹i d­¬ng nµo cã diÖn tİch nhá nhÊt ?
+15746	Vâ L©m Cã Bao Nhiªu M«n Ph¸i ?
+15747	Ao thu l¹nh lÏo n­íc trong veo thuéc bµi th¬ nµo ?
+15748	Tªn gäi kh¸c cña qu¶ m­íp ®¾ng ?
+15749	Lo¹i ®Êt cã diÖn tİch lín nhÊt ®ång b»ng S«ng Cöu Long ?
+15750	Ngµy Thu Ph©n lµ ngµy nµo ?
+15751	Cã Bao Nhiªu Lo¹i Boss S¸t Thñ?
+15752	Ngò hµnh cã bao nhiªu hÖ?
+15753	Quèc hiÖu §¹i ViÖt chİnh thøc b¾t ®Çu tõ n¨m nµo?
+15754	Phim ®Çu tiªn cña ng­êi ViÖt?
+15755	§iÓm thi ®Êu Sea Games ph¶i treo bao nhiªu l¸ cê ?
+15756	DiÖn tİch n­íc viÖt nam réng kho¶ng bao nhiªm km² ?
+15757	HiÕn ph¸p n­íc ViÖt Nam n¨m 1959 cã bao nhiªu ®iÒu ?
+15758	Thang m¸y ®Çu tiªn ®­îc chÕ t¹o vµo n¨m nµo ?
+15759	C©n ®­îc ph¸t minh bëi c¸c c­ d©n ?
+15760	Lß ph¶n øng h¹t nh©n ®Çu tiªn cña n­íc ta n»m ë ®©u ?
+15761	B¸n kİnh Tr¸i §Êt b»ng bao nhiªu ?
+15762	Npc NhËn NhiÖm Vô S¸t Thñ Tªn G× ?
+15763	Bé phËn quan träng nhÊt cña m¸y quang phæ lµ g× ?
+15764	GiÊy ®­îc ph¸t minh vµo n¨m nµo ?
+15765	Nguån Gèc cña n­íc hoa ë ®©u ?
+15766	Thuı KiÒu dïng lo¹i mü phÈm nµo ?
+15767	§Ønh nói cao nhÊt n­íc ta Phan Xi P¨ng thuéc tØnh nµo ?
+15768	Cã bao nhiªu vŞ tr¹ng nguyªn d­íi thêi vua Gia Long ?
+15769	Bµi th¬ D­¬ng phô hµnh do ai s¸ng t¸c ?
+15770	Quèc gia cã l­îng khİ th¶i lín nhÊt thÕ giíi ?
+15771	Ng­êi lao ®éng n­íc nµo kh«ng cÇn ph¶i ®ãng thuÕ ?
+15772	Nguyªn tö cacbon cã bao nhiªu electron ?
+15773	TuyÕn må h«i cña chã tËp trung ë ®©u ?
+15774	ViÖt Nam cã bao nhiªu khu b¶o tån sinh th¸i ?"
+15775	§¹i héi thÓ thao häc sinh §«ng Nam Á lÇn thø 3-2011 diÔn ra ë n­íc nµo?
+15776	Phim ®Çu tiªn cña ng­êi ViÖt?
+15777	Møc l­¬ng tèi thiÓu cña c¸n bé c«ng chøc ®­îc ®iÒu chØnh tõ ngµy 1/5/2011 lµ?
+15778	Vµo ®ªm giao thõa ë NhËt B¶n th× c¸c chïa ®Òu ®¸nh bao nhiªu tiÕng chu«ng?
+15779	§¹i héi thÓ thao ng­êi khuyÕt tËt §«ng Nam Á Para Games 2011 ®­îc tæ chøc t¹i n­íc nµo?
+15780	VŞ chóa nµo cña chóa NguyÔn lµ ng­êi ®Çu tiªn ®· ph¸c th¶o ra h×nh d¸ng chiÕc ¸o dµi ViÖt Nam?
+15781	Tê b¸o b»ng ch÷ quèc ng÷ ®Çu tiªn ë n­íc ta ra ®êi vµo nöa cuèi thÕ kû XIX ë Sµi Gßn cã tªn lµ g×?
+15782	C©u l¹c bé nµo v« ®Şch CHAMPION LEAGUE mïa bãng 2000-2011?
+15783	ChØ sè gia tiªu dïng cã kı hiÖu lµ g×?
+15784	Trong Th¨ng Long tø trÊn, trÊn nµo n»m ë khu phè cæ Hµ Néi (phè Hµng Buåm)?
+15785	Quü häc bæng NguyÔn Th¸i B×nh lµ ho¹t ®éng cña tê b¸o nµo?
+15786	Than ®¸, than bïn lµ lo¹i kho¸ng s¶n nµo?
+15787	Bé phim truyÒn h×nh nµo ®¹t gi¶i C¸nh diÒu vµng 2010?
+15788	§Ó duy tr× nång ®é trong m¸u, c¸c thuèc chèng viªm corticoid nªn uèng vµo lóc mÊy giê vµo buæi s¸ng?
+15789	ASIAD 2014 ®­îc tæ chøc t¹i n­íc nµo?
+15790	Ng«i tr­êng ®Çu tiªn mang tªn cè Thñ t­íng Vâ V¨n KiÖt n»m ë tØnh nµo?
+15791	Qu©n cê nµo cã trªn c¶ bµn cê vua vµ bµn cê t­íng?
+15792	C¸c tiÓu v­¬ng quèc Arab thèng nhÊt (UAE) hiÖn nay cã bao nhiªu tiÓu v­¬ng quèc ?
+15793	Bé phim truyÒn h×nh nµo sau ®©y kh«ng cã néi dung vÒ phßng chèng HIV/AIDS?
+15794	Nhµ th¬ thêi §­êng ®­îc nh¾c ®Õn trong di chóc cña B¸c Hå lµ ai?
+15795	Héi khoÎ Phï §æng toµn quèc lÇn thø VIII 2012 diÔn ra t¹i thµnh phè nµo?
+15796	Ai lµ ng­êi ViÖt Nam thø hai bay vµo vò trô?
+15797	Ai ®­îc t¹p chİ Time b×nh chän lµ Nh©n vËt cña n¨m 2010?
+15798	Tr­êng §¹i häc B¸ch Khoa TP.HCM thµnh lËp n¨m nµo?
+15799	Mét ng­êi ®i tr­íc 2 ng­êi, 1 mét ng­êi ®i gi÷a 2 ng­êi, 1 ng­êi ®i sau 2 ng­êi. Hái cã mÊy ng­êi ®ang ®i?
+15800	¢m thanh cña ve sÇu c¸i ph¸t ra tõ ®©u?
+15801	¢m thanh ko truyÓn dc ®i trong m«i tr­êng nµo?
+15802	Ai ®­îc mÖnh danh lµ 'Tam NguyÔn Yªn §ç' ?
+15803	Quèc tÕ thiÕu nhi lµ ngµy nµo?
+15804	BiÓu t­îng SEAGAME 22 lµ g×?
+15805	BÕn Tre tr­íc sù kiÖn 30/4/1975 cã tªn lµ g×?
+15806	Tæng thèng Mü viÕng th¨m ViÖt Nam ®Çu tiªn cã tªn lµ g×?

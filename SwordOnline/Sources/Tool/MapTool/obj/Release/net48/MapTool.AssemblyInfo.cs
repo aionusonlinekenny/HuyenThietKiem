@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MapTool")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4f169ba930e240605a58b3e3d836a8c84f2fc72d")]
 [assembly: System.Reflection.AssemblyProductAttribute("MapTool")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MapTool")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
