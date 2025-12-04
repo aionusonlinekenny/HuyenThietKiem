@@ -1154,7 +1154,10 @@ namespace PakExtractTool
             // 4. Map-related sprites and overlays
             GenerateMapRelatedSprites(paths);
 
-            // 5. Chinese UI paths - common Chinese character folders
+            // 5. Specific game paths (christmas, dazhuanpan, events)
+            GenerateSpecificGamePaths(paths);
+
+            // 6. UI paths - English only (Chinese rarely used)
             GenerateChineseUIPaths(paths);
         }
 
@@ -1255,37 +1258,68 @@ namespace PakExtractTool
         /// <summary>
         /// Generate equipment sprites with standard naming conventions
         /// Based on item type and ID
+        /// From matched paths: obj_fm_lf_000.spr, obj_ma_lf_000.spr pattern
         /// </summary>
         private void GenerateEquipmentSprites(HashSet<string> paths)
         {
             var equipTypes = new[]
             {
                 "armor", "helmet", "weapon", "melee", "range", "ring", "amulet", "boots", "belt",
-                "shield", "horse", "cuff", "pendant", "mask"
+                "shield", "horse", "cuff", "pendant", "mask", "cloth", "dress"
             };
 
-            var equipTypesShort = new[] { "ar", "he", "wp", "ml", "rg", "ri", "am", "bo", "be", "sh", "ho", "cu", "pe", "ma" };
+            // Character class codes (from matched paths: obj_fm_lf, obj_ma_lf, etc.)
+            var classCodes = new[]
+            {
+                "fm", "ma", "wa", "as", "pr",  // Female Mage, Male Archer, Warrior, Assassin, Priest
+                "lf", "mf",  // Additional codes
+                "01", "02", "03", "04", "05"  // Numeric codes
+            };
 
             foreach (var type in equipTypes)
             {
-                for (int i = 1; i <= 200; i++)
+                // Standard long format (increased to 500)
+                for (int i = 0; i <= 500; i++)
                 {
-                    // Standard formats
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\obj_{type}{i:D2}.spr"));
+                    // obj_TYPE_000 format
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\obj_{type}_{i:D3}.spr"));
                     paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\obj_{type}{i:D3}.spr"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\obj_{type}_{i:D2}.spr"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\{type}{i:D2}.spr"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\{type}_{i:D2}.spr"));
+
+                    // TYPE_000 format
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\{type}_{i:D3}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\{type}{i:D3}.spr"));
+                }
+
+                // Class-specific equipment (obj_CLASS_TYPE_000)
+                foreach (var classCode in classCodes)
+                {
+                    for (int i = 0; i <= 300; i++)
+                    {
+                        paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\obj_{classCode}_{type}_{i:D3}.spr"));
+                        paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\{type}\\obj_{classCode}_{i:D3}.spr"));
+                    }
                 }
             }
 
-            // Short form equipment codes
-            for (int t = 0; t < equipTypesShort.Length; t++)
+            // Short form equipment codes (ar, he, wp, etc.)
+            var equipTypesShort = new[] { "ar", "he", "wp", "ml", "rg", "ri", "am", "bo", "be", "sh", "ho", "cu", "pe", "ma", "cl" };
+
+            foreach (var shortType in equipTypesShort)
             {
-                for (int i = 1; i <= 200; i++)
+                // Generic obj_XX_000 format
+                for (int i = 0; i <= 500; i++)
                 {
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\obj_{equipTypesShort[t]}_{i:D2}.spr"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\obj_{equipTypesShort[t]}{i:D3}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\obj_{shortType}_{i:D3}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\obj_{shortType}{i:D3}.spr"));
+                }
+
+                // Class-specific (obj_CLASS_XX_000)
+                foreach (var classCode in classCodes)
+                {
+                    for (int i = 0; i <= 300; i++)
+                    {
+                        paths.Add(LowercaseAsciiOnly($"\\spr\\item\\equip\\obj_{classCode}_{shortType}_{i:D3}.spr"));
+                    }
                 }
             }
         }
@@ -1320,90 +1354,118 @@ namespace PakExtractTool
         /// Generate common Chinese UI paths
         /// Many Chinese MMORPGs have UI folders with Chinese names
         /// Example: \spr\ui3\聊天 (Chat), \spr\ui3\物品 (Items), etc.
+        /// NOTE: Analysis shows most games use English paths, not Chinese folder names
         /// </summary>
         private void GenerateChineseUIPaths(HashSet<string> paths)
         {
-            // Common Chinese UI folder names (Simplified + Traditional variants)
-            // Using HashSet to auto-deduplicate
-            var chineseFoldersSet = new HashSet<(string, string)>
-            {
-                // Simplified Chinese (简体中文)
-                ("聊天", "chat"),      // Chat
-                ("物品", "item"),      // Items
-                ("技能", "skill"),     // Skills
-                ("任务", "quest"),     // Quests (Simplified)
-                ("地图", "map"),       // Map (Simplified)
-                ("商店", "shop"),      // Shop
-                ("交易", "trade"),     // Trade
-                ("组队", "team"),      // Team/Party (Simplified)
-                ("好友", "friend"),    // Friends
-                ("帮会", "guild"),     // Guild (Simplified)
-                ("背包", "bag"),       // Bag/Inventory
-                ("装备", "equip"),     // Equipment (Simplified)
-                ("系统", "system"),    // System (Simplified)
-                ("设置", "setting"),   // Settings (Simplified)
-                ("帮助", "help"),      // Help
-                ("邮件", "mail"),      // Mail (Simplified)
-                ("拍卖", "auction"),   // Auction (Simplified)
-                ("排行", "rank"),      // Ranking
-                ("宠物", "pet"),       // Pet (Simplified)
-                ("坐骑", "mount"),     // Mount (Simplified)
+            // REDUCED: Analysis shows Chinese folder names rarely used in actual PAK files
+            // Generate only a few common ones to avoid bloating path list
 
-                // Traditional Chinese (繁體中文) - only different ones
-                ("任務", "quest"),     // Quests (Traditional)
-                ("地圖", "map"),       // Map (Traditional)
-                ("組隊", "team"),      // Team/Party (Traditional)
-                ("幫會", "guild"),     // Guild (Traditional)
-                ("裝備", "equip"),     // Equipment (Traditional)
-                ("系統", "system"),    // System (Traditional)
-                ("設置", "setting"),   // Settings (Traditional)
-                ("郵件", "mail"),      // Mail (Traditional)
-                ("拍賣", "auction"),   // Auction (Traditional)
-                ("寵物", "pet"),       // Pet (Traditional)
-                ("坐騎", "mount"),     // Mount (Traditional)
+            var commonFolders = new[]
+            {
+                "chat", "item", "skill", "quest", "map", "shop", "trade",
+                "team", "friend", "guild", "bag", "equip", "system", "pet", "mount"
             };
 
-            var chineseFolders = chineseFoldersSet.ToArray();
-
-            // Generate paths for each Chinese folder
-            foreach (var (chName, enName) in chineseFolders)
+            // Generate English folder paths (more likely to match)
+            foreach (var folder in commonFolders)
             {
-                // UI3 style paths (common in Chinese games)
-                for (int i = 1; i <= 200; i++)
+                // UI3 style
+                for (int i = 1; i <= 50; i++) // Reduced from 200 to 50
                 {
-                    // With Chinese folder names
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{chName}\\{i:D2}.spr"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{chName}\\{i:D3}.spr"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{chName}\\icon{i:D2}.spr"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{chName}\\pic{i:D2}.spr"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{chName}\\btn{i:D2}.spr"));
-
-                    // With English folder names (fallback)
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{enName}\\{i:D2}.spr"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{enName}\\{i:D3}.spr"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{enName}\\icon{i:D2}.spr"));
-
-                    // UI2 style
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui2\\{chName}\\{i:D2}.spr"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui2\\{enName}\\{i:D2}.spr"));
-
-                    // UI style
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui\\{chName}\\{i:D2}.spr"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui\\{enName}\\{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{folder}\\{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{folder}\\icon{i:D2}.spr"));
                 }
 
-                // Common UI filenames with Chinese
-                var commonFiles = new[] { "background.spr", "frame.spr", "button.spr", "icon.spr", "title.spr" };
-                foreach (var file in commonFiles)
+                // Common files
+                var files = new[] { "background.spr", "frame.spr", "button.spr", "icon.spr" };
+                foreach (var file in files)
                 {
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{chName}\\{file}"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui2\\{chName}\\{file}"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui\\{chName}\\{file}"));
-                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{enName}\\{file}"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{folder}\\{file}"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui2\\{folder}\\{file}"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui\\{folder}\\{file}"));
                 }
             }
 
-            DebugLogger.Log($"   ✓ Generated Chinese UI paths for {chineseFolders.Length} folder types");
+            DebugLogger.Log($"   ✓ Generated UI paths for {commonFolders.Length} folder types (English only, Chinese rarely used)");
+        }
+
+        /// <summary>
+        /// Generate paths for specific game folders found in scanned files
+        /// Based on actual matched paths from log analysis
+        /// </summary>
+        private void GenerateSpecificGamePaths(HashSet<string> paths)
+        {
+            DebugLogger.Log($"📁 Generating specific game folder paths...");
+
+            // 1. CHRISTMAS event items (found in matched paths)
+            var christmasColors = new[] { "blue", "green", "purple", "red", "yellow", "white" };
+            var christmasLevels = new[] { "low", "mid", "high" };
+            foreach (var level in christmasLevels)
+            {
+                foreach (var color in christmasColors)
+                {
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\christmas\\{level}_{color}.spr"));
+                }
+            }
+            paths.Add(LowercaseAsciiOnly($"\\spr\\item\\christmas\\perfect.spr"));
+
+            // 2. DAZHUANPAN (大转盘 - lucky wheel) - found in scanned files
+            for (int i = 1; i <= 100; i++)
+            {
+                paths.Add(LowercaseAsciiOnly($"\\spr\\item\\dazhuanpan\\card{i}.spr"));
+                paths.Add(LowercaseAsciiOnly($"\\spr\\item\\dazhuanpan\\item{i}.spr"));
+                paths.Add(LowercaseAsciiOnly($"\\spr\\item\\dazhuanpan\\reward{i}.spr"));
+                paths.Add(LowercaseAsciiOnly($"\\spr\\item\\dazhuanpan\\icon{i}.spr"));
+            }
+
+            // 3. Common game event folders
+            var eventFolders = new[]
+            {
+                "newyear", "春节", "springfestival",
+                "halloween", "万圣节",
+                "valentine", "情人节",
+                "midautumn", "中秋",
+                "anniversary", "周年",
+                "summer", "winter",
+                "lottery", "抽奖",
+                "gift", "礼物",
+                "vip", "会员"
+            };
+
+            foreach (var folder in eventFolders)
+            {
+                for (int i = 1; i <= 50; i++)
+                {
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\{folder}\\item{i}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\{folder}\\icon{i}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\item\\{folder}\\{i:D2}.spr"));
+                }
+            }
+
+            // 4. UI common elements (not in specific folders)
+            var uiElements = new[]
+            {
+                "btn", "icon", "pic", "frame", "background", "title", "panel",
+                "window", "dialog", "bar", "slider", "checkbox", "radio"
+            };
+
+            foreach (var elem in uiElements)
+            {
+                for (int i = 1; i <= 100; i++)
+                {
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui\\{elem}{i}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui\\{elem}_{i}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui\\{elem}{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui\\{elem}_{i:D2}.spr"));
+
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{elem}{i}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui3\\{elem}_{i}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\ui2\\{elem}{i}.spr"));
+                }
+            }
+
+            DebugLogger.Log($"   ✓ Generated specific game paths (christmas, events, UI elements)");
         }
 
         private void ExtractAndGenerateFormattedPaths(string content, HashSet<string> paths)
