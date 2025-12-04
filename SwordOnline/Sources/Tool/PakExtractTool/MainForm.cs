@@ -794,6 +794,8 @@ namespace PakExtractTool
         /// </summary>
         private void ParseSkillsTxt(string filePath, HashSet<string> paths)
         {
+            DebugLogger.Log($"   🔧 [DEBUG] ParseSkillsTxt() called for: {filePath}");
+
             try
             {
                 // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
@@ -804,15 +806,20 @@ namespace PakExtractTool
                 try
                 {
                     // Always use Windows-1252 for game data files
+                    DebugLogger.Log("   🔧 [DEBUG] Reading with Windows-1252 encoding...");
                     lines = File.ReadAllLines(filePath, Encoding.GetEncoding("windows-1252"));
+                    DebugLogger.Log($"   🔧 [DEBUG] Read {lines.Length} lines successfully");
                 }
-                catch
+                catch (Exception ex)
                 {
+                    DebugLogger.Log($"   🔧 [DEBUG] Windows-1252 failed: {ex.Message}, trying fallback...");
                     // Fallback if Windows-1252 fails
                     try { lines = File.ReadAllLines(filePath, Encoding.Default); } catch { return; }
                 }
 
                 bool headerSkipped = false;
+                int pathsExtracted = 0;
+                int chinesePathsSampled = 0;
 
                 foreach (var line in lines)
                 {
@@ -840,6 +847,14 @@ namespace PakExtractTool
                             if (!iconPath.StartsWith("\\")) iconPath = "\\" + iconPath;
                             iconPath = LowercaseAsciiOnly(iconPath);
                             paths.Add(iconPath);
+                            pathsExtracted++;
+
+                            // Debug: Log first few paths with non-ASCII chars
+                            if (chinesePathsSampled < 3 && iconPath.Any(c => c > 127))
+                            {
+                                DebugLogger.Log($"   🔧 [DEBUG] Extracted path: {iconPath}");
+                                chinesePathsSampled++;
+                            }
                         }
                     }
 
@@ -853,6 +868,14 @@ namespace PakExtractTool
                             if (!preCastPath.StartsWith("\\")) preCastPath = "\\" + preCastPath;
                             preCastPath = LowercaseAsciiOnly(preCastPath);
                             paths.Add(preCastPath);
+                            pathsExtracted++;
+
+                            // Debug: Log first few paths with non-ASCII chars
+                            if (chinesePathsSampled < 3 && preCastPath.Any(c => c > 127))
+                            {
+                                DebugLogger.Log($"   🔧 [DEBUG] Extracted path: {preCastPath}");
+                                chinesePathsSampled++;
+                            }
                         }
                     }
 
@@ -866,9 +889,19 @@ namespace PakExtractTool
                             if (!resourcePath.StartsWith("\\")) resourcePath = "\\" + resourcePath;
                             resourcePath = LowercaseAsciiOnly(resourcePath);
                             paths.Add(resourcePath);
+                            pathsExtracted++;
+
+                            // Debug: Log first few paths with non-ASCII chars
+                            if (chinesePathsSampled < 3 && resourcePath.Any(c => c > 127))
+                            {
+                                DebugLogger.Log($"   🔧 [DEBUG] Extracted path: {resourcePath}");
+                                chinesePathsSampled++;
+                            }
                         }
                     }
                 }
+
+                DebugLogger.Log($"   🔧 [DEBUG] ParseSkillsTxt extracted {pathsExtracted} paths total");
 
                 DebugLogger.Log($"   Parsed Skills.txt: extracted skill icon and effect paths");
             }
@@ -1185,6 +1218,8 @@ namespace PakExtractTool
         /// </summary>
         private void GeneratePlayerSprites(HashSet<string> paths)
         {
+            DebugLogger.Log("   🔧 [DEBUG] GeneratePlayerSprites() called - BUILD VERSION 2025-12-04");
+
             // 5 Series (五行): Metal, Wood, Water, Fire, Earth
             var series = new[] { "金", "木", "水", "火", "土" };
             var seriesEn = new[] { "metal", "wood", "water", "fire", "earth" };
@@ -1195,7 +1230,10 @@ namespace PakExtractTool
             var gendersCn = new[] { "男", "女" };  // Chinese
 
             // Convert Unicode Chinese to Windows-1252 garbled representation
+            DebugLogger.Log($"   🔧 [DEBUG] Converting series[0] '{series[0]}' to garbled...");
             var seriesGarbled = series.Select(s => ConvertChineseToGarbled(s)).ToArray();
+            DebugLogger.Log($"   🔧 [DEBUG] Result: seriesGarbled[0] = '{seriesGarbled[0]}'");
+
             var gendersGarbled = genders.Select(g => ConvertChineseToGarbled(g)).ToArray();
             var gendersCnGarbled = gendersCn.Select(g => ConvertChineseToGarbled(g)).ToArray();
 
