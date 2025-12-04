@@ -1031,40 +1031,43 @@ namespace PakExtractTool
                         // Also do generic regex extraction for all files
                         string content = null;
 
-                        // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
-                        // When read with Windows-1252, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
-                        // Priority: Windows-1252 first (game's actual encoding), then fallbacks
-                        var encodings = new List<Encoding>();
+                        // Detect file type and use appropriate encoding:
+                        // - Game data files (.txt, .ini in Bin/Client/) use Windows-1252 (ANSI with embedded GBK bytes)
+                        // - Source code files (.cpp, .h, .cs) use UTF-8
+                        bool isSourceCode = fileExt == ".cpp" || fileExt == ".h" || fileExt == ".cs" ||
+                                           fileExt == ".hpp" || fileExt == ".c" || fileExt == ".cc";
 
-                        try { encodings.Add(Encoding.GetEncoding("windows-1252")); } catch { } // Windows-1252 (ANSI) - PRIMARY
-                        try { encodings.Add(Encoding.GetEncoding("GBK")); } catch { }          // GBK (Simplified Chinese - fallback)
-                        try { encodings.Add(Encoding.GetEncoding("GB2312")); } catch { }       // GB2312 (Simplified Chinese)
-                        try { encodings.Add(Encoding.GetEncoding("Big5")); } catch { }         // Big5 (Traditional Chinese)
-                        try { encodings.Add(Encoding.GetEncoding("windows-1258")); } catch { } // Vietnamese ANSI
-                        encodings.Add(Encoding.UTF8);                                          // UTF-8
-                        encodings.Add(Encoding.Default);                                       // System default
-                        encodings.Add(Encoding.ASCII);                                         // ASCII fallback
+                        bool isGameData = (fileExt == ".txt" || fileExt == ".ini") &&
+                                         (filePath.Contains("\\Bin\\") || filePath.Contains("/Bin/"));
 
-                        foreach (var encoding in encodings)
+                        if (isSourceCode)
                         {
-                            try
+                            // Source code files: Try UTF-8 first
+                            try { content = File.ReadAllText(filePath, Encoding.UTF8); }
+                            catch { try { content = File.ReadAllText(filePath, Encoding.Default); } catch { } }
+                        }
+                        else if (isGameData)
+                        {
+                            // Game data files: ALWAYS use Windows-1252 (no fallback)
+                            try { content = File.ReadAllText(filePath, Encoding.GetEncoding("windows-1252")); }
+                            catch { try { content = File.ReadAllText(filePath, Encoding.Default); } catch { } }
+                        }
+                        else
+                        {
+                            // Other files: Try Windows-1252 first, then fallbacks
+                            var encodings = new List<Encoding>();
+                            try { encodings.Add(Encoding.GetEncoding("windows-1252")); } catch { }
+                            encodings.Add(Encoding.UTF8);
+                            encodings.Add(Encoding.Default);
+
+                            foreach (var encoding in encodings)
                             {
-                                content = File.ReadAllText(filePath, encoding);
-
-                                // Check if decoded text has replacement characters (decode errors)
-                                // U+FFFD (�) indicates the encoding couldn't decode certain bytes
-                                bool hasDecodeErrors = content.Contains('\uFFFD') ||
-                                                      (content.Contains('?') && content.Length > 100 && content.Count(c => c == '?') > content.Length / 50);
-
-                                if (!hasDecodeErrors)
+                                try
                                 {
-                                    // Successfully read with good encoding
+                                    content = File.ReadAllText(filePath, encoding);
                                     break;
                                 }
-                            }
-                            catch
-                            {
-                                // Try next encoding
+                                catch { }
                             }
                         }
 
@@ -1102,6 +1105,13 @@ namespace PakExtractTool
 
                                 // Remove trailing whitespace/quotes that might be captured
                                 path = path.TrimEnd(' ', '\t', '"', '\'');
+
+                                // If path came from UTF-8 source code and contains Chinese characters,
+                                // convert to Windows-1252 garbled representation (for correct hash calculation)
+                                if (isSourceCode && path.Any(c => c >= 0x4E00 && c <= 0x9FFF))
+                                {
+                                    path = ConvertChineseToGarbled(path);
+                                }
 
                                 // Add to set if valid
                                 if (path.Length > 3 && path.Contains('.'))  // Min: \a.b
@@ -1548,6 +1558,12 @@ namespace PakExtractTool
 
                 // Lowercase ONLY A-Z → a-z (match game engine g_StrLower)
                 path = LowercaseAsciiOnly(path);
+
+                // If path contains Unicode Chinese characters, convert to Windows-1252 garbled representation
+                if (path.Any(c => c >= 0x4E00 && c <= 0x9FFF))
+                {
+                    path = ConvertChineseToGarbled(path);
+                }
 
                 // Add if valid
                 if (path.Length > 3 && path.Contains('.'))
