@@ -381,6 +381,15 @@ namespace MapTool.PakFile
         }
 
         /// <summary>
+        /// Get all file IDs (hashes) in the PAK file
+        /// Used by PakExtractTool to match against generated paths
+        /// </summary>
+        public List<uint> GetAllFileIds()
+        {
+            return _fileIndex.Keys.ToList();
+        }
+
+        /// <summary>
         /// Get pak statistics
         /// </summary>
         public PakStatistics GetStatistics()
