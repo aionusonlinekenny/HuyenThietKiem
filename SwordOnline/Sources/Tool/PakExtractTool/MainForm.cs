@@ -1474,7 +1474,8 @@ namespace PakExtractTool
             }
 
             // 3. Common game event folders
-            var eventFolders = new[]
+            // Convert Unicode Chinese folder names to garbled Windows-1252 (like client does)
+            var eventFoldersRaw = new[]
             {
                 "newyear", "春节", "springfestival",
                 "halloween", "万圣节",
@@ -1486,6 +1487,17 @@ namespace PakExtractTool
                 "gift", "礼物",
                 "vip", "会员"
             };
+
+            // Convert Chinese folder names to garbled (game uses Windows-1252 with embedded GBK bytes)
+            var eventFolders = eventFoldersRaw.Select(folder =>
+            {
+                // Check if folder contains Chinese characters
+                if (folder.Any(c => c >= 0x4E00 && c <= 0x9FFF))
+                {
+                    return ConvertChineseToGarbled(folder);
+                }
+                return folder;
+            }).ToArray();
 
             foreach (var folder in eventFolders)
             {
