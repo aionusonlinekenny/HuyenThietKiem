@@ -1587,16 +1587,40 @@ namespace PakExtractTool
             // Different game versions may use different encodings
             var encodingsToTry = new[] { "GBK", "GB2312", "Big5" };
 
+            // Debug: Count Chinese character paths for analysis
+            int chinesePathCount = 0;
+            int chinesePathsTested = 0;
+
             for (int i = 0; i < pathReferences.Count; i++)
             {
                 string path = pathReferences[i];
                 bool foundMatch = false;
+
+                // Check if path contains Chinese characters (for debugging)
+                bool hasChinese = path.Any(c => c >= 0x4E00 && c <= 0x9FFF);
+                if (hasChinese)
+                {
+                    chinesePathCount++;
+
+                    // Log first 5 Chinese paths being tested
+                    if (chinesePathsTested < 5)
+                    {
+                        DebugLogger.Log($"   🔍 Testing Chinese path #{chinesePathsTested + 1}: {path}");
+                        chinesePathsTested++;
+                    }
+                }
 
                 // Try each encoding until we find a match
                 foreach (var encoding in encodingsToTry)
                 {
                     // Calculate hash with this encoding
                     uint hash = FileNameHasher.CalculateFileIdWithEncoding(path, encoding);
+
+                    // Debug: Log hash for first few Chinese paths
+                    if (hasChinese && chinesePathsTested <= 5)
+                    {
+                        DebugLogger.Log($"      Hash [{encoding}]: 0x{hash:X8}");
+                    }
 
                     // Check if this hash exists in PAK
                     if (pakHashSet.Contains(hash) && !matches.ContainsKey(hash))
@@ -1607,7 +1631,8 @@ namespace PakExtractTool
                         if (matches.Count <= 20)
                         {
                             // Log first 20 matches for debugging (with encoding info)
-                            DebugLogger.Log($"   ✓ Match #{matches.Count}: {path} -> 0x{hash:X8} [{encoding}]");
+                            string marker = hasChinese ? "🇨🇳" : "  ";
+                            DebugLogger.Log($"   ✓ Match #{matches.Count} {marker}: {path} -> 0x{hash:X8} [{encoding}]");
                         }
 
                         break; // Found match, no need to try other encodings
@@ -1620,6 +1645,10 @@ namespace PakExtractTool
                         new ProgressData { Step = "Step 3/4: Matching paths with PAK...", Progress = $"Checked {i:N0}/{pathReferences.Count:N0} - Matched {matches.Count:N0}" });
                 }
             }
+
+            DebugLogger.Log($"   📊 Chinese path statistics:");
+            DebugLogger.Log($"      Total Chinese paths generated: {chinesePathCount:N0}");
+            DebugLogger.Log($"      Chinese paths matched: {matches.Values.Count(p => p.Any(c => c >= 0x4E00 && c <= 0x9FFF)):N0}");
 
             DebugLogger.Log($"   ✓ Final match result: {matches.Count:N0}/{pakFileIds.Count:N0} ({(double)matches.Count / pakFileIds.Count * 100:F1}%)");
 
