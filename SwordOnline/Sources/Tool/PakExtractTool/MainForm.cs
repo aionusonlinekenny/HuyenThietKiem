@@ -1790,14 +1790,21 @@ namespace PakExtractTool
             // Debug: Count Chinese character paths for analysis
             int chinesePathCount = 0;
             int chinesePathsTested = 0;
+            int garbledPathCount = 0;
+            int garbledPathsTested = 0;
 
             for (int i = 0; i < pathReferences.Count; i++)
             {
                 string path = pathReferences[i];
                 bool foundMatch = false;
 
-                // Check if path contains Chinese characters (for debugging)
+                // Check if path contains Unicode Chinese characters (for debugging)
                 bool hasChinese = path.Any(c => c >= 0x4E00 && c <= 0x9FFF);
+
+                // Check if path contains garbled characters (Windows-1252 high bytes from GBK)
+                // Garbled chars are typically in ranges: 0x80-0xFF (À-ÿ, Á-ÿ, etc.)
+                bool hasGarbled = path.Any(c => c >= 0x80 && c <= 0xFF && c < 0x4E00);
+
                 if (hasChinese)
                 {
                     chinesePathCount++;
@@ -1805,8 +1812,20 @@ namespace PakExtractTool
                     // Log first 5 Chinese paths being tested
                     if (chinesePathsTested < 5)
                     {
-                        DebugLogger.Log($"   🔍 Testing Chinese path #{chinesePathsTested + 1}: {path}");
+                        DebugLogger.Log($"   🔍 Testing Unicode Chinese path #{chinesePathsTested + 1}: {path}");
                         chinesePathsTested++;
+                    }
+                }
+
+                if (hasGarbled)
+                {
+                    garbledPathCount++;
+
+                    // Log first 10 garbled paths being tested
+                    if (garbledPathsTested < 10)
+                    {
+                        DebugLogger.Log($"   🔧 Testing GARBLED path #{garbledPathsTested + 1}: {path}");
+                        garbledPathsTested++;
                     }
                 }
 
@@ -1816,8 +1835,12 @@ namespace PakExtractTool
                     // Calculate hash with this encoding
                     uint hash = FileNameHasher.CalculateFileIdWithEncoding(path, encoding);
 
-                    // Debug: Log hash for first few Chinese paths
+                    // Debug: Log hash for first few Chinese/garbled paths
                     if (hasChinese && chinesePathsTested <= 5)
+                    {
+                        DebugLogger.Log($"      Hash [{encoding}]: 0x{hash:X8}");
+                    }
+                    if (hasGarbled && garbledPathsTested <= 10)
                     {
                         DebugLogger.Log($"      Hash [{encoding}]: 0x{hash:X8}");
                     }
@@ -1831,7 +1854,7 @@ namespace PakExtractTool
                         if (matches.Count <= 20)
                         {
                             // Log first 20 matches for debugging (with encoding info)
-                            string marker = hasChinese ? "🇨🇳" : "  ";
+                            string marker = hasChinese ? "🇨🇳" : (hasGarbled ? "🔧" : "  ");
                             DebugLogger.Log($"   ✓ Match #{matches.Count} {marker}: {path} -> 0x{hash:X8} [{encoding}]");
                         }
 
@@ -1846,9 +1869,11 @@ namespace PakExtractTool
                 }
             }
 
-            DebugLogger.Log($"   📊 Chinese path statistics:");
-            DebugLogger.Log($"      Total Chinese paths generated: {chinesePathCount:N0}");
-            DebugLogger.Log($"      Chinese paths matched: {matches.Values.Count(p => p.Any(c => c >= 0x4E00 && c <= 0x9FFF)):N0}");
+            DebugLogger.Log($"   📊 Path statistics:");
+            DebugLogger.Log($"      Total Unicode Chinese paths: {chinesePathCount:N0}");
+            DebugLogger.Log($"      Total GARBLED paths (Windows-1252): {garbledPathCount:N0}");
+            DebugLogger.Log($"      Unicode Chinese paths matched: {matches.Values.Count(p => p.Any(c => c >= 0x4E00 && c <= 0x9FFF)):N0}");
+            DebugLogger.Log($"      GARBLED paths matched: {matches.Values.Count(p => p.Any(c => c >= 0x80 && c <= 0xFF && c < 0x4E00)):N0}");
 
             DebugLogger.Log($"   ✓ Final match result: {matches.Count:N0}/{pakFileIds.Count:N0} ({(double)matches.Count / pakFileIds.Count * 100:F1}%)");
 
