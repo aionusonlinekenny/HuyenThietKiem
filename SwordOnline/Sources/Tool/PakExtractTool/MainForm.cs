@@ -982,6 +982,7 @@ namespace PakExtractTool
         private List<string> ScanFolderRecursive(string folder, System.ComponentModel.BackgroundWorker worker)
         {
             var paths = new HashSet<string>();
+            int chinesePathDebugCount = 0;  // Debug counter for tracking Unicode Chinese paths
 
             try
             {
@@ -1077,10 +1078,11 @@ namespace PakExtractTool
                         {
                             content = File.ReadAllText(filePath, Encoding.GetEncoding("windows-1252"));
                         }
-                        catch
+                        catch (Exception ex)
                         {
                             // Windows-1252 failed - skip this file
                             // Do NOT use Encoding.Default (it's GBK on Chinese Windows, causes Unicode Chinese)
+                            DebugLogger.Log($"   ⚠️ [DEBUG] Skipping file (Windows-1252 read failed): {filePath} - {ex.Message}");
                             continue;
                         }
 
@@ -1119,6 +1121,15 @@ namespace PakExtractTool
                                 // REMOVED: UTF-8 conversion logic
                                 // User confirmed: NO UTF-8 in project, ALL files use Windows-1252 ANSI
                                 // Paths are already in correct garbled Windows-1252 format from ReadAllText above
+
+                                // DEBUG: Track if Unicode Chinese characters are being extracted
+                                bool hasUnicodeChinese = path.Any(c => c >= 0x4E00 && c <= 0x9FFF);
+                                if (hasUnicodeChinese && chinesePathDebugCount < 5)
+                                {
+                                    DebugLogger.Log($"   ❌ [DEBUG] UNEXPECTED: Unicode Chinese extracted from: {filePath}");
+                                    DebugLogger.Log($"   ❌ [DEBUG] Path: {path}");
+                                    chinesePathDebugCount++;
+                                }
 
                                 // Add to set if valid
                                 if (path.Length > 3 && path.Contains('.'))  // Min: \a.b
