@@ -1323,53 +1323,47 @@ namespace PakExtractTool
         /// </summary>
         private void GenerateChineseUIPaths(HashSet<string> paths)
         {
-            // Common Chinese UI folder names (both Simplified and Traditional)
-            var chineseFolders = new[]
+            // Common Chinese UI folder names (Simplified + Traditional variants)
+            // Using HashSet to auto-deduplicate
+            var chineseFoldersSet = new HashSet<(string, string)>
             {
                 // Simplified Chinese (简体中文)
                 ("聊天", "chat"),      // Chat
                 ("物品", "item"),      // Items
                 ("技能", "skill"),     // Skills
-                ("任务", "quest"),     // Quests
-                ("地图", "map"),       // Map
+                ("任务", "quest"),     // Quests (Simplified)
+                ("地图", "map"),       // Map (Simplified)
                 ("商店", "shop"),      // Shop
                 ("交易", "trade"),     // Trade
-                ("组队", "team"),      // Team/Party
+                ("组队", "team"),      // Team/Party (Simplified)
                 ("好友", "friend"),    // Friends
-                ("帮会", "guild"),     // Guild
+                ("帮会", "guild"),     // Guild (Simplified)
                 ("背包", "bag"),       // Bag/Inventory
-                ("装备", "equip"),     // Equipment
-                ("系统", "system"),    // System
-                ("设置", "setting"),   // Settings
+                ("装备", "equip"),     // Equipment (Simplified)
+                ("系统", "system"),    // System (Simplified)
+                ("设置", "setting"),   // Settings (Simplified)
                 ("帮助", "help"),      // Help
-                ("邮件", "mail"),      // Mail
-                ("拍卖", "auction"),   // Auction
+                ("邮件", "mail"),      // Mail (Simplified)
+                ("拍卖", "auction"),   // Auction (Simplified)
                 ("排行", "rank"),      // Ranking
-                ("宠物", "pet"),       // Pet
-                ("坐骑", "mount"),     // Mount
+                ("宠物", "pet"),       // Pet (Simplified)
+                ("坐骑", "mount"),     // Mount (Simplified)
 
-                // Traditional Chinese (繁體中文)
-                ("聊天", "chat"),      // Chat (same)
-                ("物品", "item"),      // Items (same)
-                ("技能", "skill"),     // Skills (same)
-                ("任務", "quest"),     // Quests
-                ("地圖", "map"),       // Map
-                ("商店", "shop"),      // Shop (same)
-                ("交易", "trade"),     // Trade (same)
-                ("組隊", "team"),      // Team/Party
-                ("好友", "friend"),    // Friends (same)
-                ("幫會", "guild"),     // Guild
-                ("背包", "bag"),       // Bag (same)
-                ("裝備", "equip"),     // Equipment
-                ("系統", "system"),    // System
-                ("設置", "setting"),   // Settings
-                ("幫助", "help"),      // Help (same)
-                ("郵件", "mail"),      // Mail
-                ("拍賣", "auction"),   // Auction
-                ("排行", "rank"),      // Ranking (same)
-                ("寵物", "pet"),       // Pet
-                ("坐騎", "mount"),     // Mount
+                // Traditional Chinese (繁體中文) - only different ones
+                ("任務", "quest"),     // Quests (Traditional)
+                ("地圖", "map"),       // Map (Traditional)
+                ("組隊", "team"),      // Team/Party (Traditional)
+                ("幫會", "guild"),     // Guild (Traditional)
+                ("裝備", "equip"),     // Equipment (Traditional)
+                ("系統", "system"),    // System (Traditional)
+                ("設置", "setting"),   // Settings (Traditional)
+                ("郵件", "mail"),      // Mail (Traditional)
+                ("拍賣", "auction"),   // Auction (Traditional)
+                ("寵物", "pet"),       // Pet (Traditional)
+                ("坐騎", "mount"),     // Mount (Traditional)
             };
+
+            var chineseFolders = chineseFoldersSet.ToArray();
 
             // Generate paths for each Chinese folder
             foreach (var (chName, enName) in chineseFolders)
@@ -1527,22 +1521,34 @@ namespace PakExtractTool
                 }
             }
 
+            // Try multiple encodings for Chinese character support
+            // Different game versions may use different encodings
+            var encodingsToTry = new[] { "GBK", "GB2312", "Big5" };
+
             for (int i = 0; i < pathReferences.Count; i++)
             {
                 string path = pathReferences[i];
+                bool foundMatch = false;
 
-                // Calculate hash for this path
-                uint hash = FileNameHasher.CalculateFileId(path);
-
-                // Check if this hash exists in PAK
-                if (pakHashSet.Contains(hash) && !matches.ContainsKey(hash))
+                // Try each encoding until we find a match
+                foreach (var encoding in encodingsToTry)
                 {
-                    matches[hash] = path;
+                    // Calculate hash with this encoding
+                    uint hash = FileNameHasher.CalculateFileIdWithEncoding(path, encoding);
 
-                    if (matches.Count <= 20)
+                    // Check if this hash exists in PAK
+                    if (pakHashSet.Contains(hash) && !matches.ContainsKey(hash))
                     {
-                        // Log first 20 matches for debugging
-                        DebugLogger.Log($"   ✓ Match #{matches.Count}: {path} -> 0x{hash:X8}");
+                        matches[hash] = path;
+                        foundMatch = true;
+
+                        if (matches.Count <= 20)
+                        {
+                            // Log first 20 matches for debugging (with encoding info)
+                            DebugLogger.Log($"   ✓ Match #{matches.Count}: {path} -> 0x{hash:X8} [{encoding}]");
+                        }
+
+                        break; // Found match, no need to try other encodings
                     }
                 }
 

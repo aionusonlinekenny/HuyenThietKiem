@@ -17,9 +17,31 @@ namespace MapTool.PakFile
         /// <returns>Hash ID used in pak file index</returns>
         public static uint CalculateFileId(string fileName)
         {
-            // Convert to ANSI bytes using GB2312 encoding (same as game)
-            byte[] ansiBytes = Encoding.GetEncoding("GB2312").GetBytes(fileName);
+            // Convert to ANSI bytes using GBK encoding (superset of GB2312, supports more Chinese characters)
+            // GBK supports both Simplified Chinese (GB2312) AND Traditional Chinese characters
+            byte[] ansiBytes = Encoding.GetEncoding("GBK").GetBytes(fileName);
             return CalculateFileIdFromBytes(ansiBytes);
+        }
+
+        /// <summary>
+        /// Calculate hash ID with specific encoding
+        /// Useful for trying different encodings to find match
+        /// </summary>
+        /// <param name="fileName">Filename with path</param>
+        /// <param name="encodingName">Encoding name (e.g., "GBK", "GB2312", "Big5")</param>
+        /// <returns>Hash ID</returns>
+        public static uint CalculateFileIdWithEncoding(string fileName, string encodingName)
+        {
+            try
+            {
+                byte[] ansiBytes = Encoding.GetEncoding(encodingName).GetBytes(fileName);
+                return CalculateFileIdFromBytes(ansiBytes);
+            }
+            catch
+            {
+                // Fallback to GBK if encoding not available
+                return CalculateFileId(fileName);
+            }
         }
 
         /// <summary>
