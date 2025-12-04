@@ -1093,8 +1093,17 @@ namespace PakExtractTool
                             try
                             {
                                 content = File.ReadAllText(filePath, encoding);
-                                // Successfully read, use this encoding
-                                break;
+
+                                // Check if decoded text has replacement characters (decode errors)
+                                // U+FFFD (�) indicates the encoding couldn't decode certain bytes
+                                bool hasDecodeErrors = content.Contains('\uFFFD') ||
+                                                      (content.Contains('?') && content.Length > 100 && content.Count(c => c == '?') > content.Length / 50);
+
+                                if (!hasDecodeErrors)
+                                {
+                                    // Successfully read with good encoding
+                                    break;
+                                }
                             }
                             catch
                             {
@@ -1970,8 +1979,8 @@ namespace PakExtractTool
                 {
                     try
                     {
-                        // Write all paths to file with UTF-8 encoding (supports Chinese characters)
-                        File.WriteAllLines(dialog.FileName, _lastGeneratedPaths, Encoding.UTF8);
+                        // Write all paths to file with ANSI/GBK encoding (matches game's encoding for Chinese characters)
+                        File.WriteAllLines(dialog.FileName, _lastGeneratedPaths, Encoding.GetEncoding("GBK"));
 
                         DebugLogger.Log($"💾 Exported {_lastGeneratedPaths.Count:N0} paths to: {dialog.FileName}");
 
