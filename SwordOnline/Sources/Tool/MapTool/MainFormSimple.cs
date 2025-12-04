@@ -587,12 +587,90 @@ namespace MapTool
         {
             _exporter.Clear();
             UpdateTrapList();
+
+            // Clear trap markers from map
+            _renderer.SetTrapMarkers(new List<Export.TrapEntry>());
+            mapPanel.Invalidate();
         }
 
         private void btnRemoveLast_Click(object sender, EventArgs e)
         {
             _exporter.RemoveLast();
             UpdateTrapList();
+
+            // Update renderer to remove trap markers
+            if (_currentMap != null)
+            {
+                var mapTraps = _exporter.GetEntriesForMap(_currentMap.MapId);
+                _renderer.SetTrapMarkers(mapTraps);
+                mapPanel.Invalidate();
+            }
+        }
+
+        // Import Trap File button - load existing trap file
+        private void btnImportTrapFile_Click(object sender, EventArgs e)
+        {
+            if (_currentMap == null)
+            {
+                MessageBox.Show("Please load a map first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Ask user for trap file
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                dialog.FileName = $"{_currentMap.MapId}.txt";
+                dialog.Title = "Import Trap File";
+
+                // Try to default to game folder library/maps/Trap
+                string defaultPath = Path.Combine(_gameFolder, "library", "maps", "Trap", $"{_currentMap.MapId}.txt");
+                if (File.Exists(defaultPath))
+                {
+                    dialog.InitialDirectory = Path.GetDirectoryName(defaultPath);
+                    dialog.FileName = $"{_currentMap.MapId}.txt";
+                }
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        Cursor = Cursors.WaitCursor;
+
+                        // Import traps
+                        _exporter.ImportFromFile(dialog.FileName);
+
+                        // Filter for current map
+                        var mapTraps = _exporter.GetEntriesForMap(_currentMap.MapId);
+
+                        // Update list
+                        UpdateTrapList();
+
+                        // Update renderer with trap markers
+                        _renderer.SetTrapMarkers(mapTraps);
+
+                        MessageBox.Show($"Loaded {_exporter.GetEntries().Count} traps total\n" +
+                                        $"{mapTraps.Count} traps for map {_currentMap.MapId}",
+                            "Traps Loaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        lblStatus.Text = $"Loaded {mapTraps.Count} traps for map {_currentMap.MapId}";
+                        DebugLogger.Log($"[Trap Import] Loaded {_exporter.GetEntries().Count} traps, {mapTraps.Count} for map {_currentMap.MapId}");
+
+                        // Trigger map redraw to show trap positions
+                        mapPanel.Invalidate();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to load traps:\n{ex.Message}", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        DebugLogger.Log($"ERROR importing traps: {ex}");
+                    }
+                    finally
+                    {
+                        Cursor = Cursors.Default;
+                    }
+                }
+            }
         }
 
         // Extract All Regions button - export all trap cells from loaded regions

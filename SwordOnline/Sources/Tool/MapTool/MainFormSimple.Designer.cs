@@ -15,6 +15,7 @@ namespace MapTool
         private System.Windows.Forms.Button btnExtractAllRegions;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnRemoveLast;
+        private System.Windows.Forms.Button btnImportTrapFile;
         private System.Windows.Forms.Button btnZoomIn;
         private System.Windows.Forms.Button btnZoomOut;
         private System.Windows.Forms.TextBox txtGameFolder;
@@ -88,6 +89,7 @@ namespace MapTool
             this.btnExtractAllRegions = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnRemoveLast = new System.Windows.Forms.Button();
+            this.btnImportTrapFile = new System.Windows.Forms.Button();
             this.btnZoomIn = new System.Windows.Forms.Button();
             this.btnZoomOut = new System.Windows.Forms.Button();
             this.txtGameFolder = new System.Windows.Forms.TextBox();
@@ -326,6 +328,7 @@ namespace MapTool
 
             // grpEntries
             this.grpEntries.Controls.Add(this.lstEntries);
+            this.grpEntries.Controls.Add(this.btnImportTrapFile);
             this.grpEntries.Controls.Add(this.btnExport);
             this.grpEntries.Controls.Add(this.btnExtractAllRegions);
             this.grpEntries.Controls.Add(this.btnClear);
@@ -339,10 +342,18 @@ namespace MapTool
 
             this.lstEntries.FormattingEnabled = true;
             this.lstEntries.HorizontalScrollbar = true;
-            this.lstEntries.Location = new System.Drawing.Point(10, 22);
+            this.lstEntries.Location = new System.Drawing.Point(10, 50);
             this.lstEntries.Name = "lstEntries";
-            this.lstEntries.Size = new System.Drawing.Size(310, 85);
+            this.lstEntries.Size = new System.Drawing.Size(310, 60);
             this.lstEntries.TabIndex = 0;
+
+            this.btnImportTrapFile.Location = new System.Drawing.Point(10, 20);
+            this.btnImportTrapFile.Name = "btnImportTrapFile";
+            this.btnImportTrapFile.Size = new System.Drawing.Size(310, 25);
+            this.btnImportTrapFile.TabIndex = 5;
+            this.btnImportTrapFile.Text = "Import Trap File (from library/maps/Trap)";
+            this.btnImportTrapFile.UseVisualStyleBackColor = true;
+            this.btnImportTrapFile.Click += new System.EventHandler(this.btnImportTrapFile_Click);
 
             this.btnExtractAllRegions.Location = new System.Drawing.Point(10, 115);
             this.btnExtractAllRegions.Name = "btnExtractAllRegions";

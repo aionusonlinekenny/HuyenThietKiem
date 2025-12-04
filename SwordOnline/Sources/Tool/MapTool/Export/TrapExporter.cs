@@ -147,6 +147,22 @@ namespace MapTool.Export
         }
 
         /// <summary>
+        /// Get entries for specific map
+        /// </summary>
+        public List<TrapEntry> GetEntriesForMap(int mapId)
+        {
+            return _entries.FindAll(e => e.MapId == mapId);
+        }
+
+        /// <summary>
+        /// Import from file (defaults to trap file format)
+        /// </summary>
+        public void ImportFromFile(string filePath)
+        {
+            ImportFromTrapFile(filePath);
+        }
+
+        /// <summary>
         /// Import from Trap file
         /// </summary>
         public void ImportFromTrapFile(string filePath)

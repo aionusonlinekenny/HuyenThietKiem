@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using MapTool.MapData;
 using MapTool.NPC;
+using MapTool.Export;
 using MapRegionData = MapTool.MapData.RegionData;
 
 namespace MapTool.Rendering
@@ -27,6 +28,9 @@ namespace MapTool.Rendering
 
         // NPC markers
         private List<NpcEntry> _npcMarkers = new List<NpcEntry>();
+
+        // Trap markers (from imported trap files)
+        private List<TrapEntry> _trapMarkers = new List<TrapEntry>();
 
         // Colors - Simple overlay visualization
         private Color _gridColor = Color.FromArgb(80, 100, 100, 120);  // Subtle grid
@@ -91,6 +95,31 @@ namespace MapTool.Rendering
         public void ClearNpcMarkers()
         {
             _npcMarkers.Clear();
+        }
+
+        /// <summary>
+        /// Set trap markers to display on map
+        /// </summary>
+        public void SetTrapMarkers(List<TrapEntry> traps)
+        {
+            _trapMarkers = traps ?? new List<TrapEntry>();
+
+            // Debug logging
+            DebugLogger.Log($"[MapRenderer] SetTrapMarkers: {_trapMarkers.Count} traps");
+            foreach (var trap in _trapMarkers)
+            {
+                // Convert local RegionID back to global RegionX, RegionY
+                // Then calculate world coordinates for display
+                DebugLogger.Log($"   Trap Map={trap.MapId} RegionID={trap.RegionId} Cell({trap.CellX},{trap.CellY})");
+            }
+        }
+
+        /// <summary>
+        /// Clear trap markers
+        /// </summary>
+        public void ClearTrapMarkers()
+        {
+            _trapMarkers.Clear();
         }
 
         /// <summary>
@@ -201,12 +230,82 @@ namespace MapTool.Rendering
                 RenderRegion(g, region, selectedCoord);
             }
 
+            // Draw trap markers
+            RenderTrapMarkers(g);
+
             // Draw NPC markers
             RenderNpcMarkers(g);
 
             // Draw coordinate info
             g.ResetTransform();
             DrawCoordinateInfo(g, width, height, selectedCoord);
+        }
+
+        /// <summary>
+        /// Render trap markers at their cell positions
+        /// </summary>
+        private void RenderTrapMarkers(Graphics g)
+        {
+            if (_trapMarkers == null || _trapMarkers.Count == 0)
+                return;
+
+            foreach (var trap in _trapMarkers)
+            {
+                // Convert RegionID + Cell to World coordinates
+                // Note: RegionID in trap file is LOCAL RegionID (relative to map rect)
+                // We need to convert it to actual RegionX, RegionY first
+
+                // For now, we'll assume RegionID is in format Y*256+X (global format)
+                // TODO: Need map config to convert local RegionID to global RegionX/Y
+                RegionData.ParseRegionID(trap.RegionId, out int regionX, out int regionY);
+
+                // Convert Region + Cell to World coordinates
+                CoordinateConverter.RegionCellToWorld(regionX, regionY, trap.CellX, trap.CellY,
+                    out int worldX, out int worldY);
+
+                // Convert World to Map coordinates (for 24.jpg pixel coordinates)
+                int mapX = worldX / MapConstants.MAP_SCALE_H;
+                int mapY = worldY / MapConstants.MAP_SCALE_V;
+
+                // Convert MAP coordinates to screen coordinates
+                int screenX = mapX - _viewOffsetX;
+                int screenY = mapY - _viewOffsetY;
+
+                // Draw trap marker as a small square (6 pixel)
+                int markerSize = 6;
+                Rectangle markerRect = new Rectangle(
+                    screenX - markerSize / 2,
+                    screenY - markerSize / 2,
+                    markerSize,
+                    markerSize
+                );
+
+                // Draw filled square with border (yellow for traps)
+                Color trapMarkerColor = Color.FromArgb(220, 255, 200, 0); // Yellow-orange
+                using (SolidBrush brush = new SolidBrush(trapMarkerColor))
+                using (Pen pen = new Pen(Color.White, 1))
+                {
+                    g.FillRectangle(brush, markerRect);
+                    g.DrawRectangle(pen, markerRect);
+                }
+
+                // Draw trap cell position text next to marker (very small font)
+                using (Font font = new Font("Arial", 5))
+                using (SolidBrush textBrush = new SolidBrush(Color.White))
+                using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, 0, 0, 0)))
+                {
+                    string trapText = $"T({trap.CellX},{trap.CellY})";
+                    SizeF textSize = g.MeasureString(trapText, font);
+                    Rectangle textBg = new Rectangle(
+                        screenX + markerSize / 2 + 2,
+                        screenY - (int)textSize.Height / 2,
+                        (int)textSize.Width + 4,
+                        (int)textSize.Height
+                    );
+                    g.FillRectangle(bgBrush, textBg);
+                    g.DrawString(trapText, font, textBrush, screenX + markerSize / 2 + 4, screenY - textSize.Height / 2);
+                }
+            }
         }
 
         /// <summary>
