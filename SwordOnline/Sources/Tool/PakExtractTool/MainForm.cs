@@ -626,6 +626,7 @@ namespace PakExtractTool
                                 string fullPath = basePath + "\\" + fileName;
                                 fullPath = fullPath.Replace('/', '\\');
                                 if (!fullPath.StartsWith("\\")) fullPath = "\\" + fullPath;
+                                fullPath = NormalizePath(fullPath);
                                 fullPath = LowercaseAsciiOnly(fullPath);
                                 paths.Add(fullPath);
                             }
@@ -769,6 +770,7 @@ namespace PakExtractTool
 
                             path = path.Replace('/', '\\');
                             if (!path.StartsWith("\\")) path = "\\" + path;
+                            path = NormalizePath(path);
                             path = LowercaseAsciiOnly(path);
                             paths.Add(path);
 
@@ -860,6 +862,7 @@ namespace PakExtractTool
                         {
                             iconPath = iconPath.Replace('/', '\\');
                             if (!iconPath.StartsWith("\\")) iconPath = "\\" + iconPath;
+                            iconPath = NormalizePath(iconPath);
                             iconPath = LowercaseAsciiOnly(iconPath);
                             paths.Add(iconPath);
                             pathsExtracted++;
@@ -881,6 +884,7 @@ namespace PakExtractTool
                         {
                             preCastPath = preCastPath.Replace('/', '\\');
                             if (!preCastPath.StartsWith("\\")) preCastPath = "\\" + preCastPath;
+                            preCastPath = NormalizePath(preCastPath);
                             preCastPath = LowercaseAsciiOnly(preCastPath);
                             paths.Add(preCastPath);
                             pathsExtracted++;
@@ -902,6 +906,7 @@ namespace PakExtractTool
                         {
                             string resourcePath = field.Replace('/', '\\');
                             if (!resourcePath.StartsWith("\\")) resourcePath = "\\" + resourcePath;
+                            resourcePath = NormalizePath(resourcePath);
                             resourcePath = LowercaseAsciiOnly(resourcePath);
                             paths.Add(resourcePath);
                             pathsExtracted++;
@@ -977,6 +982,7 @@ namespace PakExtractTool
                         {
                             string resourcePath = trimmed.Replace('/', '\\');
                             if (!resourcePath.StartsWith("\\")) resourcePath = "\\" + resourcePath;
+                            resourcePath = NormalizePath(resourcePath);
                             resourcePath = LowercaseAsciiOnly(resourcePath);
                             paths.Add(resourcePath);
                         }
@@ -1131,6 +1137,9 @@ namespace PakExtractTool
                                 // From KPakList::FindElemFile(): szPackName[0] = '\\'; ... FileNameToId(szPackName);
                                 if (!path.StartsWith("\\"))
                                     path = "\\" + path;
+
+                                // Normalize path by removing `\..\` patterns (match RemoveTwoPointPath in C++)
+                                path = NormalizePath(path);
 
                                 // Lowercase ONLY A-Z → a-z (match game engine g_StrLower)
                                 path = LowercaseAsciiOnly(path);
@@ -1344,15 +1353,15 @@ namespace PakExtractTool
                         // Try multiple path formats (we don't know which one the PAK uses):
                         // 1. Direct: \man\...
                         string path1 = $"\\man\\{categoryGarbled}\\{itemGarbled}\\{itemGarbled}_{suffix}.spr";
-                        paths.Add(LowercaseAsciiOnly(path1));
+                        paths.Add(LowercaseAsciiOnly(NormalizePath(path1)));
 
-                        // 2. Relative: \..\man\...
+                        // 2. Relative: \..\man\... (normalized to \man\... by engine)
                         string path2 = $"\\..\\man\\{categoryGarbled}\\{itemGarbled}\\{itemGarbled}_{suffix}.spr";
-                        paths.Add(LowercaseAsciiOnly(path2));
+                        paths.Add(LowercaseAsciiOnly(NormalizePath(path2)));
 
                         // 3. Under spr: \spr\man\... (most likely since all samples start with \spr\)
                         string path3 = $"\\spr\\man\\{categoryGarbled}\\{itemGarbled}\\{itemGarbled}_{suffix}.spr";
-                        paths.Add(LowercaseAsciiOnly(path3));
+                        paths.Add(LowercaseAsciiOnly(NormalizePath(path3)));
 
                         // Log first 3 generated paths as examples
                         if (pathsLogged < 3)
@@ -1698,6 +1707,9 @@ namespace PakExtractTool
                 if (!path.StartsWith("\\"))
                     path = "\\" + path;
 
+                // Normalize path by removing `\..\` patterns (match RemoveTwoPointPath in C++)
+                path = NormalizePath(path);
+
                 // Lowercase ONLY A-Z → a-z (match game engine g_StrLower)
                 path = LowercaseAsciiOnly(path);
 
@@ -1735,6 +1747,48 @@ namespace PakExtractTool
                 }
             }
             return new string(chars);
+        }
+
+        /// <summary>
+        /// Normalize path by removing `\..\ patterns (parent directory references).
+        /// Matches RemoveTwoPointPath() from KFilePath.cpp.
+        /// Example: "\spr\..\man\file.spr" → "\man\file.spr"
+        ///          "man\..\folder\file.spr" → "folder\file.spr"
+        /// </summary>
+        private static string NormalizePath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return path;
+
+            const string pattern = "\\..\\";
+            int index = path.IndexOf(pattern);
+
+            while (index >= 0)
+            {
+                // Find the backslash before `\..\
+                int prevSlash = index - 1;
+                while (prevSlash >= 0 && path[prevSlash] != '\\')
+                {
+                    prevSlash--;
+                }
+
+                // If we found a previous backslash (or we're at the beginning)
+                if (prevSlash < 0)
+                {
+                    // Remove from start to after `\..\`
+                    path = path.Substring(index + pattern.Length);
+                }
+                else
+                {
+                    // Remove from previous backslash to after `\..\`
+                    path = path.Substring(0, prevSlash) + path.Substring(index + pattern.Length - 1);
+                }
+
+                // Look for next occurrence
+                index = path.IndexOf(pattern);
+            }
+
+            return path;
         }
 
         private static int _conversionCallCount = 0;  // Track how many times ConvertChineseToGarbled is called
