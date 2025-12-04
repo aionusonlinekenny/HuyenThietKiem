@@ -60,6 +60,11 @@ namespace MapTool.PakFile
                 if (c == (byte)'/')
                     c = (byte)'\\';
 
+                // CRITICAL: Convert uppercase A-Z to lowercase DURING hash calculation
+                // This matches the C++ FileNameToId behavior
+                if (c >= 'A' && c <= 'Z')
+                    c = (byte)(c + ('a' - 'A'));  // Convert to lowercase
+
                 // Hash algorithm from KFilePath.cpp:
                 // Id = (Id + (i + 1) * c) % 0x8000000b * 0xffffffef;
                 id = (id + (uint)(i + 1) * c) % 0x8000000b * 0xffffffef;
