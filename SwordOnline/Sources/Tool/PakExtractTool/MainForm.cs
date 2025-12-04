@@ -1189,6 +1189,9 @@ namespace PakExtractTool
             // From client code: sprintf(pszName, "%s_%s_%s_%d.spr", pszPrefix, pszAttribute, pszGender, nIndex)
             GeneratePlayerSprites(paths);
 
+            // 1a. Equipment attachments (挂件) for all schools
+            GenerateEquipmentAttachmentPaths(paths);
+
             // 2. Numbered UI sprite sequences (icons, pics, effects)
             GenerateNumberedSpriteSequences(paths);
 
@@ -1267,6 +1270,65 @@ namespace PakExtractTool
                             string path = $"\\spr\\players\\{seriesEn[s]}_{gendersEn[g]}_{part}_{i}.spr";
                             paths.Add(LowercaseAsciiOnly(path));
                         }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Generate equipment attachment (挂件) paths for all schools
+        /// Example: \..\man\普通挂件\少林挂件\少林挂件_st01.spr
+        /// Note: \..\man\ becomes \man\ after path normalization
+        /// </summary>
+        private void GenerateEquipmentAttachmentPaths(HashSet<string> paths)
+        {
+            // Equipment attachment categories and schools (Chinese names need conversion to garbled)
+            var attachments = new[]
+            {
+                new { category = "普通挂件", items = new[] { "少林挂件", "峨眉挂件" } },
+                new { category = "天王挂件", items = new[] { "天王挂件女" } },
+                new { category = "唐门挂件", items = new[] { "唐门挂件女" } },
+                new { category = "五毒挂件", items = new[] { "五毒挂件女" } },
+                new { category = "翠烟挂件", items = new[] { "翠烟挂件女" } }
+            };
+
+            // Action suffixes for equipment animations
+            var actionSuffixes = new[]
+            {
+                // Standing (st01-06)
+                "st01", "st02", "st03", "st04", "st05", "st06",
+                // Walking (wk01-04)
+                "wk01", "wk02", "wk03", "wk04",
+                // Running (rn01-04)
+                "rn01", "rn02", "rn03", "rn04",
+                // Injured (ij01-04)
+                "ij01", "ij02", "ij03", "ij04",
+                // Death (de01-04)
+                "de01", "de02", "de03", "de04",
+                // Attack (at01-07)
+                "at01", "at02", "at03", "at04", "at05", "at06", "at07",
+                // Magic (mg01-05)
+                "mg01", "mg02", "mg03", "mg04", "mg05",
+                // Special actions
+                "zz01", "jp01", "rd01", "hw01", "hr01",
+                "ha01", "ha02", "hm01", "hi01", "hd01"
+            };
+
+            foreach (var attachment in attachments)
+            {
+                // Convert Chinese folder names to garbled Windows-1252
+                string categoryGarbled = ConvertChineseToGarbled(attachment.category);
+
+                foreach (var item in attachment.items)
+                {
+                    string itemGarbled = ConvertChineseToGarbled(item);
+
+                    foreach (var suffix in actionSuffixes)
+                    {
+                        // Note: \..\man\ is a relative path that becomes \man\ after normalization
+                        // g_GetPackPath() in C++ handles .. removal
+                        string path = $"\\man\\{categoryGarbled}\\{itemGarbled}\\{itemGarbled}_{suffix}.spr";
+                        paths.Add(LowercaseAsciiOnly(path));
                     }
                 }
             }
