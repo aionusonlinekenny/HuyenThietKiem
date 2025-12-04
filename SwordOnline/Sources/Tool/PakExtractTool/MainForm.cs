@@ -581,19 +581,19 @@ namespace PakExtractTool
                 string basePath = null;
                 int count = 0;
 
-                // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
-                // When read with Windows-1252, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
+                // Game files use ISO-8859-1 encoding with embedded GBK bytes for Chinese characters
+                // When read with ISO-8859-1, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
                 // IMPORTANT: Do NOT check for decode errors - we WANT garbled chars for hash calculation!
                 string[] lines = null;
 
                 try
                 {
-                    // ONLY use Windows-1252 for game data files (NO fallback to Encoding.Default)
-                    lines = File.ReadAllLines(filePath, Encoding.GetEncoding("windows-1252"));
+                    // CRITICAL: Use ISO-8859-1 (NOT Windows-1252) to match hash calculation!
+                    lines = File.ReadAllLines(filePath, Encoding.GetEncoding("iso-8859-1"));
                 }
                 catch
                 {
-                    // Windows-1252 failed - skip this file
+                    // ISO-8859-1 failed - skip this file
                     // Do NOT use Encoding.Default (it's GBK on Chinese Windows)
                     return;
                 }
@@ -687,19 +687,19 @@ namespace PakExtractTool
                 }
 
                 // Generic parsing for other settings files
-                // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
-                // When read with Windows-1252, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
+                // Game files use ISO-8859-1 encoding with embedded GBK bytes for Chinese characters
+                // When read with ISO-8859-1, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
                 // IMPORTANT: Do NOT check for decode errors - we WANT garbled chars for hash calculation!
                 string[] lines = null;
 
                 try
                 {
-                    // ONLY use Windows-1252 for game data files (NO fallback to Encoding.Default)
-                    lines = File.ReadAllLines(filePath, Encoding.GetEncoding("windows-1252"));
+                    // CRITICAL: Use ISO-8859-1 (NOT Windows-1252) to match hash calculation!
+                    lines = File.ReadAllLines(filePath, Encoding.GetEncoding("iso-8859-1"));
                 }
                 catch
                 {
-                    // Windows-1252 failed - skip this file
+                    // ISO-8859-1 failed - skip this file
                     // Do NOT use Encoding.Default (it's GBK on Chinese Windows)
                     return;
                 }
@@ -811,22 +811,23 @@ namespace PakExtractTool
 
             try
             {
-                // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
-                // When read with Windows-1252, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
+                // Game files use ISO-8859-1 encoding with embedded GBK bytes for Chinese characters
+                // When read with ISO-8859-1, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
                 // IMPORTANT: Do NOT check for decode errors - we WANT garbled chars for hash calculation!
                 string[] lines = null;
 
                 try
                 {
-                    // ONLY use Windows-1252 for game data files (NO fallback to Encoding.Default)
-                    DebugLogger.Log("   🔧 [DEBUG] Reading with Windows-1252 encoding...");
-                    lines = File.ReadAllLines(filePath, Encoding.GetEncoding("windows-1252"));
+                    // CRITICAL: Use ISO-8859-1 (NOT Windows-1252) to match hash calculation!
+                    // GBK bytes in file → read as ISO-8859-1 → garbled chars for hash
+                    DebugLogger.Log("   🔧 [DEBUG] Reading with ISO-8859-1 encoding...");
+                    lines = File.ReadAllLines(filePath, Encoding.GetEncoding("iso-8859-1"));
                     DebugLogger.Log($"   🔧 [DEBUG] Read {lines.Length} lines successfully");
                 }
                 catch (Exception ex)
                 {
-                    DebugLogger.Log($"   🔧 [DEBUG] Windows-1252 failed: {ex.Message}");
-                    // Windows-1252 failed - skip this file
+                    DebugLogger.Log($"   🔧 [DEBUG] ISO-8859-1 failed: {ex.Message}");
+                    // ISO-8859-1 failed - skip this file
                     // Do NOT use Encoding.Default (it's GBK on Chinese Windows)
                     return;
                 }
@@ -933,19 +934,19 @@ namespace PakExtractTool
         {
             try
             {
-                // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
-                // When read with Windows-1252, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
+                // Game files use ISO-8859-1 encoding with embedded GBK bytes for Chinese characters
+                // When read with ISO-8859-1, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
                 // IMPORTANT: Do NOT check for decode errors - we WANT garbled chars for hash calculation!
                 string[] lines = null;
 
                 try
                 {
-                    // ONLY use Windows-1252 for game data files (NO fallback to Encoding.Default)
-                    lines = File.ReadAllLines(filePath, Encoding.GetEncoding("windows-1252"));
+                    // CRITICAL: Use ISO-8859-1 (NOT Windows-1252) to match hash calculation!
+                    lines = File.ReadAllLines(filePath, Encoding.GetEncoding("iso-8859-1"));
                 }
                 catch
                 {
-                    // Windows-1252 failed - skip this file
+                    // ISO-8859-1 failed - skip this file
                     // Do NOT use Encoding.Default (it's GBK on Chinese Windows)
                     return;
                 }
@@ -1794,7 +1795,7 @@ namespace PakExtractTool
 
             // Try multiple encodings for Chinese character support
             // Different game versions may use different encodings
-            // Since we read files with Windows-1252, GBK bytes appear as garbled text (e.g., ÉÙÁÖ)
+            // Since we read files with ISO-8859-1, GBK bytes appear as garbled text (e.g., ÉÙÁÖ)
             // To calculate hash correctly, use ISO-8859-1 (Latin1) to convert garbled chars back to original bytes
             // ISO-8859-1 maps U+00C9 → 0xC9 directly (Unicode codepoint = byte value)
             var encodingsToTry = new[] { "iso-8859-1", "GBK", "GB2312", "Big5" };
@@ -1813,7 +1814,7 @@ namespace PakExtractTool
                 // Check if path contains Unicode Chinese characters (for debugging)
                 bool hasChinese = path.Any(c => c >= 0x4E00 && c <= 0x9FFF);
 
-                // Check if path contains garbled characters (Windows-1252 high bytes from GBK)
+                // Check if path contains garbled characters (ISO-8859-1 high bytes from GBK)
                 // Garbled chars are typically in ranges: 0x80-0xFF (À-ÿ, Á-ÿ, etc.)
                 bool hasGarbled = path.Any(c => c >= 0x80 && c <= 0xFF && c < 0x4E00);
 
@@ -1897,7 +1898,7 @@ namespace PakExtractTool
 
             DebugLogger.Log($"   📊 Path statistics:");
             DebugLogger.Log($"      Total Unicode Chinese paths: {chinesePathCount:N0}");
-            DebugLogger.Log($"      Total GARBLED paths (Windows-1252): {garbledPathCount:N0}");
+            DebugLogger.Log($"      Total GARBLED paths (ISO-8859-1): {garbledPathCount:N0}");
             DebugLogger.Log($"      Unicode Chinese paths matched: {matches.Values.Count(p => p.Any(c => c >= 0x4E00 && c <= 0x9FFF)):N0}");
             DebugLogger.Log($"      GARBLED paths matched: {matches.Values.Count(p => p.Any(c => c >= 0x80 && c <= 0xFF && c < 0x4E00)):N0}");
 
