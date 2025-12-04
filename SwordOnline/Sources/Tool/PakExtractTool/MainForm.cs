@@ -577,13 +577,14 @@ namespace PakExtractTool
 
                 try
                 {
-                    // Always use Windows-1252 for game data files
+                    // ONLY use Windows-1252 for game data files (NO fallback to Encoding.Default)
                     lines = File.ReadAllLines(filePath, Encoding.GetEncoding("windows-1252"));
                 }
                 catch
                 {
-                    // Fallback if Windows-1252 fails
-                    try { lines = File.ReadAllLines(filePath, Encoding.Default); } catch { return; }
+                    // Windows-1252 failed - skip this file
+                    // Do NOT use Encoding.Default (it's GBK on Chinese Windows)
+                    return;
                 }
 
                 foreach (var line in lines)
@@ -682,13 +683,14 @@ namespace PakExtractTool
 
                 try
                 {
-                    // Always use Windows-1252 for game data files
+                    // ONLY use Windows-1252 for game data files (NO fallback to Encoding.Default)
                     lines = File.ReadAllLines(filePath, Encoding.GetEncoding("windows-1252"));
                 }
                 catch
                 {
-                    // Fallback if Windows-1252 fails
-                    try { lines = File.ReadAllLines(filePath, Encoding.Default); } catch { return; }
+                    // Windows-1252 failed - skip this file
+                    // Do NOT use Encoding.Default (it's GBK on Chinese Windows)
+                    return;
                 }
 
                 foreach (var line in lines)
@@ -805,16 +807,17 @@ namespace PakExtractTool
 
                 try
                 {
-                    // Always use Windows-1252 for game data files
+                    // ONLY use Windows-1252 for game data files (NO fallback to Encoding.Default)
                     DebugLogger.Log("   🔧 [DEBUG] Reading with Windows-1252 encoding...");
                     lines = File.ReadAllLines(filePath, Encoding.GetEncoding("windows-1252"));
                     DebugLogger.Log($"   🔧 [DEBUG] Read {lines.Length} lines successfully");
                 }
                 catch (Exception ex)
                 {
-                    DebugLogger.Log($"   🔧 [DEBUG] Windows-1252 failed: {ex.Message}, trying fallback...");
-                    // Fallback if Windows-1252 fails
-                    try { lines = File.ReadAllLines(filePath, Encoding.Default); } catch { return; }
+                    DebugLogger.Log($"   🔧 [DEBUG] Windows-1252 failed: {ex.Message}");
+                    // Windows-1252 failed - skip this file
+                    // Do NOT use Encoding.Default (it's GBK on Chinese Windows)
+                    return;
                 }
 
                 bool headerSkipped = false;
@@ -926,13 +929,14 @@ namespace PakExtractTool
 
                 try
                 {
-                    // Always use Windows-1252 for game data files
+                    // ONLY use Windows-1252 for game data files (NO fallback to Encoding.Default)
                     lines = File.ReadAllLines(filePath, Encoding.GetEncoding("windows-1252"));
                 }
                 catch
                 {
-                    // Fallback if Windows-1252 fails
-                    try { lines = File.ReadAllLines(filePath, Encoding.Default); } catch { return; }
+                    // Windows-1252 failed - skip this file
+                    // Do NOT use Encoding.Default (it's GBK on Chinese Windows)
+                    return;
                 }
 
                 bool headerSkipped = false;
@@ -1064,48 +1068,21 @@ namespace PakExtractTool
                         // Also do generic regex extraction for all files
                         string content = null;
 
-                        // Detect file type and use appropriate encoding:
-                        // - Game data files (.txt, .ini in Bin/Client/) use Windows-1252 (ANSI with embedded GBK bytes)
-                        // - Source code files (.cpp, .h, .cs) use UTF-8
-                        bool isSourceCode = fileExt == ".cpp" || fileExt == ".h" || fileExt == ".cs" ||
-                                           fileExt == ".hpp" || fileExt == ".c" || fileExt == ".cc";
+                        // CRITICAL: User confirmed entire project uses ANSI (Windows-1252) encoding
+                        // NO UTF-8, NO Unicode anywhere in the codebase
+                        // ALL files (source code, game data, config) use Windows-1252 with embedded GBK bytes
+                        // If Windows-1252 fails, skip the file (do NOT fallback to Encoding.Default which is GBK)
 
-                        bool isGameData = (fileExt == ".txt" || fileExt == ".ini") &&
-                                         (filePath.Contains("\\Bin\\") || filePath.Contains("/Bin/"));
-
-                        if (isSourceCode)
+                        try
                         {
-                            // Source code files: Try UTF-8 first
-                            try { content = File.ReadAllText(filePath, Encoding.UTF8); }
-                            catch { try { content = File.ReadAllText(filePath, Encoding.Default); } catch { } }
+                            content = File.ReadAllText(filePath, Encoding.GetEncoding("windows-1252"));
                         }
-                        else if (isGameData)
+                        catch
                         {
-                            // Game data files: ALWAYS use Windows-1252 (no fallback)
-                            try { content = File.ReadAllText(filePath, Encoding.GetEncoding("windows-1252")); }
-                            catch { try { content = File.ReadAllText(filePath, Encoding.Default); } catch { } }
+                            // Windows-1252 failed - skip this file
+                            // Do NOT use Encoding.Default (it's GBK on Chinese Windows, causes Unicode Chinese)
+                            continue;
                         }
-                        else
-                        {
-                            // Other files: Try Windows-1252 first, then fallbacks
-                            var encodings = new List<Encoding>();
-                            try { encodings.Add(Encoding.GetEncoding("windows-1252")); } catch { }
-                            encodings.Add(Encoding.UTF8);
-                            encodings.Add(Encoding.Default);
-
-                            foreach (var encoding in encodings)
-                            {
-                                try
-                                {
-                                    content = File.ReadAllText(filePath, encoding);
-                                    break;
-                                }
-                                catch { }
-                            }
-                        }
-
-                        if (content == null)
-                            continue; // Skip this file
 
                         // Extract all path references using regex
                         foreach (var pattern in pathPatterns)
@@ -1139,21 +1116,9 @@ namespace PakExtractTool
                                 // Remove trailing whitespace/quotes that might be captured
                                 path = path.TrimEnd(' ', '\t', '"', '\'');
 
-                                // If path came from UTF-8 source code and contains Chinese characters,
-                                // convert to Windows-1252 garbled representation (for correct hash calculation)
-                                bool hasChinese = path.Any(c => c >= 0x4E00 && c <= 0x9FFF);
-                                if (isSourceCode && hasChinese)
-                                {
-                                    DebugLogger.Log($"   🔧 [DEBUG] ScanFolder: Converting UTF-8 Chinese path: {path}");
-                                    string before = path;
-                                    path = ConvertChineseToGarbled(path);
-                                    DebugLogger.Log($"   🔧 [DEBUG] ScanFolder: Result: {path}");
-                                }
-                                else if (hasChinese)
-                                {
-                                    DebugLogger.Log($"   🔧 [DEBUG] ScanFolder: Found Chinese path in NON-source file ({fileExt}): {path}");
-                                    DebugLogger.Log($"   🔧 [DEBUG] ScanFolder: isSourceCode={isSourceCode}, isGameData={isGameData}");
-                                }
+                                // REMOVED: UTF-8 conversion logic
+                                // User confirmed: NO UTF-8 in project, ALL files use Windows-1252 ANSI
+                                // Paths are already in correct garbled Windows-1252 format from ReadAllText above
 
                                 // Add to set if valid
                                 if (path.Length > 3 && path.Contains('.'))  // Min: \a.b
