@@ -13,6 +13,10 @@ class TestHash
             byte c = bytes[i];
             if (c == (byte)'/') c = (byte)'\\';
 
+            // CRITICAL: Convert uppercase A-Z to lowercase DURING hash calculation
+            if (c >= 'A' && c <= 'Z')
+                c = (byte)(c + ('a' - 'A'));
+
             id = (id + (uint)(i + 1) * c) % 0x8000000b * 0xffffffef;
         }
 

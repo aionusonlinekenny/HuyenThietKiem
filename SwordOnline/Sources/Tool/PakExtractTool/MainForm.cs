@@ -1739,10 +1739,10 @@ namespace PakExtractTool
         private static int _conversionCallCount = 0;  // Track how many times ConvertChineseToGarbled is called
 
         /// <summary>
-        /// Convert Unicode Chinese characters to Windows-1252 garbled representation
+        /// Convert Unicode Chinese characters to ISO-8859-1/Latin1 garbled representation
         /// This is needed for hash calculation because game files store GBK bytes
-        /// which are read as Windows-1252, resulting in garbled characters.
-        /// Example: "金" (U+91D1) → GBK [0xBD, 0xF0] → Windows-1252 "½ð"
+        /// which are read as ISO-8859-1 by the game engine, resulting in garbled characters.
+        /// Example: "金" (U+91D1) → GBK [0xBD, 0xF0] → ISO-8859-1 "½ð"
         /// </summary>
         private static string ConvertChineseToGarbled(string input)
         {
@@ -1754,8 +1754,9 @@ namespace PakExtractTool
                 // Step 1: Encode Unicode string to GBK bytes
                 byte[] gbkBytes = Encoding.GetEncoding("GBK").GetBytes(input);
 
-                // Step 2: Decode GBK bytes as Windows-1252 (creates garbled chars)
-                string garbled = Encoding.GetEncoding("windows-1252").GetString(gbkBytes);
+                // Step 2: Decode GBK bytes as ISO-8859-1/Latin1 (creates garbled chars)
+                // CRITICAL: Must use ISO-8859-1 (not Windows-1252) to match hash calculation!
+                string garbled = Encoding.GetEncoding("iso-8859-1").GetString(gbkBytes);
 
                 // Debug: Log first few conversions only
                 if (_conversionCallCount < 10 && input != garbled && input.Any(c => c >= 0x4E00 && c <= 0x9FFF))
