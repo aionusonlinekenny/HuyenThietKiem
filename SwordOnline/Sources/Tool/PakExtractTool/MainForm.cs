@@ -1163,57 +1163,45 @@ namespace PakExtractTool
 
         /// <summary>
         /// Generate player character sprites: series × gender × body parts
-        /// Example: \spr\players\金_男_1.spr (Metal-Male-1)
+        /// DISABLED: Analysis shows game uses ENGLISH naming only, not Chinese/Korean
+        /// Keeping only English placeholder paths
         /// </summary>
         private void GeneratePlayerSprites(HashSet<string> paths)
         {
-            // 5 Series (五行): Metal, Wood, Water, Fire, Earth
-            var series = new[] { "金", "木", "水", "火", "土" };
-            var seriesEn = new[] { "metal", "wood", "water", "fire", "earth" };
+            // DISABLED: Chinese/Korean naming doesn't match PAK files
+            // Game uses English paths like: \spr\players\player_male_01.spr
 
-            // 2 Genders: Male, Female
-            var genders = new[] { "남", "녀" };  // Korean: nam (male), nyeo (female)
-            var gendersEn = new[] { "male", "female" };
-            var gendersCn = new[] { "男", "女" };  // Chinese
+            // Generate English player sprite patterns
+            var genders = new[] { "male", "female", "m", "f" };
+            var classes = new[] { "warrior", "mage", "archer", "assassin", "priest", "wa", "ma", "ar", "as", "pr" };
 
-            // Body parts and equipment slots
-            var bodyParts = new[] { "body", "head", "hand", "foot", "weapon", "horse" };
-
-            // Generate combinations
-            for (int s = 0; s < series.Length; s++)
+            foreach (var gender in genders)
             {
-                for (int g = 0; g < genders.Length; g++)
+                for (int i = 1; i <= 100; i++)
                 {
-                    // Korean naming: 금_남_1.spr, 금_녀_1.spr
-                    for (int i = 1; i <= 20; i++)
-                    {
-                        string path = $"\\spr\\players\\{series[s]}_{genders[g]}_{i}.spr";
-                        paths.Add(LowercaseAsciiOnly(path));
-                    }
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\players\\player_{gender}_{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\players\\{gender}_{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\players\\{gender}{i:D2}.spr"));
+                }
 
-                    // English naming: metal_male_1.spr
-                    for (int i = 1; i <= 20; i++)
+                foreach (var cls in classes)
+                {
+                    for (int i = 1; i <= 50; i++)
                     {
-                        string path = $"\\spr\\players\\{seriesEn[s]}_{gendersEn[g]}_{i}.spr";
-                        paths.Add(LowercaseAsciiOnly(path));
+                        paths.Add(LowercaseAsciiOnly($"\\spr\\players\\{cls}_{gender}_{i:D2}.spr"));
+                        paths.Add(LowercaseAsciiOnly($"\\spr\\players\\{gender}_{cls}_{i:D2}.spr"));
                     }
+                }
+            }
 
-                    // Chinese naming: 金_男_1.spr
-                    for (int i = 1; i <= 20; i++)
-                    {
-                        string path = $"\\spr\\players\\{series[s]}_{gendersCn[g]}_{i}.spr";
-                        paths.Add(LowercaseAsciiOnly(path));
-                    }
-
-                    // Body part variations
-                    foreach (var part in bodyParts)
-                    {
-                        for (int i = 1; i <= 10; i++)
-                        {
-                            string path = $"\\spr\\players\\{seriesEn[s]}_{gendersEn[g]}_{part}_{i}.spr";
-                            paths.Add(LowercaseAsciiOnly(path));
-                        }
-                    }
+            // Body parts
+            var bodyParts = new[] { "body", "head", "hand", "foot", "weapon", "horse", "armor", "helmet" };
+            foreach (var part in bodyParts)
+            {
+                for (int i = 1; i <= 50; i++)
+                {
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\players\\{part}{i:D2}.spr"));
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\players\\{part}_{i:D2}.spr"));
                 }
             }
         }
@@ -1419,18 +1407,20 @@ namespace PakExtractTool
                 paths.Add(LowercaseAsciiOnly($"\\spr\\item\\dazhuanpan\\icon{i}.spr"));
             }
 
-            // 3. Common game event folders
+            // 3. Common game event folders (ENGLISH ONLY - Chinese names don't match PAK)
             var eventFolders = new[]
             {
-                "newyear", "春节", "springfestival",
-                "halloween", "万圣节",
-                "valentine", "情人节",
-                "midautumn", "中秋",
-                "anniversary", "周年",
-                "summer", "winter",
-                "lottery", "抽奖",
-                "gift", "礼物",
-                "vip", "会员"
+                "newyear", "springfestival", "chinesenewyear",
+                "halloween", "christmas",
+                "valentine", "valentinesday",
+                "midautumn", "moonfestival",
+                "anniversary", "birthday",
+                "summer", "winter", "autumn", "spring",
+                "lottery", "raffle", "draw",
+                "gift", "present", "reward",
+                "vip", "membership", "premium",
+                "event", "festival", "celebration",
+                "lucky", "fortune", "treasure"
             };
 
             foreach (var folder in eventFolders)
@@ -1465,7 +1455,41 @@ namespace PakExtractTool
                 }
             }
 
-            DebugLogger.Log($"   ✓ Generated specific game paths (christmas, events, UI elements)");
+            // 5. NPC and Monster sprites (common pattern: enemy001_st.spr, boss001_at.spr)
+            var npcTypes = new[] { "enemy", "boss", "npc", "monster", "mob", "pet" };
+            var npcActions = new[] { "_st", "_wlk", "_run", "_bat", "_at", "_die", "_magic", "_sit" };
+
+            foreach (var type in npcTypes)
+            {
+                for (int i = 1; i <= 500; i++)
+                {
+                    foreach (var action in npcActions)
+                    {
+                        paths.Add(LowercaseAsciiOnly($"\\spr\\npcres\\{type}\\{type}{i:D3}{action}.spr"));
+                        paths.Add(LowercaseAsciiOnly($"\\spr\\npcres\\{type}\\{type}{i:D3}{action}b.spr")); // Shadow variant
+                    }
+
+                    // Without action suffix
+                    paths.Add(LowercaseAsciiOnly($"\\spr\\npcres\\{type}\\{type}{i:D3}.spr"));
+                }
+            }
+
+            // 6. Skill effects and animations
+            for (int i = 1; i <= 500; i++)
+            {
+                paths.Add(LowercaseAsciiOnly($"\\spr\\skill\\skill{i:D3}.spr"));
+                paths.Add(LowercaseAsciiOnly($"\\spr\\skill\\effect{i:D3}.spr"));
+                paths.Add(LowercaseAsciiOnly($"\\spr\\skill\\magic{i:D3}.spr"));
+                paths.Add(LowercaseAsciiOnly($"\\spr\\skill\\cast{i:D3}.spr"));
+                paths.Add(LowercaseAsciiOnly($"\\spr\\skill\\missile{i:D3}.spr"));
+
+                paths.Add(LowercaseAsciiOnly($"\\spr\\effect\\effect{i:D3}.spr"));
+                paths.Add(LowercaseAsciiOnly($"\\spr\\effect\\hit{i:D3}.spr"));
+                paths.Add(LowercaseAsciiOnly($"\\spr\\effect\\boom{i:D3}.spr"));
+                paths.Add(LowercaseAsciiOnly($"\\spr\\effect\\magic{i:D3}.spr"));
+            }
+
+            DebugLogger.Log($"   ✓ Generated specific game paths (christmas, events, UI, NPC, effects)");
         }
 
         private void ExtractAndGenerateFormattedPaths(string content, HashSet<string> paths)
@@ -1909,8 +1933,9 @@ namespace PakExtractTool
                 {
                     try
                     {
-                        // Write all paths to file with UTF-8 encoding (supports Chinese characters)
-                        File.WriteAllLines(dialog.FileName, _lastGeneratedPaths, Encoding.UTF8);
+                        // Write all paths to file with GBK encoding (compatible with Chinese Windows)
+                        // Note: Since we removed Chinese folder names, paths are English-only now
+                        File.WriteAllLines(dialog.FileName, _lastGeneratedPaths, Encoding.GetEncoding("GBK"));
 
                         DebugLogger.Log($"💾 Exported {_lastGeneratedPaths.Count:N0} paths to: {dialog.FileName}");
 
