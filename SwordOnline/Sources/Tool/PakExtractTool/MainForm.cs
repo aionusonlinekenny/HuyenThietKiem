@@ -570,10 +570,11 @@ namespace PakExtractTool
                 string basePath = null;
                 int count = 0;
 
-                // Try multiple encodings for Chinese characters (Traditional and Simplified)
-                // Priority: GBK/GB2312 first (most common in Chinese games), then Big5
+                // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
+                // When read with Windows-1252, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
+                // Priority: Windows-1252 first (game's actual encoding), then GBK fallback
                 string[] lines = null;
-                var encodings = new[] { "GBK", "GB2312", "Big5", "UTF-8" };
+                var encodings = new[] { "windows-1252", "GBK", "GB2312", "Big5", "UTF-8" };
 
                 foreach (var encName in encodings)
                 {
@@ -687,10 +688,11 @@ namespace PakExtractTool
                 }
 
                 // Generic parsing for other settings files
-                // Try multiple encodings for Chinese characters (Traditional and Simplified)
-                // Priority: GBK/GB2312 first (most common in Chinese games), then Big5
+                // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
+                // When read with Windows-1252, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
+                // Priority: Windows-1252 first (game's actual encoding), then GBK fallback
                 string[] lines = null;
-                var encodings = new[] { "GBK", "GB2312", "Big5", "UTF-8" };
+                var encodings = new[] { "windows-1252", "GBK", "GB2312", "Big5", "UTF-8" };
 
                 foreach (var encName in encodings)
                 {
@@ -812,10 +814,11 @@ namespace PakExtractTool
         {
             try
             {
-                // Try multiple encodings for Chinese characters (Traditional and Simplified)
-                // Priority: GBK/GB2312 first (most common in Chinese games), then Big5
+                // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
+                // When read with Windows-1252, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
+                // Priority: Windows-1252 first (game's actual encoding), then GBK fallback
                 string[] lines = null;
-                var encodings = new[] { "GBK", "GB2312", "Big5", "UTF-8" };
+                var encodings = new[] { "windows-1252", "GBK", "GB2312", "Big5", "UTF-8" };
 
                 foreach (var encName in encodings)
                 {
@@ -916,10 +919,11 @@ namespace PakExtractTool
         {
             try
             {
-                // Try multiple encodings for Chinese characters (Traditional and Simplified)
-                // Priority: GBK/GB2312 first (most common in Chinese games), then Big5
+                // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
+                // When read with Windows-1252, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
+                // Priority: Windows-1252 first (game's actual encoding), then GBK fallback
                 string[] lines = null;
-                var encodings = new[] { "GBK", "GB2312", "Big5", "UTF-8" };
+                var encodings = new[] { "windows-1252", "GBK", "GB2312", "Big5", "UTF-8" };
 
                 foreach (var encName in encodings)
                 {
@@ -1075,15 +1079,16 @@ namespace PakExtractTool
                         // Also do generic regex extraction for all files
                         string content = null;
 
-                        // Try multiple encodings to handle Chinese (Traditional & Simplified) and Vietnamese characters
-                        // Priority: GBK first (most common in Chinese games), then GB2312, then Big5
+                        // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
+                        // When read with Windows-1252, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
+                        // Priority: Windows-1252 first (game's actual encoding), then fallbacks
                         var encodings = new List<Encoding>();
 
-                        try { encodings.Add(Encoding.GetEncoding("GBK")); } catch { }          // GBK (Simplified Chinese - superset of GB2312)
+                        try { encodings.Add(Encoding.GetEncoding("windows-1252")); } catch { } // Windows-1252 (ANSI) - PRIMARY
+                        try { encodings.Add(Encoding.GetEncoding("GBK")); } catch { }          // GBK (Simplified Chinese - fallback)
                         try { encodings.Add(Encoding.GetEncoding("GB2312")); } catch { }       // GB2312 (Simplified Chinese)
                         try { encodings.Add(Encoding.GetEncoding("Big5")); } catch { }         // Big5 (Traditional Chinese)
                         try { encodings.Add(Encoding.GetEncoding("windows-1258")); } catch { } // Vietnamese ANSI
-                        try { encodings.Add(Encoding.GetEncoding(1258)); } catch { }           // Vietnamese codepage
                         encodings.Add(Encoding.UTF8);                                          // UTF-8
                         encodings.Add(Encoding.Default);                                       // System default
                         encodings.Add(Encoding.ASCII);                                         // ASCII fallback
@@ -1626,7 +1631,10 @@ namespace PakExtractTool
 
             // Try multiple encodings for Chinese character support
             // Different game versions may use different encodings
-            var encodingsToTry = new[] { "GBK", "GB2312", "Big5" };
+            // Since we read files with Windows-1252, GBK bytes appear as garbled text (e.g., ÉÙÁÖ)
+            // To calculate hash correctly, use ISO-8859-1 (Latin1) to convert garbled chars back to original bytes
+            // ISO-8859-1 maps U+00C9 → 0xC9 directly (Unicode codepoint = byte value)
+            var encodingsToTry = new[] { "iso-8859-1", "GBK", "GB2312", "Big5" };
 
             // Debug: Count Chinese character paths for analysis
             int chinesePathCount = 0;
