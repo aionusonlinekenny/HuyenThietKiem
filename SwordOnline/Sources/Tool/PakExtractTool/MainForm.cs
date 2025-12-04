@@ -1141,9 +1141,18 @@ namespace PakExtractTool
 
                                 // If path came from UTF-8 source code and contains Chinese characters,
                                 // convert to Windows-1252 garbled representation (for correct hash calculation)
-                                if (isSourceCode && path.Any(c => c >= 0x4E00 && c <= 0x9FFF))
+                                bool hasChinese = path.Any(c => c >= 0x4E00 && c <= 0x9FFF);
+                                if (isSourceCode && hasChinese)
                                 {
+                                    DebugLogger.Log($"   🔧 [DEBUG] ScanFolder: Converting UTF-8 Chinese path: {path}");
+                                    string before = path;
                                     path = ConvertChineseToGarbled(path);
+                                    DebugLogger.Log($"   🔧 [DEBUG] ScanFolder: Result: {path}");
+                                }
+                                else if (hasChinese)
+                                {
+                                    DebugLogger.Log($"   🔧 [DEBUG] ScanFolder: Found Chinese path in NON-source file ({fileExt}): {path}");
+                                    DebugLogger.Log($"   🔧 [DEBUG] ScanFolder: isSourceCode={isSourceCode}, isGameData={isGameData}");
                                 }
 
                                 // Add to set if valid
@@ -1633,6 +1642,8 @@ namespace PakExtractTool
             return new string(chars);
         }
 
+        private static int _conversionCallCount = 0;  // Track how many times ConvertChineseToGarbled is called
+
         /// <summary>
         /// Convert Unicode Chinese characters to Windows-1252 garbled representation
         /// This is needed for hash calculation because game files store GBK bytes
@@ -1652,11 +1663,19 @@ namespace PakExtractTool
                 // Step 2: Decode GBK bytes as Windows-1252 (creates garbled chars)
                 string garbled = Encoding.GetEncoding("windows-1252").GetString(gbkBytes);
 
+                // Debug: Log first few conversions only
+                if (_conversionCallCount < 10 && input != garbled && input.Any(c => c >= 0x4E00 && c <= 0x9FFF))
+                {
+                    DebugLogger.Log($"   🔧 [DEBUG] ConvertChineseToGarbled #{_conversionCallCount + 1}: '{input}' → '{garbled}'");
+                    _conversionCallCount++;
+                }
+
                 return garbled;
             }
-            catch
+            catch (Exception ex)
             {
                 // If conversion fails, return original (might be English/ASCII)
+                DebugLogger.Log($"   🔧 [DEBUG] ConvertChineseToGarbled ERROR: {ex.Message} for input: {input}");
                 return input;
             }
         }
