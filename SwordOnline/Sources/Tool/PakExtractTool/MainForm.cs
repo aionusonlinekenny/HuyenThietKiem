@@ -1050,7 +1050,15 @@ namespace PakExtractTool
 
                     try
                     {
+                        string fileName = Path.GetFileName(filePath);
                         string fileExt = Path.GetExtension(filePath).ToLower();
+
+                        // CRITICAL: Skip old exported files (they contain Unicode from previous buggy versions)
+                        if (fileName.StartsWith("generated_paths_", StringComparison.OrdinalIgnoreCase) ||
+                            fileName.EndsWith(".pak.txt", StringComparison.OrdinalIgnoreCase))
+                        {
+                            continue; // Skip these files - they're our own exports
+                        }
 
                         // Use specialized parsers for INI and Settings TXT files
                         if (fileExt == ".ini")
