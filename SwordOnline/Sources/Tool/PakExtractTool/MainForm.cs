@@ -1843,34 +1843,48 @@ namespace PakExtractTool
                 // Try each encoding until we find a match
                 foreach (var encoding in encodingsToTry)
                 {
-                    // Calculate hash with this encoding
-                    uint hash = FileNameHasher.CalculateFileIdWithEncoding(path, encoding);
-
-                    // Debug: Log hash for first few Chinese/garbled paths
-                    if (hasChinese && chinesePathsTested <= 5)
+                    // CRITICAL: Try BOTH path formats (with and without leading backslash)
+                    // Game engine may strip leading \ before hashing!
+                    string[] pathsToTry = new[]
                     {
-                        DebugLogger.Log($"      Hash [{encoding}]: 0x{hash:X8}");
-                    }
-                    if (hasGarbled && garbledPathsTested <= 10)
-                    {
-                        DebugLogger.Log($"      Hash [{encoding}]: 0x{hash:X8}");
-                    }
+                        path,                           // Original: \spr\skill\...
+                        path.TrimStart('\\')           // Without leading \: spr\skill\...
+                    };
 
-                    // Check if this hash exists in PAK
-                    if (pakHashSet.Contains(hash) && !matches.ContainsKey(hash))
+                    foreach (var testPath in pathsToTry)
                     {
-                        matches[hash] = path;
-                        foundMatch = true;
+                        // Calculate hash with this encoding
+                        uint hash = FileNameHasher.CalculateFileIdWithEncoding(testPath, encoding);
 
-                        if (matches.Count <= 20)
+                        // Debug: Log hash for first few Chinese/garbled paths
+                        if (hasChinese && chinesePathsTested <= 5)
                         {
-                            // Log first 20 matches for debugging (with encoding info)
-                            string marker = hasChinese ? "🇨🇳" : (hasGarbled ? "🔧" : "  ");
-                            DebugLogger.Log($"   ✓ Match #{matches.Count} {marker}: {path} -> 0x{hash:X8} [{encoding}]");
+                            DebugLogger.Log($"      Hash [{encoding}] (path: {(testPath == path ? "WITH \\" : "NO \\")}): 0x{hash:X8}");
+                        }
+                        if (hasGarbled && garbledPathsTested <= 10)
+                        {
+                            DebugLogger.Log($"      Hash [{encoding}] (path: {(testPath == path ? "WITH \\" : "NO \\")}): 0x{hash:X8}");
                         }
 
-                        break; // Found match, no need to try other encodings
+                        // Check if this hash exists in PAK
+                        if (pakHashSet.Contains(hash) && !matches.ContainsKey(hash))
+                        {
+                            matches[hash] = path; // Store original path with \
+                            foundMatch = true;
+
+                            if (matches.Count <= 20)
+                            {
+                                // Log first 20 matches for debugging (with encoding info)
+                                string marker = hasChinese ? "🇨🇳" : (hasGarbled ? "🔧" : "  ");
+                                string pathFormat = testPath == path ? "WITH \\" : "NO \\";
+                                DebugLogger.Log($"   ✓ Match #{matches.Count} {marker}: {path} -> 0x{hash:X8} [{encoding}, {pathFormat}]");
+                            }
+
+                            break; // Found match, no need to try other path formats
+                        }
                     }
+
+                    if (foundMatch) break; // Found match, no need to try other encodings
                 }
 
                 if (i % 1000 == 0)
