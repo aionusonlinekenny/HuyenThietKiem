@@ -1184,6 +1184,11 @@ namespace PakExtractTool
             var gendersEn = new[] { "male", "female" };
             var gendersCn = new[] { "男", "女" };  // Chinese
 
+            // Convert Unicode Chinese to Windows-1252 garbled representation
+            var seriesGarbled = series.Select(s => ConvertChineseToGarbled(s)).ToArray();
+            var gendersGarbled = genders.Select(g => ConvertChineseToGarbled(g)).ToArray();
+            var gendersCnGarbled = gendersCn.Select(g => ConvertChineseToGarbled(g)).ToArray();
+
             // Body parts and equipment slots
             var bodyParts = new[] { "body", "head", "hand", "foot", "weapon", "horse" };
 
@@ -1192,10 +1197,10 @@ namespace PakExtractTool
             {
                 for (int g = 0; g < genders.Length; g++)
                 {
-                    // Korean naming: 금_남_1.spr, 금_녀_1.spr
+                    // Korean naming with garbled chars: ½𠝱_남_1.spr (金 → ½ð as Windows-1252)
                     for (int i = 1; i <= 20; i++)
                     {
-                        string path = $"\\spr\\players\\{series[s]}_{genders[g]}_{i}.spr";
+                        string path = $"\\spr\\players\\{seriesGarbled[s]}_{gendersGarbled[g]}_{i}.spr";
                         paths.Add(LowercaseAsciiOnly(path));
                     }
 
@@ -1206,10 +1211,10 @@ namespace PakExtractTool
                         paths.Add(LowercaseAsciiOnly(path));
                     }
 
-                    // Chinese naming: 金_男_1.spr
+                    // Chinese naming with garbled chars: ½ð_ÄÐ_1.spr (金_男 → ½ð_ÄÐ as Windows-1252)
                     for (int i = 1; i <= 20; i++)
                     {
-                        string path = $"\\spr\\players\\{series[s]}_{gendersCn[g]}_{i}.spr";
+                        string path = $"\\spr\\players\\{seriesGarbled[s]}_{gendersCnGarbled[g]}_{i}.spr";
                         paths.Add(LowercaseAsciiOnly(path));
                     }
 
@@ -1572,6 +1577,34 @@ namespace PakExtractTool
                 }
             }
             return new string(chars);
+        }
+
+        /// <summary>
+        /// Convert Unicode Chinese characters to Windows-1252 garbled representation
+        /// This is needed for hash calculation because game files store GBK bytes
+        /// which are read as Windows-1252, resulting in garbled characters.
+        /// Example: "金" (U+91D1) → GBK [0xBD, 0xF0] → Windows-1252 "½ð"
+        /// </summary>
+        private static string ConvertChineseToGarbled(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return input;
+
+            try
+            {
+                // Step 1: Encode Unicode string to GBK bytes
+                byte[] gbkBytes = Encoding.GetEncoding("GBK").GetBytes(input);
+
+                // Step 2: Decode GBK bytes as Windows-1252 (creates garbled chars)
+                string garbled = Encoding.GetEncoding("windows-1252").GetString(gbkBytes);
+
+                return garbled;
+            }
+            catch
+            {
+                // If conversion fails, return original (might be English/ASCII)
+                return input;
+            }
         }
 
         private Dictionary<uint, string> MatchFilesWithPak(List<string> pathReferences, List<uint> pakFileIds, string scanFolder, System.ComponentModel.BackgroundWorker worker)
