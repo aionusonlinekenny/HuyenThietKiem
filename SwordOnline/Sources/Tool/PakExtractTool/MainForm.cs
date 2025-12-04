@@ -1282,6 +1282,9 @@ namespace PakExtractTool
         /// </summary>
         private void GenerateEquipmentAttachmentPaths(HashSet<string> paths)
         {
+            int initialCount = paths.Count;
+            DebugLogger.Log("   🔧 [DEBUG] GenerateEquipmentAttachmentPaths() called");
+
             // Equipment attachment categories and schools (Chinese names need conversion to garbled)
             var attachments = new[]
             {
@@ -1314,6 +1317,7 @@ namespace PakExtractTool
                 "ha01", "ha02", "hm01", "hi01", "hd01"
             };
 
+            int pathsLogged = 0;
             foreach (var attachment in attachments)
             {
                 // Convert Chinese folder names to garbled Windows-1252
@@ -1325,13 +1329,28 @@ namespace PakExtractTool
 
                     foreach (var suffix in actionSuffixes)
                     {
-                        // Note: \..\man\ is a relative path that becomes \man\ after normalization
-                        // g_GetPackPath() in C++ handles .. removal
-                        string path = $"\\man\\{categoryGarbled}\\{itemGarbled}\\{itemGarbled}_{suffix}.spr";
-                        paths.Add(LowercaseAsciiOnly(path));
+                        // Try both path formats:
+                        // 1. Absolute: \man\...
+                        string path1 = $"\\man\\{categoryGarbled}\\{itemGarbled}\\{itemGarbled}_{suffix}.spr";
+                        paths.Add(LowercaseAsciiOnly(path1));
+
+                        // 2. Relative: \..\man\... (as shown in user's example)
+                        string path2 = $"\\..\\man\\{categoryGarbled}\\{itemGarbled}\\{itemGarbled}_{suffix}.spr";
+                        paths.Add(LowercaseAsciiOnly(path2));
+
+                        // Log first 5 generated paths as examples
+                        if (pathsLogged < 5)
+                        {
+                            DebugLogger.Log($"      Sample path #{pathsLogged + 1} (absolute): {path1}");
+                            DebugLogger.Log($"      Sample path #{pathsLogged + 1} (relative): {path2}");
+                            pathsLogged++;
+                        }
                     }
                 }
             }
+
+            int generatedCount = paths.Count - initialCount;
+            DebugLogger.Log($"   ✓ Generated {generatedCount:N0} equipment attachment paths");
         }
 
         /// <summary>
