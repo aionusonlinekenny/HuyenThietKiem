@@ -614,6 +614,8 @@ namespace PakExtractTool
                     else if (trimmed.StartsWith("Path=", StringComparison.OrdinalIgnoreCase))
                     {
                         basePath = trimmed.Substring(5).Trim();
+                        // Convert double backslashes to single (config files use "\\" for paths)
+                        basePath = basePath.Replace("\\\\", "\\");
                     }
                     // Parse numeric entries like 0=01.spr, 1=02.spr
                     else if (trimmed.Contains("=") && !trimmed.StartsWith("["))
@@ -736,6 +738,16 @@ namespace PakExtractTool
                         if (trimmed.Contains(".spr") || trimmed.Contains(".ini") || trimmed.Contains(".txt"))
                         {
                             string path = trimmed;
+
+                            // Remove key-value prefix if present (e.g., "Path=\\spr\\..." -> "\\spr\\...")
+                            if (path.Contains("="))
+                            {
+                                int equalsIndex = path.IndexOf('=');
+                                path = path.Substring(equalsIndex + 1);
+                            }
+
+                            // Convert double backslashes to single (config files use "\\" for paths)
+                            path = path.Replace("\\\\", "\\");
 
                             // If it's just a filename, try to infer the directory from the settings file path
                             if (!path.Contains("\\") && !path.Contains("/"))
@@ -1126,6 +1138,16 @@ namespace PakExtractTool
                             foreach (System.Text.RegularExpressions.Match match in matches)
                             {
                                 string path = match.Value.Trim();
+
+                                // Remove key-value prefix if present (e.g., "damahupos=\\settings..." -> "\\settings...")
+                                if (path.Contains("="))
+                                {
+                                    int equalsIndex = path.IndexOf('=');
+                                    path = path.Substring(equalsIndex + 1);
+                                }
+
+                                // Convert double backslashes to single (config files use "\\" for paths)
+                                path = path.Replace("\\\\", "\\");
 
                                 // Normalize path: convert forward slash to backslash
                                 path = path.Replace('/', '\\');
