@@ -1746,7 +1746,9 @@ namespace PakExtractTool
 
         private void GeneratePakTxtFile(string txtFile, Dictionary<uint, string> matches)
         {
-            using (StreamWriter writer = new StreamWriter(txtFile, false, Encoding.GetEncoding("GBK")))
+            // CRITICAL: Use Windows-1252 to preserve garbled Chinese characters (e.g., ÉÙÁÖ)
+            // GBK cannot encode Windows-1252 characters and produces '?' marks
+            using (StreamWriter writer = new StreamWriter(txtFile, false, Encoding.GetEncoding("windows-1252")))
             {
                 // Write header line 1 - matching original format
                 string pakTime = DateTime.Now.ToString("yyyy-M-d H:m:s");
@@ -2020,8 +2022,9 @@ namespace PakExtractTool
                 {
                     try
                     {
-                        // Write all paths to file with ANSI/GBK encoding (matches game's encoding for Chinese characters)
-                        File.WriteAllLines(dialog.FileName, _lastGeneratedPaths, Encoding.GetEncoding("GBK"));
+                        // CRITICAL: Use Windows-1252 to preserve garbled Chinese characters (e.g., ÉÙÁÖ)
+                        // GBK cannot encode Windows-1252 characters and produces '?' marks
+                        File.WriteAllLines(dialog.FileName, _lastGeneratedPaths, Encoding.GetEncoding("windows-1252"));
 
                         DebugLogger.Log($"💾 Exported {_lastGeneratedPaths.Count:N0} paths to: {dialog.FileName}");
 
