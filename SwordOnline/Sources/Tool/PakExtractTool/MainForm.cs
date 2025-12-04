@@ -572,32 +572,17 @@ namespace PakExtractTool
 
                 // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
                 // When read with Windows-1252, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
-                // Priority: Windows-1252 first (game's actual encoding), then GBK fallback
+                // IMPORTANT: Do NOT check for decode errors - we WANT garbled chars for hash calculation!
                 string[] lines = null;
-                var encodings = new[] { "windows-1252", "GBK", "GB2312", "Big5", "UTF-8" };
 
-                foreach (var encName in encodings)
+                try
                 {
-                    try
-                    {
-                        lines = File.ReadAllLines(filePath, Encoding.GetEncoding(encName));
-
-                        // Check if decoded text has '?' characters (decode errors)
-                        // If so, try next encoding
-                        bool hasDecodeErrors = lines.Any(l => l.Contains('?') && l.Contains("Path="));
-                        if (!hasDecodeErrors)
-                        {
-                            break; // Good encoding, use it
-                        }
-                    }
-                    catch
-                    {
-                        // Try next encoding
-                    }
+                    // Always use Windows-1252 for game data files
+                    lines = File.ReadAllLines(filePath, Encoding.GetEncoding("windows-1252"));
                 }
-
-                if (lines == null)
+                catch
                 {
+                    // Fallback if Windows-1252 fails
                     try { lines = File.ReadAllLines(filePath, Encoding.Default); } catch { return; }
                 }
 
@@ -692,32 +677,17 @@ namespace PakExtractTool
                 // Generic parsing for other settings files
                 // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
                 // When read with Windows-1252, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
-                // Priority: Windows-1252 first (game's actual encoding), then GBK fallback
+                // IMPORTANT: Do NOT check for decode errors - we WANT garbled chars for hash calculation!
                 string[] lines = null;
-                var encodings = new[] { "windows-1252", "GBK", "GB2312", "Big5", "UTF-8" };
 
-                foreach (var encName in encodings)
+                try
                 {
-                    try
-                    {
-                        lines = File.ReadAllLines(filePath, Encoding.GetEncoding(encName));
-
-                        // Check if decoded text has '?' characters (decode errors)
-                        // If so, try next encoding
-                        bool hasDecodeErrors = lines.Any(l => l.Contains('?') && l.Contains("Path="));
-                        if (!hasDecodeErrors)
-                        {
-                            break; // Good encoding, use it
-                        }
-                    }
-                    catch
-                    {
-                        // Try next encoding
-                    }
+                    // Always use Windows-1252 for game data files
+                    lines = File.ReadAllLines(filePath, Encoding.GetEncoding("windows-1252"));
                 }
-
-                if (lines == null)
+                catch
                 {
+                    // Fallback if Windows-1252 fails
                     try { lines = File.ReadAllLines(filePath, Encoding.Default); } catch { return; }
                 }
 
@@ -828,32 +798,17 @@ namespace PakExtractTool
             {
                 // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
                 // When read with Windows-1252, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
-                // Priority: Windows-1252 first (game's actual encoding), then GBK fallback
+                // IMPORTANT: Do NOT check for decode errors - we WANT garbled chars for hash calculation!
                 string[] lines = null;
-                var encodings = new[] { "windows-1252", "GBK", "GB2312", "Big5", "UTF-8" };
 
-                foreach (var encName in encodings)
+                try
                 {
-                    try
-                    {
-                        lines = File.ReadAllLines(filePath, Encoding.GetEncoding(encName));
-
-                        // Check if decoded text has '?' characters (decode errors)
-                        // If so, try next encoding
-                        bool hasDecodeErrors = lines.Any(l => l.Contains('?') && l.Contains("Path="));
-                        if (!hasDecodeErrors)
-                        {
-                            break; // Good encoding, use it
-                        }
-                    }
-                    catch
-                    {
-                        // Try next encoding
-                    }
+                    // Always use Windows-1252 for game data files
+                    lines = File.ReadAllLines(filePath, Encoding.GetEncoding("windows-1252"));
                 }
-
-                if (lines == null)
+                catch
                 {
+                    // Fallback if Windows-1252 fails
                     try { lines = File.ReadAllLines(filePath, Encoding.Default); } catch { return; }
                 }
 
@@ -933,32 +888,17 @@ namespace PakExtractTool
             {
                 // Game files use Windows-1252 (ANSI) for Vietnamese text with embedded GBK bytes for Chinese
                 // When read with Windows-1252, Chinese paths appear garbled (e.g., ÉÙÁÖ instead of 少林)
-                // Priority: Windows-1252 first (game's actual encoding), then GBK fallback
+                // IMPORTANT: Do NOT check for decode errors - we WANT garbled chars for hash calculation!
                 string[] lines = null;
-                var encodings = new[] { "windows-1252", "GBK", "GB2312", "Big5", "UTF-8" };
 
-                foreach (var encName in encodings)
+                try
                 {
-                    try
-                    {
-                        lines = File.ReadAllLines(filePath, Encoding.GetEncoding(encName));
-
-                        // Check if decoded text has '?' characters (decode errors)
-                        // If so, try next encoding
-                        bool hasDecodeErrors = lines.Any(l => l.Contains('?') && l.Contains("Path="));
-                        if (!hasDecodeErrors)
-                        {
-                            break; // Good encoding, use it
-                        }
-                    }
-                    catch
-                    {
-                        // Try next encoding
-                    }
+                    // Always use Windows-1252 for game data files
+                    lines = File.ReadAllLines(filePath, Encoding.GetEncoding("windows-1252"));
                 }
-
-                if (lines == null)
+                catch
                 {
+                    // Fallback if Windows-1252 fails
                     try { lines = File.ReadAllLines(filePath, Encoding.Default); } catch { return; }
                 }
 
