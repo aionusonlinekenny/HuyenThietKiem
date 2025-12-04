@@ -1329,20 +1329,26 @@ namespace PakExtractTool
 
                     foreach (var suffix in actionSuffixes)
                     {
-                        // Try both path formats:
-                        // 1. Absolute: \man\...
+                        // Try multiple path formats (we don't know which one the PAK uses):
+                        // 1. Direct: \man\...
                         string path1 = $"\\man\\{categoryGarbled}\\{itemGarbled}\\{itemGarbled}_{suffix}.spr";
                         paths.Add(LowercaseAsciiOnly(path1));
 
-                        // 2. Relative: \..\man\... (as shown in user's example)
+                        // 2. Relative: \..\man\...
                         string path2 = $"\\..\\man\\{categoryGarbled}\\{itemGarbled}\\{itemGarbled}_{suffix}.spr";
                         paths.Add(LowercaseAsciiOnly(path2));
 
-                        // Log first 5 generated paths as examples
-                        if (pathsLogged < 5)
+                        // 3. Under spr: \spr\man\... (most likely since all samples start with \spr\)
+                        string path3 = $"\\spr\\man\\{categoryGarbled}\\{itemGarbled}\\{itemGarbled}_{suffix}.spr";
+                        paths.Add(LowercaseAsciiOnly(path3));
+
+                        // Log first 3 generated paths as examples
+                        if (pathsLogged < 3)
                         {
-                            DebugLogger.Log($"      Sample path #{pathsLogged + 1} (absolute): {path1}");
-                            DebugLogger.Log($"      Sample path #{pathsLogged + 1} (relative): {path2}");
+                            DebugLogger.Log($"      Sample #{pathsLogged + 1}:");
+                            DebugLogger.Log($"        Format 1: {path1}");
+                            DebugLogger.Log($"        Format 2: {path2}");
+                            DebugLogger.Log($"        Format 3: {path3}");
                             pathsLogged++;
                         }
                     }
