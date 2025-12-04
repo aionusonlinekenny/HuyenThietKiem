@@ -1,0 +1,39 @@
+# Bin directories (game data, executables, logs)
+Bin/Client/
+Bin/Server/
+
+# Build artifacts
+*.exe
+*.dll
+*.pdb
+*.map
+*.obj
+*.o
+*.log
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+bin/
+obj/
+*.VC.db
+*.VC.VC.opendb
+
+# User data
+UserData/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*~
+
+# PAK files and indexes
+*.pak
+*.pak.txt
+
+# Test files
+test_hash.exe
