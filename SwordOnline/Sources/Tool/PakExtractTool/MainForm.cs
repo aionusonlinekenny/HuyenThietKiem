@@ -571,15 +571,23 @@ namespace PakExtractTool
                 int count = 0;
 
                 // Try multiple encodings for Chinese characters (Traditional and Simplified)
+                // Priority: GBK/GB2312 first (most common in Chinese games), then Big5
                 string[] lines = null;
-                var encodings = new[] { "Big5", "GBK", "GB2312", "UTF-8" };
+                var encodings = new[] { "GBK", "GB2312", "Big5", "UTF-8" };
 
                 foreach (var encName in encodings)
                 {
                     try
                     {
                         lines = File.ReadAllLines(filePath, Encoding.GetEncoding(encName));
-                        break; // Successfully read
+
+                        // Check if decoded text has '?' characters (decode errors)
+                        // If so, try next encoding
+                        bool hasDecodeErrors = lines.Any(l => l.Contains('?') && l.Contains("Path="));
+                        if (!hasDecodeErrors)
+                        {
+                            break; // Good encoding, use it
+                        }
                     }
                     catch
                     {
@@ -680,15 +688,23 @@ namespace PakExtractTool
 
                 // Generic parsing for other settings files
                 // Try multiple encodings for Chinese characters (Traditional and Simplified)
+                // Priority: GBK/GB2312 first (most common in Chinese games), then Big5
                 string[] lines = null;
-                var encodings = new[] { "Big5", "GBK", "GB2312", "UTF-8" };
+                var encodings = new[] { "GBK", "GB2312", "Big5", "UTF-8" };
 
                 foreach (var encName in encodings)
                 {
                     try
                     {
                         lines = File.ReadAllLines(filePath, Encoding.GetEncoding(encName));
-                        break; // Successfully read
+
+                        // Check if decoded text has '?' characters (decode errors)
+                        // If so, try next encoding
+                        bool hasDecodeErrors = lines.Any(l => l.Contains('?') && l.Contains("Path="));
+                        if (!hasDecodeErrors)
+                        {
+                            break; // Good encoding, use it
+                        }
                     }
                     catch
                     {
@@ -797,15 +813,23 @@ namespace PakExtractTool
             try
             {
                 // Try multiple encodings for Chinese characters (Traditional and Simplified)
+                // Priority: GBK/GB2312 first (most common in Chinese games), then Big5
                 string[] lines = null;
-                var encodings = new[] { "Big5", "GBK", "GB2312", "UTF-8" };
+                var encodings = new[] { "GBK", "GB2312", "Big5", "UTF-8" };
 
                 foreach (var encName in encodings)
                 {
                     try
                     {
                         lines = File.ReadAllLines(filePath, Encoding.GetEncoding(encName));
-                        break; // Successfully read
+
+                        // Check if decoded text has '?' characters (decode errors)
+                        // If so, try next encoding
+                        bool hasDecodeErrors = lines.Any(l => l.Contains('?') && l.Contains("Path="));
+                        if (!hasDecodeErrors)
+                        {
+                            break; // Good encoding, use it
+                        }
                     }
                     catch
                     {
@@ -893,15 +917,23 @@ namespace PakExtractTool
             try
             {
                 // Try multiple encodings for Chinese characters (Traditional and Simplified)
+                // Priority: GBK/GB2312 first (most common in Chinese games), then Big5
                 string[] lines = null;
-                var encodings = new[] { "Big5", "GBK", "GB2312", "UTF-8" };
+                var encodings = new[] { "GBK", "GB2312", "Big5", "UTF-8" };
 
                 foreach (var encName in encodings)
                 {
                     try
                     {
                         lines = File.ReadAllLines(filePath, Encoding.GetEncoding(encName));
-                        break; // Successfully read
+
+                        // Check if decoded text has '?' characters (decode errors)
+                        // If so, try next encoding
+                        bool hasDecodeErrors = lines.Any(l => l.Contains('?') && l.Contains("Path="));
+                        if (!hasDecodeErrors)
+                        {
+                            break; // Good encoding, use it
+                        }
                     }
                     catch
                     {
@@ -1044,12 +1076,12 @@ namespace PakExtractTool
                         string content = null;
 
                         // Try multiple encodings to handle Chinese (Traditional & Simplified) and Vietnamese characters
-                        // Priority: Big5 first (Traditional Chinese), then GBK (Simplified Chinese)
+                        // Priority: GBK first (most common in Chinese games), then GB2312, then Big5
                         var encodings = new List<Encoding>();
 
-                        try { encodings.Add(Encoding.GetEncoding("Big5")); } catch { }         // Big5 (Traditional Chinese)
                         try { encodings.Add(Encoding.GetEncoding("GBK")); } catch { }          // GBK (Simplified Chinese - superset of GB2312)
-                        try { encodings.Add(Encoding.GetEncoding("GB2312")); } catch { }       // GB2312 (Simplified Chinese fallback)
+                        try { encodings.Add(Encoding.GetEncoding("GB2312")); } catch { }       // GB2312 (Simplified Chinese)
+                        try { encodings.Add(Encoding.GetEncoding("Big5")); } catch { }         // Big5 (Traditional Chinese)
                         try { encodings.Add(Encoding.GetEncoding("windows-1258")); } catch { } // Vietnamese ANSI
                         try { encodings.Add(Encoding.GetEncoding(1258)); } catch { }           // Vietnamese codepage
                         encodings.Add(Encoding.UTF8);                                          // UTF-8
