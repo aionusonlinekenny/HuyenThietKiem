@@ -635,12 +635,12 @@ namespace MapTool
                         // Update trap list display
                         UpdateTrapList();
 
-                        // Update renderer to show traps on map
-                        _renderer.ClearRegions();
-                        foreach (var region in _currentMap.Regions.Values)
-                        {
-                            _renderer.AddRegion(region);
-                        }
+                        // Convert trap entries to markers with world coordinates and update renderer
+                        var trapEntries = _exporter.GetEntries();
+                        var trapMarkers = MapRenderer.ConvertTrapEntriesToMarkers(trapEntries, _currentMap.Config);
+                        _renderer.SetTrapMarkers(trapMarkers);
+
+                        // Refresh map display
                         mapPanel.Invalidate();
 
                         MessageBox.Show($"Loaded {_exporter.GetEntries().Count} trap entries from:\n{dialog.FileName}",

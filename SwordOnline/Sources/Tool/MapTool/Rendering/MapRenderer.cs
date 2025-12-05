@@ -10,6 +10,16 @@ using MapRegionData = MapTool.MapData.RegionData;
 namespace MapTool.Rendering
 {
     /// <summary>
+    /// Trap marker with world coordinates for rendering
+    /// </summary>
+    public class TrapMarker
+    {
+        public int WorldX { get; set; }
+        public int WorldY { get; set; }
+        public string ScriptFile { get; set; }
+    }
+
+    /// <summary>
     /// Renders map regions and cells to a Graphics surface
     /// </summary>
     public class MapRenderer
@@ -27,6 +37,9 @@ namespace MapTool.Rendering
 
         // NPC markers
         private List<NpcEntry> _npcMarkers = new List<NpcEntry>();
+
+        // Trap markers (from loaded trap file)
+        private List<TrapMarker> _trapMarkers = new List<TrapMarker>();
 
         // Colors - Simple overlay visualization
         private Color _gridColor = Color.FromArgb(80, 100, 100, 120);  // Subtle grid
@@ -91,6 +104,48 @@ namespace MapTool.Rendering
         public void ClearNpcMarkers()
         {
             _npcMarkers.Clear();
+        }
+
+        /// <summary>
+        /// Set Trap markers to display on map
+        /// </summary>
+        public void SetTrapMarkers(List<TrapMarker> traps)
+        {
+            _trapMarkers = traps ?? new List<TrapMarker>();
+
+            // Debug logging
+            DebugLogger.Log($"[MapRenderer] SetTrapMarkers: {_trapMarkers.Count} Traps");
+        }
+
+        /// <summary>
+        /// Clear Trap markers
+        /// </summary>
+        public void ClearTrapMarkers()
+        {
+            _trapMarkers.Clear();
+        }
+
+        /// <summary>
+        /// Convert trap entries to trap markers with world coordinates
+        /// </summary>
+        public static List<TrapMarker> ConvertTrapEntriesToMarkers(List<MapData.TrapEntry> entries, MapConfig config)
+        {
+            List<TrapMarker> markers = new List<TrapMarker>();
+
+            foreach (var entry in entries)
+            {
+                // Convert RegionId + Cell to World coordinates
+                entry.GetWorldCoordinates(config, out int worldX, out int worldY);
+
+                markers.Add(new TrapMarker
+                {
+                    WorldX = worldX,
+                    WorldY = worldY,
+                    ScriptFile = entry.ScriptFile
+                });
+            }
+
+            return markers;
         }
 
         /// <summary>
@@ -204,6 +259,9 @@ namespace MapTool.Rendering
             // Draw NPC markers
             RenderNpcMarkers(g);
 
+            // Draw Trap markers
+            RenderTrapMarkers(g);
+
             // Draw coordinate info
             g.ResetTransform();
             DrawCoordinateInfo(g, width, height, selectedCoord);
@@ -262,6 +320,46 @@ namespace MapTool.Rendering
                     );
                     g.FillRectangle(bgBrush, textBg);
                     g.DrawString(npcText, font, textBrush, screenX + markerSize / 2 + 4, screenY - textSize.Height / 2);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Render Trap markers at their world positions
+        /// </summary>
+        private void RenderTrapMarkers(Graphics g)
+        {
+            if (_trapMarkers == null || _trapMarkers.Count == 0)
+                return;
+
+            foreach (var trap in _trapMarkers)
+            {
+                // Trap WorldX/WorldY are in WORLD coordinates (logic coordinates)
+                // Need to convert to MAP coordinates (24.jpg pixel coordinates)
+                // WorldX → MapX: divide by MAP_SCALE_H (16)
+                // WorldY → MapY: divide by MAP_SCALE_V (32)
+                int mapX = trap.WorldX / MapConstants.MAP_SCALE_H;
+                int mapY = trap.WorldY / MapConstants.MAP_SCALE_V;
+
+                // Convert MAP coordinates to screen coordinates
+                int screenX = mapX - _viewOffsetX;
+                int screenY = mapY - _viewOffsetY;
+
+                // Draw Trap marker as a square (6x6 pixels) - YELLOW with WHITE border
+                int markerSize = 6;
+                Rectangle markerRect = new Rectangle(
+                    screenX - markerSize / 2,
+                    screenY - markerSize / 2,
+                    markerSize,
+                    markerSize
+                );
+
+                // Draw filled yellow square with white border
+                using (SolidBrush brush = new SolidBrush(Color.Yellow))
+                using (Pen pen = new Pen(Color.White, 1))
+                {
+                    g.FillRectangle(brush, markerRect);
+                    g.DrawRectangle(pen, markerRect);
                 }
             }
         }
