@@ -40,6 +40,8 @@ namespace MapTool.Rendering
 
         // Trap markers (from loaded trap file)
         private List<TrapMarker> _trapMarkers = new List<TrapMarker>();
+        private int _hoveredTrapIndex = -1;
+        private int _selectedTrapIndex = -1;
 
         // Colors - Simple overlay visualization
         private Color _gridColor = Color.FromArgb(80, 100, 100, 120);  // Subtle grid
@@ -123,6 +125,81 @@ namespace MapTool.Rendering
         public void ClearTrapMarkers()
         {
             _trapMarkers.Clear();
+        }
+
+        /// <summary>
+        /// Set hovered trap index for highlighting
+        /// </summary>
+        public void SetHoveredTrapIndex(int index)
+        {
+            _hoveredTrapIndex = index;
+        }
+
+        /// <summary>
+        /// Set selected trap index for highlighting
+        /// </summary>
+        public void SetSelectedTrapIndex(int index)
+        {
+            _selectedTrapIndex = index;
+        }
+
+        /// <summary>
+        /// Find trap marker at screen position (returns -1 if not found)
+        /// </summary>
+        public int FindTrapMarkerAtScreenPosition(int screenX, int screenY)
+        {
+            if (_trapMarkers == null || _trapMarkers.Count == 0)
+                return -1;
+
+            int markerSize = 6;
+            int hitRadius = markerSize / 2 + 2; // Slightly larger hit area
+
+            for (int i = 0; i < _trapMarkers.Count; i++)
+            {
+                var trap = _trapMarkers[i];
+
+                // Convert trap world coords to map coords
+                int mapX = trap.WorldX / MapConstants.MAP_SCALE_H;
+                int mapY = trap.WorldY / MapConstants.MAP_SCALE_V;
+
+                // Convert to screen coords (including zoom)
+                int markerScreenX = (int)((mapX - _viewOffsetX) * _zoom);
+                int markerScreenY = (int)((mapY - _viewOffsetY) * _zoom);
+
+                // Check if mouse is within hit radius
+                int dx = screenX - markerScreenX;
+                int dy = screenY - markerScreenY;
+                int distanceSquared = dx * dx + dy * dy;
+
+                if (distanceSquared <= hitRadius * hitRadius)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Get trap marker by index
+        /// </summary>
+        public TrapMarker GetTrapMarker(int index)
+        {
+            if (index >= 0 && index < _trapMarkers.Count)
+                return _trapMarkers[index];
+            return null;
+        }
+
+        /// <summary>
+        /// Update trap marker position
+        /// </summary>
+        public void UpdateTrapMarkerPosition(int index, int worldX, int worldY)
+        {
+            if (index >= 0 && index < _trapMarkers.Count)
+            {
+                _trapMarkers[index].WorldX = worldX;
+                _trapMarkers[index].WorldY = worldY;
+            }
         }
 
         /// <summary>
@@ -332,8 +409,12 @@ namespace MapTool.Rendering
             if (_trapMarkers == null || _trapMarkers.Count == 0)
                 return;
 
-            foreach (var trap in _trapMarkers)
+            for (int i = 0; i < _trapMarkers.Count; i++)
             {
+                var trap = _trapMarkers[i];
+                bool isHovered = (i == _hoveredTrapIndex);
+                bool isSelected = (i == _selectedTrapIndex);
+
                 // Trap WorldX/WorldY are in WORLD coordinates (logic coordinates)
                 // Need to convert to MAP coordinates (24.jpg pixel coordinates)
                 // WorldX → MapX: divide by MAP_SCALE_H (16)
@@ -345,8 +426,8 @@ namespace MapTool.Rendering
                 int screenX = mapX - _viewOffsetX;
                 int screenY = mapY - _viewOffsetY;
 
-                // Draw Trap marker as a square (6x6 pixels) - YELLOW with WHITE border
-                int markerSize = 6;
+                // Draw Trap marker as a square (6x6 pixels normally, 8x8 if hovered/selected)
+                int markerSize = (isHovered || isSelected) ? 8 : 6;
                 Rectangle markerRect = new Rectangle(
                     screenX - markerSize / 2,
                     screenY - markerSize / 2,
@@ -354,12 +435,79 @@ namespace MapTool.Rendering
                     markerSize
                 );
 
-                // Draw filled yellow square with white border
-                using (SolidBrush brush = new SolidBrush(Color.Yellow))
-                using (Pen pen = new Pen(Color.White, 1))
+                // Choose color based on state
+                Color fillColor = Color.Gold;
+                Color borderColor = Color.White;
+                int borderWidth = 2;
+
+                if (isSelected)
+                {
+                    fillColor = Color.Orange;  // Orange for selected
+                    borderColor = Color.Lime;   // Bright green border
+                    borderWidth = 3;
+                }
+                else if (isHovered)
+                {
+                    fillColor = Color.Orange;  // Orange for hovered
+                    borderWidth = 2;
+                }
+
+                // Draw filled square with border
+                using (SolidBrush brush = new SolidBrush(fillColor))
+                using (Pen pen = new Pen(borderColor, borderWidth))
                 {
                     g.FillRectangle(brush, markerRect);
                     g.DrawRectangle(pen, markerRect);
+                }
+
+                // Draw tooltip for hovered trap (BEFORE ResetTransform)
+                if (isHovered)
+                {
+                    // Convert region/cell back from world coordinates for display
+                    int regionX = trap.WorldX / MapConstants.REGION_PIXEL_WIDTH;
+                    int regionY = trap.WorldY / MapConstants.REGION_PIXEL_HEIGHT;
+                    int cellX = (trap.WorldX % MapConstants.REGION_PIXEL_WIDTH) / MapConstants.LOGIC_CELL_WIDTH;
+                    int cellY = (trap.WorldY % MapConstants.REGION_PIXEL_HEIGHT) / MapConstants.LOGIC_CELL_HEIGHT;
+
+                    string tooltipText = $"Trap #{i + 1}\nWorld: ({trap.WorldX}, {trap.WorldY})\nRegion: ({regionX}, {regionY})\nCell: ({cellX}, {cellY})";
+
+                    using (Font font = new Font("Arial", 8))
+                    using (SolidBrush textBrush = new SolidBrush(Color.White))
+                    using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(220, 0, 0, 0)))
+                    {
+                        // Measure text size
+                        string[] lines = tooltipText.Split('\n');
+                        float maxWidth = 0;
+                        float totalHeight = 0;
+                        foreach (string line in lines)
+                        {
+                            SizeF lineSize = g.MeasureString(line, font);
+                            maxWidth = Math.Max(maxWidth, lineSize.Width);
+                            totalHeight += lineSize.Height;
+                        }
+
+                        // Position tooltip above and to the right of marker
+                        int tooltipX = screenX + markerSize / 2 + 5;
+                        int tooltipY = screenY - (int)totalHeight - 5;
+
+                        Rectangle tooltipBg = new Rectangle(
+                            tooltipX - 2,
+                            tooltipY - 2,
+                            (int)maxWidth + 4,
+                            (int)totalHeight + 4
+                        );
+
+                        g.FillRectangle(bgBrush, tooltipBg);
+                        g.DrawRectangle(new Pen(Color.Gold, 1), tooltipBg);
+
+                        // Draw text lines
+                        float currentY = tooltipY;
+                        foreach (string line in lines)
+                        {
+                            g.DrawString(line, font, textBrush, tooltipX, currentY);
+                            currentY += g.MeasureString(line, font).Height;
+                        }
+                    }
                 }
             }
         }

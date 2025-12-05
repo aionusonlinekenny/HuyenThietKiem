@@ -29,6 +29,11 @@ namespace MapTool
         private bool _isPanning;
         private Point _lastMousePosition;
 
+        // Trap dragging state
+        private bool _isDraggingTrap = false;
+        private int _draggedTrapIndex = -1;
+        private Point _trapDragStartPos;
+
         // NPC functionality
         private NpcLoader _npcLoader;
         private NpcExporter _npcExporter;
@@ -323,10 +328,35 @@ namespace MapTool
             }
             else if (e.Button == MouseButtons.Left)
             {
-                // Select cell
-                _selectedCoordinate = _renderer.ScreenToMapCoordinate(e.X, e.Y);
-                UpdateCoordinateDisplay();
-                mapPanel.Invalidate();
+                // Check if clicking on a trap marker
+                int trapIndex = _renderer.FindTrapMarkerAtScreenPosition(e.X, e.Y);
+
+                if (trapIndex >= 0)
+                {
+                    // Clicked on a trap marker
+                    _isDraggingTrap = true;
+                    _draggedTrapIndex = trapIndex;
+                    _trapDragStartPos = e.Location;
+                    _renderer.SetSelectedTrapIndex(trapIndex);
+
+                    // Select corresponding item in Trap Entries listbox
+                    if (trapIndex < lstEntries.Items.Count)
+                    {
+                        lstEntries.SelectedIndex = trapIndex;
+                        lstEntries.TopIndex = Math.Max(0, trapIndex - 2); // Scroll to show selected item
+                    }
+
+                    mapPanel.Cursor = Cursors.Hand;
+                    mapPanel.Invalidate();
+                }
+                else
+                {
+                    // Normal cell selection
+                    _selectedCoordinate = _renderer.ScreenToMapCoordinate(e.X, e.Y);
+                    UpdateCoordinateDisplay();
+                    _renderer.SetSelectedTrapIndex(-1);
+                    mapPanel.Invalidate();
+                }
             }
         }
 
@@ -337,6 +367,49 @@ namespace MapTool
             {
                 _isPanning = false;
                 mapPanel.Cursor = Cursors.Default;
+            }
+            else if (e.Button == MouseButtons.Left && _isDraggingTrap)
+            {
+                // Finish dragging trap
+                if (_draggedTrapIndex >= 0 && _currentMap != null)
+                {
+                    // Get new world coordinates from current mouse position
+                    MapCoordinate newCoord = _renderer.ScreenToMapCoordinate(e.X, e.Y);
+
+                    // Update trap marker position
+                    _renderer.UpdateTrapMarkerPosition(_draggedTrapIndex, newCoord.WorldX, newCoord.WorldY);
+
+                    // Update trap entry in exporter
+                    var entries = _exporter.GetEntries();
+                    if (_draggedTrapIndex < entries.Count)
+                    {
+                        // Calculate new local RegionID
+                        int localRegionID = MapData.RegionData.MakeLocalRegionID(
+                            newCoord.RegionX, newCoord.RegionY,
+                            _currentMap.Config.RegionLeft, _currentMap.Config.RegionTop, _currentMap.Config.RegionWidth);
+
+                        entries[_draggedTrapIndex].RegionId = localRegionID;
+                        entries[_draggedTrapIndex].CellX = newCoord.CellX;
+                        entries[_draggedTrapIndex].CellY = newCoord.CellY;
+
+                        // Refresh trap list display
+                        UpdateTrapList();
+
+                        // Re-select the item
+                        if (_draggedTrapIndex < lstEntries.Items.Count)
+                        {
+                            lstEntries.SelectedIndex = _draggedTrapIndex;
+                        }
+                    }
+
+                    DebugLogger.Log($"[Trap Moved] Trap #{_draggedTrapIndex + 1} moved to World({newCoord.WorldX},{newCoord.WorldY}) Region({newCoord.RegionX},{newCoord.RegionY}) Cell({newCoord.CellX},{newCoord.CellY})");
+                    lblStatus.Text = $"Trap #{_draggedTrapIndex + 1} moved to World({newCoord.WorldX},{newCoord.WorldY})";
+                }
+
+                _isDraggingTrap = false;
+                _draggedTrapIndex = -1;
+                mapPanel.Cursor = Cursors.Default;
+                mapPanel.Invalidate();
             }
         }
 
@@ -358,11 +431,39 @@ namespace MapTool
                 _lastMousePosition = e.Location;
                 mapPanel.Invalidate();
             }
+            else if (_isDraggingTrap && _draggedTrapIndex >= 0)
+            {
+                // Dragging a trap marker - update visual feedback
+                MapCoordinate coord = _renderer.ScreenToMapCoordinate(e.X, e.Y);
+                lblStatus.Text = $"Dragging Trap #{_draggedTrapIndex + 1} to World: ({coord.WorldX}, {coord.WorldY}) | Region: ({coord.RegionX}, {coord.RegionY}) | Cell: ({coord.CellX}, {coord.CellY})";
+
+                // Update trap position in real-time for visual feedback
+                _renderer.UpdateTrapMarkerPosition(_draggedTrapIndex, coord.WorldX, coord.WorldY);
+                mapPanel.Invalidate();
+            }
             else if (_currentMap != null)
             {
-                // Show coordinate under mouse
-                MapCoordinate coord = _renderer.ScreenToMapCoordinate(e.X, e.Y);
-                lblStatus.Text = $"World: ({coord.WorldX}, {coord.WorldY}) | Region: ({coord.RegionX}, {coord.RegionY}) | Cell: ({coord.CellX}, {coord.CellY})";
+                // Check if hovering over a trap marker
+                int hoveredTrapIndex = _renderer.FindTrapMarkerAtScreenPosition(e.X, e.Y);
+                _renderer.SetHoveredTrapIndex(hoveredTrapIndex);
+
+                if (hoveredTrapIndex >= 0)
+                {
+                    // Hovering over a trap
+                    mapPanel.Cursor = Cursors.Hand;
+                    lblStatus.Text = $"Trap #{hoveredTrapIndex + 1} - Click to select, Drag to move";
+                    mapPanel.Invalidate(); // Redraw to show tooltip
+                }
+                else
+                {
+                    // Not hovering over a trap
+                    mapPanel.Cursor = Cursors.Default;
+
+                    // Show coordinate under mouse
+                    MapCoordinate coord = _renderer.ScreenToMapCoordinate(e.X, e.Y);
+                    lblStatus.Text = $"World: ({coord.WorldX}, {coord.WorldY}) | Region: ({coord.RegionX}, {coord.RegionY}) | Cell: ({coord.CellX}, {coord.CellY})";
+                    mapPanel.Invalidate(); // Redraw to clear tooltip
+                }
             }
         }
 
