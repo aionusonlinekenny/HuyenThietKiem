@@ -450,7 +450,7 @@ namespace MapTool
                     _renderer.UpdateNpcMarkerPosition(_draggedNpcIndex, newCoord.WorldX, newCoord.WorldY);
 
                     // Update NPC entry in exporter
-                    var allNpcs = _npcExporter.GetAllEntries();
+                    var allNpcs = _npcExporter.GetEntries();
                     if (_draggedNpcIndex < allNpcs.Count)
                     {
                         allNpcs[_draggedNpcIndex].PosX = newCoord.WorldX;
