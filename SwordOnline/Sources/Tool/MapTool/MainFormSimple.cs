@@ -595,6 +595,74 @@ namespace MapTool
             UpdateTrapList();
         }
 
+        // Load trap file button
+        private void btnLoadTrapFile_Click(object sender, EventArgs e)
+        {
+            if (_currentMap == null)
+            {
+                MessageBox.Show("Please load a map first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Open file dialog to select trap file
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                dialog.Title = "Load Trap File";
+
+                // Try to default to library/maps/Trap folder with map ID as filename
+                string trapFolder = Path.Combine(_gameFolder, "library", "maps", "Trap");
+                string defaultFile = Path.Combine(trapFolder, $"{_currentMap.MapId}.txt");
+
+                if (Directory.Exists(trapFolder))
+                {
+                    dialog.InitialDirectory = trapFolder;
+                    if (File.Exists(defaultFile))
+                    {
+                        dialog.FileName = $"{_currentMap.MapId}.txt";
+                    }
+                }
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        Cursor = Cursors.WaitCursor;
+
+                        // Import trap file
+                        _exporter.ImportFromTrapFile(dialog.FileName);
+
+                        // Update trap list display
+                        UpdateTrapList();
+
+                        // Update renderer to show traps on map
+                        _renderer.ClearRegions();
+                        foreach (var region in _currentMap.Regions.Values)
+                        {
+                            _renderer.AddRegion(region);
+                        }
+                        mapPanel.Invalidate();
+
+                        MessageBox.Show($"Loaded {_exporter.GetEntries().Count} trap entries from:\n{dialog.FileName}",
+                            "Load Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        lblStatus.Text = $"Loaded {_exporter.GetEntries().Count} trap entries from {Path.GetFileName(dialog.FileName)}";
+                        DebugLogger.Log($"[Trap Import] Loaded {_exporter.GetEntries().Count} trap entries from {dialog.FileName}");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to load trap file:\n{ex.Message}", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        DebugLogger.Log($"ERROR loading trap file: {ex}");
+                    }
+                    finally
+                    {
+                        Cursor = Cursors.Default;
+                    }
+                }
+            }
+        }
+
         // Extract All Regions button - export all trap cells from loaded regions
         private void btnExtractAllRegions_Click(object sender, EventArgs e)
         {
