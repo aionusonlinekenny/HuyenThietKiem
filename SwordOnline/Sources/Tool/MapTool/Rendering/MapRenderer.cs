@@ -45,6 +45,10 @@ namespace MapTool.Rendering
         private List<TrapMarker> _trapMarkers = new List<TrapMarker>();
         private int _hoveredTrapIndex = -1;
         private int _selectedTrapIndex = -1;
+        private List<int> _selectedTrapIndices = new List<int>();
+
+        // Selection rectangle
+        private Rectangle? _selectionRectangle = null;
 
         // NPC sprite loader
         private NpcLoader _npcLoader = null;
@@ -315,6 +319,85 @@ namespace MapTool.Rendering
         }
 
         /// <summary>
+        /// Set selection rectangle for block selection
+        /// </summary>
+        public void SetSelectionRectangle(Rectangle? rect)
+        {
+            _selectionRectangle = rect;
+        }
+
+        /// <summary>
+        /// Find all trap markers within screen rectangle
+        /// </summary>
+        public List<int> FindTrapMarkersInRectangle(Rectangle screenRect)
+        {
+            List<int> indices = new List<int>();
+
+            if (_trapMarkers == null || _trapMarkers.Count == 0)
+                return indices;
+
+            for (int i = 0; i < _trapMarkers.Count; i++)
+            {
+                var trap = _trapMarkers[i];
+
+                // Convert trap world coords to screen coords
+                int mapX = trap.WorldX / MapConstants.MAP_SCALE_H;
+                int mapY = trap.WorldY / MapConstants.MAP_SCALE_V;
+                int screenX = (int)((mapX - _viewOffsetX) * _zoom);
+                int screenY = (int)((mapY - _viewOffsetY) * _zoom);
+
+                // Check if trap marker is inside selection rectangle
+                if (screenRect.Contains(screenX, screenY))
+                {
+                    indices.Add(i);
+                }
+            }
+
+            return indices;
+        }
+
+        /// <summary>
+        /// Set multiple selected trap indices
+        /// </summary>
+        public void SetSelectedTrapIndices(List<int> indices)
+        {
+            _selectedTrapIndices = new List<int>(indices);
+            _selectedTrapIndex = -1; // Clear single selection
+        }
+
+        /// <summary>
+        /// Get selected trap indices
+        /// </summary>
+        public List<int> GetSelectedTrapIndices()
+        {
+            return new List<int>(_selectedTrapIndices);
+        }
+
+        /// <summary>
+        /// Clear all trap selections
+        /// </summary>
+        public void ClearTrapSelection()
+        {
+            _selectedTrapIndices.Clear();
+            _selectedTrapIndex = -1;
+        }
+
+        /// <summary>
+        /// Update multiple trap marker positions (for block drag)
+        /// </summary>
+        public void UpdateTrapMarkerPositions(List<int> indices, int deltaWorldX, int deltaWorldY)
+        {
+            foreach (int index in indices)
+            {
+                if (index >= 0 && index < _trapMarkers.Count)
+                {
+                    _trapMarkers[index].WorldX += deltaWorldX;
+                    _trapMarkers[index].WorldY += deltaWorldY;
+                }
+            }
+        }
+
+        /// <summary>
         /// Set map background image from byte array
         /// </summary>
         public void SetMapImage(byte[] imageData, int offsetX = 0, int offsetY = 0)
@@ -427,6 +510,33 @@ namespace MapTool.Rendering
 
             // Draw Trap markers
             RenderTrapMarkers(g);
+
+            // Draw selection rectangle (before ResetTransform)
+            if (_selectionRectangle.HasValue)
+            {
+                // Selection rectangle is in screen coordinates, need to invert zoom
+                Rectangle rect = _selectionRectangle.Value;
+                float invZoom = 1.0f / _zoom;
+
+                Rectangle zoomedRect = new Rectangle(
+                    (int)(rect.X * invZoom),
+                    (int)(rect.Y * invZoom),
+                    (int)(rect.Width * invZoom),
+                    (int)(rect.Height * invZoom)
+                );
+
+                using (Pen pen = new Pen(Color.FromArgb(150, 0, 255, 255), 2))
+                {
+                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+                    g.DrawRectangle(pen, zoomedRect);
+                }
+
+                // Draw semi-transparent fill
+                using (SolidBrush brush = new SolidBrush(Color.FromArgb(30, 0, 255, 255)))
+                {
+                    g.FillRectangle(brush, zoomedRect);
+                }
+            }
 
             // Draw coordinate info
             g.ResetTransform();
@@ -634,7 +744,7 @@ namespace MapTool.Rendering
             {
                 var trap = _trapMarkers[i];
                 bool isHovered = (i == _hoveredTrapIndex);
-                bool isSelected = (i == _selectedTrapIndex);
+                bool isSelected = (i == _selectedTrapIndex) || _selectedTrapIndices.Contains(i);
 
                 // Trap WorldX/WorldY are in WORLD coordinates (logic coordinates)
                 // Need to convert to MAP coordinates (24.jpg pixel coordinates)

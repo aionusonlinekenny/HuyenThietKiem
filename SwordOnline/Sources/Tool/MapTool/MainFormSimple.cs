@@ -34,6 +34,14 @@ namespace MapTool
         private int _draggedTrapIndex = -1;
         private Point _trapDragStartPos;
 
+        // Block selection for traps
+        private bool _isSelectingTrapBlock = false;
+        private Point _selectionStartPos;
+        private Point _selectionCurrentPos;
+        private List<int> _selectedTrapIndices = new List<int>();
+        private bool _isDraggingTrapBlock = false;
+        private Point _trapBlockDragStartPos;
+
         // NPC dragging state
         private bool _isDraggingNpc = false;
         private int _draggedNpcIndex = -1;
@@ -363,8 +371,33 @@ namespace MapTool
             }
             else if (e.Button == MouseButtons.Left)
             {
-                // Check if clicking on a trap marker first
+                // Check for Shift+drag to start block selection (only in Trap tab)
+                if (ModifierKeys == Keys.Shift && tabMain.SelectedTab == tabTrap)
+                {
+                    _isSelectingTrapBlock = true;
+                    _selectionStartPos = e.Location;
+                    _selectionCurrentPos = e.Location;
+                    _renderer.ClearTrapSelection();
+                    mapPanel.Cursor = Cursors.Cross;
+                    DebugLogger.Log($"[Block Selection] Started at ({e.X}, {e.Y})");
+                    return;
+                }
+
+                // Check if clicking on selected trap block for dragging
                 int trapIndex = _renderer.FindTrapMarkerAtScreenPosition(e.X, e.Y);
+                List<int> selectedIndices = _renderer.GetSelectedTrapIndices();
+
+                if (selectedIndices.Count > 0 && selectedIndices.Contains(trapIndex))
+                {
+                    // Start dragging the entire block
+                    _isDraggingTrapBlock = true;
+                    _trapBlockDragStartPos = e.Location;
+                    mapPanel.Cursor = Cursors.SizeAll;
+                    DebugLogger.Log($"[Block Drag] Started dragging {selectedIndices.Count} traps");
+                    return;
+                }
+
+                // Check if clicking on a trap marker
                 int npcIndex = _renderer.FindNpcMarkerAtScreenPosition(e.X, e.Y);
 
                 if (trapIndex >= 0)
@@ -447,6 +480,87 @@ namespace MapTool
             {
                 _isPanning = false;
                 mapPanel.Cursor = Cursors.Default;
+            }
+            else if (e.Button == MouseButtons.Left && _isSelectingTrapBlock)
+            {
+                // Finish block selection
+                _isSelectingTrapBlock = false;
+
+                // Find all traps in selection rectangle
+                int x = Math.Min(_selectionStartPos.X, _selectionCurrentPos.X);
+                int y = Math.Min(_selectionStartPos.Y, _selectionCurrentPos.Y);
+                int width = Math.Abs(_selectionCurrentPos.X - _selectionStartPos.X);
+                int height = Math.Abs(_selectionCurrentPos.Y - _selectionStartPos.Y);
+
+                Rectangle selRect = new Rectangle(x, y, width, height);
+                List<int> selectedIndices = _renderer.FindTrapMarkersInRectangle(selRect);
+
+                _selectedTrapIndices = selectedIndices;
+                _renderer.SetSelectedTrapIndices(selectedIndices);
+                _renderer.SetSelectionRectangle(null); // Clear selection rectangle
+
+                DebugLogger.Log($"[Block Selection] Selected {selectedIndices.Count} traps");
+                lblStatus.Text = $"Selected {selectedIndices.Count} traps. Click and drag to move them.";
+
+                mapPanel.Cursor = Cursors.Default;
+                mapPanel.Invalidate();
+            }
+            else if (e.Button == MouseButtons.Left && _isDraggingTrapBlock)
+            {
+                // Finish dragging trap block
+                if (_selectedTrapIndices.Count > 0 && _currentMap != null)
+                {
+                    // Calculate delta
+                    MapCoordinate startCoord = _renderer.ScreenToMapCoordinate(_trapBlockDragStartPos.X, _trapBlockDragStartPos.Y);
+                    MapCoordinate endCoord = _renderer.ScreenToMapCoordinate(e.X, e.Y);
+                    int deltaWorldX = endCoord.WorldX - startCoord.WorldX;
+                    int deltaWorldY = endCoord.WorldY - startCoord.WorldY;
+
+                    // Update all selected traps
+                    _renderer.UpdateTrapMarkerPositions(_selectedTrapIndices, deltaWorldX, deltaWorldY);
+
+                    // Update all trap entries in exporter
+                    var entries = _exporter.GetEntries();
+                    foreach (int trapIndex in _selectedTrapIndices)
+                    {
+                        if (trapIndex < entries.Count)
+                        {
+                            TrapMarker marker = _renderer.GetTrapMarker(trapIndex);
+                            if (marker != null)
+                            {
+                                // Convert world coords back to region/cell
+                                MapCoordinate newCoord = new MapCoordinate
+                                {
+                                    WorldX = marker.WorldX,
+                                    WorldY = marker.WorldY
+                                };
+
+                                // Calculate region/cell from world coords
+                                newCoord.RegionX = marker.WorldX / MapConstants.REGION_PIXEL_WIDTH;
+                                newCoord.RegionY = marker.WorldY / MapConstants.REGION_PIXEL_HEIGHT;
+                                newCoord.CellX = (marker.WorldX % MapConstants.REGION_PIXEL_WIDTH) / MapConstants.LOGIC_CELL_WIDTH;
+                                newCoord.CellY = (marker.WorldY % MapConstants.REGION_PIXEL_HEIGHT) / MapConstants.LOGIC_CELL_HEIGHT;
+
+                                int localRegionID = MapData.RegionData.MakeLocalRegionID(
+                                    newCoord.RegionX, newCoord.RegionY,
+                                    _currentMap.Config.RegionLeft, _currentMap.Config.RegionTop, _currentMap.Config.RegionWidth);
+
+                                entries[trapIndex].RegionId = localRegionID;
+                                entries[trapIndex].CellX = newCoord.CellX;
+                                entries[trapIndex].CellY = newCoord.CellY;
+                            }
+                        }
+                    }
+
+                    UpdateTrapList();
+
+                    DebugLogger.Log($"[Block Drag] Moved {_selectedTrapIndices.Count} traps by ({deltaWorldX}, {deltaWorldY})");
+                    lblStatus.Text = $"Moved {_selectedTrapIndices.Count} traps. Shift+drag to select new block.";
+                }
+
+                _isDraggingTrapBlock = false;
+                mapPanel.Cursor = Cursors.Default;
+                mapPanel.Invalidate();
             }
             else if (e.Button == MouseButtons.Left && _isDraggingTrap)
             {
@@ -533,7 +647,39 @@ namespace MapTool
         // Map panel mouse move
         private void mapPanel_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_isPanning && mapPanel.AutoScroll)
+            if (_isSelectingTrapBlock)
+            {
+                // Update selection rectangle
+                _selectionCurrentPos = e.Location;
+
+                // Create rectangle from start to current position
+                int x = Math.Min(_selectionStartPos.X, _selectionCurrentPos.X);
+                int y = Math.Min(_selectionStartPos.Y, _selectionCurrentPos.Y);
+                int width = Math.Abs(_selectionCurrentPos.X - _selectionStartPos.X);
+                int height = Math.Abs(_selectionCurrentPos.Y - _selectionStartPos.Y);
+
+                Rectangle selRect = new Rectangle(x, y, width, height);
+                _renderer.SetSelectionRectangle(selRect);
+
+                lblStatus.Text = $"Selecting traps: {width}x{height} pixels";
+                mapPanel.Invalidate();
+            }
+            else if (_isDraggingTrapBlock && _selectedTrapIndices.Count > 0)
+            {
+                // Dragging block of traps
+                int deltaX = e.X - _trapBlockDragStartPos.X;
+                int deltaY = e.Y - _trapBlockDragStartPos.Y;
+
+                // Convert screen delta to world delta
+                MapCoordinate startCoord = _renderer.ScreenToMapCoordinate(_trapBlockDragStartPos.X, _trapBlockDragStartPos.Y);
+                MapCoordinate currentCoord = _renderer.ScreenToMapCoordinate(e.X, e.Y);
+                int deltaWorldX = currentCoord.WorldX - startCoord.WorldX;
+                int deltaWorldY = currentCoord.WorldY - startCoord.WorldY;
+
+                lblStatus.Text = $"Dragging {_selectedTrapIndices.Count} traps (Δ: {deltaWorldX}, {deltaWorldY})";
+                mapPanel.Invalidate();
+            }
+            else if (_isPanning && mapPanel.AutoScroll)
             {
                 int deltaX = _lastMousePosition.X - e.X;
                 int deltaY = _lastMousePosition.Y - e.Y;
