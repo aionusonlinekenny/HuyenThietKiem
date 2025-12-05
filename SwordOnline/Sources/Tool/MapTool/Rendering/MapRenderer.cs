@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using MapTool.MapData;
 using MapTool.NPC;
+using MapTool.SPR;
 using MapRegionData = MapTool.MapData.RegionData;
 
 namespace MapTool.Rendering
@@ -44,6 +45,9 @@ namespace MapTool.Rendering
         private List<TrapMarker> _trapMarkers = new List<TrapMarker>();
         private int _hoveredTrapIndex = -1;
         private int _selectedTrapIndex = -1;
+
+        // NPC sprite loader
+        private NpcLoader _npcLoader = null;
 
         // Colors - Simple overlay visualization
         private Color _gridColor = Color.FromArgb(80, 100, 100, 120);  // Subtle grid
@@ -100,6 +104,14 @@ namespace MapTool.Rendering
                 int mapY = npc.PosY / MapConstants.MAP_SCALE_V;
                 DebugLogger.Log($"   NPC {npc.NpcID}: World({npc.PosX},{npc.PosY}) → Map({mapX},{mapY})");
             }
+        }
+
+        /// <summary>
+        /// Set NPC loader for loading NPC sprites
+        /// </summary>
+        public void SetNpcLoader(NpcLoader npcLoader)
+        {
+            _npcLoader = npcLoader;
         }
 
         /// <summary>
@@ -483,50 +495,103 @@ namespace MapTool.Rendering
                 // Draw tooltip for hovered NPC
                 if (isHovered)
                 {
+                    const int spriteSize = 64; // Fixed sprite display size
+                    const int padding = 4;
+                    const int columnSpacing = 8;
+
+                    // Load NPC sprite if available
+                    Bitmap npcSprite = null;
+                    if (_npcLoader != null)
+                    {
+                        try
+                        {
+                            SpriteData spriteData = _npcLoader.LoadSpriteById(npc.NpcID, NpcAction.NormalStand);
+                            if (spriteData != null && spriteData.FrameCount > 0)
+                            {
+                                // Get first frame (direction 0)
+                                npcSprite = SpriteLoader.FrameToBitmap(spriteData, 0);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            DebugLogger.Log($"Failed to load NPC sprite for ID {npc.NpcID}: {ex.Message}");
+                        }
+                    }
+
                     string tooltipText = $"NPC #{i + 1}\nID: {npc.NpcID}\nName: {npc.Name}\nLevel: {npc.Level}\nWorld: ({npc.PosX}, {npc.PosY})";
 
-                    using (Font font = new Font("Arial", 8))
+                    using (Font font = new Font(".VnArial", 8))
                     using (SolidBrush textBrush = new SolidBrush(Color.White))
                     using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(220, 0, 0, 0)))
                     {
-                        // Measure text size
+                        // Measure text size for right column
                         string[] lines = tooltipText.Split('\n');
-                        float maxWidth = 0;
-                        float totalHeight = 0;
+                        float maxTextWidth = 0;
+                        float totalTextHeight = 0;
                         foreach (string line in lines)
                         {
                             SizeF lineSize = g.MeasureString(line, font);
-                            maxWidth = Math.Max(maxWidth, lineSize.Width);
-                            totalHeight += lineSize.Height;
+                            maxTextWidth = Math.Max(maxTextWidth, lineSize.Width);
+                            totalTextHeight += lineSize.Height;
                         }
+
+                        // Calculate tooltip dimensions
+                        // Left column: sprite (if available), Right column: text
+                        int leftColumnWidth = (npcSprite != null) ? spriteSize : 0;
+                        int rightColumnWidth = (int)maxTextWidth;
+                        int tooltipContentWidth = leftColumnWidth + (leftColumnWidth > 0 ? columnSpacing : 0) + rightColumnWidth;
+                        int tooltipContentHeight = (int)Math.Max(npcSprite != null ? spriteSize : 0, totalTextHeight);
 
                         // Position tooltip above and to the right of marker
                         int tooltipX = screenX + markerSize / 2 + 5;
-                        int tooltipY = screenY - (int)totalHeight - 5;
+                        int tooltipY = screenY - tooltipContentHeight - padding * 2 - 5;
 
                         Rectangle tooltipBg = new Rectangle(
-                            tooltipX - 2,
-                            tooltipY - 2,
-                            (int)maxWidth + 4,
-                            (int)totalHeight + 4
+                            tooltipX - padding,
+                            tooltipY - padding,
+                            tooltipContentWidth + padding * 2,
+                            tooltipContentHeight + padding * 2
                         );
 
+                        // Draw background and border
                         g.FillRectangle(bgBrush, tooltipBg);
-                        g.DrawRectangle(new Pen(Color.Magenta, 1), tooltipBg);
+                        g.DrawRectangle(new Pen(Color.Magenta, 2), tooltipBg);
 
-                        // Draw text lines
-                        float currentY = tooltipY;
+                        // Draw sprite in left column (if available)
+                        if (npcSprite != null)
+                        {
+                            Rectangle spriteRect = new Rectangle(
+                                tooltipX,
+                                tooltipY + (tooltipContentHeight - spriteSize) / 2,
+                                spriteSize,
+                                spriteSize
+                            );
+                            g.DrawImage(npcSprite, spriteRect);
+
+                            // Draw separator line
+                            int separatorX = tooltipX + spriteSize + columnSpacing / 2;
+                            g.DrawLine(new Pen(Color.FromArgb(100, 255, 255, 255), 1),
+                                separatorX, tooltipY,
+                                separatorX, tooltipY + tooltipContentHeight);
+                        }
+
+                        // Draw text in right column
+                        int textStartX = tooltipX + leftColumnWidth + (leftColumnWidth > 0 ? columnSpacing : 0);
+                        float currentY = tooltipY + (tooltipContentHeight - totalTextHeight) / 2;
                         foreach (string line in lines)
                         {
-                            g.DrawString(line, font, textBrush, tooltipX, currentY);
+                            g.DrawString(line, font, textBrush, textStartX, currentY);
                             currentY += g.MeasureString(line, font).Height;
                         }
                     }
+
+                    // Dispose sprite bitmap
+                    npcSprite?.Dispose();
                 }
                 else if (!isSelected)
                 {
                     // Draw NPC ID text next to marker (smaller font) - only when not hovered/selected
-                    using (Font font = new Font("Arial", 6))
+                    using (Font font = new Font(".VnArial", 6))
                     using (SolidBrush textBrush = new SolidBrush(Color.White))
                     using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, 0, 0, 0)))
                     {
@@ -615,7 +680,7 @@ namespace MapTool.Rendering
 
                     string tooltipText = $"Trap #{i + 1}\nWorld: ({trap.WorldX}, {trap.WorldY})\nRegion: ({regionX}, {regionY})\nCell: ({cellX}, {cellY})";
 
-                    using (Font font = new Font("Arial", 8))
+                    using (Font font = new Font(".VnArial", 8))
                     using (SolidBrush textBrush = new SolidBrush(Color.White))
                     using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(220, 0, 0, 0)))
                     {

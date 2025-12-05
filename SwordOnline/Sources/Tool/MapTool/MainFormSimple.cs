@@ -1144,6 +1144,10 @@ namespace MapTool
                     DebugLogger.Log($"   ✓ NPC Loader initialized");
                     DebugLogger.Log($"      Client path: {clientPath}");
                     DebugLogger.Log($"      Server path: {serverPath}");
+
+                    // Set NpcLoader in MapRenderer for sprite rendering
+                    _renderer.SetNpcLoader(_npcLoader);
+                    DebugLogger.Log("   ✓ NpcLoader set in MapRenderer for sprite tooltips");
                 }
                 else
                 {
