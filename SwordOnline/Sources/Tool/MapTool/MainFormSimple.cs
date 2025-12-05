@@ -204,6 +204,36 @@ namespace MapTool
 
                 _renderer.Zoom = 1.0f;
 
+                // Initialize NPC Loader early for sprite tooltips
+                if (_npcLoader == null)
+                {
+                    try
+                    {
+                        DebugLogger.Log("   Initializing NPC Loader for sprite tooltips...");
+                        string clientPath = Path.Combine(_gameFolder, "client");
+                        string serverPath = Path.Combine(_gameFolder, "library", "npc");
+
+                        if (Directory.Exists(clientPath) && Directory.Exists(serverPath))
+                        {
+                            _npcLoader = new NpcLoader(clientPath, serverPath);
+                            _npcLoader.LoadMappingFiles();
+                            _renderer.SetNpcLoader(_npcLoader);
+                            DebugLogger.Log("   ✓ NpcLoader initialized and set in MapRenderer");
+                        }
+                        else
+                        {
+                            DebugLogger.Log($"   ⚠ NPC paths not found - sprite tooltips disabled");
+                            DebugLogger.Log($"      Client: {clientPath} (exists: {Directory.Exists(clientPath)})");
+                            DebugLogger.Log($"      Server: {serverPath} (exists: {Directory.Exists(serverPath)})");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        DebugLogger.Log($"   ⚠ Failed to init NpcLoader: {ex.Message}");
+                        DebugLogger.Log($"      Sprite tooltips will not work");
+                    }
+                }
+
                 // Update scroll area size based on map size and zoom
                 UpdateScrollAreaSize();
 
@@ -370,6 +400,29 @@ namespace MapTool
                     {
                         lstNpcEntries.SelectedIndex = npcIndex;
                         lstNpcEntries.TopIndex = Math.Max(0, npcIndex - 2); // Scroll to show selected item
+                    }
+
+                    // Auto-fill NPC ID in Add NPC tab for preview
+                    try
+                    {
+                        NpcEntry selectedNpc = _renderer.GetNpcMarker(npcIndex);
+                        if (selectedNpc != null)
+                        {
+                            // Switch to NPC tab
+                            tabMain.SelectedTab = tabNPC;
+
+                            // Fill NPC ID textbox
+                            txtNpcId.Text = selectedNpc.NpcID.ToString();
+
+                            // Trigger load preview (simulate button click)
+                            btnLoadNpcPreview_Click(this, EventArgs.Empty);
+
+                            DebugLogger.Log($"[NPC Selected] Auto-filled NPC ID: {selectedNpc.NpcID} ({selectedNpc.Name})");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        DebugLogger.Log($"[NPC Selected] Failed to auto-fill: {ex.Message}");
                     }
 
                     mapPanel.Cursor = Cursors.Hand;

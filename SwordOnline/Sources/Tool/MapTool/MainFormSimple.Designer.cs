@@ -507,7 +507,7 @@ namespace MapTool
             this.lstNpcEntries.HorizontalScrollbar = true;
             this.lstNpcEntries.Location = new System.Drawing.Point(10, 50);
             this.lstNpcEntries.Name = "lstNpcEntries";
-            this.lstNpcEntries.Size = new System.Drawing.Size(310, 210);
+            this.lstNpcEntries.Size = new System.Drawing.Size(310, 165);
             this.lstNpcEntries.TabIndex = 0;
 
             this.btnLoadNpcsFromServer.Location = new System.Drawing.Point(10, 20);
@@ -518,7 +518,7 @@ namespace MapTool
             this.btnLoadNpcsFromServer.UseVisualStyleBackColor = true;
             this.btnLoadNpcsFromServer.Click += new System.EventHandler(this.btnLoadNpcsFromServer_Click);
 
-            this.btnExtractNpcList.Location = new System.Drawing.Point(10, 233);
+            this.btnExtractNpcList.Location = new System.Drawing.Point(10, 223);
             this.btnExtractNpcList.Name = "btnExtractNpcList";
             this.btnExtractNpcList.Size = new System.Drawing.Size(310, 28);
             this.btnExtractNpcList.TabIndex = 2;
@@ -527,7 +527,7 @@ namespace MapTool
             this.btnExtractNpcList.UseVisualStyleBackColor = true;
             this.btnExtractNpcList.Click += new System.EventHandler(this.btnExtractNpcList_Click);
 
-            this.btnRemoveLastNpc.Location = new System.Drawing.Point(10, 268);
+            this.btnRemoveLastNpc.Location = new System.Drawing.Point(10, 258);
             this.btnRemoveLastNpc.Name = "btnRemoveLastNpc";
             this.btnRemoveLastNpc.Size = new System.Drawing.Size(150, 25);
             this.btnRemoveLastNpc.TabIndex = 3;
@@ -535,7 +535,7 @@ namespace MapTool
             this.btnRemoveLastNpc.UseVisualStyleBackColor = true;
             this.btnRemoveLastNpc.Click += new System.EventHandler(this.btnRemoveLastNpc_Click);
 
-            this.btnClearNpcs.Location = new System.Drawing.Point(165, 268);
+            this.btnClearNpcs.Location = new System.Drawing.Point(165, 258);
             this.btnClearNpcs.Name = "btnClearNpcs";
             this.btnClearNpcs.Size = new System.Drawing.Size(155, 25);
             this.btnClearNpcs.TabIndex = 4;

@@ -505,17 +505,29 @@ namespace MapTool.Rendering
                     {
                         try
                         {
+                            DebugLogger.Log($"[Tooltip] Loading sprite for NPC ID {npc.NpcID}...");
                             SpriteData spriteData = _npcLoader.LoadSpriteById(npc.NpcID, NpcAction.NormalStand);
                             if (spriteData != null && spriteData.FrameCount > 0)
                             {
                                 // Get first frame (direction 0)
+                                DebugLogger.Log($"[Tooltip] Sprite loaded: {spriteData.FrameCount} frames, converting frame 0 to bitmap");
                                 npcSprite = SpriteLoader.FrameToBitmap(spriteData, 0);
+                                DebugLogger.Log($"[Tooltip] ✓ Bitmap created: {npcSprite.Width}x{npcSprite.Height}");
+                            }
+                            else
+                            {
+                                DebugLogger.Log($"[Tooltip] ⚠ No sprite data or frames for NPC ID {npc.NpcID}");
                             }
                         }
                         catch (Exception ex)
                         {
-                            DebugLogger.Log($"Failed to load NPC sprite for ID {npc.NpcID}: {ex.Message}");
+                            DebugLogger.Log($"[Tooltip] ✗ Failed to load NPC sprite for ID {npc.NpcID}: {ex.Message}");
+                            DebugLogger.Log($"[Tooltip]    Stack: {ex.StackTrace}");
                         }
+                    }
+                    else
+                    {
+                        DebugLogger.Log($"[Tooltip] ⚠ NpcLoader is null - cannot load sprite");
                     }
 
                     string tooltipText = $"NPC #{i + 1}\nID: {npc.NpcID}\nName: {npc.Name}\nLevel: {npc.Level}\nWorld: ({npc.PosX}, {npc.PosY})";
