@@ -120,6 +120,8 @@ void	KPlayer::Release()
 	m_nRightSkillLevel = 0;
 	m_nSendMoveFrames = defMAX_PLAYER_SEND_MOVE_FRAME;
 	m_dwLastPosSyncTime = 0;
+	m_nLastSyncX = 0;
+	m_nLastSyncY = 0;
 	m_MouseDown[0] = FALSE;
 	m_MouseDown[1] = FALSE;
 	m_bDebugMode	= FALSE;
@@ -357,25 +359,46 @@ void	KPlayer::Active()
 	}
 	
 	m_nSendMoveFrames++;
-	// FIX: Periodic position sync to prevent desync (10 times per second for better sync)
-	// This ensures position is accurate even when player is standing still/attacking
+
+	// FIX: SMART periodic position sync to prevent desync WITHOUT flooding packets
+	// Strategy: Only sync when position actually changed OR too long since last sync
+	// This reduces packets by 90%+ while maintaining accuracy
 	DWORD currentTime = GetTickCount();
-	if (m_dwLastPosSyncTime == 0 || (currentTime - m_dwLastPosSyncTime) >= 200)  // 2 seconds
+
+	// Check every 3 seconds (reduced from 200ms to prevent flood)
+	if (currentTime - m_dwLastPosSyncTime >= 3000)
 	{
-		// Force sync current position
 		int nMpsX, nMpsY;
 		Npc[m_nIndex].GetMpsPos(&nMpsX, &nMpsY);
-		// FIX: Sync with correct movement state (run/walk) to prevent other clients seeing wrong state
-		// Check current Npc doing state and send appropriate command
-		if (Npc[m_nIndex].m_Doing == do_run)
+
+		// Calculate distance moved since last sync
+		int dx = nMpsX - m_nLastSyncX;
+		int dy = nMpsY - m_nLastSyncY;
+		int distanceMoved = (int)sqrt((double)(dx * dx + dy * dy));
+
+		// ONLY sync if:
+		// 1. Position changed significantly (>50 units = player is moving)
+		// 2. OR too long since last sync (>10 seconds = fallback safety)
+		// 3. OR first sync (m_dwLastPosSyncTime == 0)
+		if (m_dwLastPosSyncTime == 0 ||
+		    distanceMoved > 50 ||
+		    (currentTime - m_dwLastPosSyncTime) >= 10000)
 		{
-			SendClientCmdRun(nMpsX, nMpsY);  // Player is running, sync as run
+			// Sync with correct movement state (run/walk)
+			if (Npc[m_nIndex].m_Doing == do_run)
+			{
+				SendClientCmdRun(nMpsX, nMpsY);
+			}
+			else
+			{
+				SendClientCmdWalk(nMpsX, nMpsY);
+			}
+
+			// Update last sync time and position
+			m_dwLastPosSyncTime = currentTime;
+			m_nLastSyncX = nMpsX;
+			m_nLastSyncY = nMpsY;
 		}
-		else
-		{
-			SendClientCmdWalk(nMpsX, nMpsY);  // Player is walking/standing, sync as walk
-		}
-		m_dwLastPosSyncTime = currentTime;  // Update last sync time
 	}
 	this->m_cPK.Active();
 	if (Npc[m_nIndex].m_bOpenShop <= 0)
@@ -634,15 +657,17 @@ void KPlayer::ProcessMouse(int x, int y, int Key, MOUSE_BUTTON nButton)
 				return ;
 			}
 			// FIX: Throttled position sync before skill to prevent desync (anti-spam protection)
-			// Reduced throttle from 300ms to 50ms for better accuracy
-			// With periodic 10 Hz sync, this ensures position is fresh before skill cast
+			// Increased throttle from 50ms to 300ms to prevent flood packets
+			// This still ensures position is reasonably fresh before skill cast
 			DWORD currentTime = GetTickCount();
-			if (m_dwLastPosSyncTime == 0 || (currentTime - m_dwLastPosSyncTime) >= 50)
+			if (m_dwLastPosSyncTime == 0 || (currentTime - m_dwLastPosSyncTime) >= 300)
 			{
 				int nMpsX, nMpsY;
 				Npc[m_nIndex].GetMpsPos(&nMpsX, &nMpsY);
 				SendClientCmdWalk(nMpsX, nMpsY);  // Throttled position sync
 				m_dwLastPosSyncTime = currentTime;
+				m_nLastSyncX = nMpsX;  // Update last sync position
+				m_nLastSyncY = nMpsY;
 			}
 			if (!nTargetIdx)
 			{
@@ -695,6 +720,8 @@ void KPlayer::ProcessMouse(int x, int y, int Key, MOUSE_BUTTON nButton)
 			}
 			m_nSendMoveFrames = 0;
 			m_dwLastPosSyncTime = GetTickCount();
+			m_nLastSyncX = nX;  // Update last sync position for smart sync
+			m_nLastSyncY = nY;
 		}
 		return;
 	}
@@ -725,8 +752,11 @@ void KPlayer::Walk(int nDir, int nSpeed)
 			return;
 		if(Npc[m_nIndex].m_bOpenShop)
 			return;
-		
+
 		SendClientCmdRun(nX, nY);
+		m_dwLastPosSyncTime = GetTickCount();
+		m_nLastSyncX = nX;  // Update last sync position
+		m_nLastSyncY = nY;
 	}
 	else
 	{
@@ -736,9 +766,11 @@ void KPlayer::Walk(int nDir, int nSpeed)
 			return;
 		if(Npc[m_nIndex].m_bOpenShop)
 			return;
-		
+
 		SendClientCmdWalk(nX, nY);
 		m_dwLastPosSyncTime = GetTickCount();
+		m_nLastSyncX = nX;  // Update last sync position
+		m_nLastSyncY = nY;
 	}
 }
 
@@ -1267,7 +1299,7 @@ void	KPlayer::SendSelfTeamInfo()
 		sSelfInfo.m_dwNpcID[0] = Npc[nNpcIndex].m_dwID;
 		sSelfInfo.m_btLevel[0] = (DWORD)Npc[nNpcIndex].m_Level;
 		sSelfInfo.m_TP[0] = SubWorld[Npc[nNpcIndex].m_SubWorldIndex].m_SubWorldID; // S? d?ng m_TP cho SubWorldID
-		sSelfInfo.m_HP[0] = Npc[nNpcIndex].m_CurrentLife; // Lay HP thành viên
+		sSelfInfo.m_HP[0] = Npc[nNpcIndex].m_CurrentLife; // Lay HP thï¿½nh viï¿½n
 		sSelfInfo.m_MHP[0] = Npc[nNpcIndex].m_CurrentLifeMax;
 		sSelfInfo.m_SM[0] = Player[g_Team[m_cTeam.m_nID].m_nCaptain].m_cFaction.m_nCurFaction;
 		strcpy(sSelfInfo.m_szNpcName[0], Npc[nNpcIndex].Name);
@@ -1280,8 +1312,8 @@ void	KPlayer::SendSelfTeamInfo()
 				sSelfInfo.m_dwNpcID[i + 1] = Npc[nNpcIndex].m_dwID;
 				sSelfInfo.m_btLevel[i + 1] = (DWORD)Npc[nNpcIndex].m_Level;
 				sSelfInfo.m_TP[i + 1] = SubWorld[Npc[nNpcIndex].m_SubWorldIndex].m_SubWorldID;
-				sSelfInfo.m_HP[i + 1] = Npc[nNpcIndex].m_CurrentLife; // Lay HP thành viên
-				sSelfInfo.m_MHP[i + 1] = Npc[nNpcIndex].m_CurrentLifeMax; // Lay HP thành viên
+				sSelfInfo.m_HP[i + 1] = Npc[nNpcIndex].m_CurrentLife; // Lay HP thï¿½nh viï¿½n
+				sSelfInfo.m_MHP[i + 1] = Npc[nNpcIndex].m_CurrentLifeMax; // Lay HP thï¿½nh viï¿½n
 				sSelfInfo.m_SM[i + 1] = Player[g_Team[m_cTeam.m_nID].m_nMember[i]].m_cFaction.m_nCurFaction;
 				strcpy(sSelfInfo.m_szNpcName[i + 1], Npc[nNpcIndex].Name);
 			}
@@ -1442,7 +1474,7 @@ BOOL	KPlayer::AddTeamMember(BYTE* pProtocol)
 	sAddMem.ProtocolType = s2c_teamaddmember;
 	sAddMem.m_dwNpcID = Npc[Player[nPlayer].m_nIndex].m_dwID;
 	sAddMem.m_btLevel = (DWORD)Npc[Player[nPlayer].m_nIndex].m_Level;
-	sAddMem.m_TP = SubWorld[Npc[Player[nPlayer].m_nIndex].m_SubWorldIndex].m_SubWorldID; // Thêm SubWorldID
+	sAddMem.m_TP = SubWorld[Npc[Player[nPlayer].m_nIndex].m_SubWorldIndex].m_SubWorldID; // Thï¿½m SubWorldID
 	sAddMem.m_SM = Player[nPlayer].m_cFaction.m_nCurFaction;
 	sAddMem.m_HP = Npc[Player[nPlayer].m_nIndex].m_CurrentLife;
 	sAddMem.m_MHP = Npc[Player[nPlayer].m_nIndex].m_CurrentLifeMax;
@@ -2159,7 +2191,7 @@ void	KPlayer::ResetBaseAttribute(char cSeries)
 //
 
 //void	KPlayer::CalcCurStrength()
-//{	// »¹ÐèÒª¿¼ÂÇ ×°±¸¡¢¼¼ÄÜ¡¢×´Ì¬ µÄÓ°Ïì
+//{	// ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ ×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¡ï¿½×´Ì¬ ï¿½ï¿½Ó°ï¿½ï¿½
 //	m_nCurStrength = m_nStrength;
 //}
 
@@ -2167,7 +2199,7 @@ void	KPlayer::ResetBaseAttribute(char cSeries)
 //	
 
 //void	KPlayer::CalcCurDexterity()
-//{	// »¹ÐèÒª¿¼ÂÇ ×°±¸¡¢¼¼ÄÜ¡¢×´Ì¬ µÄÓ°Ïì
+//{	// ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ ×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¡ï¿½×´Ì¬ ï¿½ï¿½Ó°ï¿½ï¿½
 //	m_nCurDexterity = m_nDexterity;
 //}
 
@@ -2175,7 +2207,7 @@ void	KPlayer::ResetBaseAttribute(char cSeries)
 //	
 
 //void	KPlayer::CalcCurVitality()
-//{	// »¹ÐèÒª¿¼ÂÇ ×°±¸¡¢¼¼ÄÜ¡¢×´Ì¬ µÄÓ°Ïì
+//{	// ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ ×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¡ï¿½×´Ì¬ ï¿½ï¿½Ó°ï¿½ï¿½
 //	m_nCurVitality = m_nVitality;
 //}
 
@@ -2183,7 +2215,7 @@ void	KPlayer::ResetBaseAttribute(char cSeries)
 //	
 
 //void	KPlayer::CalcCurEngergy()
-//{	// »¹ÐèÒª¿¼ÂÇ ×°±¸¡¢¼¼ÄÜ¡¢×´Ì¬ µÄÓ°Ïì
+//{	// ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ ×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¡ï¿½×´Ì¬ ï¿½ï¿½Ó°ï¿½ï¿½
 //	m_nCurEngergy = m_nEngergy;
 //}
 
@@ -4652,8 +4684,8 @@ void	KPlayer::AddSkillPoint(BYTE* pProtocol)
 			if(pSkill->IsExpSkill())
 			{
 				char szMsg[128];
-				sprintf(szMsg, "<color=green>[ %s ]<color> cÇn ph¶i tu luyÖn míi th¨ng cÊp ®­îc.", pSkill->GetSkillName());
-				KPlayerChat::SendSystemInfo(1, m_nPlayerIndex, "Kü n¨ng", (char *)szMsg, strlen(szMsg));
+				sprintf(szMsg, "<color=green>[ %s ]<color> cï¿½n phï¿½i tu luyï¿½n mï¿½i thï¿½ng cï¿½p ï¿½ï¿½ï¿½c.", pSkill->GetSkillName());
+				KPlayerChat::SendSystemInfo(1, m_nPlayerIndex, "Kï¿½ nï¿½ng", (char *)szMsg, strlen(szMsg));
 				return;
 			}
 
@@ -4688,14 +4720,14 @@ void	KPlayer::AddSkillPoint(BYTE* pProtocol)
 							if (nWantToBeLevel >=  btMaxLevel)
 							{
 								char szMsg[128];
-								sprintf(szMsg, "<color=green>[ %s ]<color> ®· ®¹t cÊp tèi ®a kh«ng thÓ lÜnh ngé thªm.", pSkill->GetSkillName());
-								KPlayerChat::SendSystemInfo(1, m_nPlayerIndex, "Kü n¨ng", (char *) szMsg, strlen(szMsg) );
+								sprintf(szMsg, "<color=green>[ %s ]<color> ï¿½ï¿½ ï¿½ï¿½t cï¿½p tï¿½i ï¿½a khï¿½ng thï¿½ lï¿½nh ngï¿½ thï¿½m.", pSkill->GetSkillName());
+								KPlayerChat::SendSystemInfo(1, m_nPlayerIndex, "Kï¿½ nï¿½ng", (char *) szMsg, strlen(szMsg) );
 							}
 							else 
 							{
 								char szMsg[128];
-								sprintf(szMsg, "CÊp ®é tu luyÖn <color=gold>%d cÊp<color> míi cã thÓ t¨ng kü n¨ng <color=green>[ %s ]<color>.", ((KSkill *)pSkill)->GetSkillReqLevel() -1 +  pAdd->m_nAddPoint + nSkillLevel,  ((KSkill*)pSkill)->GetSkillName());
-								KPlayerChat::SendSystemInfo(1, m_nPlayerIndex, "Kü n¨ng", (char *) szMsg, strlen(szMsg) );
+								sprintf(szMsg, "Cï¿½p ï¿½ï¿½ tu luyï¿½n <color=gold>%d cï¿½p<color> mï¿½i cï¿½ thï¿½ tï¿½ng kï¿½ nï¿½ng <color=green>[ %s ]<color>.", ((KSkill *)pSkill)->GetSkillReqLevel() -1 +  pAdd->m_nAddPoint + nSkillLevel,  ((KSkill*)pSkill)->GetSkillName());
+								KPlayerChat::SendSystemInfo(1, m_nPlayerIndex, "Kï¿½ nï¿½ng", (char *) szMsg, strlen(szMsg) );
 							}
 							
 						}
@@ -5219,7 +5251,7 @@ void	KPlayer::ChatTransmitApplyAddFriend(BYTE* pProtocol)
 	sAdd.m_szSourceName[sizeof(sAdd.m_szSourceName)-1] = '\0';
 
 	memset(sAdd.m_szInfo, 0, sizeof(sAdd.m_szInfo));
-	// Sao chép an toàn t? buffer client (KHÔNG tin m_wLength)
+	// Sao chï¿½p an toï¿½n t? buffer client (KHï¿½NG tin m_wLength)
 	int copyLen = (int)sizeof(pAdd->m_szInfo);
 	if (copyLen > (int)sizeof(sAdd.m_szInfo) - 1) copyLen = (int)sizeof(sAdd.m_szInfo) - 1;
 	memcpy(sAdd.m_szInfo, pAdd->m_szInfo, copyLen);
@@ -5856,7 +5888,7 @@ void KPlayer::UseTownPortal()
 
 	if(m_bForbidTownPortal)
 	{	
-		KPlayerChat::SendSystemInfo(1, m_nPlayerIndex, "Nh¾c nhë", MSG_FORBID_TOWN_PORTAL, strlen(MSG_FORBID_TOWN_PORTAL));
+		KPlayerChat::SendSystemInfo(1, m_nPlayerIndex, "Nhï¿½c nhï¿½", MSG_FORBID_TOWN_PORTAL, strlen(MSG_FORBID_TOWN_PORTAL));
 		return;
 	}
 
@@ -6781,10 +6813,10 @@ void	KPlayer::OnScriptAction(PLAYER_SCRIPTACTION_SYNC * pMsg)
 							
 							
 							if (i < pScriptAction->m_bOptionNum - 1)
-								strcpy(pSpeakList[i].sConfirmText, "¼ÌÐø");
+								strcpy(pSpeakList[i].sConfirmText, "ï¿½ï¿½ï¿½ï¿½");
 							else 
 							{
-								strcpy(pSpeakList[i].sConfirmText, "Íê³É");
+								strcpy(pSpeakList[i].sConfirmText, "ï¿½ï¿½ï¿½");
 								if (pScriptAction->m_nParam == 1)						
 									pSpeakList[i].bNeedConfirmNotify = TRUE;
 								
@@ -6803,7 +6835,7 @@ void	KPlayer::OnScriptAction(PLAYER_SCRIPTACTION_SYNC * pMsg)
 								strcpy(pSpeakList[i].sInformation, g_GetStringRes(atoi(pAnswer), szString ,sizeof(szString)));
 							}
 							
-							strcpy(pSpeakList[i].sConfirmText, "Íê³É");
+							strcpy(pSpeakList[i].sConfirmText, "ï¿½ï¿½ï¿½");
 							
 							if (pScriptAction->m_nParam == 1)						
 								pSpeakList[i].bNeedConfirmNotify = TRUE;
@@ -7720,14 +7752,14 @@ void KPlayer::ForceReapplyRightAura()
     int lv = m_nRightSkillLevel;
     if (id <= 0) return;
 
-    // ch? ép g?i l?i n?u là skill aura (tránh spam)
+    // ch? ï¿½p g?i l?i n?u lï¿½ skill aura (trï¿½nh spam)
     KSkill* pSkill = (KSkill*)g_SkillManager.GetSkill(id, (lv > 0 ? lv : 1));
     if (pSkill && pSkill->IsAura())
     {
-        // Ép khác ID d? SetRightSkill() g?i c2s_changeauraskill cho GS m?i
+        // ï¿½p khï¿½c ID d? SetRightSkill() g?i c2s_changeauraskill cho GS m?i
         m_nRightSkillID = 0;
         SetRightSkill(id);
-        // khôi ph?c level hi?n th? local
+        // khï¿½i ph?c level hi?n th? local
         m_nRightSkillLevel = lv;
     }
 }
@@ -7736,7 +7768,7 @@ void KPlayer::ForceReapplyRightAura()
 
 void KPlayer::SyncCurPlayer(BYTE* pMsg)
 {
-    // --- GI? L?I SKILL TAY TRÁI / TAY PH?I TRU?C KHI B? RESET ---
+    // --- GI? L?I SKILL TAY TRï¿½I / TAY PH?I TRU?C KHI B? RESET ---
     int keepLeftID    = m_nLeftSkillID;
     int keepLeftLV    = m_nLeftSkillLevel;
     int keepRightID   = m_nRightSkillID;
@@ -7822,13 +7854,13 @@ void KPlayer::SyncCurPlayer(BYTE* pMsg)
     m_MouseDown[1]= 0;
     Npc[m_nIndex].m_SyncSignal = 0;
 
-    // --- KHÔI PH?C SKILL ---
+    // --- KHï¿½I PH?C SKILL ---
     if (keepLeftID > 0) {
         m_nLeftSkillID    = keepLeftID;
         m_nLeftSkillLevel = keepLeftLV;
         SetLeftSkill(keepLeftID);
     } else {
-        // tu? ý: SetDefaultImmedSkill();
+        // tu? ï¿½: SetDefaultImmedSkill();
     }
 
     if (keepRightID > 0) {
@@ -9080,7 +9112,7 @@ void	KPlayer::SendShopItemInfo(int nTargetPlayer, int nDataIndex)
 		sView.m_btCount = 0;
 	}
 	if(sView.m_sInfo[0].m_ID == 0)
-		m_cShop.SetAdvText(" (B¸n hÕt) ");
+		m_cShop.SetAdvText(" (Bï¿½n hï¿½t) ");
 
 	g_pServer->PackDataToClient(Player[nTargetPlayer].m_nNetConnectIdx, (BYTE*)&sView, sizeof(sView));
 }

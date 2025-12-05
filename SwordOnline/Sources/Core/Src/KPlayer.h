@@ -199,7 +199,9 @@ public:
 	int				m_RunStatus;
 	DWORD			m_dwNextLevelLeadExp;
 	int				m_nSendMoveFrames;
-	DWORD			m_dwLastPosSyncTime; 
+	DWORD			m_dwLastPosSyncTime;
+	int				m_nLastSyncX;		// Last synced X position for smart sync
+	int				m_nLastSyncY;		// Last synced Y position for smart sync
 	BOOL			m_bDebugMode;
 	
 	char			m_szExpAddNo[16];
