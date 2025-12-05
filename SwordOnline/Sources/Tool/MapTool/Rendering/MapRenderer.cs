@@ -37,6 +37,8 @@ namespace MapTool.Rendering
 
         // NPC markers
         private List<NpcEntry> _npcMarkers = new List<NpcEntry>();
+        private int _hoveredNpcIndex = -1;
+        private int _selectedNpcIndex = -1;
 
         // Trap markers (from loaded trap file)
         private List<TrapMarker> _trapMarkers = new List<TrapMarker>();
@@ -106,6 +108,81 @@ namespace MapTool.Rendering
         public void ClearNpcMarkers()
         {
             _npcMarkers.Clear();
+        }
+
+        /// <summary>
+        /// Set hovered NPC index for highlighting
+        /// </summary>
+        public void SetHoveredNpcIndex(int index)
+        {
+            _hoveredNpcIndex = index;
+        }
+
+        /// <summary>
+        /// Set selected NPC index for highlighting
+        /// </summary>
+        public void SetSelectedNpcIndex(int index)
+        {
+            _selectedNpcIndex = index;
+        }
+
+        /// <summary>
+        /// Find NPC marker at screen position (returns -1 if not found)
+        /// </summary>
+        public int FindNpcMarkerAtScreenPosition(int screenX, int screenY)
+        {
+            if (_npcMarkers == null || _npcMarkers.Count == 0)
+                return -1;
+
+            int markerSize = 8;
+            int hitRadius = markerSize / 2 + 3; // Slightly larger hit area
+
+            for (int i = 0; i < _npcMarkers.Count; i++)
+            {
+                var npc = _npcMarkers[i];
+
+                // Convert NPC world coords to map coords
+                int mapX = npc.PosX / MapConstants.MAP_SCALE_H;
+                int mapY = npc.PosY / MapConstants.MAP_SCALE_V;
+
+                // Convert to screen coords (including zoom)
+                int markerScreenX = (int)((mapX - _viewOffsetX) * _zoom);
+                int markerScreenY = (int)((mapY - _viewOffsetY) * _zoom);
+
+                // Check if mouse is within hit radius
+                int dx = screenX - markerScreenX;
+                int dy = screenY - markerScreenY;
+                int distanceSquared = dx * dx + dy * dy;
+
+                if (distanceSquared <= hitRadius * hitRadius)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Get NPC marker by index
+        /// </summary>
+        public NpcEntry GetNpcMarker(int index)
+        {
+            if (index >= 0 && index < _npcMarkers.Count)
+                return _npcMarkers[index];
+            return null;
+        }
+
+        /// <summary>
+        /// Update NPC marker position
+        /// </summary>
+        public void UpdateNpcMarkerPosition(int index, int worldX, int worldY)
+        {
+            if (index >= 0 && index < _npcMarkers.Count)
+            {
+                _npcMarkers[index].PosX = worldX;
+                _npcMarkers[index].PosY = worldY;
+            }
         }
 
         /// <summary>
@@ -352,8 +429,12 @@ namespace MapTool.Rendering
             if (_npcMarkers == null || _npcMarkers.Count == 0)
                 return;
 
-            foreach (var npc in _npcMarkers)
+            for (int i = 0; i < _npcMarkers.Count; i++)
             {
+                var npc = _npcMarkers[i];
+                bool isHovered = (i == _hoveredNpcIndex);
+                bool isSelected = (i == _selectedNpcIndex);
+
                 // PosX/PosY from Npc_Load.txt are in WORLD coordinates (logic coordinates)
                 // Need to convert to MAP coordinates (24.jpg pixel coordinates)
                 // WorldX → MapX: divide by MAP_SCALE_H (16)
@@ -365,8 +446,8 @@ namespace MapTool.Rendering
                 int screenX = mapX - _viewOffsetX;
                 int screenY = mapY - _viewOffsetY;
 
-                // Draw NPC marker as a circle (8 pixel diameter)
-                int markerSize = 8;
+                // Draw NPC marker as a circle (8 pixel diameter normally, 10 if hovered/selected)
+                int markerSize = (isHovered || isSelected) ? 10 : 8;
                 Rectangle markerRect = new Rectangle(
                     screenX - markerSize / 2,
                     screenY - markerSize / 2,
@@ -374,29 +455,92 @@ namespace MapTool.Rendering
                     markerSize
                 );
 
+                // Choose color based on state
+                Color fillColor = _npcColor;  // Purple
+                Color borderColor = Color.White;
+                int borderWidth = 1;
+
+                if (isSelected)
+                {
+                    fillColor = Color.HotPink;  // Hot pink for selected
+                    borderColor = Color.Lime;    // Bright green border
+                    borderWidth = 3;
+                }
+                else if (isHovered)
+                {
+                    fillColor = Color.Magenta;  // Magenta for hovered
+                    borderWidth = 2;
+                }
+
                 // Draw filled circle with border
-                using (SolidBrush brush = new SolidBrush(_npcColor))
-                using (Pen pen = new Pen(Color.White, 1))
+                using (SolidBrush brush = new SolidBrush(fillColor))
+                using (Pen pen = new Pen(borderColor, borderWidth))
                 {
                     g.FillEllipse(brush, markerRect);
                     g.DrawEllipse(pen, markerRect);
                 }
 
-                // Draw NPC ID text next to marker (smaller font)
-                using (Font font = new Font("Arial", 6))
-                using (SolidBrush textBrush = new SolidBrush(Color.White))
-                using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, 0, 0, 0)))
+                // Draw tooltip for hovered NPC
+                if (isHovered)
                 {
-                    string npcText = $"NPC {npc.NpcID}";
-                    SizeF textSize = g.MeasureString(npcText, font);
-                    Rectangle textBg = new Rectangle(
-                        screenX + markerSize / 2 + 2,
-                        screenY - (int)textSize.Height / 2,
-                        (int)textSize.Width + 4,
-                        (int)textSize.Height
-                    );
-                    g.FillRectangle(bgBrush, textBg);
-                    g.DrawString(npcText, font, textBrush, screenX + markerSize / 2 + 4, screenY - textSize.Height / 2);
+                    string tooltipText = $"NPC #{i + 1}\nID: {npc.NpcID}\nName: {npc.Name}\nLevel: {npc.Level}\nWorld: ({npc.PosX}, {npc.PosY})";
+
+                    using (Font font = new Font("Arial", 8))
+                    using (SolidBrush textBrush = new SolidBrush(Color.White))
+                    using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(220, 0, 0, 0)))
+                    {
+                        // Measure text size
+                        string[] lines = tooltipText.Split('\n');
+                        float maxWidth = 0;
+                        float totalHeight = 0;
+                        foreach (string line in lines)
+                        {
+                            SizeF lineSize = g.MeasureString(line, font);
+                            maxWidth = Math.Max(maxWidth, lineSize.Width);
+                            totalHeight += lineSize.Height;
+                        }
+
+                        // Position tooltip above and to the right of marker
+                        int tooltipX = screenX + markerSize / 2 + 5;
+                        int tooltipY = screenY - (int)totalHeight - 5;
+
+                        Rectangle tooltipBg = new Rectangle(
+                            tooltipX - 2,
+                            tooltipY - 2,
+                            (int)maxWidth + 4,
+                            (int)totalHeight + 4
+                        );
+
+                        g.FillRectangle(bgBrush, tooltipBg);
+                        g.DrawRectangle(new Pen(Color.Magenta, 1), tooltipBg);
+
+                        // Draw text lines
+                        float currentY = tooltipY;
+                        foreach (string line in lines)
+                        {
+                            g.DrawString(line, font, textBrush, tooltipX, currentY);
+                            currentY += g.MeasureString(line, font).Height;
+                        }
+                    }
+                }
+                else if (!isSelected)
+                {
+                    // Draw NPC ID text next to marker (smaller font) - only when not hovered/selected
+                    using (Font font = new Font("Arial", 6))
+                    using (SolidBrush textBrush = new SolidBrush(Color.White))
+                    using (SolidBrush bgBrush = new SolidBrush(Color.FromArgb(180, 0, 0, 0)))
+                    {
+                        string npcText = $"NPC {npc.NpcID}";
+                        SizeF textSize = g.MeasureString(npcText, font);
+                        Rectangle textBg = new Rectangle(
+                            screenX + markerSize / 2 + 2,
+                            screenY - (int)textSize.Height / 2,
+                            (int)textSize.Width + 4,
+                            (int)textSize.Height
+                        );
+                        g.FillRectangle(bgBrush, textBg);
+                        g.DrawString(npcText, font, textBrush, screenX + markerSize / 2 + 4, screenY - textSize.Height / 2);
+                    }
                 }
             }
         }

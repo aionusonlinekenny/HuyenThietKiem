@@ -34,6 +34,11 @@ namespace MapTool
         private int _draggedTrapIndex = -1;
         private Point _trapDragStartPos;
 
+        // NPC dragging state
+        private bool _isDraggingNpc = false;
+        private int _draggedNpcIndex = -1;
+        private Point _npcDragStartPos;
+
         // NPC functionality
         private NpcLoader _npcLoader;
         private NpcExporter _npcExporter;
@@ -328,8 +333,9 @@ namespace MapTool
             }
             else if (e.Button == MouseButtons.Left)
             {
-                // Check if clicking on a trap marker
+                // Check if clicking on a trap marker first
                 int trapIndex = _renderer.FindTrapMarkerAtScreenPosition(e.X, e.Y);
+                int npcIndex = _renderer.FindNpcMarkerAtScreenPosition(e.X, e.Y);
 
                 if (trapIndex >= 0)
                 {
@@ -338,6 +344,7 @@ namespace MapTool
                     _draggedTrapIndex = trapIndex;
                     _trapDragStartPos = e.Location;
                     _renderer.SetSelectedTrapIndex(trapIndex);
+                    _renderer.SetSelectedNpcIndex(-1);
 
                     // Select corresponding item in Trap Entries listbox
                     if (trapIndex < lstEntries.Items.Count)
@@ -349,12 +356,32 @@ namespace MapTool
                     mapPanel.Cursor = Cursors.Hand;
                     mapPanel.Invalidate();
                 }
+                else if (npcIndex >= 0)
+                {
+                    // Clicked on an NPC marker
+                    _isDraggingNpc = true;
+                    _draggedNpcIndex = npcIndex;
+                    _npcDragStartPos = e.Location;
+                    _renderer.SetSelectedNpcIndex(npcIndex);
+                    _renderer.SetSelectedTrapIndex(-1);
+
+                    // Select corresponding item in NPC Entries listbox
+                    if (npcIndex < lstNpcEntries.Items.Count)
+                    {
+                        lstNpcEntries.SelectedIndex = npcIndex;
+                        lstNpcEntries.TopIndex = Math.Max(0, npcIndex - 2); // Scroll to show selected item
+                    }
+
+                    mapPanel.Cursor = Cursors.Hand;
+                    mapPanel.Invalidate();
+                }
                 else
                 {
                     // Normal cell selection
                     _selectedCoordinate = _renderer.ScreenToMapCoordinate(e.X, e.Y);
                     UpdateCoordinateDisplay();
                     _renderer.SetSelectedTrapIndex(-1);
+                    _renderer.SetSelectedNpcIndex(-1);
                     mapPanel.Invalidate();
                 }
             }
@@ -411,6 +438,43 @@ namespace MapTool
                 mapPanel.Cursor = Cursors.Default;
                 mapPanel.Invalidate();
             }
+            else if (e.Button == MouseButtons.Left && _isDraggingNpc)
+            {
+                // Finish dragging NPC
+                if (_draggedNpcIndex >= 0 && _currentMap != null)
+                {
+                    // Get new world coordinates from current mouse position
+                    MapCoordinate newCoord = _renderer.ScreenToMapCoordinate(e.X, e.Y);
+
+                    // Update NPC marker position
+                    _renderer.UpdateNpcMarkerPosition(_draggedNpcIndex, newCoord.WorldX, newCoord.WorldY);
+
+                    // Update NPC entry in exporter
+                    var allNpcs = _npcExporter.GetAllEntries();
+                    if (_draggedNpcIndex < allNpcs.Count)
+                    {
+                        allNpcs[_draggedNpcIndex].PosX = newCoord.WorldX;
+                        allNpcs[_draggedNpcIndex].PosY = newCoord.WorldY;
+
+                        // Refresh NPC list display
+                        UpdateNpcList();
+
+                        // Re-select the item
+                        if (_draggedNpcIndex < lstNpcEntries.Items.Count)
+                        {
+                            lstNpcEntries.SelectedIndex = _draggedNpcIndex;
+                        }
+                    }
+
+                    DebugLogger.Log($"[NPC Moved] NPC #{_draggedNpcIndex + 1} moved to World({newCoord.WorldX},{newCoord.WorldY})");
+                    lblStatus.Text = $"NPC #{_draggedNpcIndex + 1} moved to World({newCoord.WorldX},{newCoord.WorldY})";
+                }
+
+                _isDraggingNpc = false;
+                _draggedNpcIndex = -1;
+                mapPanel.Cursor = Cursors.Default;
+                mapPanel.Invalidate();
+            }
         }
 
         // Map panel mouse move
@@ -441,11 +505,24 @@ namespace MapTool
                 _renderer.UpdateTrapMarkerPosition(_draggedTrapIndex, coord.WorldX, coord.WorldY);
                 mapPanel.Invalidate();
             }
+            else if (_isDraggingNpc && _draggedNpcIndex >= 0)
+            {
+                // Dragging an NPC marker - update visual feedback
+                MapCoordinate coord = _renderer.ScreenToMapCoordinate(e.X, e.Y);
+                lblStatus.Text = $"Dragging NPC #{_draggedNpcIndex + 1} to World: ({coord.WorldX}, {coord.WorldY})";
+
+                // Update NPC position in real-time for visual feedback
+                _renderer.UpdateNpcMarkerPosition(_draggedNpcIndex, coord.WorldX, coord.WorldY);
+                mapPanel.Invalidate();
+            }
             else if (_currentMap != null)
             {
-                // Check if hovering over a trap marker
+                // Check if hovering over a trap or NPC marker
                 int hoveredTrapIndex = _renderer.FindTrapMarkerAtScreenPosition(e.X, e.Y);
+                int hoveredNpcIndex = _renderer.FindNpcMarkerAtScreenPosition(e.X, e.Y);
+
                 _renderer.SetHoveredTrapIndex(hoveredTrapIndex);
+                _renderer.SetHoveredNpcIndex(hoveredNpcIndex);
 
                 if (hoveredTrapIndex >= 0)
                 {
@@ -454,9 +531,16 @@ namespace MapTool
                     lblStatus.Text = $"Trap #{hoveredTrapIndex + 1} - Click to select, Drag to move";
                     mapPanel.Invalidate(); // Redraw to show tooltip
                 }
+                else if (hoveredNpcIndex >= 0)
+                {
+                    // Hovering over an NPC
+                    mapPanel.Cursor = Cursors.Hand;
+                    lblStatus.Text = $"NPC #{hoveredNpcIndex + 1} - Click to select, Drag to move";
+                    mapPanel.Invalidate(); // Redraw to show tooltip
+                }
                 else
                 {
-                    // Not hovering over a trap
+                    // Not hovering over anything
                     mapPanel.Cursor = Cursors.Default;
 
                     // Show coordinate under mouse
@@ -485,6 +569,12 @@ namespace MapTool
                     // Use LOCAL RegionID for trap export (relative to map rect)
                     _exporter.AddEntry(_currentMap.MapId, _selectedCoordinate.Value, _currentMap.Config, scriptFile);
                     UpdateTrapList();
+
+                    // Update trap markers to render on map immediately
+                    var trapEntries = _exporter.GetEntries();
+                    var trapMarkers = MapRenderer.ConvertTrapEntriesToMarkers(trapEntries, _currentMap.Config);
+                    _renderer.SetTrapMarkers(trapMarkers);
+                    mapPanel.Invalidate();
 
                     // Calculate local RegionID for display
                     int localRegionID = RegionData.MakeLocalRegionID(
@@ -536,9 +626,10 @@ namespace MapTool
 
                     UpdateNpcList();
 
-                    // Update renderer with current map's NPCs
+                    // Update renderer with current map's NPCs to render on map immediately
                     var mapNpcs = _npcExporter.GetEntriesForMap(_currentMap.MapId);
                     _renderer.SetNpcMarkers(mapNpcs);
+                    mapPanel.Invalidate();
 
                     lblStatus.Text = $"Added NPC ID {npcId} ({_currentNpcResource.NpcName}) at World({_selectedCoordinate.Value.WorldX},{_selectedCoordinate.Value.WorldY})";
                     DebugLogger.Log($"[NPC Added] ID: {npcId}, Name: {_currentNpcResource.NpcName}, Pos: World({_selectedCoordinate.Value.WorldX},{_selectedCoordinate.Value.WorldY})");
