@@ -435,11 +435,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\HuyenThietKiem\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj",
+      "projectUniqueName": "C:\\Users\\Administrator\\Downloads\\HuyenThietKiem-claude-add-trap-file-selection-01XBemNX8c4whjSKgwfKiZVD\\HuyenThietKiem-claude-add-trap-file-selection-01XBemNX8c4whjSKgwfKiZVD\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj",
       "projectName": "MapTool",
-      "projectPath": "D:\\HuyenThietKiem\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj",
+      "projectPath": "C:\\Users\\Administrator\\Downloads\\HuyenThietKiem-claude-add-trap-file-selection-01XBemNX8c4whjSKgwfKiZVD\\HuyenThietKiem-claude-add-trap-file-selection-01XBemNX8c4whjSKgwfKiZVD\\SwordOnline\\Sources\\Tool\\MapTool\\MapTool.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "D:\\HuyenThietKiem\\SwordOnline\\Sources\\Tool\\MapTool\\obj\\",
+      "outputPath": "C:\\Users\\Administrator\\Downloads\\HuyenThietKiem-claude-add-trap-file-selection-01XBemNX8c4whjSKgwfKiZVD\\HuyenThietKiem-claude-add-trap-file-selection-01XBemNX8c4whjSKgwfKiZVD\\SwordOnline\\Sources\\Tool\\MapTool\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

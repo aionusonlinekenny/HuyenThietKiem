@@ -1,0 +1,1842 @@
+﻿================================================================================
+MapTool Debug Log - 2025-12-05 16:14:33
+================================================================================
+
+[16:14:33.482] ✓ Debug log initialized: D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48\MapTool_Debug_20251205_161433.log
+[16:14:33.482] === MapTool Started ===
+[16:14:33.482] Executable: D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48\MapTool.exe
+[16:14:33.482] Working Directory: D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48
+[16:14:33.482] Log file: D:\HuyenThietKiem\SwordOnline\Sources\Tool\MapTool\bin\Release\net48\MapTool_Debug_20251205_161433.log
+[16:14:33.482] --------------------------------------------------------------------------------
+[16:14:33.482] Default folder set: D:\HuyenThietKiem\Bin\Server
+[16:14:45.952] --------------------------------------------------------------------------------
+[16:14:45.952] 📂 LOADING MAP
+[16:14:45.952]    Map ID: 11
+[16:14:45.952]    Game Folder: D:\HuyenThietKiem\Bin\Server
+[16:14:45.952]    Mode: Server
+[16:14:45.952] --------------------------------------------------------------------------------
+[16:14:46.195] --------------------------------------------------------------------------------
+[16:14:46.195] 🔍 PARSED RECT FROM .WOR FILE
+[16:14:46.195]    rect = 165,142,215,172
+[16:14:46.195]    Grid size: 51 x 31 regions
+[16:14:46.195]    First region coords: (165, 142)
+[16:14:46.195]    First RegionID (Y*256+X): 142*256 + 165 = 36517
+[16:14:46.195] --------------------------------------------------------------------------------
+[16:14:46.195] --------------------------------------------------------------------------------
+[16:14:46.195] 🔍 SCANNING FOR REGION FILES
+[16:14:46.195]    Looking for regions from (165,142) to (215,172)
+[16:14:46.195]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\165_Region_S.dat
+[16:14:46.195]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\166_Region_S.dat
+[16:14:46.195]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\167_Region_S.dat
+[16:14:46.195]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\168_Region_S.dat
+[16:14:46.195]    ✗ Missing region (3d,3d) | Expected: maps\西南北区\成都\成都\v_142\169_Region_S.dat
+[16:14:46.197]    ✓ Found region (3d,3d) → RegionID=36557 | File: maps\西南北区\成都\成都\v_142\205_Region_S.dat
+[16:14:46.197]    ✓ Found region (3d,3d) → RegionID=36558 | File: maps\西南北区\成都\成都\v_142\206_Region_S.dat
+[16:14:46.197]    ✓ Found region (3d,3d) → RegionID=36559 | File: maps\西南北区\成都\成都\v_142\207_Region_S.dat
+[16:14:46.197]    ✓ Found region (3d,3d) → RegionID=36807 | File: maps\西南北区\成都\成都\v_143\199_Region_S.dat
+[16:14:46.197]    ✓ Found region (3d,3d) → RegionID=36808 | File: maps\西南北区\成都\成都\v_143\200_Region_S.dat
+[16:14:46.197]    ⚠ Error loading (206,143): Unable to read beyond the end of the stream.
+[16:14:46.197]    ⚠ Error loading (206,144): Unable to read beyond the end of the stream.
+[16:14:46.204]    ⚠ Error loading (175,149): Unable to read beyond the end of the stream.
+[16:14:46.204]    ⚠ Error loading (176,149): Unable to read beyond the end of the stream.
+[16:14:46.208]    ⚠ Error loading (175,150): Unable to read beyond the end of the stream.
+[16:14:46.208]    ⚠ Error loading (176,150): Unable to read beyond the end of the stream.
+[16:14:46.208]    ⚠ Error loading (188,154): Unable to read beyond the end of the stream.
+[16:14:46.212]    ⚠ Error loading (205,155): Unable to read beyond the end of the stream.
+[16:14:46.214]    ⚠ Error loading (205,156): Unable to read beyond the end of the stream.
+[16:14:46.216]    ⚠ Error loading (177,158): Unable to read beyond the end of the stream.
+[16:14:46.216]    ⚠ Error loading (203,158): Unable to read beyond the end of the stream.
+[16:14:46.216]    ⚠ Error loading (177,159): Unable to read beyond the end of the stream.
+[16:14:46.216]    ⚠ Error loading (186,160): Unable to read beyond the end of the stream.
+[16:14:46.216]    ⚠ Error loading (200,163): Unable to read beyond the end of the stream.
+[16:14:46.216]    ⚠ Error loading (201,163): Unable to read beyond the end of the stream.
+[16:14:46.222]    ⚠ Error loading (212,165): Unable to read beyond the end of the stream.
+[16:14:46.222]    ⚠ Error loading (213,165): Unable to read beyond the end of the stream.
+[16:14:46.222]    ⚠ Error loading (169,166): Unable to read beyond the end of the stream.
+[16:14:46.225]    ⚠ Error loading (212,166): Unable to read beyond the end of the stream.
+[16:14:46.225]    ⚠ Error loading (213,166): Unable to read beyond the end of the stream.
+[16:14:46.225]    ⚠ Error loading (169,167): Unable to read beyond the end of the stream.
+[16:14:46.228]    ⚠ Error loading (202,169): Unable to read beyond the end of the stream.
+[16:14:46.228]    ⚠ Error loading (201,170): Unable to read beyond the end of the stream.
+[16:14:46.228]    ⚠ Error loading (202,170): Unable to read beyond the end of the stream.
+[16:14:46.230] --------------------------------------------------------------------------------
+[16:14:46.230] 📊 REGION SCAN SUMMARY
+[16:14:46.230]    Attempted: 1581 regions
+[16:14:46.230]    Loaded: 803 regions
+[16:14:46.230]    Missing: 778 regions
+[16:14:46.230]    First missing: (165,142), (166,142), (167,142), (168,142), (169,142)
+[16:14:46.232]    First existing: (205,142), (206,142), (207,142), (199,143), (200,143)
+[16:14:46.232] --------------------------------------------------------------------------------
+[16:14:46.232] 🖼️  LOADING MAP IMAGE
+[16:14:46.232]    Map ID: 11
+[16:14:46.232]    Folder Path: 西南北区\成都\成都
+[16:14:46.232]    Image Path: \maps\西南北区\成都\成都24.jpg
+[16:14:46.232]    Disk Path (Unicode): D:\HuyenThietKiem\Bin\Server\maps\西南北区\成都\成都24.jpg
+[16:14:46.232]    Disk Exists (direct): False
+[16:14:46.232]    🔍 Searching with filesystem enumeration (handles GB2312 encoding)...
+[16:14:46.232]       Expected directory: maps\西南北区\成都
+[16:14:46.232]       Expected filename: 成都24.jpg
+[16:14:46.232]       🔍 Match strategy: Direct Unicode
+[16:14:46.232]       ✓ Found: maps → maps
+[16:14:46.232]       🔍 Match strategy: GB2312 re-decode (Default→GB2312)
+[16:14:46.232]          Original: 'Î÷ÄÏ±±Çø' → Decoded: '西南北区'
+[16:14:46.233]       ✓ Found: 西南北区 → Î÷ÄÏ±±Çø
+[16:14:46.233]       🔍 Match strategy: GB2312 re-decode (Default→GB2312)
+[16:14:46.233]          Original: '³É¶¼' → Decoded: '成都'
+[16:14:46.233]       ✓ Found: 成都 → ³É¶¼
+[16:14:46.233]       📁 Navigated to: D:\HuyenThietKiem\Bin\Server\maps\Î÷ÄÏ±±Çø\³É¶¼
+[16:14:46.233]       🔍 Looking for file: 成都24.jpg
+[16:14:46.233]       ✓ File match: GB2312 re-decode
+[16:14:46.233]          Original: '³É¶¼24.jpg' → Decoded: '成都24.jpg'
+[16:14:46.233]    ✓ Found image via enumeration: D:\HuyenThietKiem\Bin\Server\maps\Î÷ÄÏ±±Çø\³É¶¼\³É¶¼24.jpg
+[16:14:46.233] ✓ Loading image from DISK (via filesystem enumeration)
+[16:14:46.233] ✓ Loaded map image from disk (enumerated): D:\HuyenThietKiem\Bin\Server\maps\Î÷ÄÏ±±Çø\³É¶¼\³É¶¼24.jpg
+[16:14:46.233]    Size: 572,772 bytes
+[16:14:46.233]    Offset: (5280, 4544) pixels
+[16:14:46.233] --------------------------------------------------------------------------------
+[16:14:46.233] ✓ Map loaded successfully!
+[16:14:46.233]    Name: Thµnh §«
+[16:14:46.233]    Folder: 西南北区\成都\成都
+[16:14:46.233]    Regions loaded: 803
+[16:14:46.233]    First region: (205, 142) RegionID=36557
+[16:14:46.233] --------------------------------------------------------------------------------
+[16:14:46.258]    Initializing NPC Loader for sprite tooltips...
+[16:14:46.258]    ⚠ NPC paths not found - sprite tooltips disabled
+[16:14:46.258]       Client: D:\HuyenThietKiem\Bin\Server\client (exists: False)
+[16:14:46.258]       Server: D:\HuyenThietKiem\Bin\Server\library\npc (exists: False)
+[16:14:47.894] --------------------------------------------------------------------------------
+[16:14:47.894] 🎯 LOADING NPC PREVIEW
+[16:14:47.894]    Search input: '1'
+[16:14:47.894]    Parsed as NPC ID: 1
+[16:14:47.894]    Game folder: D:\HuyenThietKiem\Bin\Server
+[16:14:47.894]    Mode: Server
+[16:14:47.894]    Looking for Client folder: D:\HuyenThietKiem\Bin\Client
+[16:14:47.894]    ✓ Found Client folder: D:\HuyenThietKiem\Bin\Client
+[16:14:47.894]    Initializing NPC Loader...
+[16:14:47.894]          Loading NpcResKind.txt from: D:\HuyenThietKiem\Bin\Client\Settings\NpcRes\NpcResKind.txt
+[16:14:47.894]          Total lines in NpcResKind.txt: 939
+[16:14:47.894]          [NpcResKind] Name='MainMan', Type='SpecialNpc', Path='spr\npcres\man'
+[16:14:47.894]          [NpcResKind] Name='MainLady', Type='SpecialNpc', Path='spr\npcres\woman'
+[16:14:47.894]          [NpcResKind] Name='enemy003', Type='NormalNpc', Path='spr\npcres\enemy\enemy003'
+[16:14:47.894]          [NpcResKind] Name='enemy004', Type='NormalNpc', Path='spr\npcres\enemy\enemy004'
+[16:14:47.902]          [NpcResKind] Name='enemy005', Type='NormalNpc', Path='spr\npcres\enemy\enemy005'
+[16:14:47.902]          ✓ Loaded 938 NPC resource kinds
+[16:14:47.911]          Loading NPC database from: D:\HuyenThietKiem\Bin\Server\Settings\Npcs.txt
+[16:14:47.913]          Total lines in file: 2188
+[16:14:47.913]          [Line 2] ID=1, Name='§«ng B¾c hæ', ResType='ani001'
+[16:14:47.913]          [Line 3] ID=2, Name='Hoa Nam hæ', ResType='ani002'
+[16:14:47.913]          [Line 4] ID=3, Name='B¹ch Hæ', ResType='ani003'
+[16:14:47.913]          [Line 5] ID=4, Name='Kim TiÒn b¸o', ResType='ani005'
+[16:14:47.913]          [Line 6] ID=5, Name='TuyÕt B¸o', ResType='ani006'
+[16:14:47.913]          ... (2178 more NPCs) ...
+[16:14:47.922]          [Line 2184] ID=2183, Name='ÁúÀÏ»¢£¨ÐÂ£©', ResType='boss077'
+[16:14:47.922]          [Line 2185] ID=2184, Name='²ÔåâåË£¨ÐÂ£©', ResType='boss078'
+[16:14:47.922]          [Line 2186] ID=2185, Name='nangongjue', ResType='boss132'
+[16:14:47.922]          [Line 2187] ID=2186, Name='linhaotian', ResType='boss130'
+[16:14:47.922]          [Line 2188] ID=2187, Name='Tiªn N÷ Gi÷ Trµ', ResType='boss093'
+[16:14:47.922]          ✓ Loaded 2185 NPCs from Npcs.txt
+[16:14:47.923]          Loading PAK files from: D:\HuyenThietKiem\Bin\Client
+[16:14:47.923]             ✓ Loaded PAK: adultpermit.pak
+[16:14:47.923]             ✓ Loaded PAK: font.pak
+[16:14:47.923]             ✓ Loaded PAK: jxck.pak
+[16:14:47.923]             ✓ Loaded PAK: jxhangnga1.pak
+[16:14:47.932]             ✓ Loaded PAK: maps.pak
+[16:14:47.955]             ✓ Loaded PAK: maps1.pak
+[16:14:47.955]             ✓ Loaded PAK: resource.pak
+[16:14:47.955]             ✓ Loaded PAK: serverlist.pak
+[16:14:47.955]             ✓ Loaded PAK: serverlistfree.pak
+[16:14:47.955]             ✓ Loaded PAK: settings.pak
+[16:14:47.955]             ✓ Loaded PAK: skills.pak
+[16:14:47.955]             ✓ Loaded PAK: slistcache.pak
+[16:14:47.955]             ✓ Loaded PAK: slistfree.pak
+[16:14:47.955]             ✓ Loaded PAK: sound.pak
+[16:14:47.962]             ✓ Loaded PAK: spr.pak
+[16:14:47.962]             ✓ Loaded PAK: update.pak
+[16:14:47.967]             ✓ Loaded PAK: update01.pak
+[16:14:47.967]             ✓ Loaded PAK: update02.pak
+[16:14:47.967]             ✓ Loaded PAK: update03.pak
+[16:14:47.972]             ✓ Loaded PAK: update04.pak
+[16:14:47.972]             ✓ Loaded PAK: updatejx01.pak
+[16:14:47.972]             ✓ Loaded PAK: updatejx02.pak
+[16:14:47.972]             ✓ Loaded PAK: updatejx03.pak
+[16:14:47.972]             ✓ Loaded PAK: updatejx04.pak
+[16:14:47.972]             ✓ Loaded PAK: updatejx05.pak
+[16:14:47.972]             ✓ Loaded PAK: updatejx06.pak
+[16:14:47.974]             ✓ Loaded PAK: updatejx07_jxf06.pak
+[16:14:47.974]             ✓ Loaded PAK: updatejx08.pak
+[16:14:47.974]             ✓ Loaded PAK: updatejx09.pak
+[16:14:47.974]             ✓ Loaded PAK: updatejx10.pak
+[16:14:47.974]             ✓ Loaded PAK: updatejx11.pak
+[16:14:47.974]             ✓ Loaded PAK: updatejx12.pak
+[16:14:47.974]             ✓ Loaded PAK: updatejx13.pak
+[16:14:47.979]             ✓ Loaded PAK: updatejx14.pak
+[16:14:47.979]             ✓ Loaded PAK: vltkcache.pak
+[16:14:47.979]             ✓ Loaded PAK: vng.pak
+[16:14:47.979]             ✓ Loaded PAK: volamtest1.pak
+[16:14:47.979]             ✓ Loaded PAK: adultpermit.pak
+[16:14:47.979]             ✓ Loaded PAK: font.pak
+[16:14:47.979]             ✓ Loaded PAK: jxhangnga1.pak
+[16:14:48.003]             ✓ Loaded PAK: maps.pak
+[16:14:48.003]             ✓ Loaded PAK: resource.pak
+[16:14:48.003]             ✓ Loaded PAK: serverlist.pak
+[16:14:48.003]             ✓ Loaded PAK: serverlistfree.pak
+[16:14:48.003]             ✓ Loaded PAK: settings.pak
+[16:14:48.003]             ✓ Loaded PAK: skills.pak
+[16:14:48.003]             ✓ Loaded PAK: slistcache.pak
+[16:14:48.003]             ✓ Loaded PAK: slistfree.pak
+[16:14:48.003]             ✓ Loaded PAK: sound.pak
+[16:14:48.003]             ✓ Loaded PAK: spr.pak
+[16:14:48.003]             ✓ Loaded PAK: update.pak
+[16:14:48.012]             ✓ Loaded PAK: update01.pak
+[16:14:48.012]             ✓ Loaded PAK: update02.pak
+[16:14:48.013]             ✓ Loaded PAK: update03.pak
+[16:14:48.014]             ✓ Loaded PAK: update04.pak
+[16:14:48.014]             ✓ Loaded PAK: updatejx01.pak
+[16:14:48.014]             ✓ Loaded PAK: updatejx02.pak
+[16:14:48.014]             ✓ Loaded PAK: updatejx03.pak
+[16:14:48.014]             ✓ Loaded PAK: updatejx04.pak
+[16:14:48.014]             ✓ Loaded PAK: updatejx05.pak
+[16:14:48.016]             ✓ Loaded PAK: updatejx06.pak
+[16:14:48.016]             ✓ Loaded PAK: updatejx07_jxf06.pak
+[16:14:48.016]             ✓ Loaded PAK: updatejx08.pak
+[16:14:48.016]             ✓ Loaded PAK: updatejx09.pak
+[16:14:48.016]             ✓ Loaded PAK: updatejx10.pak
+[16:14:48.022]             ✓ Loaded PAK: updatejx11.pak
+[16:14:48.022]             ✓ Loaded PAK: updatejx12.pak
+[16:14:48.022]             ✓ Loaded PAK: updatejx13.pak
+[16:14:48.022]             ✓ Loaded PAK: updatejx14.pak
+[16:14:48.022]             ✓ Loaded PAK: updatejx15.pak
+[16:14:48.022]             ✓ Loaded PAK: updatejx16.pak
+[16:14:48.022]             ✓ Loaded PAK: vltkcache.pak
+[16:14:48.022]             ✓ Loaded PAK: vng.pak
+[16:14:48.022]             ✓ Loaded PAK: vng00.pak
+[16:14:48.031]             ✓ Loaded PAK: volam2005.pak
+[16:14:48.031]             ✓ Loaded PAK: volam2005ctc.pak
+[16:14:48.031]          ✓ Loaded 76 PAK files
+[16:14:48.031]    ✓ NPC Loader initialized
+[16:14:48.031]       Client path: D:\HuyenThietKiem\Bin\Client
+[16:14:48.031]       Server path: D:\HuyenThietKiem\Bin\Server
+[16:14:48.031]    ✓ NpcLoader set in MapRenderer for sprite tooltips
+[16:14:48.031]    Calling GetNpcResourceById(1)...
+[16:14:48.031]       → GetNpcResourceById: Looking up NPC ID 1
+[16:14:48.031]          NPC database count: 2185 NPCs loaded
+[16:14:48.031]             → GetNpcResType: Looking up ID 1 in database
+[16:14:48.031]                ✓ Found: ID=1, Name='§«ng B¾c hæ', ResType='ani001'
+[16:14:48.031]          NpcResType for ID 1: 'ani001'
+[16:14:48.031]          Calling GetNpcResource('ani001')...
+[16:14:48.031]                → GetNpcResource: Looking up 'ani001'
+[16:14:48.031]                   ResKind cache contains 938 entries
+[16:14:48.031]                   ✓ Found 'ani001' in ResKind cache
+[16:14:48.031]                   Has SpriteRes: True, Has SpriteInfo: True
+[16:14:48.031]                   ✓ Created NpcResource for 'ani001'
+[16:14:48.031]          ✓ NpcResource found for 'ani001'
+[16:14:48.031]          NPC name from Npcs.txt: '§«ng B¾c hæ'
+[16:14:48.031]          NPC name set to: '§«ng B¾c hæ'
+[16:14:48.031]    ✓ NPC resource loaded: §«ng B¾c hæ
+[16:14:48.031]    Loading sprite for action: NormalStand
+[16:14:48.036]                   → LoadSpriteById: ID=1, Action=NormalStand
+[16:14:48.036]       → GetNpcResourceById: Looking up NPC ID 1
+[16:14:48.036]          NPC database count: 2185 NPCs loaded
+[16:14:48.036]             → GetNpcResType: Looking up ID 1 in database
+[16:14:48.036]                ✓ Found: ID=1, Name='§«ng B¾c hæ', ResType='ani001'
+[16:14:48.036]          NpcResType for ID 1: 'ani001'
+[16:14:48.036]          Calling GetNpcResource('ani001')...
+[16:14:48.036]                → GetNpcResource: Looking up 'ani001'
+[16:14:48.036]                   ResKind cache contains 938 entries
+[16:14:48.036]                   ✓ Found 'ani001' in ResKind cache
+[16:14:48.036]                   Has SpriteRes: True, Has SpriteInfo: True
+[16:14:48.036]                   ✓ Created NpcResource for 'ani001'
+[16:14:48.036]          ✓ NpcResource found for 'ani001'
+[16:14:48.036]          NPC name from Npcs.txt: '§«ng B¾c hæ'
+[16:14:48.036]          NPC name set to: '§«ng B¾c hæ'
+[16:14:48.036]                      SPR path: spr\npcres\animal\ani001\ani001_st.spr
+[16:14:48.044]                      ✓ Found in PAK (339647 bytes)
+[16:14:48.046]                            Frame size: 28x76
+[16:14:48.052] [NPC Loaded] ID: 1, Name: §«ng B¾c hæ, Frames: 96
+[16:14:53.562] [MapRenderer] SetNpcMarkers: 1 NPCs
+[16:14:53.562]    NPC 769: World(102688,159136) → Map(6418,4973)
+[16:14:54.972] [NPC Import] Loaded 12 NPCs, 1 for map 11
+[16:14:55.101] [ScreenToMapCoordinate] Screen(700,442) → Map(5980,4986) → World(95680,159552) → Region(186,155) Cell(14,26) ID=39866
+[16:14:55.101]   Zoom=1.00, ViewOffset=(5280,4544)
+[16:14:55.102] [ScreenToMapCoordinate] Screen(716,442) → Map(5996,4986) → World(95936,159552) → Region(187,155) Cell(6,26) ID=39867
+[16:14:55.102]   Zoom=1.00, ViewOffset=(5280,4544)
+[16:14:56.077] [ScreenToMapCoordinate] Screen(840,539) → Map(6120,5083) → World(97920,162656) → Region(191,158) Cell(4,27) ID=40639
+[16:14:56.077]   Zoom=1.00, ViewOffset=(5280,4544)
+[16:14:56.177] [ScreenToMapCoordinate] Screen(706,528) → Map(5986,5072) → World(95776,162304) → Region(187,158) Cell(1,16) ID=40635
+[16:14:56.177]   Zoom=1.00, ViewOffset=(5280,4544)
+[16:14:56.282] [ScreenToMapCoordinate] Screen(706,517) → Map(5986,5061) → World(95776,161952) → Region(187,158) Cell(1,5) ID=40635
+[16:14:56.282]   Zoom=1.00, ViewOffset=(5280,4544)
+[16:14:56.386] [ScreenToMapCoordinate] Screen(705,512) → Map(5985,5056) → World(95760,161792) → Region(187,158) Cell(0,0) ID=40635
+[16:14:56.386]   Zoom=1.00, ViewOffset=(5280,4544)
+[16:14:56.512] [ScreenToMapCoordinate] Screen(704,512) → Map(5984,5156) → World(95744,164992) → Region(187,161) Cell(0,4) ID=41403
+[16:14:56.512]   Zoom=1.00, ViewOffset=(5280,4644)
+[16:14:56.642] [ScreenToMapCoordinate] Screen(701,515) → Map(5981,5159) → World(95696,165088) → Region(186,161) Cell(14,7) ID=41402
+[16:14:56.642]   Zoom=1.00, ViewOffset=(5280,4644)
+[16:14:56.772] [ScreenToMapCoordinate] Screen(681,586) → Map(5961,5230) → World(95376,167360) → Region(186,163) Cell(4,14) ID=41914
+[16:14:56.772]   Zoom=1.00, ViewOffset=(5280,4644)
+[16:14:56.902] [ScreenToMapCoordinate] Screen(633,673) → Map(5913,5317) → World(94608,170144) → Region(184,166) Cell(12,5) ID=42680
+[16:14:56.902]   Zoom=1.00, ViewOffset=(5280,4644)
+[16:14:59.528] [ScreenToMapCoordinate] Screen(637,676) → Map(6361,5320) → World(101776,170240) → Region(198,166) Cell(12,8) ID=42694
+[16:14:59.528]   Zoom=1.00, ViewOffset=(5724,4644)
+[16:14:59.720] [ScreenToMapCoordinate] Screen(749,340) → Map(6473,4984) → World(103568,159488) → Region(202,155) Cell(4,24) ID=39882
+[16:14:59.720]   Zoom=1.00, ViewOffset=(5724,4644)
+[16:14:59.912] [ScreenToMapCoordinate] Screen(735,322) → Map(6459,4966) → World(103344,158912) → Region(201,155) Cell(13,6) ID=39881
+[16:14:59.912]   Zoom=1.00, ViewOffset=(5724,4644)
+[16:15:00.108] [ScreenToMapCoordinate] Screen(705,329) → Map(6429,4973) → World(102864,159136) → Region(200,155) Cell(14,13) ID=39880
+[16:15:00.108]   Zoom=1.00, ViewOffset=(5724,4644)
+[16:15:00.492] [Tooltip] Loading sprite for NPC ID 769...
+[16:15:00.492]                   → LoadSpriteById: ID=769, Action=NormalStand
+[16:15:00.492]       → GetNpcResourceById: Looking up NPC ID 769
+[16:15:00.492]          NPC database count: 2185 NPCs loaded
+[16:15:00.492]             → GetNpcResType: Looking up ID 769 in database
+[16:15:00.492]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[16:15:00.492]          NpcResType for ID 769: 'enemy051'
+[16:15:00.492]          Calling GetNpcResource('enemy051')...
+[16:15:00.492]                → GetNpcResource: Looking up 'enemy051'
+[16:15:00.492]                   ResKind cache contains 938 entries
+[16:15:00.492]                   ✓ Found 'enemy051' in ResKind cache
+[16:15:00.492]                   Has SpriteRes: True, Has SpriteInfo: True
+[16:15:00.492]                   ✓ Created NpcResource for 'enemy051'
+[16:15:00.492]          ✓ NpcResource found for 'enemy051'
+[16:15:00.492]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:00.492]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:00.492]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[16:15:00.496]                      ✓ Found in PAK (194439 bytes)
+[16:15:00.496] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[16:15:00.496]                            Frame size: 35x75
+[16:15:00.496] [Tooltip] ✓ Bitmap created: 35x75
+[16:15:00.688] [Tooltip] Loading sprite for NPC ID 769...
+[16:15:00.688]                   → LoadSpriteById: ID=769, Action=NormalStand
+[16:15:00.688]       → GetNpcResourceById: Looking up NPC ID 769
+[16:15:00.688]          NPC database count: 2185 NPCs loaded
+[16:15:00.688]             → GetNpcResType: Looking up ID 769 in database
+[16:15:00.688]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[16:15:00.688]          NpcResType for ID 769: 'enemy051'
+[16:15:00.690]          Calling GetNpcResource('enemy051')...
+[16:15:00.690]                → GetNpcResource: Looking up 'enemy051'
+[16:15:00.690]                   ResKind cache contains 938 entries
+[16:15:00.690]                   ✓ Found 'enemy051' in ResKind cache
+[16:15:00.690]                   Has SpriteRes: True, Has SpriteInfo: True
+[16:15:00.690]                   ✓ Created NpcResource for 'enemy051'
+[16:15:00.690]          ✓ NpcResource found for 'enemy051'
+[16:15:00.690]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:00.690]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:00.690]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[16:15:00.692]                      ✓ Found in PAK (194439 bytes)
+[16:15:00.692] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[16:15:00.692]                            Frame size: 35x75
+[16:15:00.692] [Tooltip] ✓ Bitmap created: 35x75
+[16:15:05.395] [ScreenToMapCoordinate] Screen(695,290) → Map(6419,4934) → World(102704,157888) → Region(200,154) Cell(9,6) ID=39624
+[16:15:05.395]   Zoom=1.00, ViewOffset=(5724,4644)
+[16:15:05.607] [ScreenToMapCoordinate] Screen(693,168) → Map(6417,4812) → World(102672,153984) → Region(200,150) Cell(8,12) ID=38600
+[16:15:05.607]   Zoom=1.00, ViewOffset=(5724,4644)
+[16:15:05.802] [ScreenToMapCoordinate] Screen(733,435) → Map(6457,5079) → World(103312,162528) → Region(201,158) Cell(12,23) ID=40649
+[16:15:05.802]   Zoom=1.00, ViewOffset=(5724,4644)
+[16:15:05.994] [ScreenToMapCoordinate] Screen(716,363) → Map(6440,5007) → World(103040,160224) → Region(201,156) Cell(4,15) ID=40137
+[16:15:05.994]   Zoom=1.00, ViewOffset=(5724,4644)
+[16:15:05.995] [ScreenToMapCoordinate] Screen(709,344) → Map(6433,4988) → World(102928,159616) → Region(201,155) Cell(0,28) ID=39881
+[16:15:05.995]   Zoom=1.00, ViewOffset=(5724,4644)
+[16:15:06.182] [ScreenToMapCoordinate] Screen(691,305) → Map(6415,4949) → World(102640,158368) → Region(200,154) Cell(7,21) ID=39624
+[16:15:06.182]   Zoom=1.00, ViewOffset=(5724,4644)
+[16:15:06.375] [ScreenToMapCoordinate] Screen(680,331) → Map(6404,4975) → World(102464,159200) → Region(200,155) Cell(2,15) ID=39880
+[16:15:06.375]   Zoom=1.00, ViewOffset=(5724,4644)
+[16:15:06.811] [Tooltip] Loading sprite for NPC ID 769...
+[16:15:06.811]                   → LoadSpriteById: ID=769, Action=NormalStand
+[16:15:06.811]       → GetNpcResourceById: Looking up NPC ID 769
+[16:15:06.811]          NPC database count: 2185 NPCs loaded
+[16:15:06.811]             → GetNpcResType: Looking up ID 769 in database
+[16:15:06.811]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[16:15:06.811]          NpcResType for ID 769: 'enemy051'
+[16:15:06.811]          Calling GetNpcResource('enemy051')...
+[16:15:06.811]                → GetNpcResource: Looking up 'enemy051'
+[16:15:06.812]                   ResKind cache contains 938 entries
+[16:15:06.812]                   ✓ Found 'enemy051' in ResKind cache
+[16:15:06.812]                   Has SpriteRes: True, Has SpriteInfo: True
+[16:15:06.812]                   ✓ Created NpcResource for 'enemy051'
+[16:15:06.812]          ✓ NpcResource found for 'enemy051'
+[16:15:06.812]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:06.812]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:06.812]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[16:15:06.812]                      ✓ Found in PAK (194439 bytes)
+[16:15:06.812] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[16:15:06.812]                            Frame size: 35x75
+[16:15:06.812] [Tooltip] ✓ Bitmap created: 35x75
+[16:15:06.819] --------------------------------------------------------------------------------
+[16:15:06.819] 🎯 LOADING NPC PREVIEW
+[16:15:06.819]    Search input: '769'
+[16:15:06.819]    Parsed as NPC ID: 769
+[16:15:06.819]    Game folder: D:\HuyenThietKiem\Bin\Server
+[16:15:06.819]    Mode: Server
+[16:15:06.819]    Looking for Client folder: D:\HuyenThietKiem\Bin\Client
+[16:15:06.819]    ✓ Found Client folder: D:\HuyenThietKiem\Bin\Client
+[16:15:06.819]    Using existing NPC Loader instance
+[16:15:06.819]    Calling GetNpcResourceById(769)...
+[16:15:06.819]       → GetNpcResourceById: Looking up NPC ID 769
+[16:15:06.819]          NPC database count: 2185 NPCs loaded
+[16:15:06.819]             → GetNpcResType: Looking up ID 769 in database
+[16:15:06.819]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[16:15:06.819]          NpcResType for ID 769: 'enemy051'
+[16:15:06.819]          Calling GetNpcResource('enemy051')...
+[16:15:06.819]                → GetNpcResource: Looking up 'enemy051'
+[16:15:06.819]                   ResKind cache contains 938 entries
+[16:15:06.819]                   ✓ Found 'enemy051' in ResKind cache
+[16:15:06.819]                   Has SpriteRes: True, Has SpriteInfo: True
+[16:15:06.819]                   ✓ Created NpcResource for 'enemy051'
+[16:15:06.819]          ✓ NpcResource found for 'enemy051'
+[16:15:06.819]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:06.822]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:06.822]    ✓ NPC resource loaded: NhiÖm vô s¸t thñ cÊp 90
+[16:15:06.823]    Loading sprite for action: NormalStand
+[16:15:06.823]                   → LoadSpriteById: ID=769, Action=NormalStand
+[16:15:06.823]       → GetNpcResourceById: Looking up NPC ID 769
+[16:15:06.823]          NPC database count: 2185 NPCs loaded
+[16:15:06.823]             → GetNpcResType: Looking up ID 769 in database
+[16:15:06.823]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[16:15:06.823]          NpcResType for ID 769: 'enemy051'
+[16:15:06.823]          Calling GetNpcResource('enemy051')...
+[16:15:06.823]                → GetNpcResource: Looking up 'enemy051'
+[16:15:06.823]                   ResKind cache contains 938 entries
+[16:15:06.823]                   ✓ Found 'enemy051' in ResKind cache
+[16:15:06.823]                   Has SpriteRes: True, Has SpriteInfo: True
+[16:15:06.823]                   ✓ Created NpcResource for 'enemy051'
+[16:15:06.823]          ✓ NpcResource found for 'enemy051'
+[16:15:06.823]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:06.823]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:06.823]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[16:15:06.823]                      ✓ Found in PAK (194439 bytes)
+[16:15:06.823]                            Frame size: 35x75
+[16:15:06.823] [NPC Loaded] ID: 769, Name: NhiÖm vô s¸t thñ cÊp 90, Frames: 80
+[16:15:06.827] [NPC Selected] Auto-filled NPC ID: 769 (NhiÕp ThÝ TrÇn)
+[16:15:07.013] [Tooltip] Loading sprite for NPC ID 769...
+[16:15:07.013]                   → LoadSpriteById: ID=769, Action=NormalStand
+[16:15:07.013]       → GetNpcResourceById: Looking up NPC ID 769
+[16:15:07.013]          NPC database count: 2185 NPCs loaded
+[16:15:07.013]             → GetNpcResType: Looking up ID 769 in database
+[16:15:07.013]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[16:15:07.013]          NpcResType for ID 769: 'enemy051'
+[16:15:07.013]          Calling GetNpcResource('enemy051')...
+[16:15:07.013]                → GetNpcResource: Looking up 'enemy051'
+[16:15:07.013]                   ResKind cache contains 938 entries
+[16:15:07.013]                   ✓ Found 'enemy051' in ResKind cache
+[16:15:07.013]                   Has SpriteRes: True, Has SpriteInfo: True
+[16:15:07.013]                   ✓ Created NpcResource for 'enemy051'
+[16:15:07.013]          ✓ NpcResource found for 'enemy051'
+[16:15:07.013]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:07.013]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:07.013]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[16:15:07.013]                      ✓ Found in PAK (194439 bytes)
+[16:15:07.021] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[16:15:07.021]                            Frame size: 35x75
+[16:15:07.022] [Tooltip] ✓ Bitmap created: 35x75
+[16:15:07.023] [ScreenToMapCoordinate] Screen(695,329) → Map(6419,4973) → World(102704,159136) → Region(200,155) Cell(9,13) ID=39880
+[16:15:07.023]   Zoom=1.00, ViewOffset=(5724,4644)
+[16:15:07.023] [NPC Moved] NPC #1 moved to World(102704,159136)
+[16:15:07.217] [Tooltip] Loading sprite for NPC ID 769...
+[16:15:07.217]                   → LoadSpriteById: ID=769, Action=NormalStand
+[16:15:07.217]       → GetNpcResourceById: Looking up NPC ID 769
+[16:15:07.217]          NPC database count: 2185 NPCs loaded
+[16:15:07.217]             → GetNpcResType: Looking up ID 769 in database
+[16:15:07.217]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[16:15:07.217]          NpcResType for ID 769: 'enemy051'
+[16:15:07.217]          Calling GetNpcResource('enemy051')...
+[16:15:07.217]                → GetNpcResource: Looking up 'enemy051'
+[16:15:07.217]                   ResKind cache contains 938 entries
+[16:15:07.217]                   ✓ Found 'enemy051' in ResKind cache
+[16:15:07.217]                   Has SpriteRes: True, Has SpriteInfo: True
+[16:15:07.217]                   ✓ Created NpcResource for 'enemy051'
+[16:15:07.217]          ✓ NpcResource found for 'enemy051'
+[16:15:07.217]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:07.217]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:07.217]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[16:15:07.217]                      ✓ Found in PAK (194439 bytes)
+[16:15:07.217] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[16:15:07.217]                            Frame size: 35x75
+[16:15:07.222] [Tooltip] ✓ Bitmap created: 35x75
+[16:15:07.408] [Tooltip] Loading sprite for NPC ID 769...
+[16:15:07.408]                   → LoadSpriteById: ID=769, Action=NormalStand
+[16:15:07.408]       → GetNpcResourceById: Looking up NPC ID 769
+[16:15:07.408]          NPC database count: 2185 NPCs loaded
+[16:15:07.412]             → GetNpcResType: Looking up ID 769 in database
+[16:15:07.412]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[16:15:07.412]          NpcResType for ID 769: 'enemy051'
+[16:15:07.412]          Calling GetNpcResource('enemy051')...
+[16:15:07.412]                → GetNpcResource: Looking up 'enemy051'
+[16:15:07.412]                   ResKind cache contains 938 entries
+[16:15:07.412]                   ✓ Found 'enemy051' in ResKind cache
+[16:15:07.412]                   Has SpriteRes: True, Has SpriteInfo: True
+[16:15:07.412]                   ✓ Created NpcResource for 'enemy051'
+[16:15:07.412]          ✓ NpcResource found for 'enemy051'
+[16:15:07.412]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:07.412]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:07.412]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[16:15:07.412]                      ✓ Found in PAK (194439 bytes)
+[16:15:07.412] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[16:15:07.412]                            Frame size: 35x75
+[16:15:07.412] [Tooltip] ✓ Bitmap created: 35x75
+[16:15:07.802] [Tooltip] Loading sprite for NPC ID 769...
+[16:15:07.802]                   → LoadSpriteById: ID=769, Action=NormalStand
+[16:15:07.802]       → GetNpcResourceById: Looking up NPC ID 769
+[16:15:07.802]          NPC database count: 2185 NPCs loaded
+[16:15:07.802]             → GetNpcResType: Looking up ID 769 in database
+[16:15:07.802]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[16:15:07.802]          NpcResType for ID 769: 'enemy051'
+[16:15:07.802]          Calling GetNpcResource('enemy051')...
+[16:15:07.802]                → GetNpcResource: Looking up 'enemy051'
+[16:15:07.802]                   ResKind cache contains 938 entries
+[16:15:07.802]                   ✓ Found 'enemy051' in ResKind cache
+[16:15:07.802]                   Has SpriteRes: True, Has SpriteInfo: True
+[16:15:07.802]                   ✓ Created NpcResource for 'enemy051'
+[16:15:07.802]          ✓ NpcResource found for 'enemy051'
+[16:15:07.802]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:07.802]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[16:15:07.802]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[16:15:07.802]                      ✓ Found in PAK (194439 bytes)
+[16:15:07.807] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[16:15:07.807]                            Frame size: 35x75
+[16:15:07.807] [Tooltip] ✓ Bitmap created: 35x75
+[16:15:15.321]                            Frame size: 35x75
+[16:15:15.427]                            Frame size: 35x75
+[16:15:15.550]                            Frame size: 35x75
+[16:15:15.650]                            Frame size: 35x74
+[16:15:15.768]                            Frame size: 35x74
+[16:15:15.872]                            Frame size: 35x74
+[16:15:15.982]                            Frame size: 36x75
+[16:15:16.093]                            Frame size: 35x75
+[16:15:16.192]                            Frame size: 35x75
+[16:15:16.302]                            Frame size: 27x76
+[16:15:16.412]                            Frame size: 26x76
+[16:15:16.523]                            Frame size: 25x76
+[16:15:16.631]                            Frame size: 26x76
+[16:15:16.742]                            Frame size: 26x76
+[16:15:16.852]                            Frame size: 26x76
+[16:15:16.962]                            Frame size: 26x76
+[16:15:17.081]                            Frame size: 26x76
+[16:15:17.180]                            Frame size: 26x76
+[16:15:17.297]                            Frame size: 26x76
+[16:15:17.400]                            Frame size: 36x74
+[17:14:25.540]                            Frame size: 36x74
+[17:14:25.647]                            Frame size: 37x73
+[17:14:25.760]                            Frame size: 37x74
+[17:14:25.763] [ScreenToMapCoordinate] Screen(865,418) → Map(6589,5062) → World(105424,161984) → Region(205,158) Cell(14,6) ID=40653
+[17:14:25.763]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:14:25.975]                            Frame size: 37x73
+[17:14:26.088]                            Frame size: 37x73
+[17:14:26.188] [ScreenToMapCoordinate] Screen(420,677) → Map(6144,5321) → World(98304,170272) → Region(192,166) Cell(0,9) ID=42688
+[17:14:26.188]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:14:26.395]                            Frame size: 37x73
+[17:14:26.403] [ScreenToMapCoordinate] Screen(139,191) → Map(5863,4835) → World(93808,154720) → Region(183,151) Cell(3,3) ID=38839
+[17:14:26.403]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:14:26.609]                            Frame size: 36x73
+[17:14:26.655]                            Frame size: 36x73
+[17:14:26.765]                            Frame size: 36x74
+[17:14:26.871]                            Frame size: 42x77
+[17:14:26.985]                            Frame size: 42x76
+[17:14:27.085]                            Frame size: 42x76
+[17:14:27.195]                            Frame size: 40x76
+[17:14:27.315]                            Frame size: 40x76
+[17:14:27.425]                            Frame size: 40x76
+[17:14:27.524]                            Frame size: 40x76
+[17:14:30.344] [ScreenToMapCoordinate] Screen(394,3) → Map(6118,4647) → World(97888,148704) → Region(191,145) Cell(3,7) ID=37311
+[17:14:30.345]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:14:30.535] [ScreenToMapCoordinate] Screen(257,137) → Map(5981,4781) → World(95696,152992) → Region(186,149) Cell(14,13) ID=38330
+[17:14:30.535]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:14:30.727] [ScreenToMapCoordinate] Screen(319,128) → Map(6043,4772) → World(96688,152704) → Region(188,149) Cell(13,4) ID=38332
+[17:14:30.727]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:44.924] [ScreenToMapCoordinate] Screen(21,506) → Map(5745,5150) → World(91920,164800) → Region(179,160) Cell(8,30) ID=41139
+[17:36:44.924]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:45.127] [ScreenToMapCoordinate] Screen(117,601) → Map(5841,5245) → World(93456,167840) → Region(182,163) Cell(8,29) ID=41910
+[17:36:45.127]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:45.499] [ScreenToMapCoordinate] Screen(879,633) → Map(6603,5277) → World(105648,168864) → Region(206,164) Cell(5,29) ID=42190
+[17:36:45.499]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:46.431] [ScreenToMapCoordinate] Screen(834,561) → Map(6558,5205) → World(104928,166560) → Region(204,162) Cell(15,21) ID=41676
+[17:36:46.436]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:46.636] [ScreenToMapCoordinate] Screen(788,481) → Map(6512,5125) → World(104192,164000) → Region(203,160) Cell(8,5) ID=41163
+[17:36:46.636]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:46.826] [ScreenToMapCoordinate] Screen(757,434) → Map(6481,5078) → World(103696,162496) → Region(202,158) Cell(8,22) ID=40650
+[17:36:46.826]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:47.016] [ScreenToMapCoordinate] Screen(740,315) → Map(6464,4959) → World(103424,158688) → Region(202,154) Cell(0,31) ID=39626
+[17:36:47.016]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:47.209] [ScreenToMapCoordinate] Screen(696,353) → Map(6420,4997) → World(102720,159904) → Region(200,156) Cell(10,5) ID=40136
+[17:36:47.209]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:47.209] [ScreenToMapCoordinate] Screen(696,351) → Map(6420,4995) → World(102720,159840) → Region(200,156) Cell(10,3) ID=40136
+[17:36:47.209]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:47.588] [Tooltip] Loading sprite for NPC ID 769...
+[17:36:47.588]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:36:47.588]       → GetNpcResourceById: Looking up NPC ID 769
+[17:36:47.588]          NPC database count: 2185 NPCs loaded
+[17:36:47.588]             → GetNpcResType: Looking up ID 769 in database
+[17:36:47.588]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:36:47.588]          NpcResType for ID 769: 'enemy051'
+[17:36:47.588]          Calling GetNpcResource('enemy051')...
+[17:36:47.588]                → GetNpcResource: Looking up 'enemy051'
+[17:36:47.588]                   ResKind cache contains 938 entries
+[17:36:47.588]                   ✓ Found 'enemy051' in ResKind cache
+[17:36:47.588]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:36:47.588]                   ✓ Created NpcResource for 'enemy051'
+[17:36:47.588]          ✓ NpcResource found for 'enemy051'
+[17:36:47.588]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:47.588]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:47.588]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:36:47.591]                      ✓ Found in PAK (194439 bytes)
+[17:36:47.591] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:36:47.591]                            Frame size: 35x75
+[17:36:47.593] [Tooltip] ✓ Bitmap created: 35x75
+[17:36:47.776] [Tooltip] Loading sprite for NPC ID 769...
+[17:36:47.776]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:36:47.776]       → GetNpcResourceById: Looking up NPC ID 769
+[17:36:47.776]          NPC database count: 2185 NPCs loaded
+[17:36:47.776]             → GetNpcResType: Looking up ID 769 in database
+[17:36:47.776]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:36:47.776]          NpcResType for ID 769: 'enemy051'
+[17:36:47.776]          Calling GetNpcResource('enemy051')...
+[17:36:47.776]                → GetNpcResource: Looking up 'enemy051'
+[17:36:47.776]                   ResKind cache contains 938 entries
+[17:36:47.776]                   ✓ Found 'enemy051' in ResKind cache
+[17:36:47.776]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:36:47.776]                   ✓ Created NpcResource for 'enemy051'
+[17:36:47.776]          ✓ NpcResource found for 'enemy051'
+[17:36:47.776]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:47.776]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:47.776]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:36:47.782]                      ✓ Found in PAK (194439 bytes)
+[17:36:47.782] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:36:47.782]                            Frame size: 35x75
+[17:36:47.782] [Tooltip] ✓ Bitmap created: 35x75
+[17:36:47.966] [Tooltip] Loading sprite for NPC ID 769...
+[17:36:47.966]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:36:47.971]       → GetNpcResourceById: Looking up NPC ID 769
+[17:36:47.971]          NPC database count: 2185 NPCs loaded
+[17:36:47.971]             → GetNpcResType: Looking up ID 769 in database
+[17:36:47.971]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:36:47.971]          NpcResType for ID 769: 'enemy051'
+[17:36:47.971]          Calling GetNpcResource('enemy051')...
+[17:36:47.971]                → GetNpcResource: Looking up 'enemy051'
+[17:36:47.971]                   ResKind cache contains 938 entries
+[17:36:47.971]                   ✓ Found 'enemy051' in ResKind cache
+[17:36:47.971]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:36:47.971]                   ✓ Created NpcResource for 'enemy051'
+[17:36:47.971]          ✓ NpcResource found for 'enemy051'
+[17:36:47.971]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:47.971]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:47.971]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:36:47.974]                      ✓ Found in PAK (194439 bytes)
+[17:36:47.974] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:36:47.974]                            Frame size: 35x75
+[17:36:47.974] [Tooltip] ✓ Bitmap created: 35x75
+[17:36:47.976] --------------------------------------------------------------------------------
+[17:36:47.976] 🎯 LOADING NPC PREVIEW
+[17:36:47.976]    Search input: '769'
+[17:36:47.976]    Parsed as NPC ID: 769
+[17:36:47.976]    Game folder: D:\HuyenThietKiem\Bin\Server
+[17:36:47.976]    Mode: Server
+[17:36:47.976]    Looking for Client folder: D:\HuyenThietKiem\Bin\Client
+[17:36:47.976]    ✓ Found Client folder: D:\HuyenThietKiem\Bin\Client
+[17:36:47.976]    Using existing NPC Loader instance
+[17:36:47.976]    Calling GetNpcResourceById(769)...
+[17:36:47.976]       → GetNpcResourceById: Looking up NPC ID 769
+[17:36:47.976]          NPC database count: 2185 NPCs loaded
+[17:36:47.976]             → GetNpcResType: Looking up ID 769 in database
+[17:36:47.976]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:36:47.976]          NpcResType for ID 769: 'enemy051'
+[17:36:47.976]          Calling GetNpcResource('enemy051')...
+[17:36:47.976]                → GetNpcResource: Looking up 'enemy051'
+[17:36:47.976]                   ResKind cache contains 938 entries
+[17:36:47.976]                   ✓ Found 'enemy051' in ResKind cache
+[17:36:47.976]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:36:47.976]                   ✓ Created NpcResource for 'enemy051'
+[17:36:47.976]          ✓ NpcResource found for 'enemy051'
+[17:36:47.976]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:47.976]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:47.976]    ✓ NPC resource loaded: NhiÖm vô s¸t thñ cÊp 90
+[17:36:47.976]    Loading sprite for action: NormalStand
+[17:36:47.976]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:36:47.976]       → GetNpcResourceById: Looking up NPC ID 769
+[17:36:47.976]          NPC database count: 2185 NPCs loaded
+[17:36:47.976]             → GetNpcResType: Looking up ID 769 in database
+[17:36:47.976]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:36:47.976]          NpcResType for ID 769: 'enemy051'
+[17:36:47.976]          Calling GetNpcResource('enemy051')...
+[17:36:47.976]                → GetNpcResource: Looking up 'enemy051'
+[17:36:47.976]                   ResKind cache contains 938 entries
+[17:36:47.976]                   ✓ Found 'enemy051' in ResKind cache
+[17:36:47.976]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:36:47.976]                   ✓ Created NpcResource for 'enemy051'
+[17:36:47.976]          ✓ NpcResource found for 'enemy051'
+[17:36:47.976]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:47.976]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:47.976]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:36:47.976]                      ✓ Found in PAK (194439 bytes)
+[17:36:47.976]                            Frame size: 35x75
+[17:36:47.984] [NPC Loaded] ID: 769, Name: NhiÖm vô s¸t thñ cÊp 90, Frames: 80
+[17:36:47.984] [NPC Selected] Auto-filled NPC ID: 769 (NhiÕp ThÝ TrÇn)
+[17:36:48.167] [Tooltip] Loading sprite for NPC ID 769...
+[17:36:48.167]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:36:48.167]       → GetNpcResourceById: Looking up NPC ID 769
+[17:36:48.167]          NPC database count: 2185 NPCs loaded
+[17:36:48.167]             → GetNpcResType: Looking up ID 769 in database
+[17:36:48.167]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:36:48.167]          NpcResType for ID 769: 'enemy051'
+[17:36:48.167]          Calling GetNpcResource('enemy051')...
+[17:36:48.167]                → GetNpcResource: Looking up 'enemy051'
+[17:36:48.167]                   ResKind cache contains 938 entries
+[17:36:48.167]                   ✓ Found 'enemy051' in ResKind cache
+[17:36:48.167]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:36:48.167]                   ✓ Created NpcResource for 'enemy051'
+[17:36:48.167]          ✓ NpcResource found for 'enemy051'
+[17:36:48.167]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:48.167]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:48.167]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:36:48.167]                      ✓ Found in PAK (194439 bytes)
+[17:36:48.167] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:36:48.167]                            Frame size: 35x75
+[17:36:48.167] [Tooltip] ✓ Bitmap created: 35x75
+[17:36:48.175] [ScreenToMapCoordinate] Screen(697,332) → Map(6421,4976) → World(102736,159232) → Region(200,155) Cell(10,16) ID=39880
+[17:36:48.175]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:48.176] [NPC Moved] NPC #1 moved to World(102736,159232)
+[17:36:48.361] [Tooltip] Loading sprite for NPC ID 769...
+[17:36:48.361]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:36:48.361]       → GetNpcResourceById: Looking up NPC ID 769
+[17:36:48.361]          NPC database count: 2185 NPCs loaded
+[17:36:48.361]             → GetNpcResType: Looking up ID 769 in database
+[17:36:48.361]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:36:48.361]          NpcResType for ID 769: 'enemy051'
+[17:36:48.366]          Calling GetNpcResource('enemy051')...
+[17:36:48.366]                → GetNpcResource: Looking up 'enemy051'
+[17:36:48.366]                   ResKind cache contains 938 entries
+[17:36:48.366]                   ✓ Found 'enemy051' in ResKind cache
+[17:36:48.366]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:36:48.366]                   ✓ Created NpcResource for 'enemy051'
+[17:36:48.366]          ✓ NpcResource found for 'enemy051'
+[17:36:48.366]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:48.366]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:48.366]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:36:48.369]                      ✓ Found in PAK (194439 bytes)
+[17:36:48.369] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:36:48.369]                            Frame size: 35x75
+[17:36:48.369] [Tooltip] ✓ Bitmap created: 35x75
+[17:36:48.559] [Tooltip] Loading sprite for NPC ID 769...
+[17:36:48.559]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:36:48.559]       → GetNpcResourceById: Looking up NPC ID 769
+[17:36:48.559]          NPC database count: 2185 NPCs loaded
+[17:36:48.559]             → GetNpcResType: Looking up ID 769 in database
+[17:36:48.559]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:36:48.559]          NpcResType for ID 769: 'enemy051'
+[17:36:48.559]          Calling GetNpcResource('enemy051')...
+[17:36:48.559]                → GetNpcResource: Looking up 'enemy051'
+[17:36:48.559]                   ResKind cache contains 938 entries
+[17:36:48.559]                   ✓ Found 'enemy051' in ResKind cache
+[17:36:48.559]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:36:48.559]                   ✓ Created NpcResource for 'enemy051'
+[17:36:48.559]          ✓ NpcResource found for 'enemy051'
+[17:36:48.559]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:48.559]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:36:48.559]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:36:48.562]                      ✓ Found in PAK (194439 bytes)
+[17:36:48.562] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:36:48.562]                            Frame size: 35x75
+[17:36:48.562] [Tooltip] ✓ Bitmap created: 35x75
+[17:36:48.562] [ScreenToMapCoordinate] Screen(709,340) → Map(6433,4984) → World(102928,159488) → Region(201,155) Cell(0,24) ID=39881
+[17:36:48.562]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:48.566] [ScreenToMapCoordinate] Screen(710,341) → Map(6434,4985) → World(102944,159520) → Region(201,155) Cell(1,25) ID=39881
+[17:36:48.566]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:48.754] [ScreenToMapCoordinate] Screen(733,393) → Map(6457,5037) → World(103312,161184) → Region(201,157) Cell(12,13) ID=40393
+[17:36:48.754]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:48.941] [ScreenToMapCoordinate] Screen(666,597) → Map(6390,5241) → World(102240,167712) → Region(199,163) Cell(11,25) ID=41927
+[17:36:48.941]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:50.016] [ScreenToMapCoordinate] Screen(880,457) → Map(6604,5101) → World(105664,163232) → Region(206,159) Cell(6,13) ID=40910
+[17:36:50.016]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:51.212] [ScreenToMapCoordinate] Screen(875,132) → Map(6599,4776) → World(105584,152832) → Region(206,149) Cell(3,8) ID=38350
+[17:36:51.212]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:51.406] [ScreenToMapCoordinate] Screen(636,349) → Map(6360,4993) → World(101760,159776) → Region(198,156) Cell(12,1) ID=40134
+[17:36:51.406]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:51.596] [ScreenToMapCoordinate] Screen(576,448) → Map(6300,5092) → World(100800,162944) → Region(196,159) Cell(14,4) ID=40900
+[17:36:51.596]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:51.786] [ScreenToMapCoordinate] Screen(617,475) → Map(6341,5119) → World(101456,163808) → Region(198,159) Cell(2,31) ID=40902
+[17:36:51.786]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:51.977] [ScreenToMapCoordinate] Screen(630,487) → Map(6354,5131) → World(101664,164192) → Region(198,160) Cell(9,11) ID=41158
+[17:36:51.977]   Zoom=1.00, ViewOffset=(5724,4644)
+[17:36:52.170] [ScreenToMapCoordinate] Screen(638,503) → Map(6362,5267) → World(101792,168544) → Region(198,164) Cell(13,19) ID=42182
+[17:36:52.170]   Zoom=1.00, ViewOffset=(5724,4764)
+[17:36:52.376] [ScreenToMapCoordinate] Screen(640,521) → Map(6364,5285) → World(101824,169120) → Region(198,165) Cell(14,5) ID=42438
+[17:36:52.376]   Zoom=1.00, ViewOffset=(5724,4764)
+[17:36:52.576] [ScreenToMapCoordinate] Screen(634,667) → Map(6358,5431) → World(101728,173792) → Region(198,169) Cell(11,23) ID=43462
+[17:36:52.576]   Zoom=1.00, ViewOffset=(5724,4764)
+[17:36:52.766] [ScreenToMapCoordinate] Screen(496,676) → Map(6220,5440) → World(99520,174080) → Region(194,170) Cell(6,0) ID=43714
+[17:36:52.766]   Zoom=1.00, ViewOffset=(5724,4764)
+[17:36:52.961] [ScreenToMapCoordinate] Screen(475,665) → Map(6199,5429) → World(99184,173728) → Region(193,169) Cell(11,21) ID=43457
+[17:36:52.962]   Zoom=1.00, ViewOffset=(5724,4764)
+[17:36:53.393] [ScreenToMapCoordinate] Screen(573,680) → Map(6297,5444) → World(100752,174208) → Region(196,170) Cell(12,4) ID=43716
+[17:36:53.393]   Zoom=1.00, ViewOffset=(5724,4764)
+[17:36:53.607] [ScreenToMapCoordinate] Screen(594,676) → Map(6318,5440) → World(101088,174080) → Region(197,170) Cell(7,0) ID=43717
+[17:36:53.607]   Zoom=1.00, ViewOffset=(5724,4764)
+[17:36:54.456] [ScreenToMapCoordinate] Screen(622,677) → Map(6523,5441) → World(104368,174112) → Region(203,170) Cell(13,1) ID=43723
+[17:36:54.456]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:36:59.836] [MapRenderer] SetTrapMarkers: 590 Traps
+[17:37:01.306] [Trap Import] Loaded 590 trap entries from D:\HuyenThietKiem\Bin\Server\library\maps\Trap\11.txt
+[17:37:01.306] [ScreenToMapCoordinate] Screen(751,445) → Map(6652,5209) → World(106432,166688) → Region(207,162) Cell(14,25) ID=41679
+[17:37:01.306]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:01.500] [ScreenToMapCoordinate] Screen(751,445) → Map(6652,5209) → World(106432,166688) → Region(207,162) Cell(14,25) ID=41679
+[17:37:01.500]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:01.690] [ScreenToMapCoordinate] Screen(748,442) → Map(6649,5206) → World(106384,166592) → Region(207,162) Cell(12,22) ID=41679
+[17:37:01.690]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:01.882] [ScreenToMapCoordinate] Screen(746,442) → Map(6647,5206) → World(106352,166592) → Region(207,162) Cell(11,22) ID=41679
+[17:37:01.882]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:02.151] [ScreenToMapCoordinate] Screen(745,441) → Map(6646,5205) → World(106336,166560) → Region(207,162) Cell(11,21) ID=41679
+[17:37:02.151]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:02.345] [ScreenToMapCoordinate] Screen(726,413) → Map(6627,5177) → World(106032,165664) → Region(207,161) Cell(1,25) ID=41423
+[17:37:02.345]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:02.536] [ScreenToMapCoordinate] Screen(737,453) → Map(6638,5217) → World(106208,166944) → Region(207,163) Cell(7,1) ID=41935
+[17:37:02.536]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:02.726] [ScreenToMapCoordinate] Screen(751,436) → Map(6652,5200) → World(106432,166400) → Region(207,162) Cell(14,16) ID=41679
+[17:37:02.726]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:02.918] [ScreenToMapCoordinate] Screen(728,414) → Map(6629,5178) → World(106064,165696) → Region(207,161) Cell(2,26) ID=41423
+[17:37:02.918]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:03.112] [ScreenToMapCoordinate] Screen(602,333) → Map(6503,5097) → World(104048,163104) → Region(203,159) Cell(3,9) ID=40907
+[17:37:03.112]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:03.112] [ScreenToMapCoordinate] Screen(602,332) → Map(6503,5096) → World(104048,163072) → Region(203,159) Cell(3,8) ID=40907
+[17:37:03.112]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:03.303] [ScreenToMapCoordinate] Screen(599,329) → Map(6500,5093) → World(104000,162976) → Region(203,159) Cell(2,5) ID=40907
+[17:37:03.303]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:03.493] [ScreenToMapCoordinate] Screen(596,349) → Map(6497,5113) → World(103952,163616) → Region(203,159) Cell(0,25) ID=40907
+[17:37:03.495]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:03.687] [ScreenToMapCoordinate] Screen(579,346) → Map(6480,5110) → World(103680,163520) → Region(202,159) Cell(8,22) ID=40906
+[17:37:03.687]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:03.878] [ScreenToMapCoordinate] Screen(604,340) → Map(6505,5104) → World(104080,163328) → Region(203,159) Cell(4,16) ID=40907
+[17:37:03.878]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:04.070] [ScreenToMapCoordinate] Screen(620,341) → Map(6521,5105) → World(104336,163360) → Region(203,159) Cell(12,17) ID=40907
+[17:37:04.071]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:04.264] [ScreenToMapCoordinate] Screen(557,365) → Map(6458,5129) → World(103328,164128) → Region(201,160) Cell(13,9) ID=41161
+[17:37:04.264]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:04.454] [ScreenToMapCoordinate] Screen(460,325) → Map(6361,5089) → World(101776,162848) → Region(198,159) Cell(12,1) ID=40902
+[17:37:04.456]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:04.647] [ScreenToMapCoordinate] Screen(436,312) → Map(6337,5076) → World(101392,162432) → Region(198,158) Cell(0,20) ID=40646
+[17:37:04.647]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:04.836] [ScreenToMapCoordinate] Screen(415,309) → Map(6316,5073) → World(101056,162336) → Region(197,158) Cell(6,17) ID=40645
+[17:37:04.836]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:05.026] [ScreenToMapCoordinate] Screen(415,310) → Map(6316,5074) → World(101056,162368) → Region(197,158) Cell(6,18) ID=40645
+[17:37:05.026]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:05.221] [ScreenToMapCoordinate] Screen(425,324) → Map(6326,5088) → World(101216,162816) → Region(197,159) Cell(11,0) ID=40901
+[17:37:05.221]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:05.416] [ScreenToMapCoordinate] Screen(442,347) → Map(6343,5111) → World(101488,163552) → Region(198,159) Cell(3,23) ID=40902
+[17:37:05.416]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:05.606] [ScreenToMapCoordinate] Screen(443,347) → Map(6344,5111) → World(101504,163552) → Region(198,159) Cell(4,23) ID=40902
+[17:37:05.606]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:06.536] [ScreenToMapCoordinate] Screen(443,346) → Map(6344,5110) → World(101504,163520) → Region(198,159) Cell(4,22) ID=40902
+[17:37:06.536]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:06.726] [ScreenToMapCoordinate] Screen(444,328) → Map(6345,5092) → World(101520,162944) → Region(198,159) Cell(4,4) ID=40902
+[17:37:06.726]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:06.916] [ScreenToMapCoordinate] Screen(443,320) → Map(6344,5084) → World(101504,162688) → Region(198,158) Cell(4,28) ID=40646
+[17:37:06.916]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:07.107] [ScreenToMapCoordinate] Screen(443,321) → Map(6344,5085) → World(101504,162720) → Region(198,158) Cell(4,29) ID=40646
+[17:37:07.107]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:07.290] [ScreenToMapCoordinate] Screen(484,404) → Map(6385,5168) → World(102160,165376) → Region(199,161) Cell(8,16) ID=41415
+[17:37:07.296]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:07.486] [ScreenToMapCoordinate] Screen(522,448) → Map(6423,5212) → World(102768,166784) → Region(200,162) Cell(11,28) ID=41672
+[17:37:07.486]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:07.682] [ScreenToMapCoordinate] Screen(523,463) → Map(6424,5227) → World(102784,167264) → Region(200,163) Cell(12,11) ID=41928
+[17:37:07.682]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:07.682] [ScreenToMapCoordinate] Screen(523,464) → Map(6424,5228) → World(102784,167296) → Region(200,163) Cell(12,12) ID=41928
+[17:37:07.682]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:07.871] [ScreenToMapCoordinate] Screen(522,466) → Map(6423,5230) → World(102768,167360) → Region(200,163) Cell(11,14) ID=41928
+[17:37:07.871]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:08.447] [ScreenToMapCoordinate] Screen(508,466) → Map(6409,5230) → World(102544,167360) → Region(200,163) Cell(4,14) ID=41928
+[17:37:08.447]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:08.666] [ScreenToMapCoordinate] Screen(508,465) → Map(6409,5229) → World(102544,167328) → Region(200,163) Cell(4,13) ID=41928
+[17:37:08.666]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:08.856] [ScreenToMapCoordinate] Screen(517,420) → Map(6418,5184) → World(102688,165888) → Region(200,162) Cell(9,0) ID=41672
+[17:37:08.857]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:09.046] [ScreenToMapCoordinate] Screen(549,392) → Map(6450,5156) → World(103200,164992) → Region(201,161) Cell(9,4) ID=41417
+[17:37:09.046]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:09.046] [ScreenToMapCoordinate] Screen(549,391) → Map(6450,5155) → World(103200,164960) → Region(201,161) Cell(9,3) ID=41417
+[17:37:09.046]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:09.240] [ScreenToMapCoordinate] Screen(558,326) → Map(6459,5090) → World(103344,162880) → Region(201,159) Cell(13,2) ID=40905
+[17:37:09.240]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:09.431] [ScreenToMapCoordinate] Screen(614,321) → Map(6515,5085) → World(104240,162720) → Region(203,158) Cell(9,29) ID=40651
+[17:37:09.431]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:09.621] [ScreenToMapCoordinate] Screen(610,325) → Map(6511,5089) → World(104176,162848) → Region(203,159) Cell(7,1) ID=40907
+[17:37:09.621]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:09.806] [ScreenToMapCoordinate] Screen(476,328) → Map(6377,5092) → World(102032,162944) → Region(199,159) Cell(4,4) ID=40903
+[17:37:09.806]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:09.996] [ScreenToMapCoordinate] Screen(439,295) → Map(6340,5059) → World(101440,161888) → Region(198,158) Cell(2,3) ID=40646
+[17:37:09.996]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:10.192] [ScreenToMapCoordinate] Screen(435,294) → Map(6336,5058) → World(101376,161856) → Region(198,158) Cell(0,2) ID=40646
+[17:37:10.196]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:10.381] [ScreenToMapCoordinate] Screen(434,294) → Map(6335,5058) → World(101360,161856) → Region(197,158) Cell(15,2) ID=40645
+[17:37:10.385]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:10.571] [ScreenToMapCoordinate] Screen(434,293) → Map(6335,5057) → World(101360,161824) → Region(197,158) Cell(15,1) ID=40645
+[17:37:10.571]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:10.762] [ScreenToMapCoordinate] Screen(434,292) → Map(6335,5056) → World(101360,161792) → Region(197,158) Cell(15,0) ID=40645
+[17:37:10.762]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:11.404] [ScreenToMapCoordinate] Screen(434,291) → Map(6335,5055) → World(101360,161760) → Region(197,157) Cell(15,31) ID=40389
+[17:37:11.404]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:13.980] [ScreenToMapCoordinate] Screen(436,291) → Map(6337,5055) → World(101392,161760) → Region(198,157) Cell(0,31) ID=40390
+[17:37:13.980]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:14.169] [ScreenToMapCoordinate] Screen(618,339) → Map(6519,5103) → World(104304,163296) → Region(203,159) Cell(11,15) ID=40907
+[17:37:14.169]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:14.359] [ScreenToMapCoordinate] Screen(629,341) → Map(6530,5105) → World(104480,163360) → Region(204,159) Cell(1,17) ID=40908
+[17:37:14.361]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:14.551] [ScreenToMapCoordinate] Screen(631,338) → Map(6532,5102) → World(104512,163264) → Region(204,159) Cell(2,14) ID=40908
+[17:37:14.551]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:37:14.736] [ScreenToMapCoordinate] Screen(645,312) → Map(6546,5076) → World(104736,162432) → Region(204,158) Cell(9,20) ID=40652
+[17:37:14.736]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:18.202] [ScreenToMapCoordinate] Screen(354,680) → Map(6255,5444) → World(100080,174208) → Region(195,170) Cell(7,4) ID=43715
+[17:42:18.202]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:18.396] [ScreenToMapCoordinate] Screen(371,636) → Map(6272,5400) → World(100352,172800) → Region(196,168) Cell(0,24) ID=43204
+[17:42:18.396]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:18.587] [ScreenToMapCoordinate] Screen(414,609) → Map(6315,5373) → World(101040,171936) → Region(197,167) Cell(5,29) ID=42949
+[17:42:18.587]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:18.789] [ScreenToMapCoordinate] Screen(580,464) → Map(6481,5228) → World(103696,167296) → Region(202,163) Cell(8,12) ID=41930
+[17:42:18.789]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:18.983] [ScreenToMapCoordinate] Screen(596,472) → Map(6497,5236) → World(103952,167552) → Region(203,163) Cell(0,20) ID=41931
+[17:42:18.983]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:19.178] [ScreenToMapCoordinate] Screen(600,472) → Map(6501,5236) → World(104016,167552) → Region(203,163) Cell(2,20) ID=41931
+[17:42:19.178]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:19.370] [ScreenToMapCoordinate] Screen(584,412) → Map(6485,5176) → World(103760,165632) → Region(202,161) Cell(10,24) ID=41418
+[17:42:19.370]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:21.117] [ScreenToMapCoordinate] Screen(876,114) → Map(6777,4878) → World(108432,156096) → Region(211,152) Cell(12,14) ID=39123
+[17:42:21.117]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:21.316] [ScreenToMapCoordinate] Screen(595,250) → Map(6496,5014) → World(103936,160448) → Region(203,156) Cell(0,22) ID=40139
+[17:42:21.316]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:21.509] [ScreenToMapCoordinate] Screen(567,224) → Map(6468,4988) → World(103488,159616) → Region(202,155) Cell(2,28) ID=39882
+[17:42:21.509]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:21.705] [ScreenToMapCoordinate] Screen(534,220) → Map(6435,4984) → World(102960,159488) → Region(201,155) Cell(1,24) ID=39881
+[17:42:21.705]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:22.117] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:22.117]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:22.117]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:22.117]          NPC database count: 2185 NPCs loaded
+[17:42:22.117]             → GetNpcResType: Looking up ID 769 in database
+[17:42:22.117]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:22.117]          NpcResType for ID 769: 'enemy051'
+[17:42:22.117]          Calling GetNpcResource('enemy051')...
+[17:42:22.117]                → GetNpcResource: Looking up 'enemy051'
+[17:42:22.117]                   ResKind cache contains 938 entries
+[17:42:22.117]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:22.117]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:22.117]                   ✓ Created NpcResource for 'enemy051'
+[17:42:22.117]          ✓ NpcResource found for 'enemy051'
+[17:42:22.117]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:22.117]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:22.117]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:22.117]                      ✓ Found in PAK (194439 bytes)
+[17:42:22.117] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:22.117]                            Frame size: 35x75
+[17:42:22.117] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:22.317] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:22.317]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:22.317]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:22.317]          NPC database count: 2185 NPCs loaded
+[17:42:22.317]             → GetNpcResType: Looking up ID 769 in database
+[17:42:22.317]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:22.317]          NpcResType for ID 769: 'enemy051'
+[17:42:22.317]          Calling GetNpcResource('enemy051')...
+[17:42:22.317]                → GetNpcResource: Looking up 'enemy051'
+[17:42:22.317]                   ResKind cache contains 938 entries
+[17:42:22.317]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:22.317]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:22.317]                   ✓ Created NpcResource for 'enemy051'
+[17:42:22.317]          ✓ NpcResource found for 'enemy051'
+[17:42:22.317]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:22.317]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:22.317]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:22.317]                      ✓ Found in PAK (194439 bytes)
+[17:42:22.317] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:22.317]                            Frame size: 35x75
+[17:42:22.317] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:23.028] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:23.028]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:23.028]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:23.028]          NPC database count: 2185 NPCs loaded
+[17:42:23.028]             → GetNpcResType: Looking up ID 769 in database
+[17:42:23.028]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:23.028]          NpcResType for ID 769: 'enemy051'
+[17:42:23.028]          Calling GetNpcResource('enemy051')...
+[17:42:23.028]                → GetNpcResource: Looking up 'enemy051'
+[17:42:23.028]                   ResKind cache contains 938 entries
+[17:42:23.028]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:23.028]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:23.028]                   ✓ Created NpcResource for 'enemy051'
+[17:42:23.028]          ✓ NpcResource found for 'enemy051'
+[17:42:23.028]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:23.028]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:23.028]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:23.028]                      ✓ Found in PAK (194439 bytes)
+[17:42:23.028] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:23.028]                            Frame size: 35x75
+[17:42:23.028] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:23.036] [ScreenToMapCoordinate] Screen(616,247) → Map(6517,5011) → World(104272,160352) → Region(203,156) Cell(10,19) ID=40139
+[17:42:23.036]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:23.250] [ScreenToMapCoordinate] Screen(732,189) → Map(6633,4953) → World(106128,158496) → Region(207,154) Cell(4,25) ID=39631
+[17:42:23.250]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:27.156] [ScreenToMapCoordinate] Screen(869,56) → Map(6770,4820) → World(108320,154240) → Region(211,150) Cell(9,20) ID=38611
+[17:42:27.156]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:27.355] [ScreenToMapCoordinate] Screen(503,267) → Map(6404,5031) → World(102464,160992) → Region(200,157) Cell(2,7) ID=40392
+[17:42:27.357]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:27.547] [ScreenToMapCoordinate] Screen(508,250) → Map(6409,5014) → World(102544,160448) → Region(200,156) Cell(4,22) ID=40136
+[17:42:27.547]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:27.738] [ScreenToMapCoordinate] Screen(526,219) → Map(6427,4983) → World(102832,159456) → Region(200,155) Cell(13,23) ID=39880
+[17:42:27.738]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:28.117] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:28.117]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:28.117]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:28.117]          NPC database count: 2185 NPCs loaded
+[17:42:28.117]             → GetNpcResType: Looking up ID 769 in database
+[17:42:28.117]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:28.117]          NpcResType for ID 769: 'enemy051'
+[17:42:28.117]          Calling GetNpcResource('enemy051')...
+[17:42:28.117]                → GetNpcResource: Looking up 'enemy051'
+[17:42:28.117]                   ResKind cache contains 938 entries
+[17:42:28.117]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:28.117]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:28.117]                   ✓ Created NpcResource for 'enemy051'
+[17:42:28.117]          ✓ NpcResource found for 'enemy051'
+[17:42:28.117]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:28.117]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:28.117]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:28.117]                      ✓ Found in PAK (194439 bytes)
+[17:42:28.117] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:28.117]                            Frame size: 35x75
+[17:42:28.117] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:29.513] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:29.513]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:29.513]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:29.513]          NPC database count: 2185 NPCs loaded
+[17:42:29.513]             → GetNpcResType: Looking up ID 769 in database
+[17:42:29.513]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:29.513]          NpcResType for ID 769: 'enemy051'
+[17:42:29.513]          Calling GetNpcResource('enemy051')...
+[17:42:29.513]                → GetNpcResource: Looking up 'enemy051'
+[17:42:29.513]                   ResKind cache contains 938 entries
+[17:42:29.513]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:29.513]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:29.513]                   ✓ Created NpcResource for 'enemy051'
+[17:42:29.513]          ✓ NpcResource found for 'enemy051'
+[17:42:29.513]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:29.513]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:29.513]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:29.516]                      ✓ Found in PAK (194439 bytes)
+[17:42:29.516] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:29.516]                            Frame size: 35x75
+[17:42:29.517] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:29.519] [ScreenToMapCoordinate] Screen(511,217) → Map(6412,4981) → World(102592,159392) → Region(200,155) Cell(6,21) ID=39880
+[17:42:29.519]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:29.713] [ScreenToMapCoordinate] Screen(507,219) → Map(6408,4983) → World(102528,159456) → Region(200,155) Cell(4,23) ID=39880
+[17:42:29.713]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:30.040] [ScreenToMapCoordinate] Screen(506,220) → Map(6407,4984) → World(102512,159488) → Region(200,155) Cell(3,24) ID=39880
+[17:42:30.040]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:30.232] [ScreenToMapCoordinate] Screen(396,374) → Map(6297,5138) → World(100752,164416) → Region(196,160) Cell(12,18) ID=41156
+[17:42:30.235]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:30.237] [ScreenToMapCoordinate] Screen(375,406) → Map(6276,5170) → World(100416,165440) → Region(196,161) Cell(2,18) ID=41412
+[17:42:30.237]   Zoom=1.00, ViewOffset=(5901,4764)
+[17:42:32.037] [ScreenToMapCoordinate] Screen(83,671) → Map(6226,5219) → World(99616,167008) → Region(194,163) Cell(9,3) ID=41922
+[17:42:32.037]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:32.089] [ScreenToMapCoordinate] Screen(326,487) → Map(6308,5158) → World(100928,165056) → Region(197,161) Cell(2,6) ID=41413
+[17:42:32.089]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:32.146] [ScreenToMapCoordinate] Screen(539,342) → Map(6379,5109) → World(102064,163488) → Region(199,159) Cell(5,21) ID=40903
+[17:42:32.146]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:32.202] [ScreenToMapCoordinate] Screen(631,300) → Map(6410,5095) → World(102560,163040) → Region(200,159) Cell(5,7) ID=40904
+[17:42:32.202]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:32.262] [ScreenToMapCoordinate] Screen(670,285) → Map(6423,5090) → World(102768,162880) → Region(200,159) Cell(11,2) ID=40904
+[17:42:32.262]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:32.318] [ScreenToMapCoordinate] Screen(703,289) → Map(6434,5091) → World(102944,162912) → Region(201,159) Cell(1,3) ID=40905
+[17:42:32.318]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:32.374] [ScreenToMapCoordinate] Screen(777,320) → Map(6459,5102) → World(103344,163264) → Region(201,159) Cell(13,14) ID=40905
+[17:42:32.374]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:32.429] [ScreenToMapCoordinate] Screen(808,315) → Map(6469,5100) → World(103504,163200) → Region(202,159) Cell(2,12) ID=40906
+[17:42:32.429]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:32.486] [ScreenToMapCoordinate] Screen(846,311) → Map(6482,5099) → World(103712,163168) → Region(202,159) Cell(9,11) ID=40906
+[17:42:32.486]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:32.486] [ScreenToMapCoordinate] Screen(851,312) → Map(6483,5099) → World(103728,163168) → Region(202,159) Cell(9,11) ID=40906
+[17:42:32.486]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:32.547] [ScreenToMapCoordinate] Screen(870,336) → Map(6490,5107) → World(103840,163424) → Region(202,159) Cell(13,19) ID=40906
+[17:42:32.547]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:32.602] [ScreenToMapCoordinate] Screen(871,357) → Map(6490,5114) → World(103840,163648) → Region(202,159) Cell(13,26) ID=40906
+[17:42:32.602]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:32.656] [ScreenToMapCoordinate] Screen(870,394) → Map(6490,5126) → World(103840,164032) → Region(202,160) Cell(13,6) ID=41162
+[17:42:32.656]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:32.717] [ScreenToMapCoordinate] Screen(871,401) → Map(6490,5129) → World(103840,164128) → Region(202,160) Cell(13,9) ID=41162
+[17:42:32.717]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:32.774] [ScreenToMapCoordinate] Screen(873,402) → Map(6491,5129) → World(103856,164128) → Region(202,160) Cell(13,9) ID=41162
+[17:42:32.774]   Zoom=2.99, ViewOffset=(6199,4995)
+[17:42:34.967] [ScreenToMapCoordinate] Screen(877,537) → Map(6492,5006) → World(103872,160192) → Region(202,156) Cell(14,14) ID=40138
+[17:42:34.967]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.032] [ScreenToMapCoordinate] Screen(810,510) → Map(6470,4997) → World(103520,159904) → Region(202,156) Cell(3,5) ID=40138
+[17:42:35.032]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.089] [ScreenToMapCoordinate] Screen(784,504) → Map(6461,4995) → World(103376,159840) → Region(201,156) Cell(14,3) ID=40137
+[17:42:35.089]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.157] [ScreenToMapCoordinate] Screen(774,509) → Map(6458,4997) → World(103328,159904) → Region(201,156) Cell(13,5) ID=40137
+[17:42:35.157]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.157] [ScreenToMapCoordinate] Screen(773,510) → Map(6457,4997) → World(103312,159904) → Region(201,156) Cell(12,5) ID=40137
+[17:42:35.157]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.216] [ScreenToMapCoordinate] Screen(759,511) → Map(6453,4998) → World(103248,159936) → Region(201,156) Cell(10,6) ID=40137
+[17:42:35.216]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.216] [ScreenToMapCoordinate] Screen(755,511) → Map(6451,4998) → World(103216,159936) → Region(201,156) Cell(9,6) ID=40137
+[17:42:35.216]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.280] [ScreenToMapCoordinate] Screen(730,505) → Map(6443,4996) → World(103088,159872) → Region(201,156) Cell(5,4) ID=40137
+[17:42:35.280]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.280] [ScreenToMapCoordinate] Screen(726,503) → Map(6442,4995) → World(103072,159840) → Region(201,156) Cell(5,3) ID=40137
+[17:42:35.280]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.343] [ScreenToMapCoordinate] Screen(715,499) → Map(6438,4994) → World(103008,159808) → Region(201,156) Cell(3,2) ID=40137
+[17:42:35.343]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.407] [ScreenToMapCoordinate] Screen(714,497) → Map(6438,4993) → World(103008,159776) → Region(201,156) Cell(3,1) ID=40137
+[17:42:35.407]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.466] [ScreenToMapCoordinate] Screen(712,495) → Map(6437,4992) → World(102992,159744) → Region(201,156) Cell(2,0) ID=40137
+[17:42:35.466]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.532] [ScreenToMapCoordinate] Screen(702,487) → Map(6434,4990) → World(102944,159680) → Region(201,155) Cell(1,30) ID=39881
+[17:42:35.532]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.589] [ScreenToMapCoordinate] Screen(700,481) → Map(6433,4988) → World(102928,159616) → Region(201,155) Cell(0,28) ID=39881
+[17:42:35.589]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.657] [ScreenToMapCoordinate] Screen(694,471) → Map(6431,4984) → World(102896,159488) → Region(200,155) Cell(15,24) ID=39880
+[17:42:35.657]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.716] [ScreenToMapCoordinate] Screen(685,459) → Map(6428,4980) → World(102848,159360) → Region(200,155) Cell(14,20) ID=39880
+[17:42:35.716]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.781] [ScreenToMapCoordinate] Screen(678,452) → Map(6426,4978) → World(102816,159296) → Region(200,155) Cell(13,18) ID=39880
+[17:42:35.781]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.837] [ScreenToMapCoordinate] Screen(675,450) → Map(6425,4977) → World(102800,159264) → Region(200,155) Cell(12,17) ID=39880
+[17:42:35.837]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.905] [ScreenToMapCoordinate] Screen(673,450) → Map(6424,4977) → World(102784,159264) → Region(200,155) Cell(12,17) ID=39880
+[17:42:35.905]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:35.967] [ScreenToMapCoordinate] Screen(669,450) → Map(6423,4977) → World(102768,159264) → Region(200,155) Cell(11,17) ID=39880
+[17:42:35.967]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:36.089] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:36.089]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:36.089]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:36.089]          NPC database count: 2185 NPCs loaded
+[17:42:36.089]             → GetNpcResType: Looking up ID 769 in database
+[17:42:36.089]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:36.089]          NpcResType for ID 769: 'enemy051'
+[17:42:36.089]          Calling GetNpcResource('enemy051')...
+[17:42:36.089]                → GetNpcResource: Looking up 'enemy051'
+[17:42:36.089]                   ResKind cache contains 938 entries
+[17:42:36.089]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:36.089]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:36.089]                   ✓ Created NpcResource for 'enemy051'
+[17:42:36.089]          ✓ NpcResource found for 'enemy051'
+[17:42:36.089]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:36.089]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:36.089]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:36.089]                      ✓ Found in PAK (194439 bytes)
+[17:42:36.089] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:36.089]                            Frame size: 35x75
+[17:42:36.089] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:36.289] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:36.289]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:36.289]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:36.289]          NPC database count: 2185 NPCs loaded
+[17:42:36.289]             → GetNpcResType: Looking up ID 769 in database
+[17:42:36.289]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:36.289]          NpcResType for ID 769: 'enemy051'
+[17:42:36.289]          Calling GetNpcResource('enemy051')...
+[17:42:36.289]                → GetNpcResource: Looking up 'enemy051'
+[17:42:36.289]                   ResKind cache contains 938 entries
+[17:42:36.289]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:36.289]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:36.289]                   ✓ Created NpcResource for 'enemy051'
+[17:42:36.289]          ✓ NpcResource found for 'enemy051'
+[17:42:36.289]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:36.289]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:36.289]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:36.289]                      ✓ Found in PAK (194439 bytes)
+[17:42:36.289] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:36.289]                            Frame size: 35x75
+[17:42:36.289] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:36.356] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:36.356]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:36.356]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:36.356]          NPC database count: 2185 NPCs loaded
+[17:42:36.356]             → GetNpcResType: Looking up ID 769 in database
+[17:42:36.357]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:36.357]          NpcResType for ID 769: 'enemy051'
+[17:42:36.357]          Calling GetNpcResource('enemy051')...
+[17:42:36.357]                → GetNpcResource: Looking up 'enemy051'
+[17:42:36.357]                   ResKind cache contains 938 entries
+[17:42:36.357]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:36.357]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:36.357]                   ✓ Created NpcResource for 'enemy051'
+[17:42:36.357]          ✓ NpcResource found for 'enemy051'
+[17:42:36.357]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:36.357]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:36.357]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:36.357]                      ✓ Found in PAK (194439 bytes)
+[17:42:36.357] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:36.357]                            Frame size: 35x75
+[17:42:36.357] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:36.423] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:36.423]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:36.423]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:36.423]          NPC database count: 2185 NPCs loaded
+[17:42:36.423]             → GetNpcResType: Looking up ID 769 in database
+[17:42:36.423]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:36.423]          NpcResType for ID 769: 'enemy051'
+[17:42:36.423]          Calling GetNpcResource('enemy051')...
+[17:42:36.423]                → GetNpcResource: Looking up 'enemy051'
+[17:42:36.423]                   ResKind cache contains 938 entries
+[17:42:36.423]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:36.423]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:36.423]                   ✓ Created NpcResource for 'enemy051'
+[17:42:36.423]          ✓ NpcResource found for 'enemy051'
+[17:42:36.423]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:36.423]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:36.423]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:36.427]                      ✓ Found in PAK (194439 bytes)
+[17:42:36.427] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:36.427]                            Frame size: 35x75
+[17:42:36.427] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:36.801] --------------------------------------------------------------------------------
+[17:42:36.801] 🎯 LOADING NPC PREVIEW
+[17:42:36.801]    Search input: '769'
+[17:42:36.801]    Parsed as NPC ID: 769
+[17:42:36.801]    Game folder: D:\HuyenThietKiem\Bin\Server
+[17:42:36.801]    Mode: Server
+[17:42:36.801]    Looking for Client folder: D:\HuyenThietKiem\Bin\Client
+[17:42:36.801]    ✓ Found Client folder: D:\HuyenThietKiem\Bin\Client
+[17:42:36.801]    Using existing NPC Loader instance
+[17:42:36.801]    Calling GetNpcResourceById(769)...
+[17:42:36.801]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:36.801]          NPC database count: 2185 NPCs loaded
+[17:42:36.801]             → GetNpcResType: Looking up ID 769 in database
+[17:42:36.801]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:36.801]          NpcResType for ID 769: 'enemy051'
+[17:42:36.801]          Calling GetNpcResource('enemy051')...
+[17:42:36.801]                → GetNpcResource: Looking up 'enemy051'
+[17:42:36.801]                   ResKind cache contains 938 entries
+[17:42:36.801]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:36.801]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:36.801]                   ✓ Created NpcResource for 'enemy051'
+[17:42:36.801]          ✓ NpcResource found for 'enemy051'
+[17:42:36.801]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:36.801]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:36.801]    ✓ NPC resource loaded: NhiÖm vô s¸t thñ cÊp 90
+[17:42:36.801]    Loading sprite for action: NormalStand
+[17:42:36.801]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:36.801]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:36.801]          NPC database count: 2185 NPCs loaded
+[17:42:36.801]             → GetNpcResType: Looking up ID 769 in database
+[17:42:36.801]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:36.801]          NpcResType for ID 769: 'enemy051'
+[17:42:36.801]          Calling GetNpcResource('enemy051')...
+[17:42:36.801]                → GetNpcResource: Looking up 'enemy051'
+[17:42:36.801]                   ResKind cache contains 938 entries
+[17:42:36.801]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:36.801]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:36.801]                   ✓ Created NpcResource for 'enemy051'
+[17:42:36.801]          ✓ NpcResource found for 'enemy051'
+[17:42:36.801]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:36.801]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:36.801]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:36.806]                      ✓ Found in PAK (194439 bytes)
+[17:42:36.806]                            Frame size: 35x75
+[17:42:36.808] [NPC Loaded] ID: 769, Name: NhiÖm vô s¸t thñ cÊp 90, Frames: 80
+[17:42:36.808] [NPC Selected] Auto-filled NPC ID: 769 (NhiÕp ThÝ TrÇn)
+[17:42:36.866] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:36.866]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:36.866]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:36.866]          NPC database count: 2185 NPCs loaded
+[17:42:36.866]             → GetNpcResType: Looking up ID 769 in database
+[17:42:36.866]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:36.866]          NpcResType for ID 769: 'enemy051'
+[17:42:36.866]          Calling GetNpcResource('enemy051')...
+[17:42:36.866]                → GetNpcResource: Looking up 'enemy051'
+[17:42:36.866]                   ResKind cache contains 938 entries
+[17:42:36.866]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:36.866]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:36.866]                   ✓ Created NpcResource for 'enemy051'
+[17:42:36.866]          ✓ NpcResource found for 'enemy051'
+[17:42:36.866]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:36.866]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:36.866]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:36.866]                      ✓ Found in PAK (194439 bytes)
+[17:42:36.866] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:36.866]                            Frame size: 35x75
+[17:42:36.866] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:36.967] [ScreenToMapCoordinate] Screen(660,451) → Map(6420,4978) → World(102720,159296) → Region(200,155) Cell(10,18) ID=39880
+[17:42:36.967]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.027] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:37.032]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:37.032]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:37.032]          NPC database count: 2185 NPCs loaded
+[17:42:37.032]             → GetNpcResType: Looking up ID 769 in database
+[17:42:37.032]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:37.032]          NpcResType for ID 769: 'enemy051'
+[17:42:37.032]          Calling GetNpcResource('enemy051')...
+[17:42:37.032]                → GetNpcResource: Looking up 'enemy051'
+[17:42:37.032]                   ResKind cache contains 938 entries
+[17:42:37.032]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:37.032]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:37.032]                   ✓ Created NpcResource for 'enemy051'
+[17:42:37.032]          ✓ NpcResource found for 'enemy051'
+[17:42:37.032]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.032]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.032]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:37.032]                      ✓ Found in PAK (194439 bytes)
+[17:42:37.032] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:37.032]                            Frame size: 35x75
+[17:42:37.032] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:37.037] [ScreenToMapCoordinate] Screen(658,454) → Map(6419,4979) → World(102704,159328) → Region(200,155) Cell(9,19) ID=39880
+[17:42:37.037]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.096] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:37.096]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:37.096]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:37.096]          NPC database count: 2185 NPCs loaded
+[17:42:37.096]             → GetNpcResType: Looking up ID 769 in database
+[17:42:37.096]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:37.096]          NpcResType for ID 769: 'enemy051'
+[17:42:37.096]          Calling GetNpcResource('enemy051')...
+[17:42:37.096]                → GetNpcResource: Looking up 'enemy051'
+[17:42:37.096]                   ResKind cache contains 938 entries
+[17:42:37.096]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:37.096]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:37.096]                   ✓ Created NpcResource for 'enemy051'
+[17:42:37.096]          ✓ NpcResource found for 'enemy051'
+[17:42:37.096]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.096]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.096]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:37.101]                      ✓ Found in PAK (194439 bytes)
+[17:42:37.101] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:37.101]                            Frame size: 35x75
+[17:42:37.101] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:37.105] [ScreenToMapCoordinate] Screen(655,458) → Map(6418,4980) → World(102688,159360) → Region(200,155) Cell(9,20) ID=39880
+[17:42:37.105]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.163] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:37.163]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:37.163]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:37.163]          NPC database count: 2185 NPCs loaded
+[17:42:37.163]             → GetNpcResType: Looking up ID 769 in database
+[17:42:37.163]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:37.163]          NpcResType for ID 769: 'enemy051'
+[17:42:37.163]          Calling GetNpcResource('enemy051')...
+[17:42:37.163]                → GetNpcResource: Looking up 'enemy051'
+[17:42:37.163]                   ResKind cache contains 938 entries
+[17:42:37.163]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:37.163]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:37.163]                   ✓ Created NpcResource for 'enemy051'
+[17:42:37.163]          ✓ NpcResource found for 'enemy051'
+[17:42:37.163]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.163]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.163]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:37.167]                      ✓ Found in PAK (194439 bytes)
+[17:42:37.167] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:37.167]                            Frame size: 35x75
+[17:42:37.167] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:37.191] [ScreenToMapCoordinate] Screen(654,459) → Map(6418,4980) → World(102688,159360) → Region(200,155) Cell(9,20) ID=39880
+[17:42:37.191]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.251] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:37.251]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:37.251]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:37.251]          NPC database count: 2185 NPCs loaded
+[17:42:37.251]             → GetNpcResType: Looking up ID 769 in database
+[17:42:37.251]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:37.251]          NpcResType for ID 769: 'enemy051'
+[17:42:37.251]          Calling GetNpcResource('enemy051')...
+[17:42:37.251]                → GetNpcResource: Looking up 'enemy051'
+[17:42:37.251]                   ResKind cache contains 938 entries
+[17:42:37.251]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:37.251]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:37.251]                   ✓ Created NpcResource for 'enemy051'
+[17:42:37.251]          ✓ NpcResource found for 'enemy051'
+[17:42:37.251]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.251]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.251]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:37.251]                      ✓ Found in PAK (194439 bytes)
+[17:42:37.251] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:37.251]                            Frame size: 35x75
+[17:42:37.251] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:37.257] [ScreenToMapCoordinate] Screen(651,461) → Map(6417,4981) → World(102672,159392) → Region(200,155) Cell(8,21) ID=39880
+[17:42:37.257]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.318] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:37.318]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:37.318]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:37.318]          NPC database count: 2185 NPCs loaded
+[17:42:37.318]             → GetNpcResType: Looking up ID 769 in database
+[17:42:37.318]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:37.318]          NpcResType for ID 769: 'enemy051'
+[17:42:37.318]          Calling GetNpcResource('enemy051')...
+[17:42:37.318]                → GetNpcResource: Looking up 'enemy051'
+[17:42:37.318]                   ResKind cache contains 938 entries
+[17:42:37.318]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:37.318]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:37.318]                   ✓ Created NpcResource for 'enemy051'
+[17:42:37.318]          ✓ NpcResource found for 'enemy051'
+[17:42:37.318]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.318]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.318]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:37.324]                      ✓ Found in PAK (194439 bytes)
+[17:42:37.324] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:37.324]                            Frame size: 35x75
+[17:42:37.324] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:37.327] [ScreenToMapCoordinate] Screen(650,462) → Map(6416,4981) → World(102656,159392) → Region(200,155) Cell(8,21) ID=39880
+[17:42:37.327]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.327] [ScreenToMapCoordinate] Screen(649,463) → Map(6416,4982) → World(102656,159424) → Region(200,155) Cell(8,22) ID=39880
+[17:42:37.327]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.386] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:37.386]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:37.386]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:37.386]          NPC database count: 2185 NPCs loaded
+[17:42:37.386]             → GetNpcResType: Looking up ID 769 in database
+[17:42:37.386]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:37.386]          NpcResType for ID 769: 'enemy051'
+[17:42:37.386]          Calling GetNpcResource('enemy051')...
+[17:42:37.386]                → GetNpcResource: Looking up 'enemy051'
+[17:42:37.386]                   ResKind cache contains 938 entries
+[17:42:37.386]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:37.386]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:37.386]                   ✓ Created NpcResource for 'enemy051'
+[17:42:37.386]          ✓ NpcResource found for 'enemy051'
+[17:42:37.386]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.386]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.386]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:37.390]                      ✓ Found in PAK (194439 bytes)
+[17:42:37.390] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:37.390]                            Frame size: 35x75
+[17:42:37.390] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:37.390] [ScreenToMapCoordinate] Screen(645,464) → Map(6415,4982) → World(102640,159424) → Region(200,155) Cell(7,22) ID=39880
+[17:42:37.390]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.451] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:37.451]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:37.451]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:37.451]          NPC database count: 2185 NPCs loaded
+[17:42:37.451]             → GetNpcResType: Looking up ID 769 in database
+[17:42:37.451]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:37.451]          NpcResType for ID 769: 'enemy051'
+[17:42:37.451]          Calling GetNpcResource('enemy051')...
+[17:42:37.451]                → GetNpcResource: Looking up 'enemy051'
+[17:42:37.451]                   ResKind cache contains 938 entries
+[17:42:37.451]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:37.451]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:37.451]                   ✓ Created NpcResource for 'enemy051'
+[17:42:37.451]          ✓ NpcResource found for 'enemy051'
+[17:42:37.451]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.451]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.451]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:37.457]                      ✓ Found in PAK (194439 bytes)
+[17:42:37.457] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:37.457]                            Frame size: 35x75
+[17:42:37.457] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:37.462] [ScreenToMapCoordinate] Screen(639,465) → Map(6412,4982) → World(102592,159424) → Region(200,155) Cell(6,22) ID=39880
+[17:42:37.462]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.518] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:37.518]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:37.518]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:37.518]          NPC database count: 2185 NPCs loaded
+[17:42:37.518]             → GetNpcResType: Looking up ID 769 in database
+[17:42:37.518]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:37.518]          NpcResType for ID 769: 'enemy051'
+[17:42:37.518]          Calling GetNpcResource('enemy051')...
+[17:42:37.518]                → GetNpcResource: Looking up 'enemy051'
+[17:42:37.518]                   ResKind cache contains 938 entries
+[17:42:37.518]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:37.518]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:37.518]                   ✓ Created NpcResource for 'enemy051'
+[17:42:37.518]          ✓ NpcResource found for 'enemy051'
+[17:42:37.518]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.518]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.518]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:37.524]                      ✓ Found in PAK (194439 bytes)
+[17:42:37.524] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:37.524]                            Frame size: 35x75
+[17:42:37.524] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:37.526] [ScreenToMapCoordinate] Screen(634,465) → Map(6411,4982) → World(102576,159424) → Region(200,155) Cell(5,22) ID=39880
+[17:42:37.526]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.586] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:37.586]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:37.586]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:37.586]          NPC database count: 2185 NPCs loaded
+[17:42:37.586]             → GetNpcResType: Looking up ID 769 in database
+[17:42:37.586]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:37.586]          NpcResType for ID 769: 'enemy051'
+[17:42:37.586]          Calling GetNpcResource('enemy051')...
+[17:42:37.586]                → GetNpcResource: Looking up 'enemy051'
+[17:42:37.586]                   ResKind cache contains 938 entries
+[17:42:37.586]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:37.586]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:37.586]                   ✓ Created NpcResource for 'enemy051'
+[17:42:37.586]          ✓ NpcResource found for 'enemy051'
+[17:42:37.586]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.586]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.586]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:37.590]                      ✓ Found in PAK (194439 bytes)
+[17:42:37.590] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:37.590]                            Frame size: 35x75
+[17:42:37.590] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:37.590] [ScreenToMapCoordinate] Screen(632,465) → Map(6410,4982) → World(102560,159424) → Region(200,155) Cell(5,22) ID=39880
+[17:42:37.590]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.657] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:37.657]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:37.657]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:37.657]          NPC database count: 2185 NPCs loaded
+[17:42:37.657]             → GetNpcResType: Looking up ID 769 in database
+[17:42:37.657]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:37.657]          NpcResType for ID 769: 'enemy051'
+[17:42:37.657]          Calling GetNpcResource('enemy051')...
+[17:42:37.657]                → GetNpcResource: Looking up 'enemy051'
+[17:42:37.657]                   ResKind cache contains 938 entries
+[17:42:37.657]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:37.657]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:37.657]                   ✓ Created NpcResource for 'enemy051'
+[17:42:37.657]          ✓ NpcResource found for 'enemy051'
+[17:42:37.657]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.657]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.657]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:37.657]                      ✓ Found in PAK (194439 bytes)
+[17:42:37.657] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:37.657]                            Frame size: 35x75
+[17:42:37.657] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:37.657] [ScreenToMapCoordinate] Screen(629,465) → Map(6409,4982) → World(102544,159424) → Region(200,155) Cell(4,22) ID=39880
+[17:42:37.657]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.724] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:37.724]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:37.724]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:37.724]          NPC database count: 2185 NPCs loaded
+[17:42:37.724]             → GetNpcResType: Looking up ID 769 in database
+[17:42:37.724]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:37.724]          NpcResType for ID 769: 'enemy051'
+[17:42:37.724]          Calling GetNpcResource('enemy051')...
+[17:42:37.724]                → GetNpcResource: Looking up 'enemy051'
+[17:42:37.724]                   ResKind cache contains 938 entries
+[17:42:37.724]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:37.724]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:37.724]                   ✓ Created NpcResource for 'enemy051'
+[17:42:37.724]          ✓ NpcResource found for 'enemy051'
+[17:42:37.724]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.724]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.724]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:37.727]                      ✓ Found in PAK (194439 bytes)
+[17:42:37.727] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:37.727]                            Frame size: 35x75
+[17:42:37.727] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:37.727] [ScreenToMapCoordinate] Screen(625,463) → Map(6408,4982) → World(102528,159424) → Region(200,155) Cell(4,22) ID=39880
+[17:42:37.727]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.791] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:37.791]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:37.791]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:37.791]          NPC database count: 2185 NPCs loaded
+[17:42:37.791]             → GetNpcResType: Looking up ID 769 in database
+[17:42:37.791]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:37.791]          NpcResType for ID 769: 'enemy051'
+[17:42:37.791]          Calling GetNpcResource('enemy051')...
+[17:42:37.791]                → GetNpcResource: Looking up 'enemy051'
+[17:42:37.791]                   ResKind cache contains 938 entries
+[17:42:37.791]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:37.791]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:37.791]                   ✓ Created NpcResource for 'enemy051'
+[17:42:37.791]          ✓ NpcResource found for 'enemy051'
+[17:42:37.791]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.791]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.791]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:37.791]                      ✓ Found in PAK (194439 bytes)
+[17:42:37.791] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:37.791]                            Frame size: 35x75
+[17:42:37.791] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:37.827] [ScreenToMapCoordinate] Screen(625,462) → Map(6408,4981) → World(102528,159392) → Region(200,155) Cell(4,21) ID=39880
+[17:42:37.827]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.887] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:37.887]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:37.887]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:37.887]          NPC database count: 2185 NPCs loaded
+[17:42:37.887]             → GetNpcResType: Looking up ID 769 in database
+[17:42:37.887]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:37.887]          NpcResType for ID 769: 'enemy051'
+[17:42:37.887]          Calling GetNpcResource('enemy051')...
+[17:42:37.887]                → GetNpcResource: Looking up 'enemy051'
+[17:42:37.887]                   ResKind cache contains 938 entries
+[17:42:37.887]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:37.887]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:37.887]                   ✓ Created NpcResource for 'enemy051'
+[17:42:37.887]          ✓ NpcResource found for 'enemy051'
+[17:42:37.887]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.887]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.887]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:37.891]                      ✓ Found in PAK (194439 bytes)
+[17:42:37.891] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:37.891]                            Frame size: 35x75
+[17:42:37.891] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:37.894] [ScreenToMapCoordinate] Screen(625,460) → Map(6408,4981) → World(102528,159392) → Region(200,155) Cell(4,21) ID=39880
+[17:42:37.894]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:37.954] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:37.954]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:37.954]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:37.954]          NPC database count: 2185 NPCs loaded
+[17:42:37.954]             → GetNpcResType: Looking up ID 769 in database
+[17:42:37.954]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:37.954]          NpcResType for ID 769: 'enemy051'
+[17:42:37.954]          Calling GetNpcResource('enemy051')...
+[17:42:37.954]                → GetNpcResource: Looking up 'enemy051'
+[17:42:37.954]                   ResKind cache contains 938 entries
+[17:42:37.954]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:37.954]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:37.954]                   ✓ Created NpcResource for 'enemy051'
+[17:42:37.954]          ✓ NpcResource found for 'enemy051'
+[17:42:37.954]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.954]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:37.954]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:37.957]                      ✓ Found in PAK (194439 bytes)
+[17:42:37.957] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:37.957]                            Frame size: 35x75
+[17:42:37.957] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:37.957] [ScreenToMapCoordinate] Screen(625,459) → Map(6408,4980) → World(102528,159360) → Region(200,155) Cell(4,20) ID=39880
+[17:42:37.957]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:38.017] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:38.017]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:38.017]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:38.017]          NPC database count: 2185 NPCs loaded
+[17:42:38.017]             → GetNpcResType: Looking up ID 769 in database
+[17:42:38.017]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:38.017]          NpcResType for ID 769: 'enemy051'
+[17:42:38.017]          Calling GetNpcResource('enemy051')...
+[17:42:38.017]                → GetNpcResource: Looking up 'enemy051'
+[17:42:38.017]                   ResKind cache contains 938 entries
+[17:42:38.017]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:38.017]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:38.017]                   ✓ Created NpcResource for 'enemy051'
+[17:42:38.017]          ✓ NpcResource found for 'enemy051'
+[17:42:38.022]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:38.022]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:38.022]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:38.024]                      ✓ Found in PAK (194439 bytes)
+[17:42:38.024] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:38.024]                            Frame size: 35x75
+[17:42:38.024] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:38.167] [ScreenToMapCoordinate] Screen(624,459) → Map(6407,4980) → World(102512,159360) → Region(200,155) Cell(3,20) ID=39880
+[17:42:38.167]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:38.237] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:38.237]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:38.237]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:38.237]          NPC database count: 2185 NPCs loaded
+[17:42:38.237]             → GetNpcResType: Looking up ID 769 in database
+[17:42:38.237]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:38.237]          NpcResType for ID 769: 'enemy051'
+[17:42:38.237]          Calling GetNpcResource('enemy051')...
+[17:42:38.237]                → GetNpcResource: Looking up 'enemy051'
+[17:42:38.237]                   ResKind cache contains 938 entries
+[17:42:38.237]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:38.237]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:38.237]                   ✓ Created NpcResource for 'enemy051'
+[17:42:38.237]          ✓ NpcResource found for 'enemy051'
+[17:42:38.237]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:38.237]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:38.237]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:38.237]                      ✓ Found in PAK (194439 bytes)
+[17:42:38.237] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:38.237]                            Frame size: 35x75
+[17:42:38.237] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:38.251] [ScreenToMapCoordinate] Screen(623,459) → Map(6407,4980) → World(102512,159360) → Region(200,155) Cell(3,20) ID=39880
+[17:42:38.251]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:38.313] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:38.313]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:38.313]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:38.313]          NPC database count: 2185 NPCs loaded
+[17:42:38.313]             → GetNpcResType: Looking up ID 769 in database
+[17:42:38.313]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:38.313]          NpcResType for ID 769: 'enemy051'
+[17:42:38.313]          Calling GetNpcResource('enemy051')...
+[17:42:38.313]                → GetNpcResource: Looking up 'enemy051'
+[17:42:38.313]                   ResKind cache contains 938 entries
+[17:42:38.313]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:38.313]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:38.313]                   ✓ Created NpcResource for 'enemy051'
+[17:42:38.313]          ✓ NpcResource found for 'enemy051'
+[17:42:38.313]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:38.313]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:38.313]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:38.317]                      ✓ Found in PAK (194439 bytes)
+[17:42:38.317] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:38.318]                            Frame size: 35x75
+[17:42:38.318] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:38.431] [ScreenToMapCoordinate] Screen(623,459) → Map(6407,4980) → World(102512,159360) → Region(200,155) Cell(3,20) ID=39880
+[17:42:38.431]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:38.431] [NPC Moved] NPC #1 moved to World(102512,159360)
+[17:42:38.491] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:38.491]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:38.491]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:38.491]          NPC database count: 2185 NPCs loaded
+[17:42:38.491]             → GetNpcResType: Looking up ID 769 in database
+[17:42:38.491]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:38.491]          NpcResType for ID 769: 'enemy051'
+[17:42:38.491]          Calling GetNpcResource('enemy051')...
+[17:42:38.497]                → GetNpcResource: Looking up 'enemy051'
+[17:42:38.497]                   ResKind cache contains 938 entries
+[17:42:38.497]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:38.497]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:38.497]                   ✓ Created NpcResource for 'enemy051'
+[17:42:38.497]          ✓ NpcResource found for 'enemy051'
+[17:42:38.497]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:38.497]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:38.497]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:38.497]                      ✓ Found in PAK (194439 bytes)
+[17:42:38.497] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:38.497]                            Frame size: 35x75
+[17:42:38.500] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:38.560] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:38.560]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:38.560]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:38.560]          NPC database count: 2185 NPCs loaded
+[17:42:38.560]             → GetNpcResType: Looking up ID 769 in database
+[17:42:38.560]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:38.560]          NpcResType for ID 769: 'enemy051'
+[17:42:38.565]          Calling GetNpcResource('enemy051')...
+[17:42:38.565]                → GetNpcResource: Looking up 'enemy051'
+[17:42:38.565]                   ResKind cache contains 938 entries
+[17:42:38.565]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:38.565]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:38.565]                   ✓ Created NpcResource for 'enemy051'
+[17:42:38.565]          ✓ NpcResource found for 'enemy051'
+[17:42:38.565]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:38.565]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:38.565]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:38.567]                      ✓ Found in PAK (194439 bytes)
+[17:42:38.567] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:38.567]                            Frame size: 35x75
+[17:42:38.567] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:38.627] [Tooltip] Loading sprite for NPC ID 769...
+[17:42:38.627]                   → LoadSpriteById: ID=769, Action=NormalStand
+[17:42:38.627]       → GetNpcResourceById: Looking up NPC ID 769
+[17:42:38.627]          NPC database count: 2185 NPCs loaded
+[17:42:38.627]             → GetNpcResType: Looking up ID 769 in database
+[17:42:38.627]                ✓ Found: ID=769, Name='NhiÖm vô s¸t thñ cÊp 90', ResType='enemy051'
+[17:42:38.627]          NpcResType for ID 769: 'enemy051'
+[17:42:38.627]          Calling GetNpcResource('enemy051')...
+[17:42:38.627]                → GetNpcResource: Looking up 'enemy051'
+[17:42:38.627]                   ResKind cache contains 938 entries
+[17:42:38.627]                   ✓ Found 'enemy051' in ResKind cache
+[17:42:38.627]                   Has SpriteRes: True, Has SpriteInfo: True
+[17:42:38.627]                   ✓ Created NpcResource for 'enemy051'
+[17:42:38.627]          ✓ NpcResource found for 'enemy051'
+[17:42:38.627]          NPC name from Npcs.txt: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:38.627]          NPC name set to: 'NhiÖm vô s¸t thñ cÊp 90'
+[17:42:38.627]                      SPR path: spr\npcres\enemy\enemy051\enemy051_st.spr
+[17:42:38.632]                      ✓ Found in PAK (194439 bytes)
+[17:42:38.632] [Tooltip] Sprite loaded: 80 frames, converting frame 0 to bitmap
+[17:42:38.632]                            Frame size: 35x75
+[17:42:38.632] [Tooltip] ✓ Bitmap created: 35x75
+[17:42:38.637] [ScreenToMapCoordinate] Screen(633,464) → Map(6410,4982) → World(102560,159424) → Region(200,155) Cell(5,22) ID=39880
+[17:42:38.637]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:38.697] [ScreenToMapCoordinate] Screen(684,493) → Map(6428,4992) → World(102848,159744) → Region(200,156) Cell(14,0) ID=40136
+[17:42:38.697]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:38.757] [ScreenToMapCoordinate] Screen(726,518) → Map(6442,5000) → World(103072,160000) → Region(201,156) Cell(5,8) ID=40137
+[17:42:38.757]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:38.817] [ScreenToMapCoordinate] Screen(732,520) → Map(6444,5001) → World(103104,160032) → Region(201,156) Cell(6,9) ID=40137
+[17:42:38.817]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:38.877] [ScreenToMapCoordinate] Screen(735,521) → Map(6445,5001) → World(103120,160032) → Region(201,156) Cell(6,9) ID=40137
+[17:42:38.877]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:38.937] [ScreenToMapCoordinate] Screen(738,522) → Map(6446,5001) → World(103136,160032) → Region(201,156) Cell(7,9) ID=40137
+[17:42:38.937]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:39.002] [ScreenToMapCoordinate] Screen(739,523) → Map(6446,5002) → World(103136,160064) → Region(201,156) Cell(7,10) ID=40137
+[17:42:39.002]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:39.217] [ScreenToMapCoordinate] Screen(739,524) → Map(6446,5002) → World(103136,160064) → Region(201,156) Cell(7,10) ID=40137
+[17:42:39.217]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:39.282] [ScreenToMapCoordinate] Screen(740,524) → Map(6446,5002) → World(103136,160064) → Region(201,156) Cell(7,10) ID=40137
+[17:42:39.282]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:39.526] [ScreenToMapCoordinate] Screen(741,525) → Map(6447,5002) → World(103152,160064) → Region(201,156) Cell(7,10) ID=40137
+[17:42:39.526]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:39.586] [ScreenToMapCoordinate] Screen(741,526) → Map(6447,5003) → World(103152,160096) → Region(201,156) Cell(7,11) ID=40137
+[17:42:39.586]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:39.647] [ScreenToMapCoordinate] Screen(742,529) → Map(6447,5004) → World(103152,160128) → Region(201,156) Cell(7,12) ID=40137
+[17:42:39.647]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:39.707] [ScreenToMapCoordinate] Screen(749,536) → Map(6449,5006) → World(103184,160192) → Region(201,156) Cell(8,14) ID=40137
+[17:42:39.707]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:39.771] [ScreenToMapCoordinate] Screen(790,556) → Map(6463,5013) → World(103408,160416) → Region(201,156) Cell(15,21) ID=40137
+[17:42:39.771]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:40.547] [ScreenToMapCoordinate] Screen(879,594) → Map(6493,5025) → World(103888,160800) → Region(202,157) Cell(14,1) ID=40394
+[17:42:40.547]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:40.611] [ScreenToMapCoordinate] Screen(683,504) → Map(6427,4995) → World(102832,159840) → Region(200,156) Cell(13,3) ID=40136
+[17:42:40.611]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:40.667] [ScreenToMapCoordinate] Screen(668,501) → Map(6422,4994) → World(102752,159808) → Region(200,156) Cell(11,2) ID=40136
+[17:42:40.667]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:40.736] [ScreenToMapCoordinate] Screen(655,503) → Map(6418,4995) → World(102688,159840) → Region(200,156) Cell(9,3) ID=40136
+[17:42:40.736]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:40.802] [ScreenToMapCoordinate] Screen(646,503) → Map(6415,4995) → World(102640,159840) → Region(200,156) Cell(7,3) ID=40136
+[17:42:40.802]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:40.863] [ScreenToMapCoordinate] Screen(637,498) → Map(6412,4993) → World(102592,159776) → Region(200,156) Cell(6,1) ID=40136
+[17:42:40.863]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:40.923] [ScreenToMapCoordinate] Screen(620,494) → Map(6406,4992) → World(102496,159744) → Region(200,156) Cell(3,0) ID=40136
+[17:42:40.923]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:40.988] [ScreenToMapCoordinate] Screen(617,492) → Map(6405,4991) → World(102480,159712) → Region(200,155) Cell(2,31) ID=39880
+[17:42:40.988]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:40.988] [ScreenToMapCoordinate] Screen(616,492) → Map(6405,4991) → World(102480,159712) → Region(200,155) Cell(2,31) ID=39880
+[17:42:40.990]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:41.051] [ScreenToMapCoordinate] Screen(613,492) → Map(6404,4991) → World(102464,159712) → Region(200,155) Cell(2,31) ID=39880
+[17:42:41.051]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:41.130] [ScreenToMapCoordinate] Screen(613,492) → Map(6404,4991) → World(102464,159712) → Region(200,155) Cell(2,31) ID=39880
+[17:42:41.130]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:41.257] [ScreenToMapCoordinate] Screen(613,492) → Map(6404,4991) → World(102464,159712) → Region(200,155) Cell(2,31) ID=39880
+[17:42:41.257]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:41.316] [ScreenToMapCoordinate] Screen(613,491) → Map(6404,4991) → World(102464,159712) → Region(200,155) Cell(2,31) ID=39880
+[17:42:41.316]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:41.556] [ScreenToMapCoordinate] Screen(614,493) → Map(6404,4992) → World(102464,159744) → Region(200,156) Cell(2,0) ID=40136
+[17:42:41.556]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:41.617] [ScreenToMapCoordinate] Screen(630,528) → Map(6409,5003) → World(102544,160096) → Region(200,156) Cell(4,11) ID=40136
+[17:42:41.617]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:41.677] [ScreenToMapCoordinate] Screen(642,546) → Map(6414,5009) → World(102624,160288) → Region(200,156) Cell(7,17) ID=40136
+[17:42:41.677]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:41.737] [ScreenToMapCoordinate] Screen(651,555) → Map(6417,5012) → World(102672,160384) → Region(200,156) Cell(8,20) ID=40136
+[17:42:41.737]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:41.798] [ScreenToMapCoordinate] Screen(659,560) → Map(6419,5014) → World(102704,160448) → Region(200,156) Cell(9,22) ID=40136
+[17:42:41.798]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:41.865] [ScreenToMapCoordinate] Screen(660,561) → Map(6420,5014) → World(102720,160448) → Region(200,156) Cell(10,22) ID=40136
+[17:42:41.865]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:41.927] [ScreenToMapCoordinate] Screen(660,562) → Map(6420,5015) → World(102720,160480) → Region(200,156) Cell(10,23) ID=40136
+[17:42:41.927]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:41.927] [ScreenToMapCoordinate] Screen(660,562) → Map(6420,5015) → World(102720,160480) → Region(200,156) Cell(10,23) ID=40136
+[17:42:41.927]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:42.023] [ScreenToMapCoordinate] Screen(660,562) → Map(6420,5015) → World(102720,160480) → Region(200,156) Cell(10,23) ID=40136
+[17:42:42.023]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:42.207] [ScreenToMapCoordinate] Screen(660,561) → Map(6420,5014) → World(102720,160448) → Region(200,156) Cell(10,22) ID=40136
+[17:42:42.207]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:42.269] [ScreenToMapCoordinate] Screen(661,541) → Map(6420,5008) → World(102720,160256) → Region(200,156) Cell(10,16) ID=40136
+[17:42:42.269]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:42.337] [ScreenToMapCoordinate] Screen(660,494) → Map(6420,4992) → World(102720,159744) → Region(200,156) Cell(10,0) ID=40136
+[17:42:42.337]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:42.400] [ScreenToMapCoordinate] Screen(647,472) → Map(6415,4985) → World(102640,159520) → Region(200,155) Cell(7,25) ID=39880
+[17:42:42.400]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:42.462] [ScreenToMapCoordinate] Screen(641,467) → Map(6413,4983) → World(102608,159456) → Region(200,155) Cell(6,23) ID=39880
+[17:42:42.462]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:42.752] [ScreenToMapCoordinate] Screen(641,468) → Map(6413,4983) → World(102608,159456) → Region(200,155) Cell(6,23) ID=39880
+[17:42:42.752]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:42.812] [ScreenToMapCoordinate] Screen(640,479) → Map(6413,4987) → World(102608,159584) → Region(200,155) Cell(6,27) ID=39880
+[17:42:42.812]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:42.876] [ScreenToMapCoordinate] Screen(643,484) → Map(6414,4989) → World(102624,159648) → Region(200,155) Cell(7,29) ID=39880
+[17:42:42.876]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:42.937] [ScreenToMapCoordinate] Screen(644,484) → Map(6414,4989) → World(102624,159648) → Region(200,155) Cell(7,29) ID=39880
+[17:42:42.937]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:43.001] [ScreenToMapCoordinate] Screen(644,484) → Map(6414,4989) → World(102624,159648) → Region(200,155) Cell(7,29) ID=39880
+[17:42:43.001]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:43.123] [ScreenToMapCoordinate] Screen(644,484) → Map(6414,4989) → World(102624,159648) → Region(200,155) Cell(7,29) ID=39880
+[17:42:43.123]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:43.247] [ScreenToMapCoordinate] Screen(643,484) → Map(6414,4989) → World(102624,159648) → Region(200,155) Cell(7,29) ID=39880
+[17:42:43.247]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:43.307] [ScreenToMapCoordinate] Screen(641,484) → Map(6413,4989) → World(102608,159648) → Region(200,155) Cell(6,29) ID=39880
+[17:42:43.307]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:43.442] [ScreenToMapCoordinate] Screen(644,483) → Map(6414,4988) → World(102624,159616) → Region(200,155) Cell(7,28) ID=39880
+[17:42:43.442]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:43.502] [ScreenToMapCoordinate] Screen(657,473) → Map(6419,4985) → World(102704,159520) → Region(200,155) Cell(9,25) ID=39880
+[17:42:43.502]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:43.569] [ScreenToMapCoordinate] Screen(658,472) → Map(6419,4985) → World(102704,159520) → Region(200,155) Cell(9,25) ID=39880
+[17:42:43.569]   Zoom=2.99, ViewOffset=(6199,4827)
+[17:42:43.897] [ScreenToMapCoordinate] Screen(657,472) → Map(6419,5065) → World(102704,162080) → Region(200,158) Cell(9,9) ID=40648
+[17:42:43.897]   Zoom=2.99, ViewOffset=(6199,4907)
+[17:42:43.952] [ScreenToMapCoordinate] Screen(652,474) → Map(6417,5065) → World(102672,162080) → Region(200,158) Cell(8,9) ID=40648
+[17:42:43.957]   Zoom=2.99, ViewOffset=(6199,4907)
+[17:42:44.012] [ScreenToMapCoordinate] Screen(621,493) → Map(6406,5072) → World(102496,162304) → Region(200,158) Cell(3,16) ID=40648
+[17:42:44.012]   Zoom=2.99, ViewOffset=(6199,4907)
+[17:42:44.071] [ScreenToMapCoordinate] Screen(557,516) → Map(6385,5079) → World(102160,162528) → Region(199,158) Cell(8,23) ID=40647
+[17:42:44.071]   Zoom=2.99, ViewOffset=(6199,4907)
+[17:42:44.127] [ScreenToMapCoordinate] Screen(475,568) → Map(6358,5097) → World(101728,163104) → Region(198,159) Cell(11,9) ID=40902
+[17:42:44.127]   Zoom=2.99, ViewOffset=(6199,4907)
+[17:42:44.127] [ScreenToMapCoordinate] Screen(461,579) → Map(6353,5100) → World(101648,163200) → Region(198,159) Cell(8,12) ID=40902
+[17:42:44.127]   Zoom=2.99, ViewOffset=(6199,4907)
+[17:42:44.186] [ScreenToMapCoordinate] Screen(366,640) → Map(6321,5121) → World(101136,163872) → Region(197,160) Cell(8,1) ID=41157
+[17:42:44.186]   Zoom=2.99, ViewOffset=(6199,4907)
+[17:42:46.775] [ScreenToMapCoordinate] Screen(271,597) → Map(6089,5377) → World(97424,172064) → Region(190,168) Cell(4,1) ID=43198
+[17:42:46.776]   Zoom=0.69, ViewOffset=(5699,4518)
+[17:42:47.057] [ScreenToMapCoordinate] Screen(380,516) → Map(6246,5261) → World(99936,168352) → Region(195,164) Cell(3,13) ID=42179
+[17:42:47.057]   Zoom=0.69, ViewOffset=(5699,4518)
+[17:42:47.339] [ScreenToMapCoordinate] Screen(507,432) → Map(6429,5140) → World(102864,164480) → Region(200,160) Cell(14,20) ID=41160
+[17:42:47.339]   Zoom=0.69, ViewOffset=(5699,4518)
+[17:42:47.626] [ScreenToMapCoordinate] Screen(873,373) → Map(6956,5055) → World(111296,161760) → Region(217,157) Cell(6,31) ID=40409
+[17:42:47.627]   Zoom=0.69, ViewOffset=(5699,4518)
+[17:42:47.912] [ScreenToMapCoordinate] Screen(833,505) → Map(6898,5245) → World(110368,167840) → Region(215,163) Cell(9,29) ID=41943
+[17:42:47.912]   Zoom=0.69, ViewOffset=(5699,4518)
+[17:42:47.912] [ScreenToMapCoordinate] Screen(832,507) → Map(6897,5248) → World(110352,167936) → Region(215,164) Cell(8,0) ID=42199
+[17:42:47.912]   Zoom=0.69, ViewOffset=(5699,4518)
+[17:42:48.198] [ScreenToMapCoordinate] Screen(795,543) → Map(6843,5299) → World(109488,169568) → Region(213,165) Cell(13,19) ID=42453
+[17:42:48.203]   Zoom=0.69, ViewOffset=(5699,4518)
