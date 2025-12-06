@@ -371,17 +371,18 @@ void	KPlayer::Active()
 		int nMpsX, nMpsY;
 		Npc[m_nIndex].GetMpsPos(&nMpsX, &nMpsY);
 
-		// Calculate distance moved since last sync
+		// Calculate distance moved since last sync (using squared distance to avoid sqrt)
 		int dx = nMpsX - m_nLastSyncX;
 		int dy = nMpsY - m_nLastSyncY;
-		int distanceMoved = (int)sqrt((double)(dx * dx + dy * dy));
+		int distanceSquared = dx * dx + dy * dy;
+		int thresholdSquared = 50 * 50;  // 2500 (50 units squared)
 
 		// ONLY sync if:
 		// 1. Position changed significantly (>50 units = player is moving)
 		// 2. OR too long since last sync (>10 seconds = fallback safety)
 		// 3. OR first sync (m_dwLastPosSyncTime == 0)
 		if (m_dwLastPosSyncTime == 0 ||
-		    distanceMoved > 50 ||
+		    distanceSquared > thresholdSquared ||
 		    (currentTime - m_dwLastPosSyncTime) >= 10000)
 		{
 			// Sync with correct movement state (run/walk)
