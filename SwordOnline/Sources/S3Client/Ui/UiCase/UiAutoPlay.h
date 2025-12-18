@@ -302,10 +302,15 @@ private:
 	KWndLabeledButton	c_MoveCoordiNatesDel;
 	KWndLabeledButton	c_MoveCoordiNatesDelAll;
 
+	// Training area radius controls
+	KWndButton	c_MoveStayInArea;
+	KWndText32	t_MoveTrainingRadiusText;
+	KWndEdit32	e_MoveTrainingRadius;
+
 	BOOL		m_MoveAroundBtn;
 	int			m_MoveMpsList[defMAX_AUTO_MOVEMPSL][3];
 	int			m_MoveMpsListSave[defMAX_AUTO_MOVEMPSL][3];
-	char		m_cFollowName[32];	
+	char		m_cFollowName[32];
 public:
 	KUiSceneTimeInfo	m_CurrentMps;
 };

@@ -568,19 +568,19 @@ int	KCoreShell::GetGameData(unsigned int uDataId, unsigned int uParam, int nPara
 			switch(pNpc->m_Series)
 			{
 				case series_water:
-					strcpy(pInfo->StatusDesc, "HÖ Thñy");
+					strcpy(pInfo->StatusDesc, "Hï¿½ Thï¿½y");
 					break;
 				case series_wood:
-					strcpy(pInfo->StatusDesc, "HÖ Méc");
+					strcpy(pInfo->StatusDesc, "Hï¿½ Mï¿½c");
 					break;
 				case series_metal:
-					strcpy(pInfo->StatusDesc, "HÖ Kim");
+					strcpy(pInfo->StatusDesc, "Hï¿½ Kim");
 					break;
 				case series_fire:
-					strcpy(pInfo->StatusDesc, "HÖ Háa");
+					strcpy(pInfo->StatusDesc, "Hï¿½ Hï¿½a");
 					break;
 				case series_earth:
-					strcpy(pInfo->StatusDesc, "HÖ Thæ ");
+					strcpy(pInfo->StatusDesc, "Hï¿½ Thï¿½ ");
 					break;
 			}
 
@@ -764,7 +764,7 @@ int	KCoreShell::GetGameData(unsigned int uDataId, unsigned int uParam, int nPara
 		nRet = 0;
 		if (uParam)
 		{
-			// TODO?????û????????????
+			// TODO?????ï¿½????????????
 			if (nParam == 1)
 				break;
 
@@ -3005,7 +3005,7 @@ int	KCoreShell::OperationRequest(unsigned int uOper, unsigned int uParam, int nP
 					break;
 				case UOC_BUILD_ITEM://TrembleItem by kinnox;
 					{
-						// TODO:???û???????
+						// TODO:???ï¿½???????
 						if (pObject2->Region.h == 1)
 							break;
 						P2.nPlace = pos_builditem;
@@ -3304,7 +3304,7 @@ int	KCoreShell::OperationRequest(unsigned int uOper, unsigned int uParam, int nP
 	case GOI_SET_SEND_CHAT_CHANNEL:
 		if (uParam)
 		{
-			KUiChatChannel* pChannelInfo = (KUiChatChannel*)uParam;// pChannelInfo ????õ?????????
+			KUiChatChannel* pChannelInfo = (KUiChatChannel*)uParam;// pChannelInfo ????ï¿½?????????
 			Player[CLIENT_PLAYER_INDEX].m_cChat.SetCurChannel(pChannelInfo->nChannelNo, pChannelInfo->uChannelId, pChannelInfo->nChannelIndex);
 		}
 		break;
@@ -4585,7 +4585,7 @@ int KCoreShell::SystemMessages(unsigned int uDataId, unsigned int uParam, int nP
 	switch(uDataId)
 	{	
 	case GSM_FIGHT_MODE_ON:
-		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "HÖ thèng", MSG_FIGHT_MODE_ON, 
+		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "Hï¿½ thï¿½ng", MSG_FIGHT_MODE_ON, 
 														strlen(MSG_FIGHT_MODE_ON), TRUE); 
 		break;
 	case GSM_FEATURE_BUIDING:
@@ -4626,16 +4626,16 @@ int KCoreShell::SystemMessages(unsigned int uDataId, unsigned int uParam, int nP
 				i++;
 			}
 #endif
-			l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "HÖ thèng", MSG_FEATURE_BUIDING, 
+			l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "Hï¿½ thï¿½ng", MSG_FEATURE_BUIDING, 
 															strlen(MSG_FEATURE_BUIDING), TRUE); 
 		}
 		break;
 	case GSM_PLAYER_RIDEHORSE:
-		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "HÖ thèng", MSG_PLAYER_RIDEHORSE, 
+		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "Hï¿½ thï¿½ng", MSG_PLAYER_RIDEHORSE, 
 															strlen(MSG_PLAYER_RIDEHORSE), TRUE); 
 		break;
 	case GSM_MAP_TYPE_ERROR:
-		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "HÖ thèng", MSG_MAP_TYPE_ERROR, 
+		l_pDataChangedNotifyFunc->ChannelMessageArrival(0, "Hï¿½ thï¿½ng", MSG_MAP_TYPE_ERROR, 
 															strlen(MSG_MAP_TYPE_ERROR), TRUE); 
 		break;
 	default:
@@ -5100,9 +5100,19 @@ int KCoreShell::PAIOperation(unsigned int uOper, unsigned int uParam, int nParam
 			Player[CLIENT_PLAYER_INDEX].m_cAI.SendAroundAuto(uParam);
 		}
 		break;
-		case GPI_M_MOVEPOS:	
+		case GPI_M_MOVEPOS:
 		{
 			Player[CLIENT_PLAYER_INDEX].m_cAI.m_AutoMove = uParam;
+		}
+		break;
+		case GPI_M_TRAINING_RADIUS:
+		{
+			Player[CLIENT_PLAYER_INDEX].m_cAI.m_nTrainingRadius = nParam;
+		}
+		break;
+		case GPI_M_STAY_IN_AREA:
+		{
+			Player[CLIENT_PLAYER_INDEX].m_cAI.m_bStayInTrainingArea = uParam;
 		}
 		break;
 		//////////////////////////AUTO OTHER

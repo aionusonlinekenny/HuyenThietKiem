@@ -141,22 +141,39 @@ The new priority when Auto-Play is active:
 
 ---
 
-## UI Implementation TODO
+## UI Implementation - COMPLETE
 
-**Location**: Need to find Auto-Play UI file (likely in `SwordOnline/Sources/S3Client/Ui/...`)
+**Files Modified**:
+- `SwordOnline/Sources/S3Client/Ui/UiCase/UiAutoPlay.h`
+- `SwordOnline/Sources/S3Client/Ui/UiCase/UiAutoPlay.cpp`
+- `Bin/Client/Ui/Ui3/UiAutoPlay.ini`
+- `SwordOnline/Sources/Core/Src/CoreShell.h`
+- `SwordOnline/Sources/Core/Src/CoreShell.cpp`
 
-**Required Changes**:
-1. Add checkbox control for "Stay in Training Area"
-2. Add numeric input for training radius
-3. Bind controls to `Player[CLIENT_PLAYER_INDEX].m_cAI.m_nTrainingRadius` and `m_bStayInTrainingArea`
-4. Save/load these settings with other Auto-Play configuration
-
-**Search Hints**:
-```bash
-# Find Auto-Play UI files
-find . -name "*Auto*.cpp" -o -name "*Auto*.h"
-grep -r "m_bFollowPeople" --include="*.cpp" --include="*.h" SwordOnline/Sources/S3Client/
+**UI Controls Added (UiAutoPlay.h)**:
+```cpp
+// In KUiMovePlayer class
+KWndButton	c_MoveStayInArea;           // Checkbox "Stay in Training Area"
+KWndText32	t_MoveTrainingRadiusText;   // Label "Giới hạn bán kính train:"
+KWndEdit32	e_MoveTrainingRadius;       // Edit box for radius value
 ```
+
+**GPI Operations Added (CoreShell.h)**:
+```cpp
+GPI_M_TRAINING_RADIUS,  // Set training radius (nParam = radius in cells)
+GPI_M_STAY_IN_AREA,     // Enable/disable enforcement (uParam = TRUE/FALSE)
+```
+
+**UI Scheme Added (UiAutoPlay.ini)**:
+- Position: After MoveCoordiNatesDelAll (line 2600)
+- Checkbox at (10, 200)
+- Label at (28, 200) - "Giới hạn bán kính train:"
+- Edit box at (153, 200)
+
+**Save/Load Integration**:
+- Config keys: `F4` (checkbox state), `F5` (radius value)
+- Auto-saved when UI changes
+- Auto-loaded on startup
 
 ---
 
@@ -166,8 +183,12 @@ grep -r "m_bFollowPeople" --include="*.cpp" --include="*.h" SwordOnline/Sources/
 |-----------|--------|---------------|
 | KPlayerAI.h | ✅ Complete | +4 fields, +2 methods |
 | KPlayerAI.cpp | ✅ Complete | +3 init, +85 implementation, +30 filter logic |
-| UI Integration | ⚠️ TODO | Need to find and update UI file |
-| **Total** | **85% Complete** | **~122 lines** |
+| CoreShell.h | ✅ Complete | +2 GPI constants |
+| CoreShell.cpp | ✅ Complete | +10 GPI handlers |
+| UiAutoPlay.h | ✅ Complete | +3 UI controls |
+| UiAutoPlay.cpp | ✅ Complete | +20 init, +15 events, +15 save/load |
+| UiAutoPlay.ini | ✅ Complete | +3 UI control definitions |
+| **Total** | **✅ 100% Complete** | **~185 lines** |
 
 ---
 
