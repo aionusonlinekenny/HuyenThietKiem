@@ -190,6 +190,10 @@ void KPlayerAI::Release()
 	m_nStuckCounter = 0;
 	m_dwLastWaypointTime = 0;
 
+	// Training area radius
+	m_nTrainingRadius = 0;			// Default: unlimited
+	m_bStayInTrainingArea = FALSE;	// Default: off
+
 	// Packet throttling
 	memset(m_PacketLastSent, 0, sizeof(m_PacketLastSent));
 	memset(m_PacketCount, 0, sizeof(m_PacketCount));
@@ -800,8 +804,39 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 				if (_findLag == TRUE)
 					continue;	
 				
-				if (IsNotValidNpc(m_ArrayNpcNeast[i]))		
+				if (IsNotValidNpc(m_ArrayNpcNeast[i]))
 					continue;
+
+				// FIX: Skip NPCs that would take us outside training area radius
+				if (m_bStayInTrainingArea && m_nTrainingRadius > 0 && m_AutoMove)
+				{
+					int npcX, npcY;
+					Npc[m_ArrayNpcNeast[i]].GetMpsPos(&npcX, &npcY);
+
+					// Check if NPC is within radius of any waypoint
+					BOOL npcInRange = FALSE;
+					int radiusMPS = m_nTrainingRadius * 32;
+					for (int wp = 0; wp < m_MoveCount; wp++)
+					{
+						if (!m_MoveMps[wp][0] ||
+							m_MoveMps[wp][0] != SubWorld[Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_SubWorldIndex].m_SubWorldID)
+							continue;
+
+						int distSq = (npcX - m_MoveMps[wp][1]) * (npcX - m_MoveMps[wp][1]) +
+									 (npcY - m_MoveMps[wp][2]) * (npcY - m_MoveMps[wp][2]);
+
+						if (distSq <= radiusMPS * radiusMPS)
+						{
+							npcInRange = TRUE;
+							break;
+						}
+					}
+
+					// Skip this NPC if it's outside training area
+					if (!npcInRange)
+						continue;
+				}
+
 				distance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_ArrayNpcNeast[i]);
 				if (FALSE == _fg)
 				{
@@ -837,11 +872,22 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 		else if (m_AutoMove && !m_bFollowPeople)
 		{
 			// Only auto-move when NOT in follow mode
-			// When following but lost leader, stay at current position and attack nearby monsters
 			PlayerMoveMps();
 		}
-		// Else: Following but lost leader (m_bFollowPeople = TRUE but m_FollowPeopleIdx = 0)
-		//       Stay at current position, don't wander - just attack nearby monsters
+		else if (m_bFollowPeople && m_FollowPeopleIdx == 0 && m_AutoMove)
+		{
+			// FIX: When following but lost leader, return to training waypoints
+			// instead of staying at current position
+			ReturnToTrainingArea();
+		}
+
+		// Check if out of training area radius - return to waypoints
+		int nearestWp = -1;
+		if (m_bStayInTrainingArea && !IsWithinTrainingArea(&nearestWp))
+		{
+			ReturnToTrainingArea();
+		}
+
 		AutoReturn();
 		m_Actacker = 0;
 		m_bActacker = FALSE;
@@ -3695,6 +3741,93 @@ void KPlayerAI::PaintActionAuto(int nType,int nNpcID,int nX,int nY)
 			nDestXPaint = nX;
 			nDestYPaint = nY;
 		}
+}
+
+// ===== TRAINING AREA RADIUS ENFORCEMENT =====
+// Check if character is within training radius of any waypoint
+BOOL KPlayerAI::IsWithinTrainingArea(int *outNearestWaypointIdx)
+{
+	// If training area limit is disabled, always return TRUE
+	if (!m_bStayInTrainingArea || m_nTrainingRadius <= 0 || !m_AutoMove)
+		return TRUE;
+
+	int nPlayerX, nPlayerY;
+	Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].GetMpsPos(&nPlayerX, &nPlayerY);
+
+	// Convert radius from cells to MPS units (1 cell = 32 pixels)
+	int radiusMPS = m_nTrainingRadius * 32;
+	int minDistSq = radiusMPS * radiusMPS;
+	int nearestIdx = -1;
+	int nearestDistSq = 999999999;
+
+	// Check distance to all valid waypoints
+	for (int i = 0; i < m_MoveCount; i++)
+	{
+		// Skip invalid waypoints or wrong map
+		if (!m_MoveMps[i][0] ||
+			m_MoveMps[i][0] != SubWorld[Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_SubWorldIndex].m_SubWorldID)
+			continue;
+
+		int wpX = m_MoveMps[i][1];
+		int wpY = m_MoveMps[i][2];
+
+		int distSq = (nPlayerX - wpX) * (nPlayerX - wpX) + (nPlayerY - wpY) * (nPlayerY - wpY);
+
+		// Track nearest waypoint
+		if (distSq < nearestDistSq)
+		{
+			nearestDistSq = distSq;
+			nearestIdx = i;
+		}
+
+		// If within radius of any waypoint, we're good
+		if (distSq <= minDistSq)
+		{
+			if (outNearestWaypointIdx)
+				*outNearestWaypointIdx = i;
+			return TRUE;
+		}
+	}
+
+	// Out of range - return nearest waypoint index
+	if (outNearestWaypointIdx)
+		*outNearestWaypointIdx = nearestIdx;
+
+	return FALSE;
+}
+
+// Return to nearest waypoint (used when out of training area or leader lost)
+void KPlayerAI::ReturnToTrainingArea()
+{
+	int nearestWpIdx = -1;
+
+	// Find nearest waypoint
+	if (!IsWithinTrainingArea(&nearestWpIdx) ||
+		(m_bFollowPeople && m_FollowPeopleIdx == 0 && m_AutoMove))  // Leader lost, have waypoints
+	{
+		if (nearestWpIdx >= 0 && nearestWpIdx < m_MoveCount)
+		{
+			// Cancel current combat
+			m_Actacker = 0;
+			m_bActacker = FALSE;
+			m_nLifeLag = 0;
+			m_nTimeRunLag = 0;
+			m_Count_Acttack_Lag = 0;
+			Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;
+
+			// Move to nearest waypoint
+			Player[CLIENT_PLAYER_INDEX].m_cAutoMove.AutoMoveTo(
+				m_MoveMps[nearestWpIdx][1],
+				m_MoveMps[nearestWpIdx][2]);
+
+			PaintActionAuto(2, 0,
+				m_MoveMps[nearestWpIdx][1] / 256,
+				m_MoveMps[nearestWpIdx][2] / 512);
+
+			// Update route step to continue from this waypoint
+			m_MoveStep = nearestWpIdx;
+		}
+	}
 }
 
 

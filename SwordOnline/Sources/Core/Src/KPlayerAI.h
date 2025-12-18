@@ -187,6 +187,10 @@ public:
 	unsigned int	m_dwLastReacquireAttempt;	// Last reacquire attempt time
 	int				m_nSavedAutoMove;			// Saved m_AutoMove state before fallback
 
+	// Training area radius limit (prevent running too far from waypoints)
+	int				m_nTrainingRadius;			// Max distance from waypoints (in cells, 0 = unlimited)
+	BOOL			m_bStayInTrainingArea;		// Force stay within training radius?
+
 	// Route + combat balance (pause route to fight nearby enemies)
 	BOOL			m_bRoutePaused;				// Route paused for combat?
 	int				m_nPausedRouteStep;			// Which waypoint we paused at
@@ -281,6 +285,10 @@ public:
 	void			UpdateRouteProgress();
 	BOOL			CanSendPacket(int packetType);		// 0=MOVE 1=ATTACK 2=SKILL 3=ITEM
 	void			LogPacketStats();
+
+	// ===== TRAINING AREA RADIUS ENFORCEMENT =====
+	BOOL			IsWithinTrainingArea(int *outNearestWaypointIdx);
+	void			ReturnToTrainingArea();
 };
 #endif
 #endif
