@@ -1,0 +1,2 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+

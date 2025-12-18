@@ -1,0 +1,9 @@
+[MAIN]
+HaveMap=1
+IsInDoor=1
+brightness=255
+color=177,195,26,255
+event=中原南区
+rect=94,99,107,106
+verson=0
+windspeed=0.100000,0.000000,0.000000

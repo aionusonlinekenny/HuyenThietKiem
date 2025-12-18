@@ -1,0 +1,13 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+769	1	47968	101472	\script\maps\npc\nhiepthitran.lua	Nhi’p Th› Tr«n	1
+769	11	102688	159136	\script\maps\npc\nhiepthitran.lua	Nhi’p Th› Tr«n	1
+769	176	43872	96256	\script\maps\npc\nhiepthitran.lua	Nhi’p Th› Tr«n	1
+769	162	50240	102720	\script\maps\npc\nhiepthitran.lua	Nhi’p Th› Tr«n	1
+769	80	54176	94432	\script\maps\npc\nhiepthitran.lua	Nhi’p Th› Tr«n	1
+769	37	51904	96416	\script\maps\npc\nhiepthitran.lua	Nhi’p Th› Tr«n	1
+769	78	48288	102528	\script\maps\npc\nhiepthitran.lua	Nhi’p Th› Tr«n	1
+240	336	36736	96608	\script\missions\fengling_ferry\fldmap_boat1.lua	Thuy“n Phu  t	1
+241	336	41248	93760	\script\missions\fengling_ferry\fldmap_boat2.lua	Thuy“n Phu Gi∏p	1
+242	336	49120	89856	\script\missions\fengling_ferry\fldmap_boat3.lua	Thuy“n Phu B›nh	1
+108	2	83200	112640		Hoa S¨n L∑o T»u	1
+769	21	89120	128192	\script\event\vantieu\tieusu.lua	Ti™u s≠	1

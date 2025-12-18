@@ -1,0 +1,129 @@
+SCC = This is a Source Code Control file
+
+[bcb.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[como.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[cygwin.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[deccxx.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[djgpp.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[egcs.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[gcc-99r1.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[gcc-amigaos-m68k.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[gcc-apple-macosx.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[gcc-freebsd.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[gcc-hp11.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[gcc-irix.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[gcc-linux.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[gcc-netbsd.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[gcc.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[gcc7.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[hp.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[hpacc.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[intel.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[intel45.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[intel50.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[kai.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[mingw32.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[sgi_mipspro.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[sunpro-64.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[sunpro.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[sunpro42.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[test_hash_map.dsp]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[vc-static.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[vc.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[vc5.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA
+
+[vc6.mak]
+SCC_Aux_Path = "\\Swordonline\Sword3Home\sword3vss"
+SCC_Project_Name = "$/stlport/test/eh", BHQAAAAA

@@ -1,0 +1,9 @@
+Name	ItemGenre	DetailType	ParticularType	Icon	ObjID	Width	Height	Intro	Stack
+VËt phÈm nguyªn liÖu	8	0	0	\spr\item\questkey\taskobj001.spr	41	1	1	VËt phÈm nhiÖm vô  	0
+HuyÒn Tinh Kho¸ng Th¹ch 	8	1	0	\spr\item\script\item_xuanjingkuangshi.spr	425	1	1	Lµ 1 trong nh÷ng vËt liÖu quan träng ®Ó kİch ho¹t trang bŞ mµu xanh, kh¶m n¹m, chÕ t¹o Trang bŞ HuyÒn Tinh vµ trang bŞ Hoµng Kim. 	0
+HuyÒn ThiÕt Nguyªn Kho¸ng	8	2	0	\spr\item\script\item_xuantiekuang.spr	425	1	1	Mét lo¹i <color=yellow>Kho¸ng th¹ch cã thuéc tİnh<color>, cã thÓ lµm thay ®æi <color=yellow>thuéc tİnh hiÖn 1<color> trªn trang bŞ 	0
+Khæng T­íc Nguyªn Th¹ch 	8	3	0	\spr\item\script\item_kongqueshi.spr	425	1	1	Mét lo¹i <color=yellow>Kho¸ng th¹ch cã thuéc tİnh<color>, cã thÓ lµm thay ®æi <color=yellow>thuéc tİnh Èn 1<color> trªn trang bŞ cïng Ngò hµnh  	0
+MËt Ng©n Nguyªn Kho¸ng	8	4	0	\spr\item\script\item_miyinkuang.spr	425	1	1	Mét lo¹i <color=yellow>Kho¸ng th¹ch cã thuéc tİnh<color>, cã thÓ lµm thay ®æi <color=yellow> thuéc tİnh hiÖn 2<color> trªn trang bŞ  	0
+Phï Dung Nguyªn Th¹ch 	8	5	0	\spr\item\script\item_furongshi.spr	425	1	1	Mét lo¹i <color=yellow>Kho¸ng th¹ch cã thuéc tİnh<color>, cã thÓ lµm thay ®æi <color=yellow>thuéc tİnh Èn 2<color> trªn trang bŞ cïng Ngò hµnh 	0
+Chu Sa Nguyªn Kho¸ng	8	6	0	\spr\item\script\item_zhushakuang.spr	425	1	1	Mét lo¹i <color=yellow>Kho¸ng th¹ch cã thuéc tİnh<color>, cã thÓ lµm thay ®æi <color=yellow>thuéc tİnh hiÖn 3<color> trªn trang bŞ  	0
+Chung Nhò Nguyªn Th¹ch 	8	7	0	\spr\item\script\item_zhongrushi.spr	425	1	1	Mét lo¹i <color=yellow>Kho¸ng th¹ch cã thuéc tİnh<color>, cã thÓ lµm thay ®æi <color=yellow>thuéc tİnh Èn 3<color> trªn trang bŞ cïng Ngò hµnh 	0

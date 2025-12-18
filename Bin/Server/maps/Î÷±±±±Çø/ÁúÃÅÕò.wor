@@ -1,0 +1,16 @@
+[MAIN]
+HaveMap=1
+brightness=255
+color=255,255,255,255
+event=ÁúÃÅÕò
+rect=105,123,145,149
+verson=0
+windspeed=0.100000,0.000000,0.000000
+[Weather]
+Weather0=MiddleRain
+Weather1=Sprinkle
+odds0=5
+odds1=10
+timeMax=20
+timeMin=10
+weathernum=2

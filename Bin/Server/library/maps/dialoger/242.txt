@@ -1,0 +1,3 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+68	242	51058	102925	\script\global\luanpcfunctions\thieulamphantang.lua	ThiÕu L©m Ph¶n T¨ng	1
+259	242	52357	103012	\script\global\luanpcfunctions\godmedicine.lua	B¸n thuèc	1

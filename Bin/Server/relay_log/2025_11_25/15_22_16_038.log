@@ -1,0 +1,77 @@
+
+*
+***** S3Relay Start (@ 2025/11/25 15:22:16.038) >>>>>
+*
+
+[2025/11/25 15:22:16] 1-- Initializing ...
+[2025/11/25 15:22:16] 2-- Create Channel: [Stock, GM] <00000000> GM
+[2025/11/25 15:22:16] 3-- Create Channel: [Stock] <00000001> WORLD
+[2025/11/25 15:22:16] 4-- friend timing update db: start
+[2025/11/25 15:22:16] 5-- relay server startup
+[2025/11/25 15:22:16] 6-- root client create: 192.168.254.53
+[2025/11/25 15:22:16] 7-- DBRole client create: 192.168.254.53
+[2025/11/25 15:22:16] 8-- root client close: 192.168.254.53
+[2025/11/25 15:22:16] 9-- gateway client create: 192.168.254.53
+[2025/11/25 15:22:16] 10-- host server startup
+[2025/11/25 15:22:16] 11-- tong server startup
+[2025/11/25 15:22:16] 12-- chat server startup
+[2025/11/25 15:22:16] 13-- SockThread start success
+[2025/11/25 15:22:16] 14-- tong database open ok!
+[2025/11/25 15:22:16] 15-- tongset init ok !
+[2025/11/25 15:22:16] 16-- Initialize OK
+[2025/11/25 15:22:25] 17-- host connect create: 192.168.254.5
+[2025/11/25 15:22:25] 18-- chat connect create: 192.168.254.5
+[2025/11/25 15:22:25] 19-- tong connect create: 192.168.254.5
+[2025/11/25 15:22:28] 20-- host connect create: 192.168.254.53
+[2025/11/25 15:22:28] 21-- chat connect create: 192.168.254.53
+[2025/11/25 15:22:28] 22-- tong connect create: 192.168.254.53
+[2025/11/25 15:22:28] 23-- host connect create: 192.168.254.2
+[2025/11/25 15:22:28] 24-- chat connect create: 192.168.254.2
+[2025/11/25 15:22:28] 25-- tong connect create: 192.168.254.2
+[2025/11/25 15:22:28] 26-- host connect create: 192.168.254.3
+[2025/11/25 15:22:28] 27-- chat connect create: 192.168.254.3
+[2025/11/25 15:22:28] 28-- tong connect create: 192.168.254.3
+[2025/11/25 15:22:31] 29-- host connect create: 192.168.254.4
+[2025/11/25 15:22:31] 30-- chat connect create: 192.168.254.4
+[2025/11/25 15:22:31] 31-- tong connect create: 192.168.254.4
+[2025/11/25 15:23:22] 32-- load someone: KennyMask
+[2025/11/25 15:23:22] 33-- player login: 123456 [KennyMask] (35FEA8C0, 00000000)
+[2025/11/25 15:23:22] 34-- Query ChannelID: \S from (35FEA8C0, 00000000)
+[2025/11/25 15:23:22] 35-- Create Channel: <00000002> \S905881792
+[2025/11/25 15:23:22] 36-- Query ChannelID: WORLD from (35FEA8C0, 00000000)
+[2025/11/25 15:23:22] 37-- Query ChannelID: GM from (35FEA8C0, 00000000)
+[2025/11/25 15:23:22] 38-- Query ChannelID: \B from (35FEA8C0, 00000000)
+[2025/11/25 15:23:22] 39-- Create Channel: <00000003> \B905881792
+[2025/11/25 15:23:22] 40-- sync friend list: KennyMask (full)
+[2025/11/25 15:23:22] 41-- Subscribe Channel: 00000002 by (35FEA8C0,00000000)
+[2025/11/25 15:23:22] 42-- Subscribe Channel: 00000001 by (35FEA8C0,00000000)
+[2025/11/25 15:23:22] 43-- Subscribe Channel: GM <00000000> by (35FEA8C0,00000000)
+[2025/11/25 15:23:22] 44-- Subscribe Channel: 00000003 by (35FEA8C0,00000000)
+[2025/11/25 15:24:01] 45-- Query ChannelID: \F1 from (35FEA8C0, 00000000)
+[2025/11/25 15:24:01] 46-- Create Channel: <00000004> \F1
+[2025/11/25 15:24:01] 47-- Subscribe Channel: 00000004 by (35FEA8C0,00000000)
+[2025/11/25 15:24:10] 48-- Destroy Channel: <00000002> \S905881792
+[2025/11/25 15:24:10] 49-- Destroy Channel: <00000003> \B905881792
+[2025/11/25 15:24:10] 50-- Destroy Channel: <00000004> \F1
+[2025/11/25 15:24:10] 51-- player logout: 123456
+[2025/11/25 15:24:10] 52-- player login: 123456 [KennyMask] (02FEA8C0, 00000000)
+[2025/11/25 15:24:10] 53-- Query ChannelID: \S from (02FEA8C0, 00000000)
+[2025/11/25 15:24:10] 54-- Create Channel: <00000005> \S50243776
+[2025/11/25 15:24:10] 55-- Query ChannelID: WORLD from (02FEA8C0, 00000000)
+[2025/11/25 15:24:10] 56-- Query ChannelID: \F1 from (02FEA8C0, 00000000)
+[2025/11/25 15:24:10] 57-- Create Channel: <00000006> \F1
+[2025/11/25 15:24:10] 58-- Query ChannelID: GM from (02FEA8C0, 00000000)
+[2025/11/25 15:24:10] 59-- Query ChannelID: \B from (02FEA8C0, 00000000)
+[2025/11/25 15:24:10] 60-- Create Channel: <00000007> \B50243776
+[2025/11/25 15:24:10] 61-- sync friend list: KennyMask (full)
+[2025/11/25 15:24:10] 62-- Subscribe Channel: 00000005 by (02FEA8C0,00000000)
+[2025/11/25 15:24:10] 63-- Subscribe Channel: 00000001 by (02FEA8C0,00000000)
+[2025/11/25 15:24:10] 64-- Subscribe Channel: 00000006 by (02FEA8C0,00000000)
+[2025/11/25 15:24:10] 65-- Subscribe Channel: GM <00000000> by (02FEA8C0,00000000)
+[2025/11/25 15:24:10] 66-- Subscribe Channel: 00000007 by (02FEA8C0,00000000)
+[2025/11/25 15:27:22] 67-- update friend DB succeed
+[2025/11/25 15:30:10] 68-- Destroy Channel: <00000005> \S50243776
+[2025/11/25 15:30:10] 69-- Destroy Channel: <00000006> \F1
+[2025/11/25 15:30:10] 70-- Destroy Channel: <00000007> \B50243776
+[2025/11/25 15:30:10] 71-- player logout: 123456
+[2025/11/25 15:32:22] 72-- update friend DB succeed

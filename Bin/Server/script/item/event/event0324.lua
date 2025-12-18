@@ -1,0 +1,1 @@
+Include("\\script\\event\\quockhanh\\giohoaquockhanh.lua");

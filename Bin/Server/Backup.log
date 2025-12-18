@@ -1,0 +1,323 @@
+[Backup] Bat dau backup...
+Backup Log File Open Time:2025.11.25 20:32:13
+[Backup] Thu muc dich: D:\HuyenThietKiem\Bin\Server\database\20251125_203213214
+[Backup] Mo file dump: D:\HuyenThietKiem\Bin\Server\database\20251125_203213214\roledb.bak
+RunTable cursor Opened. Backup begin.
+[Backup] RunTable cursor opened. Bat dau dump...
+DB Dump Finished.
+RunTable cursor closed.
+[Backup] Dump xong. Tong so player: 1; Tong tien: 3000
+[Backup] Cap nhat va luu StatData.dat thanh cong
+DB Statistic Log:
+// --Level// --
+KennyMask	90	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+// --Money// --
+KennyMask	3000	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+// --Killer// --
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+// --Sect 0 Level// --
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+-Sect 0 Money// ---
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+// --Sect 1 Level// --
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+-Sect 1 Money// ---
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+// --Sect 2 Level// --
+KennyMask	90	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+-Sect 2 Money// ---
+KennyMask	3000	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+// --Sect 3 Level// --
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+-Sect 3 Money// ---
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+// --Sect 4 Level// --
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+-Sect 4 Money// ---
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+// --Sect 5 Level// --
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+-Sect 5 Money// ---
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+// --Sect 6 Level// --
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+-Sect 6 Money// ---
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+// --Sect 7 Level// --
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+-Sect 7 Money// ---
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+// --Sect 8 Level// --
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+-Sect 8 Money// ---
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+// --Sect 9 Level// --
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+-Sect 9 Money// ---
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+// --Sect 10 Level// --
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+	0	1	0
+-Sect 10 Money// ---
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+	0	1
+各个门派的玩家数
+Sect 0 ：0
+Sect 1 ：0
+Sect 2 ：1
+Sect 3 ：0
+Sect 4 ：0
+Sect 5 ：0
+Sect 6 ：0
+Sect 7 ：0
+Sect 8 ：0
+Sect 9 ：0
+Sect 10 ：0
+财富排名前 1000 玩家中各门派所占比例数
+Sect 0 ：999
+Sect 1 ：0
+Sect 2 ：1
+Sect 3 ：0
+Sect 4 ：0
+Sect 5 ：0
+Sect 6 ：0
+Sect 7 ：0
+Sect 8 ：0
+Sect 9 ：0
+Sect 10 ：0
+级别排名前 1000 玩家中各门派所占比例数
+Sect 0 ：4999
+Sect 1 ：0
+Sect 2 ：1
+Sect 3 ：0
+Sect 4 ：0
+Sect 5 ：0
+Sect 6 ：0
+Sect 7 ：0
+Sect 8 ：0
+Sect 9 ：0
+Sect 10 ：0
+[Backup] Hoan tat backup. Xem log tai Backup.log

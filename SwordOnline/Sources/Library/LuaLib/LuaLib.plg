@@ -1,0 +1,58 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+Configuration: LuaLib - Win32 Release
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\Ken\AppData\Local\Temp\RSP352C.tmp" with contents
+[
+/nologo /out:"Release\LuaLib.lib" 
+.\Release\lapi.obj
+.\Release\lcode.obj
+.\Release\ldebug.obj
+.\Release\ldo.obj
+.\Release\lfunc.obj
+.\Release\lgc.obj
+.\Release\llex.obj
+.\Release\lmem.obj
+.\Release\lobject.obj
+.\Release\lparser.obj
+.\Release\lstate.obj
+.\Release\lstring.obj
+.\Release\ltable.obj
+.\Release\ltests.obj
+.\Release\ltm.obj
+.\Release\lua.obj
+.\Release\LuaExtend.obj
+.\Release\lundump.obj
+.\Release\lvm.obj
+.\Release\lzio.obj
+.\Release\lauxlib.obj
+.\Release\lbaselib.obj
+.\Release\ldblib.obj
+.\Release\liolib.obj
+.\Release\lmathlib.obj
+.\Release\lstrlib.obj
+]
+Creating command line "link.exe -lib @C:\Users\Ken\AppData\Local\Temp\RSP352C.tmp"
+<h3>Output Window</h3>
+Creating library...
+Creating temporary file "C:\Users\Ken\AppData\Local\Temp\RSP356B.bat" with contents
+[
+@echo off
+copy debug\lualib.lib ..\..\..\Lib\lualib.lib
+]
+Creating command line "C:\Users\Ken\AppData\Local\Temp\RSP356B.bat"
+
+The system cannot find the file specified.
+Error executing c:\windows\system32\cmd.exe.
+
+
+
+<h3>Results</h3>
+LuaLib.lib - 1 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

@@ -1,0 +1,44 @@
+Name	ItemGenre	DetailType	ParticularType	Level	Icon	ObjID	Width	Height	Intro	Price	MagicNo1	Value1	Time1	MagicNo2	Value2	Time2	MagicNo3	Value3	Time3
+Kim S¸ng D­îc (tiÓu) 	5	0	0	1	\spr\item\medecine\obj-potion01.spr	18	1	1	Håi phôc chót Ýt khÝ huyÕt	50	153	10	100						
+Kim S¸ng D­îc (trung) 	5	0	0	2	\spr\item\medecine\obj-potion01.spr	18	1	1	Håi phôc khÝ huyÕt t­¬ng ®èi nhanh.	100	153	25	100						
+Kim S¸ng D­îc (®¹i) 	5	0	0	3	\spr\item\medecine\obj-potion02.spr	307	1	1	Håi phôc khÝ huyÕt cùc nhanh.	250	153	25	200						
+Håi Thiªn ®an	5	0	0	4	\spr\item\medecine\obj-potion02.spr	307	1	1	ThÇn d­îc ch÷a th­¬ng, c¶i tö hoµn sinh	500	153	50	200						
+Cöu ChuyÓn Hoµn Hån ®an	5	0	0	5	\spr\item\medecine\obj-potion03.spr	310	1	1	LËp tøc håi phôc 5000 ®iÓm sinh lùc	2000	153	500	100						
+Ng­ng ThÇn ®an (tiÓu) 	5	1	0	1	\spr\item\medecine\obj-potion06.spr	20	1	1	Cã thÓ håi phôc chót Ýt Néi lùc	50	154	5	200						
+Ng­ng ThÇn ®an (trung) 	5	1	0	2	\spr\item\medecine\obj-potion06.spr	20	1	1	Håi phôc Néi lùc t­¬ng ®èi nhanh.	100	154	10	200						
+Ng­ng ThÇn ®an (®¹i) 	5	1	0	3	\spr\item\medecine\obj-potion07.spr	309	1	1	Håi phôc Néi lùc côc nhanh	250	154	20	250						
+§¹i Bæ t¸n	5	1	0	4	\spr\item\medecine\obj-potion07.spr	309	1	1	Håi phôc Néi lôc trong nh¸y m¾t	500	154	50	200						
+¤ ®Çu Hoµn thÇn ®an	5	1	0	5	\spr\item\medecine\obj-potion08.spr	312	1	1	LËp tøc håi phôc 5000 ®iÓm Néi lùc	2000	154	500	100						
+Thõa Tiªn MËt (tiÓu) 	5	2	0	1	\spr\item\medecine\obj-potion11.spr	19	1	1	§ång thêi håi phôc chót Ýt Sinh lùc vµ Néi lùc.	80	153	10	100	154	6	100			
+Thõa Tiªn MËt (trung) 	5	2	0	2	\spr\item\medecine\obj-potion11.spr	19	1	1	§ång thêi håi phôc nhanh Sinh lùc vµ Néi lùc 	150	153	25	100	154	6	250			
+Thõa Tiªn MËt (®¹i) 	5	2	0	3	\spr\item\medecine\obj-potion12.spr	308	1	1	§ång thêi håi phôc cùc nhanh Sinh lùc vµ Néi lùc	375	153	25	200	154	15	200			
+ThÊt KhiÕu Bæ t©m ®an	5	2	0	4	\spr\item\medecine\obj-potion12.spr	308	1	1	LËp tøc håi phôc Sinh lùc vµ Néi lùc	750	153	50	200	154	30	200			
+Ngò Hoa Ngäc Lé Hoµn	5	2	0	5	\spr\item\medecine\obj-potion13.spr	311	1	1	§ång thêi håi phôc 5000 ®iÓm Sinh lùc vµ Néi lùc	3000	153	500	100	154	500	100			
+Tam Hoa T¸n 	5	3	0	1	\spr\item\medecine\obj-potion16.spr	19	1	1	Cã thÓ håi phôc 1000 ®iÓm thÓ lùc.	50	95	50	200						
+§ïi gµ 	5	3	0	2	\spr\item\questkey\taskobj106.spr	41	1	1	Cã thÓ bæ sung khÝ huyÕt.	50	153	500	100						
+B¸nh Trung Thu h­ 	5	3	0	3	\spr\item\special\ÔÂ±ý.spr	329	1	1	Sö dông v« hiÖu.	50	153	-10	100	154	-10	100			
+Toµn Qu¶ hoµn	5	3	0	4	\spr\item\medecine\obj-potion17.spr	19	1	1	Cã thÓ håi phôc 5000 ®iÓm thÓ lùc.	100	95	200	200						
+Toµn Qu¶ hoµn	5	3	0	5	\spr\item\medecine\obj-potion17.spr	19	1	1	Cã thÓ håi phôc 5000 ®iÓm thÓ lùc.	100	95	200	200						
+Thanh Ng­u Gi¶i ®éc t¸n	5	4	0	1	\spr\item\medecine\obj-potion23.spr	19	1	1	Lo¹i bæ d­îc th«ng th­êng, t¸c dông kh«ng cao.	10	109	100	200						
+Ho¾c H­¬ng ChÝnh khÝ hoµn	5	4	0	2	\spr\item\medecine\obj-potion24.spr	19	1	1	Cã chót Ýt t¸c dông gi¶i ®éc	20	109	200	200						
+Tam ThuËn t¸n	5	4	0	3	\spr\item\medecine\obj-potion25.spr	19	1	1	Gi¶i ®éc rÊt hiÖu qu¶ 	50	109	400	200						
+Ng©n KiÒu Khø ®éc ®an	5	4	0	4	\spr\item\medecine\obj-potion26.spr	19	1	1	Gi¶i ®éc cùu kú hiÖu qu¶ 	100	109	800	200						
+Long §µm Hãa §éc ®an	5	4	0	5	\spr\item\medecine\obj-potion27.spr	19	1	1	Kh«ng ®éc kh«ng thÓ gi¶i	200	109	1200	200						
+Tr­êng MÖnh hoµn	5	5	0	1	\spr\item\medecine\obj-potion15.spr	19	1	1	Néi 5 phót, sinh lùc t¨ng tèi ®a: 500 ®iÓm	5	85	500	6000						
+Gia Bµo hoµn	5	5	0	2	\spr\item\medecine\obj-potion15.spr	19	1	1	Néi 5 phót, tèc ®é di chuyÓn t¨ng: 20%	5	111	20	6000						
+§¹i Lùc hoµn	5	5	0	3	\spr\item\medecine\obj-potion15.spr	19	1	1	Néi 5 phót, c«ng kÝch vËt lý t¨ng: 100 ®iÓm	5	121	100	6000						
+Cao ThiÓm hoµn	5	5	0	4	\spr\item\medecine\obj-potion15.spr	19	1	1	Néi 5 phót, t¨ng ®é c«ng kÝch chÝnh x¸c: 500 ®iÓm	5	150	500	6000						
+Cao Trung hoµn	5	5	0	5	\spr\item\medecine\obj-potion15.spr	19	1	1	Néi 5 phót, t¨ng ®é c«ng kÝch chÝnh x¸c: 500 ®iÓm	5	166	500	6000						
+Phi Tèc hoµn	5	6	0	1	\spr\item\medecine\obj-potion15.spr	19	1	1	Néi 5 phót, tèc ®é c«ng kÝch t¨ng 50%.	5	115	50	6000						
+B¨ng Phßng hoµn	5	6	0	2	\spr\item\medecine\obj-potion15.spr	19	1	1	Néi 5 phót, t¨ng phßng ngù: 50%	5	105	50	6000						
+L«i Phßng hoµn	5	6	0	3	\spr\item\medecine\obj-potion15.spr	19	1	1	Néi 5 phót, t¨ng phßng L«i: 50%	5	103	50	6000						
+Háa Phßng hoµn	5	6	0	4	\spr\item\medecine\obj-potion15.spr	19	1	1	Néi 5 phót, t¨ng phßng háa: 50%	5	102	50	6000						
+§éc Phßng hoµn	5	6	0	5	\spr\item\medecine\obj-potion15.spr	19	1	1	Néi 5 phót, t¨ng phßng ®éc: 50%	5	101	50	6000						
+B¸nh ch­ng Nh©n t¸o	5	7	0	1	\spr\item\questkey\taskobj400.spr	366	1	1	Sau khi ¨n mçi gi©y t¨ng thªm 1000 ®iÓm Sinh lùc	100	153	500	100						
+Thiªn s¬n  Håi ThÇn ®an	5	7	0	2	\spr\item\medecine\obj-potion30.spr	369	1	1	Tiªn s¬n  b¶o d­îc, ®ång thêi håi phôc Sinh lùc vµ Néi lùc 	2000	153	350	100	154	350	100			
+B¸nh ch­ng Nh©n t¸o	5	7	0	3	\spr\item\questkey\taskobj400.spr	366	1	1	Sau khi ¨n mçi gi©y t¨ng thªm 1000 ®iÓm Sinh lùc	100	153	500	100						
+B¸nh ch­ng Nh©n t¸o	5	7	0	4	\spr\item\questkey\taskobj400.spr	366	1	1	Sau khi ¨n mçi gi©y t¨ng thªm 1000 ®iÓm Sinh lùc	100	153	500	100						
+B¸nh ch­ng Nh©n t¸o	5	7	0	5	\spr\item\questkey\taskobj400.spr	366	1	1	Sau khi ¨n mçi gi©y t¨ng thªm 1000 ®iÓm Sinh lùc	100	153	500	100						
+Ngò hoa ngäc lé hoµn ®Æc biÖt	5	8	0	1	\spr\item\medecine\obj-potion13.spr	311	1	1	Tiªn ®¬n diÖu d­îc, kh«i phôc hoµn toµn sinh lùc vµ néi lùc trong nh¸y m¾t.	12000	153	1000	100	154	500	100			
+Cöu chuyÓn hoµn hån ®an ®Æc biÖt	5	8	0	2	\spr\item\medecine\obj-potion03.spr	310	1	1	Linh ®¬n diÖu d­îc, c¶i tö hoµn sinh. Phôc håi sinh lùc 10000 ®iÓm.	8000	153	1000	100						
+Tóc c©n tiÕp m¹ch t¸n	5	8	0	3	\spr\item\medecine\obj-potion31.spr	311	1	1	Lo¹i linh d­îc gióp c¶i tö hoµn sinh.	100	153	1000	100	154	500	100			

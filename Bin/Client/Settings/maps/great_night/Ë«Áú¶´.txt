@@ -1,0 +1,2 @@
+map_ID	nPosX	nPosY
+959	1504	3100

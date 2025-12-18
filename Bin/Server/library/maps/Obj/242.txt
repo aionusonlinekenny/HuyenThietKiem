@@ -1,0 +1,2 @@
+ObjID	MapID	PosX	PosY	Dir	State	ScriptFile	IsLoad
+1	53	51392	101472	0	0	\script\maps\obj\242\ruongdo.lua	1

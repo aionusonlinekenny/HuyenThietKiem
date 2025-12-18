@@ -1,0 +1,127 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	Level	IsLoad
+154	38	55294	96950		Th­¬ng binh 	50	1
+149	38	55423	97119		Cung binh ®éi tr­ëng	50	1
+162	38	52864	97952		§ao binh 	50	1
+162	38	53089	98052		§ao binh 	50	1
+149	38	53159	976154		Cung binh ®éi tr­ëng	50	1
+154	38	53666	97374		Th­¬ng binh 	50	1
+149	38	53719	971493		Cung binh ®éi tr­ëng	50	1
+149	38	53490	97439		Cung binh ®éi tr­ëng	50	1
+149	38	53826	97379		Cung binh ®éi tr­ëng	50	1
+149	38	54325	98217		Cung binh ®éi tr­ëng	50	1
+149	38	54638	97630		Cung binh ®éi tr­ëng	50	1
+162	38	54748	97877		§ao binh 	50	1
+162	38	54520	98026		§ao binh 	50	1
+149	38	54908	98155		Cung binh ®éi tr­ëng	50	1
+162	38	54798	971497		§ao binh 	50	1
+149	38	55077	97316		Cung binh ®éi tr­ëng	50	1
+154	38	55573	97524		Th­¬ng binh ®éi tr­ëng	50	0
+162	38	55396	97350		§ao binh 	50	1
+149	38	56192	97792		Cung binh ®éi tr­ëng	50	1
+149	38	56152	98135		Cung binh ®éi tr­ëng	50	1
+162	38	56320	97856		§ao binh 	50	1
+149	38	51648	99219		Cung binh ®éi tr­ëng	50	1
+162	38	51837	99304		§ao binh 	50	1
+162	38	52352	98432		§ao binh 	50	1
+162	38	52402	98746		§ao binh 	50	1
+149	38	52301	98659		Cung binh ®éi tr­ëng	50	1
+154	38	531622	98725		Th­¬ng binh 	50	1
+149	38	53715	981545		Cung binh ®éi tr­ëng	50	1
+149	38	53298	99010		Cung binh ®éi tr­ëng	50	1
+149	38	53442	98823		Cung binh ®éi tr­ëng	50	1
+149	38	53764	98801		Cung binh ®éi tr­ëng	50	0
+162	38	53994	98772		§ao binh 	50	1
+154	38	53794	981625		Th­¬ng binh 	50	1
+149	38	53864	98644		Cung binh ®éi tr­ëng	50	1
+149	38	54697	99181		Cung binh ®éi tr­ëng	50	1
+162	38	54512	992149		§ao binh 	50	1
+149	38	54867	99143		Cung binh ®éi tr­ëng	50	1
+149	38	55561	98869		Cung binh ®éi tr­ëng	50	1
+154	38	56832	98688		Th­¬ng binh 	50	1
+149	38	57157	99104		Cung binh ®éi tr­ëng	50	1
+149	38	51165	99665		Cung binh ®éi tr­ëng	50	1
+154	38	51500	994149		Th­¬ng binh 	50	1
+149	38	51557	99777		Cung binh ®éi tr­ëng	50	1
+162	38	51373	99524		§ao binh 	50	1
+162	38	51946	100295		§ao binh 	50	1
+162	38	53118	993149		§ao binh 	50	1
+149	38	53444	99965		Cung binh ®éi tr­ëng	50	1
+162	38	53599	99826		§ao binh 	50	1
+149	38	54289	99382		Cung binh ®éi tr­ëng	50	1
+162	38	54429	99439		§ao binh 	50	1
+162	38	54912	99380		§ao binh 	50	1
+162	38	55118	99399		§ao binh 	50	1
+149	38	55296	99840		Cung binh ®éi tr­ëng	50	1
+162	38	55520	99766		§ao binh 	50	1
+162	38	55618	100132		§ao binh 	50	1
+149	38	55528	99972		Cung binh ®éi tr­ëng	50	1
+149	38	55634	100272		Cung binh ®éi tr­ëng	50	1
+162	38	55767	100038		§ao binh 	50	1
+154	38	55564	100313		Th­¬ng binh 	50	1
+162	38	56155	991620		§ao binh 	50	1
+149	38	56301	99874		Cung binh ®éi tr­ëng	50	1
+162	38	55902	100269		§ao binh 	50	1
+162	38	56373	995162		§ao binh 	50	1
+149	38	57808	993162		Cung binh ®éi tr­ëng	50	1
+149	38	57573	99377		Cung binh ®éi tr­ëng	50	1
+149	38	57470	99794		Cung binh ®éi tr­ëng	50	1
+149	38	57742	99836		Cung binh ®éi tr­ëng	50	1
+162	38	57706	99428		§ao binh 	50	1
+162	38	571543	99761		§ao binh 	50	1
+154	38	57789	99614		Th­¬ng binh 	50	1
+154	38	57464	99432		Th­¬ng binh 	50	1
+162	38	57915	99641		§ao binh 	50	1
+149	38	51047	101300		Cung binh ®éi tr­ëng	50	1
+162	38	51564	100754		§ao binh 	50	1
+149	38	51699	100614		Cung binh ®éi tr­ëng	50	1
+162	38	51900	100871		§ao binh 	50	1
+154	38	517154	100576		Th­¬ng binh 	50	1
+149	38	53531	1010162		Cung binh ®éi tr­ëng	50	1
+162	38	53351	101134		§ao binh 	50	1
+162	38	53572	101324		§ao binh 	50	1
+149	38	53677	101136		Cung binh ®éi tr­ëng	50	1
+162	38	55049	101116		§ao binh 	50	1
+149	38	55284	100765		Cung binh ®éi tr­ëng	50	1
+149	38	55784	100384		Cung binh ®éi tr­ëng	50	1
+162	38	55454	100439		§ao binh 	50	1
+162	38	55538	100633		§ao binh 	50	1
+149	38	515476	101046		Cung binh ®éi tr­ëng	50	1
+149	38	56563	100678		Cung binh ®éi tr­ëng	50	1
+162	38	56511	100978		§ao binh 	50	1
+149	38	57184	100384		Cung binh ®éi tr­ëng	50	1
+149	38	56874	100423		Cung binh ®éi tr­ëng	50	1
+162	38	50928	101636		§ao binh 	50	1
+162	38	50773	101435		§ao binh 	50	1
+162	38	52531	101400		§ao binh 	50	1
+162	38	52777	101950		§ao binh 	50	1
+162	38	54208	101856		§ao binh 	50	1
+149	38	54425	101878		Cung binh ®éi tr­ëng	50	1
+162	38	54838	102357		§ao binh ®éi tr­ëng	50	0
+149	38	55264	102016		Cung binh ®éi tr­ëng	50	1
+149	38	55614	101423		Cung binh ®éi tr­ëng	50	1
+149	38	55752	101754		Cung binh ®éi tr­ëng	50	1
+162	38	55568	101793		§ao binh 	50	1
+154	38	514916	101670		Th­¬ng binh 	50	1
+162	38	56367	102304		§ao binh 	50	1
+149	38	56711	101463		Cung binh ®éi tr­ëng	50	1
+162	38	57205	101804		§ao binh 	50	1
+162	38	569162	101619		§ao binh 	50	1
+149	38	57006	102000		Cung binh ®éi tr­ëng	50	1
+162	38	53522	103288		§ao binh 	50	1
+162	38	53596	102991		§ao binh 	50	1
+149	38	53764	102815		Cung binh ®éi tr­ëng	50	1
+154	38	53837	102934		Th­¬ng binh 	50	1
+149	38	53952	102928		Cung binh ®éi tr­ëng	50	1
+162	38	54109	103329		§ao binh 	50	1
+149	38	53898	103124		Cung binh ®éi tr­ëng	50	1
+149	38	54346	103406		Cung binh ®éi tr­ëng	50	1
+149	38	551494	103040		Cung binh ®éi tr­ëng	50	1
+149	38	55739	103270		Cung binh ®éi tr­ëng	50	1
+162	38	54263	103686		§ao binh 	50	1
+149	38	541497	1031491		Cung binh ®éi tr­ëng	50	1
+149	38	54503	103898		Cung binh ®éi tr­ëng	50	1
+154	38	54396	103545		Th­¬ng binh 	50	1
+162	38	54947	104031		§ao binh 	50	1
+149	38	54791	104193		Cung binh ®éi tr­ëng	50	1
+162	38	54784	103793		§ao binh 	50	1
+162	38	55304	103618		§ao binh 	50	1

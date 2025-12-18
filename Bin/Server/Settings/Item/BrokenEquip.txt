@@ -1,0 +1,2 @@
+Name	ItemGenre	Icon	ObjID	Width	Height
+Trang bÞ tæn h¹i	4	\spr\item\equip\brokenequip.spr	348	1	1

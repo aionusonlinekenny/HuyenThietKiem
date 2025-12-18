@@ -1,0 +1,2 @@
+ObjID	MapID	PosX	PosY	Dir	State	ScriptFile	IsLoad
+769	21	89184	128381	0	0	\script\event\vantieu\tieusu.lua	1

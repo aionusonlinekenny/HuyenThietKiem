@@ -1,0 +1,30 @@
+Name	ItemGenre	DetailType	ParticularType	Icon	ObjID	Width	Height	Intro	Stack
+Thóy Vò tr©m	6	0	0	\spr\item\questkey\taskobj001.spr	41	1	1	VËt phÈm nhiÖm vô  	0
+§¹i M¹n ®µ la hoa	6	1	0	\spr\item\questkey\taskobj002.spr	41	1	1	VËt phÈm nhiÖm vô  	0
+S¸t Thñ LÖnh [Kim]	6	2	1	\spr\item\questkey\taskobj126.spr	336	1	1	PhÇn th­ëng cho nhiÖm vô giÕt Boss <enter>5 c¸i ®ång cÊp ®æi ®­îc 1 S¸t Thñ gi¶n.	50
+S¸t Thñ LÖnh [Méc]	6	3	1	\spr\item\questkey\taskobj126.spr	336	1	1	PhÇn th­ëng cho nhiÖm vô giÕt Boss <enter>5 c¸i ®ång cÊp ®æi ®­îc 1 S¸t Thñ gi¶n.	50
+S¸t Thñ LÖnh [Thñy]	6	4	1	\spr\item\questkey\taskobj126.spr	336	1	1	PhÇn th­ëng cho nhiÖm vô giÕt Boss <enter>5 c¸i ®ång cÊp ®æi ®­îc 1 S¸t Thñ gi¶n.	50
+S¸t Thñ LÖnh [Háa]	6	5	1	\spr\item\questkey\taskobj126.spr	336	1	1	PhÇn th­ëng cho nhiÖm vô giÕt Boss <enter>5 c¸i ®ång cÊp ®æi ®­îc 1 S¸t Thñ gi¶n.	50
+S¸t Thñ LÖnh [Thæ]	6	6	1	\spr\item\questkey\taskobj126.spr	336	1	1	PhÇn th­ëng cho nhiÖm vô giÕt Boss <enter>5 c¸i ®ång cÊp ®æi ®­îc 1 S¸t Thñ gi¶n.	50
+S¸t Thñ Gi¶n [Kim]	6	7	1	\spr\item\questkey\taskobj033.spr	9	1	2	Mang ®Õn gÆp NhiÕp Thİ TrÇn ®Ó nhËn nhiÖm vô ®Æc biÖt.	50
+S¸t Thñ Gi¶n [Méc]	6	8	1	\spr\item\questkey\taskobj033.spr	9	1	2	Mang ®Õn gÆp NhiÕp Thİ TrÇn ®Ó nhËn nhiÖm vô ®Æc biÖt.	50
+S¸t Thñ Gi¶n [Thñy]	6	9	1	\spr\item\questkey\taskobj033.spr	9	1	2	Mang ®Õn gÆp NhiÕp Thİ TrÇn ®Ó nhËn nhiÖm vô ®Æc biÖt.	50
+S¸t Thñ Gi¶n [Háa]	6	10	1	\spr\item\questkey\taskobj033.spr	9	1	2	Mang ®Õn gÆp NhiÕp Thİ TrÇn ®Ó nhËn nhiÖm vô ®Æc biÖt.	50
+S¸t Thñ Gi¶n [Thæ]	6	11	1	\spr\item\questkey\taskobj033.spr	9	1	2	Mang ®Õn gÆp NhiÕp Thİ TrÇn ®Ó nhËn nhiÖm vô ®Æc biÖt.	50
+LÖnh Bµi Phong L¨ng §é	6	12	1	\spr\item\questkey\006.spr	385	1	1	§Õn ThuyÒn Phu Phong L¨ng §é ®Ó b¸o danh nhËn nhiÖm vô Phong L¨ng §é	50
+Nh¹c V­¬ng KiÕm	6	13	1	\spr\item\questkey\ÔÀÍõ½£.spr	41	2	3	<color=green>T­îng tr­ng cho kÎ ®øng ®Çu mét bang héi.	0
+Nh¹c V­¬ng Hån Th¹ch	6	14	1	\spr\Ui3\±íÇé\417.spr	41	1	1	Thu thËp ®ñ 50 viªn ®Õn thî rÌn T­¬ng D­¬ng chÕ t¹o Nh¹c V­¬ng KiÕm	50
+Tinh Hång B¶o Th¹ch	6	15	1	\spr\item\obj_item_red.spr	333	1	1	"Mét viªn b¶o th¹ch thÇn bİ, ng­êi luyÖn vâ cã thÓ dïng ®Ó ®¶ th«ng kinh m¹ch."	0
+Lam Thñy Tinh	6	16	1	\spr\item\questkey\baoshi_zhuanxu.spr	333	1	1	Lo¹i Thñy tinh cã thÓ lµm thay ®æi ngò hµnh cña trang bŞ 	0
+Tö Thñy Tinh	6	17	1	\spr\item\questkey\baoshi_xingtian.spr	333	1	1	Lo¹i Thñy tinh cã thÓ n©ng cÊp trang bŞ.  	0
+Lôc Thñy Tinh	6	18	1	\spr\item\questkey\baoshi_nvwa.spr	333	1	1	Lo¹i thñy tinh cã thÓ gióp thay ®æi c¸c thuéc tİnh cña trang bŞ 	0
+TiÒn §ång	6	19	1	\spr\item\tongqian.spr	373	1	1	Dïng ®Ó mua nh÷ng vËt phÈm ®Æc thï.	50
+Kim Nguyªn b¶o	6	20	1	\spr\item\questkey\obj_item_cardg.spr	340	1	1	§¹i Nguyªn b¶o	0
+Tİn vËt D­¬ng Anh	6	21	1	\spr\item\script\nvtianwangling.spr	41	1	1	VËt phÈm cÇn thiÕt ®Ó nh©n vËt n÷ gia nhËp Thiªn V­¬ng Bang	0
+H×nh Bé LÖnh	6	22	1	\spr\item\questkey\006.spr	336	1	1	Giao cho Nha DŞch t¹i BiÖn Kinh phñ cã thÓ xãa bá ®iÓm PK	0
+ThÇn bİ kho¸ng th¹ch	6	23	1	\spr\item\christmas\perfect.spr	425	1	1	"<color=yellow> Mét lo¹i kho¸ng th¹ch thÇn bİ, cã thÓ dïng ®Ó kh«i phôc trang bŞ ®· h­ háng nÆng"	0
+Thæ §Şa Phï	6	24	1	\spr\item\special\Obj_TownPortal.spr	38	1	1	"Mét lo¹i bïa ph¸p, gióp b¹n mau chãng ®Õn n¬i muèn ®Õn"	0
+Thæ ®Şa phï (sö dông v« h¹n)	6	25	1	\spr\item\special\Obj_TownPortal.spr	38	1	1	"Mét lo¹i bïa ph¸p, gióp b¹n mau chãng ®Õn n¬i muèn ®Õn"	0
+ThÇn Hµnh Phï	6	26	1	\spr\item\special\Obj_TownPortal_l.spr	38	1	1	"ThÇn Hµnh ThuËt, lµm cho ®¹i hiÖp ®i bÊt cø thµnh thŞ th«n trÊn chØ ®Şnh nµo"	0
+S­ ®å thiÕp	6	27	1	\spr\item\questkey\taskobj091.spr	38	1	1	"Ng­êi ch¬i d­íi cÊp 80 dïng ®Ó nhËn s­ phô, trªn cÊp 80 dïng ®Ó nhËn ®Ö tö."	0
+Khiªu chiÕn lÖnh	6	28	1	\spr\item\vietnam\tiaozhanling.spr	41	1	1	Tİch lòy ®ñ 50 c¸I gÆp B¹o nh©n ë m¹c b¾c th¶o nguyªn ®Ó ®æi KiÕm hiÖp lÖnh	100

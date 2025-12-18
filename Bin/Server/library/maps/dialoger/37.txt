@@ -1,0 +1,70 @@
+NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
+396	37	61585	78337		ThuyÒn Phu	1
+394	37	60988	78878		ThuyÒn Phu	1
+395	37	61799	79043		ThuyÒn Phu	1
+61	37	60277	93077		VÖ binh thµnh m«n	1
+329	37	57990	94021		M¹nh Hóc	1
+336	37	57942	94054		Lý Tæ §øc	1
+237	37	59566	93639	\script\global\luanpcfunctions\station.lua	Xa phu	1
+61	37	60435	93192		VÖ binh thµnh m«n	1
+64	37	54875	95152		§¹i §é ThiÒn S­ 	1
+359	37	58756	94513		T«n Tó Tµi	1
+61	37	50571	95825		VÖ binh thµnh m«n	1
+61	37	50733	95736		VÖ binh thµnh m«n	1
+236	37	51030	95774	\script\global\luanpcfunctions\station.lua	Xa phu	1
+377	37	51279	96030		DÞch quan	1
+404	37	53387	95701		Tr­¬ng ThiÕt Chñy	1
+321	37	53850	95979		¡n mµy	1
+400	37	56145	95752		TrÇn Tam B¶o	1
+247	37	59896	95613		Ph­¬ng L·o Th¸i	1
+230	37	54815	96940	\script\global\luanpcfunctions\horsesale.lua	B¸n ngùa	1
+359	37	56325	96318		T©n Khëi TËt 	1
+61	37	57203	97038		Nha M«n VÖ binh	1
+61	37	57324	97160		Nha M«n VÖ binh	1
+49	37	57076	97146		Nha DÞch	1
+372	37	59843	97026		Khæng Toµn	1
+305	37	52485	97387		T©n §¹i C« 	1
+327	37	53108	98111		B¹ch C«ng Tö 	1
+378	37	55445	97852		¤ng chñ C¬ 	1
+387	37	55903	97604		Khóc ThiÕt T­îng	1
+306	37	56042	98203		§­êng L·o gia	1
+308	37	56168	97370		Vâ L©m truyÒn nh©n	1
+351	37	58896	97773		§«ng Mai	1
+308	37	51165	98425		¤ng chñ Tiªu côc	1
+325	37	51071	99307		Con b¹c	1
+260	37	50839	98975		Hµng rong	1
+245	37	53332	99234		Tr×nh §¹i Gia	1
+214	37	53954	98873		Töu B¶o	1
+365	37	54051	98977		¤ng chñ töu lÇu	1
+202	37	54816	99223	\script\global\luanpcfunctions\blacksmith.lua	V­¬ng ThiÕt T­îng	1
+108	37	55537	99223		D· TÈu	1
+203	37	56809	98897	\script\global\luanpcfunctions\godmedicine.lua	¤ng chñ d­îc ®iÕm	1
+360	37	56357	98336		TiÓu H¶i	1
+216	37	57176	99283	\script\global\luanpcfunctions\grocery.lua	Chñ tiÖm t¹p hãa	1
+377	37	57802	99118		LÔ Quan	1
+209	37	51466	99474		Chñ sßng b¹c	1
+210	37	51343	99480		B¶o kª 	1
+334	37	51535	99760		Con b¹c	1
+195	37	52048	100073		Chñ l÷ qu¸n	1
+321	37	52303	100309		¡n mµy	1
+205	37	54099	99888		Chñ tiÖm ®å cæ 	1
+224	37	55070	100100		Chñ tiÖm trµ 	1
+363	37	57839	99831		Anh Tö 	1
+313	37	59067	99554		ÁõÔ±Íâ	1
+383	37	53551	100425		L­u Viªn Ngo¹i	1
+223	37	53545	100619		Xu©n Hoa	1
+221	37	53726	100490		Nh­ Ngäc	1
+324	37	53712	100644		Hoµng §¹i ThiÕu	1
+376	37	54467	101087		Phã Nam B¨ng	1
+335	37	55784	100683		§Ëu Tö Lý	1
+237	37	52170	101961	\script\global\luanpcfunctions\station.lua	Xa phu	1
+217	37	53113	102205		Chñ tiÖm cÇm ®å	1
+357	37	54567	102307		Tr­¬ng Qu¶ phô 	1
+61	37	51575	103193		VÖ binh thµnh m«n	1
+61	37	51440	103095		VÖ binh thµnh m«n	1
+391	37	53326	102602		Chñ TiÒn trang	1
+311	37	53629	103151		Kim quèc Vâ sÜ 	1
+236	37	54565	103124	\script\global\luanpcfunctions\station.lua	Xa phu	1
+61	37	55207	104272		VÖ binh thµnh m«n	1
+61	37	55322	104141		VÖ binh thµnh m«n	1
+769	37	51904	96416	\script\mission\vuotai\npc_talk.lua	NhiÕp ThÝ TrÇn	1

@@ -1,0 +1,15 @@
+
+*
+***** S3RelayServer Start (@ 2025/11/25 15:22:12.298) >>>>>
+*
+
+[2025/11/25 15:22:21] 1-- Add Relay(192.168.254.53 : 54723) Client 0 ! // -- Count 1
+[2025/11/25 15:22:21] 2-- DB Connect 0 is busy !
+[2025/11/25 15:22:21] 3-- Relay (192.168.254.53)D89E-F301-B7E6: Name, Password !
+[2025/11/25 15:22:21] 4-- DB Connect 0 is free !
+[2025/11/25 15:22:21] 5-- Remove Relay Client 0 ! // -- Count 0
+
+*
+***** S3RelayServer Stop (@ 2025/11/25 15:32:44.912) <<<<<
+*
+

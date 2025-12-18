@@ -1,0 +1,11 @@
+ObjID	MapID	PosX	PosY	Dir	State	ScriptFile	IsLoad
+303	53	57712	96746	0	0	\script\maps\obj\contains.lua	1
+6	53	52048	99008	1	0	\script\maps\obj\contains.lua	1
+6	53	49418	99490	0	0	\script\maps\obj\contains.lua	1
+1	53	51593	101357	1	0	\script\maps\obj\53\∞Õ¡Íœÿ-¥¢ŒÔœ‰1.lua	1
+4	53	52083	101248	1	0	\script\missions\congthanh\notice.lua	1
+6	53	49835	104110	1	0	\script\maps\obj\contains.lua	1
+6	53	53128	103632	0	0	\script\maps\obj\contains.lua	1
+295	53	43188	105587	0	0	\script\maps\obj\contains.lua	1
+295	53	43178	106701	0	0	\script\maps\obj\contains.lua	1
+296	53	57826	109886	0	0	\script\maps\obj\contains.lua	1

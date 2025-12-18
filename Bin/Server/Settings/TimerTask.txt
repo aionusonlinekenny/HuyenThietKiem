@@ -1,0 +1,21 @@
+TASK	SCRIPT
+1	\script\mission\vuotai\va_runtimer.lua
+2	\script\mission\battles\battles_small.lua
+3	\script\mission\battles\battles_total.lua
+4	\script\mission\bw\bw_small.lua
+5	\script\mission\bw\bw_total.lua
+6	
+7	
+8	
+9	
+10	\script\mission\phonglangdo\pld_runtimer.lua
+11	\script\mission\loanchien\lc_runtimer.lua
+12	\script\mission\loanchien\lc_runtimercheckpk.lua
+13	
+14	\script\mission\liendau\liendau_subtimer.lua
+15	
+16	
+17  \script\event\gambling\racing.lua
+18  \script\event\gambling\racing.lua
+19  \script\event\gambling\racing.lua
+20  \script\event\gambling\racing.lua

@@ -1,0 +1,75 @@
+Name	ItemGenre	DetailType	ParticularType	Icon	ObjID	Width	Height	Intro	Stack
+Thóy Vò tr©m	6	0	1	\spr\item\questkey\taskobj001.spr	41	1	1	VËt phÈm nhiÖm vô  	0
+§¹i M¹n ®µ la hoa	6	1	1	\spr\item\questkey\taskobj002.spr	41	1	1	VËt phÈm nhiÖm vô  	0
+S¸t Thñ LÖnh [Kim]	6	2	1	\spr\item\questkey\taskobj126.spr	336	1	1	PhÇn th­ëng cho nhiÖm vô giÕt Boss <enter>5 c¸i ®ång cÊp ®æi ®­îc 1 S¸t Thñ gi¶n.	0
+S¸t Thñ LÖnh [Méc]	6	3	1	\spr\item\questkey\taskobj126.spr	336	1	1	PhÇn th­ëng cho nhiÖm vô giÕt Boss <enter>5 c¸i ®ång cÊp ®æi ®­îc 1 S¸t Thñ gi¶n.	0
+S¸t Thñ LÖnh [Thñy]	6	4	1	\spr\item\questkey\taskobj126.spr	336	1	1	PhÇn th­ëng cho nhiÖm vô giÕt Boss <enter>5 c¸i ®ång cÊp ®æi ®­îc 1 S¸t Thñ gi¶n.	0
+S¸t Thñ LÖnh [Háa]	6	5	1	\spr\item\questkey\taskobj126.spr	336	1	1	PhÇn th­ëng cho nhiÖm vô giÕt Boss <enter>5 c¸i ®ång cÊp ®æi ®­îc 1 S¸t Thñ gi¶n.	0
+S¸t Thñ LÖnh [Thæ]	6	6	1	\spr\item\questkey\taskobj126.spr	336	1	1	PhÇn th­ëng cho nhiÖm vô giÕt Boss <enter>5 c¸i ®ång cÊp ®æi ®­îc 1 S¸t Thñ gi¶n.	0
+S¸t Thñ Gi¶n [Kim]	6	7	1	\spr\item\questkey\taskobj033.spr	9	1	2	Mang ®Õn gÆp NhiÕp Thİ TrÇn ®Ó nhËn nhiÖm vô ®Æc biÖt.	0
+S¸t Thñ Gi¶n [Méc]	6	8	1	\spr\item\questkey\taskobj033.spr	9	1	2	Mang ®Õn gÆp NhiÕp Thİ TrÇn ®Ó nhËn nhiÖm vô ®Æc biÖt.	0
+S¸t Thñ Gi¶n [Thñy]	6	9	1	\spr\item\questkey\taskobj033.spr	9	1	2	Mang ®Õn gÆp NhiÕp Thİ TrÇn ®Ó nhËn nhiÖm vô ®Æc biÖt.	0
+S¸t Thñ Gi¶n [Háa]	6	10	1	\spr\item\questkey\taskobj033.spr	9	1	2	Mang ®Õn gÆp NhiÕp Thİ TrÇn ®Ó nhËn nhiÖm vô ®Æc biÖt.	0
+S¸t Thñ Gi¶n [Thæ]	6	11	1	\spr\item\questkey\taskobj033.spr	9	1	2	Mang ®Õn gÆp NhiÕp Thİ TrÇn ®Ó nhËn nhiÖm vô ®Æc biÖt.	0
+LÖnh Bµi Phong L¨ng §é	6	12	1	\spr\item\questkey\006.spr	385	1	1	§Õn ThuyÒn Phu Phong L¨ng §é ®Ó b¸o danh nhËn nhiÖm vô Phong L¨ng §é	0
+Nh¹c V­¬ng KiÕm	6	13	1	\spr\item\questkey\ÔÀÍõ½£.spr	41	2	3	<color=green>T­îng tr­ng cho kÎ ®øng ®Çu mét bang héi.	0
+Nh¹c V­¬ng Hån Th¹ch	6	14	1	\spr\item\questkey\taskobj105.spr	41	1	1	Thu thËp ®ñ 50 viªn ®Õn thî rÌn T­¬ng D­¬ng chÕ t¹o Nh¹c V­¬ng KiÕm	50
+Tinh Hång B¶o Th¹ch	6	15	1	\spr\item\obj_item_red.spr	333	1	1	"Mét viªn b¶o th¹ch thÇn bİ, ng­êi luyÖn vâ cã thÓ dïng ®Ó ®¶ th«ng kinh m¹ch."	0
+Lam Thñy Tinh	6	16	1	\spr\item\questkey\baoshi_zhuanxu.spr	333	1	1	Lo¹i Thñy tinh cã thÓ lµm thay ®æi ngò hµnh cña trang bŞ 	0
+Tö Thñy Tinh	6	17	1	\spr\item\questkey\baoshi_xingtian.spr	333	1	1	Lo¹i Thñy tinh cã thÓ n©ng cÊp trang bŞ.  	0
+Lôc Thñy Tinh	6	18	1	\spr\item\questkey\baoshi_nvwa.spr	333	1	1	Lo¹i thñy tinh cã thÓ gióp thay ®æi c¸c thuéc tİnh cña trang bŞ 	0
+TiÒn §ång	6	19	1	\spr\item\tongqian.spr	373	1	1	Dïng ®Ó mua nh÷ng vËt phÈm ®Æc thï.	1000
+Kim Nguyªn b¶o	6	20	1	\spr\item\questkey\obj_item_cardg.spr	340	1	1	§Õn NPC TiÒn Trang Thµnh ThŞ ®Ó ®æi lÊy 150 Xu	0
+Tİn vËt D­¬ng Anh	6	21	1	\spr\item\script\nvtianwangling.spr	41	1	1	VËt phÈm cÇn thiÕt ®Ó nh©n vËt n÷ gia nhËp Thiªn V­¬ng Bang	0
+Ch×a Khãa R­¬ng 1	6	22	1	\spr\item\questkey\taskobj092-3.spr	41	1	1	Lo¹i ch×a khãa gióp b¹n më réng r­¬ng 1.	0
+Ch×a Khãa R­¬ng 2	6	23	1	\spr\item\questkey\taskobj092-3.spr	41	1	1	Lo¹i ch×a khãa gióp b¹n më réng r­¬ng 2.	0
+Ch×a Khãa R­¬ng 3	6	24	1	\spr\item\questkey\taskobj092-3.spr	41	1	1	Lo¹i ch×a khãa gióp b¹n më réng r­¬ng 3.	0
+Ch×a Khãa Hµnh Trang	6	25	1	\spr\item\questkey\taskobj092.spr	41	1	1	Lo¹i ch×a khãa gióp b¹n më réng hµnh trang.	0
+LÖnh Bµi Tİch T×nh §éng	6	26	1	\spr\item\questkey\006.spr	385	1	1	"LÖnh bµi th«ng tuyÕn Tİch T×nh §éng, rÊt quı hiÕm trªn giang hå. C¸c quı nh©n thiªn cæ t­¬ng truyÒn ®©y lµ vïng ®Êt tu luyÖn nh©n sÜ thµnh cao thñ vâ l©m"	0
+H×nh Bé LÖnh	6	27	1	\spr\item\questkey\006.spr	385	1	1	Giao cho L·o ®¹i t¹i ®¹i lao triÒu ®×nh cã thÓ xãa bá ®iÓm PK	0
+Khiªu chiÕn lÖnh	6	28	1	\spr\item\vietnam\tiaozhanling.spr	41	1	1	Tİch lòy ®ñ 50 c¸I gÆp B¹o nh©n ë m¹c b¾c th¶o nguyªn ®Ó ®æi KiÕm hiÖp lÖnh	100
+M¶nh trang bŞ hång ¶nh [1/6]	6	29	1	\spr\item\script\item_huangjintupu.spr	38	1	1	"M¶nh trang bŞ hång ¶nh rÊt quı hiÕm trong giang hå, thî rÌn cã thÓ dïng m¶nh nµy rÌn thµnh trang søc."	0
+M¶nh trang bŞ hång ¶nh [2/6]	6	30	1	\spr\item\script\item_huangjintupu.spr	38	1	1	"M¶nh trang bŞ hång ¶nh rÊt quı hiÕm trong giang hå, thî rÌn cã thÓ dïng m¶nh nµy rÌn thµnh trang søc."	0
+M¶nh trang bŞ hång ¶nh [3/6]	6	31	1	\spr\item\script\item_huangjintupu.spr	38	1	1	"M¶nh trang bŞ hång ¶nh rÊt quı hiÕm trong giang hå, thî rÌn cã thÓ dïng m¶nh nµy rÌn thµnh trang søc."	0
+M¶nh trang bŞ hång ¶nh [4/6]	6	32	1	\spr\item\script\item_huangjintupu.spr	38	1	1	"M¶nh trang bŞ hång ¶nh rÊt quı hiÕm trong giang hå, thî rÌn cã thÓ dïng m¶nh nµy rÌn thµnh trang søc."	0
+M¶nh trang bŞ hång ¶nh [5/6]	6	33	1	\spr\item\script\item_huangjintupu.spr	38	1	1	"M¶nh trang bŞ hång ¶nh rÊt quı hiÕm trong giang hå, thî rÌn cã thÓ dïng m¶nh nµy rÌn thµnh trang søc."	0
+M¶nh trang bŞ hång ¶nh [6/6]	6	34	1	\spr\item\script\item_huangjintupu.spr	38	1	1	"M¶nh trang bŞ hång ¶nh rÊt quı hiÕm trong giang hå, thî rÌn cã thÓ dïng m¶nh nµy rÌn thµnh trang søc."	0
+B¾c §Èu ThuÇn M· ThuËt - Phi v©n [1/6]	6	35	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa phi v©n quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - Phi v©n [2/6]	6	36	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa phi v©n quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - Phi v©n [3/6]	6	37	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa phi v©n quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - Phi v©n [4/6]	6	38	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa phi v©n quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - Phi v©n [5/6]	6	39	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa phi v©n quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - Phi v©n [6/6]	6	40	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa phi v©n quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - B«n tiªu [1/6]	6	41	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa b«n tiªu quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - B«n tiªu [2/6]	6	42	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa b«n tiªu quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - B«n tiªu [3/6]	6	43	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa b«n tiªu quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - B«n tiªu [4/6]	6	44	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa b«n tiªu quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - B«n tiªu [5/6]	6	45	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa b«n tiªu quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - B«n tiªu [6/6]	6	46	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa b«n tiªu quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - Phiªn vò [1/6]	6	47	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa phi vò quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - Phiªn vò [2/6]	6	48	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa phi vò quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - Phiªn vò [3/6]	6	49	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa phi vò quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - Phiªn vò [4/6]	6	50	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa phi vò quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - Phiªn vò [5/6]	6	51	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa phi vò quı hiÕm	0
+B¾c §Èu ThuÇn M· ThuËt - Phiªn vò [6/6]	6	52	1	\spr\item\script\chuanjiadaoshu_YN.spr	41	1	1	Nh©n gian kh¸o nhau r»ng: §©y lµ b¶o vËt ®· tõng gióp c¸c t­íng lÜnh nhµ Tèng thuÇn hãa ®­îc ngùa phi vò quı hiÕm	0
+Binh ch­¬ng kü n¨ng 120 Trang [1/6]	6	53	1	\spr\item\script\201107\xuanzhi.spr	387	1	1	"Bªn trong cã viÕt tuyÖt kü 120 cña c¸c m«n ph¸I nh­ng bŞ thÊt l¹c ®· l©u, thiªn h¹ t­¬ng truyÒn cã 6 trang. LÔ quang cã thÓ gióp ng­¬I hiÓu nã."	0
+Binh ch­¬ng kü n¨ng 120 Trang [2/6]	6	54	1	\spr\item\script\201107\xuanzhi.spr	387	1	1	"Bªn trong cã viÕt tuyÖt kü 120 cña c¸c m«n ph¸I nh­ng bŞ thÊt l¹c ®· l©u, thiªn h¹ t­¬ng truyÒn cã 6 trang. LÔ quang cã thÓ gióp ng­¬I hiÓu nã."	0
+Binh ch­¬ng kü n¨ng 120 Trang [3/6]	6	55	1	\spr\item\script\201107\xuanzhi.spr	387	1	1	"Bªn trong cã viÕt tuyÖt kü 120 cña c¸c m«n ph¸I nh­ng bŞ thÊt l¹c ®· l©u, thiªn h¹ t­¬ng truyÒn cã 6 trang. LÔ quang cã thÓ gióp ng­¬I hiÓu nã."	0
+Binh ch­¬ng kü n¨ng 120 Trang [4/6]	6	56	1	\spr\item\script\201107\xuanzhi.spr	387	1	1	"Bªn trong cã viÕt tuyÖt kü 120 cña c¸c m«n ph¸I nh­ng bŞ thÊt l¹c ®· l©u, thiªn h¹ t­¬ng truyÒn cã 6 trang. LÔ quang cã thÓ gióp ng­¬I hiÓu nã."	0
+Binh ch­¬ng kü n¨ng 120 Trang [5/6]	6	57	1	\spr\item\script\201107\xuanzhi.spr	387	1	1	"Bªn trong cã viÕt tuyÖt kü 120 cña c¸c m«n ph¸I nh­ng bŞ thÊt l¹c ®· l©u, thiªn h¹ t­¬ng truyÒn cã 6 trang. LÔ quang cã thÓ gióp ng­¬I hiÓu nã."	0
+Binh ch­¬ng kü n¨ng 120 Trang [6/6]	6	58	1	\spr\item\script\201107\xuanzhi.spr	387	1	1	"Bªn trong cã viÕt tuyÖt kü 120 cña c¸c m«n ph¸I nh­ng bŞ thÊt l¹c ®· l©u, thiªn h¹ t­¬ng truyÒn cã 6 trang. LÔ quang cã thÓ gióp ng­¬I hiÓu nã."	0
+Háa tèc triÒu lÖnh	6	59	1	\spr\item\questkey\obj_item_herokey1.spr	352	1	1	"LÖnh bµi do th¸i thó ban tÆng cho ng­êi cã c«ng gi÷ thµnh khái giÆc ngo¹i s©m, dïng ®Ó hoµn thµnh cÊp tèc nhiÖm vô d· tÈu"	0
+Bã cñi	6	60	1	\spr\item\event\event_banhchung\bocui.spr	352	1	1	"VËt phÈm sù kiÖn, nguyªn liÖu dïng ®Ó ghĞp b¸nh tĞt ho¹c b¸nh ch­ng."	100
+Nåi b¸nh	6	61	1	\spr\item\event\event_banhchung\noibanh.spr	352	1	1	"VËt phÈm sù kiÖn, nguyªn liÖu dïng ®Ó ghĞp b¸nh tĞt ho¹c b¸nh ch­ng."	100
+Bao nÕp	6	62	1	\spr\item\event\event_banhchung\baonep.spr	352	1	1	"VËt phÈm sù kiÖn, nguyªn liÖu dïng ®Ó ghĞp b¸nh tĞt ho¹c b¸nh ch­ng."	100
+L¸ gãi	6	63	1	\spr\item\event\event_banhchung\lagoi.spr	352	1	1	"VËt phÈm sù kiÖn, nguyªn liÖu dïng ®Ó ghĞp b¸nh tĞt ho¹c b¸nh ch­ng."	100
+Hoa Quèc Kh¸nh	6	64	1	\spr\item\script\hongse_meiguihua.spr	41	1	1	VËt PhÈm Sù KiÖn Quèc Kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	500
+GiÊy Gãi Hoa	6	65	1	\spr\item\script\zhongqiu_jieri\200909\wusezhizhang.spr	41	1	1	VËt PhÈm Sù KiÖn Quèc Kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	500
+D©y Buéc Hoa	6	66	1	\spr\vng\item\womenday2011\ribbon.spr	41	1	1	VËt PhÈm Sù KiÖn Quèc Kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	500
+Giá §ùng Hoa	6	67	1	\spr\item\script\basket.spr	41	1	1	VËt PhÈm Sù KiÖn Quèc Kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	500
+Tiªu Kú	6	68	1	\spr\item\questkey\taskobj033.spr	41	1	2	Tiªu Kú ®­îc r¬i khi tiªu xa bŞ c­íp. Mang vÒ cho Tiªu §Çu ®Ó nhËn th­ëng.	50
+VĞ Më Khãa VËn Tiªu	6	69	1	\spr\item\questkey\taskobj092.spr	41	1	1	Dïng ®Ó mê khãa giíi h¹n vËn tiªu hµng ngµy. Cho phĞp ch¹y thªm 1 lÇn n÷a.	10
+Hå Tiªu LÖnh	6	70	1	\spr\item\questkey\card_xnk.spr	385	1	1	PhÇn th­ëng tõ event VËn Tiªu. Cã thÓ ®æi lÊy c¸c vËt phÈm hå trî.	999
+T¨ng Tèc	6	71	1	\spr\item\questkey\taskobj105.spr	41	1	1	T¨ng tôc ®Ó di chuyÓn trong thêi gian ng¾n. Dµnh cho event VËn Tiªu.	50
+Håi M¸u	6	72	1	\spr\item\questkey\huihuangzhiguo.spr	380	1	1	Håi phôc sinh lùc nhanh chãng. Dµng riªng cho VËn Tiªu.	50
+DŞch ChuyÓn	6	73	1	\spr\item\questkey\006.spr	385	1	1	DŞch chuyÓn ®Õn vŞ trİ an toµn. Dµnh riªng cho VËn Tiªu.	50

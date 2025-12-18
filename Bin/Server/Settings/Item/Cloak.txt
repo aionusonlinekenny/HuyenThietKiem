@@ -1,0 +1,81 @@
+Ãû³Æ	µÀ¾ßÖÖÀà	¾ßÌåÀà±ğ	ÏêÏ¸Àà±ğ	¶¯»­ÎÄ¼şÃû	¶ÔÓ¦Îï¼şË÷Òı	¿í¶È	¸ß¶È	ËµÃ÷ÎÄ×Ö	ÎåĞĞÊôĞÔ	¼Û¸ñ	µÈ¼¶	»ù´¡ÊôĞÔ1ÀàĞÍ	»ù´¡ÊôĞÔ1×îĞ¡Öµ	»ù´¡ÊôĞÔ1×î´óÖµ	»ù´¡ÊôĞÔ2ÀàĞÍ	»ù´¡ÊôĞÔ2×îĞ¡Öµ	»ù´¡ÊôĞÔ2×î´óÖµ	»ù´¡ÊôĞÔ3ÀàĞÍ	»ù´¡ÊôĞÔ3×îĞ¡Öµ	»ù´¡ÊôĞÔ3×î´óÖµ	»ù´¡ÊôĞÔ4ÀàĞÍ	»ù´¡ÊôĞÔ4×îĞ¡Öµ	»ù´¡ÊôĞÔ4×î´óÖµ	»ù´¡ÊôĞÔ5ÀàĞÍ	»ù´¡ÊôĞÔ5×îĞ¡Öµ	»ù´¡ÊôĞÔ5×î´óÖµ	»ù´¡ÊôĞÔ6ÀàĞÍ	»ù´¡ÊôĞÔ6×îĞ¡Öµ	»ù´¡ÊôĞÔ6×î´óÖµ	»ù´¡ÊôĞÔ7ÀàĞÍ	»ù´¡ÊôĞÔ7×îĞ¡Öµ	»ù´¡ÊôĞÔ7×î´óÖµ	ĞèÇóÊôĞÔ1ÀàĞÍ	ĞèÇóÊôĞÔ1ÊıÖµ	ĞèÇóÊôĞÔ2ÀàĞÍ	ĞèÇóÊôĞÔ2ÊıÖµ	ĞèÇóÊôĞÔ3ÀàĞÍ	ĞèÇóÊôĞÔ3ÊıÖµ	ĞèÇóÊôĞÔ4ÀàĞÍ	ĞèÇóÊôĞÔ4ÊıÖµ	ĞèÇóÊôĞÔ5ÀàĞÍ	ĞèÇóÊôĞÔ5ÊıÖµ	ĞèÇóÊôĞÔ6ÀàĞÍ	ĞèÇóÊôĞÔ6ÊıÖµ
+Sa Di-ngo¹i trang	0	16	0	\spr\item\equip\armor\obj-ma-cloth01-1.spr	41	2	3	T¨ng y dµnh cho c¸c tiÓu Sa Di võa nhËp m«n		100	1																						38	0										
+NguyÖn B¹ch-ngo¹i trang	0	16	1	\spr\item\equip\armor\obj-ma-cloth02-3.spr	41	2	3	Cßn gäi lµ ThÊt §iÒu y, y phôc cña c¸c t¨ng nh©n chøc vŞ cao		100	1																						38	0										
+ThÊt B¶o-ngo¹i trang	0	16	2	\spr\item\equip\armor\obj-ma-cloth03-3.spr	41	2	3	Lµ PhËt m«n chi b¶o, do PhËt Tæ tÆng cho §­êng Tam T¹ng khi ®i thØnh kinh		100	1																						38	0										
+§¹o sÜ-ngo¹i trang	0	16	3	\spr\item\equip\armor\obj-ma-cloth04-3.spr	41	2	3	Lµ y phôc cña c¸c ®¹o sÜ th­êng mÆc khi luyÖn vâ		100	1																						38	0										
+Thiªn s­-ngo¹i trang	0	16	4	\spr\item\equip\armor\obj-ma-cloth05-3.spr	41	2	3	Y phôc cña nh÷ng ®¹o sÜ míi nhËp m«n		100	1																						38	0										
+ThÊt B¶o-ngo¹i trang	0	16	5	\spr\item\equip\armor\obj-ma-cloth06-3.spr	41	2	3	Trong bªn ngoµi cã vÎ tÇm th­êng, nh­ng thùc chÊt lµ mét b¶o y		100	1																						38	0										
+Cæn y-ngo¹i trang	0	16	6	\spr\item\equip\armor\obj-ma-cloth07-3.spr	41	2	3	¸o dµnh cho c¸c s¸t thñ cÊp thÊp nhÊt Èn giÊu th©n phËn		100	1																						38	0										
+Ng­ NhÉn-ngo¹i trang	0	16	7	\spr\item\equip\armor\obj-ma-cloth08-3.spr	41	2	3	Trang bŞ cho c¸c s¸t thñ cÊp cao		100	1																						38	0										
+Thiªn NhÉn MËt Trang-ngo¹i trang	0	16	8	\spr\item\equip\armor\obj-ma-cloth09-3.spr	41	2	3	TËp trung s¸t khİ v« biªn, gÆp thÇn giÕt thÇn, gÆp PhËt giÕt PhËt		100	1																						38	0										
+Th« Bè-ngo¹i trang	0	16	9	\spr\item\equip\armor\obj-ma-cloth10-3.spr	41	2	3	Do c¸c lo¹i v¶i th« dÖt thµnh		100	1																						38	0										
+Ng©n T¬-ngo¹i trang	0	16	10	\spr\item\equip\armor\obj-ma-cloth11-3.spr	41	2	3	Dïng Tµm t¬ phèi hîp víi Ng©n t¬ chÕ thµnh, cã kh¶ n¨ng phßng ngù cùc tèt		100	1																						38	0										
+Gi¸ng Sa-ngo¹i trang	0	16	11	\spr\item\equip\armor\obj-ma-cloth12-3.spr	41	2	3	Dïng Gi¸ng Sa chÕ thµnh, dïng cho c¸c bËc ®Õ v­¬ng, cao quı khã t¶		100	1																						38	0										
+Táa Tö-ngo¹i trang	0	16	12	\spr\item\equip\armor\obj-ma-cloth13-3.spr	41	2	3	Trang bŞ cho nh÷ng sÜ tèt trong qu©n ®éi, søc phßng ngù kĞm		100	1																						38	0										
+S¬n V¨n-ngo¹i trang	0	16	13	\spr\item\equip\armor\obj-ma-cloth14-3.spr	41	2	3	Lµ mét m¶nh ¸o gi¸p. gi÷a låi, hai bªn lâm, c«ng dông chèng tªn		100	1																						38	0										
+§­êng Nghª-ngo¹i trang	0	16	14	\spr\item\equip\armor\obj-ma-cloth15-3.spr	41	2	3	TruyÒn thiÕt ®©y lµ hé th©n b¶o gi¸p cña L· ¤n HÇu, lµ hé ph¸p cùc phÈm		100	1																						38	0										
+Lan Bè-ngo¹i trang	0	16	15	\spr\item\equip\armor\obj-ma-cloth16-3.spr	41	2	3	lµ thø v¶i b»ng vâ c©y, chØ mÆc nh÷ng lóc b×nh th­êng		100	1																						38	0
+ThËp ph­¬ng-ngo¹i trang	0	16	16	\spr\item\equip\armor\obj-ma-cloth17-3.spr	41	2	3	Th­êng phôc cña C¸i Bang tr­ëng l·o, réng mµ kh«ng d­, thİch hîp chiÕn ®Êu		100	1																						38	0
+V¹n L­u Quy t«ng-ngo¹i trang	0	16	17	\spr\item\equip\armor\obj-ma-cloth18-3.spr	41	2	3	Y phôc dµnh cho bang chñ C¸i Bang vµ c¸c vŞ tr­ëng l·o 10 tói, t­îng tr­ng cho vâ c«ng vµ ®ia vŞ		100	1																						38	0
+¸o v¶i th«-ngo¹i trang	0	16	18	\spr\item\equip\armor\obj-ma-cloth19-1.spr	41	2	3	¸o v¶i th« s¬, kh«ng cã tªn gäi		100	1																						38	0
+HuyÒn Hoµng-ngo¹i trang	0	16	19	\spr\item\equip\armor\obj-ma-cloth20-3.spr	41	2	3	Bªn ngoµi lµ ¸o, bªn trong thùc chÊt lµ mét ¸o gi¸p, søc phßng ngù cù h¹n		100	1																						38	0
+TuyÒn Long-ngo¹i trang	0	16	20	\spr\item\equip\armor\obj-ma-cloth21-3.spr	41	2	3	Ph¶i hao søc cña 100 ng­êi thî rÌn lµm trong m­êi n¨m		100	1																						38	0
+Sa Ni-ngo¹i trang	0	16	21	\spr\item\equip\armor\obj-fm-cloth01-1.spr	41	2	3	T¨ng y dµnh cho c¸c tiÓu Sa Di võa nhËp m«n		100	1																						38	1
+NguyÖn B¹ch-ngo¹i trang	0	16	22	\spr\item\equip\armor\obj-fm-cloth02-3.spr	41	2	3	Cßn gäi lµ ThÊt §iÒu y, y phôc cña c¸c t¨ng nh©n chøc vŞ cao		100	1																						38	1
+ThÊt B¶o-ngo¹i trang	0	16	23	\spr\item\equip\armor\obj-fm-cloth03-3.spr	41	2	3	Lµ PhËt m«n chi b¶o, do PhËt Tæ tÆng cho §­êng Tam T¹ng khi ®i thØnh kinh		100	1																						38	1
+N÷ thøc-ngo¹i trang	0	16	24	\spr\item\equip\armor\obj-fm-cloth04-3.spr	41	2	3	Y phôc th­êng nhËt cña c¸c n÷ ®¹o sÜ		100	1																						38	1
+V« Cùc-ngo¹i trang	0	16	25	\spr\item\equip\armor\obj-fm-cloth05-3.spr	41	2	3	§¹i thµnh v« dông, ®¹i ®¹o v« cùc		100	1																						38	1
+Long Tiªu-ngo¹i trang	0	16	26	\spr\item\equip\armor\obj-fm-cloth06-3.spr	41	2	3	§¹o y ®­îc kÕt b»ng nhiÒu thø lôa quı, cèt c¸ch phi th­êng, cã thÓ xem lµ b¶o bèi		100	1																						38	1
+Linh Xµ-ngo¹i trang	0	16	27	\spr\item\equip\armor\obj-fm-cloth07-3.spr	41	2	3	Gièng nh­ kho¸t trªn ng­êi mét tÊm da r¾n, cö ®éng cùc kú linh ho¹t		100	1																						38	1
+Hæ B×-ngo¹i trang	0	16	28	\spr\item\equip\armor\obj-fm-cloth08-3.spr	41	2	3	May b»ng da hæ, mÆc vµo khİ lùc t¨ng lªn, cùc kú hiÕm thÊy		100	1																						38	1
+Cöu VÜ B¹ch Hå-ngo¹i trang	0	16	29	\spr\item\equip\armor\obj-fm-cloth09-3.spr	41	2	3	§­îc may tõ ®u«i cña 9 con Hå Ly tinh, mÆc vµo n¨ng lùc v« song		100	1																						38	1
+CÈm Sam-ngo¹i trang	0	16	30	\spr\item\equip\armor\obj-fm-cloth10-3.spr	41	2	3	Y phôc ®­îc chÕ tõ nh÷ng lo¹i v¶i th«ng th­êng		100	1																						38	1
+Thanh La-ngo¹i trang	0	16	31	\spr\item\equip\armor\obj-fm-cloth11-3.spr	41	2	3	Bªn ngoµi lµ ¸o nh­ng bªn trong lµ gi¸p, kh¶ n¨ng phßng ngù rÊt tèt		100	1																						38	1
+TrÇm H­¬ng-ngo¹i trang	0	16	32	\spr\item\equip\armor\obj-fm-cloth12-3.spr	41	2	3	Trong ¸o lu«n ph¶ng phÊt mïi trÇm h­¬ng, nh­ tiªn n÷ gi¸ng trÇn		100	1																						38	1
+Kh¶m ThiÕt-ngo¹i trang	0	16	33	\spr\item\equip\armor\obj-fm-cloth13-3.spr	41	2	3	¸o gi¸p th«ng th­êng cña n÷ giíi		100	1																						38	1
+Xİch Nh¹n-ngo¹i trang	0	16	34	\spr\item\equip\armor\obj-fm-cloth14-3.spr	41	2	3	¸o gi¸p ®­îc kÕt b»ng l«ng Nh¹n ®á, n÷ tİnh th­êng hay dïng		100	1																						38	1
+Tİch LŞch-ngo¹i trang	0	16	35	\spr\item\equip\armor\obj-fm-cloth15-3.spr	41	2	3	Hé gi¸p cña Môc QuÕ Anh, theo truyÒn thuyÕt lµ do Th¸nh MÉu ban tÆng		100	1																						38	1
+Ph¸ Ma-ngo¹i trang	0	16	36	\spr\item\equip\armor\obj-fm-cloth16-3.spr	41	2	3	Lµ lo¹i ¸o ®­îc lµm tõ vá c©y Ma thô		100	1																						38	1
+D­¬ng B×-ngo¹i trang	0	16	37	\spr\item\equip\armor\obj-fm-cloth17-3.spr	41	2	3	Dïng da dª vµ Ma Bè hîp thµnh, tİnh phßng ngù rÊt cao		100	1																						38	1
+V¹n Chóng TÒ T©m-ngo¹i trang	0	16	38	\spr\item\equip\armor\obj-fm-cloth18-3.spr	41	2	3	ThÓ hiÖn tinh thÇn ®oµn kÕt cña C¸i bang, trªn d­íi ®ång lßng, viÖc g× còng xong		100	1																						38	1
+B¹ch §iÖp-ngo¹i trang	0	16	39	\spr\item\equip\armor\obj-fm-cloth19-1.spr	41	2	3	Lµ lo¹i th­êng phôc cña n÷ giíi		100	1																						38	1
+NguyÖt Hoa-ngo¹i trang	0	16	40	\spr\item\equip\armor\obj-fm-cloth20-3.spr	41	2	3	Lo¹i quÇn ph¸t ra ¸nh s¸ng kú ¶o nh­ ¸nh s¸ng tr¨ng		100	1																						38	1
+L­u Tiªn-ngo¹i trang	0	16	41	\spr\item\equip\armor\obj-fm-cloth21-3.spr	41	2	3	TruyÒn thuyÕt nãi r»ng ®©y lµ do TriÖu Phi YÕn thêi H¸n tù tay lµm ra, mÆc vµo nh­ ®ang du tiªn		100	1																						38	1
+ThÊt TŞch-ngo¹i trang 1	0	16	42	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1																							
+ThÊt TŞch-ngo¹i trang 2	0	16	43	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1																							
+ThÊt TŞch-ngo¹i trang 3	0	16	44	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1																							
+ThÊt TŞch-ngo¹i trang 4	0	16	45	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1																							
+ThÊt TŞch-ngo¹i trang 5	0	16	46	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1																							
+ThÊt TŞch-ngo¹i trang 6	0	16	47	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 7	0	16	48	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 8	0	16	49	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 9	0	16	50	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 10	0	16	51	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 11	0	16	52	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 12	0	16	53	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 13	0	16	54	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 14	0	16	55	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 15	0	16	56	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 16	0	16	57	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 17	0	16	58	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 18	0	16	59	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 19	0	16	60	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 20	0	16	61	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 21	0	16	62	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 22	0	16	63	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 23	0	16	64	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 24	0	16	65	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 25	0	16	66	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 26	0	16	67	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 27	0	16	68	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 28	0	16	69	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 29	0	16	70	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 30	0	16	71	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 31	0	16	72	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 32	0	16	73	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 33	0	16	74	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 34	0	16	75	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 35	0	16	76	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 36	0	16	77	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 37	0	16	78	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1
+ThÊt TŞch-ngo¹i trang 38	0	16	79	\spr\item\equip\armor\obj-ma-cloth81.spr	41	2	3	Pháng chÕ theo trang bŞ ThÊt TŞch thêi trang		100	1

@@ -1,0 +1,10 @@
+NpcID	MapID	PosX	PosY	ScriptFile	NpcName	Level	IsLoad
+703	394	45344	98592	\script\event\thienbaokho\npc_death.lua	B¶o Khè Thñ Hé Gi¶ 01	95	1
+703	394	46048	97120	\script\event\thienbaokho\npc_death.lua	B¶o Khè Thñ Hé Gi¶ 02	95	1
+703	394	44960	95104	\script\event\thienbaokho\npc_death.lua	B¶o Khè Thñ Hé Gi¶ 03	95	1
+703	394	44288	93984	\script\event\thienbaokho\npc_death.lua	B¶o Khè Thñ Hé Gi¶ 04	95	1
+703	394	45216	92800	\script\event\thienbaokho\npc_death.lua	B¶o Khè Thñ Hé Gi¶ 05	95	1
+703	394	44192	90592	\script\event\thienbaokho\npc_death.lua	B¶o Khè Thñ Hé Gi¶ 06	95	1
+703	394	45632	88992	\script\event\thienbaokho\npc_death.lua	B¶o Khè Thñ Hé Gi¶ 07	95	1
+703	394	43872	87392	\script\event\thienbaokho\npc_death.lua	B¶o Khè Thñ Hé Gi¶ 08	95	1
+703	394	45408	85440	\script\event\thienbaokho\npc_death.lua	B¶o Khè Thñ Hé Gi¶ 09	95	1
