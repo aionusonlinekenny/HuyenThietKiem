@@ -162,6 +162,12 @@ CClientManager::CClientManager(
 		m_clientContext[i].pReadBuffer = Allocate();
 
 		m_clientContext[i].pWriteBuffer = Allocate();
+
+		// Initialize rate telemetry
+		m_connStats[i].last_second = 0;
+		m_connStats[i].packets_this_second = 0;
+		m_connStats[i].max_burst = 0;
+		m_connStats[i].total_packets = 0;
 	}
 }
 
@@ -463,6 +469,24 @@ void CClientManager::BeginToSend()
 
 		if ( used > 0 && pSocket != NULL )
 		{
+		// Rate telemetry: Track packet rate to detect burst spam
+		DWORD now_sec = GetTickCount() / 1000;
+		if (m_connStats[ulnID].last_second != now_sec) {
+			// New second started - check if previous second had abnormal burst
+			if (m_connStats[ulnID].packets_this_second > 50) {
+				printf("[BURST-WARN] Client %lu sent %d packets/sec (max_burst=%d, total=%d)\n",
+					   ulnID, m_connStats[ulnID].packets_this_second,
+					   m_connStats[ulnID].max_burst, m_connStats[ulnID].total_packets);
+			}
+			if (m_connStats[ulnID].packets_this_second > m_connStats[ulnID].max_burst) {
+				m_connStats[ulnID].max_burst = m_connStats[ulnID].packets_this_second;
+			}
+			m_connStats[ulnID].last_second = now_sec;
+			m_connStats[ulnID].packets_this_second = 0;
+		}
+		m_connStats[ulnID].packets_this_second++;
+		m_connStats[ulnID].total_packets++;
+
 		//[
 #ifdef  NETWORK_DEBUG
 //{

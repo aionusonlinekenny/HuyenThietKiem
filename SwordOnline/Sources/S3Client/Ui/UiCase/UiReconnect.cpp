@@ -15,17 +15,17 @@
 #include <crtdbg.h>
 #include "../../../core/src/coreshell.h"
 #include "../../../Represent/iRepresent/iRepresentShell.h"
-#define	MSG_RECONNECTING				"§ang thùc hiÖn kÕt nèi l¹i lÇn thø <color=red>%d<color> \n%s..."
-#define	MSG_WAIT_TO_RECONNECT			"KÕt nèi l¹i lÇn thø <color=red>%d<color> sau %d gi©y!"
-#define	MSG_WAIT_NEXT_GROUP_RECONNECT	"Sau %d gi©y tiÕn hµnh t¸i kÕt nèi!"
+#define	MSG_RECONNECTING				"ï¿½ang thï¿½c hiï¿½n kï¿½t nï¿½i lï¿½i lï¿½n thï¿½ <color=red>%d<color> \n%s..."
+#define	MSG_WAIT_TO_RECONNECT			"Kï¿½t nï¿½i lï¿½i lï¿½n thï¿½ <color=red>%d<color> sau %d giï¿½y!"
+#define	MSG_WAIT_NEXT_GROUP_RECONNECT	"Sau %d giï¿½y tiï¿½n hï¿½nh tï¿½i kï¿½t nï¿½i!"
 #define	MSG_HIDE_RECONNECT_MSG_ID		"21"
 
 #define RECONNECT_GROUP_INTERVAL		60000
 #define RECONNECT_INTERVAL				10000
 #define INVISIBLE_RECONNECT_TIMES		100
 #define INVISIBLE_RECONNECT_INTERVAL	20000
-#define	RECONNECT_QUIT_BTN_LABEL		"Tho¸t"
-#define	RECONNECT_START_AT_ONCE			"KÕt nèi"
+#define	RECONNECT_QUIT_BTN_LABEL		"Thoï¿½t"
+#define	RECONNECT_START_AT_ONCE			"Kï¿½t nï¿½i"
 
 
 KReconnectWnd*	KReconnectWnd::m_pSelf = NULL;
@@ -219,33 +219,33 @@ void KReconnectWnd::Breathe()
 				else
 				{
 					m_uToWaitTime = RECONNECT_INTERVAL;
-					pReconnectMsg = "KÕt nèi l¹i thÊt b¹i.";
+					pReconnectMsg = "Kï¿½t nï¿½i lï¿½i thï¿½t bï¿½i.";
 				}
 			}
 		}
 		break;
 	case LL_S_ACCOUNT_CONFIRMING:
-		pReconnectMsg = "§ang x¸c thùc tµi kho¶n vµ mËt khÈu";
+		pReconnectMsg = "ï¿½ang xï¿½c thï¿½c tï¿½i khoï¿½n vï¿½ mï¿½t khï¿½u";
 		break;
 	case LL_S_WAIT_ROLE_LIST:
-		pReconnectMsg = "§ang lÊy th«ng tin nh©n vËt";
+		pReconnectMsg = "ï¿½ang lï¿½y thï¿½ng tin nhï¿½n vï¿½t";
 		break;
 	
 	case LL_S_WAIT_EXTPOINT:
-		pReconnectMsg = "§ang lÊy ÷ liÖu";
+		pReconnectMsg = "ï¿½ang lï¿½y ï¿½ liï¿½u";
 		break;
 	
 	case LL_S_WAIT_TO_LOGIN_GAMESERVER:
-		pReconnectMsg = "§ang kÕt nèi m¸y chñ";
+		pReconnectMsg = "ï¿½ang kï¿½t nï¿½i mï¿½y chï¿½";
 		break;
 	case LL_S_ENTERING_GAME:
-		pReconnectMsg = "§ang ®¨ng nhËp vµo trß ch¬i";
+		pReconnectMsg = "ï¿½ang ï¿½ï¿½ng nhï¿½p vï¿½o trï¿½ chï¿½i";
 		break;
 	}
 
 	if (m_bStop)
 	{
-		pReconnectMsg = "Tµi kho¶n ®· hÕt h¹n, vui lßng gia h¹n tríc khi tiÕp tôc trß ch¬i!";
+		pReconnectMsg = "Tï¿½i khoï¿½n ï¿½ï¿½ hï¿½t hï¿½n, vui lï¿½ng gia hï¿½n trï¿½c khi tiï¿½p tï¿½c trï¿½ chï¿½i!";
 		nInfoLen = strlen(pReconnectMsg);
 		g_UiInformation.Show(pReconnectMsg, RECONNECT_QUIT_BTN_LABEL, NULL, this, 0, nInfoLen);
 	}
@@ -287,24 +287,25 @@ void KReconnectWnd::Breathe()
 
     if (m_bWaitToReconnect)
     {
-        /*
+        // FIX: Add exponential backoff to prevent reconnect burst spam
+        // ROOT CAUSE: Immediate retries (0ms delay) cause 3 connection attempts in <50ms
+        // This triggers VPS/WAF rate limiting and blocks the client IP
+        // SOLUTION: Exponential backoff - delays: 500ms, 1000ms, 2000ms
         if (m_nChangeWorldReconnectTimes < 3)
         {
             unsigned int now = IR_GetCurrentTime();
-            if (now - m_uLastReconnectTick >= m_uLastReconnectTime)
+            // Exponential backoff: 500ms * 2^attempt = 500ms, 1s, 2s
+            unsigned int delay = 500 * (1 << m_nChangeWorldReconnectTimes);
+            if (now - m_uLastReconnectTick >= delay)
             {
                 StartReconnect();
                 m_uLastReconnectTick = now;
                 m_nChangeWorldReconnectTimes++;
-                return; 
+                return;
             }
-        }*/
-		if (m_nChangeWorldReconnectTimes < 3) 
-		{ 
-        StartReconnect();
-        m_nChangeWorldReconnectTimes++;
-        return;
-		}
+            // Still waiting for backoff delay, show reconnect countdown
+            return;
+        }
 
         unsigned int uRemain;
         if (uRemain = IR_GetRemainTime(m_uToWaitTime, m_uWaitStartTime))
@@ -366,36 +367,36 @@ void KReconnectWnd::Breathe()
             else
             {
                 m_uToWaitTime  = RECONNECT_INTERVAL;
-                pReconnectMsg  = "KÕt nèi l¹i thÊt b¹i.";
+                pReconnectMsg  = "Kï¿½t nï¿½i lï¿½i thï¿½t bï¿½i.";
             }
         }
         break;
     }
 
     case LL_S_ACCOUNT_CONFIRMING:
-        pReconnectMsg = "§ang x¸c thùc tµi kho¶n vµ mËt khÈu";
+        pReconnectMsg = "ï¿½ang xï¿½c thï¿½c tï¿½i khoï¿½n vï¿½ mï¿½t khï¿½u";
         break;
 
     case LL_S_WAIT_ROLE_LIST:
-        pReconnectMsg = "§ang lÊy th«ng tin nh©n vËt";
+        pReconnectMsg = "ï¿½ang lï¿½y thï¿½ng tin nhï¿½n vï¿½t";
         break;
 
     case LL_S_WAIT_EXTPOINT:
-        pReconnectMsg = "§ang lÊy d÷ liÖu";
+        pReconnectMsg = "ï¿½ang lï¿½y dï¿½ liï¿½u";
         break;
 
     case LL_S_WAIT_TO_LOGIN_GAMESERVER:
-        pReconnectMsg = "§ang kÕt nèi m¸y chñ";
+        pReconnectMsg = "ï¿½ang kï¿½t nï¿½i mï¿½y chï¿½";
         break;
 
     case LL_S_ENTERING_GAME:
-        pReconnectMsg = "§ang ®¨ng nhËp vµo trß ch¬i";
+        pReconnectMsg = "ï¿½ang ï¿½ï¿½ng nhï¿½p vï¿½o trï¿½ chï¿½i";
         break;
     }
 
     if (m_bStop)
     {
-        pReconnectMsg = "Tµi kho¶n ®· hÕt h¹n, vui lßng gia h¹n tríc khi tiÕp tôc trß ch¬i!";
+        pReconnectMsg = "Tï¿½i khoï¿½n ï¿½ï¿½ hï¿½t hï¿½n, vui lï¿½ng gia hï¿½n trï¿½c khi tiï¿½p tï¿½c trï¿½ chï¿½i!";
         nInfoLen = (int)strlen(pReconnectMsg);
         g_UiInformation.Show(pReconnectMsg, RECONNECT_QUIT_BTN_LABEL, NULL, this, 0, nInfoLen);
     }

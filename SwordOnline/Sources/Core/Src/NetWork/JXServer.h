@@ -75,6 +75,13 @@ typedef struct tagClientContext
 	
 }CLIENT_CONTEXT, NEAR *PCLIENT_CONTEXT, FAR *LPCLIENT_CONTEXT;
 
+// Lightweight packet rate telemetry structure
+struct ConnectionStats {
+	DWORD last_second;
+	int packets_this_second;
+	int max_burst;
+	int total_packets;
+};
 
 /*
  * class CClientManager
@@ -135,13 +142,16 @@ private:
 	 */
 	OnlineGameLib::Win32::CCriticalSection	m_csAction;
 	OnlineGameLib::Win32::CCriticalSection	m_csWriteExchange;
-	
+
 	CLIENT_CONTEXT	m_clientContext[MAX_CLIENT_CANBELINKED];
 
 	STACK			m_freeClientStack;
 	LIST			m_usedClientStack;
 
 	CALLBACK_SERVER_EVENT	m_pfnCallBackServerEvent;
+
+	// Rate telemetry for burst detection
+	ConnectionStats	m_connStats[MAX_CLIENT_CANBELINKED];
 };
 
 /*
