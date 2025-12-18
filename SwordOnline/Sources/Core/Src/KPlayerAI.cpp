@@ -167,6 +167,35 @@ void KPlayerAI::Release()
 	ClearArrayTimeObjectLag();
 	m_sListEquipment.m_Link.Init(MAX_EQUIPMENT_ITEM);
 
+	// ===== PACKET BURST FIX: Initialize new fields =====
+	// Lag detection
+	m_nLastTargetHP = 0;
+	m_nLastTargetDistance = 0;
+	m_nSameHPCounter = 0;
+	m_nSameDistCounter = 0;
+	m_nLastTargetPosX = 0;
+	m_nLastTargetPosY = 0;
+
+	// Follow fallback
+	m_dwLeaderLostTime = 0;
+	m_bFollowFallback = FALSE;
+	m_dwLastReacquireAttempt = 0;
+	m_nSavedAutoMove = 0;
+
+	// Route + combat
+	m_bRoutePaused = FALSE;
+	m_nPausedRouteStep = 0;
+	m_nLastRouteX = 0;
+	m_nLastRouteY = 0;
+	m_nStuckCounter = 0;
+	m_dwLastWaypointTime = 0;
+
+	// Packet throttling
+	memset(m_PacketLastSent, 0, sizeof(m_PacketLastSent));
+	memset(m_PacketCount, 0, sizeof(m_PacketCount));
+	m_PacketWindowStart = 0;
+	m_PacketTotalThisSecond = 0;
+	m_PacketLastLogTime = 0;
 }
 
 void KPlayerAI::ResetAuto()

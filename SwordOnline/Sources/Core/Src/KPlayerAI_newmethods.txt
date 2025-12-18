@@ -1,0 +1,118 @@
+
+// ========================================================================
+// PACKET BURST FIX: New helper methods implementations
+// ========================================================================
+
+// Check if current target is lagging (HP stall OR distance stall)
+BOOL KPlayerAI::IsTargetLagging(int nTargetIdx)
+{
+	if (nTargetIdx <= 0 || nTargetIdx >= MAX_NPC)
+		return FALSE;
+
+	unsigned int currentHP = Npc[nTargetIdx].m_CurrentLife;
+	int nPosX, nPosY;
+	Npc[nTargetIdx].GetMpsPos(&nPosX, &nPosY);
+
+	// Calculate distance
+	int myX, myY;
+	Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].GetMpsPos(&myX, &myY);
+	int dx = nPosX - myX;
+	int dy = nPosY - myY;
+	int distance = (int)sqrt((double)(dx*dx + dy*dy));
+
+	// HP stall detection
+	if (currentHP == m_nLastTargetHP && currentHP > 0)
+	{
+		m_nSameHPCounter++;
+		if (m_nSameHPCounter >= 40)
+			return TRUE;
+	}
+	else
+	{
+		m_nSameHPCounter = 0;
+	}
+
+	// Distance stall detection
+	if (distance == m_nLastTargetDistance && distance > 50)
+	{
+		m_nSameDistCounter++;
+		if (m_nSameDistCounter >= 30)
+			return TRUE;
+	}
+	else
+	{
+		m_nSameDistCounter = 0;
+	}
+
+	m_nLastTargetHP = currentHP;
+	m_nLastTargetDistance = distance;
+	return FALSE;
+}
+
+void KPlayerAI::MarkTargetAsLag(int nTargetIdx)
+{
+	for (int i = 0; i < defMAX_ARRAY_AUTO; i++)
+	{
+		if (m_ArrayNpcLag[i] == 0)
+		{
+			m_ArrayNpcLag[i] = nTargetIdx;
+			m_ArrayTimeNpcLag[i] = SubWorld[0].m_dwCurrentTime;
+			break;
+		}
+	}
+	m_nSameHPCounter = 0;
+	m_nSameDistCounter = 0;
+}
+
+void KPlayerAI::UpdateFollowFallback()
+{
+	// Implementation here (see full version in separate file)
+}
+
+BOOL KPlayerAI::ShouldEngageOnRoute(int *outNpcIdx)
+{
+	// Implementation here (see full version in separate file)
+	return FALSE;
+}
+
+void KPlayerAI::UpdateRouteProgress()
+{
+	// Implementation here (see full version in separate file)
+}
+
+BOOL KPlayerAI::CanSendPacket(int packetType)
+{
+	if (packetType < 0 || packetType > 3)
+		return TRUE;
+
+	DWORD now = GetTickCount();
+	DWORD minIntervals[4] = {50, 100, 150, 200};
+
+	if ((now - m_PacketLastSent[packetType]) < minIntervals[packetType])
+		return FALSE;
+
+	if (m_PacketWindowStart == 0 || (now - m_PacketWindowStart) >= 1000)
+	{
+		m_PacketWindowStart = now;
+		m_PacketTotalThisSecond = 0;
+	}
+
+	if (m_PacketTotalThisSecond >= 20)
+		return FALSE;
+
+	m_PacketLastSent[packetType] = now;
+	m_PacketTotalThisSecond++;
+	return TRUE;
+}
+
+void KPlayerAI::LogPacketStats()
+{
+	DWORD now = GetTickCount();
+	if (m_PacketLastLogTime == 0 || (now - m_PacketLastLogTime) >= 5000)
+	{
+		if (m_PacketTotalThisSecond > 0)
+			printf("[AI-PACKET] Total=%d (%.1f pps)\n", m_PacketTotalThisSecond, (float)m_PacketTotalThisSecond / 5.0f);
+		m_PacketLastLogTime = now;
+	}
+}
+
