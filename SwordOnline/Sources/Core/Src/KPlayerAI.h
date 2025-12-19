@@ -191,6 +191,9 @@ public:
 	int				m_nTrainingRadius;			// Max distance from waypoints (in cells, 0 = unlimited)
 	BOOL			m_bStayInTrainingArea;		// Force stay within training radius?
 
+	// Follow leader auto-mount
+	BOOL			m_bFollowAutoMount;			// Auto-mount horse when following leader and far away
+
 	// Route + combat balance (pause route to fight nearby enemies)
 	BOOL			m_bRoutePaused;				// Route paused for combat?
 	int				m_nPausedRouteStep;			// Which waypoint we paused at

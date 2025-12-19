@@ -289,6 +289,7 @@ private:
 	KWndButton	p_MoveFollowPopup;
 	KWndText32	t_MoveFollowPeopleRadius;
 	KWndEdit32	e_MoveFollowPeopleRadius;
+	KWndButton	c_MoveFollowAutoMount;		// Auto-mount when following leader
 	KWndButton	c_MoveAround;
 	KWndText80	t_MoveAround;
 	KWndLabeledButton	c_MoveAroundAdd;

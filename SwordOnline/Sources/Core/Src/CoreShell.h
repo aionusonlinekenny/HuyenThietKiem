@@ -525,6 +525,7 @@ enum GAME_PLAYERAI_OPERATION_INDEX
 	GPI_M_MOVEPOS,
 	GPI_M_TRAINING_RADIUS,		// Training area radius limit (cells)
 	GPI_M_STAY_IN_AREA,			// Enable/disable training area enforcement
+	GPI_M_FOLLOW_AUTO_MOUNT,	// Auto-mount horse when following leader
 	GAUTO_AUTO_MOVEMPSID,
 	GAUTO_AUTO_MOVEMPSX,	
 	GAUTO_AUTO_MOVEMPSY,	

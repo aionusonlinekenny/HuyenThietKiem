@@ -5115,6 +5115,11 @@ int KCoreShell::PAIOperation(unsigned int uOper, unsigned int uParam, int nParam
 			Player[CLIENT_PLAYER_INDEX].m_cAI.m_bStayInTrainingArea = uParam;
 		}
 		break;
+		case GPI_M_FOLLOW_AUTO_MOUNT:
+		{
+			Player[CLIENT_PLAYER_INDEX].m_cAI.m_bFollowAutoMount = uParam;
+		}
+		break;
 		//////////////////////////AUTO OTHER
 		case GPI_O_PARTYCK:
 		{

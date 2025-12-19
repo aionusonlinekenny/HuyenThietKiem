@@ -2793,6 +2793,7 @@ void KUiMovePlayer::Initialize()
 	AddChild(&p_MoveFollowPopup);
 	AddChild(&t_MoveFollowPeopleRadius);
 	AddChild(&e_MoveFollowPeopleRadius);
+	AddChild(&c_MoveFollowAutoMount);
 	AddChild(&c_MoveAround);
 	AddChild(&t_MoveAround);
 	AddChild(&c_MoveAroundAdd);
@@ -2830,6 +2831,7 @@ void KUiMovePlayer::LoadScheme(KIniFile* pIni)
 	t_MoveFollowPeopleRadius.Init(pIni,"MoveFollowRadiusText");
 	e_MoveFollowPeopleRadius.Init(pIni,"MoveFollowRadiusEdit");
 	e_MoveFollowPeopleRadius.SetIntText(200);
+	c_MoveFollowAutoMount.Init(pIni,"MoveFollowAutoMountCK");
 	c_MoveAround.Init(pIni,"MoveAround");
 	t_MoveAround.Init(pIni,"MoveAroundText");
 	c_MoveAroundAdd.Init(pIni,"MoveAroundAdd");
@@ -2873,6 +2875,19 @@ int KUiMovePlayer::WndProc(unsigned int uMsg, unsigned int uParam, int nParam)
 		}
 		else if (uParam == (unsigned int)(KWndWindow*)&p_MoveFollowPopup)
 			PopUpFollowPeople();
+		else if (uParam == (unsigned int)(KWndWindow*)&c_MoveFollowAutoMount)
+		{
+			if (c_MoveFollowAutoMount.IsButtonChecked())
+			{
+				c_MoveFollowAutoMount.CheckButton(true);
+				g_pCoreShell->PAIOperation(GPI_M_FOLLOW_AUTO_MOUNT, true, NULL, NULL);
+			}
+			else
+			{
+				c_MoveFollowAutoMount.CheckButton(false);
+				g_pCoreShell->PAIOperation(GPI_M_FOLLOW_AUTO_MOUNT, false, NULL, NULL);
+			}
+		}
 		else if (uParam == (unsigned int)(KWndWindow*)&c_MoveAround)
 		{
 			if (c_MoveAround.IsButtonChecked())
@@ -3224,6 +3239,12 @@ void KUiMovePlayer::LoadMoveSetting()
 		e_MoveTrainingRadius.SetIntText(m_nValue);
 		g_pCoreShell->PAIOperation(GPI_M_TRAINING_RADIUS,NULL,m_nValue,NULL);
 
+		pConfigFile->GetInteger(MTitle, "F6", 0, (int*)(&m_nValue));
+		if (m_nValue > 0)
+			m_nValue = true;
+		c_MoveFollowAutoMount.CheckButton(m_nValue);
+		g_pCoreShell->PAIOperation(GPI_M_FOLLOW_AUTO_MOUNT,m_nValue,NULL,NULL);
+
 		for (i = 0; i < defMAX_AUTO_MOVEMPSL; i++)
 		{
 			sprintf(szKeyName, "F3D%d", i);
@@ -3252,6 +3273,7 @@ void KUiMovePlayer::SaveMoveSetting()
 		pConfigFile->WriteInteger(MTitle, "F3",c_MoveCoordiNates.IsButtonChecked());
 		pConfigFile->WriteInteger(MTitle, "F4",c_MoveStayInArea.IsButtonChecked());
 		pConfigFile->WriteInteger(MTitle, "F5",e_MoveTrainingRadius.GetIntNumber());
+		pConfigFile->WriteInteger(MTitle, "F6",c_MoveFollowAutoMount.IsButtonChecked());
 		for (i = 0; i < defMAX_AUTO_MOVEMPSL; i++)
 		{ 
 			sprintf(szKeyName, "F3D%d", i);

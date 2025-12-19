@@ -194,6 +194,9 @@ void KPlayerAI::Release()
 	m_nTrainingRadius = 0;			// Default: unlimited
 	m_bStayInTrainingArea = FALSE;	// Default: off
 
+	// Follow auto-mount
+	m_bFollowAutoMount = FALSE;		// Default: off
+
 	// Packet throttling
 	memset(m_PacketLastSent, 0, sizeof(m_PacketLastSent));
 	memset(m_PacketCount, 0, sizeof(m_PacketCount));
@@ -861,10 +864,24 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 		{
 			// Move closer to leader when idle (no target)
 			int leaderDistance = NpcSet.GetDistance(Player[CLIENT_PLAYER_INDEX].m_nIndex, m_FollowPeopleIdx);
+
+			// Auto-mount horse when following leader and far away (if enabled)
+			if (m_bFollowAutoMount && leaderDistance > m_nRadiusFollow / 2)
+			{
+				// If leader is far and we're not on horse, mount up
+				if (!Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_bRideHorse)
+				{
+					if (GetTickCount() - Player[CLIENT_PLAYER_INDEX].m_dwTimeHorse >= TIME_RIDE)
+					{
+						SendClientCmdRide(FALSE);  // Mount horse
+					}
+				}
+			}
+
 			if (leaderDistance > m_nRadiusFollow / 3)  // If not very close to leader
 			{
 				// FIX: Use cached leader position instead of real-time to avoid desync
-				
+
 				if (!m_bPriorityUseMouse)
 					MoveTo(m_nCachedLeaderPosX, m_nCachedLeaderPosY);
 			}
