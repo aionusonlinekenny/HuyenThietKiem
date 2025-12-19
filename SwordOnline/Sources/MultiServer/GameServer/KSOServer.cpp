@@ -1702,7 +1702,7 @@ void KSwordOnLineSever::TransferMessageProcess(const char* pChar, size_t nSize)
 	if (nSize < sizeof(EXTEND_HEADER))
 		return;
 
-	// ????·????
+	// ????ï¿½????
 	if (pEH->ProtocolID == relay_c2c_askwaydata && pEH->ProtocolFamily == pf_relay)
 	{
 		TransferAskWayMessageProcess(pChar, nSize);
@@ -1713,7 +1713,7 @@ void KSwordOnLineSever::TransferMessageProcess(const char* pChar, size_t nSize)
 	if (nSize <= sizeof(RELAY_DATA) || nSize != pRD->routeDateLength + sizeof(RELAY_DATA))
 		return;
 
-	// ????·????
+	// ????ï¿½????
 	if (pEH->ProtocolID == relay_s2c_loseway && pEH->ProtocolFamily == pf_relay)
 	{
 		TransferLoseWayMessageProcess(pChar + sizeof(RELAY_DATA), nSize - sizeof(RELAY_DATA));
@@ -2161,8 +2161,9 @@ void KSwordOnLineSever::PlayerMessageProcess(const unsigned long lnID, const cha
 		{
 			if (*(BYTE*)pData == c2s_ping)
 			{
-				printf("[GS-RECV-PONG] lnID=%lu received PONG packet (size=%zu), calling ProcessPingReply...\n",
-					   lnID, dataLength);
+				// DISABLED: This printf() was causing I/O storm with multiple clients
+				// printf("[GS-RECV-PONG] lnID=%lu received PONG packet (size=%zu), calling ProcessPingReply...\n",
+				//	   lnID, dataLength);
 				ProcessPingReply(lnID, pData, dataLength);
 			}
 			else if (*(BYTE*)pData == c2s_extendtong)
@@ -2519,7 +2520,7 @@ void KSwordOnLineSever::MainLoop()
 	SavePlayerData();
 	PlayerLogoutGateway();
 	PlayerExchangeServer();
-//	m_pServer->PreparePackSink();	???????û????õi??
+//	m_pServer->PreparePackSink();	???????ï¿½????ï¿½i??
 	m_pCoreServerShell->Breathe();
 
 // ????????????????????
@@ -2539,7 +2540,7 @@ void KSwordOnLineSever::MainLoop()
 		}
 	}
 
-// ??????????????û???PING????1min??
+// ??????????????ï¿½???PING????1min??
 	int lnID = m_nGameLoop % m_nMaxPlayer;
 	int nIndex = m_pGameStatus[lnID].nPlayerIndex;
 	if (nIndex > 0 && nIndex <= m_nMaxPlayer && m_pGameStatus[lnID].nGameStatus == enumPlayerPlaying)
@@ -2676,17 +2677,19 @@ void KSwordOnLineSever::ProcessPingReply(const unsigned long lnID, const char* p
 
     PING_CLIENTREPLY_COMMAND* pPC = (PING_CLIENTREPLY_COMMAND *)pData;
     int replied = (int)pPC->m_dwReplyServerTime;
-			printf("[ProcessPingReply] lnID=%lu replied=%d histCount=%d history=[%d,%d,%d,%d]\n",
-           lnID, replied, m_pGameStatus[lnID].nPingHistCount,
-           m_pGameStatus[lnID].nPingHistory[0], m_pGameStatus[lnID].nPingHistory[1],
-           m_pGameStatus[lnID].nPingHistory[2], m_pGameStatus[lnID].nPingHistory[3]);
+			// DISABLED: Excessive logging causing I/O storm
+		// printf("[ProcessPingReply] lnID=%lu replied=%d histCount=%d history=[%d,%d,%d,%d]\n",
+        //    lnID, replied, m_pGameStatus[lnID].nPingHistCount,
+        //    m_pGameStatus[lnID].nPingHistory[0], m_pGameStatus[lnID].nPingHistory[1],
+        //    m_pGameStatus[lnID].nPingHistory[2], m_pGameStatus[lnID].nPingHistory[3]);
     BOOL ok = FALSE;
     for (int k = 0; k < m_pGameStatus[lnID].nPingHistCount; ++k)
     {
         if (m_pGameStatus[lnID].nPingHistory[k] == replied)
         {
             ok = TRUE;
-			printf("[ProcessPingReply] lnID=%lu MATCH found at history[%d]=%d\n", lnID, k, replied);
+			// DISABLED: Excessive logging causing I/O storm
+		// printf("[ProcessPingReply] lnID=%lu MATCH found at history[%d]=%d\n", lnID, k, replied);
             break;
         }
     }
@@ -2698,8 +2701,9 @@ void KSwordOnLineSever::ProcessPingReply(const unsigned long lnID, const char* p
 		{
         if (replied < expected && (expected - replied) <= grace)
             ok = TRUE;
-		 printf("[ProcessPingReply] lnID=%lu GRACE period match (replied=%d expected=%d grace=%d)\n",
-                   lnID, replied, expected, grace);
+		 // DISABLED: Excessive logging causing I/O storm
+	 // printf("[ProcessPingReply] lnID=%lu GRACE period match (replied=%d expected=%d grace=%d)\n",
+                //    lnID, replied, expected, grace);
         }
     }
 
@@ -2718,8 +2722,9 @@ void KSwordOnLineSever::ProcessPingReply(const unsigned long lnID, const char* p
     m_pGameStatus[lnID].nPingHistory[hist & 3] = rtt;
     hist = (hist + 1) & 3;
 
-    printf("[PING-OK] ID=%lu RTT=%d ticks (send=%d reply=%d)\n",
-           lnID, rtt, lastSend, m_pGameStatus[lnID].nReplyPingTime);
+    // DISABLED: Excessive logging causing I/O storm (prints every ping = 100s of times/minute)
+    // printf("[PING-OK] ID=%lu RTT=%d ticks (send=%d reply=%d)\n",
+    //        lnID, rtt, lastSend, m_pGameStatus[lnID].nReplyPingTime);
 
     PING_COMMAND pc;
     pc.ProtocolType = s2c_replyclientping;
@@ -2973,7 +2978,7 @@ void KSwordOnLineSever::PlayerExchangeServer()
 					pRAD->nFromIP = 0;		// 0.0.0.0
 					pRAD->nFromRelayID = 0;
 					pRAD->seekRelayCount = 0;
-					// ???õ??ID??SERVER
+					// ???ï¿½??ID??SERVER
 					pRAD->seekMethod = rm_map_id;
 					pRAD->wMethodDataLength = 4;
 					pRAD->routeDateLength = sizeof(tagSearchWay);
@@ -3179,7 +3184,7 @@ int KSwordOnLineSever::ProcessLoginProtocol(const unsigned long lnID, const char
 		}
 		else
 		{
-			// ?????????????ô??????ô????
+			// ?????????????ï¿½??????ï¿½????
 			return 0;
 		}
 	}
@@ -3327,7 +3332,7 @@ BOOL KSwordOnLineSever::ConformAskWay(const void* pData, int nSize, DWORD *lpnNe
 	BOOL	bRet = FALSE;
 	RELAY_ASKWAY_DATA*	pRAD = (RELAY_ASKWAY_DATA *)pData;
 
-	// TODO: ???????·???
+	// TODO: ???????ï¿½???
 	int nMethod = pRAD->seekMethod;
 	switch(nMethod)
 	{
