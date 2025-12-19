@@ -3847,5 +3847,48 @@ void KPlayerAI::ReturnToTrainingArea()
 	}
 }
 
+// ===== PACKET RATE LIMITING (VPS-safe) =====
+// Prevents IP blocks from packet bursts by throttling client-side packet rate
+// Returns TRUE if packet can be sent, FALSE if should wait
+BOOL KPlayerAI::CanSendPacket(int packetType)
+{
+	// Packet types: 0=MOVE, 1=ATTACK, 2=SKILL, 3=ITEM
+	if (packetType < 0 || packetType >= 4)
+		return TRUE;  // Unknown type, allow
+
+	DWORD now = GetTickCount();
+
+	// Per-type rate limits (milliseconds between packets)
+	const DWORD typeIntervals[4] = {
+		100,  // MOVE: max 10/sec
+		200,  // ATTACK: max 5/sec
+		300,  // SKILL: max 3/sec
+		500   // ITEM: max 2/sec
+	};
+
+	// Check per-type throttle
+	if (now - m_PacketLastSent[packetType] < typeIntervals[packetType])
+		return FALSE;  // Too soon, throttle
+
+	// Check total burst limit (max 30/sec across all types)
+	DWORD windowStart = now / 1000 * 1000;  // Start of current second
+	if (m_PacketWindowStart != windowStart)
+	{
+		// New second started
+		m_PacketWindowStart = windowStart;
+		m_PacketTotalThisSecond = 0;
+	}
+
+	if (m_PacketTotalThisSecond >= 30)
+		return FALSE;  // Burst limit reached
+
+	// Packet allowed - update counters
+	m_PacketLastSent[packetType] = now;
+	m_PacketCount[packetType]++;
+	m_PacketTotalThisSecond++;
+
+	return TRUE;
+}
+
 
 #endif
