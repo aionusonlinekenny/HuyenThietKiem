@@ -290,6 +290,7 @@ private:
 	KWndText32	t_MoveFollowPeopleRadius;
 	KWndEdit32	e_MoveFollowPeopleRadius;
 	KWndButton	c_MoveFollowAutoMount;		// Auto-mount when following leader
+	KWndText80	t_MoveFollowAutoMountText;	// Text label for auto-mount checkbox
 	KWndButton	c_MoveAround;
 	KWndText80	t_MoveAround;
 	KWndLabeledButton	c_MoveAroundAdd;

@@ -2794,6 +2794,7 @@ void KUiMovePlayer::Initialize()
 	AddChild(&t_MoveFollowPeopleRadius);
 	AddChild(&e_MoveFollowPeopleRadius);
 	AddChild(&c_MoveFollowAutoMount);
+	AddChild(&t_MoveFollowAutoMountText);
 	AddChild(&c_MoveAround);
 	AddChild(&t_MoveAround);
 	AddChild(&c_MoveAroundAdd);
@@ -2832,6 +2833,7 @@ void KUiMovePlayer::LoadScheme(KIniFile* pIni)
 	e_MoveFollowPeopleRadius.Init(pIni,"MoveFollowRadiusEdit");
 	e_MoveFollowPeopleRadius.SetIntText(200);
 	c_MoveFollowAutoMount.Init(pIni,"MoveFollowAutoMountCK");
+	t_MoveFollowAutoMountText.Init(pIni,"MoveFollowAutoMountText");
 	c_MoveAround.Init(pIni,"MoveAround");
 	t_MoveAround.Init(pIni,"MoveAroundText");
 	c_MoveAroundAdd.Init(pIni,"MoveAroundAdd");

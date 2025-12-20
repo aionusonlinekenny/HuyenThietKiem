@@ -464,7 +464,9 @@ void KPlayerAI::Active()
 					BOOL isTooFar = (distance > m_nRadiusFollow * 3);  // 3x radius = lost
 
 					// AUTO RIDE HORSE FEATURE: Auto mount when target is too far
-					if (Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing != do_attack &&
+					// FIX: Only auto-mount if checkbox is enabled (m_bFollowAutoMount)
+					if (m_bFollowAutoMount &&
+					    Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing != do_attack &&
 						Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing != do_magic &&
 						Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing != do_skill)
 					{
