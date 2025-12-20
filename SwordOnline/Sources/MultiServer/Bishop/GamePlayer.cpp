@@ -82,8 +82,15 @@ static void ReleaseTempLock(const std::string &acc)
     if (it != g_TempAccounts.end()) g_TempAccounts.erase(it);
 }
 
+// DISABLED: LoginLog() was causing SEVERE I/O storm and CPU overload
+// Each call does: lock + fopen() + fprintf() + fclose() = 3x blocking disk I/O
+// Called 74 times per login × multiple clients = disk I/O storm ? CPU 99%
+// Re-enable for debugging by uncommenting function body below
 static void LoginLog(const char* fmt, ...)
 {
+    // PERFORMANCE FIX: Disabled verbose login logging to prevent I/O storm
+    // Uncomment below to re-enable for debugging
+    /*
     OnlineGameLib::Win32::CCriticalSection::Owner lk(g_csLoginLog);
 
     FILE* f = fopen("Bishop_Log\\Bishop_Login.log", "a+");
@@ -99,6 +106,7 @@ static void LoginLog(const char* fmt, ...)
 
     fputc('\n', f);
     fclose(f);
+ */
 }
 
 static void ReleaseLoginLockSafe(const std::string &acc)

@@ -2793,6 +2793,7 @@ void KUiMovePlayer::Initialize()
 	AddChild(&p_MoveFollowPopup);
 	AddChild(&t_MoveFollowPeopleRadius);
 	AddChild(&e_MoveFollowPeopleRadius);
+	AddChild(&c_MoveFollowAutoMount);
 	AddChild(&c_MoveAround);
 	AddChild(&t_MoveAround);
 	AddChild(&c_MoveAroundAdd);
@@ -2806,7 +2807,10 @@ void KUiMovePlayer::Initialize()
 	AddChild(&c_MoveCoordiNatesDown);
 	AddChild(&c_MoveCoordiNatesDel);
 	AddChild(&c_MoveCoordiNatesDelAll);
-	
+	// Training area radius controls
+	AddChild(&c_MoveStayInArea);
+	AddChild(&t_MoveTrainingRadiusText);
+	AddChild(&e_MoveTrainingRadius);
 	memset(m_cFollowName, 0, sizeof(m_cFollowName));	
 	memset(m_MoveMpsList, 0, sizeof(m_MoveMpsList));
 	memset(m_MoveMpsListSave, 0, sizeof(m_MoveMpsListSave));
@@ -2825,6 +2829,7 @@ void KUiMovePlayer::LoadScheme(KIniFile* pIni)
 	t_MoveFollowPeopleRadius.Init(pIni,"MoveFollowRadiusText");
 	e_MoveFollowPeopleRadius.Init(pIni,"MoveFollowRadiusEdit");
 	e_MoveFollowPeopleRadius.SetIntText(200);
+	c_MoveFollowAutoMount.Init(pIni,"MoveFollowAutoMountCK");
 	c_MoveAround.Init(pIni,"MoveAround");
 	t_MoveAround.Init(pIni,"MoveAroundText");
 	c_MoveAroundAdd.Init(pIni,"MoveAroundAdd");
@@ -2838,6 +2843,11 @@ void KUiMovePlayer::LoadScheme(KIniFile* pIni)
 	c_MoveCoordiNatesDel.Init(pIni,"MoveCoordiNatesDel");
 	c_MoveCoordiNatesDelAll.Init(pIni,"MoveCoordiNatesDelAll");
 
+	// Training area radius controls
+	c_MoveStayInArea.Init(pIni,"MoveStayInAreaCK");
+	t_MoveTrainingRadiusText.Init(pIni,"MoveTrainingRadiusText");
+	e_MoveTrainingRadius.Init(pIni,"MoveTrainingRadiusEdit");
+	e_MoveTrainingRadius.SetIntText(0);  // Default: 0 = unlimited
 	LoadMoveSetting();
 }
 
@@ -2862,6 +2872,19 @@ int KUiMovePlayer::WndProc(unsigned int uMsg, unsigned int uParam, int nParam)
 		}
 		else if (uParam == (unsigned int)(KWndWindow*)&p_MoveFollowPopup)
 			PopUpFollowPeople();
+		else if (uParam == (unsigned int)(KWndWindow*)&c_MoveFollowAutoMount)
+		{
+			if (c_MoveFollowAutoMount.IsButtonChecked())
+			{
+				c_MoveFollowAutoMount.CheckButton(true);
+				g_pCoreShell->PAIOperation(GPI_M_FOLLOW_AUTO_MOUNT, true, NULL, NULL);
+			}
+			else
+			{
+				c_MoveFollowAutoMount.CheckButton(false);
+				g_pCoreShell->PAIOperation(GPI_M_FOLLOW_AUTO_MOUNT, false, NULL, NULL);
+			}
+		}
 		else if (uParam == (unsigned int)(KWndWindow*)&c_MoveAround)
 		{
 			if (c_MoveAround.IsButtonChecked())
@@ -3019,6 +3042,19 @@ int KUiMovePlayer::WndProc(unsigned int uMsg, unsigned int uParam, int nParam)
 			memset(m_MoveMpsList, 0, sizeof(m_MoveMpsList));
 			SetMoveMpsList();
 		}
+		else if (uParam == (unsigned int)(KWndWindow*)&c_MoveStayInArea)
+		{
+			if (c_MoveStayInArea.IsButtonChecked())
+			{
+				c_MoveStayInArea.CheckButton(true);
+				g_pCoreShell->PAIOperation(GPI_M_STAY_IN_AREA, true, NULL, NULL);
+			}
+		else
+			{
+				c_MoveStayInArea.CheckButton(false);
+				g_pCoreShell->PAIOperation(GPI_M_STAY_IN_AREA, false, NULL, NULL);
+			}
+		}
 		SaveMoveSetting();
 		break;
 	case WND_N_SCORLLBAR_POS_CHANGED:
@@ -3043,6 +3079,8 @@ void KUiMovePlayer::OnCheckInput()
 {
 	int nRadiusFollow = e_MoveFollowPeopleRadius.GetIntNumber();
 	g_pCoreShell->PAIOperation(GPI_M_FOLLOW_PEOPLE_RADIUS,NULL,nRadiusFollow,NULL);
+	int nTrainingRadius = e_MoveTrainingRadius.GetIntNumber();
+	g_pCoreShell->PAIOperation(GPI_M_TRAINING_RADIUS,NULL,nTrainingRadius,NULL);
 }
 
 void KUiMovePlayer::PopUpFollowPeople()
@@ -3184,7 +3222,22 @@ void KUiMovePlayer::LoadMoveSetting()
 			c_MoveCoordiNates.CheckButton(true);
 			g_pCoreShell->PAIOperation(GPI_M_MOVEPOS,true,NULL,NULL);
 		}
-		
+		pConfigFile->GetInteger(MTitle, "F4", 0, (int*)(&m_nValue));
+		if (m_nValue > 0)
+			m_nValue = true;
+		c_MoveStayInArea.CheckButton(m_nValue);
+		g_pCoreShell->PAIOperation(GPI_M_STAY_IN_AREA,m_nValue,NULL,NULL);
+
+		pConfigFile->GetInteger(MTitle,"F5",0,(int*)(&m_nValue));
+		if (m_nValue < 0)
+			m_nValue = 0;
+		e_MoveTrainingRadius.SetIntText(m_nValue);
+		g_pCoreShell->PAIOperation(GPI_M_TRAINING_RADIUS,NULL,m_nValue,NULL);
+		pConfigFile->GetInteger(MTitle, "F6", 0, (int*)(&m_nValue));
+		if (m_nValue > 0)
+			m_nValue = true;
+		c_MoveFollowAutoMount.CheckButton(m_nValue);
+		g_pCoreShell->PAIOperation(GPI_M_FOLLOW_AUTO_MOUNT,m_nValue,NULL,NULL);
 		for (i = 0; i < defMAX_AUTO_MOVEMPSL; i++)
 		{
 			sprintf(szKeyName, "F3D%d", i);
@@ -3211,6 +3264,9 @@ void KUiMovePlayer::SaveMoveSetting()
 		pConfigFile->WriteInteger(MTitle, "F2",e_MoveFollowPeopleRadius.GetIntNumber());
 		pConfigFile->WriteString(MTitle, "F1CN", m_cFollowName);	
 		pConfigFile->WriteInteger(MTitle, "F3",c_MoveCoordiNates.IsButtonChecked());
+		pConfigFile->WriteInteger(MTitle, "F4",c_MoveStayInArea.IsButtonChecked());
+		pConfigFile->WriteInteger(MTitle, "F5",e_MoveTrainingRadius.GetIntNumber());
+		pConfigFile->WriteInteger(MTitle, "F6",c_MoveFollowAutoMount.IsButtonChecked());		
 		for (i = 0; i < defMAX_AUTO_MOVEMPSL; i++)
 		{ 
 			sprintf(szKeyName, "F3D%d", i);

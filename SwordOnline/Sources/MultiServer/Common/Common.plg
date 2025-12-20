@@ -6,47 +6,47 @@
 --------------------Configuration: Common - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3B37.tmp" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPB797.tmp" with contents
 [
 /nologo /MT /W3 /GX /Zi /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D _WIN32_WINNT=0x0400 /Fp"Release/Common.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Buffer.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Console.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Event.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\EventSelect.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Exception.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\IniFile.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\IOBuffer.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\IOCompletionPort.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\KSG_EncodeDecode.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\KSocketClient2.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Library.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Macro.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\ManualResetEvent.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Mutex.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\NodeList.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Socket.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\SocketAddress.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\SocketClient.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\SocketServer.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Thread.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\UsesWinsock.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Utils.cpp"
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Win32Exception.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Buffer.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Console.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Event.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\EventSelect.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Exception.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\IniFile.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\IOBuffer.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\IOCompletionPort.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\KSG_EncodeDecode.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\KSocketClient2.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Library.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Macro.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\ManualResetEvent.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Mutex.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\NodeList.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Socket.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\SocketAddress.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\SocketClient.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\SocketServer.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Thread.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\UsesWinsock.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Utils.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Win32Exception.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP3B37.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3B38.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPB797.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPB798.tmp" with contents
 [
 /nologo /MT /W3 /GX /Zi /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D _WIN32_WINNT=0x0400 /Fo"Release/" /Fd"Release/" /FD /c 
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\CRC32.C"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\CRC32.C"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP3B38.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3B39.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPB798.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPB799.tmp" with contents
 [
 /nologo /MT /W3 /GX /Zi /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D _WIN32_WINNT=0x0400 /Fp"Release/Common.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"D:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\stdafx.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\stdafx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP3B39.tmp" 
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3B3A.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPB799.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPB79A.tmp" with contents
 [
 /nologo /out:"Release\Common.lib" 
 .\Release\Buffer.obj
@@ -75,7 +75,7 @@ Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP3B3A.tmp" with 
 .\Release\Utils.obj
 .\Release\Win32Exception.obj
 ]
-Creating command line "link.exe -lib @C:\Users\ADMINI~1\AppData\Local\Temp\RSP3B3A.tmp"
+Creating command line "link.exe -lib @C:\Users\kenny\AppData\Local\Temp\RSPB79A.tmp"
 <h3>Output Window</h3>
 Compiling...
 stdafx.cpp
@@ -124,14 +124,14 @@ Generating Code...
 Compiling...
 CRC32.C
 Creating library...
-Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP44C0.bat" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPC632.bat" with contents
 [
 @echo off
 md ..\..\..\Lib\release
 copy release\common.lib ..\..\..\Lib\release\common.lib
 copy release\common.lib ..\..\..\Lib\common.lib
 ]
-Creating command line "C:\Users\ADMINI~1\AppData\Local\Temp\RSP44C0.bat"
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPC632.bat"
 
 A subdirectory or file ..\..\..\Lib\release already exists.
         1 file(s) copied.

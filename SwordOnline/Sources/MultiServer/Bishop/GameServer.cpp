@@ -70,8 +70,6 @@ void CGameServer::BeginTransfer(const char *acc)
     info.nToGS = -1;
     info.account = acc;
     g_transferTimeouts[acc] = info;
-    
-    printf("[BISHOP] BeginTransfer: %s at GS%d, time=%u\n", acc, info.nFromGS, info.dwStartTime);
 }
 
 void CGameServer::EndTransfer(const char *acc)
@@ -85,7 +83,6 @@ void CGameServer::EndTransfer(const char *acc)
     if (it != m_transferAccs.end())
     {
         m_transferAccs.erase(it);
-        printf("[BISHOP] EndTransfer: %s\n", acc);
     }
     g_transferTimeouts.erase(acc);
 }
@@ -516,11 +513,9 @@ bool CGameServer::_NotifyEnterGame(const void *pData, size_t datalength)
     bool isTransferring = IsInTransfer(szAcc);
     int nOldGS = FindServerByAccount(szAcc);
     int nThisGS = (int)GetID();
-    
-    printf("[BISHOP] EnterGame: %s, OldGS=%d, ThisGS=%d, Transfer=%d\n", szAcc, nOldGS, nThisGS, isTransferring);
-    
     // Case 1: Normal login (not in any GS)
-    if (nOldGS == -1)
+
+	if (nOldGS == -1)
         return PushAccount(szAcc);
     
     // Case 2: Already in this GS (shouldn't happen)
@@ -536,7 +531,6 @@ bool CGameServer::_NotifyEnterGame(const void *pData, size_t datalength)
     {
         if (isTransferring)
         {
-            printf("[BISHOP] Transfer confirmed: %s from GS%d to GS%d\n", szAcc, nOldGS, nThisGS);
             ((CGameServer *)pOld)->DetachAccountFromGameServer(szAcc);
             EndTransfer(szAcc);
         }
@@ -562,10 +556,6 @@ bool CGameServer::_NotifyLeaveGame(const void *pData, size_t datalength)
     bool isTransferring = IsInTransfer(pAccountName);
     bool hold = (pLG->cCmdType == HOLDACC_LEAVEGAME);
     bool inGS = HaveAccountInGameServer(pAccountName);
-
-    printf("[BISHOP] LeaveGame: %s, GS=%d, InGS=%d, Transfer=%d, Hold=%d\n",
-           pAccountName, (int)GetID(), inGS ? 1 : 0, isTransferring ? 1 : 0, hold ? 1 : 0);
-
     // FIX: Check if this account is actually in this GS
     if (!inGS)
     {
@@ -583,7 +573,6 @@ bool CGameServer::_NotifyLeaveGame(const void *pData, size_t datalength)
     {
         BeginTransfer(pAccountName);
         bool result = PopAccount(pAccountName, false);
-        printf("[BISHOP] LeaveGame (already transferring): %s detached=%d\n", pAccountName, result ? 1 : 0);
         return result;
     }
 
@@ -594,15 +583,11 @@ bool CGameServer::_NotifyLeaveGame(const void *pData, size_t datalength)
     {
         BeginTransfer(pAccountName);
         bool result = PopAccount(pAccountName, false);
-        printf("[BISHOP] LeaveGame (hold for transfer): %s detached=%d, tracking transfer\n",
-               pAccountName, result ? 1 : 0);
         return result;
     }
 
     // Normal logout - unlock account
     bool result = PopAccount(pAccountName, true);
-    printf("[BISHOP] LeaveGame (normal logout): %s detached=%d, unlocked=%d\n",
-           pAccountName, result ? 1 : 0, 1);
     return result;
 }
 
@@ -649,7 +634,6 @@ bool CGameServer::Attach(const char *pAccountName, bool bCheck)
     if (nExistingGS != -1 && nExistingGS != nThisGS)
     {
         bool isTransferring = IsInTransfer(pAccountName);
-        printf("[BISHOP] Attach: %s from GS%d to GS%d, Transfer=%d\n", pAccountName, nExistingGS, nThisGS, isTransferring);
         if (!isTransferring)
             BeginTransfer(pAccountName);
 
@@ -664,8 +648,6 @@ bool CGameServer::Attach(const char *pAccountName, bool bCheck)
             if (pOldGS)
             {
                 pOldGS->DetachAccountFromGameServer(pAccountName);
-                printf("[BISHOP] Attach: Detached \"%s\" from old GS%d (no logout signal)\n",
-                       pAccountName, nExistingGS);
             }
         }
     }
@@ -688,7 +670,6 @@ bool CGameServer::AttatchAccountToGameServer(const char *pAccountName, bool bChe
     if (!bCheck)
     {
         m_theAccountInThisServer.insert(stdAccountAttachIn::value_type(pAccountName, reinterpret_cast<void *>(this)));
-        printf("[BISHOP] AttatchAccount: \"%s\" attached to GS%d\n", pAccountName, (int)GetID());
     }
     return true;
 }

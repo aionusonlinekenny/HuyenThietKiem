@@ -289,6 +289,7 @@ private:
 	KWndButton	p_MoveFollowPopup;
 	KWndText32	t_MoveFollowPeopleRadius;
 	KWndEdit32	e_MoveFollowPeopleRadius;
+	KWndButton	c_MoveFollowAutoMount;		// Auto-mount when following leader
 	KWndButton	c_MoveAround;
 	KWndText80	t_MoveAround;
 	KWndLabeledButton	c_MoveAroundAdd;
@@ -302,6 +303,10 @@ private:
 	KWndLabeledButton	c_MoveCoordiNatesDel;
 	KWndLabeledButton	c_MoveCoordiNatesDelAll;
 
+	// Training area radius controls
+	KWndButton	c_MoveStayInArea;
+	KWndText32	t_MoveTrainingRadiusText;
+	KWndEdit32	e_MoveTrainingRadius;
 	BOOL		m_MoveAroundBtn;
 	int			m_MoveMpsList[defMAX_AUTO_MOVEMPSL][3];
 	int			m_MoveMpsListSave[defMAX_AUTO_MOVEMPSL][3];

@@ -171,6 +171,41 @@ public:
 	int				nNpcIDPaint;
 	int				nDestXPaint;
 	int				nDestYPaint;
+
+	// ===== PACKET BURST FIX: LAG DETECTION & RATE LIMITING =====
+	// Combat lag detection fields (HP stall + distance stall)
+	unsigned int	m_nLastTargetHP;			// Last seen HP of current target
+	int				m_nLastTargetDistance;		// Last distance to target (MPS units)
+	int				m_nSameHPCounter;			// Ticks with same HP (lag indicator)
+	int				m_nSameDistCounter;			// Ticks with same distance (unreachable)
+	int				m_nLastTargetPosX;			// For distance tracking
+	int				m_nLastTargetPosY;
+
+	// Follow leader fallback to route when leader lost
+	unsigned int	m_dwLeaderLostTime;			// Time when leader was lost
+	BOOL			m_bFollowFallback;			// In fallback-to-route mode?
+	unsigned int	m_dwLastReacquireAttempt;	// Last reacquire attempt time
+	int				m_nSavedAutoMove;			// Saved m_AutoMove state before fallback
+
+	// Training area radius limit (prevent running too far from waypoints)
+	int				m_nTrainingRadius;			// Max distance from waypoints (in cells, 0 = unlimited)
+	BOOL			m_bStayInTrainingArea;		// Force stay within training radius?
+	// Follow leader auto-mount
+	BOOL			m_bFollowAutoMount;			// Auto-mount horse when following leader and far away
+	// Route + combat balance (pause route to fight nearby enemies)
+	BOOL			m_bRoutePaused;				// Route paused for combat?
+	int				m_nPausedRouteStep;			// Which waypoint we paused at
+	int				m_nLastRouteX;				// For stuck detection
+	int				m_nLastRouteY;
+	int				m_nStuckCounter;			// Ticks stuck at same waypoint
+	unsigned int	m_dwLastWaypointTime;		// Time of last waypoint change
+
+	// VPS-safe packet rate limiting (prevent IP blocks from burst)
+	DWORD			m_PacketLastSent[4];		// [0]=MOVE [1]=ATTACK [2]=SKILL [3]=ITEM
+	int				m_PacketCount[4];			// Counts in current 1-second window
+	DWORD			m_PacketWindowStart;		// Start of current 1-second window
+	int				m_PacketTotalThisSecond;	// Total packets this second
+	DWORD			m_PacketLastLogTime;		// Last time we logged stats (every 5s)
 public:
 	KPlayerAI() {};	
 	~KPlayerAI() {}
@@ -241,6 +276,19 @@ public:
 	void			BackToMap();
 	void			MoveItemToBox();
 	void 			PaintActionAuto(int nType,int nNpcID,int nX,int nY);
+
+	// ===== PACKET BURST FIX: New helper methods =====
+	BOOL			IsTargetLagging(int nTargetIdx);
+	void			MarkTargetAsLag(int nTargetIdx);
+	void			UpdateFollowFallback();
+	BOOL			ShouldEngageOnRoute(int *outNpcIdx);
+	void			UpdateRouteProgress();
+	BOOL			CanSendPacket(int packetType);		// 0=MOVE 1=ATTACK 2=SKILL 3=ITEM
+	void			LogPacketStats();
+
+	// ===== TRAINING AREA RADIUS ENFORCEMENT =====
+	BOOL			IsWithinTrainingArea(int *outNearestWaypointIdx);
+	void			ReturnToTrainingArea();						   
 };
 #endif
 #endif

@@ -267,6 +267,12 @@ void g_InitProtocol()
 // --
 void SendClientCmdRun(int nX, int nY)
 {
+// Packet throttling: prevent VPS/WAF from blocking IP due to burst
+	if (Player[CLIENT_PLAYER_INDEX].m_bActiveAuto)
+	{
+		if (!Player[CLIENT_PLAYER_INDEX].m_cAI.CanSendPacket(0))  // 0=MOVE
+			return;  // Throttled, skip this packet
+	}
 	NPC_RUN_COMMAND	NetCommand;
 	
 	NetCommand.ProtocolType		= (BYTE)c2s_npcrun;
@@ -283,8 +289,13 @@ void SendClientCmdRun(int nX, int nY)
 // --
 void SendClientCmdWalk(int nX, int nY)
 {
+ // Packet throttling: prevent VPS/WAF from blocking IP due to burst
+	if (Player[CLIENT_PLAYER_INDEX].m_bActiveAuto)
+	{
+		if (!Player[CLIENT_PLAYER_INDEX].m_cAI.CanSendPacket(0))  // 0=MOVE
+			return;  // Throttled, skip this packet
+	}
 	NPC_WALK_COMMAND	NetCommand;
-	
 	NetCommand.ProtocolType		= (BYTE)c2s_npcwalk;
 	NetCommand.dwID = Player[CLIENT_PLAYER_INDEX].GetPlayerID();			
 	NetCommand.dwTimePacker = GetTickCount();
@@ -299,8 +310,13 @@ void SendClientCmdWalk(int nX, int nY)
 // --
 void SendClientCmdSkill(int nSkillID, int nX, int nY)
 {
+// Packet throttling: prevent VPS/WAF from blocking IP due to burst
+	if (Player[CLIENT_PLAYER_INDEX].m_bActiveAuto)
+	{
+		if (!Player[CLIENT_PLAYER_INDEX].m_cAI.CanSendPacket(2))  // 2=SKILL
+			return;  // Throttled, skip this packet
+	}
 	NPC_SKILL_COMMAND	NetCommand;
-	
 	NetCommand.ProtocolType		= (BYTE)c2s_npcskill;
 	NetCommand.dwID = Player[CLIENT_PLAYER_INDEX].GetPlayerID();
 	NetCommand.dwTimePacker = GetTickCount();  // FIX: Send player ID and timestamp for accurate position sync
