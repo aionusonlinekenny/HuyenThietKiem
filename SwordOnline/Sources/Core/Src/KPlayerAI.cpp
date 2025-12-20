@@ -3861,8 +3861,11 @@ BOOL KPlayerAI::CanSendPacket(int packetType)
 	DWORD now = GetTickCount();
 
 	// Per-type rate limits (milliseconds between packets)
+	// FIX: Reduced MOVE throttle from 100ms to 50ms for smoother position sync
+	// Old: 100ms = 10 updates/sec caused position desync (players see each other in wrong place)
+	// New: 50ms = 20 updates/sec provides smooth movement while still VPS-safe
 	const DWORD typeIntervals[4] = {
-		100,  // MOVE: max 10/sec
+		50,   // MOVE: max 20/sec (was 100ms/10sec - too slow, caused desync)
 		200,  // ATTACK: max 5/sec
 		300,  // SKILL: max 3/sec
 		500   // ITEM: max 2/sec
@@ -3872,7 +3875,10 @@ BOOL KPlayerAI::CanSendPacket(int packetType)
 	if (now - m_PacketLastSent[packetType] < typeIntervals[packetType])
 		return FALSE;  // Too soon, throttle
 
-	// Check total burst limit (max 30/sec across all types)
+	// Check total burst limit (max 40/sec across all types)
+	// FIX: Increased from 30 to 40 to accommodate faster MOVE rate (20/sec)
+	// 20 MOVE + 5 ATTACK + 3 SKILL + 2 ITEM = 30 theoretical max
+	// 40 limit provides headroom for burst scenarios
 	DWORD windowStart = now / 1000 * 1000;  // Start of current second
 	if (m_PacketWindowStart != windowStart)
 	{
@@ -3881,7 +3887,7 @@ BOOL KPlayerAI::CanSendPacket(int packetType)
 		m_PacketTotalThisSecond = 0;
 	}
 
-	if (m_PacketTotalThisSecond >= 30)
+	if (m_PacketTotalThisSecond >= 40)
 		return FALSE;  // Burst limit reached
 
 	// Packet allowed - update counters
