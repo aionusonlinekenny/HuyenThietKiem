@@ -1043,6 +1043,70 @@ BOOL KItemGenerator::IsMagicAttribLuckyLevel(const KMAGICATTRIB_TABFILE* pMAItem
 }
 
 // --
+// Helper function to get global min/max across all levels for an attribute type
+// This scans all magic attribute records and finds the minimum Min and maximum Max
+// across all levels of the same attribute type (nPropKind)
+// --
+void KItemGenerator::GetGlobalMinMax(int nAttribType, int& outGlobalMin, int& outGlobalMax)
+{
+	outGlobalMin = 999999;  // Start with very large value
+	outGlobalMax = -999999; // Start with very small value
+
+	// Get total number of magic attribute records
+	int nTotalRecords = m_BPTLib.GetMARecordNumber();
+
+	// Scan through all records
+	for (int i = 0; i < nTotalRecords; i++)
+	{
+		const KMAGICATTRIB_TABFILE* pMAItem = m_BPTLib.GetMARecord(i);
+		if (!pMAItem)
+			continue;
+
+		// Check if this record is for the same attribute type
+		if (pMAItem->m_MagicAttrib.nPropKind != nAttribType)
+			continue;
+
+		// Update global min/max from aryRange[0] (primary range)
+		if (pMAItem->m_MagicAttrib.aryRange[0].nMin < outGlobalMin)
+			outGlobalMin = pMAItem->m_MagicAttrib.aryRange[0].nMin;
+
+		if (pMAItem->m_MagicAttrib.aryRange[0].nMax > outGlobalMax)
+			outGlobalMax = pMAItem->m_MagicAttrib.aryRange[0].nMax;
+
+		// For damage range attributes, also check aryRange[2]
+		BOOL bIsDamageRange = (
+			nAttribType == magic_colddamage_v ||
+			nAttribType == magic_firedamage_v ||
+			nAttribType == magic_lightingdamage_v ||
+			nAttribType == magic_poisondamage_v ||
+			nAttribType == magic_physicsdamage_v ||
+			nAttribType == magic_addphysicsmagic_v ||
+			nAttribType == magic_addcoldmagic_v ||
+			nAttribType == magic_addfiremagic_v ||
+			nAttribType == magic_addlightingmagic_v ||
+			nAttribType == magic_addpoisonmagic_v
+		);
+
+		if (bIsDamageRange)
+		{
+			// Check if aryRange[2] has valid range (not constant)
+			if (pMAItem->m_MagicAttrib.aryRange[2].nMin != pMAItem->m_MagicAttrib.aryRange[2].nMax)
+			{
+				if (pMAItem->m_MagicAttrib.aryRange[2].nMax > outGlobalMax)
+					outGlobalMax = pMAItem->m_MagicAttrib.aryRange[2].nMax;
+			}
+		}
+	}
+
+	// Sanity check - if no records found, set to 0
+	if (outGlobalMin == 999999 || outGlobalMax == -999999)
+	{
+		outGlobalMin = 0;
+		outGlobalMax = 0;
+	}
+}
+
+// --
 //
 // --
 BOOL KItemGenerator::Gen_MagicAttrib(
@@ -1158,46 +1222,14 @@ BOOL KItemGenerator::Gen_MagicAttrib(
             pMAItem->m_MagicAttrib.aryRange[2].nMax
         );
 
-        // FIX: Determine correct min/max for [min-max] display
-        // Most attributes display a single value from nValue[0] → use aryRange[0] for min/max
-        // Some attributes display damage RANGE using nValue[0] (min) and nValue[2] (max)
-        // → need min from aryRange[0], max from aryRange[2]
-        //
-        // From KNpcAttribModify.cpp analysis, these are the ONLY attributes that use
-        // nValue[0] as min damage and nValue[2] as max damage in a range:
-        int nAttribType = pMAItem->m_MagicAttrib.nPropKind;
-        BOOL bIsDamageRange = (
-            nAttribType == magic_colddamage_v ||        // 60
-            nAttribType == magic_firedamage_v ||        // 61
-            nAttribType == magic_lightingdamage_v ||    // 62
-            nAttribType == magic_poisondamage_v ||      // 63
-            nAttribType == magic_physicsdamage_v ||     // 59
-            nAttribType == magic_addphysicsmagic_v ||   // 168
-            nAttribType == magic_addcoldmagic_v ||      // 169
-            nAttribType == magic_addfiremagic_v ||      // 170
-            nAttribType == magic_addlightingmagic_v ||  // 171
-            nAttribType == magic_addpoisonmagic_v       // 172
-        );
-
-        // Additional check: Only use aryRange[2] if it represents a REAL range,
-        // not a constant (where Min3 == Max3)
-        BOOL bHasValidRange2 = (
-            pMAItem->m_MagicAttrib.aryRange[2].nMin != pMAItem->m_MagicAttrib.aryRange[2].nMax &&
-            pMAItem->m_MagicAttrib.aryRange[2].nMax > pMAItem->m_MagicAttrib.aryRange[0].nMax
-        );
-
-        if (bIsDamageRange && bHasValidRange2)
-        {
-            // Damage range attributes: nValue[0]=min, nValue[2]=max
-            pnaryMA[i].nMin = pMAItem->m_MagicAttrib.aryRange[0].nMin;
-            pnaryMA[i].nMax = pMAItem->m_MagicAttrib.aryRange[2].nMax;
-        }
-        else
-        {
-            // Normal attributes: use only aryRange[0]
-            pnaryMA[i].nMin = pMAItem->m_MagicAttrib.aryRange[0].nMin;
-            pnaryMA[i].nMax = pMAItem->m_MagicAttrib.aryRange[0].nMax;
-        }
+        // FIX: Get GLOBAL min/max across ALL levels for this attribute type
+        // This shows players the full possible range [lowest-highest] regardless of which level was rolled
+        // Example: Attack Speed has level 2 (10-10), level 5 (20-20), level 10 (30-30)
+        // → Display [10-30] for all levels to show full range
+        int nGlobalMin = 0, nGlobalMax = 0;
+        GetGlobalMinMax(pMAItem->m_MagicAttrib.nPropKind, nGlobalMin, nGlobalMax);
+        pnaryMA[i].nMin = nGlobalMin;
+        pnaryMA[i].nMax = nGlobalMax;
 #ifdef _DEBUG
 		/*g_DebugLog(					
 			"[GenMagicAttrib] pnaryMA[%d]: (%d:%s), nAttribType = %d, nValue[0] = %d, nValue[1] = %d, nValue[2] = %d,", 
@@ -1281,34 +1313,11 @@ BOOL KItemGenerator::Gen_PurpleMagicAttrib(
 			pnaryMA[i].nAttribType = pMAItem->m_MagicAttrib.nPropKind;
 			pnaryMA[i].nValue[0] = pMAItem->m_MagicAttrib.aryRange[0].nMax - pnaryMALevel[i] + 1;
 
-		// FIX: Same logic as Gen_MagicAttrib - determine correct min/max
-		int nAttribType = pMAItem->m_MagicAttrib.nPropKind;
-		BOOL bIsDamageRange = (
-			nAttribType == magic_colddamage_v ||
-			nAttribType == magic_firedamage_v ||
-			nAttribType == magic_lightingdamage_v ||
-			nAttribType == magic_poisondamage_v ||
-			nAttribType == magic_physicsdamage_v ||
-			nAttribType == magic_addphysicsmagic_v ||
-			nAttribType == magic_addcoldmagic_v ||
-			nAttribType == magic_addfiremagic_v ||
-			nAttribType == magic_addlightingmagic_v ||
-			nAttribType == magic_addpoisonmagic_v
-		);
-		BOOL bHasValidRange2 = (
-			pMAItem->m_MagicAttrib.aryRange[2].nMin != pMAItem->m_MagicAttrib.aryRange[2].nMax &&
-			pMAItem->m_MagicAttrib.aryRange[2].nMax > pMAItem->m_MagicAttrib.aryRange[0].nMax
-		);
-		if (bIsDamageRange && bHasValidRange2)
-		{
-			pnaryMA[i].nMin = pMAItem->m_MagicAttrib.aryRange[0].nMin;
-			pnaryMA[i].nMax = pMAItem->m_MagicAttrib.aryRange[2].nMax;
-		}
-		else
-		{
-			pnaryMA[i].nMin = pMAItem->m_MagicAttrib.aryRange[0].nMin;
-			pnaryMA[i].nMax = pMAItem->m_MagicAttrib.aryRange[0].nMax;
-		}
+		// FIX: Get GLOBAL min/max across ALL levels for this attribute type (same as Gen_MagicAttrib)
+		int nGlobalMin = 0, nGlobalMax = 0;
+		GetGlobalMinMax(pMAItem->m_MagicAttrib.nPropKind, nGlobalMin, nGlobalMax);
+		pnaryMA[i].nMin = nGlobalMin;
+		pnaryMA[i].nMax = nGlobalMax;
 			pnaryMA[i].nValue[1] = pMAItem->m_MagicAttrib.aryRange[1].nMax - pnaryMALevel[i] + 1;
 			pnaryMA[i].nValue[2] = pMAItem->m_MagicAttrib.aryRange[2].nMax - pnaryMALevel[i] + 1;
 		}
