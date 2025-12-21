@@ -205,13 +205,13 @@ int LuaModifyRepute(Lua_State *L)
 	if (nValue < 0)
 	{
 		char szMsg[100];
-		sprintf(szMsg, "Danh v�ng b�n gi�m <color=green>%d �i�m<color>!", -nValue);		
+		sprintf(szMsg, "Danh v�ng b�n gi�m <color=green>%d �i�m<color>!", -nValue);		
 		KPlayerChat::SendSystemInfo(1, nPlayerIndex, MESSAGE_SYSTEM_ANNOUCE_HEAD, (char *) szMsg, strlen(szMsg) );
 	}
 	else
 	{
 		char szMsg[100];
-		sprintf(szMsg, "Danh v�ng b�n t�ng <color=green>%d �i�m<color>!", nValue);		
+		sprintf(szMsg, "Danh v�ng b�n t�ng <color=green>%d �i�m<color>!", nValue);		
 		KPlayerChat::SendSystemInfo(1, nPlayerIndex, MESSAGE_SYSTEM_ANNOUCE_HEAD, (char *) szMsg, strlen(szMsg) );
 	}
 	
@@ -246,13 +246,13 @@ int LuaModifyFuyuan(Lua_State *L)
 	if (nValue < 0)
 	{
 		char szMsg[100];
-		sprintf(szMsg, "Ph�c duy�n b�n gi�m <color=green>%d �i�m<color>!", -nValue);		
+		sprintf(szMsg, "Ph�c duy�n b�n gi�m <color=green>%d �i�m<color>!", -nValue);		
 		KPlayerChat::SendSystemInfo(1, nPlayerIndex, MESSAGE_SYSTEM_ANNOUCE_HEAD, (char *) szMsg, strlen(szMsg) );
 	}
 	else
 	{
 		char szMsg[100];
-		sprintf(szMsg, "Ph�c duy�n b�n t�ng <color=green>%d �i�m<color>!", nValue);		
+		sprintf(szMsg, "Ph�c duy�n b�n t�ng <color=green>%d �i�m<color>!", nValue);		
 		KPlayerChat::SendSystemInfo(1, nPlayerIndex, MESSAGE_SYSTEM_ANNOUCE_HEAD, (char *) szMsg, strlen(szMsg) );
 	}
 	
@@ -327,11 +327,11 @@ lab_subworldidx2id:
 Say(sMainInfo, nSelCount, sSel1, sSel2, sSel3, .....,sSeln) 
 Say(nMainInfo, nSelCount, sSel1, sSel2, sSel3, .....,sSeln) 
 Say(nMainInfo, nSelCount, SelTab)
-????????????????????????????�???
+????????????????????????????�???
 
   Say(100, 3, 10, 23,43)
-  Say("????�??", 2, "??/yes", "??/no");
-  Say("??�?", 2, SelTab);
+  Say("????�??", 2, "??/yes", "??/no");
+  Say("??�?", 2, SelTab);
 */
 //**************************************************************************************************************************************************************
 //												????u?
@@ -1824,7 +1824,7 @@ if (Lua_GetTopIndex(L) <= 0) return 0;
 		}
 		else
 		{
-			KPlayerChat::SendSystemInfo(1, nPlayerIndex, "L�i Bug", "Bug h�m LuaMsgToPlayer vui l�ng b�o BQT", 48);
+			KPlayerChat::SendSystemInfo(1, nPlayerIndex, "L�i Bug", "Bug h�m LuaMsgToPlayer vui l�ng b�o BQT", 48);
 		}
 	}
 	return 0;
@@ -1846,7 +1846,7 @@ int LuaMsgToTeam(Lua_State * L)
 		const char* szMsg = Lua_ValueToString(L,1);
 		int nTeamLeaderId = g_Team[Player[nPlayerIndex].m_cTeam.m_nID].m_nCaptain;
 		if (nTeamLeaderId > 0)
-			KPlayerChat::SendSystemInfo(1, nTeamLeaderId, "Tin t�c t� ��i",(char *) szMsg, strlen(szMsg) );
+			KPlayerChat::SendSystemInfo(1, nTeamLeaderId, "Tin t�c t� ��i",(char *) szMsg, strlen(szMsg) );
 		
 		for (int i = 0; i < MAX_TEAM_MEMBER; i ++)
 		{
@@ -1854,7 +1854,7 @@ int LuaMsgToTeam(Lua_State * L)
 			if (nMemberId > 0)
 			{
 				if (szMsg)
-					KPlayerChat::SendSystemInfo(1, nMemberId, "Tin t�c t� ��i", (char *)szMsg, strlen(szMsg) );
+					KPlayerChat::SendSystemInfo(1, nMemberId, "Tin t�c t� ��i", (char *)szMsg, strlen(szMsg) );
 			}
 		}
 	}
@@ -6528,7 +6528,7 @@ int LuaGetStationName(Lua_State * L)
 	}
 	int nStationId = (int)Lua_ValueToNumber(L,1);
 	char szName[50];
-	g_StationTabFile.GetString(nStationId + 1, "DESC", "������",  szName, 50 );
+	g_StationTabFile.GetString(nStationId + 1, "DESC", "������",  szName, 50 );
 	Lua_PushString(L, szName);
 	return 1;
 }
@@ -6547,7 +6547,7 @@ int LuaGetWayPointName(Lua_State * L)
 	}
 	int nWayPointId = (int)Lua_ValueToNumber(L,1);
 	char szName[50];
-	g_WayPointTabFile.GetString(nWayPointId + 1, "DESC", "δ��¼",  szName, 50 );
+	g_WayPointTabFile.GetString(nWayPointId + 1, "DESC", "δ��¼",  szName, 50 );
 	Lua_PushString(L, szName);
 	return 1;
 }
@@ -6821,11 +6821,11 @@ int LuaGetDockName(Lua_State * L)
 	
 	if (nDock > g_DockPriceTabFile.GetHeight() - 1)
 	{
-		strcpy(szName, "δ֪��ͷ");
+		strcpy(szName, "δ֪��ͷ");
 		goto DockName;
 	}
 	
-	g_DockTabFile.GetString(nDock + 1, "DESC", "δ֪��ͷ", szName, 100);
+	g_DockTabFile.GetString(nDock + 1, "DESC", "δ֪��ͷ", szName, 100);
 	
 DockName:
 	Lua_PushString (L, szName);
@@ -10154,6 +10154,25 @@ int LuaOpenTrembleItem(Lua_State * L)
 	if(g_pServer && Player[nPlayerIndex].m_nNetConnectIdx != -1)
 	g_pServer->PackDataToClient(Player[nPlayerIndex].m_nNetConnectIdx, &sMsg, sMsg.m_wLength + 1);
 	
+	return 0;
+}
+// ════════════════════════════════════════════════════════════
+// Open Upgrade Attribute UI
+// ════════════════════════════════════════════════════════════
+int LuaOpenUpgradeAttribUI(Lua_State * L)
+{
+	int nPlayerIndex = GetPlayerIndex(L);
+	if (nPlayerIndex <= 0) return 0;
+
+	SHOW_MSG_SYNC sMsg;
+	sMsg.ProtocolType = s2c_msgshow;
+	sMsg.m_wMsgID = enumMSG_ID_UPGRADE_ATTRIB;
+	sMsg.m_lpBuf = 0;
+	sMsg.m_wLength = sizeof(SHOW_MSG_SYNC) - 1;
+
+	if (g_pServer && Player[nPlayerIndex].m_nNetConnectIdx != -1)
+		g_pServer->PackDataToClient(Player[nPlayerIndex].m_nNetConnectIdx, &sMsg, sMsg.m_wLength + 1);
+
 	return 0;
 }
 // --
