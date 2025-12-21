@@ -1280,8 +1280,35 @@ BOOL KItemGenerator::Gen_PurpleMagicAttrib(
 
 			pnaryMA[i].nAttribType = pMAItem->m_MagicAttrib.nPropKind;
 			pnaryMA[i].nValue[0] = pMAItem->m_MagicAttrib.aryRange[0].nMax - pnaryMALevel[i] + 1;
-			pnaryMA[i].nMin = pMAItem->m_MagicAttrib.aryRange[0].nMin;	// Store min value (TamLTM custom)
-			pnaryMA[i].nMax = pMAItem->m_MagicAttrib.aryRange[0].nMax;	// Store max value (TamLTM custom)
+
+		// FIX: Same logic as Gen_MagicAttrib - determine correct min/max
+		int nAttribType = pMAItem->m_MagicAttrib.nPropKind;
+		BOOL bIsDamageRange = (
+			nAttribType == magic_colddamage_v ||
+			nAttribType == magic_firedamage_v ||
+			nAttribType == magic_lightingdamage_v ||
+			nAttribType == magic_poisondamage_v ||
+			nAttribType == magic_physicsdamage_v ||
+			nAttribType == magic_addphysicsmagic_v ||
+			nAttribType == magic_addcoldmagic_v ||
+			nAttribType == magic_addfiremagic_v ||
+			nAttribType == magic_addlightingmagic_v ||
+			nAttribType == magic_addpoisonmagic_v
+		);
+		BOOL bHasValidRange2 = (
+			pMAItem->m_MagicAttrib.aryRange[2].nMin != pMAItem->m_MagicAttrib.aryRange[2].nMax &&
+			pMAItem->m_MagicAttrib.aryRange[2].nMax > pMAItem->m_MagicAttrib.aryRange[0].nMax
+		);
+		if (bIsDamageRange && bHasValidRange2)
+		{
+			pnaryMA[i].nMin = pMAItem->m_MagicAttrib.aryRange[0].nMin;
+			pnaryMA[i].nMax = pMAItem->m_MagicAttrib.aryRange[2].nMax;
+		}
+		else
+		{
+			pnaryMA[i].nMin = pMAItem->m_MagicAttrib.aryRange[0].nMin;
+			pnaryMA[i].nMax = pMAItem->m_MagicAttrib.aryRange[0].nMax;
+		}
 			pnaryMA[i].nValue[1] = pMAItem->m_MagicAttrib.aryRange[1].nMax - pnaryMALevel[i] + 1;
 			pnaryMA[i].nValue[2] = pMAItem->m_MagicAttrib.aryRange[2].nMax - pnaryMALevel[i] + 1;
 		}
