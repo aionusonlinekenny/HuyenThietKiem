@@ -107,7 +107,6 @@ void KUiUpgradeAttrib::Initialize()
 	AddChild(&m_BtnClose);
 	AddChild(&m_UpgradeEffect);
 	AddChild(&m_TextPercent);
-	AddChild(&m_AttribList);
 
 	for (i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
 	{
@@ -116,7 +115,7 @@ void KUiUpgradeAttrib::Initialize()
 		m_UpgradeSlot[i].SetContainerId((int)UOC_BUILD_ITEM);
 	}
 
-	m_nSelectedAttrib = -1;  // No attribute selected initially
+	m_nSelectedAttrib = 0;  // Default to first attribute
 
 	char Scheme[256];
 	g_UiBase.GetCurSchemePath(Scheme, 256);
@@ -148,7 +147,6 @@ void KUiUpgradeAttrib::LoadScheme(const char* pScheme)
 			m_pSelf->m_BtnUpgrade.Init(&Ini, "UpgradeBtn");
 			m_pSelf->m_BtnClose.Init(&Ini, "CloseBtn");
 			m_pSelf->m_TextPercent.Init(&Ini, "TextPercent");
-			m_pSelf->m_AttribList.Init(&Ini, "AttribList");
 
 			for (i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
 			{
@@ -298,82 +296,64 @@ BOOL KUiUpgradeAttrib::ValidateItemPickDrop(KWndWindow* pWnd, int nIndex)
  *********************************************************************/
 void KUiUpgradeAttrib::OnItemPickDrop(ITEM_PICKDROP_PLACE* pPickPos, ITEM_PICKDROP_PLACE* pDropPos)
 {
-	if (!pPickPos || !pDropPos)
+	KUiObjAtContRegion Pick, Drop;
+	KUiDraggedObject Obj;
+	KWndWindow* pWnd = NULL;
+
+	if (pPickPos)
+	{
+		pWnd = pPickPos->pWnd;
+	}
+	else if (pDropPos)
+	{
+		pWnd = pDropPos->pWnd;
+	}
+	else
 		return;
 
-	if (pDropPos->pWnd == &m_UpgradeSlot[0] || pDropPos->pWnd == &m_UpgradeSlot[1])
+	if (pDropPos)
 	{
-		KUiDraggedObject Obj;
-		Obj.uGenre = pPickPos->uGenre;
-		Obj.uId = pPickPos->uId;
-		Obj.DataX = pPickPos->DataX;
-		Obj.DataW = pPickPos->DataW;
-
-		if (g_pCoreShell)
+		Wnd_GetDragObj(&Obj);
+		if (ValidateItemPickDrop(pWnd, Obj.uId))
 		{
-			g_pCoreShell->OperationRequest(GOI_ADDITEM_CLIENT,
-				(unsigned int)(&Obj),
-				pos_builditem | (pDropPos->nIndex << 16));
-
-			// Load attribute list if equipment was placed
-			if (pDropPos->pWnd == &m_UpgradeSlot[0])
-			{
-				LoadAttributeList();
-			}
+			Drop.Obj.uGenre = Obj.uGenre;
+			Drop.Obj.uId = Obj.uId;
+			Drop.Region.Width = Obj.DataW;
+			Drop.Region.Height = Obj.DataH;
+			Drop.Region.h = 0;
+			Drop.eContainer = UOC_BUILD_ITEM;
 		}
 	}
-}
 
-/*********************************************************************
- * Load Attribute List
- *********************************************************************/
-void KUiUpgradeAttrib::LoadAttributeList()
-{
-	// TODO: Implement attribute list loading from equipment
-	// This will query the equipment's magic attributes and display them
-	m_nSelectedAttrib = 0;  // Default select first attribute
-	UpdateSuccessRate();
-}
-
-/*********************************************************************
- * On Attribute Selected
- *********************************************************************/
-void KUiUpgradeAttrib::OnAttributeSelected(int nIndex)
-{
-	if (nIndex >= 0 && nIndex < 6)
+	for (int i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
 	{
-		m_nSelectedAttrib = nIndex;
-		UpdateSuccessRate();
+		if (pWnd == (KWndWindow*)&m_UpgradeSlot[i])
+		{
+			Drop.Region.v = Pick.Region.v = CtrlItemMap[i].nPosition;
+			break;
+		}
 	}
+
+	g_pCoreShell->OperationRequest(GOI_SWITCH_OBJECT,
+		pPickPos ? (unsigned int)&Pick : 0,
+		pDropPos ? (int)&Drop : 0);
 }
 
-/*********************************************************************
- * Update Success Rate
- *********************************************************************/
-void KUiUpgradeAttrib::UpdateSuccessRate()
-{
-	m_TextPercent.SetText("Tỷ lệ thành công: 100%");
-}
 
 /*********************************************************************
  * Breathe (Animation Update)
  *********************************************************************/
 void KUiUpgradeAttrib::Breathe()
 {
-	if (m_EffectTime)
-	{
-		m_EffectTime++;
+	if (m_UpgradeEffect.IsVisible())
 		m_UpgradeEffect.NextFrame();
-
-		int nEffectMaxTime = (m_UpgradeEffect.GetMaxFrame()) * (LOOP * 2) / 2 + 1;
-		if (m_EffectTime >= nEffectMaxTime)
-		{
-			StopEffect();
-			OnUpgrade();
-			CloseWindow(true);
-		}
+	if (m_EffectTime)
+		m_EffectTime++;
+	if (m_EffectTime == (m_UpgradeEffect.GetMaxFrame()) * (LOOP * 2) / 2 + 1)
+	{
+		StopEffect();
+		m_EffectTime = 0;
 	}
-	KWndShowAnimate::Breathe();
 }
 
 /*********************************************************************
@@ -390,9 +370,9 @@ void KUiUpgradeAttrib::StartEffect()
  *********************************************************************/
 void KUiUpgradeAttrib::StopEffect()
 {
-	m_EffectTime = 0;
 	m_UpgradeEffect.Hide();
 	UpdatePickPut(true);
+	OnUpgrade();
 }
 
 /*********************************************************************
@@ -425,27 +405,19 @@ void KUiUpgradeAttrib::UpdateData()
  *********************************************************************/
 void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
 {
-	if (!pItem) return;
-
-	for (int i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
+	if (pItem)
 	{
-		if (pItem->Region.h == i)
+		for (int i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
 		{
-			if (bAdd)
+			if (CtrlItemMap[i].nPosition == pItem->Region.v)
 			{
-				m_UpgradeSlot[i].SetObject(&pItem->Obj, pItem->Region);
-
-				// Load attributes if equipment was added
-				if (i == 0)
-				{
-					LoadAttributeList();
-				}
+				if (bAdd)
+					m_UpgradeSlot[i].HoldObject(pItem->Obj.uGenre, pItem->Obj.uId,
+						pItem->Region.Width, pItem->Region.Height);
+				else
+					m_UpgradeSlot[i].HoldObject(CGOG_NOTHING, 0, 0, 0);
+				break;
 			}
-			else
-			{
-				m_UpgradeSlot[i].ClearObject();
-			}
-			break;
 		}
 	}
 }
@@ -455,13 +427,9 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
  *********************************************************************/
 void KUiUpgradeAttrib::OnUpgrade()
 {
-	if (g_pCoreShell)
+	if (g_pCoreShell->GetLixian())
 	{
-		// Set selected attribute index to TaskTemp for Lua to read
-		g_pCoreShell->OperationRequest(GOI_TASK_SET_TEMP, 200, m_nSelectedAttrib);
-
-		// Execute Lua script
-		char szFunc[32];
+		char szFunc[16];
 		sprintf(szFunc, "ExeUpgradeAttrib");
 		g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
 	}

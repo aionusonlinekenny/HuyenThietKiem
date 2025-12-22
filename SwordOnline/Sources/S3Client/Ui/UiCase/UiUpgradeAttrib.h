@@ -10,7 +10,6 @@ Function    : Upgrade equipment magic attributes
 #include "../elem/WndObjContainer.h"
 #include "../elem/wndlabeledbutton.h"
 #include "../elem/wndimage.h"
-#include "../elem/wndlist.h"
 #include "../../../core/src/gamedatadef.h"
 #include "../Elem/WndShowAnimate.h"
 
@@ -51,20 +50,13 @@ private:
 	BOOL          ValidateItemPickDrop(KWndWindow* pWnd, int nIndex);
 	BOOL          ValidateUpgradeReady();
 
-	void          LoadAttributeList();          // Load magic attributes from equipment
-	void          OnAttributeSelected(int nIndex); // Handle attribute selection
-	void          UpdateSuccessRate();          // Update success rate display
-
 private:
 	KWndObjectBox      m_UpgradeSlot[_UPGRADE_ATTRIB_SLOT_COUNT]; // Item slots
 	KWndLabeledButton  m_BtnUpgrade;            // Upgrade button
 	KWndLabeledButton  m_BtnClose;              // Close button
 	KCanGetNumImage    m_UpgradeEffect;         // Effect animation
 	unsigned int       m_EffectTime;            // Effect duration
-
-	KWndList80         m_AttribList;            // List of attributes
 	int                m_nSelectedAttrib;       // Selected attribute index (0-5)
-
 	KWndText80         m_TextPercent;           // Success rate display
 	char               m_szReturnInfo[8][128];  // Error messages
 
