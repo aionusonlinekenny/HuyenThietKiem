@@ -422,12 +422,22 @@ void KUiUpgradeAttrib::UpdateData()
 		return;
 	}
 
-	g_DebugLog("[CLIENT] Creating Item array, size = %d", _UPGRADE_ATTRIB_SLOT_COUNT);
-	KUiObjAtRegion Item[_UPGRADE_ATTRIB_SLOT_COUNT];
+	// CRITICAL FIX: GetGameData returns ALL 9 build container slots, not just our 3!
+	// Must allocate array for 9 items to prevent buffer overflow and stack corruption
+	const int BUILD_CONTAINER_SIZE = 9;  // Same as UiTrembleItem
+	g_DebugLog("[CLIENT] Creating Item array, size = %d (was %d)", BUILD_CONTAINER_SIZE, _UPGRADE_ATTRIB_SLOT_COUNT);
+	KUiObjAtRegion Item[BUILD_CONTAINER_SIZE];
 
 	g_DebugLog("[CLIENT] Calling GetGameData(GDI_BUILD_ITEM)");
 	int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Item, 0);
 	g_DebugLog("[CLIENT] GetGameData returned nCount = %d", nCount);
+
+	// Safety check: nCount should never exceed array size
+	if (nCount > BUILD_CONTAINER_SIZE)
+	{
+		g_DebugLog("[CLIENT] WARNING: nCount (%d) exceeds array size (%d)! Clamping.", nCount, BUILD_CONTAINER_SIZE);
+		nCount = BUILD_CONTAINER_SIZE;
+	}
 
 	for (int i = 0; i < nCount; i++)
 	{
