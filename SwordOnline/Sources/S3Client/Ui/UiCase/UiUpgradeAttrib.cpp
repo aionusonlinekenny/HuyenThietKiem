@@ -414,16 +414,33 @@ BOOL KUiUpgradeAttrib::IsEffect()
  *********************************************************************/
 void KUiUpgradeAttrib::UpdateData()
 {
-	if (!g_pCoreShell) return;
+	g_DebugLog("[CLIENT] UpdateData() started");
 
+	if (!g_pCoreShell)
+	{
+		g_DebugLog("[CLIENT] ERROR: g_pCoreShell is NULL!");
+		return;
+	}
+
+	g_DebugLog("[CLIENT] Creating Item array, size = %d", _UPGRADE_ATTRIB_SLOT_COUNT);
 	KUiObjAtRegion Item[_UPGRADE_ATTRIB_SLOT_COUNT];
+
+	g_DebugLog("[CLIENT] Calling GetGameData(GDI_BUILD_ITEM)");
 	int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Item, 0);
+	g_DebugLog("[CLIENT] GetGameData returned nCount = %d", nCount);
 
 	for (int i = 0; i < nCount; i++)
 	{
+		g_DebugLog("[CLIENT] Checking item %d, genre = %d", i, Item[i].Obj.uGenre);
 		if (Item[i].Obj.uGenre != CGOG_NOTHING)
+		{
+			g_DebugLog("[CLIENT] Calling UpdateItem for slot %d", i);
 			UpdateItem(&Item[i], true);
+			g_DebugLog("[CLIENT] UpdateItem completed for slot %d", i);
+		}
 	}
+
+	g_DebugLog("[CLIENT] UpdateData() completed");
 }
 
 /*********************************************************************
@@ -431,20 +448,41 @@ void KUiUpgradeAttrib::UpdateData()
  *********************************************************************/
 void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
 {
+	g_DebugLog("[CLIENT] UpdateItem() called, pItem=%p, bAdd=%d", pItem, bAdd);
+
 	if (pItem)
 	{
+		g_DebugLog("[CLIENT] pItem->Region.v = %d", pItem->Region.v);
+
 		for (int i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
 		{
+			g_DebugLog("[CLIENT] Checking slot %d, CtrlItemMap[%d].nPosition = %d", i, i, CtrlItemMap[i].nPosition);
+
 			if (CtrlItemMap[i].nPosition == pItem->Region.v)
 			{
+				g_DebugLog("[CLIENT] Match found at slot %d", i);
 				if (bAdd)
+				{
+					g_DebugLog("[CLIENT] Calling HoldObject(genre=%d, id=%d, w=%d, h=%d)",
+						pItem->Obj.uGenre, pItem->Obj.uId, pItem->Region.Width, pItem->Region.Height);
 					m_UpgradeSlot[i].HoldObject(pItem->Obj.uGenre, pItem->Obj.uId,
 						pItem->Region.Width, pItem->Region.Height);
+					g_DebugLog("[CLIENT] HoldObject completed");
+				}
 				else
+				{
+					g_DebugLog("[CLIENT] Calling HoldObject(CGOG_NOTHING)");
 					m_UpgradeSlot[i].HoldObject(CGOG_NOTHING, 0, 0, 0);
+					g_DebugLog("[CLIENT] HoldObject completed");
+				}
 				break;
 			}
 		}
+		g_DebugLog("[CLIENT] UpdateItem() completed");
+	}
+	else
+	{
+		g_DebugLog("[CLIENT] UpdateItem() - pItem is NULL!");
 	}
 }
 
