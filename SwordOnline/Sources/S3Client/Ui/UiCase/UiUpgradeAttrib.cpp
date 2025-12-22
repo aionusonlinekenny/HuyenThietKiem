@@ -172,8 +172,11 @@ void KUiUpgradeAttrib::LoadScheme(const char* pScheme)
 		m_pSelf->m_EffectTime = 0;
 
 		m_pSelf->m_BtnUpgrade.Init(&Ini, "UpgradeBtn");
+		m_pSelf->m_BtnUpgrade.SetText("Nang cap");  // Set button label
 		m_pSelf->m_BtnClose.Init(&Ini, "CloseBtn");
+		m_pSelf->m_BtnClose.SetText("Dong");  // Set button label
 		m_pSelf->m_TextPercent.Init(&Ini, "TextPercent");
+		m_pSelf->m_TextPercent.SetText("San sang nang cap");  // Set initial text
 
 		for (i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
 		{
@@ -516,7 +519,9 @@ void KUiUpgradeAttrib::OnCancel()
 {
 	if (g_pCoreShell)
 	{
-		KUiObjAtRegion Item[_UPGRADE_ATTRIB_SLOT_COUNT];
+		// CRITICAL FIX: Same buffer overflow bug as UpdateData!
+		const int BUILD_CONTAINER_SIZE = 9;
+		KUiObjAtRegion Item[BUILD_CONTAINER_SIZE];
 		int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Item, 0);
 		if (nCount)
 			g_pCoreShell->OperationRequest(GOI_RECOVERY_BOX_COMMAND, pos_builditem, 0);
