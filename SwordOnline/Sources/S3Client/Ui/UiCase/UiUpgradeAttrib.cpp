@@ -46,23 +46,43 @@ CtrlItemMap[_UPGRADE_ATTRIB_SLOT_COUNT] =
  *********************************************************************/
 KUiUpgradeAttrib* KUiUpgradeAttrib::OpenWindow()
 {
+	g_DebugLog("[CLIENT] KUiUpgradeAttrib::OpenWindow() called");
+
 	if (m_pSelf == NULL)
 	{
+		g_DebugLog("[CLIENT] Creating new KUiUpgradeAttrib instance");
 		m_pSelf = new KUiUpgradeAttrib;
 		if (m_pSelf)
+		{
+			g_DebugLog("[CLIENT] Calling Initialize()");
 			m_pSelf->Initialize();
+			g_DebugLog("[CLIENT] Initialize() completed");
+		}
+		else
+		{
+			g_DebugLog("[CLIENT] ERROR: Failed to allocate KUiUpgradeAttrib!");
+			return NULL;
+		}
 	}
+
 	if (m_pSelf)
 	{
+		g_DebugLog("[CLIENT] Playing open sound");
 		UiSoundPlay(UI_SI_WND_OPENCLOSE);
 
+		g_DebugLog("[CLIENT] Opening KUiItem if needed");
 		if (!KUiItem::GetIfVisible())
 			KUiItem::OpenWindow();
 
+		g_DebugLog("[CLIENT] Calling UpdateData()");
 		m_pSelf->UpdateData();
+		g_DebugLog("[CLIENT] Calling BringToTop()");
 		m_pSelf->BringToTop();
+		g_DebugLog("[CLIENT] Calling Show()");
 		m_pSelf->Show();
+		g_DebugLog("[CLIENT] Setting input handling");
 		Wnd_GameSpaceHandleInput(false);
+		g_DebugLog("[CLIENT] OpenWindow() completed successfully");
 	}
 	return m_pSelf;
 }
@@ -84,6 +104,7 @@ void KUiUpgradeAttrib::CloseWindow(bool bDestory)
 {
 	if (m_pSelf)
 	{
+		m_pSelf->OnCancel();  // Call BEFORE destroying!
 		Wnd_GameSpaceHandleInput(true);
 		if (bDestory)
 		{
@@ -92,8 +113,6 @@ void KUiUpgradeAttrib::CloseWindow(bool bDestory)
 		}
 		else
 			m_pSelf->Hide();
-
-		m_pSelf->OnCancel();
 	}
 }
 
@@ -136,30 +155,37 @@ void KUiUpgradeAttrib::LoadScheme(const char* pScheme)
 		int i = 0;
 
 		sprintf(Buff, "%s\\%s", pScheme, UPGRADE_ATTRIB_INI);
-		if (Ini.Load(Buff))
+		if (!Ini.Load(Buff))
 		{
-			m_pSelf->Init(&Ini, "Main");
+			// CRITICAL: INI file failed to load!
+			char szError[256];
+			sprintf(szError, "[ERROR] Failed to load UI config file: %s", Buff);
+			g_DebugLog(szError);
+			_ASSERT(FALSE && "UiUpgradeAttrib.ini not found!");
+			return;  // Don't initialize if INI failed to load
+		}
 
-			m_pSelf->m_UpgradeEffect.Init(&Ini, "Effect");
-			m_pSelf->m_UpgradeEffect.Hide();
-			m_pSelf->m_EffectTime = 0;
+		m_pSelf->Init(&Ini, "Main");
 
-			m_pSelf->m_BtnUpgrade.Init(&Ini, "UpgradeBtn");
-			m_pSelf->m_BtnClose.Init(&Ini, "CloseBtn");
-			m_pSelf->m_TextPercent.Init(&Ini, "TextPercent");
+		m_pSelf->m_UpgradeEffect.Init(&Ini, "Effect");
+		m_pSelf->m_UpgradeEffect.Hide();
+		m_pSelf->m_EffectTime = 0;
 
-			for (i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
-			{
-				m_pSelf->m_UpgradeSlot[i].Init(&Ini, CtrlItemMap[i].pIniSection);
-			}
+		m_pSelf->m_BtnUpgrade.Init(&Ini, "UpgradeBtn");
+		m_pSelf->m_BtnClose.Init(&Ini, "CloseBtn");
+		m_pSelf->m_TextPercent.Init(&Ini, "TextPercent");
 
-			// Load error messages
-			char szTemp[2];
-			for (i = 0; i < 8; i++)
-			{
-				sprintf(szTemp, "%d", i);
-				Ini.GetString("ReturnInfo", szTemp, "", m_pSelf->m_szReturnInfo[i], sizeof(m_pSelf->m_szReturnInfo[i]));
-			}
+		for (i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
+		{
+			m_pSelf->m_UpgradeSlot[i].Init(&Ini, CtrlItemMap[i].pIniSection);
+		}
+
+		// Load error messages
+		char szTemp[2];
+		for (i = 0; i < 8; i++)
+		{
+			sprintf(szTemp, "%d", i);
+			Ini.GetString("ReturnInfo", szTemp, "", m_pSelf->m_szReturnInfo[i], sizeof(m_pSelf->m_szReturnInfo[i]));
 		}
 	}
 }
