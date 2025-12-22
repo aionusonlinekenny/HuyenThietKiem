@@ -2,7 +2,7 @@
 -- Upgrade Equipment Attributes System
 -- Author: Claude Code
 -- Date: 2025-12-21
--- Function: Nâng cấp từng thuộc tính magic của trang bị xanh
+-- Function: Nang cap tung thuoc tinh magic cua trang bi xanh
 --═══════════════════════════════════════════════════════════════
 
 Include("\\script\\lib\\TaskLib.lua")
@@ -12,11 +12,11 @@ Include("\\script\\lib\\TaskLib.lua")
 -- ────────────────────────────────────────────────────────────
 function UpgradeAttribTalk()
     local tbSay = {
-        "Nâng cấp thuộc tính trang bị xanh/OpenUpgradeUI",
-        "Hướng dẫn nâng cấp/ShowGuide",
-        "Ta chỉ ghé ngang qua/no",
+        "Nang cap thuoc tinh trang bi xanh/OpenUpgradeUI",
+        "Huong dan nang cap/ShowGuide",
+        "Ta chi ghe ngang qua/no",
     }
-    Say("Cao thủ rèn đúc: Ta có thể giúp ngươi nâng cấp từng thuộc tính của trang bị xanh!",
+    Say("Cao thu ren duc: Ta co the giup nguoi nang cap tung thuoc tinh cua trang bi xanh!",
         getn(tbSay), tbSay)
 end
 
@@ -39,13 +39,13 @@ function ExeUpgradeAttrib()
 
     -- Validate equipment
     if nEquipIdx <= 0 then
-        Talk(1, "", "<color=red>Chưa đặt trang bị vào!<color>")
+        Talk(1, "", "<color=red>Chua dat trang bi vao!<color>")
         return
     end
 
     -- Validate material
     if nMaterialIdx <= 0 then
-        Talk(1, "", "<color=red>Chưa đặt Đá Nâng Cấp!<color>")
+        Talk(1, "", "<color=red>Chua dat Da Nang Cap!<color>")
         return
     end
 
@@ -54,12 +54,12 @@ function ExeUpgradeAttrib()
 
     -- Check if equipment is blue (genre 0 with luck < 1000000000)
     if nGenre ~= 0 then
-        Talk(1, "", "<color=red>Chỉ có thể nâng cấp trang bị xanh!<color>")
+        Talk(1, "", "<color=red>Chi co the nang cap trang bi xanh!<color>")
         return
     end
 
     if nLuck >= 1000000000 then
-        Talk(1, "", "<color=red>Trang bị này là tím/vàng, không thể nâng cấp!<color>")
+        Talk(1, "", "<color=red>Trang bi nay la tim/vang, khong the nang cap!<color>")
         return
     end
 
@@ -74,7 +74,7 @@ function ExeUpgradeAttrib()
     end
 
     if not bHasMagicAttrib then
-        Talk(1, "", "<color=red>Trang bị này không có thuộc tính magic!<color>")
+        Talk(1, "", "<color=red>Trang bi nay khong co thuoc tinh magic!<color>")
         return
     end
 
@@ -90,7 +90,7 @@ function ExeUpgradeAttrib()
     end
 
     if nAttribSlot < 0 then
-        Talk(1, "", "<color=red>Không tìm thấy thuộc tính để nâng cấp!<color>")
+        Talk(1, "", "<color=red>Khong tim thay thuoc tinh de nang cap!<color>")
         return
     end
 
@@ -99,7 +99,7 @@ function ExeUpgradeAttrib()
 
     -- Check if attribute is already at max
     if nMax > 0 and nOldValue >= nMax then
-        Talk(1, "", "<color=yellow>Thuộc tính đầu tiên đã đạt giá trị MAX!<color>\nHãy nâng cấp thuộc tính khác.")
+        Talk(1, "", "<color=yellow>Thuoc tinh dau tien da dat gia tri MAX!<color>\nHay nang cap thuoc tinh khac.")
         return
     end
 
@@ -108,7 +108,7 @@ function ExeUpgradeAttrib()
 
     -- Consume material FIRST
     if DelItemByIndex(nMaterialIdx) == 0 then
-        Talk(1, "", "<color=red>Lỗi: Không thể tiêu hao vật liệu!<color>")
+        Talk(1, "", "<color=red>Loi: Khong the tieu hao vat lieu!<color>")
         return
     end
 
@@ -121,8 +121,8 @@ function ExeUpgradeAttrib()
 
         -- Success message
         local szMsg = string.format(
-            "<color=green>✓ Nâng cấp thành công!<color>\n" ..
-            "Thuộc tính #%d: <color=yellow>%d → %d<color> (+%d%%)",
+            "<color=green>Nang cap thanh cong!<color>\n" ..
+            "Thuoc tinh #%d: <color=yellow>%d -> %d<color> (+%d%%)",
             nAttribSlot + 1,
             nOldValue,
             nNewValue,
@@ -134,7 +134,7 @@ function ExeUpgradeAttrib()
         WriteLog(string.format("[UPGRADE] Player=%s, Item=%d, Slot=%d, Old=%d, New=%d, Percent=%d",
             GetName(), nEquipIdx, nAttribSlot, nOldValue, nNewValue, nIncreasePercent))
     else
-        Talk(1, "", "<color=red>Nâng cấp thất bại! Vui lòng thử lại.<color>")
+        Talk(1, "", "<color=red>Nang cap that bai! Vui long thu lai.<color>")
     end
 end
 
@@ -143,25 +143,25 @@ end
 -- ────────────────────────────────────────────────────────────
 function ShowGuide()
     local szGuide = [[
-<color=yellow>═══ HƯỚNG DẪN NÂNG CẤP THUỘC TÍNH ═══<color>
+<color=yellow>=== HUONG DAN NANG CAP THUOC TINH ===<color>
 
-<color=cyan>Cách thực hiện:<color>
-1. Đặt <color=blue>trang bị xanh<color> vào ô trên
-2. Đặt <color=orange>Đá Nâng Cấp<color> vào ô dưới
-3. Chọn thuộc tính muốn nâng cấp từ danh sách
-4. Nhấn <color=green>Nâng Cấp<color>
+<color=cyan>Cach thuc hien:<color>
+1. Dat <color=blue>trang bi xanh<color> vao o tren
+2. Dat <color=orange>Da Nang Cap<color> vao o duoi
+3. Chon thuoc tinh muon nang cap tu danh sach
+4. Nhan <color=green>Nang Cap<color>
 
-<color=cyan>Chi tiết:<color>
-• Chỉ nâng cấp được <color=blue>trang bị xanh<color>
-• Mỗi lần nâng tăng <color=yellow>10-20%<color> giá trị
-• Không thể vượt quá giá trị <color=red>MAX<color>
-• Tỷ lệ thành công: <color=green>100%<color>
-• Mất <color=orange>1 Đá Nâng Cấp<color> mỗi lần
+<color=cyan>Chi tiet:<color>
+- Chi nang cap duoc <color=blue>trang bi xanh<color>
+- Moi lan nang tang <color=yellow>10-20%<color> gia tri
+- Khong the vuot qua gia tri <color=red>MAX<color>
+- Ti le thanh cong: <color=green>100%<color>
+- Mat <color=orange>1 Da Nang Cap<color> moi lan
 
-<color=cyan>Lưu ý:<color>
-• Thuộc tính đã MAX không thể nâng thêm
-• Vật liệu bị mất khi nâng cấp
-• Không thể hoàn tác sau khi nâng
+<color=cyan>Luu y:<color>
+- Thuoc tinh da MAX khong the nang them
+- Vat lieu bi mat khi nang cap
+- Khong the hoan tac sau khi nang
 ]]
 
     Talk(1, "", szGuide)
