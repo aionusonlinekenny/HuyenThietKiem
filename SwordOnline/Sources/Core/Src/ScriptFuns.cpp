@@ -10818,6 +10818,11 @@ TLua_Funcs GameScriptFuns[] =
 	{"GetPOItem",			LuaGetPOItem},
 	{"TrembleItem",			LuaOpenTrembleItem},
 	//
+	//UpgradeAttrib - Equipment Attribute Upgrade System
+	{"OpenUpgradeAttribUI",		LuaOpenUpgradeAttribUI},
+	{"GetItemMagicAttribInfo",	LuaGetItemMagicAttribInfo},
+	{"UpgradeItemMagicAttrib",	LuaUpgradeItemMagicAttrib},
+	//
 	{"SetLockSongJin",		LuaSetLockSongJin},
 	{"GetLockSongJin",		LuaGetLockSongJin},
 #else 
