@@ -10175,6 +10175,134 @@ int LuaOpenUpgradeAttribUI(Lua_State * L)
 
 	return 0;
 }
+// ════════════════════════════════════════════════════════════
+// Get Item Magic Attribute Info (Type, Value, Min, Max)
+// Lua: nType, nValue, nMin, nMax = GetItemMagicAttribInfo(nItemIdx, nSlot)
+// ════════════════════════════════════════════════════════════
+int LuaGetItemMagicAttribInfo(Lua_State * L)
+{
+	if (Lua_GetTopIndex(L) < 2)
+	{
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		return 4;
+	}
+
+	int nPlayerIndex = GetPlayerIndex(L);
+	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_PLAYER)
+	{
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		return 4;
+	}
+
+	int nItemIdx = (int)Lua_ValueToNumber(L, 1);
+	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
+	{
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		return 4;
+	}
+
+	int nSlot = (int)Lua_ValueToNumber(L, 2);
+	if (nSlot < 0 || nSlot >= 6)
+	{
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		return 4;
+	}
+
+	// Return: nAttribType, nValue[0], nMin, nMax
+	Lua_PushNumber(L, Item[nItemIdx].m_aryMagicAttrib[nSlot].nAttribType);
+	Lua_PushNumber(L, Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0]);
+	Lua_PushNumber(L, Item[nItemIdx].m_aryMagicAttrib[nSlot].nMin);
+	Lua_PushNumber(L, Item[nItemIdx].m_aryMagicAttrib[nSlot].nMax);
+
+	return 4;
+}
+
+// ════════════════════════════════════════════════════════════
+// Upgrade Item Magic Attribute
+// Lua: bSuccess = UpgradeItemMagicAttrib(nItemIdx, nSlot, nIncreasePercent)
+// ════════════════════════════════════════════════════════════
+int LuaUpgradeItemMagicAttrib(Lua_State * L)
+{
+	if (Lua_GetTopIndex(L) < 3)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nPlayerIndex = GetPlayerIndex(L);
+	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_PLAYER)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nItemIdx = (int)Lua_ValueToNumber(L, 1);
+	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nSlot = (int)Lua_ValueToNumber(L, 2);
+	if (nSlot < 0 || nSlot >= 6)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nIncreasePercent = (int)Lua_ValueToNumber(L, 3);
+
+	// Check if attribute exists
+	if (Item[nItemIdx].m_aryMagicAttrib[nSlot].nAttribType <= 0)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// Get current value
+	int nOldValue = Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0];
+	int nMaxValue = Item[nItemIdx].m_aryMagicAttrib[nSlot].nMax;
+
+	// Check if already at max
+	if (nMaxValue > 0 && nOldValue >= nMaxValue)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// Calculate increase
+	int nIncrease = (nOldValue * nIncreasePercent) / 100;
+	if (nIncrease < 1)
+		nIncrease = 1;
+
+	// Apply increase
+	int nNewValue = nOldValue + nIncrease;
+
+	// Cap at max
+	if (nMaxValue > 0 && nNewValue > nMaxValue)
+		nNewValue = nMaxValue;
+
+	// Set new value
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0] = nNewValue;
+
+	// Sync to client if item is equipped or in inventory
+	Player[nPlayerIndex].m_ItemList.ClientShowMsg(nItemIdx);
+
+	Lua_PushNumber(L, 1);  // Success
+	return 1;
+}
 // --
 // LockSongJin by kinnox
 // --

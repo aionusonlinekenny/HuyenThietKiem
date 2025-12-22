@@ -78,64 +78,63 @@ function ExeUpgradeAttrib()
         return
     end
 
-    -- Get selected attribute index from TaskTemp (set by client UI)
-    local nAttribSlot = GetTaskTemp(200)
-    if nAttribSlot < 0 or nAttribSlot >= 6 then
-        Talk(1, "", "<color=red>Chưa chọn thuộc tính cần nâng cấp!<color>")
+    -- TODO: Add attribute selection UI on client
+    -- For now, upgrade the FIRST attribute with value > 0
+    local nAttribSlot = -1
+    for i = 0, 5 do
+        local nAttribType, nValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
+        if nAttribType and nAttribType > 0 then
+            nAttribSlot = i
+            break
+        end
+    end
+
+    if nAttribSlot < 0 then
+        Talk(1, "", "<color=red>Không tìm thấy thuộc tính để nâng cấp!<color>")
         return
     end
 
-    -- Verify the selected attribute exists
+    -- Get attribute info
     local nAttribType, nOldValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
-    if not nAttribType or nAttribType <= 0 then
-        Talk(1, "", "<color=red>Thuộc tính đã chọn không tồn tại!<color>")
-        return
-    end
 
     -- Check if attribute is already at max
     if nMax > 0 and nOldValue >= nMax then
-        Talk(1, "", "<color=yellow>Thuộc tính này đã đạt giá trị tối đa!<color>")
+        Talk(1, "", "<color=yellow>Thuộc tính đầu tiên đã đạt giá trị MAX!<color>\nHãy nâng cấp thuộc tính khác.")
         return
     end
 
-    -- TODO: Add cost checking here (cash, items, etc.)
-    -- For now, just consume the material
+    -- Calculate upgrade: 10-20% increase (random)
+    local nIncreasePercent = 10 + random(0, 11)  -- 10-20%
 
-    -- Consume material
-    if DelItemByIndex(nMaterialIdx) ~= 0 then
-        -- Material consumed successfully
+    -- Consume material FIRST
+    if DelItemByIndex(nMaterialIdx) == 0 then
+        Talk(1, "", "<color=red>Lỗi: Không thể tiêu hao vật liệu!<color>")
+        return
+    end
 
-        -- Calculate upgrade: 10-20% increase
-        local nIncreasePercent = 10 + random(0, 10)
-        local nIncrease = floor(nOldValue * nIncreasePercent / 100)
-        if nIncrease < 1 then
-            nIncrease = 1  -- Minimum +1
-        end
+    -- Material consumed successfully, now upgrade
+    local bSuccess = UpgradeItemMagicAttrib(nEquipIdx, nAttribSlot, nIncreasePercent)
 
-        local nNewValue = nOldValue + nIncrease
+    if bSuccess == 1 then
+        -- Get new value
+        local _, nNewValue, _, _ = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
 
-        -- Cap at max
-        if nMax > 0 and nNewValue > nMax then
-            nNewValue = nMax
-        end
-
-        -- Apply upgrade (this will be handled by C++ function)
-        -- For now, just notify success
+        -- Success message
         local szMsg = string.format(
-            "<color=green>Nâng cấp thành công!<color> Thuộc tính #%d: <color=yellow>%d → %d<color> (+%d%%)",
+            "<color=green>✓ Nâng cấp thành công!<color>\n" ..
+            "Thuộc tính #%d: <color=yellow>%d → %d<color> (+%d%%)",
             nAttribSlot + 1,
             nOldValue,
             nNewValue,
             nIncreasePercent
         )
-
         Msg2Player(szMsg)
 
-        -- TODO: Actually modify the item's magic attribute value
-        -- This requires C++ implementation
-
+        -- Log for debugging
+        WriteLog(string.format("[UPGRADE] Player=%s, Item=%d, Slot=%d, Old=%d, New=%d, Percent=%d",
+            GetName(), nEquipIdx, nAttribSlot, nOldValue, nNewValue, nIncreasePercent))
     else
-        Talk(1, "", "<color=red>Lỗi: Không thể tiêu hao vật liệu!<color>")
+        Talk(1, "", "<color=red>Nâng cấp thất bại! Vui lòng thử lại.<color>")
     end
 end
 
