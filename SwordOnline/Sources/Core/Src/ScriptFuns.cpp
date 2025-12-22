@@ -10297,8 +10297,8 @@ int LuaUpgradeItemMagicAttrib(Lua_State * L)
 	// Set new value
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0] = nNewValue;
 
-	// Sync to client if item is equipped or in inventory
-	Player[nPlayerIndex].m_ItemList.ClientShowMsg(nItemIdx);
+	// Item will auto-sync to client when returned from build container
+	// No manual sync needed here
 
 	Lua_PushNumber(L, 1);  // Success
 	return 1;
