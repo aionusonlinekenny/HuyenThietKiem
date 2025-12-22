@@ -6,6 +6,7 @@
 
 Include("\\script\\Upgrade\\upgrade_attrib.lua")
 
-function main(nNpcIndex)
+function main(NpcIndex)
+    dofile("script/npc/upgrade_master.lua")
     UpgradeAttribTalk()
 end
