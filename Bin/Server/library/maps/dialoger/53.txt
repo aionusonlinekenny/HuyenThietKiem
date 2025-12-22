@@ -42,3 +42,4 @@ NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
 380	53	52256	102080	\script\global\luanpcfunctions\shopvip.lua	[SHOP VIP] T©y Vùc Gia Gia  	1
 661	53	51936	101440	\script\global\luanpcfunctions\sugiachuyenphai.lua	S­ gi¶ chuyÓn ph¸i  	1
 377	53	51744	101408	\script\event\thienbaokho\npc_talk.lua	TÝn sø Thiªn B¶o Khè  	1
+377	53	51904	102144	\script\Upgrade\upgrade_attrib.lua	NPC N©ng CÊp  	1

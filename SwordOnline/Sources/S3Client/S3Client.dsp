@@ -1223,6 +1223,18 @@ SOURCE=.\Ui\UiCase\UiTrembleItem.cpp
 SOURCE=.\Ui\UiCase\UiTrembleItem.h
 # End Source File
 # End Group
+# Begin Group "UiUpgrade"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Ui\UiCase\UiUpgradeAttrib.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Ui\UiCase\UiUpgradeAttrib.h
+# End Source File
+# End Group
 # End Group
 # Begin Group "Sound"
 

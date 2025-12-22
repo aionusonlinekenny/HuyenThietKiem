@@ -10156,6 +10156,170 @@ int LuaOpenTrembleItem(Lua_State * L)
 	
 	return 0;
 }
+// ------------------------------------------------------------
+// Open Upgrade Attribute UI
+// ------------------------------------------------------------
+int LuaOpenUpgradeAttribUI(Lua_State * L)
+{
+	g_DebugLog("[UPGRADE_ATTRIB] LuaOpenUpgradeAttribUI called");
+
+	int nPlayerIndex = GetPlayerIndex(L);
+	g_DebugLog("[UPGRADE_ATTRIB] PlayerIndex = %d", nPlayerIndex);
+
+	if (nPlayerIndex <= 0)
+	{
+		g_DebugLog("[UPGRADE_ATTRIB] Invalid player index, returning");
+		return 0;
+	}
+
+	g_DebugLog("[UPGRADE_ATTRIB] Creating SHOW_MSG_SYNC");
+	SHOW_MSG_SYNC sMsg;
+	sMsg.ProtocolType = s2c_msgshow;
+	sMsg.m_wMsgID = enumMSG_ID_UPGRADE_ATTRIB;
+	sMsg.m_lpBuf = 0;
+	sMsg.m_wLength = sizeof(SHOW_MSG_SYNC) - 1;
+
+	g_DebugLog("[UPGRADE_ATTRIB] MsgID=%d, Length=%d", sMsg.m_wMsgID, sMsg.m_wLength);
+
+	if (g_pServer && Player[nPlayerIndex].m_nNetConnectIdx != -1)
+	{
+		g_DebugLog("[UPGRADE_ATTRIB] Sending to client, ConnectIdx=%d", Player[nPlayerIndex].m_nNetConnectIdx);
+		g_pServer->PackDataToClient(Player[nPlayerIndex].m_nNetConnectIdx, &sMsg, sMsg.m_wLength + 1);
+		g_DebugLog("[UPGRADE_ATTRIB] Packet sent successfully");
+	}
+	else
+	{
+		g_DebugLog("[UPGRADE_ATTRIB] Server null or invalid connection idx");
+	}
+
+	return 0;
+}
+// ------------------------------------------------------------
+// Get Item Magic Attribute Info (Type, Value, Min, Max)
+// Lua: nType, nValue, nMin, nMax = GetItemMagicAttribInfo(nItemIdx, nSlot)
+// ------------------------------------------------------------
+int LuaGetItemMagicAttribInfo(Lua_State * L)
+{
+	if (Lua_GetTopIndex(L) < 2)
+	{
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		return 4;
+	}
+
+	int nPlayerIndex = GetPlayerIndex(L);
+	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_PLAYER)
+	{
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		return 4;
+	}
+
+	int nItemIdx = (int)Lua_ValueToNumber(L, 1);
+	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
+	{
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		return 4;
+	}
+
+	int nSlot = (int)Lua_ValueToNumber(L, 2);
+	if (nSlot < 0 || nSlot >= 6)
+	{
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		Lua_PushNumber(L, 0);
+		return 4;
+	}
+
+	// Return: nAttribType, nValue[0], nMin, nMax
+	Lua_PushNumber(L, Item[nItemIdx].m_aryMagicAttrib[nSlot].nAttribType);
+	Lua_PushNumber(L, Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0]);
+	Lua_PushNumber(L, Item[nItemIdx].m_aryMagicAttrib[nSlot].nMin);
+	Lua_PushNumber(L, Item[nItemIdx].m_aryMagicAttrib[nSlot].nMax);
+
+	return 4;
+}
+
+// ------------------------------------------------------------
+// Upgrade Item Magic Attribute
+// Lua: bSuccess = UpgradeItemMagicAttrib(nItemIdx, nSlot, nIncreasePercent)
+// ------------------------------------------------------------
+int LuaUpgradeItemMagicAttrib(Lua_State * L)
+{
+	if (Lua_GetTopIndex(L) < 3)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nPlayerIndex = GetPlayerIndex(L);
+	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_PLAYER)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nItemIdx = (int)Lua_ValueToNumber(L, 1);
+	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nSlot = (int)Lua_ValueToNumber(L, 2);
+	if (nSlot < 0 || nSlot >= 6)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nIncreasePercent = (int)Lua_ValueToNumber(L, 3);
+
+	// Check if attribute exists
+	if (Item[nItemIdx].m_aryMagicAttrib[nSlot].nAttribType <= 0)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// Get current value
+	int nOldValue = Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0];
+	int nMaxValue = Item[nItemIdx].m_aryMagicAttrib[nSlot].nMax;
+
+	// Check if already at max
+	if (nMaxValue > 0 && nOldValue >= nMaxValue)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// Calculate increase
+	int nIncrease = (nOldValue * nIncreasePercent) / 100;
+	if (nIncrease < 1)
+		nIncrease = 1;
+
+	// Apply increase
+	int nNewValue = nOldValue + nIncrease;
+
+	// Cap at max
+	if (nMaxValue > 0 && nNewValue > nMaxValue)
+		nNewValue = nMaxValue;
+
+	// Set new value
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0] = nNewValue;
+
+
+	Lua_PushNumber(L, 1);  // Success
+	return 1;
+}
 // --
 // LockSongJin by kinnox
 // --
@@ -10670,7 +10834,12 @@ TLua_Funcs GameScriptFuns[] =
 	{"SetPItemID",			LuaSetPItemID},
 	{"GetPOItem",			LuaGetPOItem},
 	{"TrembleItem",			LuaOpenTrembleItem},
+
 	//
+	//UpgradeAttrib - Equipment Attribute Upgrade System
+	{"OpenUpgradeAttribUI",		LuaOpenUpgradeAttribUI},
+	{"GetItemMagicAttribInfo",	LuaGetItemMagicAttribInfo},
+	{"UpgradeItemMagicAttrib",	LuaUpgradeItemMagicAttrib},
 	{"SetLockSongJin",		LuaSetLockSongJin},
 	{"GetLockSongJin",		LuaGetLockSongJin},
 #else 

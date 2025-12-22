@@ -21,20 +21,20 @@
   <Item>
     <Path>CoreClient.dll</Path>
     <Link>CoreClient.dll</Link>
-    <Hash>58BF13FB52B76EBE862DE0B56A722F29</Hash>
-    <Size>696408</Size>
+    <Hash>D67FB43C06D708EE7E4631D2EA83B1F7</Hash>
+    <Size>700504</Size>
   </Item>
   <Item>
     <Path>CoreClient.map</Path>
     <Link>CoreClient.map</Link>
-    <Hash>47D581FAFF163758A7550FDF6689806A</Hash>
-    <Size>327145</Size>
+    <Hash>0FC2C0FADBE313082B450793A5D551B2</Hash>
+    <Size>329048</Size>
   </Item>
   <Item>
     <Path>CoreClient.pdb</Path>
     <Link>CoreClient.pdb</Link>
-    <Hash>9B4B10A17E4186EEDA9BF7B55D01D07E</Hash>
-    <Size>1811456</Size>
+    <Hash>BFD41509C43552B17AB6D4E058B0321C</Hash>
+    <Size>1803264</Size>
   </Item>
   <Item>
     <Path>d3dx9d.dll</Path>
@@ -51,67 +51,67 @@
   <Item>
     <Path>engine.dll</Path>
     <Link>engine.dll</Link>
-    <Hash>7BDF3820E612A831ACCCCA5CC2A3C5CC</Hash>
+    <Hash>099C5602D95A5478036360B909961E5C</Hash>
     <Size>381030</Size>
   </Item>
   <Item>
     <Path>engine.map</Path>
     <Link>engine.map</Link>
-    <Hash>0F62A60DFAAA7DA209C6CECAA9F78E5A</Hash>
-    <Size>239450</Size>
+    <Hash>F21A6CB693B34D1B7CC3146CDFEA4821</Hash>
+    <Size>239692</Size>
   </Item>
   <Item>
     <Path>engine.pdb</Path>
     <Link>engine.pdb</Link>
-    <Hash>F515A478E80DD9432D945AC4016DD2C8</Hash>
+    <Hash>FFDDAB507B460848E6B29108E71028FB</Hash>
     <Size>1614848</Size>
   </Item>
   <Item>
     <Path>ExpandPackage.dll</Path>
     <Link>ExpandPackage.dll</Link>
-    <Hash>E64BAE558637E9812483C2EC2884525B</Hash>
+    <Hash>C7F501CA687684F54B02D8BB2BBAA9BB</Hash>
     <Size>204800</Size>
   </Item>
   <Item>
     <Path>FilterText.dll</Path>
     <Link>FilterText.dll</Link>
-    <Hash>B2E2FA5773D5979927EDF4E7CF6B1320</Hash>
+    <Hash>36FE631CDE8D048CE5DC90F0A0D2C025</Hash>
     <Size>32856</Size>
   </Item>
   <Item>
     <Path>FilterText.map</Path>
     <Link>FilterText.map</Link>
-    <Hash>5F329C02EE2C736A7091AD31432D3533</Hash>
+    <Hash>8CCE70F9CC59352A46E11D179A4C1702</Hash>
     <Size>18915</Size>
   </Item>
   <Item>
     <Path>FilterText.pdb</Path>
     <Link>FilterText.pdb</Link>
-    <Hash>411181A047344D925C0745B768F76F25</Hash>
+    <Hash>26F520EAB6CF247DB56F149E0461341C</Hash>
     <Size>99328</Size>
   </Item>
   <Item>
     <Path>Game.exe</Path>
     <Link>Game.exe</Link>
-    <Hash>6CE2BFD1ECFEBC40478BD76B33D4FFE0</Hash>
-    <Size>749648</Size>
+    <Hash>A9D1AB36034CC947CDFA323A043FE9D3</Hash>
+    <Size>753744</Size>
   </Item>
   <Item>
     <Path>Game.map</Path>
     <Link>Game.map</Link>
-    <Hash>F24BECCA5061089AF57550EA434CD40C</Hash>
-    <Size>580388</Size>
+    <Hash>76A009C59440D2BAB3918C1B68A9690C</Hash>
+    <Size>582887</Size>
   </Item>
   <Item>
     <Path>Game.pdb</Path>
     <Link>Game.pdb</Link>
-    <Hash>6AF005379EB05FC9C5A4E6E9175239CE</Hash>
+    <Hash>1A7FD8D9C568A67B37083DF6609ABEEF</Hash>
     <Size>2614272</Size>
   </Item>
   <Item>
     <Path>heaven.dll</Path>
     <Link>heaven.dll</Link>
-    <Hash>8E15263305904BA05A311880E8A534A5</Hash>
+    <Hash>F0C22107154AF89B8BAF464061C0C8DA</Hash>
     <Size>290908</Size>
   </Item>
   <Item>
@@ -123,7 +123,7 @@
   <Item>
     <Path>heaven.pdb</Path>
     <Link>heaven.pdb</Link>
-    <Hash>2E21FF049E6C53DC14026360C2A54F2D</Hash>
+    <Hash>772131438A4F262EE4ABA9C3B8635DAA</Hash>
     <Size>656384</Size>
   </Item>
   <Item>
@@ -147,7 +147,7 @@
   <Item>
     <Path>lualibdll.dll</Path>
     <Link>lualibdll.dll</Link>
-    <Hash>392B1DE562E42531F674F6D675822276</Hash>
+    <Hash>C448DB591F48AD78A25A3E9B5EE158A7</Hash>
     <Size>90112</Size>
   </Item>
   <Item>
@@ -213,55 +213,55 @@
   <Item>
     <Path>Rainbow.dll</Path>
     <Link>Rainbow.dll</Link>
-    <Hash>95BC3CEB80DF51EDCF0810771D403C26</Hash>
+    <Hash>94B93E92331E1921247FCD852CD4274D</Hash>
     <Size>159838</Size>
   </Item>
   <Item>
     <Path>Rainbow.map</Path>
     <Link>Rainbow.map</Link>
-    <Hash>925A53135422A9B55D244AC898EB46E4</Hash>
+    <Hash>75D1AE5EE77A3421F8FC1A9229133C73</Hash>
     <Size>172944</Size>
   </Item>
   <Item>
     <Path>Rainbow.pdb</Path>
     <Link>Rainbow.pdb</Link>
-    <Hash>4610DAC16846B61CC3BF51CA1BD58B3A</Hash>
+    <Hash>610BC08EA8DF58EB160A21F9845531F9</Hash>
     <Size>476160</Size>
   </Item>
   <Item>
     <Path>Represent2.dll</Path>
     <Link>Represent2.dll</Link>
-    <Hash>6F7A0737A4205B967814FEF61A5763FC</Hash>
+    <Hash>EDD265B69E864EB833B52A48272BC121</Hash>
     <Size>49250</Size>
   </Item>
   <Item>
     <Path>Represent2.map</Path>
     <Link>Represent2.map</Link>
-    <Hash>ACA2E466EAE2330290F9AB0F0EBCC454</Hash>
+    <Hash>0A97305A7BEF3D483F44DB57B49E928C</Hash>
     <Size>30182</Size>
   </Item>
   <Item>
     <Path>Represent2.pdb</Path>
     <Link>Represent2.pdb</Link>
-    <Hash>4729EB3F2479B1F807FCE5BDBAACD7E8</Hash>
+    <Hash>17FA59C7F3250CB135F86C0408B92D7F</Hash>
     <Size>164864</Size>
   </Item>
   <Item>
     <Path>Represent3.dll</Path>
     <Link>Represent3.dll</Link>
-    <Hash>AFD6BAC61449498DFCE4EB625EEC175A</Hash>
+    <Hash>40E866D5A68A7A215DA007A2468F9C24</Hash>
     <Size>843874</Size>
   </Item>
   <Item>
     <Path>Represent3.map</Path>
     <Link>Represent3.map</Link>
-    <Hash>44CECB932458DBA6FDBDDE787F8E39E4</Hash>
+    <Hash>BFA5A80D0AB877B59D6EAE2CF624F056</Hash>
     <Size>530058</Size>
   </Item>
   <Item>
     <Path>Represent3.pdb</Path>
     <Link>Represent3.pdb</Link>
-    <Hash>CD4C9F8AA59DD16B472E7926EA3642F6</Hash>
+    <Hash>9FF3AAE4CEFA90D21FBBA630C2D5CAEC</Hash>
     <Size>869376</Size>
   </Item>
   <Item>
@@ -279,13 +279,13 @@
   <Item>
     <Path>data\jxhangnga1.pak</Path>
     <Link>data/jxhangnga1.pak</Link>
-    <Hash>3A0216DD439A7CEEC7D7E79D0783282D</Hash>
-    <Size>11486500</Size>
+    <Hash>B677DE402B13A14A93FD2C732415DF6D</Hash>
+    <Size>11486601</Size>
   </Item>
   <Item>
     <Path>data\settings.pak</Path>
     <Link>data/settings.pak</Link>
-    <Hash>4242506B029148BBE2A820F2D3E1596D</Hash>
-    <Size>2042732</Size>
+    <Hash>712E411C54CC233AC384509184DC7744</Hash>
+    <Size>2042739</Size>
   </Item>
 </Autoupdate>

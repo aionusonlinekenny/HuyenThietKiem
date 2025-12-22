@@ -40,6 +40,7 @@
 #include "UiCase/UiTopTKNew.h"//Report Battle by kinnox;
 #include "UiCase/UiNotification.h"//Notification by kinnox;
 #include "UiCase/UiTrembleItem.h"//TrembleItem by kinnox;
+#include "UiCase/UiUpgradeAttrib.h"//UpgradeAttrib - Upgrade equipment attributes
 #include "../Login/Login.h"
 #include "UiCase/UiParadeItem.h"
 #include "UiCase/UiGetNumber.h"
@@ -552,6 +553,11 @@ void CoreDataChangedCallback(unsigned int uDataId, unsigned int uParam, int nPar
 	case GDCNI_OPEN_TREMBLE://TrembleItem by Kinnox;
 		{
 			KUiTrembleItem::OpenWindow();
+		}
+		break;	
+	case GDCNI_OPEN_UPGRADE_ATTRIB://UpgradeAttrib - Upgrade equipment attributes
+		{
+			KUiUpgradeAttrib::OpenWindow();
 		}
 		break;	
 	case GDCNI_EXIT_GAME:

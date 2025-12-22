@@ -167,7 +167,7 @@ void KPlayerAI::Release()
 	ClearArrayTimeObjectLag();
 	m_sListEquipment.m_Link.Init(MAX_EQUIPMENT_ITEM);
 
-	// ===== PACKET BURST FIX: Initialize new fields =====												   
+	// ===== PACKET BURST FIX: Initialize new fields =====
 	// Lag detection
 	m_nLastTargetHP = 0;
 	m_nLastTargetDistance = 0;
@@ -463,7 +463,9 @@ void KPlayerAI::Active()
 					BOOL isTooFar = (distance > m_nRadiusFollow * 3);  // 3x radius = lost
 
 					// AUTO RIDE HORSE FEATURE: Auto mount when target is too far
-					if (Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing != do_attack &&
+					// FIX: Only auto-mount if checkbox is enabled (m_bFollowAutoMount)
+					if (m_bFollowAutoMount &&
+					    Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing != do_attack &&
 						Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing != do_magic &&
 						Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_Doing != do_skill)
 					{
@@ -808,15 +810,24 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 				
 				if (IsNotValidNpc(m_ArrayNpcNeast[i]))
 					continue;
-// FIX: Skip NPCs that would take us outside training area radius
-				if (m_bStayInTrainingArea && m_nTrainingRadius > 0 && m_AutoMove)
+
+				// FIX: Skip NPCs that would take us outside training area radius
+				// CRITICAL FIX: When following leader and leader is lost, ALWAYS filter NPCs
+				// to prevent follower from chasing NPCs far from waypoints
+				BOOL leaderLost = (m_bFollowPeople && m_FollowPeopleIdx == 0);
+				BOOL shouldFilterNpcs = (m_bStayInTrainingArea && m_nTrainingRadius > 0 && m_AutoMove) ||
+				                         (leaderLost && m_MoveCount > 0 && m_AutoMove);
+
+				if (shouldFilterNpcs)
+					
 				{
 					int npcX, npcY;
 					Npc[m_ArrayNpcNeast[i]].GetMpsPos(&npcX, &npcY);
 
 					// Check if NPC is within radius of any waypoint
 					BOOL npcInRange = FALSE;
-					int radiusMPS = m_nTrainingRadius * 32;
+					// Use configured radius, or default 10 cells if leader lost and no radius set
+					int radiusMPS = (m_nTrainingRadius > 0) ? (m_nTrainingRadius * 32) : (10 * 32);
 					for (int wp = 0; wp < m_MoveCount; wp++)
 					{
 						if (!m_MoveMps[wp][0] ||
@@ -884,7 +895,7 @@ int KPlayerAI::FindNearNpc2Array(int nRelation)
 		else if (m_AutoMove && !m_bFollowPeople)
 		{
 			// Only auto-move when NOT in follow mode
-			// When following but lost leader, stay at current position and attack nearby monsters
+
 			PlayerMoveMps();
 		}
 		else if (m_bFollowPeople && m_FollowPeopleIdx == 0 && m_AutoMove)
@@ -3810,32 +3821,78 @@ void KPlayerAI::ReturnToTrainingArea()
 {
 	int nearestWpIdx = -1;
 
-	// Find nearest waypoint
-	if (!IsWithinTrainingArea(&nearestWpIdx) ||
-		(m_bFollowPeople && m_FollowPeopleIdx == 0 && m_AutoMove))  // Leader lost, have waypoints
+	// FIX: When leader is lost, ALWAYS find nearest waypoint regardless of training area setting
+	// Previous bug: If training area checkbox disabled, nearestWpIdx never gets set → no movement!
+	BOOL leaderLost = (m_bFollowPeople && m_FollowPeopleIdx == 0 && m_AutoMove);
+
+	if (leaderLost)
 	{
-		if (nearestWpIdx >= 0 && nearestWpIdx < m_MoveCount)
+		// Leader lost - find nearest waypoint to return to
+		// Need to manually find nearest waypoint since IsWithinTrainingArea()
+		// returns early if training area checkbox is disabled
+		if (m_MoveCount > 0)
 		{
-			// Cancel current combat
-			m_Actacker = 0;
-			m_bActacker = FALSE;
-			m_nLifeLag = 0;
-			m_nTimeRunLag = 0;
-			m_Count_Acttack_Lag = 0;
-			Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;
+			int nPlayerX, nPlayerY;
+				  
+					   
+				  
+					 
+						   
+			Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].GetMpsPos(&nPlayerX, &nPlayerY);
 
-			// Move to nearest waypoint
-			Player[CLIENT_PLAYER_INDEX].m_cAutoMove.AutoMoveTo(
-				m_MoveMps[nearestWpIdx][1],
-				m_MoveMps[nearestWpIdx][2]);
+			int nearestDistSq = 999999999;
+			for (int i = 0; i < m_MoveCount; i++)
+			{
+				// Skip invalid waypoints or wrong map
+				if (!m_MoveMps[i][0] ||
+					m_MoveMps[i][0] != SubWorld[Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_SubWorldIndex].m_SubWorldID)
+					continue;
+								
 
-			PaintActionAuto(2, 0,
-				m_MoveMps[nearestWpIdx][1] / 256,
-				m_MoveMps[nearestWpIdx][2] / 512);
+						
+				int wpX = m_MoveMps[i][1];
+				int wpY = m_MoveMps[i][2];
+				int distSq = (nPlayerX - wpX) * (nPlayerX - wpX) + (nPlayerY - wpY) * (nPlayerY - wpY);
 
-			// Update route step to continue from this waypoint
-			m_MoveStep = nearestWpIdx;
+				if (distSq < nearestDistSq)
+				{
+					nearestDistSq = distSq;
+					nearestWpIdx = i;
+				}
+			}
 		}
+	}
+	else
+	{
+		// Training area enforcement - use existing IsWithinTrainingArea() logic
+		if (!IsWithinTrainingArea(&nearestWpIdx))
+		{
+			// Out of training area - nearestWpIdx already set by IsWithinTrainingArea()
+		}
+	}
+
+	// Move to nearest waypoint if found
+	if (nearestWpIdx >= 0 && nearestWpIdx < m_MoveCount)
+	{
+		// Cancel current combat
+		m_Actacker = 0;
+		m_bActacker = FALSE;
+		m_nLifeLag = 0;
+		m_nTimeRunLag = 0;
+		m_Count_Acttack_Lag = 0;
+		Npc[Player[CLIENT_PLAYER_INDEX].m_nIndex].m_nPeopleIdx = 0;
+
+		// Move to nearest waypoint
+		Player[CLIENT_PLAYER_INDEX].m_cAutoMove.AutoMoveTo(
+			m_MoveMps[nearestWpIdx][1],
+			m_MoveMps[nearestWpIdx][2]);
+
+		PaintActionAuto(2, 0,
+			m_MoveMps[nearestWpIdx][1] / 256,
+			m_MoveMps[nearestWpIdx][2] / 512);
+
+		// Update route step to continue from this waypoint
+		m_MoveStep = nearestWpIdx;
 	}
 }
 
@@ -3851,18 +3908,23 @@ BOOL KPlayerAI::CanSendPacket(int packetType)
 	DWORD now = GetTickCount();
 
 	// Per-type rate limits (milliseconds between packets)
+	// FIX: Further reduced MOVE throttle from 50ms to 30ms for better position sync
+	// Testing showed 50ms (20/sec) improved but didn't fully fix desync
+	// New: 30ms = 33 updates/sec should provide near-realtime sync
 	const DWORD typeIntervals[4] = {
-		100,  // MOVE: max 10/sec
+		30,   // MOVE: max 33/sec (was 50ms/20sec - still had minor desync)
 		200,  // ATTACK: max 5/sec
 		300,  // SKILL: max 3/sec
 		500   // ITEM: max 2/sec
 	};
-
 	// Check per-type throttle
 	if (now - m_PacketLastSent[packetType] < typeIntervals[packetType])
 		return FALSE;  // Too soon, throttle
 
-	// Check total burst limit (max 30/sec across all types)
+	// Check total burst limit (max 50/sec across all types)
+	// FIX: Increased from 40 to 50 to accommodate faster MOVE rate (33/sec)
+	// 33 MOVE + 5 ATTACK + 3 SKILL + 2 ITEM = 43 theoretical max
+	// 50 limit provides headroom for burst scenarios
 	DWORD windowStart = now / 1000 * 1000;  // Start of current second
 	if (m_PacketWindowStart != windowStart)
 	{
@@ -3870,8 +3932,7 @@ BOOL KPlayerAI::CanSendPacket(int packetType)
 		m_PacketWindowStart = windowStart;
 		m_PacketTotalThisSecond = 0;
 	}
-
-	if (m_PacketTotalThisSecond >= 30)
+	if (m_PacketTotalThisSecond >= 50)
 		return FALSE;  // Burst limit reached
 
 	// Packet allowed - update counters

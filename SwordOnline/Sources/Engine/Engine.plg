@@ -6,56 +6,6 @@
 --------------------Configuration: Bishop - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP612D.tmp" with contents
-[
-/nologo /MT /W3 /GX /O2 /I "..\Common" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\..\lib" /I "..\..\..\Headers" /I "..\..\Sword3PaySys\S3AccServer" /I "..\..\s3client\login" /I "..\..\RoleDBManager" /I "..\..\Core\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Bishop.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\GameServer.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP612D.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP612E.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Bishop.pdb" /map:"Release/Bishop.map" /debug /machine:I386 /out:"Release/Bishop.exe" 
-.\Release\Application.obj
-.\Release\Bishop.obj
-.\Release\Event.obj
-.\Release\GamePlayer.obj
-.\Release\GameServer.obj
-.\Release\Intercessor.obj
-.\Release\Network.obj
-.\Release\PlayerCreator.obj
-.\Release\SmartClient.obj
-.\Release\StdAfx.obj
-.\Release\Bishop.res
-..\..\..\Lib\release\common.lib
-..\..\..\Lib\release\engine.lib
-]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP612E.tmp"
-<h3>Output Window</h3>
-Compiling...
-GameServer.cpp
-Linking...
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP64F8.bat" with contents
-[
-@echo off
-md ..\..\..\..\bin\Server
-copy release\Bishop.exe ..\..\..\..\bin\Server\Bishop.exe
-copy release\Bishop.map ..\..\..\..\bin\Server\Bishop.map
-copy release\Bishop.pdb ..\..\..\..\bin\Server\Bishop.pdb
-md ..\..\..\..\bin\Server\release\
-copy release\Bishop.exe ..\..\..\..\bin\Server\release\Bishop.exe
-copy release\Bishop.map ..\..\..\..\bin\Server\release\Bishop.map
-copy release\Bishop.pdb ..\..\..\..\bin\Server\release\Bishop.pdb
-]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP64F8.bat"
-
-A subdirectory or file ..\..\..\..\bin\Server already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\Server\release\ already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
 
 
 
@@ -119,55 +69,6 @@ FilterText.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: GameServer - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP670C.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/GameServer.pdb" /map:"Release/GameServer.map" /debug /machine:I386 /out:"Release/GameServer.exe" 
-.\Release\GameServer.obj
-.\Release\KSOServer.obj
-.\Release\KTransferUnit.obj
-.\Release\StdAfx.obj
-.\Release\Script1.res
-..\..\..\Lib\release\engine.lib
-..\..\..\Lib\release\CoreServer.lib
-..\..\..\Lib\release\common.lib
-]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP670C.tmp"
-<h3>Output Window</h3>
-Linking...
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP6930.bat" with contents
-[
-@echo off
-md ..\..\..\..\bin\Server
-copy Release\GameServer.exe ..\..\..\..\bin\Server\GameServer.exe
-copy Release\GameServer.pdb ..\..\..\..\bin\Server\GameServer.pdb
-copy Release\GameServer.map ..\..\..\..\bin\Server\GameServer.map
-copy Release\GameServer.exe ..\..\..\..\bin\Server\GS1.exe
-copy Release\GameServer.exe ..\..\..\..\bin\Server\GS2.exe
-copy Release\GameServer.exe ..\..\..\..\bin\Server\GS3.exe
-copy Release\GameServer.exe ..\..\..\..\bin\Server\GS4.exe
-md ..\..\..\..\bin\Server\release\
-copy Release\GameServer.exe ..\..\..\..\bin\Server\release\GameServer.exe
-copy Release\GameServer.exe ..\..\..\..\bin\Server\release\GS1.exe
-copy Release\GameServer.exe ..\..\..\..\bin\Server\release\GS2.exe
-copy Release\GameServer.exe ..\..\..\..\bin\Server\release\GS3.exe
-copy Release\GameServer.exe ..\..\..\..\bin\Server\release\GS4.exe
-]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP6930.bat"
-
-A subdirectory or file ..\..\..\..\bin\Server already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\Server\release\ already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
 
 
 
@@ -231,7 +132,13 @@ Represent3.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: S3Client - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP6AD7.tmp" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP7B6C.tmp" with contents
+[
+/nologo /MD /W3 /GX /Zi /O2 /I "../Engine/src" /I "../Core/src" /I "../Engine/include" /I "../../Headers" /D "WIN32" /D "NDEBUG_WINDOWS" /D "_MBCS" /D "SWORDONLINE_USE_MD5_PASSWORD" /Fp"Release/S3Client.pch" /Yu"KWin32.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiUpgradeAttrib.cpp"
+]
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP7B6C.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP7B6D.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib Winmm.lib shlwapi.lib lualibdll.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Game.pdb" /map:"Release/Game.map" /debug /machine:I386 /out:"Release/Game.exe" /libpath:"../../lib/" 
 .\Release\AutoLocateWnd.obj
@@ -370,11 +277,14 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Release\Script1.res
 ..\..\Lib\release\engine.lib
 ..\..\Lib\release\CoreClient.lib
+.\Release\UiUpgradeAttrib.obj
 ]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP6AD7.tmp"
+Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP7B6D.tmp"
 <h3>Output Window</h3>
+Compiling...
+UiUpgradeAttrib.cpp
 Linking...
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP6BC2.bat" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP7D43.bat" with contents
 [
 @echo off
 md ..\..\..\bin\client
@@ -386,11 +296,10 @@ copy Release\Game.exe ..\..\..\bin\Client\release\Game.exe
 copy Release\Game.pdb ..\..\..\bin\Client\release\Game.pdb
 copy Release\Game.map ..\..\..\bin\Client\release\Game.map
 ]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP6BC2.bat"
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP7D43.bat"
 
 A subdirectory or file ..\..\..\bin\client already exists.
-The process cannot access the file because it is being used by another process.
-        0 file(s) copied.
+        1 file(s) copied.
         1 file(s) copied.
         1 file(s) copied.
 A subdirectory or file ..\..\..\bin\client\release\ already exists.

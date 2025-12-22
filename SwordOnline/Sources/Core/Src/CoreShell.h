@@ -266,6 +266,7 @@ enum GAMEDATA_CHANGED_NOTIFY_INDEX
 	GDCNI_OPEN_NOTIFICATION,//Notification by kinnox;
 
 	GDCNI_OPEN_TREMBLE,//TrembleItem by kinnox;
+	GDCNI_OPEN_UPGRADE_ATTRIB,//UpgradeAttrib - Upgrade equipment attributes	
 
 	GDCNI_EXIT_GAME,
 	
