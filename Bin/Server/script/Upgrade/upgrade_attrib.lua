@@ -142,27 +142,23 @@ end
 -- Show Upgrade Guide
 -- ────────────────────────────────────────────────────────────
 function ShowGuide()
-    local szGuide = [[
-<color=yellow>=== HUONG DAN NANG CAP THUOC TINH ===<color>
-
-<color=cyan>Cach thuc hien:<color>
-1. Dat <color=blue>trang bi xanh<color> vao o tren
-2. Dat <color=orange>Da Nang Cap<color> vao o duoi
-3. Chon thuoc tinh muon nang cap tu danh sach
-4. Nhan <color=green>Nang Cap<color>
-
-<color=cyan>Chi tiet:<color>
-- Chi nang cap duoc <color=blue>trang bi xanh<color>
-- Moi lan nang tang <color=yellow>10-20%<color> gia tri
-- Khong the vuot qua gia tri <color=red>MAX<color>
-- Ti le thanh cong: <color=green>100%<color>
-- Mat <color=orange>1 Da Nang Cap<color> moi lan
-
-<color=cyan>Luu y:<color>
-- Thuoc tinh da MAX khong the nang them
-- Vat lieu bi mat khi nang cap
-- Khong the hoan tac sau khi nang
-]]
+    local szGuide =
+        "<color=yellow>=== HUONG DAN NANG CAP THUOC TINH ===<color>\n\n" ..
+        "<color=cyan>Cach thuc hien:<color>\n" ..
+        "1. Dat <color=blue>trang bi xanh<color> vao o tren\n" ..
+        "2. Dat <color=orange>Da Nang Cap<color> vao o duoi\n" ..
+        "3. Chon thuoc tinh muon nang cap tu danh sach\n" ..
+        "4. Nhan <color=green>Nang Cap<color>\n\n" ..
+        "<color=cyan>Chi tiet:<color>\n" ..
+        "- Chi nang cap duoc <color=blue>trang bi xanh<color>\n" ..
+        "- Moi lan nang tang <color=yellow>10-20%<color> gia tri\n" ..
+        "- Khong the vuot qua gia tri <color=red>MAX<color>\n" ..
+        "- Ti le thanh cong: <color=green>100%<color>\n" ..
+        "- Mat <color=orange>1 Da Nang Cap<color> moi lan\n\n" ..
+        "<color=cyan>Luu y:<color>\n" ..
+        "- Thuoc tinh da MAX khong the nang them\n" ..
+        "- Vat lieu bi mat khi nang cap\n" ..
+        "- Khong the hoan tac sau khi nang"
 
     Talk(1, "", szGuide)
 end

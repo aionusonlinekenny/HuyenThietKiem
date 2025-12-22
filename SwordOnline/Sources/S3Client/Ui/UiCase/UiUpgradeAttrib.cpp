@@ -178,7 +178,7 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 			if (ValidateUpgradeReady())
 			{
 				if (m_EffectTime) break;
-				UIMessageBox("Bạn có chắc muốn nâng cấp thuộc tính này?", this, "Xác nhận", "Hủy bỏ", ISP_DO_EVENT);
+				UIMessageBox("Ban co chac muon nang cap thuoc tinh nay?", this, "Xac nhan", "Huy bo", ISP_DO_EVENT);
 			}
 		}
 		else if (uParam == (unsigned int)&m_BtnClose)
@@ -193,7 +193,7 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 		{
 			if (ValidateUpgradeReady())
 			{
-				UIMessageBox("Bạn có chắc muốn nâng cấp thuộc tính này?", this, "Xác nhận", "Hủy bỏ", ISP_DO_EVENT);
+				UIMessageBox("Ban co chac muon nang cap thuoc tinh nay?", this, "Xac nhan", "Huy bo", ISP_DO_EVENT);
 			}
 			nRet = 1;
 		}

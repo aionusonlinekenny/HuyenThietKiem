@@ -10161,17 +10161,36 @@ int LuaOpenTrembleItem(Lua_State * L)
 // ════════════════════════════════════════════════════════════
 int LuaOpenUpgradeAttribUI(Lua_State * L)
 {
-	int nPlayerIndex = GetPlayerIndex(L);
-	if (nPlayerIndex <= 0) return 0;
+	g_DebugLog("[UPGRADE_ATTRIB] LuaOpenUpgradeAttribUI called");
 
+	int nPlayerIndex = GetPlayerIndex(L);
+	g_DebugLog("[UPGRADE_ATTRIB] PlayerIndex = %d", nPlayerIndex);
+
+	if (nPlayerIndex <= 0)
+	{
+		g_DebugLog("[UPGRADE_ATTRIB] Invalid player index, returning");
+		return 0;
+	}
+
+	g_DebugLog("[UPGRADE_ATTRIB] Creating SHOW_MSG_SYNC");
 	SHOW_MSG_SYNC sMsg;
 	sMsg.ProtocolType = s2c_msgshow;
 	sMsg.m_wMsgID = enumMSG_ID_UPGRADE_ATTRIB;
 	sMsg.m_lpBuf = 0;
 	sMsg.m_wLength = sizeof(SHOW_MSG_SYNC) - 1;
 
+	g_DebugLog("[UPGRADE_ATTRIB] MsgID=%d, Length=%d", sMsg.m_wMsgID, sMsg.m_wLength);
+
 	if (g_pServer && Player[nPlayerIndex].m_nNetConnectIdx != -1)
+	{
+		g_DebugLog("[UPGRADE_ATTRIB] Sending to client, ConnectIdx=%d", Player[nPlayerIndex].m_nNetConnectIdx);
 		g_pServer->PackDataToClient(Player[nPlayerIndex].m_nNetConnectIdx, &sMsg, sMsg.m_wLength + 1);
+		g_DebugLog("[UPGRADE_ATTRIB] Packet sent successfully");
+	}
+	else
+	{
+		g_DebugLog("[UPGRADE_ATTRIB] Server null or invalid connection idx");
+	}
 
 	return 0;
 }
