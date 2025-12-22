@@ -172,9 +172,9 @@ void KUiUpgradeAttrib::LoadScheme(const char* pScheme)
 		m_pSelf->m_EffectTime = 0;
 
 		m_pSelf->m_BtnUpgrade.Init(&Ini, "UpgradeBtn");
-		m_pSelf->m_BtnUpgrade.SetText("Nang cap");  // Set button label
+		m_pSelf->m_BtnUpgrade.SetLabel("Nang cap");  // Set button label
 		m_pSelf->m_BtnClose.Init(&Ini, "CloseBtn");
-		m_pSelf->m_BtnClose.SetText("Dong");  // Set button label
+		m_pSelf->m_BtnClose.SetLabel("Dong");  // Set button label
 		m_pSelf->m_TextPercent.Init(&Ini, "TextPercent");
 		m_pSelf->m_TextPercent.SetText("San sang nang cap");  // Set initial text
 
