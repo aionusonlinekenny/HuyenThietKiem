@@ -41,45 +41,34 @@ end
 -- Execute Upgrade (called when player clicks "Upgrade" button)
 -- ────────────────────────────────────────────────────────────
 function ExeUpgradeAttrib()
-    WriteLog("[UPGRADE_ATTRIB] ExeUpgradeAttrib() called")
-
     local nPos = 15  -- pos_builditem (same container as Tremble)
 
     -- Get items from UI slots
     local nEquipIdx = GetPOItem(nPos, 0)    -- Equipment slot
     local nMaterialIdx = GetPOItem(nPos, 1) -- Material slot
 
-    WriteLog(string.format("[UPGRADE_ATTRIB] nEquipIdx=%d, nMaterialIdx=%d", nEquipIdx or -1, nMaterialIdx or -1))
-
     -- Validate equipment
     if nEquipIdx <= 0 then
-        WriteLog("[UPGRADE_ATTRIB] ERROR: No equipment in slot")
         Talk(1, "", "<color=red>Chua dat trang bi vao!<color>")
         return
     end
 
     -- Validate material exists
     if nMaterialIdx <= 0 then
-        WriteLog("[UPGRADE_ATTRIB] ERROR: No material in slot")
         Talk(1, "", "<color=red>Chua dat Da Nang Cap!<color>")
         return
     end
 
     -- Validate material type (must be correct upgrade material)
     local nMatGenre, nMatDetail = GetItemProp(nMaterialIdx)
-    WriteLog(string.format("[UPGRADE_ATTRIB] Material: genre=%d, detail=%d (expected: %d, %d)",
-        nMatGenre or -1, nMatDetail or -1, UPGRADE_MATERIAL_GENRE, UPGRADE_MATERIAL_DETAIL))
 
     if nMatGenre ~= UPGRADE_MATERIAL_GENRE or nMatDetail ~= UPGRADE_MATERIAL_DETAIL then
-        WriteLog("[UPGRADE_ATTRIB] ERROR: Wrong material type!")
         Talk(1, "", "<color=red>Vat lieu khong dung! Can su dung Da Nang Cap.<color>")
         return
     end
 
     -- Get equipment info
     local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
-    WriteLog(string.format("[UPGRADE_ATTRIB] Equipment: genre=%d, detail=%d, luck=%d",
-        nGenre or -1, nDetail or -1, nLuck or -1))
 
     -- Check if equipment is blue (genre 0 with luck < 1000000000)
     if nGenre ~= 0 then
@@ -133,27 +122,19 @@ function ExeUpgradeAttrib()
 
     -- Calculate upgrade percentage (random between min and max)
     local nIncreasePercent = UPGRADE_MIN_PERCENT + random(0, UPGRADE_MAX_PERCENT - UPGRADE_MIN_PERCENT + 1)
-    WriteLog(string.format("[UPGRADE_ATTRIB] Calculated increase: %d%%, Old value: %d", nIncreasePercent, nOldValue))
 
     -- Consume material FIRST
-    WriteLog("[UPGRADE_ATTRIB] Attempting to consume material...")
     if DelItemByIndex(nMaterialIdx) == 0 then
-        WriteLog("[UPGRADE_ATTRIB] ERROR: Failed to delete material item")
         Talk(1, "", "<color=red>Loi: Khong the tieu hao vat lieu!<color>")
         return
     end
-    WriteLog("[UPGRADE_ATTRIB] Material consumed successfully")
 
     -- Material consumed successfully, now upgrade
-    WriteLog(string.format("[UPGRADE_ATTRIB] Calling UpgradeItemMagicAttrib(item=%d, slot=%d, percent=%d)",
-        nEquipIdx, nAttribSlot, nIncreasePercent))
     local bSuccess = UpgradeItemMagicAttrib(nEquipIdx, nAttribSlot, nIncreasePercent)
-    WriteLog(string.format("[UPGRADE_ATTRIB] UpgradeItemMagicAttrib returned: %d", bSuccess or -1))
 
     if bSuccess == 1 then
         -- Get new value
         local _, nNewValue, _, _ = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
-        WriteLog(string.format("[UPGRADE_ATTRIB] SUCCESS: %d -> %d", nOldValue, nNewValue))
 
         -- Success message
         local szMsg = string.format(
@@ -165,12 +146,7 @@ function ExeUpgradeAttrib()
             nIncreasePercent
         )
         Msg2Player(szMsg)
-
-        -- Log for debugging
-        WriteLog(string.format("[UPGRADE_ATTRIB] COMPLETE: Player=%s, Item=%d, Slot=%d, %d->%d (+%d%%)",
-            GetName(), nEquipIdx, nAttribSlot, nOldValue, nNewValue, nIncreasePercent))
     else
-        WriteLog("[UPGRADE_ATTRIB] ERROR: Upgrade failed")
         Talk(1, "", "<color=red>Nang cap that bai! Vui long thu lai.<color>")
     end
 end
