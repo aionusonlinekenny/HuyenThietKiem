@@ -172,7 +172,16 @@ function ExeUpgradeAttrib()
     Msg2Player("UpgradeItemMagicAttrib returned: " .. tostring(bSuccess))
 
     if bSuccess == 1 then
-        -- Get new value
+        -- Refresh and re-add item to build container (like Tremble system)
+        Msg2Player("Refreshing item...")
+        AddItemAgain(nEquipIdx)
+        Msg2Player("Removing from build container...")
+        if DelMyItem(nEquipIdx) ~= 0 then
+            Msg2Player("Re-adding to build container...")
+            AddMyItem(nEquipIdx, nPos, 0, 0)
+        end
+
+        -- Get new value AFTER refresh
         local _, nNewValue, _, _ = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
         Msg2Player("SUCCESS: " .. nOldValue .. " -> " .. nNewValue)
 
