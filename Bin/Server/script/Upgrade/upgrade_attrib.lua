@@ -8,6 +8,19 @@
 Include("\\script\\lib\\TaskLib.lua")
 
 -- ────────────────────────────────────────────────────────────
+-- Configuration - Item IDs
+-- ────────────────────────────────────────────────────────────
+-- Da Nang Cap (Upgrade Stone) item definition
+-- Thay doi cac gia tri nay de su dung item khac
+UPGRADE_MATERIAL_GENRE = 6      -- item_task
+UPGRADE_MATERIAL_DETAIL = 19    -- ID cua Da Nang Cap (co the thay doi)
+
+-- Upgrade settings
+UPGRADE_MIN_PERCENT = 10        -- % tang toi thieu
+UPGRADE_MAX_PERCENT = 20        -- % tang toi da
+UPGRADE_SUCCESS_RATE = 100      -- Ti le thanh cong (%)
+
+-- ────────────────────────────────────────────────────────────
 -- NPC Talk Entry Point
 -- ────────────────────────────────────────────────────────────
 function UpgradeAttribTalk()
@@ -49,9 +62,9 @@ function ExeUpgradeAttrib()
         return
     end
 
-    -- Validate material type (must be Da Nang Cap - item_task with detail 19)
+    -- Validate material type (must be correct upgrade material)
     local nMatGenre, nMatDetail = GetItemProp(nMaterialIdx)
-    if nMatGenre ~= 6 or nMatDetail ~= 19 then  -- genre 6 = item_task, detail 19 = SP_DANANGCAP
+    if nMatGenre ~= UPGRADE_MATERIAL_GENRE or nMatDetail ~= UPGRADE_MATERIAL_DETAIL then
         Talk(1, "", "<color=red>Vat lieu khong dung! Can su dung Da Nang Cap.<color>")
         return
     end
@@ -110,8 +123,8 @@ function ExeUpgradeAttrib()
         return
     end
 
-    -- Calculate upgrade: 10-20% increase (random)
-    local nIncreasePercent = 10 + random(0, 11)  -- 10-20%
+    -- Calculate upgrade percentage (random between min and max)
+    local nIncreasePercent = UPGRADE_MIN_PERCENT + random(0, UPGRADE_MAX_PERCENT - UPGRADE_MIN_PERCENT + 1)
 
     -- Consume material FIRST
     if DelItemByIndex(nMaterialIdx) == 0 then
@@ -149,7 +162,7 @@ end
 -- Show Upgrade Guide
 -- ────────────────────────────────────────────────────────────
 function ShowGuide()
-    local szGuide =
+    local szGuide = string.format(
         "<color=yellow>=== HUONG DAN NANG CAP THUOC TINH ===<color>\n\n" ..
         "<color=cyan>Cach thuc hien:<color>\n" ..
         "1. Dat <color=blue>trang bi xanh<color> vao o tren\n" ..
@@ -158,14 +171,16 @@ function ShowGuide()
         "4. Nhan <color=green>Nang Cap<color>\n\n" ..
         "<color=cyan>Chi tiet:<color>\n" ..
         "- Chi nang cap duoc <color=blue>trang bi xanh<color>\n" ..
-        "- Moi lan nang tang <color=yellow>10-20%<color> gia tri\n" ..
+        "- Moi lan nang tang <color=yellow>%d-%d%%<color> gia tri\n" ..
         "- Khong the vuot qua gia tri <color=red>MAX<color>\n" ..
-        "- Ti le thanh cong: <color=green>100%<color>\n" ..
+        "- Ti le thanh cong: <color=green>%d%%<color>\n" ..
         "- Mat <color=orange>1 Da Nang Cap<color> moi lan\n\n" ..
         "<color=cyan>Luu y:<color>\n" ..
         "- Thuoc tinh da MAX khong the nang them\n" ..
         "- Vat lieu bi mat khi nang cap\n" ..
-        "- Khong the hoan tac sau khi nang"
+        "- Khong the hoan tac sau khi nang",
+        UPGRADE_MIN_PERCENT, UPGRADE_MAX_PERCENT, UPGRADE_SUCCESS_RATE
+    )
 
     Talk(1, "", szGuide)
 end

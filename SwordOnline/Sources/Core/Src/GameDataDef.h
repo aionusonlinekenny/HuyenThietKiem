@@ -135,10 +135,9 @@ enum SPECIALITEM_TASK
 {
 	SP_CHANKHUYET	= 0,//bua chu' chua lam
 	SP_CHANTUYET	= 1,//bua chu' chua lam
-	SP_LAMTHUYTINH 	= 16,
 	SP_TUTHUYTINH 	= 17,
 	SP_LUCTHUYTINH 	= 18,
-	SP_DANANGCAP	= 19,  // Da Nang Cap - Upgrade Stone for attribute enhancement
+	SP_LAMTHUYTINH 	= 16,
 
 };
 //
