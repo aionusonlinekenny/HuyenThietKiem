@@ -94,8 +94,8 @@ function ExeUpgradeAttrib()
         return
     end
 
-    -- Check if equipment has magic attributes (DEBUG VERSION with Msg2Player)
-    local bHasMagicAttrib = false
+    -- Check if equipment has magic attributes (USE 1/0 instead of true/false)
+    local bHasMagicAttrib = 0
     Msg2Player("=== DEBUG GetItemMagicAttribInfo ===")
 
     for i = 0, 5 do
@@ -108,8 +108,8 @@ function ExeUpgradeAttrib()
 
         -- Debug the condition check
         if nAttribType and nAttribType > 0 then
-            Msg2Player("  -> Slot" .. i .. " PASSED check, setting bHasMagicAttrib=true")
-            bHasMagicAttrib = true
+            Msg2Player("  -> Slot" .. i .. " PASSED check, setting bHasMagicAttrib=1")
+            bHasMagicAttrib = 1
         else
             Msg2Player("  -> Slot" .. i .. " FAILED check")
         end
@@ -117,7 +117,7 @@ function ExeUpgradeAttrib()
 
     Msg2Player("Final bHasMagicAttrib = " .. tostring(bHasMagicAttrib))
 
-    if not bHasMagicAttrib then
+    if bHasMagicAttrib == 0 then
         Talk(1, "", "<color=red>Trang bi nay khong co thuoc tinh magic!<color>")
         return
     end
