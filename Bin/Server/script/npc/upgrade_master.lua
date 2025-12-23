@@ -93,10 +93,16 @@ function ExeUpgradeAttrib()
                       " max=" .. tostring(nMax)
         Msg2Player(szMsg)
 
+        -- Debug the condition check
         if nAttribType and nAttribType > 0 then
+            Msg2Player("  -> Slot" .. i .. " PASSED check, setting bHasMagicAttrib=true")
             bHasMagicAttrib = true
+        else
+            Msg2Player("  -> Slot" .. i .. " FAILED check")
         end
     end
+
+    Msg2Player("Final bHasMagicAttrib = " .. tostring(bHasMagicAttrib))
 
     if not bHasMagicAttrib then
         Talk(1, "", "<color=red>Trang bi nay khong co thuoc tinh magic!<color>")
