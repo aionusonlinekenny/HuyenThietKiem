@@ -524,13 +524,21 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
  *********************************************************************/
 void KUiUpgradeAttrib::OnUpgrade()
 {
+	char szFunc[32];
+	sprintf(szFunc, "ExeUpgradeAttrib");
+
+	g_DebugLog("[CLIENT] OnUpgrade() - Calling script: %s, SelectedAttrib=%d", szFunc, m_nSelectedAttrib);
+
 	if (g_pCoreShell->GetLixian())
 	{
-		char szFunc[32];
-		sprintf(szFunc, "ExeUpgradeAttrib");
-		g_DebugLog("[CLIENT] OnUpgrade() - Calling script: %s, SelectedAttrib=%d", szFunc, m_nSelectedAttrib);
+		g_DebugLog("[CLIENT] GetLixian() = TRUE, calling OperationRequest");
 		g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
 		g_DebugLog("[CLIENT] OnUpgrade() - Script call sent");
+	}
+	else
+	{
+		g_DebugLog("[CLIENT] ERROR: GetLixian() = FALSE! Cannot execute script!");
+		g_DebugLog("[CLIENT] This usually means player is in offline/test mode");
 	}
 }
 
