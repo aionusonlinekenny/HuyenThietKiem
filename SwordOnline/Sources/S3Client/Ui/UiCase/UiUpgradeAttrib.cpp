@@ -204,10 +204,16 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 	case WND_N_BUTTON_CLICK:
 		if (uParam == (unsigned int)&m_BtnUpgrade)
 		{
+			g_DebugLog("[CLIENT] Upgrade button clicked");
 			if (ValidateUpgradeReady())
 			{
+				g_DebugLog("[CLIENT] Validation passed, showing confirmation dialog");
 				if (m_EffectTime) break;
 				UIMessageBox("Ban co chac muon nang cap thuoc tinh nay?", this, "Xac nhan", "Huy bo", ISP_DO_EVENT);
+			}
+			else
+			{
+				g_DebugLog("[CLIENT] Validation failed");
 			}
 		}
 		else if (uParam == (unsigned int)&m_BtnClose)
@@ -515,9 +521,11 @@ void KUiUpgradeAttrib::OnUpgrade()
 {
 	if (g_pCoreShell->GetLixian())
 	{
-		char szFunc[16];
+		char szFunc[32];
 		sprintf(szFunc, "ExeUpgradeAttrib");
+		g_DebugLog("[CLIENT] OnUpgrade() - Calling script: %s, SelectedAttrib=%d", szFunc, m_nSelectedAttrib);
 		g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
+		g_DebugLog("[CLIENT] OnUpgrade() - Script call sent");
 	}
 }
 
