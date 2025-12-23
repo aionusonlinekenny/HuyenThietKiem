@@ -238,21 +238,18 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 		{
 			g_DebugLog("[CLIENT] WND_N_ITEM_PICKDROP: uParam=%p, nParam=%p", uParam, nParam);
 			OnItemPickDrop((ITEM_PICKDROP_PLACE*)uParam, (ITEM_PICKDROP_PLACE*)nParam);
-			// CRITICAL FIX: Only refresh UI after DROP (placing item), not PICK (removing item)
-			// nParam is pDropPos - if non-zero, this is a DROP operation
-			if (nParam != 0)
-			{
-				g_DebugLog("[CLIENT] DROP operation detected, calling UpdateData()");
-				UpdateData();  // Refresh to show newly placed item
-				g_DebugLog("[CLIENT] UpdateData() returned");
-			}
-			else
-			{
-				g_DebugLog("[CLIENT] PICK operation detected, NOT calling UpdateData()");
-			}
-			// When PICK (nParam == 0), item is removed automatically by GOI_SWITCH_OBJECT
-			// No UpdateData() needed to avoid "double item" visual bug
+			// CRITICAL FIX: DO NOT call UpdateData() here!
+			// Server will send WND_N_ITEM_CHANGEBINARY when container actually changes
+			// Calling UpdateData() here is TOO EARLY - server hasn't processed request yet
+			g_DebugLog("[CLIENT] OnItemPickDrop completed, waiting for server notification");
 		}
+		break;
+
+	case WND_N_ITEM_CHANGEBINARY:
+		// Server notification that container has changed - NOW we can update UI!
+		g_DebugLog("[CLIENT] WND_N_ITEM_CHANGEBINARY received, calling UpdateData()");
+		UpdateData();
+		g_DebugLog("[CLIENT] UpdateData() completed after server notification");
 		break;
 
 	case WND_M_OTHER_WORK_RESULT:
