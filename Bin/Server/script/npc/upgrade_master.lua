@@ -83,17 +83,20 @@ function ExeUpgradeAttrib()
 
     -- Check if equipment has magic attributes (DEBUG VERSION)
     local bHasMagicAttrib = false
-    local szDebug = "DEBUG Attribs:\n"
     for i = 0, 5 do
         local nAttribType, nValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
-        szDebug = szDebug .. string.format("Slot %d: type=%s, val=%s, min=%s, max=%s\n",
-            i, tostring(nAttribType), tostring(nValue), tostring(nMin), tostring(nMax))
+        -- Debug output without string.format
+        local szMsg = "Slot " .. i .. ": type=" .. tostring(nAttribType) ..
+                      ", val=" .. tostring(nValue) ..
+                      ", min=" .. tostring(nMin) ..
+                      ", max=" .. tostring(nMax)
+        Msg2Player(szMsg)
+
         if nAttribType and nAttribType > 0 then
             bHasMagicAttrib = true
             break
         end
     end
-    Msg2Player(szDebug)
 
     if not bHasMagicAttrib then
         Talk(1, "", "<color=red>Trang bi nay khong co thuoc tinh magic!<color>")
@@ -140,15 +143,10 @@ function ExeUpgradeAttrib()
         -- Get new value
         local _, nNewValue, _, _ = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
 
-        -- Success message
-        local szMsg = string.format(
-            "<color=green>Nang cap thanh cong!<color>\n" ..
-            "Thuoc tinh #%d: <color=yellow>%d -> %d<color> (+%d%%)",
-            nAttribSlot + 1,
-            nOldValue,
-            nNewValue,
-            nIncreasePercent
-        )
+        -- Success message (without string.format)
+        local szMsg = "<color=green>Nang cap thanh cong!<color>\n" ..
+                      "Thuoc tinh #" .. (nAttribSlot + 1) ..
+                      ": <color=yellow>" .. nOldValue .. " -> " .. nNewValue .. "<color> (+" .. nIncreasePercent .. "%)"
         Msg2Player(szMsg)
     else
         Talk(1, "", "<color=red>Nang cap that bai! Vui long thu lai.<color>")
@@ -159,8 +157,7 @@ end
 -- Show Upgrade Guide
 -- ────────────────────────────────────────────────────────────
 function ShowGuide()
-    local szGuide = string.format(
-        "<color=yellow>=== HUONG DAN NANG CAP THUOC TINH ===<color>\n\n" ..
+    local szGuide = "<color=yellow>=== HUONG DAN NANG CAP THUOC TINH ===<color>\n\n" ..
         "<color=cyan>Cach thuc hien:<color>\n" ..
         "1. Dat <color=blue>trang bi xanh<color> vao o tren\n" ..
         "2. Dat <color=orange>Da Nang Cap<color> vao o duoi\n" ..
@@ -168,16 +165,14 @@ function ShowGuide()
         "4. Nhan <color=green>Nang Cap<color>\n\n" ..
         "<color=cyan>Chi tiet:<color>\n" ..
         "- Chi nang cap duoc <color=blue>trang bi xanh<color>\n" ..
-        "- Moi lan nang tang <color=yellow>%d-%d%%<color> gia tri\n" ..
+        "- Moi lan nang tang <color=yellow>" .. UPGRADE_MIN_PERCENT .. "-" .. UPGRADE_MAX_PERCENT .. "%%<color> gia tri\n" ..
         "- Khong the vuot qua gia tri <color=red>MAX<color>\n" ..
-        "- Ti le thanh cong: <color=green>%d%%<color>\n" ..
+        "- Ti le thanh cong: <color=green>" .. UPGRADE_SUCCESS_RATE .. "%%<color>\n" ..
         "- Mat <color=orange>1 Da Nang Cap<color> moi lan\n\n" ..
         "<color=cyan>Luu y:<color>\n" ..
         "- Thuoc tinh da MAX khong the nang them\n" ..
         "- Vat lieu bi mat khi nang cap\n" ..
-        "- Khong the hoan tac sau khi nang",
-        UPGRADE_MIN_PERCENT, UPGRADE_MAX_PERCENT, UPGRADE_SUCCESS_RATE
-    )
+        "- Khong the hoan tac sau khi nang"
 
     Talk(1, "", szGuide)
 end
