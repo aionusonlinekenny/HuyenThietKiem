@@ -235,7 +235,11 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 
 	case WND_N_ITEM_PICKDROP:
 		if (g_UiBase.IsOperationEnable(UIS_O_MOVE_ITEM))
+		{
 			OnItemPickDrop((ITEM_PICKDROP_PLACE*)uParam, (ITEM_PICKDROP_PLACE*)nParam);
+			// CRITICAL FIX: Refresh UI immediately after item placement/removal
+			UpdateData();
+		}
 		break;
 
 	case WND_M_OTHER_WORK_RESULT:
