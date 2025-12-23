@@ -276,7 +276,7 @@ BOOL KUiUpgradeAttrib::ValidateUpgradeReady()
 	m_UpgradeSlot[0].GetObject(pObj);
 	if (pObj.uId == 0)
 	{
-		strcpy(szWarning, "Chưa đặt trang bị vào!");
+		strcpy(szWarning, "Chua dat trang bi vao!");
 		nLen = strlen(szWarning);
 		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
 		return FALSE;
@@ -287,19 +287,17 @@ BOOL KUiUpgradeAttrib::ValidateUpgradeReady()
 	m_UpgradeSlot[1].GetObject(pObj);
 	if (pObj.uId == 0)
 	{
-		strcpy(szWarning, "Chưa đặt Đá Nâng Cấp vào!");
+		strcpy(szWarning, "Chua dat Da Nang Cap vao!");
 		nLen = strlen(szWarning);
 		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
 		return FALSE;
 	}
 
-	// Check attribute selection
-	if (m_nSelectedAttrib < 0 || m_nSelectedAttrib >= 6)
+	// Check attribute selection (skip this check for now - will use first attribute)
+	// User can select attributes in future version
+	if (m_nSelectedAttrib < 0)
 	{
-		strcpy(szWarning, "Chưa chọn thuộc tính cần nâng cấp!");
-		nLen = strlen(szWarning);
-		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
-		return FALSE;
+		m_nSelectedAttrib = 0;  // Default to first attribute
 	}
 
 	return TRUE;
