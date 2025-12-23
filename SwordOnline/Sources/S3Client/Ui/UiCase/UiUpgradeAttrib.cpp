@@ -235,21 +235,7 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 
 	case WND_N_ITEM_PICKDROP:
 		if (g_UiBase.IsOperationEnable(UIS_O_MOVE_ITEM))
-		{
-			g_DebugLog("[CLIENT] WND_N_ITEM_PICKDROP: uParam=%p, nParam=%p", uParam, nParam);
 			OnItemPickDrop((ITEM_PICKDROP_PLACE*)uParam, (ITEM_PICKDROP_PLACE*)nParam);
-			// CRITICAL FIX: DO NOT call UpdateData() here!
-			// Server will send WND_N_ITEM_CHANGEBINARY when container actually changes
-			// Calling UpdateData() here is TOO EARLY - server hasn't processed request yet
-			g_DebugLog("[CLIENT] OnItemPickDrop completed, waiting for server notification");
-		}
-		break;
-
-	case WND_N_ITEM_CHANGEBINARY:
-		// Server notification that container has changed - NOW we can update UI!
-		g_DebugLog("[CLIENT] WND_N_ITEM_CHANGEBINARY received, calling UpdateData()");
-		UpdateData();
-		g_DebugLog("[CLIENT] UpdateData() completed after server notification");
 		break;
 
 	case WND_M_OTHER_WORK_RESULT:

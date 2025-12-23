@@ -257,6 +257,11 @@ void CoreDataChangedCallback(unsigned int uDataId, unsigned int uParam, int nPar
 				KUiTrembleItem* pTremble = KUiTrembleItem::GetIfVisible();
 				if (pTremble)
 					pTremble->UpdateItem((KUiObjAtRegion*)uParam, nParam);
+
+				// UpgradeAttrib also uses UOC_BUILD_ITEM container
+				KUiUpgradeAttrib* pUpgrade = KUiUpgradeAttrib::GetIfVisible();
+				if (pUpgrade)
+					pUpgrade->UpdateItem((KUiObjAtRegion*)uParam, nParam);
 			}
 		}
 		break;
