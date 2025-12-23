@@ -17,6 +17,7 @@ Function    : Upgrade equipment magic attributes
 #include "../../../core/src/coreshell.h"
 #include "../../../core/src/GameDataDef.h"
 #include "../../../Engine/src/Text.h"
+#include "../../../Engine/src/KDebug.h"
 #include "../UiSoundSetting.h"
 #include "../UiBase.h"
 #include <crtdbg.h>

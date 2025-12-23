@@ -43,9 +43,16 @@ function ExeUpgradeAttrib()
         return
     end
 
-    -- Validate material
+    -- Validate material exists
     if nMaterialIdx <= 0 then
         Talk(1, "", "<color=red>Chua dat Da Nang Cap!<color>")
+        return
+    end
+
+    -- Validate material type (must be Da Nang Cap - item_task with detail 19)
+    local nMatGenre, nMatDetail = GetItemProp(nMaterialIdx)
+    if nMatGenre ~= 6 or nMatDetail ~= 19 then  -- genre 6 = item_task, detail 19 = SP_DANANGCAP
+        Talk(1, "", "<color=red>Vat lieu khong dung! Can su dung Da Nang Cap.<color>")
         return
     end
 
