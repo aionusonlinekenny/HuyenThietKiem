@@ -83,20 +83,23 @@ function ExeUpgradeAttrib()
 
     -- Check if equipment has magic attributes (DEBUG VERSION)
     local bHasMagicAttrib = false
+    local szDebug = "DEBUG GetItemMagicAttribInfo:\n\n"
+
     for i = 0, 5 do
         local nAttribType, nValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
-        -- Debug output without string.format
-        local szMsg = "Slot " .. i .. ": type=" .. tostring(nAttribType) ..
-                      ", val=" .. tostring(nValue) ..
-                      ", min=" .. tostring(nMin) ..
-                      ", max=" .. tostring(nMax)
-        Msg2Player(szMsg)
+        szDebug = szDebug .. "Slot " .. i .. ":\n" ..
+                  "  type=" .. tostring(nAttribType) .. "\n" ..
+                  "  val=" .. tostring(nValue) .. "\n" ..
+                  "  min=" .. tostring(nMin) .. "\n" ..
+                  "  max=" .. tostring(nMax) .. "\n\n"
 
         if nAttribType and nAttribType > 0 then
             bHasMagicAttrib = true
-            break
         end
     end
+
+    -- Show debug dialog
+    Talk(1, "", szDebug)
 
     if not bHasMagicAttrib then
         Talk(1, "", "<color=red>Trang bi nay khong co thuoc tinh magic!<color>")
