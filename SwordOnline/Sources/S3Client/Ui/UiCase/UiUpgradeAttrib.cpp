@@ -127,6 +127,8 @@ void KUiUpgradeAttrib::Initialize()
 	AddChild(&m_BtnClose);
 	AddChild(&m_UpgradeEffect);
 	AddChild(&m_TextPercent);
+	AddChild(&m_EquipmentLabel);
+	AddChild(&m_MaterialLabel);
 
 	for (i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
 	{
@@ -178,6 +180,10 @@ void KUiUpgradeAttrib::LoadScheme(const char* pScheme)
 		m_pSelf->m_BtnClose.SetLabel("Dong");  // Set button label
 		m_pSelf->m_TextPercent.Init(&Ini, "TextPercent");
 		m_pSelf->m_TextPercent.SetText("San sang nang cap");  // Set initial text
+
+		// Initialize slot labels
+		m_pSelf->m_EquipmentLabel.Init(&Ini, "EquipmentLabel");
+		m_pSelf->m_MaterialLabel.Init(&Ini, "MaterialLabel");
 
 		for (i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
 		{
