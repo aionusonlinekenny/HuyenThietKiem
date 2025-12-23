@@ -329,8 +329,16 @@ void KUiUpgradeAttrib::OnItemPickDrop(ITEM_PICKDROP_PLACE* pPickPos, ITEM_PICKDR
 	KUiDraggedObject Obj;
 	KWndWindow* pWnd = NULL;
 
+	// CRITICAL FIX: Handle PICKING item OUT of slot (removing item)
 	if (pPickPos)
 	{
+		((KWndObjectBox*)(pPickPos->pWnd))->GetObject(Obj);
+		Pick.Obj.uGenre = Obj.uGenre;
+		Pick.Obj.uId = Obj.uId;
+		Pick.Region.Width = Obj.DataW;
+		Pick.Region.Height = Obj.DataH;
+		Pick.Region.h = 0;
+		Pick.eContainer = UOC_BUILD_ITEM;
 		pWnd = pPickPos->pWnd;
 	}
 	else if (pDropPos)
@@ -340,6 +348,7 @@ void KUiUpgradeAttrib::OnItemPickDrop(ITEM_PICKDROP_PLACE* pPickPos, ITEM_PICKDR
 	else
 		return;
 
+	// Handle DROPPING item INTO slot (adding item)
 	if (pDropPos)
 	{
 		Wnd_GetDragObj(&Obj);
