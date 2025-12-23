@@ -7,7 +7,7 @@
 function main(NpcIndex)
     -- Load upgrade functions into GLOBAL Lua state
     -- This makes ExeUpgradeAttrib available when UI button is clicked
-    dofile("\\script\\Upgrade\\upgrade_attrib.lua")
+    dofile("script\\Upgrade\\upgrade_attrib.lua")  -- Changed: removed leading \\
 
     -- Now call the talk function (which is now loaded)
     UpgradeAttribTalk()
