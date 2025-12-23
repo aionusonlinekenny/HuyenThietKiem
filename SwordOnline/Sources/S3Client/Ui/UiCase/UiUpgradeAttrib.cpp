@@ -237,8 +237,14 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 		if (g_UiBase.IsOperationEnable(UIS_O_MOVE_ITEM))
 		{
 			OnItemPickDrop((ITEM_PICKDROP_PLACE*)uParam, (ITEM_PICKDROP_PLACE*)nParam);
-			// CRITICAL FIX: Refresh UI immediately after item placement/removal
-			UpdateData();
+			// CRITICAL FIX: Only refresh UI after DROP (placing item), not PICK (removing item)
+			// nParam is pDropPos - if non-zero, this is a DROP operation
+			if (nParam != 0)
+			{
+				UpdateData();  // Refresh to show newly placed item
+			}
+			// When PICK (nParam == 0), item is removed automatically by GOI_SWITCH_OBJECT
+			// No UpdateData() needed to avoid "double item" visual bug
 		}
 		break;
 
