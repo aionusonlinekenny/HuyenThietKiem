@@ -13,7 +13,7 @@ Include("\\script\\lib\\TaskLib.lua")
 -- Da Nang Cap (Upgrade Stone) item definition
 -- Thay doi cac gia tri nay de su dung item khac
 UPGRADE_MATERIAL_GENRE = 6      -- item_task
-UPGRADE_MATERIAL_DETAIL = 19    -- ID cua Da Nang Cap (co the thay doi)
+UPGRADE_MATERIAL_DETAIL = 18    -- Luc Thuy Tinh (Green Crystal) - tam thoi
 
 -- Upgrade settings
 UPGRADE_MIN_PERCENT = 10        -- % tang toi thieu
