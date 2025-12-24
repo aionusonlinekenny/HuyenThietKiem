@@ -10406,12 +10406,8 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 	int nVersion = pOldGenParam->nVersion;
 	DWORD dwRandSeed = pOldGenParam->dwRandomSeed;
 
-	// Copy all generator levels from old item
-	int nGenLevels[6];
-	for (int i = 0; i < 6; i++)
-	{
-		nGenLevels[i] = pOldGenParam->nGeneratorLevel[i];
-	}
+	// SIMPLE APPROACH: Just upgrade the value directly on existing item!
+	// No need to delete, recreate, or search for seeds
 
 	// Calculate new value for the upgraded slot
 	int nOldValue = Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
@@ -10428,135 +10424,11 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		nNewValue = nMax;
 	}
 
-	// Store old attribute types for validation
-	int nOldAttribTypes[6];
-	int nOldAttribValues[6];
-	for (int i = 0; i < 6; i++)
-	{
-		nOldAttribTypes[i] = Item[nOldItemIdx].m_aryMagicAttrib[i].nAttribType;
-		nOldAttribValues[i] = Item[nOldItemIdx].m_aryMagicAttrib[i].nValue[0];
-	}
+	// DIRECTLY set the new value on the existing item
+	Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0] = nNewValue;
 
-	// RELAXED scoring approach: Find BEST seed even if not perfect
-	// Priority: upgraded slot type matches > value close to target > others similar
-	DWORD dwNewRandSeed = dwRandSeed;
-	DWORD dwBestSeed = dwRandSeed;
-	int nTempItemIdx = 0;
-	int nBestScore = -99999; // Higher score = better match
-
-	// Try up to 100000 seeds (increased from 50000)
-	for (DWORD nTry = 0; nTry < 100000; nTry++)
-	{
-		dwNewRandSeed = dwRandSeed + nTry;
-
-		// Create temporary item with new seed
-		nTempItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
-		                           nGenLevels, nVersion, dwNewRandSeed);
-
-		if (nTempItemIdx <= 0 || nTempItemIdx >= MAX_ITEM)
-			continue;
-
-		int nScore = 0;
-
-		// REQUIRED: Upgraded slot attribute type MUST match
-		if (Item[nTempItemIdx].m_aryMagicAttrib[nUpgradeSlot].nAttribType != nOldAttribTypes[nUpgradeSlot])
-		{
-			ItemSet.Remove(nTempItemIdx);
-			continue;
-		}
-
-		// PRIORITY 1: Upgraded value close to target
-		int nGeneratedValue = Item[nTempItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
-		int nDiff = abs(nGeneratedValue - nNewValue);
-
-		// Prefer value >= target over value < target
-		if (nGeneratedValue >= nNewValue)
-			nScore += 2000;
-
-		nScore -= nDiff * 10; // -10 points per point of difference
-
-		// Skip if too far from target
-		if (nDiff > 30) // Relaxed to ±30
-		{
-			ItemSet.Remove(nTempItemIdx);
-			continue;
-		}
-
-		// PRIORITY 2: Other attribute types match (bonus)
-		for (int i = 0; i < 6; i++)
-		{
-			if (i == nUpgradeSlot)
-				continue;
-
-			if (Item[nTempItemIdx].m_aryMagicAttrib[i].nAttribType == nOldAttribTypes[i])
-				nScore += 100;
-		}
-
-		// PRIORITY 3: Other values stay similar (bonus)
-		for (int i = 0; i < 6; i++)
-		{
-			if (i == nUpgradeSlot)
-				continue;
-
-			int nOtherDiff = abs(Item[nTempItemIdx].m_aryMagicAttrib[i].nValue[0] - nOldAttribValues[i]);
-			if (nOtherDiff <= 20)
-				nScore += 50;
-			else if (nOtherDiff <= 50)
-				nScore += 10;
-		}
-
-		// Track best seed
-		if (nScore > nBestScore)
-		{
-			nBestScore = nScore;
-			dwBestSeed = dwNewRandSeed;
-		}
-
-		ItemSet.Remove(nTempItemIdx);
-
-		// Early exit if found excellent match
-		if (nDiff <= 3 && nScore >= 2500)
-			break;
-	}
-
-	// Always use best seed found (no failure case)
-	dwNewRandSeed = dwBestSeed;
-
-	// Get old item's position in container
-	int nOldX = ItemSet.m_psItemInfo[nOldItemIdx].m_nX;
-	int nOldY = ItemSet.m_psItemInfo[nOldItemIdx].m_nY;
-
-	// Remove old item from container
-	Player[nPlayerIndex].m_ItemList.Remove(nOldItemIdx);
-
-	// Create new item with the found seed
-	int nNewItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
-	                              nGenLevels, nVersion, dwNewRandSeed);
-
-	if (nNewItemIdx <= 0 || nNewItemIdx >= MAX_ITEM)
-	{
-		// Failed - restore old item
-		Player[nPlayerIndex].m_ItemList.Add(nOldItemIdx, nPos, nOldX, nOldY);
-		Lua_PushNumber(L, 0);
-		return 1;
-	}
-
-	// Add new item to container
-	BOOL bAddResult = Player[nPlayerIndex].m_ItemList.Add(nNewItemIdx, nPos, nOldX, nOldY);
-
-	if (!bAddResult)
-	{
-		// Failed - cleanup and restore
-		ItemSet.Remove(nNewItemIdx);
-		Player[nPlayerIndex].m_ItemList.Add(nOldItemIdx, nPos, nOldX, nOldY);
-		Lua_PushNumber(L, 0);
-		return 1;
-	}
-
-	// Success! Delete old item
-	ItemSet.Remove(nOldItemIdx);
-
-	Lua_PushNumber(L, nNewItemIdx);
+	// Return the same item index (not a new item)
+	Lua_PushNumber(L, nOldItemIdx);
 	return 1;
 }
 
