@@ -166,50 +166,40 @@ function ExeUpgradeAttrib()
     end
     Msg2Player("Material consumed successfully")
 
-    -- Material consumed successfully, now upgrade
-    Msg2Player("Calling UpgradeItemMagicAttrib(equip=" .. nEquipIdx .. ", slot=" .. nAttribSlot .. ", percent=" .. nIncreasePercent .. ")")
-    local bSuccess = UpgradeItemMagicAttrib(nEquipIdx, nAttribSlot, nIncreasePercent)
-    Msg2Player("UpgradeItemMagicAttrib returned: " .. tostring(bSuccess))
+    -- Calculate new value for the upgraded attribute
+    local nIncrease = (nOldValue * nIncreasePercent) / 100
+    if nIncrease < 1 then nIncrease = 1 end
+    local nNewValue = nOldValue + nIncrease
+    if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
+    Msg2Player("Calculated new value: " .. nOldValue .. " + " .. nIncrease .. " = " .. nNewValue)
 
-    if bSuccess == 1 then
-        -- Calculate new value
-        local nIncrease = (nOldValue * nIncreasePercent) / 100
-        if nIncrease < 1 then nIncrease = 1 end
-        local nNewValue = nOldValue + nIncrease
-        if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
-
-        Msg2Player("Calculated new value: " .. nOldValue .. " + " .. nIncrease .. " = " .. nNewValue)
-
-        -- Get all 6 attribute VALUES before deleting item
-        local nAttribVals = {}
-        for i = 0, 5 do
-            local _, nVal, _, _ = GetItemMagicAttribInfo(nEquipIdx, i)
-            if i == nAttribSlot then
-                nAttribVals[i+1] = nNewValue  -- Use upgraded value
-                Msg2Player("Slot " .. i .. " (UPGRADED): " .. tostring(nNewValue))
-            else
-                nAttribVals[i+1] = nVal or 0  -- Use existing value
-                Msg2Player("Slot " .. i .. " (keep): " .. tostring(nVal))
-            end
-        end
-
-        -- Delete old item and create new one with upgraded attributes
-        Msg2Player("Deleting old item...")
-        if DelItemByIndex(nEquipIdx) ~= 0 then
-            Msg2Player("Creating new item with upgraded attributes...")
-            AddItemEx(
-                nGenre, nDetail, nParti, nLevel, nSeries, nLuck,
-                nAttribVals[1], nAttribVals[2], nAttribVals[3],
-                nAttribVals[4], nAttribVals[5], nAttribVals[6],
-                1, 0,  -- version, randseed
-                nPos   -- pos_builditem
-            )
-            Msg2Player("New item created successfully!")
+    -- Read all 6 attribute VALUES from OLD item (before any modification)
+    Msg2Player("=== Reading ALL old attribute values ===")
+    local nAttribVals = {}
+    for i = 0, 5 do
+        local _, nVal, _, _ = GetItemMagicAttribInfo(nEquipIdx, i)
+        if i == nAttribSlot then
+            nAttribVals[i+1] = nNewValue  -- Use calculated new value for upgraded slot
+            Msg2Player("Slot " .. i .. " (WILL UPGRADE): " .. tostring(nOldValue) .. " -> " .. tostring(nNewValue))
         else
-            Msg2Player("ERROR: Failed to delete old item!")
-            Talk(1, "", "<color=red>Loi: Khong the xoa trang bi cu!<color>")
-            return
+            nAttribVals[i+1] = nVal or 0  -- Keep original value for other slots
+            Msg2Player("Slot " .. i .. " (keep original): " .. tostring(nVal))
         end
+    end
+
+    -- Delete old item and create new one with upgraded attributes
+    Msg2Player("Deleting old item...")
+    if DelItemByIndex(nEquipIdx) ~= 0 then
+        Msg2Player("Creating new item with upgraded attributes...")
+        Msg2Player("Values: [" .. nAttribVals[1] .. ", " .. nAttribVals[2] .. ", " .. nAttribVals[3] .. ", " .. nAttribVals[4] .. ", " .. nAttribVals[5] .. ", " .. nAttribVals[6] .. "]")
+        AddItemEx(
+            nGenre, nDetail, nParti, nLevel, nSeries, nLuck,
+            nAttribVals[1], nAttribVals[2], nAttribVals[3],
+            nAttribVals[4], nAttribVals[5], nAttribVals[6],
+            1, 0,  -- version, randseed
+            nPos   -- pos_builditem
+        )
+        Msg2Player("New item created successfully!")
 
         -- Success message
         local szMsg = "<color=green>Nang cap thanh cong!<color>\n" ..
@@ -217,8 +207,8 @@ function ExeUpgradeAttrib()
                       ": <color=yellow>" .. nOldValue .. " -> " .. nNewValue .. "<color> (+" .. nIncreasePercent .. "%)"
         Talk(1, "", szMsg)
     else
-        Msg2Player("FAILED: Upgrade returned " .. tostring(bSuccess))
-        Talk(1, "", "<color=red>Nang cap that bai! Vui long thu lai.<color>")
+        Msg2Player("ERROR: Failed to delete old item!")
+        Talk(1, "", "<color=red>Loi: Khong the xoa trang bi cu!<color>")
     end
 end
 
