@@ -166,18 +166,15 @@ function ExeUpgradeAttrib()
     end
     Msg2Player("Material consumed successfully")
 
-    -- Calculate new value (integer math)
+    -- Calculate new value (C++ will cast to int automatically)
     local nIncrease = (nOldValue * nIncreasePercent) / 100
     if nIncrease < 1 then nIncrease = 1 end
     local nNewValue = nOldValue + nIncrease
     if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
-    -- Round to integer (floor)
-    nNewValue = nNewValue - (nNewValue % 1)
-
     Msg2Player("Calculated: " .. nOldValue .. " + " .. nIncrease .. " = " .. nNewValue)
 
-    -- Use NEW C++ function to set value
+    -- Use NEW C++ function to set value (C++ casts to int)
     Msg2Player("Calling SetItemMagicAttribValueAndSync...")
     local bSuccess = SetItemMagicAttribValueAndSync(nEquipIdx, nAttribSlot, nNewValue)
     Msg2Player("SetItemMagicAttribValueAndSync result: " .. tostring(bSuccess))
