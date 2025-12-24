@@ -10419,25 +10419,26 @@ int LuaCreateItemWithAttribs(Lua_State * L)
 	if (Lua_GetTopIndex(L) >= 33)
 		nY = (int)Lua_ValueToNumber(L, 33);
 
-	// Create item using AddItem (this will add an empty item with no magic attributes)
-	int nItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, nLuck, nDetail, nParti,
-	                           Player[nPlayerIndex].m_nIndex, nX, nY, nPos);
+	// Create item in global item pool (without magic attributes initially)
+	// ItemSet.Add expects: genre, series, level, luck, detail, particular, magicLevelArray*, version, randSeed
+	int nItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
+	                           NULL, g_SubWorldSet.GetGameVersion(), 0);
 
-	if (nItemIdx <= 0)
+	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
 	{
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
 
 	// Now set the magic attributes directly with validated values
-	for (int i = 0; i < 6; i++)
+	for (int j = 0; j < 6; j++)
 	{
-		if (nAttribTypes[i] > 0)
+		if (nAttribTypes[j] > 0)
 		{
-			Item[nItemIdx].m_aryMagicAttrib[i].nAttribType = nAttribTypes[i];
-			Item[nItemIdx].m_aryMagicAttrib[i].nValue[0] = nAttribValues[i];
-			Item[nItemIdx].m_aryMagicAttrib[i].nMin = nAttribMins[i];
-			Item[nItemIdx].m_aryMagicAttrib[i].nMax = nAttribMaxs[i];
+			Item[nItemIdx].m_aryMagicAttrib[j].nAttribType = nAttribTypes[j];
+			Item[nItemIdx].m_aryMagicAttrib[j].nValue[0] = nAttribValues[j];
+			Item[nItemIdx].m_aryMagicAttrib[j].nMin = nAttribMins[j];
+			Item[nItemIdx].m_aryMagicAttrib[j].nMax = nAttribMaxs[j];
 		}
 	}
 
@@ -10445,17 +10446,18 @@ int LuaCreateItemWithAttribs(Lua_State * L)
 	KItemGeneratorParam* pGenParam = Item[nItemIdx].GetGeneratorParam();
 	if (pGenParam)
 	{
-		for (int i = 0; i < 6; i++)
+		for (int k = 0; k < 6; k++)
 		{
-			pGenParam->nGeneratorLevel[i] = 0;
+			pGenParam->nGeneratorLevel[k] = 0;
 		}
 		pGenParam->nVersion = 0;
 		pGenParam->dwRandomSeed = 0;
 	}
 
-	// Sync to client
-	Player[nPlayerIndex].m_ItemList.SyncItem(nItemIdx);
+	// Add item to player's inventory at specified position
+	Player[nPlayerIndex].m_ItemList.Add(nItemIdx, nPos, nX, nY);
 
+	// Return the item index
 	Lua_PushNumber(L, nItemIdx);
 	return 1;
 }
