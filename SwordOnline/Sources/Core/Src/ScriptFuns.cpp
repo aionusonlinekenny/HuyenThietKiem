@@ -10414,7 +10414,6 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 	}
 
 	// Calculate new value for the upgraded slot
-	// Get current attribute value
 	int nOldValue = Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
 	int nMax = Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nMax;
 
@@ -10429,17 +10428,22 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		nNewValue = nMax;
 	}
 
-	// CRITICAL FIX: Find a random seed that generates our desired attribute value
-	// The problem: Client and database regenerate items from generator params (seed, levels, luck, version)
-	// So manually setting attribute value won't persist - it gets regenerated!
-	// Solution: Brute-force search for a random seed that generates our exact desired value
+	// Store old attribute types for validation
+	int nOldAttribTypes[6];
+	int nOldAttribValues[6];
+	for (int i = 0; i < 6; i++)
+	{
+		nOldAttribTypes[i] = Item[nOldItemIdx].m_aryMagicAttrib[i].nAttribType;
+		nOldAttribValues[i] = Item[nOldItemIdx].m_aryMagicAttrib[i].nValue[0];
+	}
 
+	// Search for a seed that generates SAME attribute types, SAME order, CLOSE values
 	DWORD dwNewRandSeed = dwRandSeed;
 	int nTempItemIdx = 0;
 	BOOL bFoundSeed = FALSE;
 
-	// Try up to 10000 different seeds to find one that generates our desired value
-	for (DWORD nTry = 0; nTry < 10000; nTry++)
+	// Try up to 50000 seeds to find one that matches our criteria
+	for (DWORD nTry = 0; nTry < 50000; nTry++)
 	{
 		dwNewRandSeed = dwRandSeed + nTry;
 
@@ -10450,102 +10454,99 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		if (nTempItemIdx <= 0 || nTempItemIdx >= MAX_ITEM)
 			continue;
 
-		// Check if this seed generated our desired value for the upgraded slot
-		int nGeneratedValue = Item[nTempItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
-
-		if (nGeneratedValue == nNewValue)
+		// VALIDATE: Check if ALL attribute types match in the SAME order
+		BOOL bTypesMatch = TRUE;
+		for (int i = 0; i < 6; i++)
 		{
-			// Perfect match! This seed generates exactly the value we want
-			bFoundSeed = TRUE;
-			ItemSet.Remove(nTempItemIdx); // Clean up temp item
-			break;
-		}
-
-		// Not a match, try next seed
-		ItemSet.Remove(nTempItemIdx);
-	}
-
-	// If we couldn't find exact match, try to find closest match (within ±3)
-	if (!bFoundSeed)
-	{
-		int nBestDiff = 9999;
-		DWORD dwBestSeed = dwRandSeed;
-
-		for (DWORD nTry = 0; nTry < 10000; nTry++)
-		{
-			dwNewRandSeed = dwRandSeed + nTry;
-
-			nTempItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
-			                           nGenLevels, nVersion, dwNewRandSeed);
-
-			if (nTempItemIdx <= 0 || nTempItemIdx >= MAX_ITEM)
-				continue;
-
-			int nGeneratedValue = Item[nTempItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
-			int nDiff = abs(nGeneratedValue - nNewValue);
-
-			if (nDiff < nBestDiff)
+			if (Item[nTempItemIdx].m_aryMagicAttrib[i].nAttribType != nOldAttribTypes[i])
 			{
-				nBestDiff = nDiff;
-				dwBestSeed = dwNewRandSeed;
-			}
-
-			ItemSet.Remove(nTempItemIdx);
-
-			// Good enough - within ±3 of target
-			if (nDiff <= 3)
-			{
-				dwNewRandSeed = dwBestSeed;
-				bFoundSeed = TRUE;
+				bTypesMatch = FALSE;
 				break;
 			}
 		}
 
-		if (!bFoundSeed)
+		if (!bTypesMatch)
 		{
-			// Use best seed found even if not perfect
-			dwNewRandSeed = dwBestSeed;
+			ItemSet.Remove(nTempItemIdx);
+			continue;
 		}
+
+		// VALIDATE: Check if upgraded slot value is close to target (within ±5)
+		int nGeneratedValue = Item[nTempItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
+		int nDiff = abs(nGeneratedValue - nNewValue);
+
+		if (nDiff > 5)
+		{
+			ItemSet.Remove(nTempItemIdx);
+			continue;
+		}
+
+		// VALIDATE: Check if other slots' values are close to original (within ±10)
+		BOOL bOtherValuesClose = TRUE;
+		for (int i = 0; i < 6; i++)
+		{
+			if (i == nUpgradeSlot)
+				continue; // Skip the upgraded slot
+
+			int nOtherDiff = abs(Item[nTempItemIdx].m_aryMagicAttrib[i].nValue[0] - nOldAttribValues[i]);
+			if (nOtherDiff > 10) // Allow ±10 variance in other slots
+			{
+				bOtherValuesClose = FALSE;
+				break;
+			}
+		}
+
+		if (!bOtherValuesClose)
+		{
+			ItemSet.Remove(nTempItemIdx);
+			continue;
+		}
+
+		// Found a good seed!
+		bFoundSeed = TRUE;
+		ItemSet.Remove(nTempItemIdx);
+		break;
 	}
 
-	// Get old item's position in container BEFORE we remove it
+	if (!bFoundSeed)
+	{
+		// Couldn't find a suitable seed, upgrade fails
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// Get old item's position in container
 	int nOldX = ItemSet.m_psItemInfo[nOldItemIdx].m_nX;
 	int nOldY = ItemSet.m_psItemInfo[nOldItemIdx].m_nY;
 
-	// Remove old item from player's container (but don't delete from global pool yet)
-	// This frees up space for the new item
+	// Remove old item from container
 	Player[nPlayerIndex].m_ItemList.Remove(nOldItemIdx);
 
-	// Create new item using the seed we found that generates our desired value
+	// Create new item with the found seed
 	int nNewItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
 	                              nGenLevels, nVersion, dwNewRandSeed);
 
 	if (nNewItemIdx <= 0 || nNewItemIdx >= MAX_ITEM)
 	{
-		// Failed to create - restore old item to container
+		// Failed - restore old item
 		Player[nPlayerIndex].m_ItemList.Add(nOldItemIdx, nPos, nOldX, nOldY);
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
 
-	// Verify the generated value matches our target (or is close)
-	int nActualValue = Item[nNewItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
-	// Note: nActualValue should equal nNewValue (or be within ±3)
-
-	// Add new item to container at the SAME position as old item
+	// Add new item to container
 	BOOL bAddResult = Player[nPlayerIndex].m_ItemList.Add(nNewItemIdx, nPos, nOldX, nOldY);
 
 	if (!bAddResult)
 	{
-		// Failed to add new item - restore old item and cleanup new item
+		// Failed - cleanup and restore
 		ItemSet.Remove(nNewItemIdx);
 		Player[nPlayerIndex].m_ItemList.Add(nOldItemIdx, nPos, nOldX, nOldY);
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
 
-	// Success! New item is in container at old item's position with upgraded value
-	// Now we can safely delete the old item from global pool
+	// Success! Delete old item
 	ItemSet.Remove(nOldItemIdx);
 
 	Lua_PushNumber(L, nNewItemIdx);
