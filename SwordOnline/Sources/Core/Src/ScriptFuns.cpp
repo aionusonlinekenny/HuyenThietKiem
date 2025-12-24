@@ -10249,82 +10249,11 @@ int LuaGetItemMagicAttribInfo(Lua_State * L)
 }
 
 // ════════════════════════════════════════════════════════════
-// Upgrade Item Magic Attribute
-// Lua: bSuccess = UpgradeItemMagicAttrib(nItemIdx, nSlot, nIncreasePercent)
+// Set Item Magic Attribute Value and Sync to Client
+// Lua: bSuccess = SetItemMagicAttribValueAndSync(nItemIdx, nSlot, nNewValue)
 // ════════════════════════════════════════════════════════════
-int LuaUpgradeItemMagicAttrib(Lua_State * L)
-{
-	if (Lua_GetTopIndex(L) < 3)
-	{
-		Lua_PushNumber(L, 0);
-		return 1;
-	}
-
-	int nPlayerIndex = GetPlayerIndex(L);
-	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_PLAYER)
-	{
-		Lua_PushNumber(L, 0);
-		return 1;
-	}
-
-	int nItemIdx = (int)Lua_ValueToNumber(L, 1);
-	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
-	{
-		Lua_PushNumber(L, 0);
-		return 1;
-	}
-
-	int nSlot = (int)Lua_ValueToNumber(L, 2);
-	if (nSlot < 0 || nSlot >= 6)
-	{
-		Lua_PushNumber(L, 0);
-		return 1;
-	}
-
-	int nIncreasePercent = (int)Lua_ValueToNumber(L, 3);
-
-	// Check if attribute exists
-	if (Item[nItemIdx].m_aryMagicAttrib[nSlot].nAttribType <= 0)
-	{
-		Lua_PushNumber(L, 0);
-		return 1;
-	}
-
-	// Get current value
-	int nOldValue = Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0];
-	int nMaxValue = Item[nItemIdx].m_aryMagicAttrib[nSlot].nMax;
-
-	// Check if already at max
-	if (nMaxValue > 0 && nOldValue >= nMaxValue)
-	{
-		Lua_PushNumber(L, 0);
-		return 1;
-	}
-
-	// Calculate increase
-	int nIncrease = (nOldValue * nIncreasePercent) / 100;
-	if (nIncrease < 1)
-		nIncrease = 1;
-
-	// Apply increase
-	int nNewValue = nOldValue + nIncrease;
-
-	// Cap at max
-	if (nMaxValue > 0 && nNewValue > nMaxValue)
-		nNewValue = nMaxValue;
-
-	// Set new value
-	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0] = nNewValue;
-
-	// Item will auto-sync to client when returned from build container
-	// No manual sync needed here
-
-	Lua_PushNumber(L, 1);  // Success
-	return 1;
-}
-
 // --
-// SetItemMagicAttribValue - Force set magic attribute value and sync to client
+// SetItemMagicAttribValueAndSync - Set magic attribute value and sync to client
 // Parameters: itemIdx, slot (0-5), newValue
 // Returns: 1 on success, 0 on failure
 // --
@@ -10905,7 +10834,6 @@ TLua_Funcs GameScriptFuns[] =
 	//UpgradeAttrib - Equipment Attribute Upgrade System
 	{"OpenUpgradeAttribUI",		LuaOpenUpgradeAttribUI},
 	{"GetItemMagicAttribInfo",	LuaGetItemMagicAttribInfo},
-	{"UpgradeItemMagicAttrib",	LuaUpgradeItemMagicAttrib},
 	{"SetItemMagicAttribValueAndSync",	LuaSetItemMagicAttribValueAndSync},
 	//
 	{"SetLockSongJin",		LuaSetLockSongJin},
