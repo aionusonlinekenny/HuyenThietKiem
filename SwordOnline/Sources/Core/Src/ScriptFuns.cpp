@@ -10322,6 +10322,71 @@ int LuaUpgradeItemMagicAttrib(Lua_State * L)
 	Lua_PushNumber(L, 1);  // Success
 	return 1;
 }
+
+// --
+// SetItemMagicAttribValue - Force set magic attribute value and sync to client
+// Parameters: itemIdx, slot (0-5), newValue
+// Returns: 1 on success, 0 on failure
+// --
+int LuaSetItemMagicAttribValueAndSync(Lua_State * L)
+{
+	if (Lua_GetTopIndex(L) < 3)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nPlayerIndex = GetPlayerIndex(L);
+	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_PLAYER)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nItemIdx = (int)Lua_ValueToNumber(L, 1);
+	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nSlot = (int)Lua_ValueToNumber(L, 2);
+	if (nSlot < 0 || nSlot >= 6)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nNewValue = (int)Lua_ValueToNumber(L, 3);
+	if (nNewValue < 0)
+		nNewValue = 0;
+
+	// Check if attribute exists
+	if (Item[nItemIdx].m_aryMagicAttrib[nSlot].nAttribType <= 0)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// Set the new value
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0] = nNewValue;
+
+	// CRITICAL: Force sync to client by calling SyncItem
+	// Find where the item is located and sync it
+	for (int i = 0; i < player_item_container; i++)
+	{
+		int nPlace, nX, nY;
+		if (Player[nPlayerIndex].m_ItemList.SearchPosition(nItemIdx, &nPlace, &nX, &nY))
+		{
+			Player[nPlayerIndex].m_ItemList.SyncItem(nItemIdx, FALSE, nPlace, nX, nY, nPlayerIndex);
+			break;
+		}
+	}
+
+	Lua_PushNumber(L, 1);  // Success
+	return 1;
+}
+
 // --
 // LockSongJin by kinnox
 // --
@@ -10841,6 +10906,7 @@ TLua_Funcs GameScriptFuns[] =
 	{"OpenUpgradeAttribUI",		LuaOpenUpgradeAttribUI},
 	{"GetItemMagicAttribInfo",	LuaGetItemMagicAttribInfo},
 	{"UpgradeItemMagicAttrib",	LuaUpgradeItemMagicAttrib},
+	{"SetItemMagicAttribValueAndSync",	LuaSetItemMagicAttribValueAndSync},
 	//
 	{"SetLockSongJin",		LuaSetLockSongJin},
 	{"GetLockSongJin",		LuaGetLockSongJin},
