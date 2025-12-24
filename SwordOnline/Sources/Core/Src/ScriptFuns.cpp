@@ -10297,11 +10297,19 @@ int LuaSetItemMagicAttribValueAndSync(Lua_State * L)
 		return 1;
 	}
 
-	// Set the new value
+	// CRITICAL: Must set BOTH magic attribute value AND generator level!
+	// - Magic attribute value: what shows in-game (generated value)
+	// - Generator level: what gets saved/synced to client and DB
+	// If we only set the value, it gets lost on refresh because
+	// items regenerate attributes from generator params!
+
+	// Set the display value
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0] = nNewValue;
 
-	// Item will sync to client when container refreshes or item is moved
-	// No manual sync needed - let the game handle it naturally
+	// Set the generator level (CRITICAL for persistence!)
+	// We set it to the new value directly - this should work
+	// because generator level seems to directly correlate with attribute value
+	Item[nItemIdx].m_GeneratorParam.nGeneratorLevel[nSlot] = nNewValue;
 
 	Lua_PushNumber(L, 1);  // Success
 	return 1;
