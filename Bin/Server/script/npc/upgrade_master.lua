@@ -166,39 +166,65 @@ function ExeUpgradeAttrib()
     end
     Msg2Player("Material consumed successfully")
 
-    -- IMPORTANT: Remove item from build container FIRST (move to player inventory)
-    Msg2Player("Removing item from build container to player inventory...")
+    -- Calculate new value
+    local nIncrease = (nOldValue * nIncreasePercent) / 100
+    if nIncrease < 1 then nIncrease = 1 end
+    local nNewValue = nOldValue + nIncrease
+    if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
+    Msg2Player("Calculated: " .. nOldValue .. " + " .. nIncrease .. " = " .. nNewValue)
+
+    -- Read ALL 6 attribute VALUES from old item
+    Msg2Player("Reading all attribute values...")
+    local nAttribVals = {}
+    for i = 0, 5 do
+        local _, nVal, _, _ = GetItemMagicAttribInfo(nEquipIdx, i)
+        if i == nAttribSlot then
+            nAttribVals[i+1] = nNewValue  -- Use calculated new value
+            Msg2Player("Slot " .. i .. ": " .. nOldValue .. " -> " .. nNewValue)
+        else
+            nAttribVals[i+1] = nVal or 0
+            Msg2Player("Slot " .. i .. ": " .. tostring(nVal))
+        end
+    end
+
+    -- Delete old item from build container
+    Msg2Player("Deleting old item...")
     if DelMyItem(nEquipIdx) == 0 then
-        Msg2Player("ERROR: Failed to remove item from container!")
-        Talk(1, "", "<color=red>Loi: Khong the lay item ra khoi container!<color>")
+        Msg2Player("ERROR: Failed to remove from container!")
+        Talk(1, "", "<color=red>Loi: Khong the xoa item!<color>")
         return
     end
-    Msg2Player("Item removed from container successfully")
 
-    -- Now upgrade the item in PLAYER INVENTORY (not in container copy)
-    Msg2Player("Calling UpgradeItemMagicAttrib on item in player inventory...")
-    local bSuccess = UpgradeItemMagicAttrib(nEquipIdx, nAttribSlot, nIncreasePercent)
-    Msg2Player("UpgradeItemMagicAttrib result: " .. tostring(bSuccess))
-
-    if bSuccess == 1 then
-        -- Get the NEW value after C++ upgrade
-        local _, nNewValue, _, _ = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
-        Msg2Player("New value after upgrade: " .. tostring(nNewValue))
-
-        -- Add the UPGRADED item back to build container
-        Msg2Player("Adding upgraded item back to container...")
-        AddMyItem(nEquipIdx, nPos, 0, 0)
-        Msg2Player("Item added back to container")
-
-        -- Success message
-        local szMsg = "<color=green>Nang cap thanh cong!<color>\n" ..
-                      "Thuoc tinh #" .. (nAttribSlot + 1) ..
-                      ": <color=yellow>" .. nOldValue .. " -> " .. nNewValue .. "<color> (+" .. nIncreasePercent .. "%)"
-        Talk(1, "", szMsg)
-    else
-        Msg2Player("ERROR: Upgrade failed!")
-        Talk(1, "", "<color=red>Nang cap that bai!<color>")
+    -- Delete item completely from player
+    Msg2Player("Deleting item from player...")
+    if DelItemByIndex(nEquipIdx) == 0 then
+        Msg2Player("ERROR: Failed to delete item!")
+        Talk(1, "", "<color=red>Loi: Khong the xoa item!<color>")
+        return
     end
+
+    -- Create NEW item as PURPLE (luck >= 1000) so AddItemEx can set attribute values!
+    -- Convert blue to purple by adding 1000000000 to luck
+    local nNewLuck = nLuck + 1000000000
+    Msg2Player("Creating new PURPLE item with upgraded values...")
+    Msg2Player("Luck: " .. nLuck .. " -> " .. nNewLuck .. " (blue->purple)")
+    Msg2Player("Attribs: [" .. nAttribVals[1] .. "," .. nAttribVals[2] .. "," .. nAttribVals[3] .. "," .. nAttribVals[4] .. "," .. nAttribVals[5] .. "," .. nAttribVals[6] .. "]")
+
+    AddItemEx(
+        nGenre, nDetail, nParti, nLevel, nSeries, nNewLuck,
+        nAttribVals[1], nAttribVals[2], nAttribVals[3],
+        nAttribVals[4], nAttribVals[5], nAttribVals[6],
+        1, 0,
+        nPos
+    )
+    Msg2Player("New item created in build container!")
+
+    -- Success message
+    local szMsg = "<color=green>Nang cap thanh cong!<color>\n" ..
+                  "Thuoc tinh #" .. (nAttribSlot + 1) ..
+                  ": <color=yellow>" .. nOldValue .. " -> " .. nNewValue .. "<color> (+" .. nIncreasePercent .. "%)\n" ..
+                  "<color=cyan>Item da duoc chuyen thanh TIM!<color>"
+    Talk(1, "", szMsg)
 end
 
 -- ────────────────────────────────────────────────────────────
