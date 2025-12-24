@@ -172,9 +172,15 @@ function ExeUpgradeAttrib()
     Msg2Player("UpgradeItemMagicAttrib result: " .. tostring(bSuccess))
 
     if bSuccess == 1 then
-        -- Force item refresh in container (like Tremble system)
+        -- Force item refresh in container (Tremble pattern)
         Msg2Player("Refreshing item in container...")
         AddItemAgain(nEquipIdx)
+
+        Msg2Player("Removing from container...")
+        if DelMyItem(nEquipIdx) ~= 0 then
+            Msg2Player("Adding back to container...")
+            AddMyItem(nEquipIdx, nPos, 0, 0)
+        end
 
         -- Get the NEW value after C++ upgrade and refresh
         local _, nNewValue, _, _ = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
