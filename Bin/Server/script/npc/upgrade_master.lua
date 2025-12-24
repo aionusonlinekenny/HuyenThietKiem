@@ -166,40 +166,19 @@ function ExeUpgradeAttrib()
     end
     Msg2Player("Material consumed successfully")
 
-    -- Calculate new value for the upgraded attribute
-    local nIncrease = (nOldValue * nIncreasePercent) / 100
-    if nIncrease < 1 then nIncrease = 1 end
-    local nNewValue = nOldValue + nIncrease
-    if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
-    Msg2Player("Calculated new value: " .. nOldValue .. " + " .. nIncrease .. " = " .. nNewValue)
+    -- Use C++ function to upgrade (handles integer math correctly)
+    Msg2Player("Calling UpgradeItemMagicAttrib...")
+    local bSuccess = UpgradeItemMagicAttrib(nEquipIdx, nAttribSlot, nIncreasePercent)
+    Msg2Player("UpgradeItemMagicAttrib result: " .. tostring(bSuccess))
 
-    -- Read all 6 attribute VALUES from OLD item (before any modification)
-    Msg2Player("=== Reading ALL old attribute values ===")
-    local nAttribVals = {}
-    for i = 0, 5 do
-        local _, nVal, _, _ = GetItemMagicAttribInfo(nEquipIdx, i)
-        if i == nAttribSlot then
-            nAttribVals[i+1] = nNewValue  -- Use calculated new value for upgraded slot
-            Msg2Player("Slot " .. i .. " (WILL UPGRADE): " .. tostring(nOldValue) .. " -> " .. tostring(nNewValue))
-        else
-            nAttribVals[i+1] = nVal or 0  -- Keep original value for other slots
-            Msg2Player("Slot " .. i .. " (keep original): " .. tostring(nVal))
-        end
-    end
+    if bSuccess == 1 then
+        -- Force item refresh in container (like Tremble system)
+        Msg2Player("Refreshing item in container...")
+        AddItemAgain(nEquipIdx)
 
-    -- Delete old item and create new one with upgraded attributes
-    Msg2Player("Deleting old item...")
-    if DelItemByIndex(nEquipIdx) ~= 0 then
-        Msg2Player("Creating new item with upgraded attributes...")
-        Msg2Player("Values: [" .. nAttribVals[1] .. ", " .. nAttribVals[2] .. ", " .. nAttribVals[3] .. ", " .. nAttribVals[4] .. ", " .. nAttribVals[5] .. ", " .. nAttribVals[6] .. "]")
-        AddItemEx(
-            nGenre, nDetail, nParti, nLevel, nSeries, nLuck,
-            nAttribVals[1], nAttribVals[2], nAttribVals[3],
-            nAttribVals[4], nAttribVals[5], nAttribVals[6],
-            1, 0,  -- version, randseed
-            nPos   -- pos_builditem
-        )
-        Msg2Player("New item created successfully!")
+        -- Get the NEW value after C++ upgrade and refresh
+        local _, nNewValue, _, _ = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
+        Msg2Player("New value after upgrade: " .. tostring(nNewValue))
 
         -- Success message
         local szMsg = "<color=green>Nang cap thanh cong!<color>\n" ..
@@ -207,8 +186,8 @@ function ExeUpgradeAttrib()
                       ": <color=yellow>" .. nOldValue .. " -> " .. nNewValue .. "<color> (+" .. nIncreasePercent .. "%)"
         Talk(1, "", szMsg)
     else
-        Msg2Player("ERROR: Failed to delete old item!")
-        Talk(1, "", "<color=red>Loi: Khong the xoa trang bi cu!<color>")
+        Msg2Player("ERROR: Upgrade failed!")
+        Talk(1, "", "<color=red>Nang cap that bai!<color>")
     end
 end
 
