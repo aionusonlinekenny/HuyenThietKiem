@@ -161,31 +161,22 @@ function ExeUpgradeAttrib()
 
     Msg2Player("Calculated: " .. nOldValue .. " + " .. nIncrease .. " = " .. nNewValue)
 
-    -- Create upgraded item FIRST (before deleting old item)
+    -- Create upgraded item (C++ will handle removing old equipment and placing new one)
     Msg2Player("Creating upgraded item...")
     local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, nPos)
 
     if nNewItemIdx == 0 then
         Msg2Player("ERROR: UpgradeItemAttributes returned 0!")
-        Talk(1, "", "<color=red>Loi: Khong the tao item! Kiem tra rong trong inventory.<color>")
+        Talk(1, "", "<color=red>Loi: Khong the nang cap! Co the do rong hoac loi khac.<color>")
         return
     end
 
     Msg2Player("Upgraded item created successfully with index: " .. nNewItemIdx)
 
-    -- Now delete old items in correct order (higher index first)
-    Msg2Player("Deleting old items...")
-    if nEquipIdx > nMaterialIdx then
-        local nResult1 = DelItemByIndex(nEquipIdx)
-        local nResult2 = DelItemByIndex(nMaterialIdx)
-        Msg2Player("Delete results: equip=" .. nResult1 .. ", material=" .. nResult2)
-    else
-        local nResult1 = DelItemByIndex(nMaterialIdx)
-        local nResult2 = DelItemByIndex(nEquipIdx)
-        Msg2Player("Delete results: material=" .. nResult1 .. ", equip=" .. nResult2)
-    end
-
-    Msg2Player("Old items deleted successfully!")
+    -- Delete material only (equipment already handled by C++ function)
+    Msg2Player("Deleting material...")
+    local nResult = DelItemByIndex(nMaterialIdx)
+    Msg2Player("Delete material result: " .. nResult)
 
     -- Success message
     local szMsg = "<color=green>Nang cap thanh cong!<color>\n" ..

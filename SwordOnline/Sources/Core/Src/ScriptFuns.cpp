@@ -10436,26 +10436,41 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		nGenLevels[nUpgradeSlot]++;
 	}
 
+	// Get old item's position in container BEFORE we remove it
+	int nOldX = ItemSet.m_psItemInfo[nOldItemIdx].m_nX;
+	int nOldY = ItemSet.m_psItemInfo[nOldItemIdx].m_nY;
+
+	// Remove old item from player's container (but don't delete from global pool yet)
+	// This frees up space for the new item
+	Player[nPlayerIndex].m_ItemList.Remove(nOldItemIdx);
+
 	// Create new item using ItemSet.Add (same way as KItemGenerator)
 	int nNewItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
 	                              nGenLevels, nVersion, dwRandSeed);
 
 	if (nNewItemIdx <= 0 || nNewItemIdx >= MAX_ITEM)
 	{
+		// Failed to create - restore old item to container
+		Player[nPlayerIndex].m_ItemList.Add(nOldItemIdx, nPos, nOldX, nOldY);
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
 
-	// Add to player inventory - CHECK if this succeeds!
-	BOOL bAddResult = Player[nPlayerIndex].m_ItemList.Add(nNewItemIdx, nPos, 0, 0);
+	// Add new item to container at the SAME position as old item
+	BOOL bAddResult = Player[nPlayerIndex].m_ItemList.Add(nNewItemIdx, nPos, nOldX, nOldY);
 
 	if (!bAddResult)
 	{
-		// Failed to add to inventory - remove the created item to prevent item loss
+		// Failed to add new item - restore old item and cleanup new item
 		ItemSet.Remove(nNewItemIdx);
+		Player[nPlayerIndex].m_ItemList.Add(nOldItemIdx, nPos, nOldX, nOldY);
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
+
+	// Success! New item is in container at old item's position
+	// Now we can safely delete the old item from global pool
+	ItemSet.Remove(nOldItemIdx);
 
 	Lua_PushNumber(L, nNewItemIdx);
 	return 1;
