@@ -153,17 +153,6 @@ function ExeUpgradeAttrib()
     local nIncreasePercent = UPGRADE_MIN_PERCENT + random(0, UPGRADE_MAX_PERCENT - UPGRADE_MIN_PERCENT + 1)
     Msg2Player("Calculated increase: " .. nIncreasePercent .. "%")
 
-    -- Consume material FIRST
-    Msg2Player("Attempting to consume material (idx=" .. nMaterialIdx .. ")")
-    local nDelResult = DelItemByIndex(nMaterialIdx)
-    Msg2Player("DelItemByIndex result: " .. tostring(nDelResult))
-    if nDelResult == 0 then
-        Msg2Player("ERROR: Failed to delete material!")
-        Talk(1, "", "<color=red>Loi: Khong the tieu hao vat lieu!<color>")
-        return
-    end
-    Msg2Player("Material consumed successfully")
-
     -- Calculate new value (C++ will cast to int automatically)
     local nIncrease = (nOldValue * nIncreasePercent) / 100
     if nIncrease < 1 then nIncrease = 1 end
@@ -189,14 +178,48 @@ function ExeUpgradeAttrib()
     nOldGenLevels[nAttribSlot+1] = nNewValue
     Msg2Player("Slot " .. nAttribSlot .. " NEW generator value: " .. nNewValue)
 
-    -- Delete old item completely (this also removes from build container)
-    Msg2Player("Deleting old item completely...")
-    if DelItemByIndex(nEquipIdx) == 0 then
-        Msg2Player("ERROR: Failed to delete item!")
-        Talk(1, "", "<color=red>Loi: Khong the xoa item!<color>")
-        return
+    -- CRITICAL: Delete items in correct order to prevent index invalidation
+    -- Must delete HIGHER index first, then LOWER index
+    -- Otherwise deleting lower index shifts higher index and causes deletion to fail
+    Msg2Player("Equipment idx=" .. nEquipIdx .. ", Material idx=" .. nMaterialIdx)
+
+    if nEquipIdx > nMaterialIdx then
+        -- Delete equipment first (higher index)
+        Msg2Player("Deleting equipment first (higher index)...")
+        if DelItemByIndex(nEquipIdx) == 0 then
+            Msg2Player("ERROR: Failed to delete equipment!")
+            Talk(1, "", "<color=red>Loi: Khong the xoa trang bi!<color>")
+            return
+        end
+        Msg2Player("Equipment deleted successfully!")
+
+        -- Then delete material (lower index, still valid)
+        Msg2Player("Deleting material (lower index)...")
+        if DelItemByIndex(nMaterialIdx) == 0 then
+            Msg2Player("ERROR: Failed to delete material!")
+            Talk(1, "", "<color=red>Loi: Khong the xoa vat lieu!<color>")
+            return
+        end
+        Msg2Player("Material deleted successfully!")
+    else
+        -- Delete material first (higher index)
+        Msg2Player("Deleting material first (higher index)...")
+        if DelItemByIndex(nMaterialIdx) == 0 then
+            Msg2Player("ERROR: Failed to delete material!")
+            Talk(1, "", "<color=red>Loi: Khong the xoa vat lieu!<color>")
+            return
+        end
+        Msg2Player("Material deleted successfully!")
+
+        -- Then delete equipment (lower index, still valid)
+        Msg2Player("Deleting equipment (lower index)...")
+        if DelItemByIndex(nEquipIdx) == 0 then
+            Msg2Player("ERROR: Failed to delete equipment!")
+            Talk(1, "", "<color=red>Loi: Khong the xoa trang bi!<color>")
+            return
+        end
+        Msg2Player("Equipment deleted successfully!")
     end
-    Msg2Player("Item deleted successfully!")
 
     -- Create new item with upgraded generator level
     Msg2Player("Creating new item with upgraded attributes...")
