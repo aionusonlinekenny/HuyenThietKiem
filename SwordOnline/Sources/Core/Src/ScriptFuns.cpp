@@ -10307,9 +10307,12 @@ int LuaSetItemMagicAttribValueAndSync(Lua_State * L)
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0] = nNewValue;
 
 	// Set the generator level (CRITICAL for persistence!)
-	// We set it to the new value directly - this should work
-	// because generator level seems to directly correlate with attribute value
-	Item[nItemIdx].m_GeneratorParam.nGeneratorLevel[nSlot] = nNewValue;
+	// Use GetGeneratorParam() to access private member
+	KItemGeneratorParam* pGenParam = Item[nItemIdx].GetGeneratorParam();
+	if (pGenParam)
+	{
+		pGenParam->nGeneratorLevel[nSlot] = nNewValue;
+	}
 
 	Lua_PushNumber(L, 1);  // Success
 	return 1;
