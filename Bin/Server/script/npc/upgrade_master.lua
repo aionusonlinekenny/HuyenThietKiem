@@ -166,25 +166,29 @@ function ExeUpgradeAttrib()
     end
     Msg2Player("Material consumed successfully")
 
-    -- Use C++ function to upgrade (handles integer math correctly)
-    Msg2Player("Calling UpgradeItemMagicAttrib...")
+    -- IMPORTANT: Remove item from build container FIRST (move to player inventory)
+    Msg2Player("Removing item from build container to player inventory...")
+    if DelMyItem(nEquipIdx) == 0 then
+        Msg2Player("ERROR: Failed to remove item from container!")
+        Talk(1, "", "<color=red>Loi: Khong the lay item ra khoi container!<color>")
+        return
+    end
+    Msg2Player("Item removed from container successfully")
+
+    -- Now upgrade the item in PLAYER INVENTORY (not in container copy)
+    Msg2Player("Calling UpgradeItemMagicAttrib on item in player inventory...")
     local bSuccess = UpgradeItemMagicAttrib(nEquipIdx, nAttribSlot, nIncreasePercent)
     Msg2Player("UpgradeItemMagicAttrib result: " .. tostring(bSuccess))
 
     if bSuccess == 1 then
-        -- Force item refresh in container (Tremble pattern)
-        Msg2Player("Refreshing item in container...")
-        AddItemAgain(nEquipIdx)
-
-        Msg2Player("Removing from container...")
-        if DelMyItem(nEquipIdx) ~= 0 then
-            Msg2Player("Adding back to container...")
-            AddMyItem(nEquipIdx, nPos, 0, 0)
-        end
-
-        -- Get the NEW value after C++ upgrade and refresh
+        -- Get the NEW value after C++ upgrade
         local _, nNewValue, _, _ = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
         Msg2Player("New value after upgrade: " .. tostring(nNewValue))
+
+        -- Add the UPGRADED item back to build container
+        Msg2Player("Adding upgraded item back to container...")
+        AddMyItem(nEquipIdx, nPos, 0, 0)
+        Msg2Player("Item added back to container")
 
         -- Success message
         local szMsg = "<color=green>Nang cap thanh cong!<color>\n" ..
