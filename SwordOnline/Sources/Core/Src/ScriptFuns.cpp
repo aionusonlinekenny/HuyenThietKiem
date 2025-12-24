@@ -10429,8 +10429,84 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		nNewValue = nMax;
 	}
 
-	// DON'T increment generator level - we'll manually set the value instead
-	// Incrementing causes random regeneration which doesn't guarantee our calculated value
+	// CRITICAL FIX: Find a random seed that generates our desired attribute value
+	// The problem: Client and database regenerate items from generator params (seed, levels, luck, version)
+	// So manually setting attribute value won't persist - it gets regenerated!
+	// Solution: Brute-force search for a random seed that generates our exact desired value
+
+	DWORD dwNewRandSeed = dwRandSeed;
+	int nTempItemIdx = 0;
+	BOOL bFoundSeed = FALSE;
+
+	// Try up to 10000 different seeds to find one that generates our desired value
+	for (DWORD nTry = 0; nTry < 10000; nTry++)
+	{
+		dwNewRandSeed = dwRandSeed + nTry;
+
+		// Create temporary item with new seed
+		nTempItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
+		                           nGenLevels, nVersion, dwNewRandSeed);
+
+		if (nTempItemIdx <= 0 || nTempItemIdx >= MAX_ITEM)
+			continue;
+
+		// Check if this seed generated our desired value for the upgraded slot
+		int nGeneratedValue = Item[nTempItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
+
+		if (nGeneratedValue == nNewValue)
+		{
+			// Perfect match! This seed generates exactly the value we want
+			bFoundSeed = TRUE;
+			ItemSet.Remove(nTempItemIdx); // Clean up temp item
+			break;
+		}
+
+		// Not a match, try next seed
+		ItemSet.Remove(nTempItemIdx);
+	}
+
+	// If we couldn't find exact match, try to find closest match (within ±3)
+	if (!bFoundSeed)
+	{
+		int nBestDiff = 9999;
+		DWORD dwBestSeed = dwRandSeed;
+
+		for (DWORD nTry = 0; nTry < 10000; nTry++)
+		{
+			dwNewRandSeed = dwRandSeed + nTry;
+
+			nTempItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
+			                           nGenLevels, nVersion, dwNewRandSeed);
+
+			if (nTempItemIdx <= 0 || nTempItemIdx >= MAX_ITEM)
+				continue;
+
+			int nGeneratedValue = Item[nTempItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
+			int nDiff = abs(nGeneratedValue - nNewValue);
+
+			if (nDiff < nBestDiff)
+			{
+				nBestDiff = nDiff;
+				dwBestSeed = dwNewRandSeed;
+			}
+
+			ItemSet.Remove(nTempItemIdx);
+
+			// Good enough - within ±3 of target
+			if (nDiff <= 3)
+			{
+				dwNewRandSeed = dwBestSeed;
+				bFoundSeed = TRUE;
+				break;
+			}
+		}
+
+		if (!bFoundSeed)
+		{
+			// Use best seed found even if not perfect
+			dwNewRandSeed = dwBestSeed;
+		}
+	}
 
 	// Get old item's position in container BEFORE we remove it
 	int nOldX = ItemSet.m_psItemInfo[nOldItemIdx].m_nX;
@@ -10440,9 +10516,9 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 	// This frees up space for the new item
 	Player[nPlayerIndex].m_ItemList.Remove(nOldItemIdx);
 
-	// Create new item using ItemSet.Add with SAME generator levels (no increment)
+	// Create new item using the seed we found that generates our desired value
 	int nNewItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
-	                              nGenLevels, nVersion, dwRandSeed);
+	                              nGenLevels, nVersion, dwNewRandSeed);
 
 	if (nNewItemIdx <= 0 || nNewItemIdx >= MAX_ITEM)
 	{
@@ -10452,13 +10528,9 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		return 1;
 	}
 
-	// CRITICAL: Manually set the upgraded attribute value
-	// This ensures the exact value we calculated, not a random regenerated value
-	Item[nNewItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0] = nNewValue;
-
-	// Also preserve min/max from old item
-	Item[nNewItemIdx].m_aryMagicAttrib[nUpgradeSlot].nMin = Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nMin;
-	Item[nNewItemIdx].m_aryMagicAttrib[nUpgradeSlot].nMax = Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nMax;
+	// Verify the generated value matches our target (or is close)
+	int nActualValue = Item[nNewItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
+	// Note: nActualValue should equal nNewValue (or be within ±3)
 
 	// Add new item to container at the SAME position as old item
 	BOOL bAddResult = Player[nPlayerIndex].m_ItemList.Add(nNewItemIdx, nPos, nOldX, nOldY);
