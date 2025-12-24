@@ -10446,8 +10446,16 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		return 1;
 	}
 
-	// Add to player inventory
-	Player[nPlayerIndex].m_ItemList.Add(nNewItemIdx, nPos, 0, 0);
+	// Add to player inventory - CHECK if this succeeds!
+	BOOL bAddResult = Player[nPlayerIndex].m_ItemList.Add(nNewItemIdx, nPos, 0, 0);
+
+	if (!bAddResult)
+	{
+		// Failed to add to inventory - remove the created item to prevent item loss
+		ItemSet.Remove(nNewItemIdx);
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
 
 	Lua_PushNumber(L, nNewItemIdx);
 	return 1;

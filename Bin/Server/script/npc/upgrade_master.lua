@@ -166,20 +166,23 @@ function ExeUpgradeAttrib()
     local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, nPos)
 
     if nNewItemIdx == 0 then
-        Talk(1, "", "<color=red>Loi: Khong the tao item moi!<color>")
+        Msg2Player("ERROR: UpgradeItemAttributes returned 0!")
+        Talk(1, "", "<color=red>Loi: Khong the tao item! Kiem tra rong trong inventory.<color>")
         return
     end
 
-    Msg2Player("Upgraded item created successfully!")
+    Msg2Player("Upgraded item created successfully with index: " .. nNewItemIdx)
 
     -- Now delete old items in correct order (higher index first)
     Msg2Player("Deleting old items...")
     if nEquipIdx > nMaterialIdx then
-        DelItemByIndex(nEquipIdx)
-        DelItemByIndex(nMaterialIdx)
+        local nResult1 = DelItemByIndex(nEquipIdx)
+        local nResult2 = DelItemByIndex(nMaterialIdx)
+        Msg2Player("Delete results: equip=" .. nResult1 .. ", material=" .. nResult2)
     else
-        DelItemByIndex(nMaterialIdx)
-        DelItemByIndex(nEquipIdx)
+        local nResult1 = DelItemByIndex(nMaterialIdx)
+        local nResult2 = DelItemByIndex(nEquipIdx)
+        Msg2Player("Delete results: material=" .. nResult1 .. ", equip=" .. nResult2)
     end
 
     Msg2Player("Old items deleted successfully!")
