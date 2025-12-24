@@ -10297,22 +10297,12 @@ int LuaSetItemMagicAttribValueAndSync(Lua_State * L)
 		return 1;
 	}
 
-	// CRITICAL: Must set BOTH magic attribute value AND generator level!
-	// - Magic attribute value: what shows in-game (generated value)
-	// - Generator level: what gets saved/synced to client and DB
-	// If we only set the value, it gets lost on refresh because
-	// items regenerate attributes from generator params!
-
-	// Set the display value
+	// Set the magic attribute value directly
+	// DO NOT modify generator level - it will cause regeneration to 0!
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0] = nNewValue;
 
-	// Set the generator level (CRITICAL for persistence!)
-	// Use GetGeneratorParam() to access private member
-	KItemGeneratorParam* pGenParam = Item[nItemIdx].GetGeneratorParam();
-	if (pGenParam)
-	{
-		pGenParam->nGeneratorLevel[nSlot] = nNewValue;
-	}
+	// Item will sync to client when UI closes or item is moved
+	// DO NOT force refresh - it causes regeneration from generator params!
 
 	Lua_PushNumber(L, 1);  // Success
 	return 1;
