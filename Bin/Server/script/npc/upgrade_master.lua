@@ -172,28 +172,58 @@ function ExeUpgradeAttrib()
 
     Msg2Player("Calculated: " .. nOldValue .. " + " .. nIncrease .. " = " .. nNewValue)
 
-    -- Use NEW C++ function to set value (C++ casts to int)
-    Msg2Player("Calling SetItemMagicAttribValueAndSync...")
-    local bSuccess = SetItemMagicAttribValueAndSync(nEquipIdx, nAttribSlot, nNewValue)
-    Msg2Player("SetItemMagicAttribValueAndSync result: " .. tostring(bSuccess))
+    -- Read all item properties for recreation
+    Msg2Player("=== Reading item properties for recreation ===")
 
-    if bSuccess == 1 then
-        -- DO NOT refresh container - it causes regeneration!
-        -- Item will sync when UI closes or item is moved
-
-        Msg2Player("Attribute upgraded successfully!")
-        Msg2Player("Close UI to see changes (item will sync)")
-
-        -- Success message
-        local szMsg = "<color=green>Nang cap thanh cong!<color>\n" ..
-                      "Thuoc tinh #" .. (nAttribSlot + 1) ..
-                      ": <color=yellow>" .. nOldValue .. " -> " .. nNewValue .. "<color> (+" .. nIncreasePercent .. "%)\n" ..
-                      "<color=cyan>Dong UI de xem thay doi!<color>"
-        Talk(1, "", szMsg)
-    else
-        Msg2Player("ERROR: Failed to set attribute value!")
-        Talk(1, "", "<color=red>Loi: Khong the nang cap!<color>")
+    -- Read all 6 generator levels (current tiers)
+    local nOldGenLevels = {}
+    for i = 0, 5 do
+        -- For now, we'll keep the same generator level
+        -- In the future, we could calculate the correct level based on MagicAttrib.txt
+        local _, nVal, _, _ = GetItemMagicAttribInfo(nEquipIdx, i)
+        nOldGenLevels[i+1] = nVal or 0
+        Msg2Player("Slot " .. i .. " old generator value: " .. tostring(nVal))
     end
+
+    -- Set the new value for the upgraded slot
+    nOldGenLevels[nAttribSlot+1] = nNewValue
+    Msg2Player("Slot " .. nAttribSlot .. " NEW generator value: " .. nNewValue)
+
+    -- Remove item from build container first
+    Msg2Player("Removing item from build container...")
+    if DelMyItem(nEquipIdx) == 0 then
+        Msg2Player("ERROR: Failed to remove item from container!")
+        Talk(1, "", "<color=red>Loi: Khong the lay item ra!<color>")
+        return
+    end
+
+    -- Delete old item completely
+    Msg2Player("Deleting old item completely...")
+    if DelItemByIndex(nEquipIdx) == 0 then
+        Msg2Player("ERROR: Failed to delete item!")
+        Talk(1, "", "<color=red>Loi: Khong the xoa item!<color>")
+        return
+    end
+
+    -- Create new item with upgraded generator level
+    Msg2Player("Creating new item with upgraded attributes...")
+    Msg2Player("Genre=" .. nGenre .. " Detail=" .. nDetail .. " Parti=" .. nParti .. " Level=" .. nLevel .. " Series=" .. nSeries .. " Luck=" .. nLuck)
+    Msg2Player("GenLevels: [" .. nOldGenLevels[1] .. "," .. nOldGenLevels[2] .. "," .. nOldGenLevels[3] .. "," .. nOldGenLevels[4] .. "," .. nOldGenLevels[5] .. "," .. nOldGenLevels[6] .. "]")
+
+    AddItemEx(
+        nGenre, nDetail, nParti, nLevel, nSeries, nLuck,
+        nOldGenLevels[1], nOldGenLevels[2], nOldGenLevels[3],
+        nOldGenLevels[4], nOldGenLevels[5], nOldGenLevels[6],
+        1, 0,  -- version, randseed
+        nPos   -- pos_builditem
+    )
+    Msg2Player("New item created successfully!")
+
+    -- Success message
+    local szMsg = "<color=green>Nang cap thanh cong!<color>\n" ..
+                  "Thuoc tinh #" .. (nAttribSlot + 1) ..
+                  ": <color=yellow>" .. nOldValue .. " -> " .. nNewValue .. "<color> (+" .. nIncreasePercent .. "%)"
+    Talk(1, "", szMsg)
 end
 
 -- ────────────────────────────────────────────────────────────
