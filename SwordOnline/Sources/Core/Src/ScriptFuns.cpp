@@ -10357,21 +10357,13 @@ int LuaGetItemGeneratorLevels(Lua_State * L)
 }
 
 // ════════════════════════════════════════════════════════════
-// Create Item With Exact Magic Attribute Values
-// Lua: nItemIdx = CreateItemWithAttribs(nGenre, nDetail, nParti, nLevel, nSeries, nLuck,
-//                                        nAttrib0Type, nAttrib0Val, nAttrib0Min, nAttrib0Max,
-//                                        nAttrib1Type, nAttrib1Val, nAttrib1Min, nAttrib1Max,
-//                                        nAttrib2Type, nAttrib2Val, nAttrib2Min, nAttrib2Max,
-//                                        nAttrib3Type, nAttrib3Val, nAttrib3Min, nAttrib3Max,
-//                                        nAttrib4Type, nAttrib4Val, nAttrib4Min, nAttrib4Max,
-//                                        nAttrib5Type, nAttrib5Val, nAttrib5Min, nAttrib5Max,
-//                                        nPos, nX, nY)
-// Creates an item and sets exact magic attribute values with min/max validation
+// Upgrade Item Attributes - Create upgraded item with exact attribute values
+// Lua: nItemIdx = UpgradeItemAttributes(nOldItemIdx, nUpgradeSlot, nUpgradePercent, nPos)
+// Takes old item, calculates new attribute values, creates upgraded item
 // ════════════════════════════════════════════════════════════
-int LuaCreateItemWithAttribs(Lua_State * L)
+int LuaUpgradeItemAttributes(Lua_State * L)
 {
-	// Need at least 31 parameters (6 basic + 24 attrib type/val/min/max tuples + pos)
-	if (Lua_GetTopIndex(L) < 31)
+	if (Lua_GetTopIndex(L) < 4)
 	{
 		Lua_PushNumber(L, 0);
 		return 1;
@@ -10384,81 +10376,80 @@ int LuaCreateItemWithAttribs(Lua_State * L)
 		return 1;
 	}
 
-	// Parse parameters
-	int nGenre = (int)Lua_ValueToNumber(L, 1);
-	int nDetail = (int)Lua_ValueToNumber(L, 2);
-	int nParti = (int)Lua_ValueToNumber(L, 3);
-	int nLevel = (int)Lua_ValueToNumber(L, 4);
-	int nSeries = (int)Lua_ValueToNumber(L, 5);
-	int nLuck = (int)Lua_ValueToNumber(L, 6);
-
-	// 6 attribute tuples (type, value, min, max)
-	int nAttribTypes[6];
-	int nAttribValues[6];
-	int nAttribMins[6];
-	int nAttribMaxs[6];
-	for (int i = 0; i < 6; i++)
-	{
-		nAttribTypes[i] = (int)Lua_ValueToNumber(L, 7 + i * 4);
-		nAttribValues[i] = (int)Lua_ValueToNumber(L, 8 + i * 4);
-		nAttribMins[i] = (int)Lua_ValueToNumber(L, 9 + i * 4);
-		nAttribMaxs[i] = (int)Lua_ValueToNumber(L, 10 + i * 4);
-
-		// Validate: value should not exceed max (if max > 0)
-		if (nAttribMaxs[i] > 0 && nAttribValues[i] > nAttribMaxs[i])
-		{
-			nAttribValues[i] = nAttribMaxs[i];
-		}
-	}
-
-	// Position (X, Y optional, default to 0)
-	int nPos = (int)Lua_ValueToNumber(L, 31);
-	int nX = 0, nY = 0;
-	if (Lua_GetTopIndex(L) >= 32)
-		nX = (int)Lua_ValueToNumber(L, 32);
-	if (Lua_GetTopIndex(L) >= 33)
-		nY = (int)Lua_ValueToNumber(L, 33);
-
-	// Create item in global item pool (without magic attributes initially)
-	// ItemSet.Add expects: genre, series, level, luck, detail, particular, magicLevelArray*, version, randSeed
-	int nItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
-	                           NULL, g_SubWorldSet.GetGameVersion(), 0);
-
-	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
+	int nOldItemIdx = (int)Lua_ValueToNumber(L, 1);
+	if (nOldItemIdx <= 0 || nOldItemIdx >= MAX_ITEM)
 	{
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
 
-	// Now set the magic attributes directly with validated values
-	for (int j = 0; j < 6; j++)
+	int nUpgradeSlot = (int)Lua_ValueToNumber(L, 2);  // Which attribute slot to upgrade (0-5)
+	int nUpgradePercent = (int)Lua_ValueToNumber(L, 3);  // Upgrade percentage
+	int nPos = (int)Lua_ValueToNumber(L, 4);  // Position to place new item
+
+	// Get old item properties
+	int nGenre = Item[nOldItemIdx].GetGenre();
+	int nDetail = Item[nOldItemIdx].GetDetailType();
+	int nParti = Item[nOldItemIdx].GetParticular();
+	int nLevel = Item[nOldItemIdx].GetLevel();
+	int nSeries = Item[nOldItemIdx].GetSeries();
+
+	// Get old generator params
+	KItemGeneratorParam* pOldGenParam = Item[nOldItemIdx].GetGeneratorParam();
+	if (!pOldGenParam)
 	{
-		if (nAttribTypes[j] > 0)
-		{
-			Item[nItemIdx].m_aryMagicAttrib[j].nAttribType = nAttribTypes[j];
-			Item[nItemIdx].m_aryMagicAttrib[j].nValue[0] = nAttribValues[j];
-			Item[nItemIdx].m_aryMagicAttrib[j].nMin = nAttribMins[j];
-			Item[nItemIdx].m_aryMagicAttrib[j].nMax = nAttribMaxs[j];
-		}
+		Lua_PushNumber(L, 0);
+		return 1;
 	}
 
-	// Set generator params to 0 so it doesn't try to regenerate attributes
-	KItemGeneratorParam* pGenParam = Item[nItemIdx].GetGeneratorParam();
-	if (pGenParam)
+	int nLuck = pOldGenParam->nLuck;
+	int nVersion = pOldGenParam->nVersion;
+	DWORD dwRandSeed = pOldGenParam->dwRandomSeed;
+
+	// Copy all generator levels from old item
+	int nGenLevels[6];
+	for (int i = 0; i < 6; i++)
 	{
-		for (int k = 0; k < 6; k++)
-		{
-			pGenParam->nGeneratorLevel[k] = 0;
-		}
-		pGenParam->nVersion = 0;
-		pGenParam->dwRandomSeed = 0;
+		nGenLevels[i] = pOldGenParam->nGeneratorLevel[i];
 	}
 
-	// Add item to player's inventory at specified position
-	Player[nPlayerIndex].m_ItemList.Add(nItemIdx, nPos, nX, nY);
+	// Calculate new value for the upgraded slot
+	// Get current attribute value
+	int nOldValue = Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
+	int nMax = Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nMax;
 
-	// Return the item index
-	Lua_PushNumber(L, nItemIdx);
+	// Calculate upgrade (rounded to integer)
+	int nIncrease = (nOldValue * nUpgradePercent) / 100;
+	if (nIncrease < 1) nIncrease = 1;
+	int nNewValue = nOldValue + nIncrease;
+
+	// Cap at max value from MagicAttrib.txt
+	if (nMax > 0 && nNewValue > nMax)
+	{
+		nNewValue = nMax;
+	}
+
+	// Increment generator level for upgraded slot
+	// This ensures proper regeneration on client
+	if (nGenLevels[nUpgradeSlot] < 10)
+	{
+		nGenLevels[nUpgradeSlot]++;
+	}
+
+	// Create new item using ItemSet.Add (same way as KItemGenerator)
+	int nNewItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
+	                              nGenLevels, nVersion, dwRandSeed);
+
+	if (nNewItemIdx <= 0 || nNewItemIdx >= MAX_ITEM)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// Add to player inventory
+	Player[nPlayerIndex].m_ItemList.Add(nNewItemIdx, nPos, 0, 0);
+
+	Lua_PushNumber(L, nNewItemIdx);
 	return 1;
 }
 
@@ -10982,7 +10973,7 @@ TLua_Funcs GameScriptFuns[] =
 	{"GetItemMagicAttribInfo",	LuaGetItemMagicAttribInfo},
 	{"SetItemMagicAttribValueAndSync",	LuaSetItemMagicAttribValueAndSync},
 	{"GetItemGeneratorLevels",	LuaGetItemGeneratorLevels},
-	{"CreateItemWithAttribs",	LuaCreateItemWithAttribs},
+	{"UpgradeItemAttributes",	LuaUpgradeItemAttributes},
 	//
 	{"SetLockSongJin",		LuaSetLockSongJin},
 	{"GetLockSongJin",		LuaGetLockSongJin},
