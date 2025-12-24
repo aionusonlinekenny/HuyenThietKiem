@@ -10429,12 +10429,8 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		nNewValue = nMax;
 	}
 
-	// Increment generator level for upgraded slot
-	// This ensures proper regeneration on client
-	if (nGenLevels[nUpgradeSlot] < 10)
-	{
-		nGenLevels[nUpgradeSlot]++;
-	}
+	// DON'T increment generator level - we'll manually set the value instead
+	// Incrementing causes random regeneration which doesn't guarantee our calculated value
 
 	// Get old item's position in container BEFORE we remove it
 	int nOldX = ItemSet.m_psItemInfo[nOldItemIdx].m_nX;
@@ -10444,7 +10440,7 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 	// This frees up space for the new item
 	Player[nPlayerIndex].m_ItemList.Remove(nOldItemIdx);
 
-	// Create new item using ItemSet.Add (same way as KItemGenerator)
+	// Create new item using ItemSet.Add with SAME generator levels (no increment)
 	int nNewItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
 	                              nGenLevels, nVersion, dwRandSeed);
 
@@ -10455,6 +10451,14 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
+
+	// CRITICAL: Manually set the upgraded attribute value
+	// This ensures the exact value we calculated, not a random regenerated value
+	Item[nNewItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0] = nNewValue;
+
+	// Also preserve min/max from old item
+	Item[nNewItemIdx].m_aryMagicAttrib[nUpgradeSlot].nMin = Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nMin;
+	Item[nNewItemIdx].m_aryMagicAttrib[nUpgradeSlot].nMax = Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nMax;
 
 	// Add new item to container at the SAME position as old item
 	BOOL bAddResult = Player[nPlayerIndex].m_ItemList.Add(nNewItemIdx, nPos, nOldX, nOldY);
@@ -10468,7 +10472,7 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		return 1;
 	}
 
-	// Success! New item is in container at old item's position
+	// Success! New item is in container at old item's position with upgraded value
 	// Now we can safely delete the old item from global pool
 	ItemSet.Remove(nOldItemIdx);
 
