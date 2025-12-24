@@ -10406,8 +10406,12 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 	int nVersion = pOldGenParam->nVersion;
 	DWORD dwRandSeed = pOldGenParam->dwRandomSeed;
 
-	// SIMPLE APPROACH: Just upgrade the value directly on existing item!
-	// No need to delete, recreate, or search for seeds
+	// Copy all 6 generator levels
+	int nGenLevels[6];
+	for (int i = 0; i < 6; i++)
+	{
+		nGenLevels[i] = pOldGenParam->nGeneratorLevel[i];
+	}
 
 	// Calculate new value for the upgraded slot
 	int nOldValue = Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
@@ -10424,11 +10428,43 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		nNewValue = nMax;
 	}
 
-	// DIRECTLY set the new value on the existing item
-	Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0] = nNewValue;
+	// Get old item's position BEFORE deleting
+	int nOldX = ItemSet.m_psItemInfo[nOldItemIdx].m_nX;
+	int nOldY = ItemSet.m_psItemInfo[nOldItemIdx].m_nY;
 
-	// Return the same item index (not a new item)
-	Lua_PushNumber(L, nOldItemIdx);
+	// Remove old item from container (frees space)
+	Player[nPlayerIndex].m_ItemList.Remove(nOldItemIdx);
+
+	// Create new item like AddItemEx does
+	int nNewItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
+	                              nGenLevels, nVersion, dwRandSeed);
+
+	if (nNewItemIdx <= 0 || nNewItemIdx >= MAX_ITEM)
+	{
+		// Failed to create - restore old item
+		Player[nPlayerIndex].m_ItemList.Add(nOldItemIdx, nPos, nOldX, nOldY);
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// MANUALLY set the upgraded attribute value on new item
+	Item[nNewItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0] = nNewValue;
+
+	// Add new item to player's inventory at old position
+	if (!Player[nPlayerIndex].m_ItemList.Add(nNewItemIdx, nPos, nOldX, nOldY))
+	{
+		// Failed to add - cleanup and restore
+		ItemSet.Remove(nNewItemIdx);
+		Player[nPlayerIndex].m_ItemList.Add(nOldItemIdx, nPos, nOldX, nOldY);
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// Success! Delete old item from global pool
+	ItemSet.Remove(nOldItemIdx);
+
+	// Return new item index
+	Lua_PushNumber(L, nNewItemIdx);
 	return 1;
 }
 
