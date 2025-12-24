@@ -122,34 +122,32 @@ function ExeUpgradeAttrib()
         return
     end
 
-    -- Find the FIRST attribute with value > 0
-    Msg2Player("=== Finding first attribute to upgrade ===")
+    -- Find the FIRST attribute that is NOT at max
+    Msg2Player("=== Finding first upgradeable attribute ===")
     local nAttribSlot = -1
     for i = 0, 5 do
         local nAttribType, nValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
         if nAttribType and nAttribType > 0 then
-            nAttribSlot = i
-            Msg2Player("Found first attribute at slot " .. i)
-            break
+            -- Check if this attribute is already at max
+            if nMax > 0 and nValue >= nMax then
+                Msg2Player("Slot " .. i .. " is at MAX (" .. nValue .. "/" .. nMax .. "), skipping...")
+            else
+                nAttribSlot = i
+                Msg2Player("Found upgradeable attribute at slot " .. i .. " (value=" .. nValue .. ", max=" .. nMax .. ")")
+                break
+            end
         end
     end
 
     if nAttribSlot < 0 then
-        Msg2Player("ERROR: No attribute slot found (nAttribSlot < 0)")
-        Talk(1, "", "<color=red>Khong tim thay thuoc tinh de nang cap!<color>")
+        Msg2Player("ERROR: No upgradeable attribute found (all at MAX or no attributes)")
+        Talk(1, "", "<color=red>Tat ca thuoc tinh da dat MAX! Khong the nang cap!<color>")
         return
     end
 
-    -- Get attribute info
+    -- Get attribute info for the selected slot
     local nAttribType, nOldValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
     Msg2Player("Selected slot " .. nAttribSlot .. ": type=" .. tostring(nAttribType) .. " oldVal=" .. tostring(nOldValue) .. " min=" .. tostring(nMin) .. " max=" .. tostring(nMax))
-
-    -- Check if attribute is already at max
-    if nMax > 0 and nOldValue >= nMax then
-        Msg2Player("Attribute already at MAX: " .. nOldValue .. " >= " .. nMax)
-        Talk(1, "", "<color=yellow>Thuoc tinh dau tien da dat gia tri MAX!<color>\nHay nang cap thuoc tinh khac.")
-        return
-    end
 
     -- Calculate upgrade percentage (random between min and max)
     local nIncreasePercent = UPGRADE_MIN_PERCENT + random(0, UPGRADE_MAX_PERCENT - UPGRADE_MIN_PERCENT + 1)
