@@ -164,19 +164,26 @@ function ExeUpgradeAttrib()
     -- Read all item properties for recreation
     Msg2Player("=== Reading item properties for recreation ===")
 
-    -- Read all 6 generator levels (current tiers)
-    local nOldGenLevels = {}
-    for i = 0, 5 do
-        -- For now, we'll keep the same generator level
-        -- In the future, we could calculate the correct level based on MagicAttrib.txt
-        local _, nVal, _, _ = GetItemMagicAttribInfo(nEquipIdx, i)
-        nOldGenLevels[i+1] = nVal or 0
-        Msg2Player("Slot " .. i .. " old generator value: " .. tostring(nVal))
+    -- Get all 6 generator levels (tiers 1-10) from the item
+    local l0, l1, l2, l3, l4, l5 = GetItemGeneratorLevels(nEquipIdx)
+    local nOldGenLevels = {l0, l1, l2, l3, l4, l5}
+
+    Msg2Player("Old generator levels (tiers): [" .. l0 .. "," .. l1 .. "," .. l2 .. "," .. l3 .. "," .. l4 .. "," .. l5 .. "]")
+    Msg2Player("Upgrading slot " .. nAttribSlot .. " from value " .. nOldValue .. " to " .. nNewValue)
+
+    -- Upgrade strategy: Increase the generator level (tier) by 1
+    -- This moves the attribute to the next tier in MagicAttrib.txt
+    local nOldTier = nOldGenLevels[nAttribSlot+1]
+    local nNewTier = nOldTier + 1
+
+    -- Cap at tier 10 (max generator level)
+    if nNewTier > 10 then
+        nNewTier = 10
+        Msg2Player("WARNING: Tier already at max (10), keeping at 10")
     end
 
-    -- Set the new value for the upgraded slot
-    nOldGenLevels[nAttribSlot+1] = nNewValue
-    Msg2Player("Slot " .. nAttribSlot .. " NEW generator value: " .. nNewValue)
+    nOldGenLevels[nAttribSlot+1] = nNewTier
+    Msg2Player("Slot " .. nAttribSlot .. " tier: " .. nOldTier .. " -> " .. nNewTier)
 
     -- CRITICAL: Delete items in correct order to prevent index invalidation
     -- Must delete HIGHER index first, then LOWER index

@@ -10308,6 +10308,54 @@ int LuaSetItemMagicAttribValueAndSync(Lua_State * L)
 	return 1;
 }
 
+// ════════════════════════════════════════════════════════════
+// Get Item Generator Levels (the tier values used for generation)
+// Lua: level0, level1, level2, level3, level4, level5 = GetItemGeneratorLevels(nItemIdx)
+// ════════════════════════════════════════════════════════════
+int LuaGetItemGeneratorLevels(Lua_State * L)
+{
+	// Default return all 0s if any validation fails
+	if (Lua_GetTopIndex(L) < 1)
+	{
+		for (int i = 0; i < 6; i++)
+			Lua_PushNumber(L, 0);
+		return 6;
+	}
+
+	int nPlayerIndex = GetPlayerIndex(L);
+	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_PLAYER)
+	{
+		for (int i = 0; i < 6; i++)
+			Lua_PushNumber(L, 0);
+		return 6;
+	}
+
+	int nItemIdx = (int)Lua_ValueToNumber(L, 1);
+	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
+	{
+		for (int i = 0; i < 6; i++)
+			Lua_PushNumber(L, 0);
+		return 6;
+	}
+
+	// Get generator params
+	KItemGeneratorParam* pGenParam = Item[nItemIdx].GetGeneratorParam();
+	if (!pGenParam)
+	{
+		for (int i = 0; i < 6; i++)
+			Lua_PushNumber(L, 0);
+		return 6;
+	}
+
+	// Return all 6 generator levels (tiers 1-10, not attribute values!)
+	for (int i = 0; i < 6; i++)
+	{
+		Lua_PushNumber(L, pGenParam->nGeneratorLevel[i]);
+	}
+
+	return 6;
+}
+
 // --
 // LockSongJin by kinnox
 // --
@@ -10827,6 +10875,7 @@ TLua_Funcs GameScriptFuns[] =
 	{"OpenUpgradeAttribUI",		LuaOpenUpgradeAttribUI},
 	{"GetItemMagicAttribInfo",	LuaGetItemMagicAttribInfo},
 	{"SetItemMagicAttribValueAndSync",	LuaSetItemMagicAttribValueAndSync},
+	{"GetItemGeneratorLevels",	LuaGetItemGeneratorLevels},
 	//
 	{"SetLockSongJin",		LuaSetLockSongJin},
 	{"GetLockSongJin",		LuaGetLockSongJin},
