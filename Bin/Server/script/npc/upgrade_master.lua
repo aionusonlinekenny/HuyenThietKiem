@@ -189,21 +189,14 @@ function ExeUpgradeAttrib()
     nOldGenLevels[nAttribSlot+1] = nNewValue
     Msg2Player("Slot " .. nAttribSlot .. " NEW generator value: " .. nNewValue)
 
-    -- Remove item from build container first
-    Msg2Player("Removing item from build container...")
-    if DelMyItem(nEquipIdx) == 0 then
-        Msg2Player("ERROR: Failed to remove item from container!")
-        Talk(1, "", "<color=red>Loi: Khong the lay item ra!<color>")
-        return
-    end
-
-    -- Delete old item completely
+    -- Delete old item completely (this also removes from build container)
     Msg2Player("Deleting old item completely...")
     if DelItemByIndex(nEquipIdx) == 0 then
         Msg2Player("ERROR: Failed to delete item!")
         Talk(1, "", "<color=red>Loi: Khong the xoa item!<color>")
         return
     end
+    Msg2Player("Item deleted successfully!")
 
     -- Create new item with upgraded generator level
     Msg2Player("Creating new item with upgraded attributes...")
