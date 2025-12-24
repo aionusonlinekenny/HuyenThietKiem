@@ -10356,6 +10356,110 @@ int LuaGetItemGeneratorLevels(Lua_State * L)
 	return 6;
 }
 
+// ════════════════════════════════════════════════════════════
+// Create Item With Exact Magic Attribute Values
+// Lua: nItemIdx = CreateItemWithAttribs(nGenre, nDetail, nParti, nLevel, nSeries, nLuck,
+//                                        nAttrib0Type, nAttrib0Val, nAttrib0Min, nAttrib0Max,
+//                                        nAttrib1Type, nAttrib1Val, nAttrib1Min, nAttrib1Max,
+//                                        nAttrib2Type, nAttrib2Val, nAttrib2Min, nAttrib2Max,
+//                                        nAttrib3Type, nAttrib3Val, nAttrib3Min, nAttrib3Max,
+//                                        nAttrib4Type, nAttrib4Val, nAttrib4Min, nAttrib4Max,
+//                                        nAttrib5Type, nAttrib5Val, nAttrib5Min, nAttrib5Max,
+//                                        nPos, nX, nY)
+// Creates an item and sets exact magic attribute values with min/max validation
+// ════════════════════════════════════════════════════════════
+int LuaCreateItemWithAttribs(Lua_State * L)
+{
+	// Need at least 31 parameters (6 basic + 24 attrib type/val/min/max tuples + pos)
+	if (Lua_GetTopIndex(L) < 31)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nPlayerIndex = GetPlayerIndex(L);
+	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_PLAYER)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// Parse parameters
+	int nGenre = (int)Lua_ValueToNumber(L, 1);
+	int nDetail = (int)Lua_ValueToNumber(L, 2);
+	int nParti = (int)Lua_ValueToNumber(L, 3);
+	int nLevel = (int)Lua_ValueToNumber(L, 4);
+	int nSeries = (int)Lua_ValueToNumber(L, 5);
+	int nLuck = (int)Lua_ValueToNumber(L, 6);
+
+	// 6 attribute tuples (type, value, min, max)
+	int nAttribTypes[6];
+	int nAttribValues[6];
+	int nAttribMins[6];
+	int nAttribMaxs[6];
+	for (int i = 0; i < 6; i++)
+	{
+		nAttribTypes[i] = (int)Lua_ValueToNumber(L, 7 + i * 4);
+		nAttribValues[i] = (int)Lua_ValueToNumber(L, 8 + i * 4);
+		nAttribMins[i] = (int)Lua_ValueToNumber(L, 9 + i * 4);
+		nAttribMaxs[i] = (int)Lua_ValueToNumber(L, 10 + i * 4);
+
+		// Validate: value should not exceed max (if max > 0)
+		if (nAttribMaxs[i] > 0 && nAttribValues[i] > nAttribMaxs[i])
+		{
+			nAttribValues[i] = nAttribMaxs[i];
+		}
+	}
+
+	// Position (X, Y optional, default to 0)
+	int nPos = (int)Lua_ValueToNumber(L, 31);
+	int nX = 0, nY = 0;
+	if (Lua_GetTopIndex(L) >= 32)
+		nX = (int)Lua_ValueToNumber(L, 32);
+	if (Lua_GetTopIndex(L) >= 33)
+		nY = (int)Lua_ValueToNumber(L, 33);
+
+	// Create item using AddItem (this will add an empty item with no magic attributes)
+	int nItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, nLuck, nDetail, nParti,
+	                           Player[nPlayerIndex].m_nIndex, nX, nY, nPos);
+
+	if (nItemIdx <= 0)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// Now set the magic attributes directly with validated values
+	for (int i = 0; i < 6; i++)
+	{
+		if (nAttribTypes[i] > 0)
+		{
+			Item[nItemIdx].m_aryMagicAttrib[i].nAttribType = nAttribTypes[i];
+			Item[nItemIdx].m_aryMagicAttrib[i].nValue[0] = nAttribValues[i];
+			Item[nItemIdx].m_aryMagicAttrib[i].nMin = nAttribMins[i];
+			Item[nItemIdx].m_aryMagicAttrib[i].nMax = nAttribMaxs[i];
+		}
+	}
+
+	// Set generator params to 0 so it doesn't try to regenerate attributes
+	KItemGeneratorParam* pGenParam = Item[nItemIdx].GetGeneratorParam();
+	if (pGenParam)
+	{
+		for (int i = 0; i < 6; i++)
+		{
+			pGenParam->nGeneratorLevel[i] = 0;
+		}
+		pGenParam->nVersion = 0;
+		pGenParam->dwRandomSeed = 0;
+	}
+
+	// Sync to client
+	Player[nPlayerIndex].m_ItemList.SyncItem(nItemIdx);
+
+	Lua_PushNumber(L, nItemIdx);
+	return 1;
+}
+
 // --
 // LockSongJin by kinnox
 // --
@@ -10876,6 +10980,7 @@ TLua_Funcs GameScriptFuns[] =
 	{"GetItemMagicAttribInfo",	LuaGetItemMagicAttribInfo},
 	{"SetItemMagicAttribValueAndSync",	LuaSetItemMagicAttribValueAndSync},
 	{"GetItemGeneratorLevels",	LuaGetItemGeneratorLevels},
+	{"CreateItemWithAttribs",	LuaCreateItemWithAttribs},
 	//
 	{"SetLockSongJin",		LuaSetLockSongJin},
 	{"GetLockSongJin",		LuaGetLockSongJin},

@@ -164,26 +164,23 @@ function ExeUpgradeAttrib()
     -- Read all item properties for recreation
     Msg2Player("=== Reading item properties for recreation ===")
 
-    -- Get all 6 generator levels (tiers 1-10) from the item
-    local l0, l1, l2, l3, l4, l5 = GetItemGeneratorLevels(nEquipIdx)
-    local nOldGenLevels = {l0, l1, l2, l3, l4, l5}
-
-    Msg2Player("Old generator levels (tiers): [" .. l0 .. "," .. l1 .. "," .. l2 .. "," .. l3 .. "," .. l4 .. "," .. l5 .. "]")
-    Msg2Player("Upgrading slot " .. nAttribSlot .. " from value " .. nOldValue .. " to " .. nNewValue)
-
-    -- Upgrade strategy: Increase the generator level (tier) by 1
-    -- This moves the attribute to the next tier in MagicAttrib.txt
-    local nOldTier = nOldGenLevels[nAttribSlot+1]
-    local nNewTier = nOldTier + 1
-
-    -- Cap at tier 10 (max generator level)
-    if nNewTier > 10 then
-        nNewTier = 10
-        Msg2Player("WARNING: Tier already at max (10), keeping at 10")
+    -- Read ALL 6 attribute types, values, min, max
+    local nAttribTypes = {}
+    local nAttribValues = {}
+    local nAttribMins = {}
+    local nAttribMaxs = {}
+    for i = 0, 5 do
+        local nType, nVal, nMin, nMaxVal = GetItemMagicAttribInfo(nEquipIdx, i)
+        nAttribTypes[i+1] = nType or 0
+        nAttribValues[i+1] = nVal or 0
+        nAttribMins[i+1] = nMin or 0
+        nAttribMaxs[i+1] = nMaxVal or 0
+        Msg2Player("Slot " .. i .. ": type=" .. tostring(nType) .. " value=" .. tostring(nVal) .. " min=" .. tostring(nMin) .. " max=" .. tostring(nMaxVal))
     end
 
-    nOldGenLevels[nAttribSlot+1] = nNewTier
-    Msg2Player("Slot " .. nAttribSlot .. " tier: " .. nOldTier .. " -> " .. nNewTier)
+    -- Set the upgraded value for the selected slot
+    nAttribValues[nAttribSlot+1] = nNewValue
+    Msg2Player("Upgrading slot " .. nAttribSlot .. " from value " .. nOldValue .. " to " .. nNewValue)
 
     -- CRITICAL: Delete items in correct order to prevent index invalidation
     -- Must delete HIGHER index first, then LOWER index
@@ -228,19 +225,31 @@ function ExeUpgradeAttrib()
         Msg2Player("Equipment deleted successfully!")
     end
 
-    -- Create new item with upgraded generator level
+    -- Create new item with exact attribute values (with min/max validation)
     Msg2Player("Creating new item with upgraded attributes...")
     Msg2Player("Genre=" .. nGenre .. " Detail=" .. nDetail .. " Parti=" .. nParti .. " Level=" .. nLevel .. " Series=" .. nSeries .. " Luck=" .. nLuck)
-    Msg2Player("GenLevels: [" .. nOldGenLevels[1] .. "," .. nOldGenLevels[2] .. "," .. nOldGenLevels[3] .. "," .. nOldGenLevels[4] .. "," .. nOldGenLevels[5] .. "," .. nOldGenLevels[6] .. "]")
+    Msg2Player("Attribs: [" .. nAttribTypes[1] .. "=" .. nAttribValues[1] .. " (" .. nAttribMins[1] .. "-" .. nAttribMaxs[1] .. "), " ..
+                              nAttribTypes[2] .. "=" .. nAttribValues[2] .. " (" .. nAttribMins[2] .. "-" .. nAttribMaxs[2] .. "), " ..
+                              nAttribTypes[3] .. "=" .. nAttribValues[3] .. " (" .. nAttribMins[3] .. "-" .. nAttribMaxs[3] .. ")]")
 
-    AddItemEx(
+    local nNewItemIdx = CreateItemWithAttribs(
         nGenre, nDetail, nParti, nLevel, nSeries, nLuck,
-        nOldGenLevels[1], nOldGenLevels[2], nOldGenLevels[3],
-        nOldGenLevels[4], nOldGenLevels[5], nOldGenLevels[6],
-        1, 0,  -- version, randseed
+        nAttribTypes[1], nAttribValues[1], nAttribMins[1], nAttribMaxs[1],
+        nAttribTypes[2], nAttribValues[2], nAttribMins[2], nAttribMaxs[2],
+        nAttribTypes[3], nAttribValues[3], nAttribMins[3], nAttribMaxs[3],
+        nAttribTypes[4], nAttribValues[4], nAttribMins[4], nAttribMaxs[4],
+        nAttribTypes[5], nAttribValues[5], nAttribMins[5], nAttribMaxs[5],
+        nAttribTypes[6], nAttribValues[6], nAttribMins[6], nAttribMaxs[6],
         nPos   -- pos_builditem
     )
-    Msg2Player("New item created successfully!")
+
+    if nNewItemIdx == 0 then
+        Msg2Player("ERROR: Failed to create new item!")
+        Talk(1, "", "<color=red>Loi: Khong the tao item moi!<color>")
+        return
+    end
+
+    Msg2Player("New item created successfully with index " .. nNewItemIdx)
 
     -- Success message
     local szMsg = "<color=green>Nang cap thanh cong!<color>\n" ..
