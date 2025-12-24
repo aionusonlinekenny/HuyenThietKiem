@@ -10437,13 +10437,15 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		nOldAttribValues[i] = Item[nOldItemIdx].m_aryMagicAttrib[i].nValue[0];
 	}
 
-	// Search for a seed that generates SAME attribute types, SAME order, CLOSE values
+	// RELAXED scoring approach: Find BEST seed even if not perfect
+	// Priority: upgraded slot type matches > value close to target > others similar
 	DWORD dwNewRandSeed = dwRandSeed;
+	DWORD dwBestSeed = dwRandSeed;
 	int nTempItemIdx = 0;
-	BOOL bFoundSeed = FALSE;
+	int nBestScore = -99999; // Higher score = better match
 
-	// Try up to 50000 seeds to find one that matches our criteria
-	for (DWORD nTry = 0; nTry < 50000; nTry++)
+	// Try up to 100000 seeds (increased from 50000)
+	for (DWORD nTry = 0; nTry < 100000; nTry++)
 	{
 		dwNewRandSeed = dwRandSeed + nTry;
 
@@ -10454,66 +10456,71 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		if (nTempItemIdx <= 0 || nTempItemIdx >= MAX_ITEM)
 			continue;
 
-		// VALIDATE: Check if ALL attribute types match in the SAME order
-		BOOL bTypesMatch = TRUE;
-		for (int i = 0; i < 6; i++)
-		{
-			if (Item[nTempItemIdx].m_aryMagicAttrib[i].nAttribType != nOldAttribTypes[i])
-			{
-				bTypesMatch = FALSE;
-				break;
-			}
-		}
+		int nScore = 0;
 
-		if (!bTypesMatch)
+		// REQUIRED: Upgraded slot attribute type MUST match
+		if (Item[nTempItemIdx].m_aryMagicAttrib[nUpgradeSlot].nAttribType != nOldAttribTypes[nUpgradeSlot])
 		{
 			ItemSet.Remove(nTempItemIdx);
 			continue;
 		}
 
-		// VALIDATE: Check if upgraded slot value is close to target (within ±5)
+		// PRIORITY 1: Upgraded value close to target
 		int nGeneratedValue = Item[nTempItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
 		int nDiff = abs(nGeneratedValue - nNewValue);
 
-		if (nDiff > 5)
+		// Prefer value >= target over value < target
+		if (nGeneratedValue >= nNewValue)
+			nScore += 2000;
+
+		nScore -= nDiff * 10; // -10 points per point of difference
+
+		// Skip if too far from target
+		if (nDiff > 30) // Relaxed to ±30
 		{
 			ItemSet.Remove(nTempItemIdx);
 			continue;
 		}
 
-		// VALIDATE: Check if other slots' values are close to original (within ±10)
-		BOOL bOtherValuesClose = TRUE;
+		// PRIORITY 2: Other attribute types match (bonus)
 		for (int i = 0; i < 6; i++)
 		{
 			if (i == nUpgradeSlot)
-				continue; // Skip the upgraded slot
+				continue;
+
+			if (Item[nTempItemIdx].m_aryMagicAttrib[i].nAttribType == nOldAttribTypes[i])
+				nScore += 100;
+		}
+
+		// PRIORITY 3: Other values stay similar (bonus)
+		for (int i = 0; i < 6; i++)
+		{
+			if (i == nUpgradeSlot)
+				continue;
 
 			int nOtherDiff = abs(Item[nTempItemIdx].m_aryMagicAttrib[i].nValue[0] - nOldAttribValues[i]);
-			if (nOtherDiff > 10) // Allow ±10 variance in other slots
-			{
-				bOtherValuesClose = FALSE;
-				break;
-			}
+			if (nOtherDiff <= 20)
+				nScore += 50;
+			else if (nOtherDiff <= 50)
+				nScore += 10;
 		}
 
-		if (!bOtherValuesClose)
+		// Track best seed
+		if (nScore > nBestScore)
 		{
-			ItemSet.Remove(nTempItemIdx);
-			continue;
+			nBestScore = nScore;
+			dwBestSeed = dwNewRandSeed;
 		}
 
-		// Found a good seed!
-		bFoundSeed = TRUE;
 		ItemSet.Remove(nTempItemIdx);
-		break;
+
+		// Early exit if found excellent match
+		if (nDiff <= 3 && nScore >= 2500)
+			break;
 	}
 
-	if (!bFoundSeed)
-	{
-		// Couldn't find a suitable seed, upgrade fails
-		Lua_PushNumber(L, 0);
-		return 1;
-	}
+	// Always use best seed found (no failure case)
+	dwNewRandSeed = dwBestSeed;
 
 	// Get old item's position in container
 	int nOldX = ItemSet.m_psItemInfo[nOldItemIdx].m_nX;
