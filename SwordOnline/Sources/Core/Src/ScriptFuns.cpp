@@ -10413,29 +10413,45 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		nGenLevels[i] = pOldGenParam->nGeneratorLevel[i];
 	}
 
-	// Calculate new value for the upgraded slot
-	int nOldValue = Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
-	int nMax = Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nMax;
+	// STEP 1: Store ALL 6 attributes (type, value, min, max) from old item
+	int nAttribTypes[6];
+	int nAttribValues[6];
+	int nAttribMins[6];
+	int nAttribMaxs[6];
 
-	// Calculate upgrade (rounded to integer)
+	for (int i = 0; i < 6; i++)
+	{
+		nAttribTypes[i] = Item[nOldItemIdx].m_aryMagicAttrib[i].nAttribType;
+		nAttribValues[i] = Item[nOldItemIdx].m_aryMagicAttrib[i].nValue[0];
+		nAttribMins[i] = Item[nOldItemIdx].m_aryMagicAttrib[i].nMin;
+		nAttribMaxs[i] = Item[nOldItemIdx].m_aryMagicAttrib[i].nMax;
+	}
+
+	// STEP 2: Calculate new value for the upgraded slot
+	int nOldValue = nAttribValues[nUpgradeSlot];
+	int nMax = nAttribMaxs[nUpgradeSlot];
+
 	int nIncrease = (nOldValue * nUpgradePercent) / 100;
 	if (nIncrease < 1) nIncrease = 1;
 	int nNewValue = nOldValue + nIncrease;
 
-	// Cap at max value from MagicAttrib.txt
+	// STEP 3: Compare with MagicAttrib max - cap if needed
 	if (nMax > 0 && nNewValue > nMax)
 	{
 		nNewValue = nMax;
 	}
 
+	// Update the value array with new upgraded value
+	nAttribValues[nUpgradeSlot] = nNewValue;
+
 	// Get old item's position BEFORE deleting
 	int nOldX = ItemSet.m_psItemInfo[nOldItemIdx].m_nX;
 	int nOldY = ItemSet.m_psItemInfo[nOldItemIdx].m_nY;
 
-	// Remove old item from container (frees space)
+	// STEP 4: Remove old item from container (frees space)
 	Player[nPlayerIndex].m_ItemList.Remove(nOldItemIdx);
 
-	// Create new item like AddItemEx does
+	// STEP 5: Create new item
 	int nNewItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
 	                              nGenLevels, nVersion, dwRandSeed);
 
@@ -10447,10 +10463,16 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		return 1;
 	}
 
-	// MANUALLY set the upgraded attribute value on new item
-	Item[nNewItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0] = nNewValue;
+	// STEP 6: Set ALL 6 attributes manually (types, values, min, max)
+	for (int i = 0; i < 6; i++)
+	{
+		Item[nNewItemIdx].m_aryMagicAttrib[i].nAttribType = nAttribTypes[i];
+		Item[nNewItemIdx].m_aryMagicAttrib[i].nValue[0] = nAttribValues[i];
+		Item[nNewItemIdx].m_aryMagicAttrib[i].nMin = nAttribMins[i];
+		Item[nNewItemIdx].m_aryMagicAttrib[i].nMax = nAttribMaxs[i];
+	}
 
-	// Add new item to player's inventory at old position
+	// STEP 7: Add new item to player's inventory
 	if (!Player[nPlayerIndex].m_ItemList.Add(nNewItemIdx, nPos, nOldX, nOldY))
 	{
 		// Failed to add - cleanup and restore
@@ -10460,7 +10482,7 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		return 1;
 	}
 
-	// Success! Delete old item from global pool
+	// STEP 8: Delete old item from global pool
 	ItemSet.Remove(nOldItemIdx);
 
 	// Return new item index
