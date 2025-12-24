@@ -10300,17 +10300,8 @@ int LuaSetItemMagicAttribValueAndSync(Lua_State * L)
 	// Set the new value
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0] = nNewValue;
 
-	// CRITICAL: Force sync to client by calling SyncItem
-	// Find where the item is located and sync it
-	for (int i = 0; i < player_item_container; i++)
-	{
-		int nPlace, nX, nY;
-		if (Player[nPlayerIndex].m_ItemList.SearchPosition(nItemIdx, &nPlace, &nX, &nY))
-		{
-			Player[nPlayerIndex].m_ItemList.SyncItem(nItemIdx, FALSE, nPlace, nX, nY, nPlayerIndex);
-			break;
-		}
-	}
+	// Item will sync to client when container refreshes or item is moved
+	// No manual sync needed - let the game handle it naturally
 
 	Lua_PushNumber(L, 1);  // Success
 	return 1;

@@ -177,20 +177,27 @@ function ExeUpgradeAttrib()
 
     Msg2Player("Calculated: " .. nOldValue .. " + " .. nIncrease .. " = " .. nNewValue)
 
-    -- Use NEW C++ function to set value AND sync to client!
+    -- Use NEW C++ function to set value
     Msg2Player("Calling SetItemMagicAttribValueAndSync...")
     local bSuccess = SetItemMagicAttribValueAndSync(nEquipIdx, nAttribSlot, nNewValue)
     Msg2Player("SetItemMagicAttribValueAndSync result: " .. tostring(bSuccess))
 
     if bSuccess == 1 then
-        -- Verify the new value
+        -- Force container refresh to sync changes to client
+        Msg2Player("Forcing container refresh...")
+        AddItemAgain(nEquipIdx)
+        if DelMyItem(nEquipIdx) ~= 0 then
+            AddMyItem(nEquipIdx, nPos, 0, 0)
+        end
+
+        -- Verify the new value after refresh
         local _, nVerifyValue, _, _ = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
-        Msg2Player("Verified new value: " .. tostring(nVerifyValue))
+        Msg2Player("Verified new value after refresh: " .. tostring(nVerifyValue))
 
         -- Success message
         local szMsg = "<color=green>Nang cap thanh cong!<color>\n" ..
                       "Thuoc tinh #" .. (nAttribSlot + 1) ..
-                      ": <color=yellow>" .. nOldValue .. " -> " .. nNewValue .. "<color> (+" .. nIncreasePercent .. "%)"
+                      ": <color=yellow>" .. nOldValue .. " -> " .. nVerifyValue .. "<color> (+" .. nIncreasePercent .. "%)"
         Talk(1, "", szMsg)
     else
         Msg2Player("ERROR: Failed to set attribute value!")
