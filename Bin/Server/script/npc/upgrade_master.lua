@@ -16,84 +16,35 @@ UPGRADE_MATERIAL_DETAIL = 18    -- Luc Thuy Tinh (Green Crystal) - tam thoi
 UPGRADE_FIXED_PERCENT = 20      -- % tang co dinh (FIXED 20%)
 UPGRADE_SUCCESS_RATE = 100      -- Ti le thanh cong (%)
 
--- Attribute names in Vietnamese (no tone marks = pure ASCII, safe for old Lua parser)
-local ATTRIB_NAMES = {
-    -- Weapon damage
-    [28] = "Sat thuong nho nhat",
-    [29] = "Sat thuong lon nhat",
-    [30] = "Ne tranh",
-
-    -- Attack attributes
-    [56] = "Do chinh xac",
-    [57] = "Do chinh xac",
-    [59] = "Sat thuong vat ly",
-    [60] = "Bang sat",
-    [61] = "Hoa sat",
-    [62] = "Loi sat",
-    [63] = "Doc sat",
-    [64] = "Sat thuong ngu hanh",
-    [70] = "Sat thuong vat ly",
-
-    -- Life/Mana/Stamina
-    [85] = "Sinh luc toi da",
-    [86] = "Sinh luc toi da",
-    [87] = "Sinh luc",
-    [88] = "Phuc hoi sinh luc",
-    [89] = "Noi luc toi da",
-    [90] = "Noi luc toi da",
-    [91] = "Noi luc",
-    [92] = "Phuc hoi noi luc",
-    [93] = "The luc toi da",
-    [94] = "The luc toi da",
-    [95] = "The luc",
-
-    -- Base attributes
-    [97] = "Suc manh",
-    [98] = "Than phap",
-    [99] = "Sinh khi",
-    [100] = "Noi cong",
-
-    -- Resistances
-    [101] = "Khang doc",
-    [102] = "Khang hoa",
-    [103] = "Khang loi",
-    [104] = "Phong thu vat ly",
-    [105] = "Khang bang",
-    [106] = "Giam thoi gian lam cham",
-    [108] = "Giam thoi gian trung doc",
-    [110] = "Giam thoi gian choang",
-    [111] = "Toc do di chuyen",
-    [113] = "Thoi gian phuc hoi",
-    [114] = "Khang tat ca",
-    [115] = "Toc do danh - ngoai cong",
-    [116] = "Toc do danh - noi cong",
-
-    -- External damage
-    [121] = "Sat thuong vat ly - ngoai cong",
-    [122] = "Hoa sat - ngoai cong",
-    [123] = "Bang sat - ngoai cong",
-    [124] = "Loi sat - ngoai cong",
-    [125] = "Doc sat - ngoai cong",
-    [126] = "Sat thuong vat ly %",
-
-    -- Special
-    [128] = "Mo hoac doi phuong",
-    [129] = "Phong thu vat ly",
-    [150] = "Ne tranh",
-    [151] = "Ne tranh %",
-    [166] = "Ti le cong kich chinh xac",
-    [167] = "Ti le cong kich chinh xac %",
-
-    -- Internal damage
-    [168] = "Sat thuong vat ly - noi cong",
-    [169] = "Bang sat - noi cong",
-    [170] = "Hoa sat - noi cong",
-    [171] = "Loi sat - noi cong",
-    [172] = "Doc sat - noi cong",
+-- Attribute names (simple English for maximum compatibility)
+ATTRIB_NAMES = {
+    [28] = "Min Damage",
+    [29] = "Max Damage",
+    [30] = "Defense",
+    [56] = "Accuracy",
+    [85] = "Max HP",
+    [89] = "Max MP",
+    [93] = "Max Stamina",
+    [97] = "Strength",
+    [98] = "Dexterity",
+    [99] = "Vitality",
+    [100] = "Energy",
+    [101] = "Poison Resist",
+    [102] = "Fire Resist",
+    [103] = "Lightning Resist",
+    [104] = "Physical Resist",
+    [105] = "Cold Resist",
+    [114] = "All Resist",
+    [115] = "Attack Speed",
+    [121] = "Physical Damage",
+    [122] = "Fire Damage",
+    [123] = "Cold Damage",
+    [124] = "Lightning Damage",
+    [125] = "Poison Damage"
 }
 
 -- Get attribute display name
-local function GetAttribName(nAttribType)
+function GetAttribName(nAttribType)
     return ATTRIB_NAMES[nAttribType] or ("Type " .. nAttribType)
 end
 
