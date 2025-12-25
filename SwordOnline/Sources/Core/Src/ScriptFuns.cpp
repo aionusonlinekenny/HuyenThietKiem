@@ -10419,12 +10419,12 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 	int nAttribMins[6];
 	int nAttribMaxs[6];
 
-	for (int i = 0; i < 6; i++)
+	for (int j = 0; j < 6; j++)
 	{
-		nAttribTypes[i] = Item[nOldItemIdx].m_aryMagicAttrib[i].nAttribType;
-		nAttribValues[i] = Item[nOldItemIdx].m_aryMagicAttrib[i].nValue[0];
-		nAttribMins[i] = Item[nOldItemIdx].m_aryMagicAttrib[i].nMin;
-		nAttribMaxs[i] = Item[nOldItemIdx].m_aryMagicAttrib[i].nMax;
+		nAttribTypes[j] = Item[nOldItemIdx].m_aryMagicAttrib[j].nAttribType;
+		nAttribValues[j] = Item[nOldItemIdx].m_aryMagicAttrib[j].nValue[0];
+		nAttribMins[j] = Item[nOldItemIdx].m_aryMagicAttrib[j].nMin;
+		nAttribMaxs[j] = Item[nOldItemIdx].m_aryMagicAttrib[j].nMax;
 	}
 
 	// STEP 2: Calculate new value for the upgraded slot
@@ -10455,16 +10455,14 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 	// Set special luck value to flag exact value mode: 999900000 + original_luck
 	int nUpgradedLuck = 999900000 + nLuck;
 
-	char szDebugMsg[256];
-	sprintf(szDebugMsg, "Encoding exact values: Luck=%d->%d, Seed=0x%08X", nLuck, nUpgradedLuck, dwEncodedSeed);
-	Player[nPlayerIndex].m_ItemList.msgshow(szDebugMsg);
-
-	for (int i = 0; i < 6; i++)
+#ifdef _DEBUG
+	g_DebugLog("[UpgradeItem] Encoding exact values: Luck=%d->%d, Seed=0x%08X", nLuck, nUpgradedLuck, dwEncodedSeed);
+	for (int k = 0; k < 6; k++)
 	{
-		int nDelta = nAttribValues[i] - nAttribMins[i];
-		sprintf(szDebugMsg, "  Slot[%d]: Value=%d, Min=%d, Delta=%d", i, nAttribValues[i], nAttribMins[i], nDelta);
-		Player[nPlayerIndex].m_ItemList.msgshow(szDebugMsg);
+		int nDelta = nAttribValues[k] - nAttribMins[k];
+		g_DebugLog("[UpgradeItem]   Slot[%d]: Value=%d, Min=%d, Delta=%d", k, nAttribValues[k], nAttribMins[k], nDelta);
 	}
+#endif
 
 	// STEP 5: Remove old item from container (frees space)
 	Player[nPlayerIndex].m_ItemList.Remove(nOldItemIdx);
@@ -10482,18 +10480,19 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		return 1;
 	}
 
-	Player[nPlayerIndex].m_ItemList.msgshow("New item created successfully with exact value mode!");
+#ifdef _DEBUG
+	g_DebugLog("[UpgradeItem] New item created successfully with exact value mode!");
 
 	// STEP 7: Verify attributes were generated correctly
-	for (int i = 0; i < 6; i++)
+	for (int m = 0; m < 6; m++)
 	{
-		int nGeneratedValue = Item[nNewItemIdx].m_aryMagicAttrib[i].nValue[0];
-		int nExpectedValue = nAttribValues[i];
-		sprintf(szDebugMsg, "  Verify Slot[%d]: Expected=%d, Got=%d %s",
-		        i, nExpectedValue, nGeneratedValue,
+		int nGeneratedValue = Item[nNewItemIdx].m_aryMagicAttrib[m].nValue[0];
+		int nExpectedValue = nAttribValues[m];
+		g_DebugLog("[UpgradeItem]   Verify Slot[%d]: Expected=%d, Got=%d %s",
+		        m, nExpectedValue, nGeneratedValue,
 		        (nGeneratedValue == nExpectedValue) ? "[OK]" : "[MISMATCH]");
-		Player[nPlayerIndex].m_ItemList.msgshow(szDebugMsg);
 	}
+#endif
 
 	// STEP 8: Add new item to player's inventory
 	if (!Player[nPlayerIndex].m_ItemList.Add(nNewItemIdx, nPos, nOldX, nOldY))

@@ -70,6 +70,13 @@ public:
 	const KMAGICATTRIB_TABFILE*	 GMA_ByRecord(IN const int nRecord) const;
 #endif
 
+	//
+	// Helper functions for exact value mode (upgraded items) - PUBLIC for ScriptFuns access
+	// Decode 6 exact attribute values from 32-bit seed (5 bits per value)
+	void DecodeExactValues(DWORD dwSeed, int* pOutValues);
+	// Encode 6 exact attribute values into 32-bit seed (5 bits per value)
+	DWORD EncodeExactValues(const int* pInValues, const int* pMinValues);
+
 private:
 	//
 	// Ham tra ve mot Level ngau nhien dua vao phan tram truyen vao cac muc Level
@@ -82,13 +89,6 @@ private:
 	//
 	// Helper function to get global min/max across all levels for an attribute type
 	void GetGlobalMinMax(int nAttribType, int& outGlobalMin, int& outGlobalMax);
-
-	//
-	// Helper functions for exact value mode (upgraded items)
-	// Decode 6 exact attribute values from 32-bit seed (5 bits per value)
-	void DecodeExactValues(DWORD dwSeed, int* pOutValues);
-	// Encode 6 exact attribute values into 32-bit seed (5 bits per value)
-	DWORD EncodeExactValues(const int* pInValues, const int* pMinValues);
 
 	//
 	BOOL Gen_MagicAttrib(int, const int*, int, int, KItemNormalAttrib*, int nVersion, BOOL bChangeOption = FALSE, DWORD dwRandomSeed = 0);
