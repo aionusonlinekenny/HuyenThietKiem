@@ -16,86 +16,6 @@ UPGRADE_MATERIAL_DETAIL = 18    -- Luc Thuy Tinh (Green Crystal) - tam thoi
 UPGRADE_FIXED_PERCENT = 20      -- % tang co dinh (FIXED 20%)
 UPGRADE_SUCCESS_RATE = 100      -- Ti le thanh cong (%)
 
--- Direct mapping: Attribute ID -> Vietnamese name (TCVN3 encoded from MagicDesc.ini)
-local ATTRIB_NAMES = {
-    -- Weapon damage
-    [28] = "S�t th��ng nh� nh�t",
-    [29] = "S�t th��ng l�n nh�t",
-    [30] = "N� tr�nh",
-
-    -- Attack attributes
-    [56] = "�� ch�nh x�c",
-    [57] = "�� ch�nh x�c",
-    [59] = "S�t th��ng v�t l�",
-    [60] = "B�ng s�t",
-    [61] = "H�a s�t",
-    [62] = "L�i s�t",
-    [63] = "��c s�t",
-    [64] = "S�t th��ng ng� h�nh",
-    [70] = "S�t th��ng v�t l�",
-
-    -- Life/Mana/Stamina
-    [85] = "Sinh l�c t�i �a",
-    [86] = "Sinh l�c t�i �a",
-    [87] = "Sinh l�c",
-    [88] = "Ph�c h�i sinh l�c m�i n�a gi�y",
-    [89] = "N�i l�c t�i �a",
-    [90] = "N�i l�c t�i �a",
-    [91] = "N�i l�c",
-    [92] = "Ph�c h�i n�i l�c m�i n�a gi�y",
-    [93] = "Th� l�c t�i �a",
-    [94] = "Th� l�c t�i �a",
-    [95] = "Th� l�c",
-
-    -- Base attributes
-    [97] = "S�c m�nh",
-    [98] = "Th�n ph�p",
-    [99] = "Sinh kh�",
-    [100] = "N�i c�ng",
-
-    -- Resistances
-    [101] = "Kh�ng ��c",
-    [102] = "Kh�ng h�a",
-    [103] = "Kh�ng l�i",
-    [104] = "Ph�ng th� v�t l�",
-    [105] = "Kh�ng b�ng",
-    [106] = "Th�i gian l�m ch�m",
-    [108] = "Th�i gian tr�ng ��c",
-    [110] = "Th�i gian cho�ng",
-    [111] = "T�c �� di chuy�n",
-    [113] = "Th�i gian ph�c h�i",
-    [114] = "Kh�ng t�t c�",
-    [115] = "T�c �� ��nh - ngo�i c�ng",
-
-    -- External damage
-    [121] = "S�t th��ng v�t l� - ngo�i c�ng",
-    [122] = "H�a s�t - ngo�i c�ng",
-    [123] = "B�ng s�t - ngo�i c�ng",
-    [124] = "L�i s�t - ngo�i c�ng",
-    [125] = "��c s�t - ngo�i c�ng",
-    [126] = "S�t th��ng v�t l� - ngo�i c�ng",
-
-    -- Special
-    [128] = "M� ho�c ��i ph��ng",
-    [129] = "Ph�ng th� v�t l�",
-    [150] = "N� tr�nh",
-    [151] = "N� tr�nh",
-    [166] = "T� l� c�ng k�ch ch�nh x�c",
-    [167] = "T� l� c�ng k�ch ch�nh x�c",
-
-    -- Internal damage
-    [168] = "S�t th��ng v�t l� - n�i c�ng",
-    [169] = "B�ng s�t - n�i c�ng",
-    [170] = "H�a s�t - n�i c�ng",
-    [171] = "L�i s�t - n�i c�ng",
-    [172] = "��c s�t - n�i c�ng",
-}
-
--- Get attribute display name
-local function GetAttribName(nAttribType)
-    return ATTRIB_NAMES[nAttribType] or ("Type " .. nAttribType)
-end
-
 -- ────────────────────────────────────────────────────────────
 -- NPC Talk Entry Point
 -- ───────────────────────────────────────────────────────────
@@ -192,9 +112,8 @@ function ExeUpgradeAttrib()
                 local nNewValue = nValue + nIncrease
                 if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
-                -- Build option string with Vietnamese name
-                local szAttribName = GetAttribName(nAttribType)
-                local szOption = szAttribName .. ": " .. nValue .. " -> " .. nNewValue .. "/DoUpgradeAttrib_" .. i
+                -- Build option string (simple, no name lookup to avoid errors)
+                local szOption = "Thuoc tinh " .. (i + 1) .. ": " .. nValue .. " -> " .. nNewValue .. "/DoUpgradeAttrib_" .. i
 
                 -- Add to table
                 tinsert(tbSayOptions, szOption)
@@ -256,8 +175,7 @@ function PerformUpgrade(nAttribSlot)
     DelItemByIndex(nMaterialIdx)
 
     -- Success message
-    local szAttribName = GetAttribName(nAttribType)
-    local szMsg = "Nang cap thanh cong!\n" .. szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)"
+    local szMsg = "Nang cap thanh cong!\nThuoc tinh " .. (nAttribSlot + 1) .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)"
     Talk(1, "", szMsg)
 end
 
