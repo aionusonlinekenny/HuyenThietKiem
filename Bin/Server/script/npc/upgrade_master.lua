@@ -96,48 +96,14 @@ function ExeUpgradeAttrib()
         return
     end
 
-    -- Build list of all upgradeable attributes
-    local tbUpgradeableAttribs = {}
-    local tbSayOptions = {}
+    -- TEST: Simple hardcoded menu
+    local tbTestOptions = {
+        "Test option 1/DoUpgradeAttrib_0",
+        "Test option 2/DoUpgradeAttrib_1",
+        "Cancel/no"
+    }
 
-    for i = 0, 5 do
-        local nAttribType, nValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
-
-        if nAttribType and nAttribType > 0 then
-            -- Check if this attribute can be upgraded
-            local bCanUpgrade = (nMax <= 0 or nValue < nMax)
-
-            if bCanUpgrade then
-                -- Calculate potential new value
-                local nIncrease = (nValue * UPGRADE_FIXED_PERCENT) / 100
-                if nIncrease < 1 then nIncrease = 1 end
-                local nNewValue = nValue + nIncrease
-                if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
-
-                -- Build option string (simple format, no colors)
-                local szOption = "Thuoc tinh #" .. (i + 1) .. " (Type " .. nAttribType .. "): " .. nValue .. " -> " .. nNewValue .. " (+" .. UPGRADE_FIXED_PERCENT .. "%)"
-                if nMax > 0 then
-                    szOption = szOption .. " [Max: " .. nMax .. "]"
-                end
-
-                -- Add to tables
-                tinsert(tbSayOptions, szOption .. "/DoUpgradeAttrib_" .. i)
-                tinsert(tbUpgradeableAttribs, i)
-            end
-        end
-    end
-
-    if getn(tbUpgradeableAttribs) == 0 then
-        Talk(1, "", "<color=red>Tat ca thuoc tinh da dat MAX! Khong the nang cap!<color>")
-        return
-    end
-
-    -- Add cancel option
-    tinsert(tbSayOptions, "Huy bo/no")
-
-    -- Show selection menu
-    Say("Chon thuoc tinh muon nang cap:\nTang co dinh: +" .. UPGRADE_FIXED_PERCENT .. "%",
-        getn(tbSayOptions), tbSayOptions)
+    Say("TEST MENU - Chon thuoc tinh:", getn(tbTestOptions), tbTestOptions)
 end
 
 -- ────────────────────────────────────────────────────────────
