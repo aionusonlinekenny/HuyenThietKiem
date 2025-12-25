@@ -180,7 +180,8 @@ BOOL KItemGenerator::Gen_Equipment(IN int nDetailType,
 		return TRUE;
 
 	KItemNormalAttrib	sMA[6];
-	bEC = Gen_MagicAttrib(nDetailType, pnaryMALevel, nSeriesReq, nLucky, sMA, nVersion, TRUE);
+	// Pass random seed for exact value mode support (upgraded items)
+	bEC = Gen_MagicAttrib(nDetailType, pnaryMALevel, nSeriesReq, nLucky, sMA, nVersion, TRUE, pItem->m_GeneratorParam.dwRandomSeed);
 	if(bEC)
 		pItem->SetAttrib_MA(sMA);
 	
@@ -276,7 +277,8 @@ BOOL KItemGenerator::Gen_ExistEquipment(IN int nRecord,
 		return TRUE;
 
 	KItemNormalAttrib	sMA[6];
-	bEC = Gen_MagicAttrib(nDetailType, pnaryMALevel, nSeries, nLucky, sMA, nVersion,FALSE); 
+	// Pass random seed for exact value mode support (upgraded items)
+	bEC = Gen_MagicAttrib(nDetailType, pnaryMALevel, nSeries, nLucky, sMA, nVersion, FALSE, pItem->m_GeneratorParam.dwRandomSeed);
 	if(bEC)
 		pItem->SetAttrib_MA(sMA);
 
@@ -1105,12 +1107,59 @@ void KItemGenerator::GetGlobalMinMax(int nAttribType, int& outGlobalMin, int& ou
 		outGlobalMax = 0;
 	}
 }
-	 
+
+// --
+// Helper function to decode 6 exact attribute values from 32-bit seed
+// Encoding: 5 bits per value (supports deltas 0-31 from min)
+// Format: bits [0-4]=slot0, [5-9]=slot1, [10-14]=slot2, [15-19]=slot3, [20-24]=slot4, [25-29]=slot5
+// --
+void KItemGenerator::DecodeExactValues(DWORD dwSeed, int* pOutValues)
+{
+	if (!pOutValues)
+		return;
+
+	// Extract 5-bit deltas from seed
+	for (int i = 0; i < 6; i++)
+	{
+		int nShift = i * 5;  // bits 0,5,10,15,20,25
+		int nDelta = (dwSeed >> nShift) & 0x1F;  // Extract 5 bits (0-31)
+		pOutValues[i] = nDelta;  // Store delta
+	}
+}
+
+// --
+// Helper function to encode 6 exact attribute values into 32-bit seed
+// Values are stored as deltas from their min values (to fit in 5 bits each)
+// --
+DWORD KItemGenerator::EncodeExactValues(const int* pInValues, const int* pMinValues)
+{
+	if (!pInValues || !pMinValues)
+		return 0;
+
+	DWORD dwSeed = 0;
+
+	// Pack 6 deltas into 30 bits (5 bits each)
+	for (int i = 0; i < 6; i++)
+	{
+		int nDelta = pInValues[i] - pMinValues[i];  // Calculate delta from min
+
+		// Clamp delta to 0-31 range (5 bits)
+		if (nDelta < 0) nDelta = 0;
+		if (nDelta > 31) nDelta = 31;
+
+		int nShift = i * 5;  // bits 0,5,10,15,20,25
+		dwSeed |= ((DWORD)nDelta << nShift);
+	}
+
+	return dwSeed;
+}
+
+// -- 
 //
 // --
 BOOL KItemGenerator::Gen_MagicAttrib(
     int nType, const int* pnaryMALevel, int nSeriesReq, int nLucky,
-	KItemNormalAttrib* pnaryMA, int nGameVersion, BOOL bChangeOption /*= FALSE*/
+	KItemNormalAttrib* pnaryMA, int nGameVersion, BOOL bChangeOption /*= FALSE*/, DWORD dwRandomSeed /*= 0*/
 )
 {
     int nResult = false;
@@ -1123,6 +1172,76 @@ BOOL KItemGenerator::Gen_MagicAttrib(
     _ASSERT(pnaryMALevel);
     _ASSERT(pnaryMA);
 
+    // Check for EXACT ATTRIBUTE MODE (upgraded items)
+    // NEW ENCODING: nLucky >= 999900000 indicates exact attribute mode
+    // - pnaryMALevel[i] = exact VALUES (not generator levels!)
+    // - dwRandomSeed = packed attribute TYPES 0-3 (8 bits each)
+    // - nGameVersion = packed attribute TYPES 4-5 (8 bits each)
+    BOOL bExactAttributeMode = (nLucky >= 999900000);
+
+    if (bExactAttributeMode)
+    {
+        // Extract original luck value
+        int nOriginalLucky = nLucky - 999900000;
+        if (nOriginalLucky < 0) nOriginalLucky = 0;
+
+#ifdef _DEBUG
+        g_DebugLog("[Gen_MagicAttrib] --- EXACT ATTRIBUTE MODE ---");
+        g_DebugLog("[Gen_MagicAttrib] Luck=%d, OriginalLuck=%d, Seed=0x%08X, Version=%d",
+            nLucky, nOriginalLucky, dwRandomSeed, nGameVersion);
+#endif
+
+        // Decode attribute TYPES from seed and version
+        int nExactTypes[6];
+        nExactTypes[0] = (dwRandomSeed >> 0) & 0xFF;   // bits 0-7
+        nExactTypes[1] = (dwRandomSeed >> 8) & 0xFF;   // bits 8-15
+        nExactTypes[2] = (dwRandomSeed >> 16) & 0xFF;  // bits 16-23
+        nExactTypes[3] = (dwRandomSeed >> 24) & 0xFF;  // bits 24-31
+        nExactTypes[4] = (nGameVersion >> 0) & 0xFF;   // bits 0-7
+        nExactTypes[5] = (nGameVersion >> 8) & 0xFF;   // bits 8-15
+
+        // pnaryMALevel contains VALUES directly (not levels!)
+        // Set attributes directly without random generation
+        for (i = 0; i < 6; i++)
+        {
+            if (nExactTypes[i] == 0)  // No attribute in this slot
+                break;
+
+            pnaryMA[i].nAttribType = nExactTypes[i];
+            pnaryMA[i].nValue[0] = pnaryMALevel[i];  // Value stored directly
+            pnaryMA[i].nValue[1] = 0;
+            pnaryMA[i].nValue[2] = 0;
+
+            // Get global min/max for this attribute type
+            int nGlobalMin = 0, nGlobalMax = 0;
+            GetGlobalMinMax(nExactTypes[i], nGlobalMin, nGlobalMax);
+            pnaryMA[i].nMin = nGlobalMin;
+            pnaryMA[i].nMax = nGlobalMax;
+
+#ifdef _DEBUG
+            g_DebugLog("[Gen_MagicAttrib] Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
+                i, nExactTypes[i], pnaryMALevel[i], nGlobalMin, nGlobalMax);
+#endif
+        }
+
+        // Fill remaining slots with empty attributes
+        for (NULL; i < 6; i++)
+        {
+            pnaryMA[i].nAttribType = 0;
+            pnaryMA[i].nValue[0] = 0;
+            pnaryMA[i].nValue[1] = 0;
+            pnaryMA[i].nValue[2] = 0;
+            pnaryMA[i].nMin = 0;
+            pnaryMA[i].nMax = 0;
+        }
+
+#ifdef _DEBUG
+        g_DebugLog("[Gen_MagicAttrib] --- EXACT MODE COMPLETE ---");
+#endif
+
+        nResult = true;
+        return nResult;  // Early exit - skip normal generation
+    }
     for (i = 0; i < 6; i++) 
     {
         if (pnaryMALevel[i] == 0)	
@@ -1208,6 +1327,8 @@ BOOL KItemGenerator::Gen_MagicAttrib(
         pMAItem->m_nUseFlag = true;
 
         pnaryMA[i].nAttribType = pMAItem->m_MagicAttrib.nPropKind;
+
+        // NORMAL MODE: Random generation of values
         pnaryMA[i].nValue[0] = GetRandomNumber(
             pMAItem->m_MagicAttrib.aryRange[0].nMin,
             pMAItem->m_MagicAttrib.aryRange[0].nMax
@@ -1228,7 +1349,6 @@ BOOL KItemGenerator::Gen_MagicAttrib(
         GetGlobalMinMax(pMAItem->m_MagicAttrib.nPropKind, nGlobalMin, nGlobalMax);
         pnaryMA[i].nMin = nGlobalMin;
         pnaryMA[i].nMax = nGlobalMax;
-	  
 #ifdef _DEBUG
 		/*g_DebugLog(					
 			"[GenMagicAttrib] pnaryMA[%d]: (%d:%s), nAttribType = %d, nValue[0] = %d, nValue[1] = %d, nValue[2] = %d,", 

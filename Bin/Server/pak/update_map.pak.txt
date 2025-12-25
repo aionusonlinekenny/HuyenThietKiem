@@ -1,0 +1,2 @@
+TotalFile:0	PakTime:2025-12-2 21:28:12	PakTimeSave:b257217e	CRC:00000000
+Index	ID	Time	FileName	Size	InPakSize	ComprFlag	CRC

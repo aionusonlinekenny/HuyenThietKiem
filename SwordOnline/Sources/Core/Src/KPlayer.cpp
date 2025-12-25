@@ -8923,8 +8923,7 @@ void	KPlayer::ExeScriptButton(BYTE* pProtocol)
 				sMsg.m_wLength = sizeof(SHOW_MSG_SYNC) - 1 - sizeof(LPVOID);
 				g_pServer->PackDataToClient(m_nNetConnectIdx, &sMsg, sMsg.m_wLength + 1);
 				break;	
-			}	
-				
+			}
 			char szScriptFile[64];
 			char* pId = NULL;
 			pId = strstr(pExe->m_szContent, "|");
@@ -8932,10 +8931,20 @@ void	KPlayer::ExeScriptButton(BYTE* pProtocol)
 			{
 				*pId++ = 0;
 			}
-			if( strcmp(pExe->m_szContent, "ExeTremble") )
+			// Allow both ExeTremble and ExeUpgradeAttrib functions
+			if( strcmp(pExe->m_szContent, "ExeTremble") && strcmp(pExe->m_szContent, "ExeUpgradeAttrib") )
 				break;
 			StopMove();
-			g_GameSettingFile.GetString("TREMBLEITEM", "Script", "", szScriptFile, sizeof(szScriptFile));
+
+			// Load script file based on function name
+			if( strcmp(pExe->m_szContent, "ExeUpgradeAttrib") == 0 )
+			{
+				g_GameSettingFile.GetString("UPGRADEATTRIB", "Script", "", szScriptFile, sizeof(szScriptFile));
+			}
+			else
+			{
+				g_GameSettingFile.GetString("TREMBLEITEM", "Script", "", szScriptFile, sizeof(szScriptFile));
+			}
 			this->ExecuteScript(szScriptFile, pExe->m_szContent, pId);
 		}
 		break;

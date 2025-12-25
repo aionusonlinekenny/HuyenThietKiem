@@ -17,10 +17,11 @@ Function    : Upgrade equipment magic attributes
 #include "../../../core/src/coreshell.h"
 #include "../../../core/src/GameDataDef.h"
 #include "../../../Engine/src/Text.h"
+#include "../../../Engine/src/KDebug.h"
 #include "../UiSoundSetting.h"
 #include "../UiBase.h"
 #include <crtdbg.h>
-#include "../../../Engine/src/KDebug.h"
+
 extern iCoreShell* g_pCoreShell;
 
 #define LOOP 2
@@ -126,6 +127,8 @@ void KUiUpgradeAttrib::Initialize()
 	AddChild(&m_BtnClose);
 	AddChild(&m_UpgradeEffect);
 	AddChild(&m_TextPercent);
+	AddChild(&m_EquipmentLabel);
+	AddChild(&m_MaterialLabel);
 
 	for (i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
 	{
@@ -172,8 +175,15 @@ void KUiUpgradeAttrib::LoadScheme(const char* pScheme)
 		m_pSelf->m_EffectTime = 0;
 
 		m_pSelf->m_BtnUpgrade.Init(&Ini, "UpgradeBtn");
+		m_pSelf->m_BtnUpgrade.SetLabel("");  // Set button label
 		m_pSelf->m_BtnClose.Init(&Ini, "CloseBtn");
+		m_pSelf->m_BtnClose.SetLabel("");  // Set button label
 		m_pSelf->m_TextPercent.Init(&Ini, "TextPercent");
+		m_pSelf->m_TextPercent.SetText("S½n sµng n©ng cÊp");  // Set initial text
+
+		// Initialize slot labels
+		m_pSelf->m_EquipmentLabel.Init(&Ini, "EquipmentLabel");
+		m_pSelf->m_MaterialLabel.Init(&Ini, "MaterialLabel");
 
 		for (i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
 		{
@@ -201,10 +211,16 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 	case WND_N_BUTTON_CLICK:
 		if (uParam == (unsigned int)&m_BtnUpgrade)
 		{
+			g_DebugLog("[CLIENT] Upgrade button clicked");
 			if (ValidateUpgradeReady())
 			{
+				g_DebugLog("[CLIENT] Validation passed, showing confirmation dialog");
 				if (m_EffectTime) break;
-				UIMessageBox("Ban co chac muon nang cap thuoc tinh nay?", this, "Xac nhan", "Huy bo", ISP_DO_EVENT);
+				UIMessageBox("B¹n cã ch¾c muèn n©ng cÊp trang bÞ nµy?", this, "X¸c nhËn", "Hñy bá", ISP_DO_EVENT);
+			}
+			else
+			{
+				g_DebugLog("[CLIENT] Validation failed");
 			}
 		}
 		else if (uParam == (unsigned int)&m_BtnClose)
@@ -219,7 +235,7 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 		{
 			if (ValidateUpgradeReady())
 			{
-				UIMessageBox("Ban co chac muon nang cap thuoc tinh nay?", this, "Xac nhan", "Huy bo", ISP_DO_EVENT);
+				UIMessageBox("B¹n cã ch¾c muèn n©ng cÊp trang bÞ nµy?", this, "X¸c nhËn", "Hñy bá", ISP_DO_EVENT);
 			}
 			nRet = 1;
 		}
@@ -267,7 +283,7 @@ BOOL KUiUpgradeAttrib::ValidateUpgradeReady()
 	m_UpgradeSlot[0].GetObject(pObj);
 	if (pObj.uId == 0)
 	{
-		strcpy(szWarning, "Chua d?t trang b? vào!");
+		strcpy(szWarning, "Ch­a ®Æt trang bi vµo!");
 		nLen = strlen(szWarning);
 		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
 		return FALSE;
@@ -278,19 +294,17 @@ BOOL KUiUpgradeAttrib::ValidateUpgradeReady()
 	m_UpgradeSlot[1].GetObject(pObj);
 	if (pObj.uId == 0)
 	{
-		strcpy(szWarning, "Chua d?t Ðá Nâng C?p vào!");
+		strcpy(szWarning, "Ch­a ®Æt ®¸ n©ng cÊp vµo.");
 		nLen = strlen(szWarning);
 		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
 		return FALSE;
 	}
 
-	// Check attribute selection
-	if (m_nSelectedAttrib < 0 || m_nSelectedAttrib >= 6)
+	// Check attribute selection (skip this check for now - will use first attribute)
+	// User can select attributes in future version
+	if (m_nSelectedAttrib < 0)
 	{
-		strcpy(szWarning, "Chua ch?n thu?c tính c?n nâng c?p!");
-		nLen = strlen(szWarning);
-		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
-		return FALSE;
+		m_nSelectedAttrib = 0;  // Default to first attribute
 	}
 
 	return TRUE;
@@ -326,8 +340,16 @@ void KUiUpgradeAttrib::OnItemPickDrop(ITEM_PICKDROP_PLACE* pPickPos, ITEM_PICKDR
 	KUiDraggedObject Obj;
 	KWndWindow* pWnd = NULL;
 
+	// CRITICAL FIX: Handle PICKING item OUT of slot (removing item)
 	if (pPickPos)
 	{
+		((KWndObjectBox*)(pPickPos->pWnd))->GetObject(Obj);
+		Pick.Obj.uGenre = Obj.uGenre;
+		Pick.Obj.uId = Obj.uId;
+		Pick.Region.Width = Obj.DataW;
+		Pick.Region.Height = Obj.DataH;
+		Pick.Region.h = 0;
+		Pick.eContainer = UOC_BUILD_ITEM;
 		pWnd = pPickPos->pWnd;
 	}
 	else if (pDropPos)
@@ -337,6 +359,7 @@ void KUiUpgradeAttrib::OnItemPickDrop(ITEM_PICKDROP_PLACE* pPickPos, ITEM_PICKDR
 	else
 		return;
 
+	// Handle DROPPING item INTO slot (adding item)
 	if (pDropPos)
 	{
 		Wnd_GetDragObj(&Obj);
@@ -422,12 +445,22 @@ void KUiUpgradeAttrib::UpdateData()
 		return;
 	}
 
-	g_DebugLog("[CLIENT] Creating Item array, size = %d", _UPGRADE_ATTRIB_SLOT_COUNT);
-	KUiObjAtRegion Item[_UPGRADE_ATTRIB_SLOT_COUNT];
+	// CRITICAL FIX: GetGameData returns ALL 9 build container slots, not just our 3!
+	// Must allocate array for 9 items to prevent buffer overflow and stack corruption
+	const int BUILD_CONTAINER_SIZE = 9;  // Same as UiTrembleItem
+	g_DebugLog("[CLIENT] Creating Item array, size = %d (was %d)", BUILD_CONTAINER_SIZE, _UPGRADE_ATTRIB_SLOT_COUNT);
+	KUiObjAtRegion Item[BUILD_CONTAINER_SIZE];
 
 	g_DebugLog("[CLIENT] Calling GetGameData(GDI_BUILD_ITEM)");
 	int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Item, 0);
 	g_DebugLog("[CLIENT] GetGameData returned nCount = %d", nCount);
+
+	// Safety check: nCount should never exceed array size
+	if (nCount > BUILD_CONTAINER_SIZE)
+	{
+		g_DebugLog("[CLIENT] WARNING: nCount (%d) exceeds array size (%d)! Clamping.", nCount, BUILD_CONTAINER_SIZE);
+		nCount = BUILD_CONTAINER_SIZE;
+	}
 
 	for (int i = 0; i < nCount; i++)
 	{
@@ -491,11 +524,21 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
  *********************************************************************/
 void KUiUpgradeAttrib::OnUpgrade()
 {
+	char szFunc[32];
+	sprintf(szFunc, "ExeUpgradeAttrib");
+
+	g_DebugLog("[CLIENT] OnUpgrade() - Calling script: %s, SelectedAttrib=%d", szFunc, m_nSelectedAttrib);
+
 	if (g_pCoreShell->GetLixian())
 	{
-		char szFunc[16];
-		sprintf(szFunc, "ExeUpgradeAttrib");
+		g_DebugLog("[CLIENT] GetLixian() = TRUE, calling OperationRequest");
 		g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
+		g_DebugLog("[CLIENT] OnUpgrade() - Script call sent");
+	}
+	else
+	{
+		g_DebugLog("[CLIENT] ERROR: GetLixian() = FALSE! Cannot execute script!");
+		g_DebugLog("[CLIENT] This usually means player is in offline/test mode");
 	}
 }
 
@@ -506,7 +549,9 @@ void KUiUpgradeAttrib::OnCancel()
 {
 	if (g_pCoreShell)
 	{
-		KUiObjAtRegion Item[_UPGRADE_ATTRIB_SLOT_COUNT];
+		// CRITICAL FIX: Same buffer overflow bug as UpdateData!
+		const int BUILD_CONTAINER_SIZE = 9;
+		KUiObjAtRegion Item[BUILD_CONTAINER_SIZE];
 		int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Item, 0);
 		if (nCount)
 			g_pCoreShell->OperationRequest(GOI_RECOVERY_BOX_COMMAND, pos_builditem, 0);

@@ -58,6 +58,8 @@ private:
 	unsigned int       m_EffectTime;            // Effect duration
 	int                m_nSelectedAttrib;       // Selected attribute index (0-5)
 	KWndText80         m_TextPercent;           // Success rate display
+	KWndText80         m_EquipmentLabel;        // Equipment slot label
+	KWndText80         m_MaterialLabel;         // Material slot label
 	char               m_szReturnInfo[8][128];  // Error messages
 
 	enum STRING_NOTE_EVENT
