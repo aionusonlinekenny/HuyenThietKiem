@@ -16,100 +16,85 @@ UPGRADE_MATERIAL_DETAIL = 18    -- Luc Thuy Tinh (Green Crystal) - tam thoi
 UPGRADE_FIXED_PERCENT = 20      -- % tang co dinh (FIXED 20%)
 UPGRADE_SUCCESS_RATE = 100      -- Ti le thanh cong (%)
 
--- Attribute ID to internal name mapping (from KMagicAttrib.h enum)
-local ATTRIB_ID_TO_NAME = {
-    [28] = "weapondamagemin_v",
-    [29] = "weapondamagemax_v",
-    [30] = "armordefense_v",
-    [56] = "attackrating_v",
-    [57] = "attackrating_p",
-    [59] = "physicsdamage_v",
-    [60] = "colddamage_v",
-    [61] = "firedamage_v",
-    [62] = "lightingdamage_v",
-    [63] = "poisondamage_v",
-    [64] = "magicdamage_v",
-    [85] = "lifemax_v",
-    [86] = "lifemax_p",
-    [89] = "manamax_v",
-    [90] = "manamax_p",
-    [93] = "staminamax_v",
-    [94] = "staminamax_p",
-    [97] = "strength_v",
-    [98] = "dexterity_v",
-    [99] = "vitality_v",
-    [100] = "energy_v",
-    [101] = "poisonres_p",
-    [102] = "fireres_p",
-    [103] = "lightingres_p",
-    [104] = "physicsres_p",
-    [105] = "coldres_p",
-    [106] = "freezetimereduce_p",
-    [107] = "burntimereduce_p",
-    [108] = "poisontimereduce_p",
-    [110] = "stuntimereduce_p",
-    [111] = "fastwalkrun_p",
-    [113] = "fasthitrecover_v",
-    [114] = "allres_p",
-    [115] = "attackspeed_v",
-    [121] = "addphysicsdamage_v",
-    [122] = "addfiredamage_v",
-    [123] = "addcolddamage_v",
-    [124] = "addlightingdamage_v",
-    [125] = "addpoisondamage_v",
-    [128] = "changecamp_b",
-    [129] = "physicsarmor_v",
-    [150] = "adddefense_v",
-    [151] = "adddefense_p",
-    [166] = "attackratingenhance_v",
-    [167] = "attackratingenhance_p",
+-- Direct mapping: Attribute ID -> Vietnamese name (TCVN3 encoded from MagicDesc.ini)
+local ATTRIB_NAMES = {
+    -- Weapon damage
+    [28] = "S�t th��ng nh� nh�t",
+    [29] = "S�t th��ng l�n nh�t",
+    [30] = "N� tr�nh",
+
+    -- Attack attributes
+    [56] = "�� ch�nh x�c",
+    [57] = "�� ch�nh x�c",
+    [59] = "S�t th��ng v�t l�",
+    [60] = "B�ng s�t",
+    [61] = "H�a s�t",
+    [62] = "L�i s�t",
+    [63] = "��c s�t",
+    [64] = "S�t th��ng ng� h�nh",
+    [70] = "S�t th��ng v�t l�",
+
+    -- Life/Mana/Stamina
+    [85] = "Sinh l�c t�i �a",
+    [86] = "Sinh l�c t�i �a",
+    [87] = "Sinh l�c",
+    [88] = "Ph�c h�i sinh l�c m�i n�a gi�y",
+    [89] = "N�i l�c t�i �a",
+    [90] = "N�i l�c t�i �a",
+    [91] = "N�i l�c",
+    [92] = "Ph�c h�i n�i l�c m�i n�a gi�y",
+    [93] = "Th� l�c t�i �a",
+    [94] = "Th� l�c t�i �a",
+    [95] = "Th� l�c",
+
+    -- Base attributes
+    [97] = "S�c m�nh",
+    [98] = "Th�n ph�p",
+    [99] = "Sinh kh�",
+    [100] = "N�i c�ng",
+
+    -- Resistances
+    [101] = "Kh�ng ��c",
+    [102] = "Kh�ng h�a",
+    [103] = "Kh�ng l�i",
+    [104] = "Ph�ng th� v�t l�",
+    [105] = "Kh�ng b�ng",
+    [106] = "Th�i gian l�m ch�m",
+    [108] = "Th�i gian tr�ng ��c",
+    [110] = "Th�i gian cho�ng",
+    [111] = "T�c �� di chuy�n",
+    [113] = "Th�i gian ph�c h�i",
+    [114] = "Kh�ng t�t c�",
+    [115] = "T�c �� ��nh - ngo�i c�ng",
+
+    -- External damage
+    [121] = "S�t th��ng v�t l� - ngo�i c�ng",
+    [122] = "H�a s�t - ngo�i c�ng",
+    [123] = "B�ng s�t - ngo�i c�ng",
+    [124] = "L�i s�t - ngo�i c�ng",
+    [125] = "��c s�t - ngo�i c�ng",
+    [126] = "S�t th��ng v�t l� - ngo�i c�ng",
+
+    -- Special
+    [128] = "M� ho�c ��i ph��ng",
+    [129] = "Ph�ng th� v�t l�",
+    [150] = "N� tr�nh",
+    [151] = "N� tr�nh",
+    [166] = "T� l� c�ng k�ch ch�nh x�c",
+    [167] = "T� l� c�ng k�ch ch�nh x�c",
+
+    -- Internal damage
+    [168] = "S�t th��ng v�t l� - n�i c�ng",
+    [169] = "B�ng s�t - n�i c�ng",
+    [170] = "H�a s�t - n�i c�ng",
+    [171] = "L�i s�t - n�i c�ng",
+    [172] = "��c s�t - n�i c�ng",
 }
 
--- Load attribute descriptions from MagicDesc.ini
-local ATTRIB_DESCRIPTIONS = {}
-
-local function LoadMagicDescriptions()
-    local file = io.open("\\settings\\MagicDesc.ini", "r")
-    if not file then
-        return false
-    end
-
-    local inDescript = false
-    for line in file:lines() do
-        if line == "[Descript]" then
-            inDescript = true
-        elseif inDescript then
-            -- Parse line: "weapondamagemin_v=Sat thuong nho nhat: #d1- diem"
-            local key, value = string.match(line, "^([%w_]+)=(.+)$")
-            if key and value then
-                -- Extract just the descriptive part (before the colon or #)
-                local desc = string.match(value, "^([^:#]+)")
-                if desc then
-                    ATTRIB_DESCRIPTIONS[key] = desc
-                end
-            end
-        end
-    end
-
-    file:close()
-    return true
-end
-
--- Get attribute display name from ID
+-- Get attribute display name
 local function GetAttribName(nAttribType)
-    local internalName = ATTRIB_ID_TO_NAME[nAttribType]
-    if internalName then
-        local desc = ATTRIB_DESCRIPTIONS[internalName]
-        if desc then
-            return desc
-        end
-        return internalName
-    end
-    return "Type " .. nAttribType
+    return ATTRIB_NAMES[nAttribType] or ("Type " .. nAttribType)
 end
-
--- Load descriptions on script init
-LoadMagicDescriptions()
 
 -- ────────────────────────────────────────────────────────────
 -- NPC Talk Entry Point
