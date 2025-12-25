@@ -133,9 +133,6 @@ function ExeUpgradeAttrib()
             -- Check if this attribute can be upgraded
             local bCanUpgrade = (nMax <= 0 or nValue < nMax)
 
-            -- Get attribute name (you may want to add a function to get proper attribute names)
-            local szAttribName = GetMagicAttribName(nAttribType) or ("Type " .. nAttribType)
-
             -- Calculate potential new value
             local nIncrease = (nValue * UPGRADE_FIXED_PERCENT) / 100
             if nIncrease < 1 then nIncrease = 1 end
@@ -144,16 +141,16 @@ function ExeUpgradeAttrib()
 
             if bCanUpgrade then
                 -- Add to upgradeable list
-                local szOption = format("<color=cyan>%s<color>: <color=yellow>%d -> %d<color> (+%d%%)",
-                                       szAttribName, nValue, nNewValue, UPGRADE_FIXED_PERCENT)
+                local szOption = string.format("<color=cyan>Thuoc tinh #%d<color> (Type %d): <color=yellow>%d -> %d<color> (+%d%%)",
+                                       (i + 1), nAttribType, nValue, nNewValue, UPGRADE_FIXED_PERCENT)
                 if nMax > 0 then
-                    szOption = szOption .. format(" [Max: %d]", nMax)
+                    szOption = szOption .. string.format(" [Max: %d]", nMax)
                 end
 
                 tinsert(tbSayOptions, szOption .. "/DoUpgradeAttrib_" .. i)
                 tinsert(tbUpgradeableAttribs, i)
 
-                Msg2Player("Added slot " .. i .. " to menu: " .. szAttribName .. " " .. nValue .. "->" .. nNewValue)
+                Msg2Player("Added slot " .. i .. " to menu: Type" .. nAttribType .. " " .. nValue .. "->" .. nNewValue)
             else
                 Msg2Player("Slot " .. i .. " is at MAX (" .. nValue .. "/" .. nMax .. "), cannot upgrade")
             end
@@ -250,10 +247,9 @@ function PerformUpgrade(nAttribSlot)
     Msg2Player("Delete material result: " .. nResult)
 
     -- Success message
-    local szAttribName = GetMagicAttribName(nAttribType) or ("Thuoc tinh #" .. (nAttribSlot + 1))
-    local szMsg = "<color=green>Nang cap thanh cong!<color>\n" ..
-                  szAttribName ..
-                  ": <color=yellow>" .. nOldValue .. " -> " .. nNewValue .. "<color> (+" .. nIncreasePercent .. "%)"
+    local szMsg = string.format("<color=green>Nang cap thanh cong!<color>\n" ..
+                  "Thuoc tinh #%d (Type %d): <color=yellow>%d -> %d<color> (+%d%%)",
+                  (nAttribSlot + 1), nAttribType, nOldValue, nNewValue, nIncreasePercent)
     Talk(1, "", szMsg)
 end
 
