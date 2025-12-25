@@ -16,59 +16,6 @@ UPGRADE_MATERIAL_DETAIL = 18    -- Luc Thuy Tinh (Green Crystal) - tam thoi
 UPGRADE_FIXED_PERCENT = 20      -- % tang co dinh (FIXED 20%)
 UPGRADE_SUCCESS_RATE = 100      -- Ti le thanh cong (%)
 
--- Attribute name mapping (ID -> Vietnamese name)
-local ATTRIB_NAMES = {
-    -- Common attributes
-    [0] = "Khong co",
-
-    -- Damage attributes
-    [39] = "Sinh luc toi da",
-    [41] = "Noi luc toi da",
-    [45] = "The luc toi da",
-
-    -- Offensive attributes
-    [128] = "Sat thuong nho nhat",
-    [129] = "Sat thuong lon nhat",
-    [198] = "Sat thuong nho nhat",
-    [205] = "Sat thuong lon nhat",
-
-    -- Elemental damage
-    [21] = "Sat thuong bang - noi cong",
-    [22] = "Sat thuong hoa - noi cong",
-    [23] = "Sat thuong loi - noi cong",
-    [24] = "Sat thuong doc - noi cong",
-    [25] = "Sat thuong bang - ngoai cong",
-    [26] = "Sat thuong hoa - ngoai cong",
-    [27] = "Sat thuong loi - ngoai cong",
-    [28] = "Sat thuong doc - ngoai cong",
-    [31] = "Sat thuong vat ly - noi cong",
-    [32] = "Sat thuong vat ly - ngoai cong",
-
-    -- Defensive attributes
-    [13] = "Phong thu",
-    [14] = "Khang doc",
-    [15] = "Khang bang",
-    [16] = "Khang hoa",
-    [17] = "Khang loi",
-
-    -- Special attributes
-    [52] = "Mau sat",
-    [53] = "Chinh xac",
-    [54] = "Ne tranh",
-    [55] = "Phan don",
-    [57] = "Cong kich nhanh",
-
-    -- Resistance
-    [61] = "Khang tat ca",
-
-    -- Add more as needed
-}
-
--- Get attribute name from ID
-local function GetAttribName(nAttribType)
-    return ATTRIB_NAMES[nAttribType] or ("Type " .. nAttribType)
-end
-
 -- ────────────────────────────────────────────────────────────
 -- NPC Talk Entry Point
 -- ───────────────────────────────────────────────────────────
@@ -102,13 +49,13 @@ function ExeUpgradeAttrib()
 
     -- Validate equipment
     if nEquipIdx <= 0 then
-        Talk(1, "", "<color=red>Chua dat trang bi vao!<color>")
+        Talk(1, "", "Chua dat trang bi vao!")
         return
     end
 
     -- Validate material exists
     if nMaterialIdx <= 0 then
-        Talk(1, "", "<color=red>Chua dat Da Nang Cap!<color>")
+        Talk(1, "", "Chua dat Da Nang Cap!")
         return
     end
 
@@ -116,7 +63,7 @@ function ExeUpgradeAttrib()
     local nMatGenre, nMatDetail = GetItemProp(nMaterialIdx)
 
     if nMatGenre ~= UPGRADE_MATERIAL_GENRE or nMatDetail ~= UPGRADE_MATERIAL_DETAIL then
-        Talk(1, "", "<color=red>Vat lieu khong dung! Can su dung Da Nang Cap.<color>")
+        Talk(1, "", "Vat lieu khong dung! Can su dung Da Nang Cap.")
         return
     end
 
@@ -125,12 +72,12 @@ function ExeUpgradeAttrib()
 
     -- Check if equipment is blue (genre 0 with luck < 1000000000)
     if nGenre ~= 0 then
-        Talk(1, "", "<color=red>Chi co the nang cap trang bi xanh!<color>")
+        Talk(1, "", "Chi co the nang cap trang bi xanh!")
         return
     end
 
     if nLuck >= 1000000000 then
-        Talk(1, "", "<color=red>Trang bi nay la tim/vang, khong the nang cap!<color>")
+        Talk(1, "", "Trang bi nay la tim/vang, khong the nang cap!")
         return
     end
 
@@ -145,7 +92,7 @@ function ExeUpgradeAttrib()
     end
 
     if bHasMagicAttrib == 0 then
-        Talk(1, "", "<color=red>Trang bi nay khong co thuoc tinh magic!<color>")
+        Talk(1, "", "Trang bi nay khong co thuoc tinh magic!")
         return
     end
 
@@ -165,12 +112,8 @@ function ExeUpgradeAttrib()
                 local nNewValue = nValue + nIncrease
                 if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
-                -- Build option string with attribute name
-                local szAttribName = GetAttribName(nAttribType)
-                local szOption = szAttribName .. ": " .. nValue .. " -> " .. nNewValue
-
-                -- Add callback
-                szOption = szOption .. "/DoUpgradeAttrib_" .. i
+                -- Build option string (simple, no name lookup to avoid errors)
+                local szOption = "Thuoc tinh " .. (i + 1) .. ": " .. nValue .. " -> " .. nNewValue .. "/DoUpgradeAttrib_" .. i
 
                 -- Add to table
                 tinsert(tbSayOptions, szOption)
@@ -204,7 +147,7 @@ function PerformUpgrade(nAttribSlot)
     local nMaterialIdx = GetPOItem(nPos, 1)
 
     if nEquipIdx <= 0 or nMaterialIdx <= 0 then
-        Talk(1, "", "<color=red>Loi: Trang bi hoac vat lieu bi mat!<color>")
+        Talk(1, "", "Loi: Trang bi hoac vat lieu bi mat!")
         return
     end
 
@@ -224,7 +167,7 @@ function PerformUpgrade(nAttribSlot)
     local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, nPos)
 
     if nNewItemIdx == 0 then
-        Talk(1, "", "<color=red>Loi: Khong the nang cap! Co the do rong hoac loi khac.<color>")
+        Talk(1, "", "Loi: Khong the nang cap! Co the do rong hoac loi khac.")
         return
     end
 
@@ -232,10 +175,7 @@ function PerformUpgrade(nAttribSlot)
     DelItemByIndex(nMaterialIdx)
 
     -- Success message
-    local szAttribName = GetAttribName(nAttribType)
-    local szMsg = string.format("<color=green>Nang cap thanh cong!<color>\n" ..
-                  "%s: <color=yellow>%d -> %d<color> (+%d%%)",
-                  szAttribName, nOldValue, nNewValue, nIncreasePercent)
+    local szMsg = "Nang cap thanh cong!\nThuoc tinh " .. (nAttribSlot + 1) .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)"
     Talk(1, "", szMsg)
 end
 
@@ -271,20 +211,20 @@ end
 -- Show Upgrade Guide
 -- ────────────────────────────────────────────────────────────
 function ShowGuide()
-    local szGuide = "<color=yellow>=== HUONG DAN NANG CAP THUOC TINH ===<color>\n\n" ..
-        "<color=cyan>Cach thuc hien:<color>\n" ..
-        "1. Dat <color=blue>trang bi xanh<color> vao o tren\n" ..
-        "2. Dat <color=orange>Da Nang Cap<color> vao o duoi\n" ..
-        "3. Nhan nut <color=green>Nang Cap<color>\n" ..
+    local szGuide = "=== HUONG DAN NANG CAP THUOC TINH ===\n\n" ..
+        "Cach thuc hien:\n" ..
+        "1. Dat trang bi xanh vao o tren\n" ..
+        "2. Dat Da Nang Cap vao o duoi\n" ..
+        "3. Nhan nut Nang Cap\n" ..
         "4. Chon thuoc tinh muon nang cap tu menu\n" ..
         "5. Xac nhan de hoan tat\n\n" ..
-        "<color=cyan>Chi tiet:<color>\n" ..
-        "- Chi nang cap duoc <color=blue>trang bi xanh<color>\n" ..
-        "- Moi lan nang tang <color=yellow>" .. UPGRADE_FIXED_PERCENT .. "%%<color> gia tri\n" ..
-        "- Khong the vuot qua gia tri <color=red>MAX<color>\n" ..
-        "- Ti le thanh cong: <color=green>" .. UPGRADE_SUCCESS_RATE .. "%%<color>\n" ..
-        "- Mat <color=orange>1 Da Nang Cap<color> moi lan\n\n" ..
-        "<color=cyan>Luu y:<color>\n" ..
+        "Chi tiet:\n" ..
+        "- Chi nang cap duoc trang bi xanh\n" ..
+        "- Moi lan nang tang 20% gia tri\n" ..
+        "- Khong the vuot qua gia tri MAX\n" ..
+        "- Ti le thanh cong: 100%\n" ..
+        "- Mat 1 Da Nang Cap moi lan\n\n" ..
+        "Luu y:\n" ..
         "- Thuoc tinh da MAX khong the nang them\n" ..
         "- Ban co the chon bat ky thuoc tinh nao de nang\n" ..
         "- Vat lieu bi mat khi nang cap\n" ..
