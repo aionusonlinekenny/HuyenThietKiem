@@ -183,9 +183,9 @@ function ExeUpgradeAttrib()
                 local szAttribName = GetAttribName(nAttribType)
                 local szOption = szAttribName .. ": " .. nValue .. " -> " .. nNewValue .. "/DoUpgradeAttrib_" .. i
 
-                -- Add to table
-                tinsert(tbSayOptions, szOption)
+                -- Add to table (old Lua style - no tinsert)
                 nCount = nCount + 1
+                tbSayOptions[nCount] = szOption
             end
         end
     end
@@ -196,8 +196,9 @@ function ExeUpgradeAttrib()
         return
     end
 
-    -- Add cancel option
-    tinsert(tbSayOptions, "Huy bo/no")
+    -- Add cancel option (old Lua style - no tinsert)
+    nCount = nCount + 1
+    tbSayOptions[nCount] = "Huy bo/no"
 
     -- Show selection menu
     Say("Chon thuoc tinh muon nang cap:", getn(tbSayOptions), tbSayOptions)
