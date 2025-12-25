@@ -16,6 +16,101 @@ UPGRADE_MATERIAL_DETAIL = 18    -- Luc Thuy Tinh (Green Crystal) - tam thoi
 UPGRADE_FIXED_PERCENT = 20      -- % tang co dinh (FIXED 20%)
 UPGRADE_SUCCESS_RATE = 100      -- Ti le thanh cong (%)
 
+-- Attribute ID to internal name mapping (from KMagicAttrib.h enum)
+local ATTRIB_ID_TO_NAME = {
+    [28] = "weapondamagemin_v",
+    [29] = "weapondamagemax_v",
+    [30] = "armordefense_v",
+    [56] = "attackrating_v",
+    [57] = "attackrating_p",
+    [59] = "physicsdamage_v",
+    [60] = "colddamage_v",
+    [61] = "firedamage_v",
+    [62] = "lightingdamage_v",
+    [63] = "poisondamage_v",
+    [64] = "magicdamage_v",
+    [85] = "lifemax_v",
+    [86] = "lifemax_p",
+    [89] = "manamax_v",
+    [90] = "manamax_p",
+    [93] = "staminamax_v",
+    [94] = "staminamax_p",
+    [97] = "strength_v",
+    [98] = "dexterity_v",
+    [99] = "vitality_v",
+    [100] = "energy_v",
+    [101] = "poisonres_p",
+    [102] = "fireres_p",
+    [103] = "lightingres_p",
+    [104] = "physicsres_p",
+    [105] = "coldres_p",
+    [106] = "freezetimereduce_p",
+    [107] = "burntimereduce_p",
+    [108] = "poisontimereduce_p",
+    [110] = "stuntimereduce_p",
+    [111] = "fastwalkrun_p",
+    [113] = "fasthitrecover_v",
+    [114] = "allres_p",
+    [115] = "attackspeed_v",
+    [121] = "addphysicsdamage_v",
+    [122] = "addfiredamage_v",
+    [123] = "addcolddamage_v",
+    [124] = "addlightingdamage_v",
+    [125] = "addpoisondamage_v",
+    [128] = "changecamp_b",
+    [129] = "physicsarmor_v",
+    [150] = "adddefense_v",
+    [151] = "adddefense_p",
+    [166] = "attackratingenhance_v",
+    [167] = "attackratingenhance_p",
+}
+
+-- Load attribute descriptions from MagicDesc.ini
+local ATTRIB_DESCRIPTIONS = {}
+
+local function LoadMagicDescriptions()
+    local file = io.open("\\settings\\MagicDesc.ini", "r")
+    if not file then
+        return false
+    end
+
+    local inDescript = false
+    for line in file:lines() do
+        if line == "[Descript]" then
+            inDescript = true
+        elseif inDescript then
+            -- Parse line: "weapondamagemin_v=Sat thuong nho nhat: #d1- diem"
+            local key, value = string.match(line, "^([%w_]+)=(.+)$")
+            if key and value then
+                -- Extract just the descriptive part (before the colon or #)
+                local desc = string.match(value, "^([^:#]+)")
+                if desc then
+                    ATTRIB_DESCRIPTIONS[key] = desc
+                end
+            end
+        end
+    end
+
+    file:close()
+    return true
+end
+
+-- Get attribute display name from ID
+local function GetAttribName(nAttribType)
+    local internalName = ATTRIB_ID_TO_NAME[nAttribType]
+    if internalName then
+        local desc = ATTRIB_DESCRIPTIONS[internalName]
+        if desc then
+            return desc
+        end
+        return internalName
+    end
+    return "Type " .. nAttribType
+end
+
+-- Load descriptions on script init
+LoadMagicDescriptions()
+
 -- ────────────────────────────────────────────────────────────
 -- NPC Talk Entry Point
 -- ───────────────────────────────────────────────────────────
@@ -112,8 +207,9 @@ function ExeUpgradeAttrib()
                 local nNewValue = nValue + nIncrease
                 if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
-                -- Build option string (simple, no name lookup to avoid errors)
-                local szOption = "Thuoc tinh " .. (i + 1) .. ": " .. nValue .. " -> " .. nNewValue .. "/DoUpgradeAttrib_" .. i
+                -- Build option string with Vietnamese name
+                local szAttribName = GetAttribName(nAttribType)
+                local szOption = szAttribName .. ": " .. nValue .. " -> " .. nNewValue .. "/DoUpgradeAttrib_" .. i
 
                 -- Add to table
                 tinsert(tbSayOptions, szOption)
@@ -175,7 +271,8 @@ function PerformUpgrade(nAttribSlot)
     DelItemByIndex(nMaterialIdx)
 
     -- Success message
-    local szMsg = "Nang cap thanh cong!\nThuoc tinh " .. (nAttribSlot + 1) .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)"
+    local szAttribName = GetAttribName(nAttribType)
+    local szMsg = "Nang cap thanh cong!\n" .. szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)"
     Talk(1, "", szMsg)
 end
 
