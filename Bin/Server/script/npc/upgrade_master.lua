@@ -38,6 +38,7 @@ end
 
 -- ────────────────────────────────────────────────────────────
 -- Execute Upgrade (called when player clicks "Upgrade" button)
+-- This function validates items and shows attribute selection menu
 -- ────────────────────────────────────────────────────────────
 function ExeUpgradeAttrib()
     Msg2Player("========================================")
@@ -121,26 +122,75 @@ function ExeUpgradeAttrib()
         return
     end
 
-    -- Find the FIRST attribute that is NOT at max
-    Msg2Player("=== Finding first upgradeable attribute ===")
-    local nAttribSlot = -1
+    -- Build list of all upgradeable attributes
+    Msg2Player("=== Building attribute selection menu ===")
+    local tbUpgradeableAttribs = {}
+    local tbSayOptions = {}
+
     for i = 0, 5 do
         local nAttribType, nValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
         if nAttribType and nAttribType > 0 then
-            -- Check if this attribute is already at max
-            if nMax > 0 and nValue >= nMax then
-                Msg2Player("Slot " .. i .. " is at MAX (" .. nValue .. "/" .. nMax .. "), skipping...")
+            -- Check if this attribute can be upgraded
+            local bCanUpgrade = (nMax <= 0 or nValue < nMax)
+
+            -- Get attribute name (you may want to add a function to get proper attribute names)
+            local szAttribName = GetMagicAttribName(nAttribType) or ("Type " .. nAttribType)
+
+            -- Calculate potential new value
+            local nIncrease = (nValue * UPGRADE_FIXED_PERCENT) / 100
+            if nIncrease < 1 then nIncrease = 1 end
+            local nNewValue = nValue + nIncrease
+            if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
+
+            if bCanUpgrade then
+                -- Add to upgradeable list
+                local szOption = format("<color=cyan>%s<color>: <color=yellow>%d -> %d<color> (+%d%%)",
+                                       szAttribName, nValue, nNewValue, UPGRADE_FIXED_PERCENT)
+                if nMax > 0 then
+                    szOption = szOption .. format(" [Max: %d]", nMax)
+                end
+
+                tinsert(tbSayOptions, szOption .. "/DoUpgradeAttrib_" .. i)
+                tinsert(tbUpgradeableAttribs, i)
+
+                Msg2Player("Added slot " .. i .. " to menu: " .. szAttribName .. " " .. nValue .. "->" .. nNewValue)
             else
-                nAttribSlot = i
-                Msg2Player("Found upgradeable attribute at slot " .. i .. " (value=" .. nValue .. ", max=" .. nMax .. ")")
-                break
+                Msg2Player("Slot " .. i .. " is at MAX (" .. nValue .. "/" .. nMax .. "), cannot upgrade")
             end
         end
     end
 
-    if nAttribSlot < 0 then
-        Msg2Player("ERROR: No upgradeable attribute found (all at MAX or no attributes)")
+    if getn(tbUpgradeableAttribs) == 0 then
+        Msg2Player("ERROR: No upgradeable attributes found (all at MAX or no attributes)")
         Talk(1, "", "<color=red>Tat ca thuoc tinh da dat MAX! Khong the nang cap!<color>")
+        return
+    end
+
+    -- Add cancel option
+    tinsert(tbSayOptions, "<color=red>Huy bo<color>/no")
+
+    -- Show selection menu
+    Say("<color=yellow>Chon thuoc tinh muon nang cap:<color>\n" ..
+        "<color=white>Tang co dinh: +" .. UPGRADE_FIXED_PERCENT .. "%%<color>",
+        getn(tbSayOptions), tbSayOptions)
+end
+
+-- ────────────────────────────────────────────────────────────
+-- Perform actual upgrade on selected attribute slot
+-- Called by dynamic functions DoUpgradeAttrib_0 through DoUpgradeAttrib_5
+-- ────────────────────────────────────────────────────────────
+function PerformUpgrade(nAttribSlot)
+    Msg2Player("═══ PERFORMING UPGRADE ═══")
+    Msg2Player("Selected slot: " .. nAttribSlot)
+
+    local nPos = 15  -- pos_builditem
+
+    -- Get items again (in case they changed)
+    local nEquipIdx = GetPOItem(nPos, 0)
+    local nMaterialIdx = GetPOItem(nPos, 1)
+
+    if nEquipIdx <= 0 or nMaterialIdx <= 0 then
+        Talk(1, "", "<color=red>Loi: Trang bi hoac vat lieu bi mat!<color>")
         return
     end
 
@@ -200,10 +250,39 @@ function ExeUpgradeAttrib()
     Msg2Player("Delete material result: " .. nResult)
 
     -- Success message
+    local szAttribName = GetMagicAttribName(nAttribType) or ("Thuoc tinh #" .. (nAttribSlot + 1))
     local szMsg = "<color=green>Nang cap thanh cong!<color>\n" ..
-                  "Thuoc tinh #" .. (nAttribSlot + 1) ..
+                  szAttribName ..
                   ": <color=yellow>" .. nOldValue .. " -> " .. nNewValue .. "<color> (+" .. nIncreasePercent .. "%)"
     Talk(1, "", szMsg)
+end
+
+-- ────────────────────────────────────────────────────────────
+-- Dynamic upgrade functions for each attribute slot (0-5)
+-- These are called from the Say menu
+-- ────────────────────────────────────────────────────────────
+function DoUpgradeAttrib_0()
+    PerformUpgrade(0)
+end
+
+function DoUpgradeAttrib_1()
+    PerformUpgrade(1)
+end
+
+function DoUpgradeAttrib_2()
+    PerformUpgrade(2)
+end
+
+function DoUpgradeAttrib_3()
+    PerformUpgrade(3)
+end
+
+function DoUpgradeAttrib_4()
+    PerformUpgrade(4)
+end
+
+function DoUpgradeAttrib_5()
+    PerformUpgrade(5)
 end
 
 -- ────────────────────────────────────────────────────────────
@@ -214,16 +293,18 @@ function ShowGuide()
         "<color=cyan>Cach thuc hien:<color>\n" ..
         "1. Dat <color=blue>trang bi xanh<color> vao o tren\n" ..
         "2. Dat <color=orange>Da Nang Cap<color> vao o duoi\n" ..
-        "3. Chon thuoc tinh muon nang cap tu danh sach\n" ..
-        "4. Nhan <color=green>Nang Cap<color>\n\n" ..
+        "3. Nhan nut <color=green>Nang Cap<color>\n" ..
+        "4. Chon thuoc tinh muon nang cap tu menu\n" ..
+        "5. Xac nhan de hoan tat\n\n" ..
         "<color=cyan>Chi tiet:<color>\n" ..
         "- Chi nang cap duoc <color=blue>trang bi xanh<color>\n" ..
-        "- Moi lan nang tang <color=yellow>" .. UPGRADE_MIN_PERCENT .. "-" .. UPGRADE_MAX_PERCENT .. "%%<color> gia tri\n" ..
+        "- Moi lan nang tang <color=yellow>" .. UPGRADE_FIXED_PERCENT .. "%%<color> gia tri\n" ..
         "- Khong the vuot qua gia tri <color=red>MAX<color>\n" ..
         "- Ti le thanh cong: <color=green>" .. UPGRADE_SUCCESS_RATE .. "%%<color>\n" ..
         "- Mat <color=orange>1 Da Nang Cap<color> moi lan\n\n" ..
         "<color=cyan>Luu y:<color>\n" ..
         "- Thuoc tinh da MAX khong the nang them\n" ..
+        "- Ban co the chon bat ky thuoc tinh nao de nang\n" ..
         "- Vat lieu bi mat khi nang cap\n" ..
         "- Khong the hoan tac sau khi nang"
 
