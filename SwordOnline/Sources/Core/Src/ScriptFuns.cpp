@@ -10507,7 +10507,9 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 	nEncodedVersion |= ((nAttribTypes[5] & 0xFF) << 8);  // bits 8-15
 
 	// Set special luck value to flag exact value mode
-	int nUpgradedLuck = 999900000 + nLuck;
+	// CRITICAL: Use modulo to prevent overflow into purple equipment range (>= 1000000000)
+	// Safe range: 999900000 to 999999999 (100,000 possible values)
+	int nUpgradedLuck = 999900000 + (nLuck % 100000);
 
 #ifdef _DEBUG
 	g_DebugLog("[UpgradeItem] ═══ ENCODING EXACT ATTRIBUTES ═══");
