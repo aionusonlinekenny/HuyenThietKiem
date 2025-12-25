@@ -10406,12 +10406,25 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 	int nVersion = pOldGenParam->nVersion;
 	DWORD dwRandSeed = pOldGenParam->dwRandomSeed;
 
+#ifdef _DEBUG
+	g_DebugLog("[UpgradeItem] ═══ START UPGRADE ═══");
+	g_DebugLog("[UpgradeItem] Old Item: Genre=%d, Detail=%d, Parti=%d, Level=%d, Series=%d",
+	           nGenre, nDetail, nParti, nLevel, nSeries);
+	g_DebugLog("[UpgradeItem] Old GenParams: Luck=%d, Version=%d, Seed=0x%08X",
+	           nLuck, nVersion, dwRandSeed);
+#endif
+
 	// Copy all 6 generator levels
 	int nGenLevels[6];
 	for (int i = 0; i < 6; i++)
 	{
 		nGenLevels[i] = pOldGenParam->nGeneratorLevel[i];
 	}
+
+#ifdef _DEBUG
+	g_DebugLog("[UpgradeItem] Generator Levels: [%d, %d, %d, %d, %d, %d]",
+	           nGenLevels[0], nGenLevels[1], nGenLevels[2], nGenLevels[3], nGenLevels[4], nGenLevels[5]);
+#endif
 
 	// STEP 1: Store ALL 6 attributes (type, value, min, max) from old item
 	int nAttribTypes[6];
@@ -10426,6 +10439,18 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		nAttribMins[j] = Item[nOldItemIdx].m_aryMagicAttrib[j].nMin;
 		nAttribMaxs[j] = Item[nOldItemIdx].m_aryMagicAttrib[j].nMax;
 	}
+
+#ifdef _DEBUG
+	g_DebugLog("[UpgradeItem] Old Attributes:");
+	for (int j = 0; j < 6; j++)
+	{
+		if (nAttribTypes[j] > 0)
+		{
+			g_DebugLog("  Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
+			           j, nAttribTypes[j], nAttribValues[j], nAttribMins[j], nAttribMaxs[j]);
+		}
+	}
+#endif
 
 	// STEP 2: Calculate new value for the upgraded slot
 	int nOldValue = nAttribValues[nUpgradeSlot];
@@ -10443,6 +10468,11 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 
 	// Update the value array with new upgraded value
 	nAttribValues[nUpgradeSlot] = nNewValue;
+
+#ifdef _DEBUG
+	g_DebugLog("[UpgradeItem] Upgrade Slot %d: OldVal=%d + Inc=%d (=%d%%) = NewVal=%d (max=%d)",
+	           nUpgradeSlot, nOldValue, nIncrease, nUpgradePercent, nNewValue, nMax);
+#endif
 
 	// Get old item's position BEFORE deleting
 	int nOldX = ItemSet.m_psItemInfo[nOldItemIdx].m_nX;
@@ -10481,17 +10511,47 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 	}
 
 #ifdef _DEBUG
-	g_DebugLog("[UpgradeItem] New item created successfully with exact value mode!");
+	g_DebugLog("[UpgradeItem] ─── NEW ITEM CREATED ───");
+
+	// Check new item properties
+	int nNewGenre = Item[nNewItemIdx].GetGenre();
+	int nNewDetail = Item[nNewItemIdx].GetDetailType();
+	int nNewLevel = Item[nNewItemIdx].GetLevel();
+	int nNewSeries = Item[nNewItemIdx].GetSeries();
+	KItemGeneratorParam* pNewGenParam = Item[nNewItemIdx].GetGeneratorParam();
+
+	g_DebugLog("[UpgradeItem] New Item Props: Genre=%d, Detail=%d, Level=%d, Series=%d",
+	           nNewGenre, nNewDetail, nNewLevel, nNewSeries);
+
+	if (pNewGenParam)
+	{
+		g_DebugLog("[UpgradeItem] New GenParams: Luck=%d, Version=%d, Seed=0x%08X",
+		           pNewGenParam->nLuck, pNewGenParam->nVersion, pNewGenParam->dwRandomSeed);
+		g_DebugLog("[UpgradeItem] New GenLevels: [%d, %d, %d, %d, %d, %d]",
+		           pNewGenParam->nGeneratorLevel[0], pNewGenParam->nGeneratorLevel[1],
+		           pNewGenParam->nGeneratorLevel[2], pNewGenParam->nGeneratorLevel[3],
+		           pNewGenParam->nGeneratorLevel[4], pNewGenParam->nGeneratorLevel[5]);
+	}
 
 	// STEP 7: Verify attributes were generated correctly
+	g_DebugLog("[UpgradeItem] New Attributes (verification):");
 	for (int m = 0; m < 6; m++)
 	{
-		int nGeneratedValue = Item[nNewItemIdx].m_aryMagicAttrib[m].nValue[0];
+		int nGenType = Item[nNewItemIdx].m_aryMagicAttrib[m].nAttribType;
+		int nGenValue = Item[nNewItemIdx].m_aryMagicAttrib[m].nValue[0];
+		int nGenMin = Item[nNewItemIdx].m_aryMagicAttrib[m].nMin;
+		int nGenMax = Item[nNewItemIdx].m_aryMagicAttrib[m].nMax;
 		int nExpectedValue = nAttribValues[m];
-		g_DebugLog("[UpgradeItem]   Verify Slot[%d]: Expected=%d, Got=%d %s",
-		        m, nExpectedValue, nGeneratedValue,
-		        (nGeneratedValue == nExpectedValue) ? "[OK]" : "[MISMATCH]");
+
+		if (nGenType > 0)
+		{
+			g_DebugLog("  Slot[%d]: Type=%d, Value=%d (expected=%d) %s, Min=%d, Max=%d",
+			           m, nGenType, nGenValue, nExpectedValue,
+			           (nGenValue == nExpectedValue) ? "[OK]" : "[MISMATCH]",
+			           nGenMin, nGenMax);
+		}
 	}
+	g_DebugLog("[UpgradeItem] ═══ END UPGRADE ═══");
 #endif
 
 	// STEP 8: Add new item to player's inventory

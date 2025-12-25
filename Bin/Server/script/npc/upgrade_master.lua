@@ -13,8 +13,7 @@ UPGRADE_MATERIAL_GENRE = 6      -- item_task
 UPGRADE_MATERIAL_DETAIL = 18    -- Luc Thuy Tinh (Green Crystal) - tam thoi
 
 -- Upgrade settings
-UPGRADE_MIN_PERCENT = 10        -- % tang toi thieu
-UPGRADE_MAX_PERCENT = 20        -- % tang toi da
+UPGRADE_FIXED_PERCENT = 20      -- % tang co dinh (FIXED 20%)
 UPGRADE_SUCCESS_RATE = 100      -- Ti le thanh cong (%)
 
 -- ────────────────────────────────────────────────────────────
@@ -147,11 +146,15 @@ function ExeUpgradeAttrib()
 
     -- Get attribute info for the selected slot
     local nAttribType, nOldValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
-    Msg2Player("Selected slot " .. nAttribSlot .. ": type=" .. tostring(nAttribType) .. " oldVal=" .. tostring(nOldValue) .. " min=" .. tostring(nMin) .. " max=" .. tostring(nMax))
+    Msg2Player("═══ SELECTED ATTRIBUTE ═══")
+    Msg2Player("  Slot: " .. nAttribSlot)
+    Msg2Player("  Type: " .. tostring(nAttribType))
+    Msg2Player("  Current Value: " .. tostring(nOldValue))
+    Msg2Player("  Min: " .. tostring(nMin) .. " | Max: " .. tostring(nMax))
 
-    -- Calculate upgrade percentage (random between min and max)
-    local nIncreasePercent = UPGRADE_MIN_PERCENT + random(0, UPGRADE_MAX_PERCENT - UPGRADE_MIN_PERCENT + 1)
-    Msg2Player("Calculated increase: " .. nIncreasePercent .. "%")
+    -- Use FIXED upgrade percentage
+    local nIncreasePercent = UPGRADE_FIXED_PERCENT
+    Msg2Player("  Increase: FIXED " .. nIncreasePercent .. "%")
 
     -- Calculate new value (C++ will cast to int automatically)
     local nIncrease = (nOldValue * nIncreasePercent) / 100
@@ -159,19 +162,37 @@ function ExeUpgradeAttrib()
     local nNewValue = nOldValue + nIncrease
     if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
-    Msg2Player("Calculated: " .. nOldValue .. " + " .. nIncrease .. " = " .. nNewValue)
+    Msg2Player("  Calculation: " .. nOldValue .. " + " .. nIncrease .. " = " .. nNewValue)
+    Msg2Player("═══════════════════════════")
 
     -- Create upgraded item (C++ will handle removing old equipment and placing new one)
-    Msg2Player("Creating upgraded item...")
+    Msg2Player(">>> Calling C++ UpgradeItemAttributes...")
     local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, nPos)
 
     if nNewItemIdx == 0 then
-        Msg2Player("ERROR: UpgradeItemAttributes returned 0!")
+        Msg2Player("<color=red>ERROR: UpgradeItemAttributes returned 0!<color>")
         Talk(1, "", "<color=red>Loi: Khong the nang cap! Co the do rong hoac loi khac.<color>")
         return
     end
 
-    Msg2Player("Upgraded item created successfully with index: " .. nNewItemIdx)
+    Msg2Player("<color=green>>>> New item created! Index: " .. nNewItemIdx .. "<color>")
+
+    -- Verify new item attributes
+    Msg2Player("═══ VERIFYING NEW ITEM ═══")
+    for i = 0, 5 do
+        local nType, nVal, nMinVal, nMaxVal = GetItemMagicAttribInfo(nNewItemIdx, i)
+        if nType and nType > 0 then
+            local szStatus = ""
+            if i == nAttribSlot then
+                if nVal == nNewValue then
+                    szStatus = " <color=green>[MATCH!]<color>"
+                else
+                    szStatus = " <color=red>[MISMATCH! Expected " .. nNewValue .. "]<color>"
+                end
+            end
+            Msg2Player("  Slot " .. i .. ": Type=" .. nType .. ", Val=" .. nVal .. szStatus)
+        end
+    end
 
     -- Delete material only (equipment already handled by C++ function)
     Msg2Player("Deleting material...")
