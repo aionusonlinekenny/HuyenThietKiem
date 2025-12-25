@@ -10478,29 +10478,63 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 	int nOldX = ItemSet.m_psItemInfo[nOldItemIdx].m_nX;
 	int nOldY = ItemSet.m_psItemInfo[nOldItemIdx].m_nY;
 
-	// STEP 4: Encode exact values for client regeneration (EXACT VALUE MODE)
-	// Encode deltas (value - min) into random seed using ItemGenerator
-	DWORD dwEncodedSeed = ItemGen.EncodeExactValues(nAttribValues, nAttribMins);
+	// STEP 4: NEW ENCODING SCHEME for exact attribute preservation
+	// Problem: Random seed changes → different attribute TYPES selected
+	// Solution: Store BOTH types and values in generator params
+	//
+	// Encoding:
+	// - m_Luck = 999900000 + original_luck (exact mode flag)
+	// - m_MagicLevel[i] = attribute VALUES directly (0-255)
+	// - dwRandomSeed (32 bits) = pack attribute TYPES 0-3 (4 types x 8 bits)
+	// - nVersion (16 bits) = pack attribute TYPES 4-5 (2 types x 8 bits)
 
-	// Set special luck value to flag exact value mode: 999900000 + original_luck
+	// Encode attribute VALUES into generator levels
+	int nEncodedLevels[6];
+	for (int k = 0; k < 6; k++)
+	{
+		nEncodedLevels[k] = nAttribValues[k]; // Store value directly (0-255)
+	}
+
+	// Encode attribute TYPES into random seed (types 0-3) and version (types 4-5)
+	DWORD dwEncodedSeed = 0;
+	dwEncodedSeed |= ((DWORD)(nAttribTypes[0] & 0xFF) << 0);   // bits 0-7
+	dwEncodedSeed |= ((DWORD)(nAttribTypes[1] & 0xFF) << 8);   // bits 8-15
+	dwEncodedSeed |= ((DWORD)(nAttribTypes[2] & 0xFF) << 16);  // bits 16-23
+	dwEncodedSeed |= ((DWORD)(nAttribTypes[3] & 0xFF) << 24);  // bits 24-31
+
+	int nEncodedVersion = 0;
+	nEncodedVersion |= ((nAttribTypes[4] & 0xFF) << 0);  // bits 0-7
+	nEncodedVersion |= ((nAttribTypes[5] & 0xFF) << 8);  // bits 8-15
+
+	// Set special luck value to flag exact value mode
 	int nUpgradedLuck = 999900000 + nLuck;
 
 #ifdef _DEBUG
-	g_DebugLog("[UpgradeItem] Encoding exact values: Luck=%d->%d, Seed=0x%08X", nLuck, nUpgradedLuck, dwEncodedSeed);
+	g_DebugLog("[UpgradeItem] ═══ ENCODING EXACT ATTRIBUTES ═══");
+	g_DebugLog("[UpgradeItem] Luck: %d -> %d (exact mode flag)", nLuck, nUpgradedLuck);
+	g_DebugLog("[UpgradeItem] Encoded Seed: 0x%08X (stores types 0-3)", dwEncodedSeed);
+	g_DebugLog("[UpgradeItem] Encoded Version: 0x%04X (stores types 4-5)", nEncodedVersion);
+	g_DebugLog("[UpgradeItem] Encoded Levels (values):");
 	for (int k = 0; k < 6; k++)
 	{
-		int nDelta = nAttribValues[k] - nAttribMins[k];
-		g_DebugLog("[UpgradeItem]   Slot[%d]: Value=%d, Min=%d, Delta=%d", k, nAttribValues[k], nAttribMins[k], nDelta);
+		if (nAttribTypes[k] > 0)
+		{
+			g_DebugLog("  Slot[%d]: Type=%d, Value=%d (min=%d, max=%d)",
+			           k, nAttribTypes[k], nAttribValues[k], nAttribMins[k], nAttribMaxs[k]);
+		}
 	}
 #endif
 
 	// STEP 5: Remove old item from container (frees space)
 	Player[nPlayerIndex].m_ItemList.Remove(nOldItemIdx);
 
-	// STEP 6: Create new item with EXACT VALUE MODE encoding
-	// Use encoded seed and special luck value
+	// STEP 6: Create new item with EXACT ATTRIBUTE MODE encoding
+	// - nEncodedLevels contains VALUES
+	// - dwEncodedSeed contains TYPES 0-3
+	// - nEncodedVersion contains TYPES 4-5
+	// - nUpgradedLuck flags exact mode
 	int nNewItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nUpgradedLuck, nDetail, nParti,
-	                              nGenLevels, nVersion, dwEncodedSeed);
+	                              nEncodedLevels, nEncodedVersion, dwEncodedSeed);
 
 	if (nNewItemIdx <= 0 || nNewItemIdx >= MAX_ITEM)
 	{

@@ -1172,28 +1172,75 @@ BOOL KItemGenerator::Gen_MagicAttrib(
     _ASSERT(pnaryMALevel);
     _ASSERT(pnaryMA);
 
-    // Check for EXACT VALUE MODE (upgraded items)
-    // Format: nLucky >= 999900000 indicates exact value mode
-    // Exact values are encoded as deltas (5 bits each) in dwRandomSeed
-    BOOL bExactValueMode = (nLucky >= 999900000);
-    int nExactDeltas[6] = {0, 0, 0, 0, 0, 0};
-    int nOriginalLucky = nLucky;
+    // Check for EXACT ATTRIBUTE MODE (upgraded items)
+    // NEW ENCODING: nLucky >= 999900000 indicates exact attribute mode
+    // - pnaryMALevel[i] = exact VALUES (not generator levels!)
+    // - dwRandomSeed = packed attribute TYPES 0-3 (8 bits each)
+    // - nGameVersion = packed attribute TYPES 4-5 (8 bits each)
+    BOOL bExactAttributeMode = (nLucky >= 999900000);
 
-    if (bExactValueMode)
+    if (bExactAttributeMode)
     {
-        // Decode 6 deltas from random seed (5 bits each)
-        DecodeExactValues(dwRandomSeed, nExactDeltas);
-
         // Extract original luck value
-        nOriginalLucky = nLucky - 999900000;
+        int nOriginalLucky = nLucky - 999900000;
         if (nOriginalLucky < 0) nOriginalLucky = 0;
 
 #ifdef _DEBUG
-        g_DebugLog("[Gen_MagicAttrib] EXACT VALUE MODE detected! Luck=%d, OriginalLuck=%d, Seed=0x%08X",
-            nLucky, nOriginalLucky, dwRandomSeed);
-        for (int d = 0; d < 6; d++)
-            g_DebugLog("  Delta[%d] = %d", d, nExactDeltas[d]);
+        g_DebugLog("[Gen_MagicAttrib] ═══ EXACT ATTRIBUTE MODE ═══");
+        g_DebugLog("[Gen_MagicAttrib] Luck=%d, OriginalLuck=%d, Seed=0x%08X, Version=%d",
+            nLucky, nOriginalLucky, dwRandomSeed, nGameVersion);
 #endif
+
+        // Decode attribute TYPES from seed and version
+        int nExactTypes[6];
+        nExactTypes[0] = (dwRandomSeed >> 0) & 0xFF;   // bits 0-7
+        nExactTypes[1] = (dwRandomSeed >> 8) & 0xFF;   // bits 8-15
+        nExactTypes[2] = (dwRandomSeed >> 16) & 0xFF;  // bits 16-23
+        nExactTypes[3] = (dwRandomSeed >> 24) & 0xFF;  // bits 24-31
+        nExactTypes[4] = (nGameVersion >> 0) & 0xFF;   // bits 0-7
+        nExactTypes[5] = (nGameVersion >> 8) & 0xFF;   // bits 8-15
+
+        // pnaryMALevel contains VALUES directly (not levels!)
+        // Set attributes directly without random generation
+        for (i = 0; i < 6; i++)
+        {
+            if (nExactTypes[i] == 0)  // No attribute in this slot
+                break;
+
+            pnaryMA[i].nAttribType = nExactTypes[i];
+            pnaryMA[i].nValue[0] = pnaryMALevel[i];  // Value stored directly
+            pnaryMA[i].nValue[1] = 0;
+            pnaryMA[i].nValue[2] = 0;
+
+            // Get global min/max for this attribute type
+            int nGlobalMin = 0, nGlobalMax = 0;
+            GetGlobalMinMax(nExactTypes[i], nGlobalMin, nGlobalMax);
+            pnaryMA[i].nMin = nGlobalMin;
+            pnaryMA[i].nMax = nGlobalMax;
+
+#ifdef _DEBUG
+            g_DebugLog("[Gen_MagicAttrib] Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
+                i, nExactTypes[i], pnaryMALevel[i], nGlobalMin, nGlobalMax);
+#endif
+        }
+
+        // Fill remaining slots with empty attributes
+        for (NULL; i < 6; i++)
+        {
+            pnaryMA[i].nAttribType = 0;
+            pnaryMA[i].nValue[0] = 0;
+            pnaryMA[i].nValue[1] = 0;
+            pnaryMA[i].nValue[2] = 0;
+            pnaryMA[i].nMin = 0;
+            pnaryMA[i].nMax = 0;
+        }
+
+#ifdef _DEBUG
+        g_DebugLog("[Gen_MagicAttrib] ═══ EXACT MODE COMPLETE ═══");
+#endif
+
+        nResult = true;
+        return nResult;  // Early exit - skip normal generation
     }
 
     for (i = 0; i < 6; i++) 
@@ -1282,44 +1329,19 @@ BOOL KItemGenerator::Gen_MagicAttrib(
 
         pnaryMA[i].nAttribType = pMAItem->m_MagicAttrib.nPropKind;
 
-        // EXACT VALUE MODE: Use decoded deltas instead of random generation
-        if (bExactValueMode)
-        {
-            // Use delta + min to get exact value
-            pnaryMA[i].nValue[0] = pMAItem->m_MagicAttrib.aryRange[0].nMin + nExactDeltas[i];
-
-            // For nValue[1] and nValue[2], generate normally (usually not used for main attributes)
-            pnaryMA[i].nValue[1] = GetRandomNumber(
-                pMAItem->m_MagicAttrib.aryRange[1].nMin,
-                pMAItem->m_MagicAttrib.aryRange[1].nMax
-            );
-            pnaryMA[i].nValue[2] = GetRandomNumber(
-                pMAItem->m_MagicAttrib.aryRange[2].nMin,
-                pMAItem->m_MagicAttrib.aryRange[2].nMax
-            );
-
-#ifdef _DEBUG
-            g_DebugLog("[Gen_MagicAttrib] Slot[%d]: Type=%d, ExactValue=%d (min=%d + delta=%d)",
-                i, pnaryMA[i].nAttribType, pnaryMA[i].nValue[0],
-                pMAItem->m_MagicAttrib.aryRange[0].nMin, nExactDeltas[i]);
-#endif
-        }
-        else
-        {
-            // NORMAL MODE: Random generation
-            pnaryMA[i].nValue[0] = GetRandomNumber(
-                pMAItem->m_MagicAttrib.aryRange[0].nMin,
-                pMAItem->m_MagicAttrib.aryRange[0].nMax
-            );
-            pnaryMA[i].nValue[1] = GetRandomNumber(
-                pMAItem->m_MagicAttrib.aryRange[1].nMin,
-                pMAItem->m_MagicAttrib.aryRange[1].nMax
-            );
-            pnaryMA[i].nValue[2] = GetRandomNumber(
-                pMAItem->m_MagicAttrib.aryRange[2].nMin,
-                pMAItem->m_MagicAttrib.aryRange[2].nMax
-            );
-        }
+        // NORMAL MODE: Random generation of values
+        pnaryMA[i].nValue[0] = GetRandomNumber(
+            pMAItem->m_MagicAttrib.aryRange[0].nMin,
+            pMAItem->m_MagicAttrib.aryRange[0].nMax
+        );
+        pnaryMA[i].nValue[1] = GetRandomNumber(
+            pMAItem->m_MagicAttrib.aryRange[1].nMin,
+            pMAItem->m_MagicAttrib.aryRange[1].nMax
+        );
+        pnaryMA[i].nValue[2] = GetRandomNumber(
+            pMAItem->m_MagicAttrib.aryRange[2].nMin,
+            pMAItem->m_MagicAttrib.aryRange[2].nMax
+        );
 
         // FIX: Get GLOBAL min/max across ALL levels for this attribute type
         // This shows players the full possible range [lowest-highest] regardless of which level was rolled
