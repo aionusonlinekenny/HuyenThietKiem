@@ -96,14 +96,47 @@ function ExeUpgradeAttrib()
         return
     end
 
-    -- TEST: Simple hardcoded menu
-    local tbTestOptions = {
-        "Test option 1/DoUpgradeAttrib_0",
-        "Test option 2/DoUpgradeAttrib_1",
-        "Cancel/no"
-    }
+    -- Build list of all upgradeable attributes
+    local tbSayOptions = {}
+    local nCount = 0
 
-    Say("TEST MENU - Chon thuoc tinh:", getn(tbTestOptions), tbTestOptions)
+    for i = 0, 5 do
+        local nAttribType, nValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
+
+        if nAttribType and nAttribType > 0 then
+            -- Check if this attribute can be upgraded
+            if nMax <= 0 or nValue < nMax then
+                -- Calculate potential new value
+                local nIncrease = (nValue * UPGRADE_FIXED_PERCENT) / 100
+                if nIncrease < 1 then nIncrease = 1 end
+                local nNewValue = nValue + nIncrease
+                if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
+
+                -- Build option string - SIMPLE, NO SPECIAL CHARS
+                local szSlotNum = i + 1
+                local szOption = "Slot " .. szSlotNum .. ": " .. nValue .. " -> " .. nNewValue
+
+                -- Add callback
+                szOption = szOption .. "/DoUpgradeAttrib_" .. i
+
+                -- Add to table
+                tinsert(tbSayOptions, szOption)
+                nCount = nCount + 1
+            end
+        end
+    end
+
+    -- Check if we have any upgradeable attributes
+    if nCount == 0 then
+        Talk(1, "", "Tat ca thuoc tinh da dat MAX!")
+        return
+    end
+
+    -- Add cancel option
+    tinsert(tbSayOptions, "Huy bo/no")
+
+    -- Show selection menu
+    Say("Chon thuoc tinh muon nang cap:", getn(tbSayOptions), tbSayOptions)
 end
 
 -- ────────────────────────────────────────────────────────────
