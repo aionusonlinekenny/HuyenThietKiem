@@ -16,6 +16,59 @@ UPGRADE_MATERIAL_DETAIL = 18    -- Luc Thuy Tinh (Green Crystal) - tam thoi
 UPGRADE_FIXED_PERCENT = 20      -- % tang co dinh (FIXED 20%)
 UPGRADE_SUCCESS_RATE = 100      -- Ti le thanh cong (%)
 
+-- Attribute name mapping (ID -> Vietnamese name)
+local ATTRIB_NAMES = {
+    -- Common attributes
+    [0] = "Khong co",
+
+    -- Damage attributes
+    [39] = "Sinh luc toi da",
+    [41] = "Noi luc toi da",
+    [45] = "The luc toi da",
+
+    -- Offensive attributes
+    [128] = "Sat thuong nho nhat",
+    [129] = "Sat thuong lon nhat",
+    [198] = "Sat thuong nho nhat",
+    [205] = "Sat thuong lon nhat",
+
+    -- Elemental damage
+    [21] = "Sat thuong bang - noi cong",
+    [22] = "Sat thuong hoa - noi cong",
+    [23] = "Sat thuong loi - noi cong",
+    [24] = "Sat thuong doc - noi cong",
+    [25] = "Sat thuong bang - ngoai cong",
+    [26] = "Sat thuong hoa - ngoai cong",
+    [27] = "Sat thuong loi - ngoai cong",
+    [28] = "Sat thuong doc - ngoai cong",
+    [31] = "Sat thuong vat ly - noi cong",
+    [32] = "Sat thuong vat ly - ngoai cong",
+
+    -- Defensive attributes
+    [13] = "Phong thu",
+    [14] = "Khang doc",
+    [15] = "Khang bang",
+    [16] = "Khang hoa",
+    [17] = "Khang loi",
+
+    -- Special attributes
+    [52] = "Mau sat",
+    [53] = "Chinh xac",
+    [54] = "Ne tranh",
+    [55] = "Phan don",
+    [57] = "Cong kich nhanh",
+
+    -- Resistance
+    [61] = "Khang tat ca",
+
+    -- Add more as needed
+}
+
+-- Get attribute name from ID
+local function GetAttribName(nAttribType)
+    return ATTRIB_NAMES[nAttribType] or ("Type " .. nAttribType)
+end
+
 -- ────────────────────────────────────────────────────────────
 -- NPC Talk Entry Point
 -- ───────────────────────────────────────────────────────────
@@ -112,9 +165,9 @@ function ExeUpgradeAttrib()
                 local nNewValue = nValue + nIncrease
                 if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
-                -- Build option string - SIMPLE, NO SPECIAL CHARS
-                local szSlotNum = i + 1
-                local szOption = "Slot " .. szSlotNum .. ": " .. nValue .. " -> " .. nNewValue
+                -- Build option string with attribute name
+                local szAttribName = GetAttribName(nAttribType)
+                local szOption = szAttribName .. ": " .. nValue .. " -> " .. nNewValue
 
                 -- Add callback
                 szOption = szOption .. "/DoUpgradeAttrib_" .. i
@@ -179,9 +232,10 @@ function PerformUpgrade(nAttribSlot)
     DelItemByIndex(nMaterialIdx)
 
     -- Success message
+    local szAttribName = GetAttribName(nAttribType)
     local szMsg = string.format("<color=green>Nang cap thanh cong!<color>\n" ..
-                  "Thuoc tinh #%d (Type %d): <color=yellow>%d -> %d<color> (+%d%%)",
-                  (nAttribSlot + 1), nAttribType, nOldValue, nNewValue, nIncreasePercent)
+                  "%s: <color=yellow>%d -> %d<color> (+%d%%)",
+                  szAttribName, nOldValue, nNewValue, nIncreasePercent)
     Talk(1, "", szMsg)
 end
 
