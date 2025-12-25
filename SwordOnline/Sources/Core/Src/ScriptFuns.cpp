@@ -10413,46 +10413,60 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		nGenLevels[i] = pOldGenParam->nGeneratorLevel[i];
 	}
 
-	// CRITICAL: Increment generator level for upgraded slot
-	// This makes the client regenerate with higher tier, producing higher values
-	int nOldGenLevel = nGenLevels[nUpgradeSlot];
+	// REVOLUTIONARY APPROACH: Use Generator Level as EXACT VALUE!
+	// Normal: Generator Level 1-10 = tier (generates random in range)
+	// Upgraded: Generator Level > 10 = EXACT value we want!
 
-	// Increment by 1 tier (but don't exceed max tier of 10)
-	if (nOldGenLevel < 10)
-	{
-		nGenLevels[nUpgradeSlot] = nOldGenLevel + 1;
-	}
+	// Get current attribute value
+	int nOldValue = Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0];
+	int nMax = Item[nOldItemIdx].m_aryMagicAttrib[nUpgradeSlot].nMax;
 
-	// Get old item's position BEFORE deleting
+	// Calculate new value
+	int nIncrease = (nOldValue * nUpgradePercent) / 100;
+	if (nIncrease < 1) nIncrease = 1;
+	int nNewValue = nOldValue + nIncrease;
+
+	// Cap at max
+	if (nMax > 0 && nNewValue > nMax)
+		nNewValue = nMax;
+
+	// KEY INNOVATION: Set generator level = exact value (not tier!)
+	// When Gen_Equipment sees level > 10, it will use it as exact value
+	nGenLevels[nUpgradeSlot] = nNewValue;
+
+	// Get old item's position
 	int nOldX = ItemSet.m_psItemInfo[nOldItemIdx].m_nX;
 	int nOldY = ItemSet.m_psItemInfo[nOldItemIdx].m_nY;
 
-	// Remove old item from container (frees space)
+	// Remove old item
 	Player[nPlayerIndex].m_ItemList.Remove(nOldItemIdx);
 
-	// Create new item with INCREMENTED generator level
+	// Create new item (will generate with random values from generator params)
 	int nNewItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
 	                              nGenLevels, nVersion, dwRandSeed);
 
 	if (nNewItemIdx <= 0 || nNewItemIdx >= MAX_ITEM)
 	{
-		// Failed to create - restore old item
 		Player[nPlayerIndex].m_ItemList.Add(nOldItemIdx, nPos, nOldX, nOldY);
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
 
-	// Add new item to player's inventory
+	// ALSO set the value directly on server (double insurance!)
+	// Generator level encodes the value for persistence
+	// Direct setting ensures immediate correctness
+	Item[nNewItemIdx].m_aryMagicAttrib[nUpgradeSlot].nValue[0] = nNewValue;
+
+	// Add to inventory
 	if (!Player[nPlayerIndex].m_ItemList.Add(nNewItemIdx, nPos, nOldX, nOldY))
 	{
-		// Failed to add - cleanup and restore
 		ItemSet.Remove(nNewItemIdx);
 		Player[nPlayerIndex].m_ItemList.Add(nOldItemIdx, nPos, nOldX, nOldY);
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
 
-	// Delete old item from global pool
+	// Delete old item
 	ItemSet.Remove(nOldItemIdx);
 
 	// Return new item index
