@@ -128,34 +128,51 @@ function ExeUpgradeAttrib()
     local tbSayOptions = {}
 
     for i = 0, 5 do
+        Msg2Player(">>> Loop iteration i=" .. i)
         local nAttribType, nValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
+        Msg2Player("  GetItemMagicAttribInfo returned: type=" .. tostring(nAttribType) .. " val=" .. tostring(nValue) .. " min=" .. tostring(nMin) .. " max=" .. tostring(nMax))
+
         if nAttribType and nAttribType > 0 then
+            Msg2Player("  -> Has attribute type " .. nAttribType)
+
             -- Check if this attribute can be upgraded
             local bCanUpgrade = (nMax <= 0 or nValue < nMax)
-
-            -- Calculate potential new value
-            local nIncrease = (nValue * UPGRADE_FIXED_PERCENT) / 100
-            if nIncrease < 1 then nIncrease = 1 end
-            local nNewValue = nValue + nIncrease
-            if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
+            Msg2Player("  -> bCanUpgrade=" .. tostring(bCanUpgrade) .. " (nMax=" .. tostring(nMax) .. ", nValue=" .. tostring(nValue) .. ")")
 
             if bCanUpgrade then
-                -- Add to upgradeable list
-                local szOption = string.format("<color=cyan>Thuoc tinh #%d<color> (Type %d): <color=yellow>%d -> %d<color> (+%d%%)",
-                                       (i + 1), nAttribType, nValue, nNewValue, UPGRADE_FIXED_PERCENT)
+                Msg2Player("  -> CAN UPGRADE - building option string")
+
+                -- Calculate potential new value
+                local nIncrease = (nValue * UPGRADE_FIXED_PERCENT) / 100
+                if nIncrease < 1 then nIncrease = 1 end
+                local nNewValue = nValue + nIncrease
+                if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
+
+                Msg2Player("  -> Calculated: " .. nValue .. " + " .. nIncrease .. " = " .. nNewValue)
+
+                -- Build option string
+                local szOption = "Thuoc tinh #" .. (i + 1) .. " (Type " .. nAttribType .. "): " .. nValue .. " -> " .. nNewValue .. " (+" .. UPGRADE_FIXED_PERCENT .. "%)"
                 if nMax > 0 then
-                    szOption = szOption .. string.format(" [Max: %d]", nMax)
+                    szOption = szOption .. " [Max: " .. nMax .. "]"
                 end
 
+                Msg2Player("  -> Option string: " .. szOption)
+
+                -- Add to tables
                 tinsert(tbSayOptions, szOption .. "/DoUpgradeAttrib_" .. i)
                 tinsert(tbUpgradeableAttribs, i)
 
-                Msg2Player("Added slot " .. i .. " to menu: Type" .. nAttribType .. " " .. nValue .. "->" .. nNewValue)
+                Msg2Player("  -> Added to menu!")
             else
-                Msg2Player("Slot " .. i .. " is at MAX (" .. nValue .. "/" .. nMax .. "), cannot upgrade")
+                Msg2Player("  -> CANNOT UPGRADE (at MAX)")
             end
+        else
+            Msg2Player("  -> No attribute in this slot")
         end
     end
+
+    Msg2Player("=== Menu building complete ===")
+    Msg2Player("Total upgradeable attributes: " .. getn(tbUpgradeableAttribs))
 
     if getn(tbUpgradeableAttribs) == 0 then
         Msg2Player("ERROR: No upgradeable attributes found (all at MAX or no attributes)")
@@ -164,12 +181,18 @@ function ExeUpgradeAttrib()
     end
 
     -- Add cancel option
-    tinsert(tbSayOptions, "<color=red>Huy bo<color>/no")
+    tinsert(tbSayOptions, "Huy bo/no")
+
+    Msg2Player("=== Calling Say() with " .. getn(tbSayOptions) .. " options ===")
+    for j = 1, getn(tbSayOptions) do
+        Msg2Player("  Option " .. j .. ": " .. tbSayOptions[j])
+    end
 
     -- Show selection menu
-    Say("<color=yellow>Chon thuoc tinh muon nang cap:<color>\n" ..
-        "<color=white>Tang co dinh: +" .. UPGRADE_FIXED_PERCENT .. "%%<color>",
+    Say("Chon thuoc tinh muon nang cap:\nTang co dinh: +" .. UPGRADE_FIXED_PERCENT .. "%",
         getn(tbSayOptions), tbSayOptions)
+
+    Msg2Player("=== Say() called ===")
 end
 
 -- ────────────────────────────────────────────────────────────
