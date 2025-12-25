@@ -84,7 +84,14 @@ private:
 	void GetGlobalMinMax(int nAttribType, int& outGlobalMin, int& outGlobalMax);
 
 	//
-	BOOL Gen_MagicAttrib(int, const int*, int, int, KItemNormalAttrib*, int nVersion, BOOL bChangeOption = FALSE);
+	// Helper functions for exact value mode (upgraded items)
+	// Decode 6 exact attribute values from 32-bit seed (5 bits per value)
+	void DecodeExactValues(DWORD dwSeed, int* pOutValues);
+	// Encode 6 exact attribute values into 32-bit seed (5 bits per value)
+	DWORD EncodeExactValues(const int* pInValues, const int* pMinValues);
+
+	//
+	BOOL Gen_MagicAttrib(int, const int*, int, int, KItemNormalAttrib*, int nVersion, BOOL bChangeOption = FALSE, DWORD dwRandomSeed = 0);
 	//
 	BOOL Gen_PurpleMagicAttrib(int, const int*, const int*, int, int, KItemNormalAttrib*, int nVersion);
 	//

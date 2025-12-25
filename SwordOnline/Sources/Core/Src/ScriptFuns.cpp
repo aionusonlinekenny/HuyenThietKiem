@@ -10448,12 +10448,31 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 	int nOldX = ItemSet.m_psItemInfo[nOldItemIdx].m_nX;
 	int nOldY = ItemSet.m_psItemInfo[nOldItemIdx].m_nY;
 
-	// STEP 4: Remove old item from container (frees space)
+	// STEP 4: Encode exact values for client regeneration (EXACT VALUE MODE)
+	// Encode deltas (value - min) into random seed using ItemGenerator
+	DWORD dwEncodedSeed = ItemGen.EncodeExactValues(nAttribValues, nAttribMins);
+
+	// Set special luck value to flag exact value mode: 999900000 + original_luck
+	int nUpgradedLuck = 999900000 + nLuck;
+
+	char szDebugMsg[256];
+	sprintf(szDebugMsg, "Encoding exact values: Luck=%d->%d, Seed=0x%08X", nLuck, nUpgradedLuck, dwEncodedSeed);
+	Player[nPlayerIndex].m_ItemList.msgshow(szDebugMsg);
+
+	for (int i = 0; i < 6; i++)
+	{
+		int nDelta = nAttribValues[i] - nAttribMins[i];
+		sprintf(szDebugMsg, "  Slot[%d]: Value=%d, Min=%d, Delta=%d", i, nAttribValues[i], nAttribMins[i], nDelta);
+		Player[nPlayerIndex].m_ItemList.msgshow(szDebugMsg);
+	}
+
+	// STEP 5: Remove old item from container (frees space)
 	Player[nPlayerIndex].m_ItemList.Remove(nOldItemIdx);
 
-	// STEP 5: Create new item
-	int nNewItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nLuck, nDetail, nParti,
-	                              nGenLevels, nVersion, dwRandSeed);
+	// STEP 6: Create new item with EXACT VALUE MODE encoding
+	// Use encoded seed and special luck value
+	int nNewItemIdx = ItemSet.Add(nGenre, nSeries, nLevel, 0, nUpgradedLuck, nDetail, nParti,
+	                              nGenLevels, nVersion, dwEncodedSeed);
 
 	if (nNewItemIdx <= 0 || nNewItemIdx >= MAX_ITEM)
 	{
@@ -10463,16 +10482,20 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		return 1;
 	}
 
-	// STEP 6: Set ALL 6 attributes manually (types, values, min, max)
+	Player[nPlayerIndex].m_ItemList.msgshow("New item created successfully with exact value mode!");
+
+	// STEP 7: Verify attributes were generated correctly
 	for (int i = 0; i < 6; i++)
 	{
-		Item[nNewItemIdx].m_aryMagicAttrib[i].nAttribType = nAttribTypes[i];
-		Item[nNewItemIdx].m_aryMagicAttrib[i].nValue[0] = nAttribValues[i];
-		Item[nNewItemIdx].m_aryMagicAttrib[i].nMin = nAttribMins[i];
-		Item[nNewItemIdx].m_aryMagicAttrib[i].nMax = nAttribMaxs[i];
+		int nGeneratedValue = Item[nNewItemIdx].m_aryMagicAttrib[i].nValue[0];
+		int nExpectedValue = nAttribValues[i];
+		sprintf(szDebugMsg, "  Verify Slot[%d]: Expected=%d, Got=%d %s",
+		        i, nExpectedValue, nGeneratedValue,
+		        (nGeneratedValue == nExpectedValue) ? "[OK]" : "[MISMATCH]");
+		Player[nPlayerIndex].m_ItemList.msgshow(szDebugMsg);
 	}
 
-	// STEP 7: Add new item to player's inventory
+	// STEP 8: Add new item to player's inventory
 	if (!Player[nPlayerIndex].m_ItemList.Add(nNewItemIdx, nPos, nOldX, nOldY))
 	{
 		// Failed to add - cleanup and restore
@@ -10482,7 +10505,7 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 		return 1;
 	}
 
-	// STEP 8: Delete old item from global pool
+	// STEP 9: Delete old item from global pool
 	ItemSet.Remove(nOldItemIdx);
 
 	// Return new item index
