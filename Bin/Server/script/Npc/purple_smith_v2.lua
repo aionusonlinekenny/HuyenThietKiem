@@ -6,10 +6,10 @@
 -----------------------------------------------------------------
 
 Include("\\script\\lib\\TaskLib.lua")
-Include("\\script\\Npc\\purple_smith_config.lua")
+Include("\\script\\npc\\purple_smith_config.lua")
 
 -- Import config as GLOBAL variable (not local)
-Config = dofile("script/Npc/purple_smith_config.lua")
+Config = dofile("script/npc/purple_smith_config.lua")
 
 -- ------------------------------------------------------------
 -- Configuration Override (can modify here)
