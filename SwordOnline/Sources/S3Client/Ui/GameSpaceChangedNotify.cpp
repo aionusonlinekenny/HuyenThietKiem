@@ -262,7 +262,15 @@ void CoreDataChangedCallback(unsigned int uDataId, unsigned int uParam, int nPar
 				KUiUpgradeAttrib* pUpgrade = KUiUpgradeAttrib::GetIfVisible();
 				if (pUpgrade)
 					pUpgrade->UpdateItem((KUiObjAtRegion*)uParam, nParam);
-				//CompoundItem also uses UOC_BUILD_ITEM container
+			}
+			else if (pObject->eContainer == UOC_COMPOUND)//CompoundItem object boxes
+			{
+				KUiComItem* pCompound = KUiComItem::GetIfVisible();
+				if (pCompound)
+					pCompound->UpdateItem((KUiObjAtRegion*)uParam, nParam);
+			}
+			else if (pObject->eContainer == UOC_COMPOUND_BOX)//CompoundItem matrix boxes
+			{
 				KUiComItem* pCompound = KUiComItem::GetIfVisible();
 				if (pCompound)
 					pCompound->UpdateItem((KUiObjAtRegion*)uParam, nParam);

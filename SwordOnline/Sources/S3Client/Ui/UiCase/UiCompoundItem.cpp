@@ -573,13 +573,13 @@ void KUiCompound::Initialize() {
 
     // Setup object boxes for drag/drop - MUST be after LoadScheme
     m_Box1.SetObjectGenre(CGOG_ITEM);
-    m_Box1.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box1.SetContainerId((int)UOC_COMPOUND);
     m_Box1.EnablePickPut(true);
     m_Box2.SetObjectGenre(CGOG_ITEM);
-    m_Box2.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box2.SetContainerId((int)UOC_COMPOUND);
     m_Box2.EnablePickPut(true);
     m_Box3.SetObjectGenre(CGOG_ITEM);
-    m_Box3.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box3.SetContainerId((int)UOC_COMPOUND);
     m_Box3.EnablePickPut(true);
 
     Wnd_AddWindow(this);
@@ -813,15 +813,15 @@ void KUiDistill::Initialize() {
 
     // Setup object boxes for drag/drop - MUST be after LoadScheme
     m_BigBox.SetObjectGenre(CGOG_ITEM);
-    m_BigBox.SetContainerId((int)UOC_BUILD_ITEM);
+    m_BigBox.SetContainerId((int)UOC_COMPOUND);
     m_BigBox.EnablePickPut(true);
     m_Box1.SetObjectGenre(CGOG_ITEM);
-    m_Box1.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box1.SetContainerId((int)UOC_COMPOUND);
     m_Box1.EnablePickPut(true);
     m_Box2.SetObjectGenre(CGOG_ITEM);
-    m_Box2.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box2.SetContainerId((int)UOC_COMPOUND);
     m_Box2.EnablePickPut(true);
-    m_ItemBox.SetContainerId((int)UOC_BUILD_ITEM);
+    m_ItemBox.SetContainerId((int)UOC_COMPOUND_BOX);
     m_ItemBox.EnablePickPut(true);
 
     Wnd_AddWindow(this);
@@ -985,10 +985,10 @@ void KUiForge::Initialize() {
 
     // Setup object boxes for drag/drop - MUST be after LoadScheme
     m_BigBox.SetObjectGenre(CGOG_ITEM);
-    m_BigBox.SetContainerId((int)UOC_BUILD_ITEM);
+    m_BigBox.SetContainerId((int)UOC_COMPOUND);
     m_BigBox.EnablePickPut(true);
     m_SmallBox.SetObjectGenre(CGOG_ITEM);
-    m_SmallBox.SetContainerId((int)UOC_BUILD_ITEM);
+    m_SmallBox.SetContainerId((int)UOC_COMPOUND);
     m_SmallBox.EnablePickPut(true);
 
     Wnd_AddWindow(this);
@@ -1174,15 +1174,15 @@ void KUiEnchaseTim::Initialize() {
 
     // Setup object boxes for drag/drop - MUST be after LoadScheme
     m_BigBox.SetObjectGenre(CGOG_ITEM);
-    m_BigBox.SetContainerId((int)UOC_BUILD_ITEM);
+    m_BigBox.SetContainerId((int)UOC_COMPOUND);
     m_BigBox.EnablePickPut(true);
     m_Box1.SetObjectGenre(CGOG_ITEM);
-    m_Box1.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box1.SetContainerId((int)UOC_COMPOUND);
     m_Box1.EnablePickPut(true);
     m_Box2.SetObjectGenre(CGOG_ITEM);
-    m_Box2.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box2.SetContainerId((int)UOC_COMPOUND);
     m_Box2.EnablePickPut(true);
-    m_ItemBox.SetContainerId((int)UOC_BUILD_ITEM);
+    m_ItemBox.SetContainerId((int)UOC_COMPOUND_BOX);
     m_ItemBox.EnablePickPut(true);
 
     Wnd_AddWindow(this);

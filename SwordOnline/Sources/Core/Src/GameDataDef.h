@@ -556,11 +556,13 @@ enum UIOBJECT_CONTAINER
 	UOC_STORE_BOX4,
 	UOC_STORE_BOX5,
 	UOC_EXPAND_BOX1,//Expandbox by kinnox;
-	UOC_GIVE_BOX,//GiveBox by kinnox;	
-	//endcode;	
-	UOC_SKILL_LIST,			
+	UOC_GIVE_BOX,//GiveBox by kinnox;
+	//endcode;
+	UOC_SKILL_LIST,
 	UOC_SKILL_TREE,
 	UOC_BUILD_ITEM,//TrembleItem by kinnox;
+	UOC_COMPOUND,//CompoundItem object boxes
+	UOC_COMPOUND_BOX,//CompoundItem matrix boxes
 };
 
 //==================================
