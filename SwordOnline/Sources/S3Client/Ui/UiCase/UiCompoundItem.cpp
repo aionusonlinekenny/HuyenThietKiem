@@ -882,8 +882,60 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             }
             break;
         case WND_N_ITEM_PICKDROP:
-            g_DebugLog("[FORGE] WND_N_ITEM_PICKDROP received");
-            OnItemPickDrop((ITEM_PICKDROP_PLACE*)uParam, (ITEM_PICKDROP_PLACE*)nParam);
+            {
+                g_DebugLog("[FORGE] WND_N_ITEM_PICKDROP received");
+
+                ITEM_PICKDROP_PLACE* pPickPos = (ITEM_PICKDROP_PLACE*)uParam;
+                ITEM_PICKDROP_PLACE* pDropPos = (ITEM_PICKDROP_PLACE*)nParam;
+
+                g_DebugLog("[FORGE] OnItemPickDrop START: pPickPos=%p, pDropPos=%p", pPickPos, pDropPos);
+
+                KUiObjAtContRegion Drop, Pick;
+                KUiDraggedObject Obj;
+                KWndWindow* pWnd = NULL;
+
+                if (pPickPos) {
+                    ((KWndObjectBox*)(pPickPos->pWnd))->GetObject(Obj);
+                    Pick.Obj.uGenre = Obj.uGenre;
+                    Pick.Obj.uId = Obj.uId;
+                    Pick.Region.Width = Obj.DataW;
+                    Pick.Region.Height = Obj.DataH;
+                    Pick.Region.h = 0;
+                    Pick.eContainer = UOC_COMPOUND;
+                    pWnd = pPickPos->pWnd;
+                    g_DebugLog("[FORGE] Pick: uId=%d, uGenre=%d", Obj.uId, Obj.uGenre);
+                }
+
+                if (pDropPos) {
+                    pWnd = pDropPos->pWnd;
+                    Wnd_GetDragObj(&Obj);
+                    Drop.Obj.uGenre = Obj.uGenre;
+                    Drop.Obj.uId = Obj.uId;
+                    Drop.Region.Width = Obj.DataW;
+                    Drop.Region.Height = Obj.DataH;
+                    Drop.Region.h = 0;
+                    Drop.eContainer = UOC_COMPOUND;
+                    g_DebugLog("[FORGE] Drop: uId=%d, uGenre=%d", Obj.uId, Obj.uGenre);
+                }
+
+                // Map window pointer to Region.v (slot)
+                if (pWnd == (KWndWindow*)&m_BigBox) {
+                    Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM1;  // Slot 0
+                    g_DebugLog("[FORGE] Mapped to BigBox (UIEP_BUILDITEM1 = %d)", UIEP_BUILDITEM1);
+                } else if (pWnd == (KWndWindow*)&m_SmallBox) {
+                    Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM2;  // Slot 1
+                    g_DebugLog("[FORGE] Mapped to SmallBox (UIEP_BUILDITEM2 = %d)", UIEP_BUILDITEM2);
+                } else {
+                    g_DebugLog("[FORGE] ERROR: pWnd doesn't match any box!");
+                    break;
+                }
+
+                g_DebugLog("[FORGE] Calling OperationRequest GOI_SWITCH_OBJECT with Region.v=%d", Drop.Region.v);
+                g_pCoreShell->OperationRequest(GOI_SWITCH_OBJECT,
+                    pPickPos ? (unsigned int)&Pick : 0,
+                    pDropPos ? (int)&Drop : 0);
+                g_DebugLog("[FORGE] OnItemPickDrop END");
+            }
             break;
         case WND_N_BUTTON_CLICK:
             if (uParam == (unsigned int) &m_Cancle) {
@@ -921,56 +973,6 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             return KWndImage::WndProc(uMsg, uParam, nParam);
     }
     return 1;
-}
-
-void KUiForge::OnItemPickDrop(ITEM_PICKDROP_PLACE* pPickPos, ITEM_PICKDROP_PLACE* pDropPos) {
-    g_DebugLog("[FORGE] OnItemPickDrop START: pPickPos=%p, pDropPos=%p", pPickPos, pDropPos);
-
-    KUiObjAtContRegion Drop, Pick;
-    KUiDraggedObject Obj;
-    KWndWindow* pWnd = NULL;
-
-    if (pPickPos) {
-        ((KWndObjectBox*)(pPickPos->pWnd))->GetObject(Obj);
-        Pick.Obj.uGenre = Obj.uGenre;
-        Pick.Obj.uId = Obj.uId;
-        Pick.Region.Width = Obj.DataW;
-        Pick.Region.Height = Obj.DataH;
-        Pick.Region.h = 0;
-        Pick.eContainer = UOC_COMPOUND;
-        pWnd = pPickPos->pWnd;
-        g_DebugLog("[FORGE] Pick: uId=%d, uGenre=%d", Obj.uId, Obj.uGenre);
-    }
-
-    if (pDropPos) {
-        pWnd = pDropPos->pWnd;
-        Wnd_GetDragObj(&Obj);
-        Drop.Obj.uGenre = Obj.uGenre;
-        Drop.Obj.uId = Obj.uId;
-        Drop.Region.Width = Obj.DataW;
-        Drop.Region.Height = Obj.DataH;
-        Drop.Region.h = 0;
-        Drop.eContainer = UOC_COMPOUND;
-        g_DebugLog("[FORGE] Drop: uId=%d, uGenre=%d", Obj.uId, Obj.uGenre);
-    }
-
-    // Map window pointer to Region.v (slot)
-    if (pWnd == (KWndWindow*)&m_BigBox) {
-        Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM1;  // Slot 0
-        g_DebugLog("[FORGE] Mapped to BigBox (UIEP_BUILDITEM1 = %d)", UIEP_BUILDITEM1);
-    } else if (pWnd == (KWndWindow*)&m_SmallBox) {
-        Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM2;  // Slot 1
-        g_DebugLog("[FORGE] Mapped to SmallBox (UIEP_BUILDITEM2 = %d)", UIEP_BUILDITEM2);
-    } else {
-        g_DebugLog("[FORGE] ERROR: pWnd doesn't match any box!");
-        return;
-    }
-
-    g_DebugLog("[FORGE] Calling OperationRequest GOI_SWITCH_OBJECT with Region.v=%d", Drop.Region.v);
-    g_pCoreShell->OperationRequest(GOI_SWITCH_OBJECT,
-        pPickPos ? (unsigned int)&Pick : 0,
-        pDropPos ? (int)&Drop : 0);
-    g_DebugLog("[FORGE] OnItemPickDrop END");
 }
 
 void KUiForge::LoadScheme(const char *pScheme) {
