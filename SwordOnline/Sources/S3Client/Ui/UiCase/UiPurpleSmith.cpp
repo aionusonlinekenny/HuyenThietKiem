@@ -287,10 +287,11 @@ BOOL KUiPurpleSmith::ValidateCraftReady()
 	char szWarning[128];
 	int nBlueCount = 0;
 	int nCrystalCount = 0;
+	int i;
 	KUiDraggedObject pObj;
 
 	// Count blue items (first 10 slots)
-	for (int i = 0; i < 10; i++)
+	for (i = 0; i < 10; i++)
 	{
 		pObj.uId = 0;
 		m_CraftSlot[i].GetObject(pObj);
@@ -299,7 +300,7 @@ BOOL KUiPurpleSmith::ValidateCraftReady()
 	}
 
 	// Count crystals (last 7 slots)
-	for (int i = 10; i < _PURPLE_SMITH_SLOT_COUNT; i++)
+	for (i = 10; i < _PURPLE_SMITH_SLOT_COUNT; i++)
 	{
 		pObj.uId = 0;
 		m_CraftSlot[i].GetObject(pObj);
@@ -336,6 +337,7 @@ BOOL KUiPurpleSmith::ValidateItemPickDrop(KWndWindow* pWnd, int nIndex)
 	int nLen;
 	char szWarning[128];
 	int nGenre, nDetail, nParti, nSeries, nLevel, nStack;
+	int i;
 
 	nGenre = g_pCoreShell->GetGenreItem(nIndex);
 	nDetail = g_pCoreShell->GetDetailItem(nIndex);
@@ -345,7 +347,7 @@ BOOL KUiPurpleSmith::ValidateItemPickDrop(KWndWindow* pWnd, int nIndex)
 	nStack = g_pCoreShell->GetNumStack(nIndex);
 
 	// Check if it's a blue equipment slot (first 10 slots)
-	for (int i = 0; i < 10; i++)
+	for (i = 0; i < 10; i++)
 	{
 		if (pWnd == (KWndWindow*)&m_CraftSlot[i])
 		{
@@ -367,7 +369,7 @@ BOOL KUiPurpleSmith::ValidateItemPickDrop(KWndWindow* pWnd, int nIndex)
 	}
 
 	// Check if it's a crystal slot (last 7 slots)
-	for (int i = 10; i < _PURPLE_SMITH_SLOT_COUNT; i++)
+	for (i = 10; i < _PURPLE_SMITH_SLOT_COUNT; i++)
 	{
 		if (pWnd == (KWndWindow*)&m_CraftSlot[i])
 		{
@@ -403,10 +405,11 @@ BOOL KUiPurpleSmith::ValidateItemPickDrop(KWndWindow* pWnd, int nIndex)
 void KUiPurpleSmith::UpdateSuccessRate()
 {
 	int nBlueCount = 0;
+	int i;
 	KUiDraggedObject pObj;
 
 	// Count blue items
-	for (int i = 0; i < 10; i++)
+	for (i = 0; i < 10; i++)
 	{
 		pObj.uId = 0;
 		m_CraftSlot[i].GetObject(pObj);
@@ -561,11 +564,12 @@ void KUiPurpleSmith::UpdateData()
 
 	KUiObjAtRegion Item[_PURPLE_SMITH_SLOT_COUNT];
 	int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Item, 0);
+	int i;
 
-	for (int i = 0; i < _PURPLE_SMITH_SLOT_COUNT; i++)
+	for (i = 0; i < _PURPLE_SMITH_SLOT_COUNT; i++)
 		m_CraftSlot[i].HoldObject(CGOG_NOTHING, 0, 0, 0);
 
-	for (int i = 0; i < nCount; i++)
+	for (i = 0; i < nCount; i++)
 		UpdateItem(&Item[i], TRUE);
 
 	UpdatePickPut(true);

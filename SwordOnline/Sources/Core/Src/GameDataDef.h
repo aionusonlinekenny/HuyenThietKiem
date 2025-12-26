@@ -103,7 +103,7 @@
 #define		defMAX_AUTO_FILTERL				40
 #define		defMAX_ARRAY_FIGHT				10
 //TrembleItem by kinnox;
-#define		MAX_PART_BUILD						9		// Max so part item kham nam
+#define		MAX_PART_BUILD						17		// Max so part item kham nam (extended for Purple Smith)
 enum UI_BUILDITEM_POSITION
 {
 	UIEP_BUILDITEM1 = 0,
@@ -114,7 +114,15 @@ enum UI_BUILDITEM_POSITION
 	UIEP_BUILDITEM6 = 5,
 	UIEP_BUILDITEM7 = 6,
 	UIEP_BUILDITEM8 = 7,
-	UIEP_BUILDITEM9 = 8,	
+	UIEP_BUILDITEM9 = 8,
+	UIEP_BUILDITEM10 = 9,   // Extended for Purple Smith
+	UIEP_BUILDITEM11 = 10,
+	UIEP_BUILDITEM12 = 11,
+	UIEP_BUILDITEM13 = 12,
+	UIEP_BUILDITEM14 = 13,
+	UIEP_BUILDITEM15 = 14,
+	UIEP_BUILDITEM16 = 15,
+	UIEP_BUILDITEM17 = 16,
 };
 
 enum BUILD_PART
@@ -128,6 +136,14 @@ enum BUILD_PART
 	itempart_build7,
 	itempart_build8,
 	itempart_build9,
+	itempart_build10,        // Extended for Purple Smith
+	itempart_build11,
+	itempart_build12,
+	itempart_build13,
+	itempart_build14,
+	itempart_build15,
+	itempart_build16,
+	itempart_build17,
 	buildpart_num,
 };
 
@@ -379,13 +395,13 @@ enum PLAYER_INSTANT_STATE
 enum CHAT_STATUS
 {
 	CHAT_S_ONLINE = 0,		//????
-	CHAT_S_BUSY,			//æµ
+	CHAT_S_BUSY,			//ï¿½
 	CHAT_S_HIDE,			//????
 	CHAT_S_LEAVE,			//??
 	CHAT_S_DISCONNECT,		//????
 };
 
-// ?????ö???????????(by zroc)
+// ?????ï¿½???????????(by zroc)
 enum OBJ_ATTRIBYTE_TYPE
 {
 	series_metal = 0,		//	???
@@ -698,7 +714,7 @@ enum PLAYER_ACTION_LIST
 //==================================
 enum SYS_MESSAGE_TYPE
 {
-	SMT_NORMAL = 0,	//???µ????????
+	SMT_NORMAL = 0,	//???ï¿½????????
 	SMT_SYSTEM,		//???????????
 	SMT_PLAYER,		//??????
 	SMT_TEAM,		//??????
