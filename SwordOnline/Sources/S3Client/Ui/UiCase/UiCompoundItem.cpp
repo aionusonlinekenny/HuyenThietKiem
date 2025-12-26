@@ -590,33 +590,26 @@ void KUiCompound::Initialize() {
 }
 
 void KUiCompound::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
-    if (bAdd == 1) {
-        m_Box1.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
-        //m_Box1.EnablePickPut(true);
-    }
-    if (bAdd == 2) {
-        m_Box2.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
-    }
-    if (bAdd == 3) {
-        m_Box3.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
-    }
-    if (bAdd == 4) {
-        KUiDraggedObject pObj;
-        m_Box1.GetObject(pObj);
-        if (pObj.uGenre) {
-            m_Box2.GetObject(pObj);
-            if (pObj.uGenre) {
-                m_Box3.GetObject(pObj);
-                if (pObj.uGenre) {
-                    m_Box1.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
-                } else {
-                    m_Box3.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
-                }
-            } else {
-                m_Box2.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
-            }
+    if (!pItem) return;
+
+    // Map Region.v to box: 0=Box1, 1=Box2, 2=Box3
+    if (pItem->DataY == 0) { // Box1
+        if (bAdd) {
+            m_Box1.HoldObject(pItem->uGenre, pItem->uId, pItem->DataW, pItem->DataH);
         } else {
-            m_Box1.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
+            m_Box1.Clear();
+        }
+    } else if (pItem->DataY == 1) { // Box2
+        if (bAdd) {
+            m_Box2.HoldObject(pItem->uGenre, pItem->uId, pItem->DataW, pItem->DataH);
+        } else {
+            m_Box2.Clear();
+        }
+    } else if (pItem->DataY == 2) { // Box3
+        if (bAdd) {
+            m_Box3.HoldObject(pItem->uGenre, pItem->uId, pItem->DataW, pItem->DataH);
+        } else {
+            m_Box3.Clear();
         }
     }
 }
@@ -831,28 +824,27 @@ void KUiDistill::Initialize() {
 }
 
 void KUiDistill::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
-    if (bAdd == 1) {
-        m_BigBox.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
-    } else if (bAdd == 2) {
-        m_Box1.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
-    } else if (bAdd == 3) {
-        m_Box2.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
-    } else if (bAdd == 4) {
-        KUiDraggedObject pObj;
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 4; j++) {
-                pObj.uId = 0;
-                m_ItemBox.GetObject(pObj, i, j);
-                if (pObj.uId == pItem->uId) {
-                    return;
-                }
-                if (!pObj.uId) {
-                    pItem->DataX = i;
-                    pItem->DataY = j;
-                    m_ItemBox.AddObject(pItem, 1);
-                    return;
-                }
-            }
+    if (!pItem) return;
+
+    // Map Region.v to box: 0=BigBox, 1=Box1, 2=Box2
+    // Matrix box (m_ItemBox) uses different container UOC_COMPOUND_BOX
+    if (pItem->DataY == 0) { // BigBox
+        if (bAdd) {
+            m_BigBox.HoldObject(pItem->uGenre, pItem->uId, pItem->DataW, pItem->DataH);
+        } else {
+            m_BigBox.Clear();
+        }
+    } else if (pItem->DataY == 1) { // Box1
+        if (bAdd) {
+            m_Box1.HoldObject(pItem->uGenre, pItem->uId, pItem->DataW, pItem->DataH);
+        } else {
+            m_Box1.Clear();
+        }
+    } else if (pItem->DataY == 2) { // Box2
+        if (bAdd) {
+            m_Box2.HoldObject(pItem->uGenre, pItem->uId, pItem->DataW, pItem->DataH);
+        } else {
+            m_Box2.Clear();
         }
     }
 }
@@ -997,10 +989,21 @@ void KUiForge::Initialize() {
 }
 
 void KUiForge::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
-    if (bAdd == 1) {
-        m_BigBox.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
-    } else if (bAdd == 2) {
-        m_SmallBox.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
+    if (!pItem) return;
+
+    // Map Region.v to box: 0=BigBox, 1=SmallBox
+    if (pItem->DataY == 0) { // BigBox
+        if (bAdd) {
+            m_BigBox.HoldObject(pItem->uGenre, pItem->uId, pItem->DataW, pItem->DataH);
+        } else {
+            m_BigBox.Clear();
+        }
+    } else if (pItem->DataY == 1) { // SmallBox
+        if (bAdd) {
+            m_SmallBox.HoldObject(pItem->uGenre, pItem->uId, pItem->DataW, pItem->DataH);
+        } else {
+            m_SmallBox.Clear();
+        }
     }
 }
 
@@ -1190,28 +1193,27 @@ void KUiEnchaseTim::Initialize() {
 }
 
 void KUiEnchaseTim::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
-    if (bAdd == 1) {
-        m_BigBox.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
-    } else if (bAdd == 2) {
-        m_Box1.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
-    } else if (bAdd == 3) {
-        m_Box2.HoldObject(pItem->uGenre, pItem->uId, 58, 54);
-    } else if (bAdd == 4) {
-        KUiDraggedObject pObj;
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 4; j++) {
-                pObj.uId = 0;
-                m_ItemBox.GetObject(pObj, i, j);
-                if (pObj.uId == pItem->uId) {
-                    return;
-                }
-                if (!pObj.uId) {
-                    pItem->DataX = i;
-                    pItem->DataY = j;
-                    m_ItemBox.AddObject(pItem, 1);
-                    return;
-                }
-            }
+    if (!pItem) return;
+
+    // Map Region.v to box: 0=BigBox, 1=Box1, 2=Box2
+    // Matrix box (m_ItemBox) uses different container UOC_COMPOUND_BOX
+    if (pItem->DataY == 0) { // BigBox
+        if (bAdd) {
+            m_BigBox.HoldObject(pItem->uGenre, pItem->uId, pItem->DataW, pItem->DataH);
+        } else {
+            m_BigBox.Clear();
+        }
+    } else if (pItem->DataY == 1) { // Box1
+        if (bAdd) {
+            m_Box1.HoldObject(pItem->uGenre, pItem->uId, pItem->DataW, pItem->DataH);
+        } else {
+            m_Box1.Clear();
+        }
+    } else if (pItem->DataY == 2) { // Box2
+        if (bAdd) {
+            m_Box2.HoldObject(pItem->uGenre, pItem->uId, pItem->DataW, pItem->DataH);
+        } else {
+            m_Box2.Clear();
         }
     }
 }
