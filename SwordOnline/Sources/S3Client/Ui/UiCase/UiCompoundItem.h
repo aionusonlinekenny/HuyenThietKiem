@@ -113,6 +113,7 @@ public:
 private:
     int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//���ں���
     void PaintWindow();                                //���ƴ���
+    void OnItemPickDrop(ITEM_PICKDROP_PLACE* pPickPos, ITEM_PICKDROP_PLACE* pDropPos);
 private:
     KWndObjectBox m_BigBox;
     KWndObjectBox m_SmallBox;
