@@ -1,5 +1,5 @@
 /*****************************************************************************************
-//	½çÃæ--´°¿Ú
+//	ï¿½ï¿½ï¿½ï¿½--ï¿½ï¿½ï¿½ï¿½
 //	Copyright : Kingsoft 2002
 //	Author	:   Wooy(Wu yue)
 //	CreateTime:	2002-8-28
@@ -21,6 +21,8 @@
 
 #include "../../../core/src/gamedatadef.h"
 
+struct KUiObjAtRegion;  // Forward declaration
+
 class KCanGetNumImage2 : public KWndImage {
 public:
     int GetMaxFrame();
@@ -32,47 +34,47 @@ class KUiAtlas : public KWndPage {
 public:
     KUiAtlas();
 
-    void Initialize();                                //³õÊ¼»¯
-    void LoadScheme(const char *pScheme);            //ÔØÈë½çÃæ·½°¸
+    void Initialize();                                //ï¿½ï¿½Ê¼ï¿½ï¿½
+    void LoadScheme(const char *pScheme);            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·½ï¿½ï¿½
 
     void UpdateItem(KUiDraggedObject *pItem, int bAdd);
 
 private:
-    int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//´°¿Úº¯Êý
-    void PaintWindow();                                //»æÖÆ´°¿Ú
+    int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½
+    void PaintWindow();                                //ï¿½ï¿½ï¿½Æ´ï¿½ï¿½ï¿½
 private:
     KWndObjectBox m_Box1;
     KWndObjectBox m_Box2;
     KWndObjectBox m_Box3;
     KWndText256 m_Guide;
 
-    KWndScrollBar m_ListScroll;                      //ÁÐ±íµÄ¹ö¶¯Ìõ
+    KWndScrollBar m_ListScroll;                      //ï¿½Ð±ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½
     //KWndButton		m_ListBtn;
     KWndButton m_Compound;
     KWndButton m_Cancle;
 
     KCanGetNumImage2
-            m_TrembleEffect1;                   //ºÏ³ÉÖÐµÄÌØÐ§
+            m_TrembleEffect1;                   //ï¿½Ï³ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ð§
     KCanGetNumImage2
-            m_TrembleEffect2;                   //ºÏ³ÉÖÐµÄÌØÐ§
+            m_TrembleEffect2;                   //ï¿½Ï³ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ð§
     KCanGetNumImage2
-            m_TrembleEffect3;                   //ºÏ³ÉÖÐµÄÌØÐ§
+            m_TrembleEffect3;                   //ï¿½Ï³ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ð§
 };
 
 class KUiEnchaseTim : public KWndPage {
 public:
     KUiEnchaseTim();
 
-    void Initialize();                                //³õÊ¼»¯
-    void LoadScheme(const char *pScheme);            //ÔØÈë½çÃæ·½°¸
+    void Initialize();                                //ï¿½ï¿½Ê¼ï¿½ï¿½
+    void LoadScheme(const char *pScheme);            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·½ï¿½ï¿½
 
     void UpdateItem(KUiDraggedObject *pItem, int bAdd);
 
     void CleanItem();
 
 private:
-    int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//´°¿Úº¯Êý
-    void PaintWindow();                                //»æÖÆ´°¿Ú
+    int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½
+    void PaintWindow();                                //ï¿½ï¿½ï¿½Æ´ï¿½ï¿½ï¿½
 private:
     KWndObjectBox m_BigBox;
     KWndObjectBox m_Box1;
@@ -84,33 +86,33 @@ private:
     KWndText32 m_Pos3;
     KWndText32 m_Pos4;
 
-    KWndScrollBar m_ListScroll;                      //ÁÐ±íµÄ¹ö¶¯Ìõ
+    KWndScrollBar m_ListScroll;                      //ï¿½Ð±ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½
     KWndButton m_ListBtn;
     KWndButton m_Distill;
     KWndButton m_Cancle;
 
     KCanGetNumImage2
-            m_TrembleEffect1;                   //ºÏ³ÉÖÐµÄÌØÐ§
+            m_TrembleEffect1;                   //ï¿½Ï³ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ð§
     KCanGetNumImage2
-            m_TrembleEffect2;                   //ºÏ³ÉÖÐµÄÌØÐ§
+            m_TrembleEffect2;                   //ï¿½Ï³ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ð§
     KCanGetNumImage2
-            m_TrembleEffect3;                   //ºÏ³ÉÖÐµÄÌØÐ§
+            m_TrembleEffect3;                   //ï¿½Ï³ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ð§
 };
 
 class KUiForge : public KWndPage {
 public:
     KUiForge();
 
-    void Initialize();                                //³õÊ¼»¯
-    void LoadScheme(const char *pScheme);            //ÔØÈë½çÃæ·½°¸
+    void Initialize();                                //ï¿½ï¿½Ê¼ï¿½ï¿½
+    void LoadScheme(const char *pScheme);            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·½ï¿½ï¿½
 
     void UpdateItem(KUiDraggedObject *pItem, int bAdd);
 
     void CleanItem();
 
 private:
-    int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//´°¿Úº¯Êý
-    void PaintWindow();                                //»æÖÆ´°¿Ú
+    int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½
+    void PaintWindow();                                //ï¿½ï¿½ï¿½Æ´ï¿½ï¿½ï¿½
 private:
     KWndObjectBox m_BigBox;
     KWndObjectBox m_SmallBox;
@@ -118,29 +120,29 @@ private:
     KWndText32 m_Pos1;
     KWndText32 m_Pos2;
 
-    KWndScrollBar m_ListScroll;                      //ÁÐ±íµÄ¹ö¶¯Ìõ
+    KWndScrollBar m_ListScroll;                      //ï¿½Ð±ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½
     KWndButton m_ListBtn;
     KWndButton m_ForgeBtn;
     KWndButton m_Cancle;
 
     KCanGetNumImage2
-            m_TrembleEffect1;                   //ºÏ³ÉÖÐµÄÌØÐ§
+            m_TrembleEffect1;                   //ï¿½Ï³ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ð§
 };
 
 class KUiDistill : public KWndPage {
 public:
     KUiDistill();
 
-    void Initialize();                                //³õÊ¼»¯
-    void LoadScheme(const char *pScheme);            //ÔØÈë½çÃæ·½°¸
+    void Initialize();                                //ï¿½ï¿½Ê¼ï¿½ï¿½
+    void LoadScheme(const char *pScheme);            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·½ï¿½ï¿½
 
     void UpdateItem(KUiDraggedObject *pItem, int bAdd);
 
     void CleanItem();
 
 private:
-    int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//´°¿Úº¯Êý
-    void PaintWindow();                                //»æÖÆ´°¿Ú
+    int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½
+    void PaintWindow();                                //ï¿½ï¿½ï¿½Æ´ï¿½ï¿½ï¿½
 private:
     KWndObjectBox m_BigBox;
     KWndObjectBox m_Box1;
@@ -152,25 +154,25 @@ private:
     KWndText32 m_Pos3;
     KWndText32 m_Pos4;
 
-    KWndScrollBar m_ListScroll;                      //ÁÐ±íµÄ¹ö¶¯Ìõ
+    KWndScrollBar m_ListScroll;                      //ï¿½Ð±ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½
     KWndButton m_ListBtn;
     KWndButton m_Distill;
     KWndButton m_Cancle;
 
     KCanGetNumImage2
-            m_TrembleEffect1;                   //ºÏ³ÉÖÐµÄÌØÐ§
+            m_TrembleEffect1;                   //ï¿½Ï³ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ð§
     KCanGetNumImage2
-            m_TrembleEffect2;                   //ºÏ³ÉÖÐµÄÌØÐ§
+            m_TrembleEffect2;                   //ï¿½Ï³ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ð§
     KCanGetNumImage2
-            m_TrembleEffect3;                   //ºÏ³ÉÖÐµÄÌØÐ§
+            m_TrembleEffect3;                   //ï¿½Ï³ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ð§
 };
 
 class KUiCompound : public KWndPage {
 public:
     KUiCompound();
 
-    void Initialize();                                //³õÊ¼»¯
-    void LoadScheme(const char *pScheme);            //ÔØÈë½çÃæ·½°¸
+    void Initialize();                                //ï¿½ï¿½Ê¼ï¿½ï¿½
+    void LoadScheme(const char *pScheme);            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·½ï¿½ï¿½
 
     void UpdateItem(KUiDraggedObject *pItem, int bAdd);
 
@@ -179,7 +181,7 @@ public:
     void CleanItem();
 
 private:
-    int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//´°¿Úº¯Êý
+    int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½
     void PaintWindow();
 
     virtual void Breathe();
@@ -201,17 +203,17 @@ private:
 
     int m_nSelect;
 
-    KWndScrollBar m_ListScroll;                      //ÁÐ±íµÄ¹ö¶¯Ìõ
+    KWndScrollBar m_ListScroll;                      //ï¿½Ð±ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½
     KWndButton m_ListBtn;
     KWndButton m_Compound;
     KWndButton m_Cancle;
 
     KCanGetNumImage2
-            m_TrembleEffect1;                   //ºÏ³ÉÖÐµÄÌØÐ§
+            m_TrembleEffect1;                   //ï¿½Ï³ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ð§
     KCanGetNumImage2
-            m_TrembleEffect2;                   //ºÏ³ÉÖÐµÄÌØÐ§
+            m_TrembleEffect2;                   //ï¿½Ï³ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ð§
     KCanGetNumImage2
-            m_TrembleEffect3;                   //ºÏ³ÉÖÐµÄÌØÐ§
+            m_TrembleEffect3;                   //ï¿½Ï³ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ð§
 private:
     enum THIS_INTERFACE_STATUS {
         STATUS_WAITING_MATERIALS,
@@ -225,10 +227,10 @@ private:
 
 class KUiComItem : public KWndPageSet {
 public:
-    static KUiComItem *OpenWindow();                            //´ò¿ª´°¿Ú£¬·µ»ØÎ¨Ò»µÄÒ»¸öÀà¶ÔÏóÊµÀý
-    static KUiComItem *GetIfVisible();                        //Èç¹û´°¿ÚÕý±»ÏÔÊ¾£¬Ôò·µ»ØÊµÀýÖ¸Õë
-    static void CloseWindow(bool bDestory = TRUE);            //¹Ø±Õ´°¿Ú£¬Í¬Ê±¿ÉÒÔÑ¡ÔòÊÇ·ñÉ¾³ý¶ÔÏóÊµÀý
-    static void LoadScheme(const char *pScheme);        //ÔØÈë½çÃæ·½°¸
+    static KUiComItem *OpenWindow();                            //ï¿½ò¿ª´ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½Î¨Ò»ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
+    static KUiComItem *GetIfVisible();                        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ò·µ»ï¿½Êµï¿½ï¿½Ö¸ï¿½ï¿½
+    static void CloseWindow(bool bDestory = TRUE);            //ï¿½Ø±Õ´ï¿½ï¿½Ú£ï¿½Í¬Ê±ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ç·ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
+    static void LoadScheme(const char *pScheme);        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ·½ï¿½ï¿½
     static void ShowWindow(int nNum = 0);
 
     void UpdateItem(KUiObjAtRegion *pItem, int bAdd);
@@ -244,8 +246,8 @@ private:
 
     ~KUiComItem() {}
 
-    void Initialize();                            //³õÊ¼»¯
-    int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//´°¿Úº¯Êý
+    void Initialize();                            //ï¿½ï¿½Ê¼ï¿½ï¿½
+    int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//ï¿½ï¿½ï¿½Úºï¿½ï¿½ï¿½
 
     virtual void Breathe();
 
@@ -291,6 +293,6 @@ private:
 
 
 private:
-    int m_nStatus;                         //µ±Ç°½çÃæËù´¦µÄ×´Ì¬
+    int m_nStatus;                         //ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
     int m_nNum;
 };
