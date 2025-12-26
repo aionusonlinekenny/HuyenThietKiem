@@ -934,6 +934,24 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                 g_pCoreShell->OperationRequest(GOI_SWITCH_OBJECT,
                     pPickPos ? (unsigned int)&Pick : 0,
                     pDropPos ? (int)&Drop : 0);
+
+                // CRITICAL FIX: Manually update the box visually after OperationRequest
+                // The server stores the item but doesn't send notification back for empty->filled case
+                Wnd_DragFinished();  // Clear drag state first
+                g_DebugLog("[FORGE] Drag finished, now manually updating box");
+
+                if (pDropPos && !pPickPos) {
+                    // Dropping into empty slot - manually show the item
+                    g_DebugLog("[FORGE] Manually updating box with item uId=%d", Obj.uId);
+                    if (pWnd == (KWndWindow*)&m_BigBox) {
+                        m_BigBox.HoldObject(Obj.uGenre, Obj.uId, Obj.DataW, Obj.DataH);
+                        g_DebugLog("[FORGE] BigBox.HoldObject called");
+                    } else if (pWnd == (KWndWindow*)&m_SmallBox) {
+                        m_SmallBox.HoldObject(Obj.uGenre, Obj.uId, Obj.DataW, Obj.DataH);
+                        g_DebugLog("[FORGE] SmallBox.HoldObject called");
+                    }
+                }
+
                 g_DebugLog("[FORGE] OnItemPickDrop END");
             }
             break;
