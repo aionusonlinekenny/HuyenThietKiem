@@ -179,7 +179,7 @@ void KUiUpgradeAttrib::LoadScheme(const char* pScheme)
 		m_pSelf->m_BtnClose.Init(&Ini, "CloseBtn");
 		m_pSelf->m_BtnClose.SetLabel("");  // Set button label
 		m_pSelf->m_TextPercent.Init(&Ini, "TextPercent");
-		m_pSelf->m_TextPercent.SetText("S½n sµng n©ng cÊp");  // Set initial text
+		m_pSelf->m_TextPercent.SetText("Sï¿½n sï¿½ng nï¿½ng cï¿½p");  // Set initial text
 
 		// Initialize slot labels
 		m_pSelf->m_EquipmentLabel.Init(&Ini, "EquipmentLabel");
@@ -216,7 +216,7 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 			{
 				g_DebugLog("[CLIENT] Validation passed, showing confirmation dialog");
 				if (m_EffectTime) break;
-				UIMessageBox("B¹n cã ch¾c muèn n©ng cÊp trang bÞ nµy?", this, "X¸c nhËn", "Hñy bá", ISP_DO_EVENT);
+				UIMessageBox("Bï¿½n cï¿½ chï¿½c muï¿½n nï¿½ng cï¿½p trang bï¿½ nï¿½y?", this, "Xï¿½c nhï¿½n", "Hï¿½y bï¿½", ISP_DO_EVENT);
 			}
 			else
 			{
@@ -235,7 +235,7 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 		{
 			if (ValidateUpgradeReady())
 			{
-				UIMessageBox("B¹n cã ch¾c muèn n©ng cÊp trang bÞ nµy?", this, "X¸c nhËn", "Hñy bá", ISP_DO_EVENT);
+				UIMessageBox("Bï¿½n cï¿½ chï¿½c muï¿½n nï¿½ng cï¿½p trang bï¿½ nï¿½y?", this, "Xï¿½c nhï¿½n", "Hï¿½y bï¿½", ISP_DO_EVENT);
 			}
 			nRet = 1;
 		}
@@ -283,7 +283,7 @@ BOOL KUiUpgradeAttrib::ValidateUpgradeReady()
 	m_UpgradeSlot[0].GetObject(pObj);
 	if (pObj.uId == 0)
 	{
-		strcpy(szWarning, "Ch­a ®Æt trang bi vµo!");
+		strcpy(szWarning, "Chï¿½a ï¿½ï¿½t trang bi vï¿½o!");
 		nLen = strlen(szWarning);
 		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
 		return FALSE;
@@ -294,7 +294,7 @@ BOOL KUiUpgradeAttrib::ValidateUpgradeReady()
 	m_UpgradeSlot[1].GetObject(pObj);
 	if (pObj.uId == 0)
 	{
-		strcpy(szWarning, "Ch­a ®Æt ®¸ n©ng cÊp vµo.");
+		strcpy(szWarning, "Chï¿½a ï¿½ï¿½t ï¿½ï¿½ nï¿½ng cï¿½p vï¿½o.");
 		nLen = strlen(szWarning);
 		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
 		return FALSE;
@@ -445,9 +445,9 @@ void KUiUpgradeAttrib::UpdateData()
 		return;
 	}
 
-	// CRITICAL FIX: GetGameData returns ALL 9 build container slots, not just our 3!
-	// Must allocate array for 9 items to prevent buffer overflow and stack corruption
-	const int BUILD_CONTAINER_SIZE = 9;  // Same as UiTrembleItem
+	// CRITICAL FIX: GetGameData can return MORE than 9 items if container has leftover items!
+	// Must allocate large enough array to prevent buffer overflow and stack corruption
+	const int BUILD_CONTAINER_SIZE = 20;  // Increased from 9 to handle edge cases
 	g_DebugLog("[CLIENT] Creating Item array, size = %d (was %d)", BUILD_CONTAINER_SIZE, _UPGRADE_ATTRIB_SLOT_COUNT);
 	KUiObjAtRegion Item[BUILD_CONTAINER_SIZE];
 
