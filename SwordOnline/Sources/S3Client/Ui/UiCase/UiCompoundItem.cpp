@@ -107,7 +107,8 @@ KUiComItem *KUiComItem::OpenWindow() {
             KUiItem::OpenWindow();
         else
             UiSoundPlay(UI_SI_WND_OPENCLOSE);
-        KUiItem::OnNpcTradeMode(true);
+        // NOTE: Do NOT call OnNpcTradeMode(true) - it disables inventory drag!
+        // Crafting UIs need players to drag items FROM inventory
     }
     return m_pSelf;
 }
@@ -134,7 +135,7 @@ void KUiComItem::CloseWindow(bool bDestory) {
             m_pSelf = NULL;
         }
     }
-    KUiItem::OnNpcTradeMode(false);
+    // NOTE: No need to call OnNpcTradeMode(false) since we never called OnNpcTradeMode(true)
 }
 
 int KUiComItem::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
