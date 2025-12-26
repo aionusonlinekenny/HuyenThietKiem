@@ -265,10 +265,17 @@ void KUiComItem::ShowWindow(int nNum /*= 0*/ ) {
 }
 
 void KUiComItem::UpdateItem(KUiObjAtRegion *pItem, int bAdd) {
+    g_DebugLog("[COMPOUND] KUiComItem::UpdateItem called: pItem=%p, bAdd=%d, m_nNum=%d", pItem, bAdd, m_nNum);
+
     // Add null check to prevent crashes when sharing UOC_BUILD_ITEM container
     if (!pItem) {
+        g_DebugLog("[COMPOUND] pItem is NULL, returning");
         return;
     }
+
+    g_DebugLog("[COMPOUND] Item data: genre=%d, id=%d, Region.h=%d, Region.v=%d, Width=%d, Height=%d",
+        pItem->Obj.uGenre, pItem->Obj.uId, pItem->Region.h, pItem->Region.v,
+        pItem->Region.Width, pItem->Region.Height);
 
     KUiDraggedObject obj;
     obj.uGenre = pItem->Obj.uGenre;
@@ -277,6 +284,8 @@ void KUiComItem::UpdateItem(KUiObjAtRegion *pItem, int bAdd) {
     obj.DataY = pItem->Region.v;
     obj.DataW = pItem->Region.Width;
     obj.DataH = pItem->Region.Height;
+
+    g_DebugLog("[COMPOUND] Converted to KUiDraggedObject: DataY(Region.v)=%d", obj.DataY);
 
     switch (m_nNum) {
         case WINDOWS_COMP: {
@@ -944,14 +953,18 @@ void KUiForge::LoadScheme(const char *pScheme) {
 }
 
 void KUiForge::Initialize() {
+    g_DebugLog("[FORGE] Initialize() START");
+
     // Setup object boxes BEFORE AddChild - matching UiTrembleItem pattern
     m_BigBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_BigBox);
     m_BigBox.SetContainerId((int)UOC_COMPOUND);
+    g_DebugLog("[FORGE] BigBox initialized: container=UOC_COMPOUND(%d), Region.v should be 0", UOC_COMPOUND);
 
     m_SmallBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_SmallBox);
     m_SmallBox.SetContainerId((int)UOC_COMPOUND);
+    g_DebugLog("[FORGE] SmallBox initialized: container=UOC_COMPOUND(%d), Region.v should be 1", UOC_COMPOUND);
 
     AddChild(&m_ForgeBtn);
     AddChild(&m_Cancle);
@@ -989,21 +1002,36 @@ void KUiForge::Initialize() {
 }
 
 void KUiForge::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
-    if (!pItem) return;
+    g_DebugLog("[FORGE] UpdateItem called: pItem=%p, bAdd=%d", pItem, bAdd);
+    if (!pItem) {
+        g_DebugLog("[FORGE] UpdateItem: pItem is NULL, returning");
+        return;
+    }
+
+    g_DebugLog("[FORGE] UpdateItem: genre=%d, id=%d, DataX=%d, DataY=%d (Region.v), DataW=%d, DataH=%d",
+        pItem->uGenre, pItem->uId, pItem->DataX, pItem->DataY, pItem->DataW, pItem->DataH);
 
     // Map Region.v to box: 0=BigBox, 1=SmallBox
     if (pItem->DataY == 0) { // BigBox
+        g_DebugLog("[FORGE] Updating BigBox (Region.v=0)");
         if (bAdd) {
             m_BigBox.HoldObject(pItem->uGenre, pItem->uId, pItem->DataW, pItem->DataH);
+            g_DebugLog("[FORGE] BigBox.HoldObject called");
         } else {
             m_BigBox.Clear();
+            g_DebugLog("[FORGE] BigBox.Clear called");
         }
     } else if (pItem->DataY == 1) { // SmallBox
+        g_DebugLog("[FORGE] Updating SmallBox (Region.v=1)");
         if (bAdd) {
             m_SmallBox.HoldObject(pItem->uGenre, pItem->uId, pItem->DataW, pItem->DataH);
+            g_DebugLog("[FORGE] SmallBox.HoldObject called");
         } else {
             m_SmallBox.Clear();
+            g_DebugLog("[FORGE] SmallBox.Clear called");
         }
+    } else {
+        g_DebugLog("[FORGE] WARNING: Unknown Region.v=%d, not mapped to any box!", pItem->DataY);
     }
 }
 
