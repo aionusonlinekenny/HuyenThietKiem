@@ -12,6 +12,7 @@
 #include "../elem/wndbutton.h"
 #include "../elem/wndtext.h"
 #include "../elem/WndObjContainer.h"
+#include "../Elem/WndMessage.h"
 
 #include "../elem/wndlabeledbutton.h"
 #include "../elem/wndscrollbar.h"
