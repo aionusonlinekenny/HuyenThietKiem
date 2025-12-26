@@ -38,7 +38,7 @@ void KUiComItem::LoadScheme(const char *pScheme) {
         m_pSelf->m_UpCryoliteBtn.Init(&Ini, "CryoliteBtn");
         m_pSelf->m_UpPropMineBtn.Init(&Ini, "PropMineBtn");
         m_pSelf->m_CheTao.Init(&Ini, "CheTao");
-        m_pSelf->m_CheTao.SetText("ChÕ T¹o");
+        m_pSelf->m_CheTao.SetText("Chï¿½ Tï¿½o");
         m_pSelf->m_Close.Init(&Ini, "CloseBtn");
 
         m_pSelf->m_CompoundPad.LoadScheme(pScheme);
@@ -81,7 +81,7 @@ void KUiComItem::Initialize() {
 }
 
 /*********************************************************************
-* ¹¦ÄÜ£º´ò¿ª´°¿Ú
+* ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ò¿ª´ï¿½ï¿½ï¿½
 **********************************************************************/
 KUiComItem *KUiComItem::OpenWindow() {
     if (m_pSelf == NULL) {
@@ -114,7 +114,7 @@ KUiComItem *KUiComItem::OpenWindow() {
 
 
 /*********************************************************************
-* ¹¦ÄÜ£ºÈç¹û´°¿ÚÕý±»ÏÔÊ¾£¬Ôò·µ»ØÊµÀýÖ¸Õë
+* ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ò·µ»ï¿½Êµï¿½ï¿½Ö¸ï¿½ï¿½
 **********************************************************************/
 KUiComItem *KUiComItem::GetIfVisible() {
     if (m_pSelf && m_pSelf->IsVisible())
@@ -124,7 +124,7 @@ KUiComItem *KUiComItem::GetIfVisible() {
 
 
 /*********************************************************************
-* ¹¦ÄÜ£º¹Ø±Õ´°¿Ú£¬Í¬Ê±¿ÉÒÔÑ¡ÔòÊÇ·ñÉ¾³ý¶ÔÏóÊµÀý
+* ï¿½ï¿½ï¿½Ü£ï¿½ï¿½Ø±Õ´ï¿½ï¿½Ú£ï¿½Í¬Ê±ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ç·ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
 **********************************************************************/
 void KUiComItem::CloseWindow(bool bDestory) {
     if (m_pSelf) {
@@ -507,21 +507,21 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         }
         m_nSelect = 0;
         m_Pos1.SetPosition(nX - 14, nY - 4);
-        m_Pos1.SetText("NhÉn");
+        m_Pos1.SetText("Nhï¿½n");
         m_Pos1.SetTextColor(nColor);
         //m_Pos1.BringToTop();
 
         Ini.GetInteger2("Box_1", "Pos", &nX, &nY);
 
         m_Pos2.SetPosition(nX - 14, nY - 4);
-        m_Pos2.SetText("D©y chuyÒn/hé thÇn phï");
+        m_Pos2.SetText("Dï¿½y chuyï¿½n/hï¿½ thï¿½n phï¿½");
         m_Pos2.SetTextColor(nColor);
         //m_Pos2.BringToTop();
 
         Ini.GetInteger2("Box_2", "Pos", &nX, &nY);
 
         m_Pos3.SetPosition(nX - 14, nY - 4);
-        m_Pos3.SetText("Ngäc béi/h­íng nang");
+        m_Pos3.SetText("Ngï¿½c bï¿½i/hï¿½ï¿½ng nang");
         m_Pos3.SetTextColor(nColor);
         //m_Pos3.BringToTop();
 
@@ -531,6 +531,14 @@ void KUiCompound::LoadScheme(const char *pScheme) {
 }
 
 void KUiCompound::Initialize() {
+    // Setup object boxes for drag/drop
+    m_Box1.SetObjectGenre(CGOG_ITEM);
+    m_Box1.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box2.SetObjectGenre(CGOG_ITEM);
+    m_Box2.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box3.SetObjectGenre(CGOG_ITEM);
+    m_Box3.SetContainerId((int)UOC_BUILD_ITEM);
+
     AddChild(&m_Pos1);
     AddChild(&m_Pos2);
     AddChild(&m_Pos3);
@@ -609,21 +617,21 @@ void KUiCompound::SetPosText(int i) {
     switch (i) {
         case 1:
             m_nSelect = 0;
-            m_Pos1.SetText("NhÉn");
-            m_Pos2.SetText("D©y chuyÒn/hé thÇn phï");
-            m_Pos3.SetText("Ngäc béi/h­íng nang");
+            m_Pos1.SetText("Nhï¿½n");
+            m_Pos2.SetText("Dï¿½y chuyï¿½n/hï¿½ thï¿½n phï¿½");
+            m_Pos3.SetText("Ngï¿½c bï¿½i/hï¿½ï¿½ng nang");
             break;
         case 2:
             m_nSelect = 1;
-            m_Pos1.SetText("HuyÒn tinh 1");
-            m_Pos2.SetText("HuyÒn tinh 2");
-            m_Pos3.SetText("HuyÒn tinh 3");
+            m_Pos1.SetText("Huyï¿½n tinh 1");
+            m_Pos2.SetText("Huyï¿½n tinh 2");
+            m_Pos3.SetText("Huyï¿½n tinh 3");
             break;
         case 3:
             m_nSelect = 2;
-            m_Pos1.SetText("Kho¸ng th¹ch 1");
-            m_Pos2.SetText("Kho¸ng th¹ch 2");
-            m_Pos3.SetText("Kho¸ng th¹ch 3");
+            m_Pos1.SetText("Khoï¿½ng thï¿½ch 1");
+            m_Pos2.SetText("Khoï¿½ng thï¿½ch 2");
+            m_Pos3.SetText("Khoï¿½ng thï¿½ch 3");
             break;
     }
 }
@@ -736,31 +744,40 @@ void KUiDistill::LoadScheme(const char *pScheme) {
         m_Pos1.SetPosition(nX - 14, nY - 4);
         m_Pos1.SetTextColor(nColor);
         m_Pos1.BringToTop();
-        m_Pos1.SetText("Trang bÞ xanh/tr¾ng");
+        m_Pos1.SetText("Trang bï¿½ xanh/trï¿½ng");
 
         Ini.GetInteger2("CryolitePos", "Pos", &nX, &nY);
         m_Pos2.SetPosition(nX - 12, nY - 4);
         m_Pos2.SetTextColor(nColor);
         m_Pos2.BringToTop();
-        m_Pos2.SetText("HuyÒn tinh");
+        m_Pos2.SetText("Huyï¿½n tinh");
 
         Ini.GetInteger2("PropMinePos", "Pos", &nX, &nY);
         m_Pos3.SetPosition(nX - 12, nY - 4);
         m_Pos3.SetTextColor(nColor);
         m_Pos3.BringToTop();
-        m_Pos3.SetText("Nguyªn kho¸ng");
+        m_Pos3.SetText("Nguyï¿½n khoï¿½ng");
 
         Ini.GetInteger2("ConsumePos", "Pos", &nX, &nY);
         m_Pos4.SetPosition(nX - 14, nY - 4);
         m_Pos4.SetTextColor(nColor);
         m_Pos4.BringToTop();
-        m_Pos4.SetText("Cã thÓ chän nguyªn liÖu");
+        m_Pos4.SetText("Cï¿½ thï¿½ chï¿½n nguyï¿½n liï¿½u");
         // 		m_pSelf->m_LiveSkillPad.LoadScheme(pScheme);
         // 		m_pSelf->m_FightSkillPad.LoadScheme(pScheme);
     }
 }
 
 void KUiDistill::Initialize() {
+    // Setup object boxes for drag/drop
+    m_BigBox.SetObjectGenre(CGOG_ITEM);
+    m_BigBox.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box1.SetObjectGenre(CGOG_ITEM);
+    m_Box1.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box2.SetObjectGenre(CGOG_ITEM);
+    m_Box2.SetContainerId((int)UOC_BUILD_ITEM);
+    m_ItemBox.SetContainerId((int)UOC_BUILD_ITEM);
+
     AddChild(&m_BigBox);
     AddChild(&m_Box1);
     AddChild(&m_Box2);
@@ -912,18 +929,24 @@ void KUiForge::LoadScheme(const char *pScheme) {
         m_Pos1.SetPosition(nX - 14, nY - 4);
         m_Pos1.SetTextColor(nColor);
         m_Pos1.BringToTop();
-        m_Pos1.SetText("Trang bÞ xanh/tr¾ng");
+        m_Pos1.SetText("Trang bï¿½ xanh/trï¿½ng");
 
         Ini.GetInteger2("CryolitePos", "Pos", &nX, &nY);
         m_Pos2.SetPosition(nX - 12, nY - 4);
         m_Pos2.SetTextColor(nColor);
         m_Pos2.BringToTop();
-        m_Pos2.SetText("HuyÒn tinh");
+        m_Pos2.SetText("Huyï¿½n tinh");
 
     }
 }
 
 void KUiForge::Initialize() {
+    // Setup object boxes for drag/drop
+    m_BigBox.SetObjectGenre(CGOG_ITEM);
+    m_BigBox.SetContainerId((int)UOC_BUILD_ITEM);
+    m_SmallBox.SetObjectGenre(CGOG_ITEM);
+    m_SmallBox.SetContainerId((int)UOC_BUILD_ITEM);
+
     AddChild(&m_BigBox);
     AddChild(&m_SmallBox);
     AddChild(&m_ForgeBtn);
@@ -1076,31 +1099,40 @@ void KUiEnchaseTim::LoadScheme(const char *pScheme) {
         m_Pos1.SetPosition(nX - 14, nY - 4);
         m_Pos1.SetTextColor(nColor);
         m_Pos1.BringToTop();
-        m_Pos1.SetText("Trang bÞ huyÒn tinh");
+        m_Pos1.SetText("Trang bï¿½ huyï¿½n tinh");
 
         Ini.GetInteger2("CryolitePos", "Pos", &nX, &nY);
         m_Pos2.SetPosition(nX - 12, nY - 4);
         m_Pos2.SetTextColor(nColor);
         m_Pos2.BringToTop();
-        m_Pos2.SetText("HuyÒn tinh");
+        m_Pos2.SetText("Huyï¿½n tinh");
 
         Ini.GetInteger2("PropMinePos", "Pos", &nX, &nY);
         m_Pos3.SetPosition(nX - 12, nY - 4);
         m_Pos3.SetTextColor(nColor);
         m_Pos3.BringToTop();
-        m_Pos3.SetText("Kho¸ng th¹ch");
+        m_Pos3.SetText("Khoï¿½ng thï¿½ch");
 
         Ini.GetInteger2("ConsumePos", "Pos", &nX, &nY);
         m_Pos4.SetPosition(nX - 14, nY - 4);
         m_Pos4.SetTextColor(nColor);
         m_Pos4.BringToTop();
-        m_Pos4.SetText("Cã thÓ chän nguyªn liÖu");
+        m_Pos4.SetText("Cï¿½ thï¿½ chï¿½n nguyï¿½n liï¿½u");
         // 		m_pSelf->m_LiveSkillPad.LoadScheme(pScheme);
         // 		m_pSelf->m_FightSkillPad.LoadScheme(pScheme);
     }
 }
 
 void KUiEnchaseTim::Initialize() {
+    // Setup object boxes for drag/drop
+    m_BigBox.SetObjectGenre(CGOG_ITEM);
+    m_BigBox.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box1.SetObjectGenre(CGOG_ITEM);
+    m_Box1.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box2.SetObjectGenre(CGOG_ITEM);
+    m_Box2.SetContainerId((int)UOC_BUILD_ITEM);
+    m_ItemBox.SetContainerId((int)UOC_BUILD_ITEM);
+
     AddChild(&m_BigBox);
     AddChild(&m_Box1);
     AddChild(&m_Box2);
