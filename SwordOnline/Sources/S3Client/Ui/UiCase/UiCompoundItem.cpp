@@ -553,14 +553,20 @@ void KUiCompound::Initialize() {
     m_Box1.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box1);
     m_Box1.SetContainerId((int)UOC_COMPOUND);
+    m_Box1.Region.v = 0;  // CRITICAL: Explicitly set slot 0 for server routing
+    m_Box1.Region.h = 0;  // Not a matrix, so h = 0
 
     m_Box2.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box2);
     m_Box2.SetContainerId((int)UOC_COMPOUND);
+    m_Box2.Region.v = 1;  // CRITICAL: Explicitly set slot 1 for server routing
+    m_Box2.Region.h = 0;  // Not a matrix, so h = 0
 
     m_Box3.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box3);
     m_Box3.SetContainerId((int)UOC_COMPOUND);
+    m_Box3.Region.v = 2;  // CRITICAL: Explicitly set slot 2 for server routing
+    m_Box3.Region.h = 0;  // Not a matrix, so h = 0
 
     AddChild(&m_Compound);
     AddChild(&m_Cancle);
@@ -783,14 +789,20 @@ void KUiDistill::Initialize() {
     m_BigBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_BigBox);
     m_BigBox.SetContainerId((int)UOC_COMPOUND);
+    m_BigBox.Region.v = 0;  // CRITICAL: Explicitly set slot 0 for server routing
+    m_BigBox.Region.h = 0;  // Not a matrix, so h = 0
 
     m_Box1.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box1);
     m_Box1.SetContainerId((int)UOC_COMPOUND);
+    m_Box1.Region.v = 1;  // CRITICAL: Explicitly set slot 1 for server routing
+    m_Box1.Region.h = 0;  // Not a matrix, so h = 0
 
     m_Box2.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box2);
     m_Box2.SetContainerId((int)UOC_COMPOUND);
+    m_Box2.Region.v = 2;  // CRITICAL: Explicitly set slot 2 for server routing
+    m_Box2.Region.h = 0;  // Not a matrix, so h = 0
 
     AddChild(&m_ItemBox);
     m_ItemBox.SetContainerId((int)UOC_COMPOUND_BOX);
@@ -959,12 +971,16 @@ void KUiForge::Initialize() {
     m_BigBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_BigBox);
     m_BigBox.SetContainerId((int)UOC_COMPOUND);
-    g_DebugLog("[FORGE] BigBox initialized: container=UOC_COMPOUND(%d), Region.v should be 0", UOC_COMPOUND);
+    m_BigBox.Region.v = 0;  // CRITICAL: Explicitly set slot 0 for server routing
+    m_BigBox.Region.h = 0;  // Not a matrix, so h = 0
+    g_DebugLog("[FORGE] BigBox initialized: container=UOC_COMPOUND(%d), Region.v=0 SET", UOC_COMPOUND);
 
     m_SmallBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_SmallBox);
     m_SmallBox.SetContainerId((int)UOC_COMPOUND);
-    g_DebugLog("[FORGE] SmallBox initialized: container=UOC_COMPOUND(%d), Region.v should be 1", UOC_COMPOUND);
+    m_SmallBox.Region.v = 1;  // CRITICAL: Explicitly set slot 1 for server routing
+    m_SmallBox.Region.h = 0;  // Not a matrix, so h = 0
+    g_DebugLog("[FORGE] SmallBox initialized: container=UOC_COMPOUND(%d), Region.v=1 SET", UOC_COMPOUND);
 
     AddChild(&m_ForgeBtn);
     AddChild(&m_Cancle);
@@ -1171,14 +1187,20 @@ void KUiEnchaseTim::Initialize() {
     m_BigBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_BigBox);
     m_BigBox.SetContainerId((int)UOC_COMPOUND);
+    m_BigBox.Region.v = 0;  // CRITICAL: Explicitly set slot 0 for server routing
+    m_BigBox.Region.h = 0;  // Not a matrix, so h = 0
 
     m_Box1.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box1);
     m_Box1.SetContainerId((int)UOC_COMPOUND);
+    m_Box1.Region.v = 1;  // CRITICAL: Explicitly set slot 1 for server routing
+    m_Box1.Region.h = 0;  // Not a matrix, so h = 0
 
     m_Box2.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box2);
     m_Box2.SetContainerId((int)UOC_COMPOUND);
+    m_Box2.Region.v = 2;  // CRITICAL: Explicitly set slot 2 for server routing
+    m_Box2.Region.h = 0;  // Not a matrix, so h = 0
 
     AddChild(&m_ItemBox);
     m_ItemBox.SetContainerId((int)UOC_COMPOUND_BOX);
