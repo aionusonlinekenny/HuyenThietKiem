@@ -6,7 +6,7 @@
 -----------------------------------------------------------------
 
 Include("\\script\\lib\\TaskLib.lua")
-Include("\\script\\Npc\\purple_smith_config.lua")
+Include("\\script\\npc\\purple_smith_config.lua")
 
 -- Build Config table from global variables (Include doesn't return values)
 -- purple_smith_config.lua defines globals, then we reference them here
