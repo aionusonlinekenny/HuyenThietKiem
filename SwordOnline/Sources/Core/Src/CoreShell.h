@@ -407,6 +407,16 @@ enum GAMEOPERATION_INDEX
 	GOI_SET_IMAGE_PLAYER,//Player Avatar by kinnox;
 
 	GOI_RECOVERY_BOX_COMMAND,//TrembleItem by kinnox;
+
+	GOI_COMPITEM_COM,//Compound system - Combine crystals
+
+	GOI_COMPITEM_DISTILL,//Compound system - Distill property stones
+
+	GOI_COMPITEM_FORGE,//Compound system - Forge purple items
+
+	GOI_COMPITEM_ENCHASE,//Compound system - Enchase purple items
+
+	GOI_COMPITEM_ALTAL,//Compound system - Atlas crafting
 };
 
 //=========================================================

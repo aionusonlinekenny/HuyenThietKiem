@@ -629,9 +629,9 @@ void KUiCompound::SetPosText(int i) {
 }
 
 void KUiCompound::CleanItem() {
-    m_Box1.Celar();
-    m_Box2.Celar();
-    m_Box3.Celar();
+    m_Box1.Clear();
+    m_Box2.Clear();
+    m_Box3.Clear();
 }
 
 KUiDistill::KUiDistill() {
@@ -830,9 +830,9 @@ void KUiDistill::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
 }
 
 void KUiDistill::CleanItem() {
-    m_BigBox.Celar();
-    m_Box1.Celar();
-    m_Box2.Celar();
+    m_BigBox.Clear();
+    m_Box1.Clear();
+    m_Box2.Clear();
     m_ItemBox.Clear();
 }
 
@@ -970,8 +970,8 @@ void KUiForge::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
 }
 
 void KUiForge::CleanItem() {
-    m_BigBox.Celar();
-    m_SmallBox.Celar();
+    m_BigBox.Clear();
+    m_SmallBox.Clear();
 }
 
 KUiEnchaseTim::KUiEnchaseTim() {
@@ -1170,9 +1170,9 @@ void KUiEnchaseTim::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
 }
 
 void KUiEnchaseTim::CleanItem() {
-    m_BigBox.Celar();
-    m_Box1.Celar();
-    m_Box2.Celar();
+    m_BigBox.Clear();
+    m_Box1.Clear();
+    m_Box2.Clear();
     m_ItemBox.Clear();
 }
 
