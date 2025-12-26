@@ -110,7 +110,8 @@ function SelectRecipe()
     local tbSay = {}
     local count = 1
 
-    for i, recipe in ipairs(Config.PURPLE_RECIPES) do
+    for i = 1, getn(Config.PURPLE_RECIPES) do
+        local recipe = Config.PURPLE_RECIPES[i]
         tbSay[count] = recipe.name .. " (" .. recipe.min_blues .. " xanh, " .. (recipe.cost/10000) .. " van)/ConfirmRecipe#" .. i
         count = count + 1
     end
@@ -368,7 +369,8 @@ function ExecuteCreatePurple()
     szSuccess = szSuccess .. "Chat luong: " .. colorTag .. qualityName .. "<color> (Rank " .. qualityRank .. ")\n\n"
     szSuccess = szSuccess .. "Huyen Tinh da su dung:\n"
 
-    for i, info in ipairs(crystalInfo) do
+    for i = 1, getn(crystalInfo) do
+        local info = crystalInfo[i]
         local tag = "<color=" .. info.color .. ">"
         szSuccess = szSuccess .. tag .. "- " .. info.name .. " (+" .. info.luck .. " luck)<color>\n"
     end

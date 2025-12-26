@@ -157,7 +157,8 @@ CRYSTAL_TYPES = {
 
 -- Quick lookup table for luck values
 CRYSTAL_LUCK_MAP = {}
-for i, crystal in ipairs(CRYSTAL_TYPES) do
+for i = 1, getn(CRYSTAL_TYPES) do
+    local crystal = CRYSTAL_TYPES[i]
     local key = crystal.detail .. "_" .. crystal.particular
     CRYSTAL_LUCK_MAP[key] = crystal.luck
 end
@@ -253,7 +254,8 @@ MAGIC_LINES_QUALITY = {
 
 -- Get crystal info
 function GetCrystalInfo(nDetail, nParticular)
-    for i, crystal in ipairs(CRYSTAL_TYPES) do
+    for i = 1, getn(CRYSTAL_TYPES) do
+        local crystal = CRYSTAL_TYPES[i]
         if crystal.detail == nDetail and crystal.particular == nParticular then
             return crystal
         end
@@ -263,7 +265,8 @@ end
 
 -- Get recipe by blue count
 function GetRecipeByBlueCount(nBlueCount)
-    for i, recipe in ipairs(PURPLE_RECIPES) do
+    for i = 1, getn(PURPLE_RECIPES) do
+        local recipe = PURPLE_RECIPES[i]
         if nBlueCount >= recipe.min_blues and nBlueCount <= recipe.max_blues then
             return recipe
         end
@@ -331,7 +334,8 @@ end
 function GetRecipeListDisplay()
     local str = "<color=yellow>=== CONG THUC HOP THANH ===<color>\n\n"
 
-    for i, recipe in ipairs(PURPLE_RECIPES) do
+    for i = 1, getn(PURPLE_RECIPES) do
+        local recipe = PURPLE_RECIPES[i]
         str = str .. string.format("<color=orange>%s:<color>\n", recipe.name)
         str = str .. string.format("  - Trang bi xanh: %d-%d\n", recipe.min_blues, recipe.max_blues)
         str = str .. string.format("  - Chi phi: %d van luong\n", recipe.cost/10000)
