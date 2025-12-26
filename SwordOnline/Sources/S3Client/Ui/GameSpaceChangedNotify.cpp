@@ -263,12 +263,12 @@ void CoreDataChangedCallback(unsigned int uDataId, unsigned int uParam, int nPar
 				if (pUpgrade)
 					pUpgrade->UpdateItem((KUiObjAtRegion*)uParam, nParam);
 			}
-		else if (pObject->eContainer == UOC_COMPOUND || pObject->eContainer == UOC_COMPOUND_BOX)//CompoundItem
-		{
-			KUiComItem* pCompound = KUiComItem::GetIfVisible();
-			if (pCompound)
-				pCompound->UpdateItem((KUiObjAtRegion*)uParam, nParam);
-		}
+			else if (pObject->eContainer == UOC_COMPOUND || pObject->eContainer == UOC_COMPOUND_BOX)//CompoundItem
+			{
+				KUiComItem* pCompound = KUiComItem::GetIfVisible();
+				if (pCompound)
+					pCompound->UpdateItem((KUiObjAtRegion*)uParam, nParam);
+			}
 		}
 		break;
 	case GDCNI_FIGHT_SKILL_POINT:	
