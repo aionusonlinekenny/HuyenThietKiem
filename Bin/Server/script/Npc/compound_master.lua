@@ -12,9 +12,9 @@ function main(NpcIndex)
 end
 
 function open_compound()
-    -- NpcCommand 272 corresponds to GDCNI_OPEN_COMPOUND
+    -- OpenCompoundUI is a C++ function exported to Lua
     -- This opens the Compound UI window
-    NpcCommand(0, 272)
+    OpenCompoundUI()
 end
 
 function guide()

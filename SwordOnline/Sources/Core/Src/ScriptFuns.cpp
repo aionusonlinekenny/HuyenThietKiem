@@ -10195,6 +10195,36 @@ int LuaOpenUpgradeAttribUI(Lua_State * L)
 	return 0;
 }
 // ------------------------------------------------------------
+// Open Compound UI
+// ------------------------------------------------------------
+int LuaOpenCompoundUI(Lua_State * L)
+{
+	g_DebugLog("[COMPOUND] LuaOpenCompoundUI called");
+
+	int nPlayerIndex = GetPlayerIndex(L);
+	g_DebugLog("[COMPOUND] PlayerIndex = %d", nPlayerIndex);
+
+	if (nPlayerIndex <= 0)
+	{
+		g_DebugLog("[COMPOUND] Invalid player index, returning");
+		return 0;
+	}
+
+	g_DebugLog("[COMPOUND] Creating SHOW_MSG_SYNC");
+	SHOW_MSG_SYNC sMsg;
+	sMsg.ProtocolType = s2c_msgshow;
+	sMsg.m_wMsgID = enumMSG_ID_COMPOUND;
+	sMsg.m_lpBuf = 0;
+	sMsg.m_wLength = sizeof(SHOW_MSG_SYNC) - 1;
+
+	g_DebugLog("[COMPOUND] Sending message to client, NetConnectIdx = %d", Player[nPlayerIndex].m_nNetConnectIdx);
+	if (g_pServer && Player[nPlayerIndex].m_nNetConnectIdx != -1)
+		g_pServer->PackDataToClient(Player[nPlayerIndex].m_nNetConnectIdx, &sMsg, sMsg.m_wLength + 1);
+
+	g_DebugLog("[COMPOUND] LuaOpenCompoundUI completed");
+	return 0;
+}
+// ------------------------------------------------------------
 // Get Item Magic Attribute Info (Type, Value, Min, Max)
 // Lua: nType, nValue, nMin, nMax = GetItemMagicAttribInfo(nItemIdx, nSlot)
 // ------------------------------------------------------------
@@ -11127,6 +11157,7 @@ TLua_Funcs GameScriptFuns[] =
 	//
 	//UpgradeAttrib - Equipment Attribute Upgrade System
 	{"OpenUpgradeAttribUI",		LuaOpenUpgradeAttribUI},
+	{"OpenCompoundUI",		LuaOpenCompoundUI},
 	{"GetItemMagicAttribInfo",	LuaGetItemMagicAttribInfo},
 	{"SetItemMagicAttribValueAndSync",	LuaSetItemMagicAttribValueAndSync},
 	{"GetItemGeneratorLevels",	LuaGetItemGeneratorLevels},
