@@ -535,9 +535,20 @@ void KUiCompound::Initialize() {
     AddChild(&m_Pos1);
     AddChild(&m_Pos2);
     AddChild(&m_Pos3);
+
+    // Setup object boxes BEFORE AddChild - matching UiTrembleItem pattern
+    m_Box1.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box1);
+    m_Box1.SetContainerId((int)UOC_COMPOUND);
+
+    m_Box2.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box2);
+    m_Box2.SetContainerId((int)UOC_COMPOUND);
+
+    m_Box3.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box3);
+    m_Box3.SetContainerId((int)UOC_COMPOUND);
+
     AddChild(&m_Compound);
     AddChild(&m_Cancle);
     AddChild(&m_TrembleEffect1);
@@ -570,17 +581,6 @@ void KUiCompound::Initialize() {
 
         m_Guide.AddOneMessage(Buff, sizeof(Buff));
     }
-
-    // Setup object boxes for drag/drop - MUST be after LoadScheme
-    m_Box1.SetObjectGenre(CGOG_ITEM);
-    m_Box1.SetContainerId((int)UOC_COMPOUND);
-    m_Box1.EnablePickPut(true);
-    m_Box2.SetObjectGenre(CGOG_ITEM);
-    m_Box2.SetContainerId((int)UOC_COMPOUND);
-    m_Box2.EnablePickPut(true);
-    m_Box3.SetObjectGenre(CGOG_ITEM);
-    m_Box3.SetContainerId((int)UOC_COMPOUND);
-    m_Box3.EnablePickPut(true);
 
     Wnd_AddWindow(this);
 }
@@ -773,10 +773,22 @@ void KUiDistill::LoadScheme(const char *pScheme) {
 }
 
 void KUiDistill::Initialize() {
+    // Setup object boxes BEFORE AddChild - matching UiTrembleItem pattern
+    m_BigBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_BigBox);
+    m_BigBox.SetContainerId((int)UOC_COMPOUND);
+
+    m_Box1.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box1);
+    m_Box1.SetContainerId((int)UOC_COMPOUND);
+
+    m_Box2.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box2);
+    m_Box2.SetContainerId((int)UOC_COMPOUND);
+
     AddChild(&m_ItemBox);
+    m_ItemBox.SetContainerId((int)UOC_COMPOUND_BOX);
+
     AddChild(&m_Distill);
     AddChild(&m_Cancle);
 
@@ -810,19 +822,6 @@ void KUiDistill::Initialize() {
 
         m_Guide.AddOneMessage(Buff, sizeof(Buff));
     }
-
-    // Setup object boxes for drag/drop - MUST be after LoadScheme
-    m_BigBox.SetObjectGenre(CGOG_ITEM);
-    m_BigBox.SetContainerId((int)UOC_COMPOUND);
-    m_BigBox.EnablePickPut(true);
-    m_Box1.SetObjectGenre(CGOG_ITEM);
-    m_Box1.SetContainerId((int)UOC_COMPOUND);
-    m_Box1.EnablePickPut(true);
-    m_Box2.SetObjectGenre(CGOG_ITEM);
-    m_Box2.SetContainerId((int)UOC_COMPOUND);
-    m_Box2.EnablePickPut(true);
-    m_ItemBox.SetContainerId((int)UOC_COMPOUND_BOX);
-    m_ItemBox.EnablePickPut(true);
 
     Wnd_AddWindow(this);
 }
@@ -949,8 +948,15 @@ void KUiForge::LoadScheme(const char *pScheme) {
 }
 
 void KUiForge::Initialize() {
+    // Setup object boxes BEFORE AddChild - matching UiTrembleItem pattern
+    m_BigBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_BigBox);
+    m_BigBox.SetContainerId((int)UOC_COMPOUND);
+
+    m_SmallBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_SmallBox);
+    m_SmallBox.SetContainerId((int)UOC_COMPOUND);
+
     AddChild(&m_ForgeBtn);
     AddChild(&m_Cancle);
 
@@ -982,14 +988,6 @@ void KUiForge::Initialize() {
 
         m_Guide.AddOneMessage(Buff, sizeof(Buff));
     }
-
-    // Setup object boxes for drag/drop - MUST be after LoadScheme
-    m_BigBox.SetObjectGenre(CGOG_ITEM);
-    m_BigBox.SetContainerId((int)UOC_COMPOUND);
-    m_BigBox.EnablePickPut(true);
-    m_SmallBox.SetObjectGenre(CGOG_ITEM);
-    m_SmallBox.SetContainerId((int)UOC_COMPOUND);
-    m_SmallBox.EnablePickPut(true);
 
     Wnd_AddWindow(this);
 }
@@ -1134,10 +1132,22 @@ void KUiEnchaseTim::LoadScheme(const char *pScheme) {
 }
 
 void KUiEnchaseTim::Initialize() {
+    // Setup object boxes BEFORE AddChild - matching UiTrembleItem pattern
+    m_BigBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_BigBox);
+    m_BigBox.SetContainerId((int)UOC_COMPOUND);
+
+    m_Box1.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box1);
+    m_Box1.SetContainerId((int)UOC_COMPOUND);
+
+    m_Box2.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box2);
+    m_Box2.SetContainerId((int)UOC_COMPOUND);
+
     AddChild(&m_ItemBox);
+    m_ItemBox.SetContainerId((int)UOC_COMPOUND_BOX);
+
     AddChild(&m_Distill);
     AddChild(&m_Cancle);
 
@@ -1171,19 +1181,6 @@ void KUiEnchaseTim::Initialize() {
 
         m_Guide.AddOneMessage(Buff, sizeof(Buff));
     }
-
-    // Setup object boxes for drag/drop - MUST be after LoadScheme
-    m_BigBox.SetObjectGenre(CGOG_ITEM);
-    m_BigBox.SetContainerId((int)UOC_COMPOUND);
-    m_BigBox.EnablePickPut(true);
-    m_Box1.SetObjectGenre(CGOG_ITEM);
-    m_Box1.SetContainerId((int)UOC_COMPOUND);
-    m_Box1.EnablePickPut(true);
-    m_Box2.SetObjectGenre(CGOG_ITEM);
-    m_Box2.SetContainerId((int)UOC_COMPOUND);
-    m_Box2.EnablePickPut(true);
-    m_ItemBox.SetContainerId((int)UOC_COMPOUND_BOX);
-    m_ItemBox.EnablePickPut(true);
 
     Wnd_AddWindow(this);
 }
