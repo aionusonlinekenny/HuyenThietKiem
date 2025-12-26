@@ -8,8 +8,22 @@
 Include("\\script\\lib\\TaskLib.lua")
 Include("\\script\\npc\\purple_smith_config.lua")
 
--- Import config as GLOBAL variable (not local)
-Config = dofile("script/npc/purple_smith_config.lua")
+-- Build Config table from global variables (Include doesn't return values)
+-- purple_smith_config.lua defines globals, then we reference them here
+Config = {
+    CRYSTAL_TYPES = CRYSTAL_TYPES,
+    CRYSTAL_LUCK_MAP = CRYSTAL_LUCK_MAP,
+    PURPLE_RECIPES = PURPLE_RECIPES,
+    MAGIC_LINES_QUALITY = MAGIC_LINES_QUALITY,
+    GetCrystalLuck = GetCrystalLuck,
+    GetCrystalInfo = GetCrystalInfo,
+    GetRecipeByBlueCount = GetRecipeByBlueCount,
+    CalculateFinalLuck = CalculateFinalLuck,
+    GetQualityDesc = GetQualityDesc,
+    GetCrystalListDisplay = GetCrystalListDisplay,
+    GetRecipeListDisplay = GetRecipeListDisplay,
+    GetQualityChartDisplay = GetQualityChartDisplay,
+}
 
 -- ------------------------------------------------------------
 -- Configuration Override (can modify here)
