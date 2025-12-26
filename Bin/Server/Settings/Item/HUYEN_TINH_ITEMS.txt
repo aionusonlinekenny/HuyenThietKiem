@@ -1,0 +1,124 @@
+# ============================================================
+# HUYEN TINH (CRYSTAL) ITEM DEFINITIONS
+# For Purple Smith NPC System
+# Genre: 6 (item_task)
+# Details: 16-19
+# Particulars: 1-5
+# ============================================================
+
+# ------------------------------------------------------------
+# LAM THUY TINH (Blue Crystal) - Low Tier
+# Detail: 16, Particulars: 1-3
+# ------------------------------------------------------------
+
+# Lam Thuy Tinh Cap 1
+# Genre=6, Detail=16, Particular=1, Luck=+1
+16_1	Lam Thuy Tinh Cap 1	Huyen tinh cap thap nhat. Dung de hop thanh trang bi TIM. Luck: +1
+
+# Lam Thuy Tinh Cap 2
+# Genre=6, Detail=16, Particular=2, Luck=+2
+16_2	Lam Thuy Tinh Cap 2	Huyen tinh cap thap. Dung de hop thanh trang bi TIM. Luck: +2
+
+# Lam Thuy Tinh Cap 3
+# Genre=6, Detail=16, Particular=3, Luck=+3
+16_3	Lam Thuy Tinh Cap 3	Huyen tinh cap thap. Dung de hop thanh trang bi TIM. Luck: +3
+
+# ------------------------------------------------------------
+# TU THUY TINH (Purple Crystal) - Medium Tier
+# Detail: 17, Particulars: 1-4
+# ------------------------------------------------------------
+
+# Tu Thuy Tinh Cap 1
+# Genre=6, Detail=17, Particular=1, Luck=+3
+17_1	Tu Thuy Tinh Cap 1	Huyen tinh cap trung. Dung de hop thanh trang bi TIM. Luck: +3
+
+# Tu Thuy Tinh Cap 2
+# Genre=6, Detail=17, Particular=2, Luck=+4
+17_2	Tu Thuy Tinh Cap 2	Huyen tinh cap trung. Dung de hop thanh trang bi TIM. Luck: +4
+
+# Tu Thuy Tinh Cap 3
+# Genre=6, Detail=17, Particular=3, Luck=+5
+17_3	Tu Thuy Tinh Cap 3	Huyen tinh cap trung. Dung de hop thanh trang bi TIM. Luck: +5
+
+# Tu Thuy Tinh Cap 4
+# Genre=6, Detail=17, Particular=4, Luck=+6
+17_4	Tu Thuy Tinh Cap 4	Huyen tinh cap trung cao. Dung de hop thanh trang bi TIM. Luck: +6
+
+# ------------------------------------------------------------
+# LUC THUY TINH (Green Crystal) - High Tier
+# Detail: 18, Particulars: 1-5
+# ------------------------------------------------------------
+
+# Luc Thuy Tinh Cap 1
+# Genre=6, Detail=18, Particular=1, Luck=+5
+18_1	Luc Thuy Tinh Cap 1	Huyen tinh cap cao. Dung de hop thanh trang bi TIM. Luck: +5
+
+# Luc Thuy Tinh Cap 2
+# Genre=6, Detail=18, Particular=2, Luck=+6
+18_2	Luc Thuy Tinh Cap 2	Huyen tinh cap cao. Dung de hop thanh trang bi TIM. Luck: +6
+
+# Luc Thuy Tinh Cap 3
+# Genre=6, Detail=18, Particular=3, Luck=+7
+18_3	Luc Thuy Tinh Cap 3	Huyen tinh cap cao. Dung de hop thanh trang bi TIM. Luck: +7
+
+# Luc Thuy Tinh Cap 4
+# Genre=6, Detail=18, Particular=4, Luck=+8
+18_4	Luc Thuy Tinh Cap 4	Huyen tinh cap cao. Dung de hop thanh trang bi TIM. Luck: +8
+
+# Luc Thuy Tinh Cap 5
+# Genre=6, Detail=18, Particular=5, Luck=+9
+18_5	Luc Thuy Tinh Cap 5	Huyen tinh cap rat cao. Dung de hop thanh trang bi TIM. Luck: +9
+
+# ------------------------------------------------------------
+# HONG THUY TINH (Red Crystal) - Legendary Tier
+# Detail: 19, Particulars: 1-5
+# ------------------------------------------------------------
+
+# Hong Thuy Tinh Cap 1
+# Genre=6, Detail=19, Particular=1, Luck=+8
+19_1	Hong Thuy Tinh Cap 1	Huyen tinh huyen thoai. Dung de hop thanh trang bi TIM. Luck: +8
+
+# Hong Thuy Tinh Cap 2
+# Genre=6, Detail=19, Particular=2, Luck=+9
+19_2	Hong Thuy Tinh Cap 2	Huyen tinh huyen thoai. Dung de hop thanh trang bi TIM. Luck: +9
+
+# Hong Thuy Tinh Cap 3
+# Genre=6, Detail=19, Particular=3, Luck=+10
+19_3	Hong Thuy Tinh Cap 3	Huyen tinh huyen thoai. Dung de hop thanh trang bi TIM. Luck: +10
+
+# Hong Thuy Tinh Cap 4
+# Genre=6, Detail=19, Particular=4, Luck=+11
+19_4	Hong Thuy Tinh Cap 4	Huyen tinh huyen thoai. Dung de hop thanh trang bi TIM. Luck: +11
+
+# Hong Thuy Tinh Cap 5
+# Genre=6, Detail=19, Particular=5, Luck=+12
+19_5	Hong Thuy Tinh Cap 5	Huyen tinh huyen thoai toi thuong. Dung de hop thanh trang bi TIM. Luck: +12
+
+# ============================================================
+# SPAWN COMMANDS (For GM/Testing)
+# ============================================================
+
+# Add items using GM command:
+# /give 6 16 1   - Lam Thuy Tinh Cap 1
+# /give 6 17 3   - Tu Thuy Tinh Cap 3
+# /give 6 18 4   - Luc Thuy Tinh Cap 4
+# /give 6 19 5   - Hong Thuy Tinh Cap 5
+
+# ============================================================
+# DROP RATES (Suggested)
+# ============================================================
+
+# Lam Thuy Tinh (16): Common - Drop from normal monsters
+# Tu Thuy Tinh (17): Uncommon - Drop from elite monsters
+# Luc Thuy Tinh (18): Rare - Drop from boss monsters
+# Hong Thuy Tinh (19): Legendary - Drop from world boss / events
+
+# ============================================================
+# UPGRADE PATH (Suggested)
+# ============================================================
+
+# 3x Lam Cap 1 -> 1x Lam Cap 2
+# 3x Lam Cap 2 -> 1x Lam Cap 3
+# 3x Lam Cap 3 -> 1x Tu Cap 1
+# 3x Tu Cap 3 -> 1x Luc Cap 1
+# 3x Luc Cap 5 -> 1x Hong Cap 1
