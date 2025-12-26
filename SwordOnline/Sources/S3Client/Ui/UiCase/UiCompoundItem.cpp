@@ -265,6 +265,10 @@ void KUiComItem::ShowWindow(int nNum /*= 0*/ ) {
 }
 
 void KUiComItem::UpdateItem(KUiObjAtRegion *pItem, int bAdd) {
+    // Add null check to prevent crashes when sharing UOC_BUILD_ITEM container
+    if (!pItem) {
+        return;
+    }
 
     KUiDraggedObject obj;
     obj.uGenre = pItem->Obj.uGenre;
@@ -539,15 +543,15 @@ void KUiCompound::Initialize() {
     // Setup object boxes BEFORE AddChild - matching UiTrembleItem pattern
     m_Box1.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box1);
-    m_Box1.SetContainerId((int)UOC_COMPOUND);
+    m_Box1.SetContainerId((int)UOC_BUILD_ITEM);
 
     m_Box2.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box2);
-    m_Box2.SetContainerId((int)UOC_COMPOUND);
+    m_Box2.SetContainerId((int)UOC_BUILD_ITEM);
 
     m_Box3.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box3);
-    m_Box3.SetContainerId((int)UOC_COMPOUND);
+    m_Box3.SetContainerId((int)UOC_BUILD_ITEM);
 
     AddChild(&m_Compound);
     AddChild(&m_Cancle);
@@ -776,18 +780,18 @@ void KUiDistill::Initialize() {
     // Setup object boxes BEFORE AddChild - matching UiTrembleItem pattern
     m_BigBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_BigBox);
-    m_BigBox.SetContainerId((int)UOC_COMPOUND);
+    m_BigBox.SetContainerId((int)UOC_BUILD_ITEM);
 
     m_Box1.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box1);
-    m_Box1.SetContainerId((int)UOC_COMPOUND);
+    m_Box1.SetContainerId((int)UOC_BUILD_ITEM);
 
     m_Box2.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box2);
-    m_Box2.SetContainerId((int)UOC_COMPOUND);
+    m_Box2.SetContainerId((int)UOC_BUILD_ITEM);
 
     AddChild(&m_ItemBox);
-    m_ItemBox.SetContainerId((int)UOC_COMPOUND_BOX);
+    m_ItemBox.SetContainerId((int)UOC_BUILD_ITEM_BOX);
 
     AddChild(&m_Distill);
     AddChild(&m_Cancle);
@@ -951,11 +955,11 @@ void KUiForge::Initialize() {
     // Setup object boxes BEFORE AddChild - matching UiTrembleItem pattern
     m_BigBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_BigBox);
-    m_BigBox.SetContainerId((int)UOC_COMPOUND);
+    m_BigBox.SetContainerId((int)UOC_BUILD_ITEM);
 
     m_SmallBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_SmallBox);
-    m_SmallBox.SetContainerId((int)UOC_COMPOUND);
+    m_SmallBox.SetContainerId((int)UOC_BUILD_ITEM);
 
     AddChild(&m_ForgeBtn);
     AddChild(&m_Cancle);
@@ -1135,18 +1139,18 @@ void KUiEnchaseTim::Initialize() {
     // Setup object boxes BEFORE AddChild - matching UiTrembleItem pattern
     m_BigBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_BigBox);
-    m_BigBox.SetContainerId((int)UOC_COMPOUND);
+    m_BigBox.SetContainerId((int)UOC_BUILD_ITEM);
 
     m_Box1.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box1);
-    m_Box1.SetContainerId((int)UOC_COMPOUND);
+    m_Box1.SetContainerId((int)UOC_BUILD_ITEM);
 
     m_Box2.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box2);
-    m_Box2.SetContainerId((int)UOC_COMPOUND);
+    m_Box2.SetContainerId((int)UOC_BUILD_ITEM);
 
     AddChild(&m_ItemBox);
-    m_ItemBox.SetContainerId((int)UOC_COMPOUND_BOX);
+    m_ItemBox.SetContainerId((int)UOC_BUILD_ITEM_BOX);
 
     AddChild(&m_Distill);
     AddChild(&m_Cancle);
