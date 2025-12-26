@@ -2789,6 +2789,15 @@ int	KCoreShell::OperationRequest(unsigned int uOper, unsigned int uParam, int nP
 						P1.nX = PartBuildItem[pObject1->Region.v];
 					}
 					break;
+			case UOC_COMPOUND://CompoundItem object boxes
+			case UOC_COMPOUND_BOX://CompoundItem matrix boxes
+				{
+					if (pObject1->Region.h == 1)
+						break;
+					P1.nPlace = pos_builditem;
+					P1.nX = PartBuildItem[pObject1->Region.v];
+				}
+				break;
 				case UOC_ITEM_TAKE_WITH:
 					P1.nPlace = pos_equiproom;
 					P1.nX = pObject1->Region.h;
@@ -3012,6 +3021,15 @@ int	KCoreShell::OperationRequest(unsigned int uOper, unsigned int uParam, int nP
 						P2.nX = PartBuildItem[pObject2->Region.v];
 					}
 					break;
+			case UOC_COMPOUND://CompoundItem object boxes
+			case UOC_COMPOUND_BOX://CompoundItem matrix boxes
+				{
+					if (pObject2->Region.h == 1)
+						break;
+					P2.nPlace = pos_builditem;
+					P2.nX = PartBuildItem[pObject2->Region.v];
+				}
+				break;
 				case UOC_ITEM_TAKE_WITH:
 					P2.nPlace = pos_equiproom;
 					P2.nX = pObject2->Region.h;

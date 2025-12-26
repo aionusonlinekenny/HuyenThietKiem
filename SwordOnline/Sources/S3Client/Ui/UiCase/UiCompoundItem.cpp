@@ -543,15 +543,15 @@ void KUiCompound::Initialize() {
     // Setup object boxes BEFORE AddChild - matching UiTrembleItem pattern
     m_Box1.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box1);
-    m_Box1.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box1.SetContainerId((int)UOC_COMPOUND);
 
     m_Box2.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box2);
-    m_Box2.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box2.SetContainerId((int)UOC_COMPOUND);
 
     m_Box3.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box3);
-    m_Box3.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box3.SetContainerId((int)UOC_COMPOUND);
 
     AddChild(&m_Compound);
     AddChild(&m_Cancle);
@@ -780,18 +780,18 @@ void KUiDistill::Initialize() {
     // Setup object boxes BEFORE AddChild - matching UiTrembleItem pattern
     m_BigBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_BigBox);
-    m_BigBox.SetContainerId((int)UOC_BUILD_ITEM);
+    m_BigBox.SetContainerId((int)UOC_COMPOUND);
 
     m_Box1.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box1);
-    m_Box1.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box1.SetContainerId((int)UOC_COMPOUND);
 
     m_Box2.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box2);
-    m_Box2.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box2.SetContainerId((int)UOC_COMPOUND);
 
     AddChild(&m_ItemBox);
-    m_ItemBox.SetContainerId((int)UOC_BUILD_ITEM_BOX);
+    m_ItemBox.SetContainerId((int)UOC_COMPOUND_BOX);
 
     AddChild(&m_Distill);
     AddChild(&m_Cancle);
@@ -955,11 +955,11 @@ void KUiForge::Initialize() {
     // Setup object boxes BEFORE AddChild - matching UiTrembleItem pattern
     m_BigBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_BigBox);
-    m_BigBox.SetContainerId((int)UOC_BUILD_ITEM);
+    m_BigBox.SetContainerId((int)UOC_COMPOUND);
 
     m_SmallBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_SmallBox);
-    m_SmallBox.SetContainerId((int)UOC_BUILD_ITEM);
+    m_SmallBox.SetContainerId((int)UOC_COMPOUND);
 
     AddChild(&m_ForgeBtn);
     AddChild(&m_Cancle);
@@ -1139,18 +1139,18 @@ void KUiEnchaseTim::Initialize() {
     // Setup object boxes BEFORE AddChild - matching UiTrembleItem pattern
     m_BigBox.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_BigBox);
-    m_BigBox.SetContainerId((int)UOC_BUILD_ITEM);
+    m_BigBox.SetContainerId((int)UOC_COMPOUND);
 
     m_Box1.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box1);
-    m_Box1.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box1.SetContainerId((int)UOC_COMPOUND);
 
     m_Box2.SetObjectGenre(CGOG_ITEM);
     AddChild(&m_Box2);
-    m_Box2.SetContainerId((int)UOC_BUILD_ITEM);
+    m_Box2.SetContainerId((int)UOC_COMPOUND);
 
     AddChild(&m_ItemBox);
-    m_ItemBox.SetContainerId((int)UOC_BUILD_ITEM_BOX);
+    m_ItemBox.SetContainerId((int)UOC_COMPOUND_BOX);
 
     AddChild(&m_Distill);
     AddChild(&m_Cancle);

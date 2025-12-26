@@ -41,6 +41,7 @@
 #include "UiCase/UiNotification.h"//Notification by kinnox;
 #include "UiCase/UiTrembleItem.h"//TrembleItem by kinnox;
 #include "UiCase/UiUpgradeAttrib.h"//UpgradeAttrib - Upgrade equipment attributes
+#include "UiCase/UiCompoundItem.h"//Compound system - Purple item crafting
 #include "../Login/Login.h"
 #include "UiCase/UiParadeItem.h"
 #include "UiCase/UiGetNumber.h"
@@ -262,6 +263,12 @@ void CoreDataChangedCallback(unsigned int uDataId, unsigned int uParam, int nPar
 				if (pUpgrade)
 					pUpgrade->UpdateItem((KUiObjAtRegion*)uParam, nParam);
 			}
+		else if (pObject->eContainer == UOC_COMPOUND || pObject->eContainer == UOC_COMPOUND_BOX)//CompoundItem
+		{
+			KUiComItem* pCompound = KUiComItem::GetIfVisible();
+			if (pCompound)
+				pCompound->UpdateItem((KUiObjAtRegion*)uParam, nParam);
+		}
 		}
 		break;
 	case GDCNI_FIGHT_SKILL_POINT:	
@@ -563,7 +570,12 @@ void CoreDataChangedCallback(unsigned int uDataId, unsigned int uParam, int nPar
 		{
 			KUiUpgradeAttrib::OpenWindow();
 		}
-		break;	
+		break;
+	case GDCNI_OPEN_COMPOUND://Compound system - Purple item crafting
+		{
+			KUiComItem::OpenWindow();
+		}
+		break;
 	case GDCNI_EXIT_GAME:
 		UiEndGame();
 		UiPostQuitMsg();
@@ -583,7 +595,7 @@ void KClientCallback::CoreDataChanged(unsigned int uDataId, unsigned int uParam,
 typedef std::map<std::string, std::string> BLACKLIST;
 BLACKLIST g_BlackListUserNames;
 
-#define BLACKLIST_UNITNAME	 "Sæ ®en"
+#define BLACKLIST_UNITNAME	 "Sï¿½ ï¿½en"
 
 struct BlacklistNotify : public AddinNotify
 {
@@ -752,7 +764,7 @@ void KClientCallback::ChannelMessageArrival(DWORD nChannelID, char* szSendName, 
 	if (!bSucc)
 	{
 		char szInfo[256];
-		int n = sprintf(szInfo, "Xin thø lçi! TÇn sè vÉn ch­a më, kh«ng thÓ chuyÓn tin tøc!");
+		int n = sprintf(szInfo, "Xin thï¿½ lï¿½i! Tï¿½n sï¿½ vï¿½n chï¿½a mï¿½, khï¿½ng thï¿½ chuyï¿½n tin tï¿½c!");
 		KUiMsgCentrePad::SystemMessageArrival(szInfo, n);
 		return;
 	}
@@ -819,7 +831,7 @@ void KClientCallback::MSNMessageArrival(char* szSourceName, char* szSendName, co
 	if (!bSucc)
 	{
 		char szInfo[256];
-		int n = sprintf(szInfo, "§¹i hiÖp %s hiÖn t¹i kh«ng cã trªn m¹ng!", szSendName);
+		int n = sprintf(szInfo, "ï¿½ï¿½i hiï¿½p %s hiï¿½n tï¿½i khï¿½ng cï¿½ trï¿½n mï¿½ng!", szSendName);
 		KUiMsgCentrePad::SystemMessageArrival(szInfo, n);
 		return;
 	}
@@ -989,7 +1001,7 @@ void KClientCallback::AddPeople(char* unitName, char* roleName)
 	}
 }
 
-#define LEVEL_TIPS_INI "\\Ui\\ÔÓ»â.ini"
+#define LEVEL_TIPS_INI "\\Ui\\ï¿½Ó»ï¿½.ini"
 void LevelTips(int nNewLevel)
 {
 	char szMsg[256], szBuf[16];
