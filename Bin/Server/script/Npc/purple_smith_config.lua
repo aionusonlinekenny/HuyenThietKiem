@@ -306,25 +306,25 @@ function GetCrystalListDisplay()
     str = str .. "<color=cyan>Cap Thap (Lam Thuy Tinh):<color>\n"
     for i = 1, 3 do
         local crystal = CRYSTAL_TYPES[i]
-        str = str .. string.format("  Cap %d: +%d luck\n", i, crystal.luck)
+        str = str .. "  Cap " .. i .. ": +" .. crystal.luck .. " luck\n"
     end
 
     str = str .. "\n<color=purple>Cap Trung (Tu Thuy Tinh):<color>\n"
     for i = 4, 7 do
         local crystal = CRYSTAL_TYPES[i]
-        str = str .. string.format("  Cap %d: +%d luck\n", i-3, crystal.luck)
+        str = str .. "  Cap " .. (i-3) .. ": +" .. crystal.luck .. " luck\n"
     end
 
     str = str .. "\n<color=green>Cap Cao (Luc Thuy Tinh):<color>\n"
     for i = 8, 12 do
         local crystal = CRYSTAL_TYPES[i]
-        str = str .. string.format("  Cap %d: +%d luck\n", i-7, crystal.luck)
+        str = str .. "  Cap " .. (i-7) .. ": +" .. crystal.luck .. " luck\n"
     end
 
     str = str .. "\n<color=red>Cap Huyen Thoai (Hong Thuy Tinh):<color>\n"
     for i = 13, 17 do
         local crystal = CRYSTAL_TYPES[i]
-        str = str .. string.format("  Cap %d: +%d luck\n", i-12, crystal.luck)
+        str = str .. "  Cap " .. (i-12) .. ": +" .. crystal.luck .. " luck\n"
     end
 
     return str
@@ -336,11 +336,11 @@ function GetRecipeListDisplay()
 
     for i = 1, getn(PURPLE_RECIPES) do
         local recipe = PURPLE_RECIPES[i]
-        str = str .. string.format("<color=orange>%s:<color>\n", recipe.name)
-        str = str .. string.format("  - Trang bi xanh: %d-%d\n", recipe.min_blues, recipe.max_blues)
-        str = str .. string.format("  - Chi phi: %d van luong\n", recipe.cost/10000)
-        str = str .. string.format("  - Do kho: -%d luck\n", recipe.difficulty)
-        str = str .. string.format("  - Ti le: %d%%\n", recipe.success_rate)
+        str = str .. "<color=orange>" .. recipe.name .. ":<color>\n"
+        str = str .. "  - Trang bi xanh: " .. recipe.min_blues .. "-" .. recipe.max_blues .. "\n"
+        str = str .. "  - Chi phi: " .. (recipe.cost/10000) .. " van luong\n"
+        str = str .. "  - Do kho: -" .. recipe.difficulty .. " luck\n"
+        str = str .. "  - Ti le: " .. recipe.success_rate .. "%%\n"
         str = str .. "\n"
     end
 
@@ -354,8 +354,7 @@ function GetQualityChartDisplay()
     for i = 0, 10 do
         local quality = MAGIC_LINES_QUALITY[i]
         local colorTag = "<color=" .. quality.color .. ">"
-        str = str .. string.format("%s%d dong: %s (Rank %d)<color>\n",
-                                    colorTag, i, quality.name, quality.rank)
+        str = str .. colorTag .. i .. " dong: " .. quality.name .. " (Rank " .. quality.rank .. ")<color>\n"
     end
 
     return str

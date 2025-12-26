@@ -147,15 +147,15 @@ function ConfirmRecipe(sel, nRecipeIdx)
     -- Save recipe index to task
     SetTask(999, nIdx)  -- Temporary task to store recipe index
 
-    local szConfirm = string.format("<color=yellow>%s<color>\n\n", recipe.name)
-    szConfirm = szConfirm .. string.format("<color=cyan>Yeu cau:<color>\n")
-    szConfirm = szConfirm .. string.format("- Trang bi xanh: %d-%d (cung loai)\n", recipe.min_blues, recipe.max_blues)
-    szConfirm = szConfirm .. string.format("- Huyen Tinh: 1-7 vien\n")
-    szConfirm = szConfirm .. string.format("- Chi phi: %d van luong\n\n", recipe.cost/10000)
-    szConfirm = szConfirm .. string.format("<color=cyan>Thong so:<color>\n")
-    szConfirm = szConfirm .. string.format("- Do kho: -%d luck\n", recipe.difficulty)
-    szConfirm = szConfirm .. string.format("- Ti le thanh cong: <color=green>%d%%<color>\n\n", recipe.success_rate)
-    szConfirm = szConfirm .. string.format("<color=yellow>%s<color>", recipe.description)
+    local szConfirm = "<color=yellow>" .. recipe.name .. "<color>\n\n"
+    szConfirm = szConfirm .. "<color=cyan>Yeu cau:<color>\n"
+    szConfirm = szConfirm .. "- Trang bi xanh: " .. recipe.min_blues .. "-" .. recipe.max_blues .. " (cung loai)\n"
+    szConfirm = szConfirm .. "- Huyen Tinh: 1-7 vien\n"
+    szConfirm = szConfirm .. "- Chi phi: " .. (recipe.cost/10000) .. " van luong\n\n"
+    szConfirm = szConfirm .. "<color=cyan>Thong so:<color>\n"
+    szConfirm = szConfirm .. "- Do kho: -" .. recipe.difficulty .. " luck\n"
+    szConfirm = szConfirm .. "- Ti le thanh cong: <color=green>" .. recipe.success_rate .. "%<color>\n\n"
+    szConfirm = szConfirm .. "<color=yellow>" .. recipe.description .. "<color>"
 
     Say(szConfirm, 2,
         "Bat dau hop thanh/OpenCraftingUI",
@@ -176,7 +176,7 @@ function OpenCraftingUI()
         return
     end
 
-    local szGuide = string.format("Cong thuc: <color=yellow>%s<color>\n", recipe.name)
+    local szGuide = "Cong thuc: <color=yellow>" .. recipe.name .. "<color>\n"
     szGuide = szGuide .. "Dat trang bi xanh vao khung lon\n"
     szGuide = szGuide .. "Dat Huyen Tinh vao khung nho (slot 1-7)"
 
@@ -239,8 +239,8 @@ function ExecuteCreatePurple()
 
     -- Validate blue count matches recipe
     if nBlueCount < recipe.min_blues or nBlueCount > recipe.max_blues then
-        Talk(1, "", string.format("<color=red>Cong thuc nay can %d-%d trang bi xanh! (hien co: %d)<color>",
-                                   recipe.min_blues, recipe.max_blues, nBlueCount))
+        Talk(1, "", "<color=red>Cong thuc nay can " .. recipe.min_blues .. "-" .. recipe.max_blues ..
+                    " trang bi xanh! (hien co: " .. nBlueCount .. ")<color>")
         return
     end
 
@@ -262,7 +262,7 @@ function ExecuteCreatePurple()
                     local info = Config.GetCrystalInfo(nD, nP)
                     table.insert(crystalInfo, info)
 
-                    Msg2Player(string.format("Crystal slot %d: %s (+%d luck)", i, info.name, luck))
+                    Msg2Player("Crystal slot " .. i .. ": " .. info.name .. " (+" .. luck .. " luck)")
                 end
             end
         end
@@ -277,7 +277,7 @@ function ExecuteCreatePurple()
 
     -- Check money
     if GetCash() < recipe.cost then
-        Talk(1, "", string.format("<color=red>Khong du %d van luong!<color>", recipe.cost/10000))
+        Talk(1, "", "<color=red>Khong du " .. (recipe.cost/10000) .. " van luong!<color>")
         return
     end
 
@@ -391,8 +391,7 @@ function ExecuteCreatePurple()
 
     Msg2Player(szSuccess)
 
-    local worldMsg = string.format("<pic=135><color=green>%s<color> da hop thanh thanh cong <color=purple>TRANG BI TIM<color> voi %s%d dong<color> (%s%s<color>)!",
-                                     GetName(), colorTag, nMagicLines, colorTag, qualityName)
+    local worldMsg = "<pic=135><color=green>" .. GetName() .. "<color> da hop thanh thanh cong <color=purple>TRANG BI TIM<color> voi " .. colorTag .. nMagicLines .. " dong<color> (" .. colorTag .. qualityName .. "<color>)!"
     Msg2SubWorld(worldMsg)
 
     Msg2Player("========================================")
