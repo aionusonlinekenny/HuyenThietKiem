@@ -952,17 +952,26 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM2;  // Slot 1
                     g_DebugLog("[FORGE] Mapped to SmallBox (UIEP_BUILDITEM2 = %d)", UIEP_BUILDITEM2);
 
-                    // VALIDATION: SmallBox only accepts crystals (item_mine)
+                    // VALIDATION: SmallBox only accepts Huyen Tinh crystals (item_task, detail 74-79)
                     if (pDropPos) {
                         int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
 
-                        if (nGenre != item_mine) {
-                            g_DebugLog("[FORGE] REJECT SmallBox: Genre %d is not crystal (item_mine)", nGenre);
+                        // Must be item_task genre (Huyen Tinh crystals are genre 6)
+                        if (nGenre != item_task) {
+                            g_DebugLog("[FORGE] REJECT SmallBox: Genre %d is not item_task", nGenre);
                             KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat Huyen Tinh vao o nay!", 256);
                             break;
                         }
 
-                        g_DebugLog("[FORGE] SmallBox validation PASSED: genre=%d (item_mine)", nGenre);
+                        // Optional: Check if it's specifically Huyen Tinh (detail 74-79)
+                        if (nDetail < 74 || nDetail > 79) {
+                            g_DebugLog("[FORGE] REJECT SmallBox: Detail %d is not Huyen Tinh (74-79)", nDetail);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat Huyen Tinh vao o nay!", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[FORGE] SmallBox validation PASSED: genre=%d (item_task), detail=%d", nGenre, nDetail);
                     }
 
                 } else {
