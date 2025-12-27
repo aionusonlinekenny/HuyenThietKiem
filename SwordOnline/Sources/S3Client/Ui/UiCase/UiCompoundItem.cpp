@@ -381,6 +381,11 @@ void KUiComItem::ComItem(unsigned int pItem, int nWindowNum, int nNum) {
 }
 
 void KUiComItem::Breathe() {
+    // Call Breathe() on child pages to update their animations
+    m_ForgePad.Breathe();
+    m_CompoundPad.Breathe();
+    // m_DistillPad and m_EnchasePad don't have custom Breathe() yet
+
 // 	if(m_nStatus == STATUS_BEGIN_TREMBLE)
 // 	{
 // 		m_TrembleEffect.Show();
