@@ -950,6 +950,16 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                         m_SmallBox.HoldObject(Obj.uGenre, Obj.uId, Obj.DataW, Obj.DataH);
                         g_DebugLog("[FORGE] SmallBox.HoldObject called");
                     }
+                } else if (pPickPos && !pDropPos) {
+                    // Picking from box (removing item) - manually clear the box
+                    g_DebugLog("[FORGE] Picking from box, clearing visual");
+                    if (pWnd == (KWndWindow*)&m_BigBox) {
+                        m_BigBox.Clear();
+                        g_DebugLog("[FORGE] BigBox.Clear called");
+                    } else if (pWnd == (KWndWindow*)&m_SmallBox) {
+                        m_SmallBox.Clear();
+                        g_DebugLog("[FORGE] SmallBox.Clear called");
+                    }
                 }
 
                 g_DebugLog("[FORGE] OnItemPickDrop END");
