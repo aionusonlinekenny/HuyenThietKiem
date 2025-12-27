@@ -154,28 +154,31 @@ function ExeCompoundForge()
         nNumLines = random(nMinLines, nMaxLines)
     end
 
-    -- Get magic attribute levels from source equipment (like ThienDieuOnline's GetOTLVItem)
-    -- This copies the attribute structure from blue to purple equipment
-    local nLv0, nLv1, nLv2, nLv3, nLv4, nLv5 = GetItemGeneratorLevels(nEquipIdx)
+    -- Create purple equipment with encoded empty slots
+    -- DecodePurple() decodes luck and randomSeed to get magic attribute records
+    -- When record = 0, it creates "Chưa khảm nạm" (empty enchantable slot)
+    -- luck = 1000000000 encodes to [0,0,0] for slots 3,4,5
+    -- randomSeed = 1000000000 encodes to [0,0,0] for slots 0,1,2
+    -- Result: All 6 slots will be "Chưa khảm nạm" (empty)
+    local nPurpleLuck = 1000000000      -- Encodes to empty records [0,0,0]
+    local nRandomSeed = 1000000000      -- Encodes to empty records [0,0,0]
 
-    -- Create purple equipment with random luck value
-    local nPurpleLuck = PURPLE_LUCK_FLAG + random(1, 999)
-
-    -- Create purple equipment using AddItem (similar to ThienDieuOnline's ItemSetAdd)
-    -- Uses magic levels from source equipment to preserve slot structure
-    local nPurpleIdx = AddItem(
+    -- Create purple equipment using AddItemEx with encoded empty slots
+    local nPurpleIdx = AddItemEx(
         1,           -- genre = 1 (item_purpleequip) for purple equipment
         nDetail,     -- detail type (weapon, armor, etc.)
         nParti,      -- particular type
         nLevel,      -- level
         nSeries,     -- series
-        nPurpleLuck, -- luck (>= 1000000000 = purple)
-        nLv0,        -- magic attribute levels copied from source
-        nLv1,        -- preserves the empty/filled slot structure
-        nLv2,
-        nLv3,
-        nLv4,
-        nLv5
+        nPurpleLuck, -- luck = 1000000000 (encodes slots 3,4,5 as empty)
+        10,          -- magic attribute levels (need > 0 to create slots)
+        10,          -- but records=0 will override to create empty slots
+        10,
+        10,
+        10,
+        10,
+        1,           -- version = 1
+        nRandomSeed  -- randomSeed = 1000000000 (encodes slots 0,1,2 as empty)
     )
 
     if not nPurpleIdx or nPurpleIdx <= 0 then
