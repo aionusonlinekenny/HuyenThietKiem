@@ -684,6 +684,60 @@ int KUiDistill::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                 m_Guide.SetFirstShowLine(nParam);
             }
             break;
+        case WND_N_ITEM_PICKDROP:
+            {
+                g_DebugLog("[DISTILL] WND_N_ITEM_PICKDROP received");
+
+                ITEM_PICKDROP_PLACE* pPickPos = (ITEM_PICKDROP_PLACE*)uParam;
+                ITEM_PICKDROP_PLACE* pDropPos = (ITEM_PICKDROP_PLACE*)nParam;
+
+                KUiObjAtContRegion Drop, Pick;
+                KUiDraggedObject Obj;
+                KWndWindow* pWnd = NULL;
+
+                if (pPickPos) {
+                    ((KWndObjectBox*)(pPickPos->pWnd))->GetObject(Obj);
+                    Pick.Obj.uGenre = Obj.uGenre;
+                    Pick.Obj.uId = Obj.uId;
+                    Pick.Region.Width = Obj.DataW;
+                    Pick.Region.Height = Obj.DataH;
+                    Pick.Region.h = 0;
+                    Pick.eContainer = UOC_COMPOUND;
+                    pWnd = pPickPos->pWnd;
+                }
+
+                if (pDropPos) {
+                    pWnd = pDropPos->pWnd;
+                    Wnd_GetDragObj(&Obj);
+                    Drop.Obj.uGenre = Obj.uGenre;
+                    Drop.Obj.uId = Obj.uId;
+                    Drop.Region.Width = Obj.DataW;
+                    Drop.Region.Height = Obj.DataH;
+                    Drop.Region.h = 0;
+                    Drop.eContainer = UOC_COMPOUND;
+                }
+
+                // Map window to Region.v (slot) - Distill has BigBox, Box1, Box2
+                if (pWnd == (KWndWindow*)&m_BigBox) {
+                    Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM1;  // Slot 0
+                    g_DebugLog("[DISTILL] Mapped to BigBox (slot 0)");
+                } else if (pWnd == (KWndWindow*)&m_Box1) {
+                    Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM2;  // Slot 1
+                    g_DebugLog("[DISTILL] Mapped to Box1 (slot 1)");
+                } else if (pWnd == (KWndWindow*)&m_Box2) {
+                    Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM3;  // Slot 2
+                    g_DebugLog("[DISTILL] Mapped to Box2 (slot 2)");
+                } else {
+                    g_DebugLog("[DISTILL] ERROR: Unknown window, aborting");
+                    return 0;
+                }
+
+                g_DebugLog("[DISTILL] Calling GOI_SWITCH_OBJECT");
+                g_pCoreShell->OperationRequest(GOI_SWITCH_OBJECT,
+                    pPickPos ? (unsigned int)&Pick : 0,
+                    pDropPos ? (int)&Drop : 0);
+            }
+            break;
         case WND_N_BUTTON_CLICK:
             if (uParam == (unsigned int) &m_Cancle) {
                 CleanItem();
@@ -883,11 +937,54 @@ void KUiDistill::CleanItem() {
 }
 
 KUiForge::KUiForge() {
-
+    m_EffectTime = 0;
 }
 
 void KUiForge::PaintWindow() {
     KWndPage::PaintWindow();
+}
+
+// Animation frame update - called every frame
+void KUiForge::Breathe() {
+    if (m_TrembleEffect1.IsVisible())
+        m_TrembleEffect1.NextFrame();
+    if (m_EffectTime)
+        m_EffectTime++;
+    // LOOP is defined in UiTrembleItem, use 4 as default
+    #ifndef LOOP
+    #define LOOP 4
+    #endif
+    if (m_EffectTime == (m_TrembleEffect1.GetMaxFrame())*(LOOP*2)/2 + 1) {
+        StopEffect();
+        m_EffectTime = 0;
+    }
+}
+
+// Start crafting effect animation
+void KUiForge::StartEffect() {
+    m_TrembleEffect1.Show();
+    m_EffectTime = 1;
+    // Disable item picking during animation
+    m_BigBox.EnablePickPut(false);
+    m_SmallBox.EnablePickPut(false);
+    g_DebugLog("[FORGE EFFECT] Animation started");
+}
+
+// Stop effect and update items
+void KUiForge::StopEffect() {
+    m_TrembleEffect1.Hide();
+    m_EffectTime = 0;
+    // Re-enable item picking
+    m_BigBox.EnablePickPut(true);
+    m_SmallBox.EnablePickPut(true);
+    // Refresh items from server
+    UpdateData();
+    g_DebugLog("[FORGE EFFECT] Animation stopped, items refreshed");
+}
+
+// Check if effect is running
+BOOL KUiForge::IsEffect() {
+    return (m_EffectTime > 0) ? TRUE : FALSE;
 }
 
 int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
@@ -1033,8 +1130,19 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             if (uParam == (unsigned int) &m_Cancle) {
                 CleanItem();
             } else if (uParam == (unsigned int) &m_ForgeBtn) {
-                int nNum = 0;
+                g_DebugLog("[FORGE] Forge button clicked - starting effect");
 
+                // Don't allow crafting if animation is running
+                if (IsEffect()) {
+                    g_DebugLog("[FORGE] Effect is running, ignoring click");
+                    return 1;
+                }
+
+                // Start animation effect
+                StartEffect();
+
+                // Validate items before sending to server
+                int nNum = 0;
                 KUiDraggedObject pObj;
                 unsigned int pUP[2];
 
@@ -1043,6 +1151,8 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                     pUP[nNum] = pObj.uId;
                     nNum++;
                 } else {
+                    g_DebugLog("[FORGE] No item in BigBox, stopping effect");
+                    StopEffect();
                     return 1;
                 }
 
@@ -1052,13 +1162,24 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                     pUP[nNum] = pObj.uId;
                     nNum++;
                 } else {
+                    g_DebugLog("[FORGE] No item in SmallBox, stopping effect");
+                    StopEffect();
                     return 1;
                 }
 
-                KUiComItem *pSelf = KUiComItem::GetIfVisible();
-                pSelf->ComItem((unsigned int) (&pUP), 4, nNum);
+                // Send craft request to server via Lua script
+                if (g_pCoreShell && g_pCoreShell->GetLixian()) {
+                    g_DebugLog("[FORGE] Sending ExeCompoundForge to server, animation playing");
+                    char szFunc[32];
+                    sprintf(szFunc, "ExeCompoundForge");
+                    g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
+                } else {
+                    g_DebugLog("[FORGE] ERROR: Cannot execute script, stopping effect");
+                    StopEffect();
+                }
 
-                CleanItem();
+                // Items will be cleared by server response or StopEffect()
+                // Don't CleanItem() here - let the animation finish first
             }
             break;
         default:

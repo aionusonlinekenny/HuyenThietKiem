@@ -112,9 +112,16 @@ public:
 
     void CleanItem();
 
+    void StartEffect();  // Start crafting animation
+    void StopEffect();   // Stop crafting animation
+    BOOL IsEffect();     // Check if effect is running
+
 private:
     int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//���ں���
     void PaintWindow();                                //���ƴ���
+    virtual void Breathe();  // Animation frame update
+private:
+    int m_EffectTime;  // Effect animation timer
 private:
     KWndObjectBox m_BigBox;
     KWndObjectBox m_SmallBox;
