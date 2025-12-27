@@ -4,6 +4,7 @@
 #include "../elem/wnds.h"
 #include "UiItem.h"
 #include "UiCompoundItem.h"
+#include "UiMsgCentrePad.h"
 #include "UiSysMsgCentre.h"
 #include "../../../core/src/coreshell.h"
 #include "../UiBase.h"
@@ -926,7 +927,7 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                     // VALIDATION: BigBox only accepts equipment (NOT ring, amulet, pendant, horse, mask)
                     if (pDropPos) {
                         int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
-                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
 
                         // Must be equipment (blue/purple/gold/platinum)
                         if (nGenre != item_equip && nGenre != item_purpleequip &&
