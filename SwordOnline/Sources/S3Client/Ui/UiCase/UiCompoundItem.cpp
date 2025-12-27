@@ -1347,9 +1347,9 @@ void KUiForge::LoadScheme(const char *pScheme) {
         m_Pos2.BringToTop();
         m_Pos2.SetText("Huy�n tinh");
 
-        // Initialize effect animation sprite
-        m_TrembleEffect1.Init(&Ini, "Effect_0");
-        g_DebugLog("[FORGE] Effect initialized from ini");
+        // Initialize effect animation sprite - must match INI section name [EquipEffect]
+        m_TrembleEffect1.Init(&Ini, "EquipEffect");
+        g_DebugLog("[FORGE] Effect initialized from ini section [EquipEffect]");
 
     }
 }
