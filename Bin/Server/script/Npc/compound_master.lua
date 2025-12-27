@@ -154,31 +154,31 @@ function ExeCompoundForge()
         nNumLines = random(nMinLines, nMaxLines)
     end
 
+    -- Get magic attribute levels from source equipment (like ThienDieuOnline's GetOTLVItem)
+    -- This copies the attribute structure from blue to purple equipment
+    local nLv0, nLv1, nLv2, nLv3, nLv4, nLv5 = GetItemGeneratorLevels(nEquipIdx)
+
     -- Create purple equipment with random luck value
     local nPurpleLuck = PURPLE_LUCK_FLAG + random(1, 999)
 
-    -- Add purple equipment to player's inventory using AddItemEx
-    -- Use genre = 1 (item_purpleequip) to create purple equipment
-    -- Set ALL magic levels to 0 to create empty item (no attributes yet)
-    -- Player can add attributes later through enchanting/upgrading
-    local bSuccess = AddItemEx(
+    -- Create purple equipment using AddItem (similar to ThienDieuOnline's ItemSetAdd)
+    -- Uses magic levels from source equipment to preserve slot structure
+    local nPurpleIdx = AddItem(
         1,           -- genre = 1 (item_purpleequip) for purple equipment
         nDetail,     -- detail type (weapon, armor, etc.)
         nParti,      -- particular type
         nLevel,      -- level
         nSeries,     -- series
-        nPurpleLuck, -- luck (>= 1000000000 = purple metadata)
-        0,           -- magic attribute 1 level = 0 (no attribute)
-        0,           -- magic attribute 2 level = 0
-        0,           -- magic attribute 3 level = 0
-        0,           -- magic attribute 4 level = 0
-        0,           -- magic attribute 5 level = 0
-        0,           -- magic attribute 6 level = 0
-        1,           -- version (1 for exact mode)
-        0            -- random seed (NO position param - auto add to inventory)
+        nPurpleLuck, -- luck (>= 1000000000 = purple)
+        nLv0,        -- magic attribute levels copied from source
+        nLv1,        -- preserves the empty/filled slot structure
+        nLv2,
+        nLv3,
+        nLv4,
+        nLv5
     )
 
-    if not bSuccess or bSuccess == 0 then
+    if not nPurpleIdx or nPurpleIdx <= 0 then
         Talk(1, "", "<color=red>Loi: Khong the tao trang bi tim!<color>")
         return
     end
