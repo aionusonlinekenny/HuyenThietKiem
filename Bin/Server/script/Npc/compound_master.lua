@@ -158,8 +158,9 @@ function ExeCompoundForge()
     local nPurpleLuck = PURPLE_LUCK_FLAG + random(1, 999)
 
     -- Add purple equipment to player's inventory using AddItemEx
-    -- Use genre = 1 (item_purpleequip) to create purple equipment (NOT genre = 0)
-    -- Pass nNumLines for first N slots, 0 for remaining to create empty enchantable slots
+    -- Use genre = 1 (item_purpleequip) to create purple equipment
+    -- Set ALL magic levels to 0 to create empty item (no attributes yet)
+    -- Player can add attributes later through enchanting/upgrading
     local bSuccess = AddItemEx(
         1,           -- genre = 1 (item_purpleequip) for purple equipment
         nDetail,     -- detail type (weapon, armor, etc.)
@@ -167,12 +168,12 @@ function ExeCompoundForge()
         nLevel,      -- level
         nSeries,     -- series
         nPurpleLuck, -- luck (>= 1000000000 = purple metadata)
-        nNumLines >= 1 and 1 or 0,  -- magic attribute 1 level (1 = has slot, 0 = no slot)
-        nNumLines >= 2 and 1 or 0,  -- magic attribute 2 level
-        nNumLines >= 3 and 1 or 0,  -- magic attribute 3 level
-        nNumLines >= 4 and 1 or 0,  -- magic attribute 4 level
-        nNumLines >= 5 and 1 or 0,  -- magic attribute 5 level
-        nNumLines >= 6 and 1 or 0,  -- magic attribute 6 level
+        0,           -- magic attribute 1 level = 0 (no attribute)
+        0,           -- magic attribute 2 level = 0
+        0,           -- magic attribute 3 level = 0
+        0,           -- magic attribute 4 level = 0
+        0,           -- magic attribute 5 level = 0
+        0,           -- magic attribute 6 level = 0
         1,           -- version (1 for exact mode)
         0            -- random seed (NO position param - auto add to inventory)
     )
@@ -182,9 +183,9 @@ function ExeCompoundForge()
         return
     end
 
-    -- Remove source items from build slots
-    SetPOItem(nPos, 0, 0)  -- Clear equipment slot
-    SetPOItem(nPos, 1, 0)  -- Clear crystal slot
+    -- Remove source items from build slots using DelItemByIndex
+    DelItemByIndex(nEquipIdx)   -- Delete equipment
+    DelItemByIndex(nCrystalIdx) -- Delete crystal
 
     -- Success message
     local szMsg = string.format("<color=green>Che tao thanh cong trang bi tim voi %d dong thuoc tinh!<color>", nNumLines)
