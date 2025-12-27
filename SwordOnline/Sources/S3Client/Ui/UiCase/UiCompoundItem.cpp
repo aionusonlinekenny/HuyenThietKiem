@@ -146,18 +146,34 @@ int KUiComItem::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             if (uParam == (unsigned int) &m_Close) {
                 CloseWindow();
             } else if (uParam == (unsigned int) &m_UpPropMineBtn && m_UpCryoliteBtn.IsVisible()) {
+                // Switch to COMPOUND case 3 (Mineral mode)
                 m_nNum = WINDOWS_COMP3;
                 ShowWindow(0);
                 m_CompoundPad.SetPosText(3);
+                // Hide dropdown menu after selection
+                m_UpCryoliteBtn.Hide();
+                m_UpPropMineBtn.Hide();
+                g_DebugLog("[UI] Switched to COMPOUND case 3 (Mineral), dropdown hidden");
             } else if (uParam == (unsigned int) &m_UpCryoliteBtn && m_UpCryoliteBtn.IsVisible()) {
+                // Switch to COMPOUND case 2 (Crystal mode)
                 m_nNum = WINDOWS_COMP2;
                 ShowWindow(0);
                 m_CompoundPad.SetPosText(2);
+                // Hide dropdown menu after selection
+                m_UpCryoliteBtn.Hide();
+                m_UpPropMineBtn.Hide();
+                g_DebugLog("[UI] Switched to COMPOUND case 2 (Crystal), dropdown hidden");
             } else if (uParam == (unsigned int) &m_CompoundPadBtn && m_UpCryoliteBtn.IsVisible()) {
+                // Switch to COMPOUND case 1 (Equipment mode)
                 m_nNum = WINDOWS_COMP;
                 ShowWindow(0);
                 m_CompoundPad.SetPosText(1);
+                // Hide dropdown menu after selection
+                m_UpCryoliteBtn.Hide();
+                m_UpPropMineBtn.Hide();
+                g_DebugLog("[UI] Switched to COMPOUND case 1 (Equipment), dropdown hidden");
             } else if (uParam == (unsigned int) &m_CompoundPadBtn && !m_UpCryoliteBtn.IsVisible()) {
+                // Show dropdown menu
                 m_CompoundPadBtn.CheckButton(TRUE);
                 int nX, nY;
                 m_CompoundPadBtn.GetPosition(&nX, &nY);
@@ -167,6 +183,7 @@ int KUiComItem::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                 m_UpPropMineBtn.BringToTop();
                 m_UpCryoliteBtn.Show();
                 m_UpPropMineBtn.Show();
+                g_DebugLog("[UI] COMPOUND dropdown menu shown");
             } else if (uParam == (unsigned int) &m_DistillPadBtn) {
                 m_nNum = WINDOWS_DISTill;
                 ShowWindow(1);
