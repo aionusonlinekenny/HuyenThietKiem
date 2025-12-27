@@ -918,13 +918,52 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                     g_DebugLog("[FORGE] Drop: uId=%d, uGenre=%d", Obj.uId, Obj.uGenre);
                 }
 
-                // Map window pointer to Region.v (slot)
+                // Map window pointer to Region.v (slot) + VALIDATE item type
                 if (pWnd == (KWndWindow*)&m_BigBox) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM1;  // Slot 0
                     g_DebugLog("[FORGE] Mapped to BigBox (UIEP_BUILDITEM1 = %d)", UIEP_BUILDITEM1);
+
+                    // VALIDATION: BigBox only accepts equipment (NOT ring, amulet, pendant, horse, mask)
+                    if (pDropPos) {
+                        int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId, Obj.uGenre);
+
+                        // Must be equipment (blue/purple/gold/platinum)
+                        if (nGenre != item_equip && nGenre != item_purpleequip &&
+                            nGenre != item_goldequip && nGenre != item_platinaequip) {
+                            g_DebugLog("[FORGE] REJECT BigBox: Genre %d is not equipment", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat trang bi vao o nay!", 256);
+                            break;
+                        }
+
+                        // Reject: ring, amulet, pendant, horse, mask
+                        if (nDetail == equip_ring || nDetail == equip_amulet ||
+                            nDetail == equip_pendant || nDetail == equip_horse || nDetail == equip_mask) {
+                            g_DebugLog("[FORGE] REJECT BigBox: Detail %d not allowed (ring/amulet/pendant/horse/mask)", nDetail);
+                            KUiMsgCentrePad::SystemMessageArrival("Khong duoc dat nhan, ngoc boi, day chuyen, ngua, mat na vao day!", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[FORGE] BigBox validation PASSED: genre=%d, detail=%d", nGenre, nDetail);
+                    }
+
                 } else if (pWnd == (KWndWindow*)&m_SmallBox) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM2;  // Slot 1
                     g_DebugLog("[FORGE] Mapped to SmallBox (UIEP_BUILDITEM2 = %d)", UIEP_BUILDITEM2);
+
+                    // VALIDATION: SmallBox only accepts crystals (item_mine)
+                    if (pDropPos) {
+                        int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+
+                        if (nGenre != item_mine) {
+                            g_DebugLog("[FORGE] REJECT SmallBox: Genre %d is not crystal (item_mine)", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat Huyen Tinh vao o nay!", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[FORGE] SmallBox validation PASSED: genre=%d (item_mine)", nGenre);
+                    }
+
                 } else {
                     g_DebugLog("[FORGE] ERROR: pWnd doesn't match any box!");
                     break;
