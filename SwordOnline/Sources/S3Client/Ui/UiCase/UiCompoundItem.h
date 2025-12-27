@@ -115,11 +115,11 @@ public:
     void StartEffect();  // Start crafting animation
     void StopEffect();   // Stop crafting animation
     BOOL IsEffect();     // Check if effect is running
+    void Breathe();  // Animation frame update - must be public for parent to call
 
 private:
     int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//���ں���
     void PaintWindow();                                //���ƴ���
-    virtual void Breathe();  // Animation frame update
 private:
     int m_EffectTime;  // Effect animation timer
 private:
@@ -189,11 +189,11 @@ public:
 
     void CleanItem();
 
+    void Breathe();  // Animation frame update - must be public for parent to call
+
 private:
     int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//���ں���
     void PaintWindow();
-
-    virtual void Breathe();
 
     int PlayEffect();
 
