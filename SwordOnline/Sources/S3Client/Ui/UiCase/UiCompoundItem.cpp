@@ -1349,7 +1349,9 @@ void KUiForge::LoadScheme(const char *pScheme) {
 
         // Initialize effect animation sprite - must match INI section name [EquipEffect]
         m_TrembleEffect1.Init(&Ini, "EquipEffect");
-        g_DebugLog("[FORGE] Effect initialized from ini section [EquipEffect]");
+        m_TrembleEffect1.Hide();  // Hide by default
+        m_EffectTime = 0;  // Reset effect timer
+        g_DebugLog("[FORGE] Effect initialized from ini section [EquipEffect], hidden and timer reset");
 
     }
 }
@@ -1379,11 +1381,9 @@ void KUiForge::Initialize() {
     AddChild(&m_Pos2);
     m_Guide.SetScrollbar(&m_ListScroll);
 
-    // Add effect sprite as child
+    // Add effect sprite as child (will be initialized and hidden in LoadScheme)
     AddChild(&m_TrembleEffect1);
-    m_TrembleEffect1.Hide();  // Hidden by default
-    g_DebugLog("[FORGE] Effect sprite added as child and hidden");
-
+    g_DebugLog("[FORGE] Effect sprite added as child");
 
     char Scheme[256];
     g_UiBase.GetCurSchemePath(Scheme, 256);
