@@ -1157,7 +1157,7 @@ void KUiForge::StartEffect() {
         objSmall.uId > 0 ? "YES" : "NO", objSmall.uId);
 }
 
-// Stop effect and update items
+// Stop effect and send craft request (like UiTrembleItem::StopEffect -> OnOk)
 void KUiForge::StopEffect() {
     m_TrembleEffect1.Hide();
     m_EffectTime = 0;
@@ -1166,14 +1166,23 @@ void KUiForge::StopEffect() {
     m_BigBox.EnablePickPut(true);
     m_SmallBox.EnablePickPut(true);
 
-    // Refresh items from server
-    UpdateData();
+    g_DebugLog("[FORGE EFFECT] Animation finished, now sending craft request to server");
 
-    // Show boxes again after refresh
+    // CRITICAL: Send request to server AFTER animation finishes (like UiTrembleItem)
+    if (g_pCoreShell && g_pCoreShell->GetLixian()) {
+        char szFunc[32];
+        sprintf(szFunc, "ExeCompoundForge");
+        g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
+        g_DebugLog("[FORGE] Sent ExeCompoundForge to server");
+    }
+
+    // Server will process and send updates
+    // UpdateData will be called when server responds
+    // Show boxes again (they were hidden during animation)
     m_BigBox.Show();
     m_SmallBox.Show();
 
-    g_DebugLog("[FORGE EFFECT] Animation stopped, items refreshed, boxes shown");
+    g_DebugLog("[FORGE EFFECT] Animation stopped, request sent, boxes shown");
 }
 
 // Check if effect is running
@@ -1324,7 +1333,7 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             if (uParam == (unsigned int) &m_Cancle) {
                 CleanItem();
             } else if (uParam == (unsigned int) &m_ForgeBtn) {
-                g_DebugLog("[FORGE] Forge button clicked - starting effect");
+                g_DebugLog("[FORGE] Forge button clicked");
 
                 // Don't allow crafting if animation is running
                 if (IsEffect()) {
@@ -1332,48 +1341,27 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                     return 1;
                 }
 
-                // Start animation effect
-                StartEffect();
-
-                // Validate items before sending to server
-                int nNum = 0;
+                // Validate items BEFORE starting effect
                 KUiDraggedObject pObj;
-                unsigned int pUP[2];
-
                 m_BigBox.GetObject(pObj);
-                if (pObj.uId > 0) {
-                    pUP[nNum] = pObj.uId;
-                    nNum++;
-                } else {
-                    g_DebugLog("[FORGE] No item in BigBox, stopping effect");
-                    StopEffect();
+                if (pObj.uId <= 0) {
+                    g_DebugLog("[FORGE] No item in BigBox");
+                    KUiMsgCentrePad::SystemMessageArrival("Vui long dat trang bi vao o lon!", 256);
                     return 1;
                 }
 
                 pObj.uId = 0;
                 m_SmallBox.GetObject(pObj);
-                if (pObj.uId > 0) {
-                    pUP[nNum] = pObj.uId;
-                    nNum++;
-                } else {
-                    g_DebugLog("[FORGE] No item in SmallBox, stopping effect");
-                    StopEffect();
+                if (pObj.uId <= 0) {
+                    g_DebugLog("[FORGE] No item in SmallBox");
+                    KUiMsgCentrePad::SystemMessageArrival("Vui long dat Huyen Tinh vao o nho!", 256);
                     return 1;
                 }
 
-                // Send craft request to server via Lua script
-                if (g_pCoreShell && g_pCoreShell->GetLixian()) {
-                    g_DebugLog("[FORGE] Sending ExeCompoundForge to server, animation playing");
-                    char szFunc[32];
-                    sprintf(szFunc, "ExeCompoundForge");
-                    g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
-                } else {
-                    g_DebugLog("[FORGE] ERROR: Cannot execute script, stopping effect");
-                    StopEffect();
-                }
-
-                // Items will be cleared by server response or StopEffect()
-                // Don't CleanItem() here - let the animation finish first
+                // Start animation effect (like UiTrembleItem)
+                // Request will be sent AFTER animation finishes in StopEffect()
+                g_DebugLog("[FORGE] Items validated, starting effect animation");
+                StartEffect();
             }
             break;
         default:
