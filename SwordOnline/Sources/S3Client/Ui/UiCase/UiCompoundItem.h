@@ -70,6 +70,7 @@ public:
     void LoadScheme(const char *pScheme);            //������淽��
 
     void UpdateItem(KUiDraggedObject *pItem, int bAdd);
+    void UpdateData();  // Load items from server and show boxes
 
     void CleanItem();
 
@@ -146,6 +147,7 @@ public:
     void LoadScheme(const char *pScheme);            //������淽��
 
     void UpdateItem(KUiDraggedObject *pItem, int bAdd);
+    void UpdateData();  // Load items from server and show boxes
 
     void CleanItem();
 
@@ -184,6 +186,7 @@ public:
     void LoadScheme(const char *pScheme);            //������淽��
 
     void UpdateItem(KUiDraggedObject *pItem, int bAdd);
+    void UpdateData();  // Load items from server and show boxes
 
     void SetPosText(int i = 1);
 

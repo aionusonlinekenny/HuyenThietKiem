@@ -193,6 +193,7 @@ void KUiComItem::ShowWindow(int nNum /*= 0*/ ) {
     switch (nNum) {
         case 0:
             m_pSelf->m_CompoundPad.Show();
+            m_pSelf->m_CompoundPad.UpdateData(); // Load items and show boxes when showing COMPOUND tab
             m_pSelf->m_CompoundPadBtn.CheckButton(TRUE);
             m_pSelf->m_UpCryoliteBtn.CheckButton(FALSE);
             m_pSelf->m_UpPropMineBtn.CheckButton(FALSE);
@@ -209,6 +210,7 @@ void KUiComItem::ShowWindow(int nNum /*= 0*/ ) {
             break;
         case 1:
             m_pSelf->m_DistillPad.Show();
+            m_pSelf->m_DistillPad.UpdateData(); // Load items and show boxes when showing DISTILL tab
             m_pSelf->m_DistillPadBtn.CheckButton(TRUE);
             m_pSelf->m_UpCryoliteBtn.Hide();
             m_pSelf->m_UpPropMineBtn.Hide();
@@ -238,6 +240,7 @@ void KUiComItem::ShowWindow(int nNum /*= 0*/ ) {
             break;
         case 3:
             m_pSelf->m_EnchasePad.Show();
+            m_pSelf->m_EnchasePad.UpdateData(); // Load items and show boxes when showing ENCHASE tab
             m_pSelf->m_EnchasePadBtn.CheckButton(TRUE);
             m_pSelf->m_UpCryoliteBtn.Hide();
             m_pSelf->m_UpPropMineBtn.Hide();
@@ -767,6 +770,51 @@ void KUiCompound::CleanItem() {
     m_Box3.Clear();
 }
 
+// Load items from server and show boxes (similar to FORGE UpdateData)
+void KUiCompound::UpdateData() {
+    g_DebugLog("[COMPOUND] UpdateData called - loading items and showing boxes");
+
+    // Request build items from server (same as FORGE/TrembleItem pattern)
+    KUiObjAtRegion Items[MAX_PART_BUILD];
+    int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Items, 0);
+
+    g_DebugLog("[COMPOUND] UpdateData: Got %d items from server", nCount);
+
+    // Clear all boxes first
+    m_Box1.Clear();
+    m_Box2.Clear();
+    m_Box3.Clear();
+
+    // Update boxes with items from server
+    for (int i = 0; i < nCount; i++) {
+        if (Items[i].Obj.uGenre != CGOG_NOTHING) {
+            g_DebugLog("[COMPOUND] UpdateData: Item[%d] Region.v=%d, genre=%d, id=%d",
+                i, Items[i].Region.v, Items[i].Obj.uGenre, Items[i].Obj.uId);
+
+            // Map Region.v to boxes: 0=Box1, 1=Box2, 2=Box3
+            if (Items[i].Region.v == UIEP_BUILDITEM1) { // Slot 0 = Box1
+                m_Box1.HoldObject(Items[i].Obj.uGenre, Items[i].Obj.uId,
+                    Items[i].Region.Width, Items[i].Region.Height);
+                g_DebugLog("[COMPOUND] UpdateData: Loaded item into Box1");
+            } else if (Items[i].Region.v == UIEP_BUILDITEM2) { // Slot 1 = Box2
+                m_Box2.HoldObject(Items[i].Obj.uGenre, Items[i].Obj.uId,
+                    Items[i].Region.Width, Items[i].Region.Height);
+                g_DebugLog("[COMPOUND] UpdateData: Loaded item into Box2");
+            } else if (Items[i].Region.v == UIEP_BUILDITEM3) { // Slot 2 = Box3
+                m_Box3.HoldObject(Items[i].Obj.uGenre, Items[i].Obj.uId,
+                    Items[i].Region.Width, Items[i].Region.Height);
+                g_DebugLog("[COMPOUND] UpdateData: Loaded item into Box3");
+            }
+        }
+    }
+
+    // CRITICAL: Show boxes to enable drag-drop functionality
+    m_Box1.Show();
+    m_Box2.Show();
+    m_Box3.Show();
+    g_DebugLog("[COMPOUND] UpdateData: All boxes shown and ready for drag-drop");
+}
+
 KUiDistill::KUiDistill() {
 
 }
@@ -1067,6 +1115,50 @@ void KUiDistill::CleanItem() {
     m_Box1.Clear();
     m_Box2.Clear();
     m_ItemBox.Clear();
+}
+
+// Load items from server and show boxes (similar to FORGE UpdateData)
+void KUiDistill::UpdateData() {
+    g_DebugLog("[DISTILL] UpdateData called - loading items and showing boxes");
+
+    // Request build items from server
+    KUiObjAtRegion Items[MAX_PART_BUILD];
+    int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Items, 0);
+
+    g_DebugLog("[DISTILL] UpdateData: Got %d items from server", nCount);
+
+    // Clear all boxes first
+    m_BigBox.Clear();
+    m_Box1.Clear();
+    m_Box2.Clear();
+    m_ItemBox.Clear();
+
+    // Update boxes with items from server
+    for (int i = 0; i < nCount; i++) {
+        if (Items[i].Obj.uGenre != CGOG_NOTHING) {
+            g_DebugLog("[DISTILL] UpdateData: Item[%d] Region.v=%d, genre=%d, id=%d",
+                i, Items[i].Region.v, Items[i].Obj.uGenre, Items[i].Obj.uId);
+
+            // Map Region.v to boxes
+            if (Items[i].Region.v == UIEP_BUILDITEM1) {
+                m_BigBox.HoldObject(Items[i].Obj.uGenre, Items[i].Obj.uId,
+                    Items[i].Region.Width, Items[i].Region.Height);
+            } else if (Items[i].Region.v == UIEP_BUILDITEM2) {
+                m_Box1.HoldObject(Items[i].Obj.uGenre, Items[i].Obj.uId,
+                    Items[i].Region.Width, Items[i].Region.Height);
+            } else if (Items[i].Region.v == UIEP_BUILDITEM3) {
+                m_Box2.HoldObject(Items[i].Obj.uGenre, Items[i].Obj.uId,
+                    Items[i].Region.Width, Items[i].Region.Height);
+            }
+        }
+    }
+
+    // CRITICAL: Show boxes to enable drag-drop functionality
+    m_BigBox.Show();
+    m_Box1.Show();
+    m_Box2.Show();
+    m_ItemBox.Show();
+    g_DebugLog("[DISTILL] UpdateData: All boxes shown and ready for drag-drop");
 }
 
 KUiForge::KUiForge() {
@@ -1860,6 +1952,50 @@ void KUiEnchaseTim::CleanItem() {
     m_Box1.Clear();
     m_Box2.Clear();
     m_ItemBox.Clear();
+}
+
+// Load items from server and show boxes (similar to FORGE UpdateData)
+void KUiEnchaseTim::UpdateData() {
+    g_DebugLog("[ENCHASE] UpdateData called - loading items and showing boxes");
+
+    // Request build items from server
+    KUiObjAtRegion Items[MAX_PART_BUILD];
+    int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Items, 0);
+
+    g_DebugLog("[ENCHASE] UpdateData: Got %d items from server", nCount);
+
+    // Clear all boxes first
+    m_BigBox.Clear();
+    m_Box1.Clear();
+    m_Box2.Clear();
+    m_ItemBox.Clear();
+
+    // Update boxes with items from server
+    for (int i = 0; i < nCount; i++) {
+        if (Items[i].Obj.uGenre != CGOG_NOTHING) {
+            g_DebugLog("[ENCHASE] UpdateData: Item[%d] Region.v=%d, genre=%d, id=%d",
+                i, Items[i].Region.v, Items[i].Obj.uGenre, Items[i].Obj.uId);
+
+            // Map Region.v to boxes
+            if (Items[i].Region.v == UIEP_BUILDITEM1) {
+                m_BigBox.HoldObject(Items[i].Obj.uGenre, Items[i].Obj.uId,
+                    Items[i].Region.Width, Items[i].Region.Height);
+            } else if (Items[i].Region.v == UIEP_BUILDITEM2) {
+                m_Box1.HoldObject(Items[i].Obj.uGenre, Items[i].Obj.uId,
+                    Items[i].Region.Width, Items[i].Region.Height);
+            } else if (Items[i].Region.v == UIEP_BUILDITEM3) {
+                m_Box2.HoldObject(Items[i].Obj.uGenre, Items[i].Obj.uId,
+                    Items[i].Region.Width, Items[i].Region.Height);
+            }
+        }
+    }
+
+    // CRITICAL: Show boxes to enable drag-drop functionality
+    m_BigBox.Show();
+    m_Box1.Show();
+    m_Box2.Show();
+    m_ItemBox.Show();
+    g_DebugLog("[ENCHASE] UpdateData: All boxes shown and ready for drag-drop");
 }
 
 KUiAtlas::KUiAtlas() {
