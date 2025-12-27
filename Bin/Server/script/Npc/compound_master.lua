@@ -200,3 +200,6 @@ function ExeCompoundForge()
     Talk(1, "", szMsg)
     Msg2SubWorld(string.format("<pic=135><color=green> %s<color> da hop thanh <color=purple>TRANG BI TIM<color> voi %d dong!", GetName(), nNumLines))
 end
+
+function no()
+end
