@@ -1135,17 +1135,15 @@ void KUiForge::StartEffect() {
     m_TrembleEffect1.SetFrame(0);  // Start from frame 0
     m_EffectTime = 1;
 
-    // CRITICAL: Hide boxes during animation to prevent visual flickering
-    // Server will clear them, but we don't want user to see that
-    m_BigBox.Hide();
-    m_SmallBox.Hide();
+    // Keep boxes VISIBLE during animation so user can see what they're crafting
+    // Items will be cleared by UpdateData() after server responds
 
     // Disable item picking during animation
     m_BigBox.EnablePickPut(false);
     m_SmallBox.EnablePickPut(false);
 
     int nMaxFrame = m_TrembleEffect1.GetMaxFrame();
-    g_DebugLog("[FORGE EFFECT] Animation started - MaxFrame=%d, will run for %d frames, boxes hidden",
+    g_DebugLog("[FORGE EFFECT] Animation started - MaxFrame=%d, will run for %d frames, boxes visible",
         nMaxFrame, nMaxFrame * 2 + 1);
 
     // Log box state at start
