@@ -158,21 +158,21 @@ function ExeCompoundForge()
     local nPurpleLuck = PURPLE_LUCK_FLAG + random(1, 999)
 
     -- Add purple equipment to player's inventory using AddItemEx
-    -- Pass 0 for all magic levels to create EMPTY SLOTS (not filled attributes)
-    -- Player can fill slots later with gems/attributes
+    -- Use genre = 1 (item_purpleequip) to create purple equipment (NOT genre = 0)
+    -- Pass nNumLines for first N slots, 0 for remaining to create empty enchantable slots
     local bSuccess = AddItemEx(
-        0,           -- genre = 0 (item_equip)
+        1,           -- genre = 1 (item_purpleequip) for purple equipment
         nDetail,     -- detail type (weapon, armor, etc.)
         nParti,      -- particular type
         nLevel,      -- level
         nSeries,     -- series
-        nPurpleLuck, -- luck (>= 1000000000 = purple)
-        0,           -- magic attribute 1 level = 0 (empty slot)
-        0,           -- magic attribute 2 level = 0 (empty slot)
-        0,           -- magic attribute 3 level = 0 (empty slot)
-        0,           -- magic attribute 4 level = 0 (empty slot)
-        0,           -- magic attribute 5 level = 0 (empty slot)
-        0,           -- magic attribute 6 level = 0 (empty slot)
+        nPurpleLuck, -- luck (>= 1000000000 = purple metadata)
+        nNumLines >= 1 and 1 or 0,  -- magic attribute 1 level (1 = has slot, 0 = no slot)
+        nNumLines >= 2 and 1 or 0,  -- magic attribute 2 level
+        nNumLines >= 3 and 1 or 0,  -- magic attribute 3 level
+        nNumLines >= 4 and 1 or 0,  -- magic attribute 4 level
+        nNumLines >= 5 and 1 or 0,  -- magic attribute 5 level
+        nNumLines >= 6 and 1 or 0,  -- magic attribute 6 level
         1,           -- version (1 for exact mode)
         0            -- random seed (NO position param - auto add to inventory)
     )
