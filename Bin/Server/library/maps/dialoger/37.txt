@@ -26,7 +26,7 @@ NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
 305	37	52485	97387		T�n ��i C� 	1
 327	37	53108	98111		B�ch C�ng T� 	1
 378	37	55445	97852		�ng ch� C� 	1
-387	37	55903	97604	\script\Npc\compound_master.lua	Kh�c Thi�t T��ng	1
+387	37	55903	97604	\script\npc\compound_master.lua	Kh�c Thi�t T��ng	1
 306	37	56042	98203		���ng L�o gia	1
 308	37	56168	97370		V� L�m truy�n nh�n	1
 351	37	58896	97773		��ng Mai	1
