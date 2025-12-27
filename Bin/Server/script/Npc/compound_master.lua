@@ -154,21 +154,12 @@ function ExeCompoundForge()
         nNumLines = random(nMinLines, nMaxLines)
     end
 
-    -- Create magic attribute level array (all level 10)
-    local tbMagicLevel = {}
-    for i = 1, 6 do
-        if i <= nNumLines then
-            tbMagicLevel[i] = 10  -- Level 10 attributes
-        else
-            tbMagicLevel[i] = 0   -- Empty slot
-        end
-    end
-
     -- Create purple equipment with random luck value
     local nPurpleLuck = PURPLE_LUCK_FLAG + random(1, 999)
 
     -- Add purple equipment to player's inventory using AddItemEx
-    -- AddItemEx with 14 parameters (no position) - will auto add to inventory
+    -- Pass 0 for all magic levels to create EMPTY SLOTS (not filled attributes)
+    -- Player can fill slots later with gems/attributes
     local bSuccess = AddItemEx(
         0,           -- genre = 0 (item_equip)
         nDetail,     -- detail type (weapon, armor, etc.)
@@ -176,12 +167,12 @@ function ExeCompoundForge()
         nLevel,      -- level
         nSeries,     -- series
         nPurpleLuck, -- luck (>= 1000000000 = purple)
-        tbMagicLevel[1] or 0,  -- magic attribute 1 level
-        tbMagicLevel[2] or 0,  -- magic attribute 2 level
-        tbMagicLevel[3] or 0,  -- magic attribute 3 level
-        tbMagicLevel[4] or 0,  -- magic attribute 4 level
-        tbMagicLevel[5] or 0,  -- magic attribute 5 level
-        tbMagicLevel[6] or 0,  -- magic attribute 6 level
+        0,           -- magic attribute 1 level = 0 (empty slot)
+        0,           -- magic attribute 2 level = 0 (empty slot)
+        0,           -- magic attribute 3 level = 0 (empty slot)
+        0,           -- magic attribute 4 level = 0 (empty slot)
+        0,           -- magic attribute 5 level = 0 (empty slot)
+        0,           -- magic attribute 6 level = 0 (empty slot)
         1,           -- version (1 for exact mode)
         0            -- random seed (NO position param - auto add to inventory)
     )
