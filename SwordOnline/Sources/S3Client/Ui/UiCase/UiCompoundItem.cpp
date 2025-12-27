@@ -349,13 +349,22 @@ void KUiComItem::ComItem(unsigned int pItem, int nWindowNum, int nNum) {
             }
             break;
         case WINDOWS_FORG:
+            g_DebugLog("[CLIENT FORGE] Craft button clicked!");
             if (g_pCoreShell) {
+                g_DebugLog("[CLIENT FORGE] g_pCoreShell is valid");
                 // Call server-side Lua script to handle crafting
                 if (g_pCoreShell->GetLixian()) {
+                    g_DebugLog("[CLIENT FORGE] GetLixian() = TRUE, sending GOI_EXESCRIPT_BUTTON");
                     char szFunc[32];
                     sprintf(szFunc, "ExeCompoundForge");
+                    g_DebugLog("[CLIENT FORGE] Function name: %s", szFunc);
                     g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
+                    g_DebugLog("[CLIENT FORGE] OperationRequest sent successfully");
+                } else {
+                    g_DebugLog("[CLIENT FORGE] ERROR: GetLixian() = FALSE! Cannot execute script!");
                 }
+            } else {
+                g_DebugLog("[CLIENT FORGE] ERROR: g_pCoreShell is NULL!");
             }
             break;
         case WINDOWS_ENCHASE:

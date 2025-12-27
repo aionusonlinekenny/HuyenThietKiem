@@ -8931,27 +8931,41 @@ void	KPlayer::ExeScriptButton(BYTE* pProtocol)
 			{
 				*pId++ = 0;
 			}
+
+			g_DebugLog("[SERVER KPLAYER] GOI_EXESCRIPT_BUTTON received, function: %s", pExe->m_szContent);
+
 			// Allow ExeTremble, ExeUpgradeAttrib, and ExeCompoundForge functions
 			if( strcmp(pExe->m_szContent, "ExeTremble") &&
 			    strcmp(pExe->m_szContent, "ExeUpgradeAttrib") &&
 			    strcmp(pExe->m_szContent, "ExeCompoundForge") )
+			{
+				g_DebugLog("[SERVER KPLAYER] ERROR: Function '%s' not allowed! Only ExeTremble, ExeUpgradeAttrib, ExeCompoundForge allowed", pExe->m_szContent);
 				break;
+			}
+
+			g_DebugLog("[SERVER KPLAYER] Function '%s' is allowed, proceeding...", pExe->m_szContent);
 			StopMove();
 
 			// Load script file based on function name
 			if( strcmp(pExe->m_szContent, "ExeUpgradeAttrib") == 0 )
 			{
 				g_GameSettingFile.GetString("UPGRADEATTRIB", "Script", "", szScriptFile, sizeof(szScriptFile));
+				g_DebugLog("[SERVER KPLAYER] ExeUpgradeAttrib: Script file = %s", szScriptFile);
 			}
 			else if( strcmp(pExe->m_szContent, "ExeCompoundForge") == 0 )
 			{
 				g_GameSettingFile.GetString("COMPOUNDFORGE", "Script", "", szScriptFile, sizeof(szScriptFile));
+				g_DebugLog("[SERVER KPLAYER] ExeCompoundForge: Script file = %s", szScriptFile);
 			}
 			else
 			{
 				g_GameSettingFile.GetString("TREMBLEITEM", "Script", "", szScriptFile, sizeof(szScriptFile));
+				g_DebugLog("[SERVER KPLAYER] ExeTremble: Script file = %s", szScriptFile);
 			}
+
+			g_DebugLog("[SERVER KPLAYER] Calling ExecuteScript(%s, %s, %s)", szScriptFile, pExe->m_szContent, pId ? pId : "NULL");
 			this->ExecuteScript(szScriptFile, pExe->m_szContent, pId);
+			g_DebugLog("[SERVER KPLAYER] ExecuteScript completed");
 		}
 		break;
 	default:
