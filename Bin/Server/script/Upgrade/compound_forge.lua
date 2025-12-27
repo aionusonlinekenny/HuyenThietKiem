@@ -126,11 +126,12 @@ function ExeCompoundForge()
     -- Create purple equipment with random luck value
     local nPurpleLuck = PURPLE_LUCK_FLAG + random(1, 999)
 
-    -- Add purple equipment directly to player's hand using AddItemEx
+    -- Add purple equipment to player's inventory using AddItemEx
     -- AddItemEx(genre, detail, particular, level, series, luck, mag1, mag2, mag3, mag4, mag5, mag6, version, randseed, pos)
-    -- pos = -1 for hand, 15 for pos_builditem
+    -- pos = 0: auto add to inventory (fallback to hand if full)
+    -- pos = 1: pos_hand, pos = 2: pos_equiproom, pos = 15: pos_builditem
     local bSuccess = AddItemEx(
-        1,           -- genre = 1 (item_purpleequip)
+        0,           -- genre = 0 (item_equip for blue base, will be purple due to luck)
         nDetail,     -- detail type (weapon, armor, etc.)
         nParti,      -- particular type
         nLevel,      -- level
@@ -144,7 +145,7 @@ function ExeCompoundForge()
         tbMagicLevel[6] or 0,  -- magic attribute 6 level
         1,           -- version (1 for exact mode)
         0,           -- random seed
-        -1           -- pos = -1 (add to hand)
+        0            -- pos = 0 (auto add to inventory, fallback to hand if full)
     )
 
     if not bSuccess or bSuccess == 0 then
