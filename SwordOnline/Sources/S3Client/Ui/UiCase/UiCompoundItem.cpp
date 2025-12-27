@@ -1106,13 +1106,26 @@ void KUiForge::Breathe() {
     int nStopTime = nMaxFrame * LOOP + 1;
 
     if (m_EffectTime >= nStopTime) {
+        // Log box state before stopping
+        KUiDraggedObject objBig, objSmall;
+        m_BigBox.GetObject(objBig);
+        m_SmallBox.GetObject(objSmall);
+        g_DebugLog("[FORGE EFFECT] BEFORE STOP - BigBox has item: %s (id=%d), SmallBox has item: %s (id=%d)",
+            objBig.uId > 0 ? "YES" : "NO", objBig.uId,
+            objSmall.uId > 0 ? "YES" : "NO", objSmall.uId);
+
         g_DebugLog("[FORGE EFFECT] Stopping - EffectTime=%d, MaxFrame=%d, StopTime=%d",
             m_EffectTime, nMaxFrame, nStopTime);
         StopEffect();
     } else if (m_EffectTime % 10 == 0) {
-        // Log every 10 frames for debugging
-        g_DebugLog("[FORGE EFFECT] Animating - EffectTime=%d/%d, CurrentFrame=%d/%d",
-            m_EffectTime, nStopTime, m_TrembleEffect1.GetCurrentFrame(), nMaxFrame);
+        // Log every 10 frames for debugging + check box state
+        KUiDraggedObject objBig, objSmall;
+        m_BigBox.GetObject(objBig);
+        m_SmallBox.GetObject(objSmall);
+        g_DebugLog("[FORGE EFFECT] Animating - EffectTime=%d/%d, CurrentFrame=%d/%d, BigBox=%s, SmallBox=%s",
+            m_EffectTime, nStopTime, m_TrembleEffect1.GetCurrentFrame(), nMaxFrame,
+            objBig.uId > 0 ? "HAS_ITEM" : "EMPTY",
+            objSmall.uId > 0 ? "HAS_ITEM" : "EMPTY");
     }
 }
 
@@ -1128,6 +1141,14 @@ void KUiForge::StartEffect() {
     int nMaxFrame = m_TrembleEffect1.GetMaxFrame();
     g_DebugLog("[FORGE EFFECT] Animation started - MaxFrame=%d, will run for %d frames",
         nMaxFrame, nMaxFrame * 2 + 1);
+
+    // Log box state at start
+    KUiDraggedObject objBig, objSmall;
+    m_BigBox.GetObject(objBig);
+    m_SmallBox.GetObject(objSmall);
+    g_DebugLog("[FORGE EFFECT] START - BigBox has item: %s (id=%d), SmallBox has item: %s (id=%d)",
+        objBig.uId > 0 ? "YES" : "NO", objBig.uId,
+        objSmall.uId > 0 ? "YES" : "NO", objSmall.uId);
 }
 
 // Stop effect and update items
