@@ -812,7 +812,13 @@ void KUiCompound::UpdateData() {
     m_Box1.Show();
     m_Box2.Show();
     m_Box3.Show();
-    g_DebugLog("[COMPOUND] UpdateData: All boxes shown and ready for drag-drop");
+
+    // CRITICAL: Enable pick/put operations on boxes
+    m_Box1.EnablePickPut(true);
+    m_Box2.EnablePickPut(true);
+    m_Box3.EnablePickPut(true);
+
+    g_DebugLog("[COMPOUND] UpdateData: All boxes shown, pick/put enabled, ready for drag-drop");
 }
 
 KUiDistill::KUiDistill() {
@@ -1158,7 +1164,13 @@ void KUiDistill::UpdateData() {
     m_Box1.Show();
     m_Box2.Show();
     m_ItemBox.Show();
-    g_DebugLog("[DISTILL] UpdateData: All boxes shown and ready for drag-drop");
+
+    // CRITICAL: Enable pick/put operations on boxes
+    m_BigBox.EnablePickPut(true);
+    m_Box1.EnablePickPut(true);
+    m_Box2.EnablePickPut(true);
+
+    g_DebugLog("[DISTILL] UpdateData: All boxes shown, pick/put enabled, ready for drag-drop");
 }
 
 KUiForge::KUiForge() {
@@ -1995,7 +2007,13 @@ void KUiEnchaseTim::UpdateData() {
     m_Box1.Show();
     m_Box2.Show();
     m_ItemBox.Show();
-    g_DebugLog("[ENCHASE] UpdateData: All boxes shown and ready for drag-drop");
+
+    // CRITICAL: Enable pick/put operations on boxes
+    m_BigBox.EnablePickPut(true);
+    m_Box1.EnablePickPut(true);
+    m_Box2.EnablePickPut(true);
+
+    g_DebugLog("[ENCHASE] UpdateData: All boxes shown, pick/put enabled, ready for drag-drop");
 }
 
 KUiAtlas::KUiAtlas() {
