@@ -1079,22 +1079,36 @@ void KUiForge::PaintWindow() {
 
 // Animation frame update - called every frame
 void KUiForge::Breathe() {
+    // Only process if effect is running
+    if (m_EffectTime == 0)
+        return;
+
     if (m_TrembleEffect1.IsVisible())
         m_TrembleEffect1.NextFrame();
-    if (m_EffectTime)
-        m_EffectTime++;
 
-    // Use LOOP=2 like UiTrembleItem (not 4)
+    m_EffectTime++;
+
+    // Use LOOP=2 like UiTrembleItem
     // Formula: stop at (MaxFrame * LOOP) + 1
     #define LOOP 2
     int nMaxFrame = m_TrembleEffect1.GetMaxFrame();
+
+    // CRITICAL: GetMaxFrame() returns 0 initially until sprite loads
+    // Skip stop check until MaxFrame is valid (> 0)
+    if (nMaxFrame == 0) {
+        if (m_EffectTime % 10 == 0) {
+            g_DebugLog("[FORGE EFFECT] Waiting for sprite to load - EffectTime=%d, MaxFrame=0",
+                m_EffectTime);
+        }
+        return;
+    }
+
     int nStopTime = nMaxFrame * LOOP + 1;
 
-    if (m_EffectTime == nStopTime) {
+    if (m_EffectTime >= nStopTime) {
         g_DebugLog("[FORGE EFFECT] Stopping - EffectTime=%d, MaxFrame=%d, StopTime=%d",
             m_EffectTime, nMaxFrame, nStopTime);
         StopEffect();
-        m_EffectTime = 0;
     } else if (m_EffectTime % 10 == 0) {
         // Log every 10 frames for debugging
         g_DebugLog("[FORGE EFFECT] Animating - EffectTime=%d/%d, CurrentFrame=%d/%d",
@@ -1508,8 +1522,17 @@ void KUiForge::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
 }
 
 void KUiForge::CleanItem() {
+    g_DebugLog("[FORGE] CleanItem called");
+
+    // CRITICAL: Don't clean while effect is running
+    if (IsEffect()) {
+        g_DebugLog("[FORGE] CleanItem BLOCKED - effect is running");
+        return;
+    }
+
     m_BigBox.Clear();
     m_SmallBox.Clear();
+    g_DebugLog("[FORGE] Boxes cleared");
 }
 
 KUiEnchaseTim::KUiEnchaseTim() {
