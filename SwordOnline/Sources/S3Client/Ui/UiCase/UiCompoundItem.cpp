@@ -1416,6 +1416,12 @@ void KUiForge::Initialize() {
 void KUiForge::UpdateData() {
     g_DebugLog("[FORGE] UpdateData called - loading items from server");
 
+    // CRITICAL: Don't update while effect is running - let animation finish first
+    if (IsEffect()) {
+        g_DebugLog("[FORGE] UpdateData BLOCKED - effect is running, will update when effect stops");
+        return;
+    }
+
     // Request build items from server (same as TrembleItem pattern)
     KUiObjAtRegion Items[MAX_PART_BUILD];
     int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Items, 0);
@@ -1452,6 +1458,12 @@ void KUiForge::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
     g_DebugLog("[FORGE] UpdateItem called: pItem=%p, bAdd=%d", pItem, bAdd);
     if (!pItem) {
         g_DebugLog("[FORGE] UpdateItem: pItem is NULL, returning");
+        return;
+    }
+
+    // CRITICAL: Don't update while effect is running - prevents boxes from clearing during animation
+    if (IsEffect()) {
+        g_DebugLog("[FORGE] UpdateItem BLOCKED - effect is running, ignoring server update");
         return;
     }
 
