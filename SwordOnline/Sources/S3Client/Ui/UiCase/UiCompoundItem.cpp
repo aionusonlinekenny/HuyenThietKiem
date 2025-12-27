@@ -631,8 +631,15 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         m_TrembleEffect3.Init(&Ini, "Effect_2");
         //m_ListBtn.Init(&Ini,"GuideList_Scroll_Btn");
 
+        // Bring boxes to top so they can receive mouse events
+        m_Box1.BringToTop();
+        m_Box2.BringToTop();
+        m_Box3.BringToTop();
+        g_DebugLog("[COMPOUND] LoadScheme: Boxes brought to top for mouse events");
+
         int nX, nY, nColor;
-        Ini.GetInteger2("Box_0", "Pos", &nX, &nY);
+        // Use Ore1 position for Pos1 text (above Box1)
+        Ini.GetInteger2("Ore1", "Pos", &nX, &nY);
 
         if (Ini.GetString("TextColor", "Font", "", Buffer, sizeof(Buffer))) {
             nColor = (::GetColor(Buffer) & 0xFFFFFF);
@@ -641,21 +648,25 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         m_Pos1.SetPosition(nX - 14, nY - 4);
         m_Pos1.SetText("Nh�n");
         m_Pos1.SetTextColor(nColor);
-        //m_Pos1.BringToTop();
+        m_Pos1.BringToTop();  // Bring text to top of boxes
 
-        Ini.GetInteger2("Box_1", "Pos", &nX, &nY);
+        // Use Ore3 position for Pos2 text (above Box2)
+        Ini.GetInteger2("Ore3", "Pos", &nX, &nY);
 
         m_Pos2.SetPosition(nX - 14, nY - 4);
         m_Pos2.SetText("D�y chuy�n/h� th�n ph�");
         m_Pos2.SetTextColor(nColor);
-        //m_Pos2.BringToTop();
+        m_Pos2.BringToTop();  // Bring text to top of boxes
 
-        Ini.GetInteger2("Box_2", "Pos", &nX, &nY);
+        // Use Ore2 position for Pos3 text (above Box3)
+        Ini.GetInteger2("Ore2", "Pos", &nX, &nY);
 
         m_Pos3.SetPosition(nX - 14, nY - 4);
         m_Pos3.SetText("Ng�c b�i/h��ng nang");
         m_Pos3.SetTextColor(nColor);
-        //m_Pos3.BringToTop();
+        m_Pos3.BringToTop();  // Bring text to top of boxes
+
+        g_DebugLog("[COMPOUND] LoadScheme: Text labels positioned and brought to top");
 
         // 		m_pSelf->m_LiveSkillPad.LoadScheme(pScheme);
         // 		m_pSelf->m_FightSkillPad.LoadScheme(pScheme);
