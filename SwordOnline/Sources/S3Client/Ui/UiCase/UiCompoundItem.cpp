@@ -223,6 +223,7 @@ void KUiComItem::ShowWindow(int nNum /*= 0*/ ) {
             break;
         case 2:
             m_pSelf->m_ForgePad.Show();
+            m_pSelf->m_ForgePad.UpdateData(); // Load items from server when showing Forge tab
             m_pSelf->m_ForgePadBtn.CheckButton(TRUE);
             m_pSelf->m_UpCryoliteBtn.Hide();
             m_pSelf->m_UpPropMineBtn.Hide();
@@ -1133,6 +1134,41 @@ void KUiForge::Initialize() {
     }
 
     Wnd_AddWindow(this);
+}
+
+void KUiForge::UpdateData() {
+    g_DebugLog("[FORGE] UpdateData called - loading items from server");
+
+    // Request build items from server (same as TrembleItem pattern)
+    KUiObjAtRegion Items[MAX_PART_BUILD];
+    int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Items, 0);
+
+    g_DebugLog("[FORGE] UpdateData: Got %d items from server", nCount);
+
+    // Clear all boxes first
+    m_BigBox.Clear();
+    m_SmallBox.Clear();
+
+    // Update boxes with items from server
+    for (int i = 0; i < nCount; i++) {
+        if (Items[i].Obj.uGenre != CGOG_NOTHING) {
+            g_DebugLog("[FORGE] UpdateData: Item[%d] Region.v=%d, genre=%d, id=%d",
+                i, Items[i].Region.v, Items[i].Obj.uGenre, Items[i].Obj.uId);
+
+            // Map Region.v to boxes: UIEP_BUILDITEM1 (0) = BigBox, UIEP_BUILDITEM2 (1) = SmallBox
+            if (Items[i].Region.v == UIEP_BUILDITEM1) { // Slot 0 = BigBox
+                m_BigBox.HoldObject(Items[i].Obj.uGenre, Items[i].Obj.uId,
+                    Items[i].Region.Width, Items[i].Region.Height);
+                g_DebugLog("[FORGE] UpdateData: Loaded item into BigBox");
+            } else if (Items[i].Region.v == UIEP_BUILDITEM2) { // Slot 1 = SmallBox
+                m_SmallBox.HoldObject(Items[i].Obj.uGenre, Items[i].Obj.uId,
+                    Items[i].Region.Width, Items[i].Region.Height);
+                g_DebugLog("[FORGE] UpdateData: Loaded item into SmallBox");
+            }
+        }
+    }
+
+    g_DebugLog("[FORGE] UpdateData complete");
 }
 
 void KUiForge::UpdateItem(KUiDraggedObject *pItem, int bAdd) {

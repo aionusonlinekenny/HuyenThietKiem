@@ -107,6 +107,7 @@ public:
     void Initialize();                                //��ʼ��
     void LoadScheme(const char *pScheme);            //������淽��
 
+    void UpdateData(); // Load items from server when tab opens
     void UpdateItem(KUiDraggedObject *pItem, int bAdd);
 
     void CleanItem();
