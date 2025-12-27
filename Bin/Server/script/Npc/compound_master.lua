@@ -82,34 +82,26 @@ end
 -- Execute Forge (called when player clicks "Che Tao" button)
 -- ------------------------------------------------------------
 function ExeCompoundForge()
-    WriteLog("[COMPOUND_FORGE] ExeCompoundForge() called from NPC script")
-
     local nPos = 15  -- pos_builditem (same container as Tremble/Upgrade)
 
     -- Get items from UI slots
     local nEquipIdx = GetPOItem(nPos, 0)      -- BigBox = slot 0 (UIEP_BUILDITEM1)
     local nCrystalIdx = GetPOItem(nPos, 1)    -- SmallBox = slot 1 (UIEP_BUILDITEM2)
 
-    WriteLog(string.format("[COMPOUND_FORGE] nEquipIdx=%d, nCrystalIdx=%d", nEquipIdx or -1, nCrystalIdx or -1))
-
     -- Validate equipment exists
     if not nEquipIdx or nEquipIdx <= 0 then
-        WriteLog("[COMPOUND_FORGE] ERROR: No equipment in slot")
         Talk(1, "", "<color=red>Vui long dat trang bi vao o lon!<color>")
         return
     end
 
     -- Validate crystal exists
     if not nCrystalIdx or nCrystalIdx <= 0 then
-        WriteLog("[COMPOUND_FORGE] ERROR: No crystal in slot")
         Talk(1, "", "<color=red>Vui long dat Huyen Tinh vao o nho!<color>")
         return
     end
 
     -- Get equipment properties
     local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
-    WriteLog(string.format("[COMPOUND_FORGE] Equipment: genre=%d, detail=%d, parti=%d, level=%d, series=%d, luck=%d",
-        nGenre or -1, nDetail or -1, nParti or -1, nLevel or -1, nSeries or -1, nLuck or -1))
 
     -- Validate equipment is blue (genre 0, luck < purple flag)
     if nGenre ~= 0 then
@@ -131,9 +123,6 @@ function ExeCompoundForge()
 
     -- Get crystal properties
     local nCrystalGenre, nCrystalDetail = GetItemProp(nCrystalIdx)
-    WriteLog(string.format("[COMPOUND_FORGE] Crystal: genre=%d, detail=%d (expected: %d, %d-%d)",
-        nCrystalGenre or -1, nCrystalDetail or -1,
-        HUYEN_TINH_GENRE, HUYEN_TINH_MIN_DETAIL, HUYEN_TINH_MAX_DETAIL))
 
     -- Validate crystal is Huyen Tinh
     if nCrystalGenre ~= HUYEN_TINH_GENRE then
@@ -148,14 +137,12 @@ function ExeCompoundForge()
 
     -- Calculate crystal level (74=1, 75=2, ..., 79=6)
     local nCrystalLevel = nCrystalDetail - 73
-    WriteLog(string.format("[COMPOUND_FORGE] Crystal level: %d", nCrystalLevel))
 
     -- Determine number of magic attribute lines based on crystal level
     local nNumLines = 0
     if nCrystalLevel >= 5 then
         -- Level 5-6: Guaranteed 6 lines
         nNumLines = 6
-        WriteLog(string.format("[COMPOUND_FORGE] Crystal level %d >= 5: Guaranteed 6 lines", nCrystalLevel))
     else
         -- Level 1-4: Random based on crystal level
         -- Level 1: 2-3, Level 2: 2-4, Level 3: 3-5, Level 4: 3-6
@@ -165,8 +152,6 @@ function ExeCompoundForge()
         end
         local nMaxLines = nCrystalLevel + 2
         nNumLines = random(nMinLines, nMaxLines)
-        WriteLog(string.format("[COMPOUND_FORGE] Crystal level %d: Random %d-%d lines, got %d",
-            nCrystalLevel, nMinLines, nMaxLines, nNumLines))
     end
 
     -- Create magic attribute level array (all level 10)
@@ -183,10 +168,6 @@ function ExeCompoundForge()
     local nPurpleLuck = PURPLE_LUCK_FLAG + random(1, 999)
 
     -- Add purple equipment to player's inventory using AddItemEx
-    WriteLog(string.format("[COMPOUND_FORGE] Calling AddItemEx: genre=0, detail=%d, parti=%d, level=%d, series=%d, luck=%d, mag=[%d,%d,%d,%d,%d,%d], pos=0",
-        nDetail, nParti, nLevel, nSeries, nPurpleLuck,
-        tbMagicLevel[1], tbMagicLevel[2], tbMagicLevel[3], tbMagicLevel[4], tbMagicLevel[5], tbMagicLevel[6]))
-
     local bSuccess = AddItemEx(
         0,           -- genre = 0 (item_equip for blue base, will be purple due to luck)
         nDetail,     -- detail type (weapon, armor, etc.)
@@ -205,26 +186,17 @@ function ExeCompoundForge()
         0            -- pos = 0 (auto add to inventory, fallback to hand if full)
     )
 
-    WriteLog(string.format("[COMPOUND_FORGE] AddItemEx returned: %s", tostring(bSuccess)))
-
     if not bSuccess or bSuccess == 0 then
-        WriteLog("[COMPOUND_FORGE] ERROR: Failed to create purple equipment (AddItemEx returned nil or 0)")
         Talk(1, "", "<color=red>Loi: Khong the tao trang bi tim!<color>")
         return
     end
-
-    WriteLog(string.format("[COMPOUND_FORGE] Created purple equipment successfully"))
 
     -- Remove source items from build slots
     SetPOItem(nPos, 0, 0)  -- Clear equipment slot
     SetPOItem(nPos, 1, 0)  -- Clear crystal slot
 
-    WriteLog("[COMPOUND_FORGE] Removed source items from build slots")
-
     -- Success message
     local szMsg = string.format("<color=green>Che tao thanh cong trang bi tim voi %d dong thuoc tinh!<color>", nNumLines)
     Talk(1, "", szMsg)
     Msg2SubWorld(string.format("<pic=135><color=green> %s<color> da hop thanh <color=purple>TRANG BI TIM<color> voi %d dong!", GetName(), nNumLines))
-
-    WriteLog("[COMPOUND_FORGE] ExeCompoundForge() completed successfully")
 end
