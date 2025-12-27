@@ -1171,13 +1171,13 @@ void KUiForge::StopEffect() {
         char szFunc[32];
         sprintf(szFunc, "ExeCompoundForge");
         g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
-        g_DebugLog("[FORGE] Sent ExeCompoundForge to server, will refresh after server processes");
+        g_DebugLog("[FORGE] Sent ExeCompoundForge to server");
     }
 
-    // Server will process the request and update items
-    // UpdateItem/UpdateData will be triggered by server notifications
-    // We don't call UpdateData here - let server updates handle it naturally
-    g_DebugLog("[FORGE EFFECT] Animation stopped, request sent");
+    // Clean boxes immediately after sending request to remove shadow/ghost items
+    // Server will delete the actual items, we just clear the visual representation
+    CleanItem();
+    g_DebugLog("[FORGE EFFECT] Animation stopped, request sent, boxes cleaned");
 }
 
 // Check if effect is running
