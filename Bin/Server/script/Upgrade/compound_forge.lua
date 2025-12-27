@@ -126,29 +126,34 @@ function ExeCompoundForge()
     -- Create purple equipment with random luck value
     local nPurpleLuck = PURPLE_LUCK_FLAG + random(1, 999)
 
-    -- Add purple equipment to player's hand
-    -- AddItemByType(genre, series, level, record, luck, detail, particular, magic_levels, version, random_seed, stack)
-    local nPurpleIdx = AddItemByType(
-        1,           -- item_purpleequip
-        nSeries,     -- series
-        nLevel,      -- level
-        wRecord,     -- equipment record
-        nPurpleLuck, -- luck (>= 1000000000 = purple)
+    -- Add purple equipment directly to player's hand using AddItemEx
+    -- AddItemEx(genre, detail, particular, level, series, luck, mag1, mag2, mag3, mag4, mag5, mag6, version, randseed, pos)
+    -- pos = -1 for hand, 15 for pos_builditem
+    local bSuccess = AddItemEx(
+        1,           -- genre = 1 (item_purpleequip)
         nDetail,     -- detail type (weapon, armor, etc.)
         nParti,      -- particular type
-        tbMagicLevel, -- magic attribute levels
-        0,           -- version
+        nLevel,      -- level
+        nSeries,     -- series
+        nPurpleLuck, -- luck (>= 1000000000 = purple)
+        tbMagicLevel[1] or 0,  -- magic attribute 1 level
+        tbMagicLevel[2] or 0,  -- magic attribute 2 level
+        tbMagicLevel[3] or 0,  -- magic attribute 3 level
+        tbMagicLevel[4] or 0,  -- magic attribute 4 level
+        tbMagicLevel[5] or 0,  -- magic attribute 5 level
+        tbMagicLevel[6] or 0,  -- magic attribute 6 level
+        1,           -- version (1 for exact mode)
         0,           -- random seed
-        1            -- stack count
+        -1           -- pos = -1 (add to hand)
     )
 
-    if not nPurpleIdx or nPurpleIdx <= 0 then
-        WriteLog("[COMPOUND_FORGE] ERROR: Failed to create purple equipment")
+    if not bSuccess or bSuccess == 0 then
+        WriteLog("[COMPOUND_FORGE] ERROR: Failed to create purple equipment (AddItemEx returned nil or 0)")
         Talk(1, "", "<color=red>Loi: Khong the tao trang bi tim!<color>")
         return
     end
 
-    WriteLog(string.format("[COMPOUND_FORGE] Created purple equipment: itemIdx=%d", nPurpleIdx))
+    WriteLog(string.format("[COMPOUND_FORGE] Created purple equipment successfully"))
 
     -- Remove source items from build slots
     -- SetPOItem(pos, slot, 0) to clear slot
