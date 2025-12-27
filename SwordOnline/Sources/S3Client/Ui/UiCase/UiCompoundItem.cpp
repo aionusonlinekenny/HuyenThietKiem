@@ -1173,16 +1173,13 @@ void KUiForge::StopEffect() {
         char szFunc[32];
         sprintf(szFunc, "ExeCompoundForge");
         g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
-        g_DebugLog("[FORGE] Sent ExeCompoundForge to server");
+        g_DebugLog("[FORGE] Sent ExeCompoundForge to server, will refresh after server processes");
     }
 
-    // Server will process and send updates
-    // UpdateData will be called when server responds
-    // Show boxes again (they were hidden during animation)
-    m_BigBox.Show();
-    m_SmallBox.Show();
-
-    g_DebugLog("[FORGE EFFECT] Animation stopped, request sent, boxes shown");
+    // Server will process the request and update items
+    // UpdateItem/UpdateData will be triggered by server notifications
+    // We don't call UpdateData here - let server updates handle it naturally
+    g_DebugLog("[FORGE EFFECT] Animation stopped, request sent");
 }
 
 // Check if effect is running
@@ -1500,7 +1497,11 @@ void KUiForge::UpdateData() {
         }
     }
 
-    g_DebugLog("[FORGE] UpdateData complete");
+    // Show boxes after updating (in case they were hidden during effect)
+    m_BigBox.Show();
+    m_SmallBox.Show();
+
+    g_DebugLog("[FORGE] UpdateData complete, boxes shown");
 }
 
 void KUiForge::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
