@@ -434,6 +434,99 @@ int KUiCompound::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                 m_Guide.SetFirstShowLine(nParam);
             }
             break;
+        case WND_N_ITEM_PICKDROP:
+            {
+                g_DebugLog("[COMPOUND] WND_N_ITEM_PICKDROP received");
+
+                ITEM_PICKDROP_PLACE* pPickPos = (ITEM_PICKDROP_PLACE*)uParam;
+                ITEM_PICKDROP_PLACE* pDropPos = (ITEM_PICKDROP_PLACE*)nParam;
+
+                g_DebugLog("[COMPOUND] OnItemPickDrop START: pPickPos=%p, pDropPos=%p", pPickPos, pDropPos);
+
+                KUiObjAtContRegion Drop, Pick;
+                KUiDraggedObject Obj;
+                KWndWindow* pWnd = NULL;
+
+                if (pPickPos) {
+                    ((KWndObjectBox*)(pPickPos->pWnd))->GetObject(Obj);
+                    Pick.Obj.uGenre = Obj.uGenre;
+                    Pick.Obj.uId = Obj.uId;
+                    Pick.Region.Width = Obj.DataW;
+                    Pick.Region.Height = Obj.DataH;
+                    Pick.Region.h = 0;
+                    Pick.eContainer = UOC_COMPOUND;
+                    pWnd = pPickPos->pWnd;
+                    g_DebugLog("[COMPOUND] Pick: uId=%d, uGenre=%d", Obj.uId, Obj.uGenre);
+                }
+
+                if (pDropPos) {
+                    pWnd = pDropPos->pWnd;
+                    Wnd_GetDragObj(&Obj);
+                    Drop.Obj.uGenre = Obj.uGenre;
+                    Drop.Obj.uId = Obj.uId;
+                    Drop.Region.Width = Obj.DataW;
+                    Drop.Region.Height = Obj.DataH;
+                    Drop.Region.h = 0;
+                    Drop.eContainer = UOC_COMPOUND;
+                    g_DebugLog("[COMPOUND] Drop: uId=%d, uGenre=%d", Obj.uId, Obj.uGenre);
+                }
+
+                // Map window pointer to Region.v (slot)
+                if (pWnd == (KWndWindow*)&m_Box1) {
+                    Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM1;  // Slot 0
+                    g_DebugLog("[COMPOUND] Mapped to Box1 (UIEP_BUILDITEM1 = %d)", UIEP_BUILDITEM1);
+                } else if (pWnd == (KWndWindow*)&m_Box2) {
+                    Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM2;  // Slot 1
+                    g_DebugLog("[COMPOUND] Mapped to Box2 (UIEP_BUILDITEM2 = %d)", UIEP_BUILDITEM2);
+                } else if (pWnd == (KWndWindow*)&m_Box3) {
+                    Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM3;  // Slot 2
+                    g_DebugLog("[COMPOUND] Mapped to Box3 (UIEP_BUILDITEM3 = %d)", UIEP_BUILDITEM3);
+                } else {
+                    g_DebugLog("[COMPOUND] ERROR: pWnd doesn't match any box!");
+                    break;
+                }
+
+                g_DebugLog("[COMPOUND] Calling OperationRequest GOI_SWITCH_OBJECT with Region.v=%d", Drop.Region.v);
+                g_pCoreShell->OperationRequest(GOI_SWITCH_OBJECT,
+                    pPickPos ? (unsigned int)&Pick : 0,
+                    pDropPos ? (int)&Drop : 0);
+
+                // CRITICAL FIX: Manually update the box visually after OperationRequest
+                // The server stores the item but doesn't send notification back for empty->filled case
+                Wnd_DragFinished();  // Clear drag state first
+                g_DebugLog("[COMPOUND] Drag finished, now manually updating box");
+
+                if (pDropPos && !pPickPos) {
+                    // Dropping into empty slot - manually show the item
+                    g_DebugLog("[COMPOUND] Manually updating box with item uId=%d", Obj.uId);
+                    if (pWnd == (KWndWindow*)&m_Box1) {
+                        m_Box1.HoldObject(Obj.uGenre, Obj.uId, Obj.DataW, Obj.DataH);
+                        g_DebugLog("[COMPOUND] Box1.HoldObject called");
+                    } else if (pWnd == (KWndWindow*)&m_Box2) {
+                        m_Box2.HoldObject(Obj.uGenre, Obj.uId, Obj.DataW, Obj.DataH);
+                        g_DebugLog("[COMPOUND] Box2.HoldObject called");
+                    } else if (pWnd == (KWndWindow*)&m_Box3) {
+                        m_Box3.HoldObject(Obj.uGenre, Obj.uId, Obj.DataW, Obj.DataH);
+                        g_DebugLog("[COMPOUND] Box3.HoldObject called");
+                    }
+                } else if (pPickPos && !pDropPos) {
+                    // Picking from box (removing item) - manually clear the box
+                    g_DebugLog("[COMPOUND] Picking from box, clearing visual");
+                    if (pWnd == (KWndWindow*)&m_Box1) {
+                        m_Box1.Clear();
+                        g_DebugLog("[COMPOUND] Box1.Clear called");
+                    } else if (pWnd == (KWndWindow*)&m_Box2) {
+                        m_Box2.Clear();
+                        g_DebugLog("[COMPOUND] Box2.Clear called");
+                    } else if (pWnd == (KWndWindow*)&m_Box3) {
+                        m_Box3.Clear();
+                        g_DebugLog("[COMPOUND] Box3.Clear called");
+                    }
+                }
+
+                g_DebugLog("[COMPOUND] OnItemPickDrop END");
+            }
+            break;
         case WND_N_BUTTON_CLICK:
             if (uParam == (unsigned int) &m_Cancle) {
                 CleanItem();
@@ -736,6 +829,41 @@ int KUiDistill::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                 g_pCoreShell->OperationRequest(GOI_SWITCH_OBJECT,
                     pPickPos ? (unsigned int)&Pick : 0,
                     pDropPos ? (int)&Drop : 0);
+
+                // CRITICAL FIX: Manually update the box visually after OperationRequest
+                // The server stores the item but doesn't send notification back for empty->filled case
+                Wnd_DragFinished();  // Clear drag state first
+                g_DebugLog("[DISTILL] Drag finished, now manually updating box");
+
+                if (pDropPos && !pPickPos) {
+                    // Dropping into empty slot - manually show the item
+                    g_DebugLog("[DISTILL] Manually updating box with item uId=%d", Obj.uId);
+                    if (pWnd == (KWndWindow*)&m_BigBox) {
+                        m_BigBox.HoldObject(Obj.uGenre, Obj.uId, Obj.DataW, Obj.DataH);
+                        g_DebugLog("[DISTILL] BigBox.HoldObject called");
+                    } else if (pWnd == (KWndWindow*)&m_Box1) {
+                        m_Box1.HoldObject(Obj.uGenre, Obj.uId, Obj.DataW, Obj.DataH);
+                        g_DebugLog("[DISTILL] Box1.HoldObject called");
+                    } else if (pWnd == (KWndWindow*)&m_Box2) {
+                        m_Box2.HoldObject(Obj.uGenre, Obj.uId, Obj.DataW, Obj.DataH);
+                        g_DebugLog("[DISTILL] Box2.HoldObject called");
+                    }
+                } else if (pPickPos && !pDropPos) {
+                    // Picking from box (removing item) - manually clear the box
+                    g_DebugLog("[DISTILL] Picking from box, clearing visual");
+                    if (pWnd == (KWndWindow*)&m_BigBox) {
+                        m_BigBox.Clear();
+                        g_DebugLog("[DISTILL] BigBox.Clear called");
+                    } else if (pWnd == (KWndWindow*)&m_Box1) {
+                        m_Box1.Clear();
+                        g_DebugLog("[DISTILL] Box1.Clear called");
+                    } else if (pWnd == (KWndWindow*)&m_Box2) {
+                        m_Box2.Clear();
+                        g_DebugLog("[DISTILL] Box2.Clear called");
+                    }
+                }
+
+                g_DebugLog("[DISTILL] OnItemPickDrop END");
             }
             break;
         case WND_N_BUTTON_CLICK:
@@ -1219,6 +1347,10 @@ void KUiForge::LoadScheme(const char *pScheme) {
         m_Pos2.BringToTop();
         m_Pos2.SetText("Huy�n tinh");
 
+        // Initialize effect animation sprite
+        m_TrembleEffect1.Init(&Ini, "Effect_0");
+        g_DebugLog("[FORGE] Effect initialized from ini");
+
     }
 }
 
@@ -1246,6 +1378,11 @@ void KUiForge::Initialize() {
     AddChild(&m_Pos1);
     AddChild(&m_Pos2);
     m_Guide.SetScrollbar(&m_ListScroll);
+
+    // Add effect sprite as child
+    AddChild(&m_TrembleEffect1);
+    m_TrembleEffect1.Hide();  // Hidden by default
+    g_DebugLog("[FORGE] Effect sprite added as child and hidden");
 
 
     char Scheme[256];
@@ -1358,6 +1495,99 @@ int KUiEnchaseTim::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
         case WND_N_SCORLLBAR_POS_CHANGED:
             if (uParam == (unsigned int) &m_ListScroll) {
                 m_Guide.SetFirstShowLine(nParam);
+            }
+            break;
+        case WND_N_ITEM_PICKDROP:
+            {
+                g_DebugLog("[ENCHASE] WND_N_ITEM_PICKDROP received");
+
+                ITEM_PICKDROP_PLACE* pPickPos = (ITEM_PICKDROP_PLACE*)uParam;
+                ITEM_PICKDROP_PLACE* pDropPos = (ITEM_PICKDROP_PLACE*)nParam;
+
+                g_DebugLog("[ENCHASE] OnItemPickDrop START: pPickPos=%p, pDropPos=%p", pPickPos, pDropPos);
+
+                KUiObjAtContRegion Drop, Pick;
+                KUiDraggedObject Obj;
+                KWndWindow* pWnd = NULL;
+
+                if (pPickPos) {
+                    ((KWndObjectBox*)(pPickPos->pWnd))->GetObject(Obj);
+                    Pick.Obj.uGenre = Obj.uGenre;
+                    Pick.Obj.uId = Obj.uId;
+                    Pick.Region.Width = Obj.DataW;
+                    Pick.Region.Height = Obj.DataH;
+                    Pick.Region.h = 0;
+                    Pick.eContainer = UOC_COMPOUND;
+                    pWnd = pPickPos->pWnd;
+                    g_DebugLog("[ENCHASE] Pick: uId=%d, uGenre=%d", Obj.uId, Obj.uGenre);
+                }
+
+                if (pDropPos) {
+                    pWnd = pDropPos->pWnd;
+                    Wnd_GetDragObj(&Obj);
+                    Drop.Obj.uGenre = Obj.uGenre;
+                    Drop.Obj.uId = Obj.uId;
+                    Drop.Region.Width = Obj.DataW;
+                    Drop.Region.Height = Obj.DataH;
+                    Drop.Region.h = 0;
+                    Drop.eContainer = UOC_COMPOUND;
+                    g_DebugLog("[ENCHASE] Drop: uId=%d, uGenre=%d", Obj.uId, Obj.uGenre);
+                }
+
+                // Map window pointer to Region.v (slot)
+                if (pWnd == (KWndWindow*)&m_BigBox) {
+                    Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM1;  // Slot 0
+                    g_DebugLog("[ENCHASE] Mapped to BigBox (UIEP_BUILDITEM1 = %d)", UIEP_BUILDITEM1);
+                } else if (pWnd == (KWndWindow*)&m_Box1) {
+                    Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM2;  // Slot 1
+                    g_DebugLog("[ENCHASE] Mapped to Box1 (UIEP_BUILDITEM2 = %d)", UIEP_BUILDITEM2);
+                } else if (pWnd == (KWndWindow*)&m_Box2) {
+                    Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM3;  // Slot 2
+                    g_DebugLog("[ENCHASE] Mapped to Box2 (UIEP_BUILDITEM3 = %d)", UIEP_BUILDITEM3);
+                } else {
+                    g_DebugLog("[ENCHASE] ERROR: pWnd doesn't match any box!");
+                    break;
+                }
+
+                g_DebugLog("[ENCHASE] Calling OperationRequest GOI_SWITCH_OBJECT with Region.v=%d", Drop.Region.v);
+                g_pCoreShell->OperationRequest(GOI_SWITCH_OBJECT,
+                    pPickPos ? (unsigned int)&Pick : 0,
+                    pDropPos ? (int)&Drop : 0);
+
+                // CRITICAL FIX: Manually update the box visually after OperationRequest
+                // The server stores the item but doesn't send notification back for empty->filled case
+                Wnd_DragFinished();  // Clear drag state first
+                g_DebugLog("[ENCHASE] Drag finished, now manually updating box");
+
+                if (pDropPos && !pPickPos) {
+                    // Dropping into empty slot - manually show the item
+                    g_DebugLog("[ENCHASE] Manually updating box with item uId=%d", Obj.uId);
+                    if (pWnd == (KWndWindow*)&m_BigBox) {
+                        m_BigBox.HoldObject(Obj.uGenre, Obj.uId, Obj.DataW, Obj.DataH);
+                        g_DebugLog("[ENCHASE] BigBox.HoldObject called");
+                    } else if (pWnd == (KWndWindow*)&m_Box1) {
+                        m_Box1.HoldObject(Obj.uGenre, Obj.uId, Obj.DataW, Obj.DataH);
+                        g_DebugLog("[ENCHASE] Box1.HoldObject called");
+                    } else if (pWnd == (KWndWindow*)&m_Box2) {
+                        m_Box2.HoldObject(Obj.uGenre, Obj.uId, Obj.DataW, Obj.DataH);
+                        g_DebugLog("[ENCHASE] Box2.HoldObject called");
+                    }
+                } else if (pPickPos && !pDropPos) {
+                    // Picking from box (removing item) - manually clear the box
+                    g_DebugLog("[ENCHASE] Picking from box, clearing visual");
+                    if (pWnd == (KWndWindow*)&m_BigBox) {
+                        m_BigBox.Clear();
+                        g_DebugLog("[ENCHASE] BigBox.Clear called");
+                    } else if (pWnd == (KWndWindow*)&m_Box1) {
+                        m_Box1.Clear();
+                        g_DebugLog("[ENCHASE] Box1.Clear called");
+                    } else if (pWnd == (KWndWindow*)&m_Box2) {
+                        m_Box2.Clear();
+                        g_DebugLog("[ENCHASE] Box2.Clear called");
+                    }
+                }
+
+                g_DebugLog("[ENCHASE] OnItemPickDrop END");
             }
             break;
         case WND_N_BUTTON_CLICK:
