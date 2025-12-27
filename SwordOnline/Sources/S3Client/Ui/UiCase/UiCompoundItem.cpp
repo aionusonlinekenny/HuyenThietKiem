@@ -1083,24 +1083,37 @@ void KUiForge::Breathe() {
         m_TrembleEffect1.NextFrame();
     if (m_EffectTime)
         m_EffectTime++;
-    // LOOP is defined in UiTrembleItem, use 4 as default
-    #ifndef LOOP
-    #define LOOP 4
-    #endif
-    if (m_EffectTime == (m_TrembleEffect1.GetMaxFrame())*(LOOP*2)/2 + 1) {
+
+    // Use LOOP=2 like UiTrembleItem (not 4)
+    // Formula: stop at (MaxFrame * LOOP) + 1
+    #define LOOP 2
+    int nMaxFrame = m_TrembleEffect1.GetMaxFrame();
+    int nStopTime = nMaxFrame * LOOP + 1;
+
+    if (m_EffectTime == nStopTime) {
+        g_DebugLog("[FORGE EFFECT] Stopping - EffectTime=%d, MaxFrame=%d, StopTime=%d",
+            m_EffectTime, nMaxFrame, nStopTime);
         StopEffect();
         m_EffectTime = 0;
+    } else if (m_EffectTime % 10 == 0) {
+        // Log every 10 frames for debugging
+        g_DebugLog("[FORGE EFFECT] Animating - EffectTime=%d/%d, CurrentFrame=%d/%d",
+            m_EffectTime, nStopTime, m_TrembleEffect1.GetCurrentFrame(), nMaxFrame);
     }
 }
 
 // Start crafting effect animation
 void KUiForge::StartEffect() {
     m_TrembleEffect1.Show();
+    m_TrembleEffect1.SetFrame(0);  // Start from frame 0
     m_EffectTime = 1;
     // Disable item picking during animation
     m_BigBox.EnablePickPut(false);
     m_SmallBox.EnablePickPut(false);
-    g_DebugLog("[FORGE EFFECT] Animation started");
+
+    int nMaxFrame = m_TrembleEffect1.GetMaxFrame();
+    g_DebugLog("[FORGE EFFECT] Animation started - MaxFrame=%d, will run for %d frames",
+        nMaxFrame, nMaxFrame * 2 + 1);
 }
 
 // Stop effect and update items
