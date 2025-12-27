@@ -350,7 +350,12 @@ void KUiComItem::ComItem(unsigned int pItem, int nWindowNum, int nNum) {
             break;
         case WINDOWS_FORG:
             if (g_pCoreShell) {
-                g_pCoreShell->OperationRequest(GOI_COMPITEM_FORGE, pItem, nNum);
+                // Call server-side Lua script to handle crafting
+                if (g_pCoreShell->GetLixian()) {
+                    char szFunc[32];
+                    sprintf(szFunc, "ExeCompoundForge");
+                    g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
+                }
             }
             break;
         case WINDOWS_ENCHASE:

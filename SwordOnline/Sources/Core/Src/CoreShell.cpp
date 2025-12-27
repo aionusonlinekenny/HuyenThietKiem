@@ -3770,7 +3770,9 @@ int	KCoreShell::OperationRequest(unsigned int uOper, unsigned int uParam, int nP
 			Player[CLIENT_PLAYER_INDEX].OnSelectFromUI(&command, UI_CHANGETAXDIALOG);
 		}
 		break;
-	case GOI_COMPITEM_FORGE://CompoundItem Forge - Create purple equipment
+	// REMOVED: GOI_COMPITEM_FORGE now handled by server-side Lua script (ExeCompoundForge)
+	// Client calls GOI_EXESCRIPT_BUTTON with "ExeCompoundForge" instead
+	/*case GOI_COMPITEM_FORGE://CompoundItem Forge - Create purple equipment (OLD CLIENT-SIDE - REMOVED)
 		{
 			g_DebugLog("[FORGE] GOI_COMPITEM_FORGE handler START");
 
@@ -3938,7 +3940,7 @@ int	KCoreShell::OperationRequest(unsigned int uOper, unsigned int uParam, int nP
 
 			g_DebugLog("[FORGE] GOI_COMPITEM_FORGE handler END - SUCCESS");
 		}
-		break;
+		break;*/
 	case GOI_PLAYER_CREATE_PWD://LockPlayer by kinnox;
 		{
 			SendClientCreatPWCmd(uParam);
