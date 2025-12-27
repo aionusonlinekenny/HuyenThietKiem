@@ -1,6 +1,7 @@
 #include "KCore.h"
 #include "GameDataDef.h"
 #include "CoreShell.h"
+#include "KItemGenerator.h"
 
 #include "CoreDrawGameObj.h"
 #include "ImgRef.h"
@@ -3847,38 +3848,29 @@ int	KCoreShell::OperationRequest(unsigned int uOper, unsigned int uParam, int nP
 				pnaryMALevel[i] = 10; // Level 10 attributes
 			}
 
-			// Create new purple equipment item
-			int nNewItemIdx = ItemSet.Add();
-			if (nNewItemIdx <= 0)
-			{
-				g_DebugLog("[FORGE] ERROR: Failed to create new item");
-				KSystemMessage sMsg;
-				strcpy(sMsg.szMessage, "Loi: Khong the tao vat pham moi!");
-				sMsg.eType = SMT_NORMAL;
-				sMsg.byConfirmType = SMCT_CLICK;
-				sMsg.byPriority = 1;
-				sMsg.byParamSize = 0;
-				CoreDataChanged(GDCNI_SYSTEM_MESSAGE, (unsigned int)&sMsg, 0);
-				break;
-			}
+			// Calculate equipment record index (same as Gen_PurpleEquipment does internally)
+			WORD wRecord = (WORD)(nParticular * 10 + nLevel - 1);
 
-			// Generate purple equipment
+			// Create new purple equipment item using ItemSet.Add()
+			// This will call ItemGen.Gen_ExistPurpleEquipment() internally
+			// Signature: Add(nItemGenre, nSeries, nLevel, wRecord, nLuck, nDetail, nParticular, pnMagicLevel, nVersion, dwRandomSeed, ...)
 			int nLuck = 1000000000 + (rand() % 1000); // Flag for purple (>= 1000000000)
-			BOOL bSuccess = ItemGen.Gen_PurpleEquipment(
-				nDetailType,
-				nParticular,
-				nSeries,
-				nLevel,
-				pnaryMALevel,
-				nLuck,
-				0, // nVersion
-				&Item[nNewItemIdx]
+			int nNewItemIdx = ItemSet.Add(
+				item_purpleequip,  // nItemGenre
+				nSeries,           // nSeries
+				nLevel,            // nLevel
+				wRecord,           // wRecord (equipment record index)
+				nLuck,             // nLuck
+				nDetailType,       // nDetail
+				nParticular,       // nParticular
+				pnaryMALevel,      // pnMagicLevel
+				0,                 // nVersion
+				0                  // dwRandomSeed
 			);
 
-			if (!bSuccess)
+			if (nNewItemIdx <= 0)
 			{
-				g_DebugLog("[FORGE] ERROR: Gen_PurpleEquipment failed");
-				ItemSet.Remove(nNewItemIdx);
+				g_DebugLog("[FORGE] ERROR: Failed to create purple equipment (ItemSet.Add returned %d)", nNewItemIdx);
 				KSystemMessage sMsg;
 				strcpy(sMsg.szMessage, "Loi: Khong the tao trang bi tim!");
 				sMsg.eType = SMT_NORMAL;
