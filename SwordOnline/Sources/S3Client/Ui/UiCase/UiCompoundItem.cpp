@@ -847,6 +847,10 @@ void KUiCompound::LoadScheme(const char *pScheme) {
 }
 
 void KUiCompound::Initialize() {
+    // Initialize status to waiting for materials
+    m_nStatus = STATUS_WAITING_MATERIALS;
+    g_DebugLog("[COMPOUND] Initialize: m_nStatus set to STATUS_WAITING_MATERIALS");
+
     AddChild(&m_Pos1);
     AddChild(&m_Pos2);
     AddChild(&m_Pos3);
