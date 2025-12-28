@@ -191,9 +191,9 @@ function ExeCompoundForge()
     DelItemByIndex(nCrystalIdx) -- Delete crystal
 
     -- Success message
-    local szMsg = string.format("<color=green>Che tao thanh cong trang bi tim voi %d dong thuoc tinh!<color>", nNumLines)
+    local szMsg = "<color=green>Che tao thanh cong trang bi tim voi " .. nNumLines .. " dong thuoc tinh!<color>"
     Talk(1, "", szMsg)
-    Msg2SubWorld(string.format("<pic=135><color=green> %s<color> da hop thanh <color=purple>TRANG BI TIM<color> voi %d dong!", GetName(), nNumLines))
+    Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da hop thanh <color=purple>TRANG BI TIM<color> voi " .. nNumLines .. " dong!")
 end
 
 -- ------------------------------------------------------------
@@ -334,9 +334,9 @@ function ExeCompoundEquipment()
 
     -- Success message
     local szLevelName = {"I", "II", "III", "IV", "V", "VI"}
-    local szMsg = string.format("<color=green>Hop thanh thanh cong Huyen Tinh cap %s!<color>", szLevelName[nHuyenTinhLevel])
+    local szMsg = "<color=green>Hop thanh thanh cong Huyen Tinh cap " .. szLevelName[nHuyenTinhLevel] .. "!<color>"
     Talk(1, "", szMsg)
-    Msg2SubWorld(string.format("<pic=135><color=green> %s<color> da hop thanh <color=cyan>HUYEN TINH CAP %s<color> tu 3 trang bi!", GetName(), szLevelName[nHuyenTinhLevel]))
+    Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da hop thanh <color=cyan>HUYEN TINH CAP " .. szLevelName[nHuyenTinhLevel] .. "<color> tu 3 trang bi!")
 end
 
 function no()
