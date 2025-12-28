@@ -739,13 +739,23 @@ void KUiCompound::UpdateResult() {
 
 void KUiCompound::Breathe() {
     if (m_nStatus == STATUS_BEGIN_TREMBLE) {
+        // Show all 3 effects for the 3 boxes
         m_TrembleEffect1.Show();
         m_TrembleEffect1.SetFrame(0);
+        m_TrembleEffect2.Show();
+        m_TrembleEffect2.SetFrame(0);
+        m_TrembleEffect3.Show();
+        m_TrembleEffect3.SetFrame(0);
         m_nStatus = STATUS_TREMBLING;
+        g_DebugLog("[COMPOUND] Started effect animation on all 3 boxes");
     } else if (m_nStatus == STATUS_TREMBLING) {
         if (!PlayEffect()) {
             m_nStatus = STATUS_CHANGING_ITEM;
+            // Hide all 3 effects when animation finishes
             m_TrembleEffect1.Hide();
+            m_TrembleEffect2.Hide();
+            m_TrembleEffect3.Hide();
+            g_DebugLog("[COMPOUND] Animation finished, hiding effects");
         }
     } else if (m_nStatus == STATUS_CHANGING_ITEM) {
         UpdateResult();
@@ -754,13 +764,18 @@ void KUiCompound::Breathe() {
 }
 
 int KUiCompound::PlayEffect() {
+    // Advance frame on all 3 effects simultaneously
     if (m_TrembleEffect1.GetMaxFrame() == 0 ||
         m_TrembleEffect1.GetMaxFrame() >= m_TrembleEffect1.GetCurrentFrame() - 1) {
         m_TrembleEffect1.SetFrame(0);
-        return 0;
+        m_TrembleEffect2.SetFrame(0);
+        m_TrembleEffect3.SetFrame(0);
+        return 0;  // Animation complete
     } else {
         m_TrembleEffect1.NextFrame();
-        return 1;
+        m_TrembleEffect2.NextFrame();
+        m_TrembleEffect3.NextFrame();
+        return 1;  // Still animating
     }
 }
 
