@@ -246,8 +246,9 @@ function ExeCompoundEquipment()
         return
     end
 
-    -- Calculate average level of 3 items
-    local nAvgLevel = math.floor((nRingLevel + nNeckLevel + nPendLevel) / 3)
+    -- Calculate average level of 3 items (manual floor since math library not available)
+    local nAvgLevel = (nRingLevel + nNeckLevel + nPendLevel) / 3
+    nAvgLevel = nAvgLevel - (nAvgLevel % 1)  -- Remove fractional part to floor
 
     -- Determine Huyen Tinh level (1-6) based on average equipment level
     -- Level mapping:
