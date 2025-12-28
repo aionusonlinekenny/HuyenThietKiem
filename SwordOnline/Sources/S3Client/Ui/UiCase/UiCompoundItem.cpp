@@ -807,8 +807,12 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         m_Guide.Init(&Ini, "GuideList");
         m_ListScroll.Init(&Ini, "GuideList_Scroll");
         m_TrembleEffect1.Init(&Ini, "Effect_0");
+        m_TrembleEffect1.Hide();  // Hide by default (like FORGE)
         m_TrembleEffect2.Init(&Ini, "Effect_1");
+        m_TrembleEffect2.Hide();  // Hide by default (like FORGE)
         m_TrembleEffect3.Init(&Ini, "Effect_2");
+        m_TrembleEffect3.Hide();  // Hide by default (like FORGE)
+        g_DebugLog("[COMPOUND] Effects initialized and hidden, MaxFrame=%d", m_TrembleEffect1.GetMaxFrame());
         //m_ListBtn.Init(&Ini,"GuideList_Scroll_Btn");
 
         // Bring boxes to top so they can receive mouse events
@@ -947,7 +951,7 @@ void KUiCompound::SetPosText(int i) {
             m_Pos1.SetText("[1] Nh?n");
             m_Pos2.SetText("[1] D?y chuy?n/h? th?n ph?");
             m_Pos3.SetText("[1] Ng?c b?i/h??ng nang");
-            g_DebugLog("[COMPOUND] SetPosText: Switched to case 1 (Equipment) - [1] Nh?n, Dây chuy?n, Ng?c b?i");
+            g_DebugLog("[COMPOUND] SetPosText: Switched to case 1 (Equipment) - [1] Nh?n, Dï¿½y chuy?n, Ng?c b?i");
             break;
         case 2:
             m_nSelect = 1;
@@ -961,7 +965,7 @@ void KUiCompound::SetPosText(int i) {
             m_Pos1.SetText("[3] Kho?ng th?ch 1");
             m_Pos2.SetText("[3] Kho?ng th?ch 2");
             m_Pos3.SetText("[3] Kho?ng th?ch 3");
-            g_DebugLog("[COMPOUND] SetPosText: Switched to case 3 (Mineral) - [3] Khoáng th?ch 1, 2, 3");
+            g_DebugLog("[COMPOUND] SetPosText: Switched to case 3 (Mineral) - [3] Khoï¿½ng th?ch 1, 2, 3");
             break;
     }
 
