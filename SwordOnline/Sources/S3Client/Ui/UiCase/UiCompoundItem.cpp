@@ -765,11 +765,19 @@ void KUiCompound::Breathe() {
 
 int KUiCompound::PlayEffect() {
     // Advance frame on all 3 effects simultaneously
-    if (m_TrembleEffect1.GetMaxFrame() == 0 ||
-        m_TrembleEffect1.GetMaxFrame() >= m_TrembleEffect1.GetCurrentFrame() - 1) {
+    // Check if sprite is loaded first
+    if (m_TrembleEffect1.GetMaxFrame() == 0) {
+        // Sprite not loaded yet, keep waiting
+        return 1;
+    }
+
+    // Check if animation is complete (current frame reached max)
+    if (m_TrembleEffect1.GetCurrentFrame() >= m_TrembleEffect1.GetMaxFrame() - 1) {
         m_TrembleEffect1.SetFrame(0);
         m_TrembleEffect2.SetFrame(0);
         m_TrembleEffect3.SetFrame(0);
+        g_DebugLog("[COMPOUND] Animation reached max frame (%d), resetting",
+            m_TrembleEffect1.GetMaxFrame());
         return 0;  // Animation complete
     } else {
         m_TrembleEffect1.NextFrame();
