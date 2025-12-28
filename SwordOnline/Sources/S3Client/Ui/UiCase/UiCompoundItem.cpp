@@ -748,6 +748,9 @@ void KUiCompound::Breathe() {
         m_TrembleEffect3.SetFrame(0);
         m_nStatus = STATUS_TREMBLING;
         g_DebugLog("[COMPOUND] Started effect animation on all 3 boxes");
+        g_DebugLog("[COMPOUND] Effect1: MaxFrame=%d, CurrentFrame=%d, IsVisible=%d",
+            m_TrembleEffect1.GetMaxFrame(), m_TrembleEffect1.GetCurrentFrame(),
+            m_TrembleEffect1.IsVisible());
     } else if (m_nStatus == STATUS_TREMBLING) {
         if (!PlayEffect()) {
             m_nStatus = STATUS_CHANGING_ITEM;
@@ -766,23 +769,35 @@ void KUiCompound::Breathe() {
 int KUiCompound::PlayEffect() {
     // Advance frame on all 3 effects simultaneously
     // Check if sprite is loaded first
-    if (m_TrembleEffect1.GetMaxFrame() == 0) {
+    int nMaxFrame = m_TrembleEffect1.GetMaxFrame();
+    int nCurrentFrame = m_TrembleEffect1.GetCurrentFrame();
+
+    if (nMaxFrame == 0) {
         // Sprite not loaded yet, keep waiting
+        static int nWaitCount = 0;
+        nWaitCount++;
+        if (nWaitCount % 50 == 0) {  // Log every 50 frames to avoid spam
+            g_DebugLog("[COMPOUND] PlayEffect: Waiting for sprite to load, MaxFrame still 0 (waited %d frames)", nWaitCount);
+        }
         return 1;
     }
 
     // Check if animation is complete (current frame reached max)
-    if (m_TrembleEffect1.GetCurrentFrame() >= m_TrembleEffect1.GetMaxFrame() - 1) {
+    if (nCurrentFrame >= nMaxFrame - 1) {
         m_TrembleEffect1.SetFrame(0);
         m_TrembleEffect2.SetFrame(0);
         m_TrembleEffect3.SetFrame(0);
-        g_DebugLog("[COMPOUND] Animation reached max frame (%d), resetting",
-            m_TrembleEffect1.GetMaxFrame());
+        g_DebugLog("[COMPOUND] Animation COMPLETE: CurrentFrame=%d reached MaxFrame=%d", nCurrentFrame, nMaxFrame);
         return 0;  // Animation complete
     } else {
         m_TrembleEffect1.NextFrame();
         m_TrembleEffect2.NextFrame();
         m_TrembleEffect3.NextFrame();
+
+        // Log every 10 frames to track progress
+        if (nCurrentFrame % 10 == 0) {
+            g_DebugLog("[COMPOUND] Animating: Frame %d/%d", nCurrentFrame, nMaxFrame);
+        }
         return 1;  // Still animating
     }
 }
