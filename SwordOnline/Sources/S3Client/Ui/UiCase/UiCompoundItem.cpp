@@ -496,16 +496,88 @@ int KUiCompound::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                     g_DebugLog("[COMPOUND] Drop: uId=%d, uGenre=%d", Obj.uId, Obj.uGenre);
                 }
 
-                // Map window pointer to Region.v (slot)
+                // Map window pointer to Region.v (slot) + ADD VALIDATION
                 if (pWnd == (KWndWindow*)&m_Box1) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM1;  // Slot 0
                     g_DebugLog("[COMPOUND] Mapped to Box1 (UIEP_BUILDITEM1 = %d)", UIEP_BUILDITEM1);
+
+                    // VALIDATION: Mode 1 (Equipment) - Box1 only accepts RINGS
+                    if (pDropPos && m_nSelect == 0) {
+                        int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
+
+                        // Must be equipment
+                        if (nGenre != item_equip && nGenre != item_purpleequip &&
+                            nGenre != item_goldequip && nGenre != item_platinaequip) {
+                            g_DebugLog("[COMPOUND] REJECT Box1 Mode1: Genre %d is not equipment", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat trang bi vao o nay!", 256);
+                            break;
+                        }
+
+                        // Must be RING (equip_ring = 3)
+                        if (nDetail != equip_ring) {
+                            g_DebugLog("[COMPOUND] REJECT Box1 Mode1: Detail %d is not ring (need %d)", nDetail, equip_ring);
+                            KUiMsgCentrePad::SystemMessageArrival("O nay chi duoc dat NHAN! (Ring)", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[COMPOUND] Box1 Mode1 validation PASSED: ring accepted");
+                    }
+
                 } else if (pWnd == (KWndWindow*)&m_Box2) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM2;  // Slot 1
                     g_DebugLog("[COMPOUND] Mapped to Box2 (UIEP_BUILDITEM2 = %d)", UIEP_BUILDITEM2);
+
+                    // VALIDATION: Mode 1 (Equipment) - Box2 only accepts NECKLACES
+                    if (pDropPos && m_nSelect == 0) {
+                        int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
+
+                        // Must be equipment
+                        if (nGenre != item_equip && nGenre != item_purpleequip &&
+                            nGenre != item_goldequip && nGenre != item_platinaequip) {
+                            g_DebugLog("[COMPOUND] REJECT Box2 Mode1: Genre %d is not equipment", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat trang bi vao o nay!", 256);
+                            break;
+                        }
+
+                        // Must be NECKLACE (equip_amulet = 4)
+                        if (nDetail != equip_amulet) {
+                            g_DebugLog("[COMPOUND] REJECT Box2 Mode1: Detail %d is not necklace (need %d)", nDetail, equip_amulet);
+                            KUiMsgCentrePad::SystemMessageArrival("O nay chi duoc dat DAY CHUYEN! (Necklace/Amulet)", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[COMPOUND] Box2 Mode1 validation PASSED: necklace accepted");
+                    }
+
                 } else if (pWnd == (KWndWindow*)&m_Box3) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM3;  // Slot 2
                     g_DebugLog("[COMPOUND] Mapped to Box3 (UIEP_BUILDITEM3 = %d)", UIEP_BUILDITEM3);
+
+                    // VALIDATION: Mode 1 (Equipment) - Box3 only accepts PENDANTS
+                    if (pDropPos && m_nSelect == 0) {
+                        int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
+
+                        // Must be equipment
+                        if (nGenre != item_equip && nGenre != item_purpleequip &&
+                            nGenre != item_goldequip && nGenre != item_platinaequip) {
+                            g_DebugLog("[COMPOUND] REJECT Box3 Mode1: Genre %d is not equipment", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat trang bi vao o nay!", 256);
+                            break;
+                        }
+
+                        // Must be PENDANT (equip_pendant = 9)
+                        if (nDetail != equip_pendant) {
+                            g_DebugLog("[COMPOUND] REJECT Box3 Mode1: Detail %d is not pendant (need %d)", nDetail, equip_pendant);
+                            KUiMsgCentrePad::SystemMessageArrival("O nay chi duoc dat NGOC BOI! (Pendant)", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[COMPOUND] Box3 Mode1 validation PASSED: pendant accepted");
+                    }
+
                 } else {
                     g_DebugLog("[COMPOUND] ERROR: pWnd doesn't match any box!");
                     break;
