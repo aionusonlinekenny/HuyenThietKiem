@@ -196,5 +196,148 @@ function ExeCompoundForge()
     Msg2SubWorld(string.format("<pic=135><color=green> %s<color> da hop thanh <color=purple>TRANG BI TIM<color> voi %d dong!", GetName(), nNumLines))
 end
 
+-- ------------------------------------------------------------
+-- Execute Compound Equipment (Mode 1 - Equipment to Huyen Tinh)
+-- Called when player clicks "Tinh Luyen" in COMPOUND tab Mode 1
+-- ------------------------------------------------------------
+function ExeCompoundEquipment()
+    local nPos = 15  -- pos_builditem
+
+    -- Get items from 3 UI slots
+    local nRingIdx = GetPOItem(nPos, 0)      -- Box1 = slot 0 (ring)
+    local nNecklaceIdx = GetPOItem(nPos, 1)  -- Box2 = slot 1 (necklace)
+    local nPendantIdx = GetPOItem(nPos, 2)   -- Box3 = slot 2 (pendant)
+
+    -- Validate all 3 items exist
+    if not nRingIdx or nRingIdx <= 0 then
+        Talk(1, "", "<color=red>Vui long dat NHAN vao o 1!<color>")
+        return
+    end
+
+    if not nNecklaceIdx or nNecklaceIdx <= 0 then
+        Talk(1, "", "<color=red>Vui long dat DAY CHUYEN vao o 2!<color>")
+        return
+    end
+
+    if not nPendantIdx or nPendantIdx <= 0 then
+        Talk(1, "", "<color=red>Vui long dat NGOC BOI vao o 3!<color>")
+        return
+    end
+
+    -- Get properties of all 3 items
+    local nRingGenre, nRingDetail, nRingParti, nRingLevel, nRingSeries = GetItemProp(nRingIdx)
+    local nNeckGenre, nNeckDetail, nNeckParti, nNeckLevel, nNeckSeries = GetItemProp(nNecklaceIdx)
+    local nPendGenre, nPendDetail, nPendParti, nPendLevel, nPendSeries = GetItemProp(nPendantIdx)
+
+    -- Validate item types (should already be validated by client, but double-check)
+    -- equip_ring=3, equip_amulet=4, equip_pendant=9
+    if nRingDetail ~= 3 then
+        Talk(1, "", "<color=red>O 1 phai la NHAN!<color>")
+        return
+    end
+
+    if nNeckDetail ~= 4 then
+        Talk(1, "", "<color=red>O 2 phai la DAY CHUYEN!<color>")
+        return
+    end
+
+    if nPendDetail ~= 9 then
+        Talk(1, "", "<color=red>O 3 phai la NGOC BOI!<color>")
+        return
+    end
+
+    -- Calculate average level of 3 items
+    local nAvgLevel = floor((nRingLevel + nNeckLevel + nPendLevel) / 3)
+
+    -- Determine Huyen Tinh level (1-6) based on average equipment level
+    -- Level mapping:
+    -- Equip Avg 1-20:   70% chance level 1, 25% level 2, 5% level 3
+    -- Equip Avg 21-40:  50% level 2, 35% level 3, 15% level 4
+    -- Equip Avg 41-60:  40% level 3, 40% level 4, 15% level 5, 5% level 6
+    -- Equip Avg 61-80:  30% level 4, 40% level 5, 25% level 6, 5% level 7 (cap at 6)
+    -- Equip Avg 81+:    20% level 5, 50% level 6, 30% level 7 (cap at 6)
+
+    local nHuyenTinhLevel = 1
+    local nRand = random(1, 100)
+
+    if nAvgLevel <= 20 then
+        -- Low level: mostly level 1
+        if nRand <= 70 then
+            nHuyenTinhLevel = 1
+        elseif nRand <= 95 then
+            nHuyenTinhLevel = 2
+        else
+            nHuyenTinhLevel = 3
+        end
+    elseif nAvgLevel <= 40 then
+        -- Mid-low level
+        if nRand <= 50 then
+            nHuyenTinhLevel = 2
+        elseif nRand <= 85 then
+            nHuyenTinhLevel = 3
+        else
+            nHuyenTinhLevel = 4
+        end
+    elseif nAvgLevel <= 60 then
+        -- Mid level
+        if nRand <= 40 then
+            nHuyenTinhLevel = 3
+        elseif nRand <= 80 then
+            nHuyenTinhLevel = 4
+        elseif nRand <= 95 then
+            nHuyenTinhLevel = 5
+        else
+            nHuyenTinhLevel = 6
+        end
+    elseif nAvgLevel <= 80 then
+        -- Mid-high level
+        if nRand <= 30 then
+            nHuyenTinhLevel = 4
+        elseif nRand <= 70 then
+            nHuyenTinhLevel = 5
+        else
+            nHuyenTinhLevel = 6
+        end
+    else
+        -- High level: better chances for level 5-6
+        if nRand <= 20 then
+            nHuyenTinhLevel = 5
+        else
+            nHuyenTinhLevel = 6
+        end
+    end
+
+    -- Create Huyen Tinh item
+    -- Genre = 6 (item_task), Detail = 74-79 (level 1-6)
+    local nHuyenTinhDetail = 73 + nHuyenTinhLevel
+    local nHuyenTinhIdx = AddItemEx(
+        HUYEN_TINH_GENRE,    -- genre = 6 (item_task)
+        nHuyenTinhDetail,    -- detail = 74-79 (level 1-6)
+        0,                   -- particular
+        0,                   -- level
+        0,                   -- series
+        0,                   -- luck
+        0, 0, 0, 0, 0, 0,   -- magic attributes
+        1,                   -- version
+        0                    -- randomSeed
+    )
+
+    if not nHuyenTinhIdx or nHuyenTinhIdx <= 0 then
+        Talk(1, "", "<color=red>Loi: Khong the tao Huyen Tinh!<color>")
+        return
+    end
+
+    -- Remove source items
+    DelItemByIndex(nRingIdx)
+    DelItemByIndex(nNecklaceIdx)
+    DelItemByIndex(nPendantIdx)
+
+    -- Success message
+    local szLevelName = {"I", "II", "III", "IV", "V", "VI"}
+    local szMsg = string.format("<color=green>Hop thanh thanh cong Huyen Tinh cap %s!<color>", szLevelName[nHuyenTinhLevel])
+    Talk(1, "", szMsg)
+    Msg2SubWorld(string.format("<pic=135><color=green> %s<color> da hop thanh <color=cyan>HUYEN TINH CAP %s<color> tu 3 trang bi!", GetName(), szLevelName[nHuyenTinhLevel]))
+end
+
 function no()
 end

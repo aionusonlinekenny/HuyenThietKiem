@@ -349,8 +349,22 @@ int KUiComItem::GetWindowsNum() {
 void KUiComItem::ComItem(unsigned int pItem, int nWindowNum, int nNum) {
     switch (nWindowNum) {
         case WINDOWS_COMP:
+            g_DebugLog("[CLIENT COMPOUND Mode1] Equipment crafting button clicked!");
             if (g_pCoreShell) {
-                g_pCoreShell->OperationRequest(GOI_COMPITEM_COM, pItem, 1);
+                g_DebugLog("[CLIENT COMPOUND Mode1] g_pCoreShell is valid");
+                // Call server-side Lua script to handle Equipment->Huyen Tinh crafting
+                if (g_pCoreShell->GetLixian()) {
+                    g_DebugLog("[CLIENT COMPOUND Mode1] GetLixian() = TRUE, sending GOI_EXESCRIPT_BUTTON");
+                    char szFunc[32];
+                    sprintf(szFunc, "ExeCompoundEquipment");
+                    g_DebugLog("[CLIENT COMPOUND Mode1] Function name: %s", szFunc);
+                    g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
+                    g_DebugLog("[CLIENT COMPOUND Mode1] OperationRequest sent successfully");
+                } else {
+                    g_DebugLog("[CLIENT COMPOUND Mode1] ERROR: GetLixian() = FALSE! Cannot execute script!");
+                }
+            } else {
+                g_DebugLog("[CLIENT COMPOUND Mode1] ERROR: g_pCoreShell is NULL!");
             }
             break;
         case WINDOWS_COMP2:
