@@ -748,6 +748,9 @@ void KUiCompound::Breathe() {
         m_TrembleEffect3.SetFrame(0);
         m_nStatus = STATUS_TREMBLING;
         g_DebugLog("[COMPOUND] Started effect animation on all 3 boxes");
+        g_DebugLog("[COMPOUND] Effect1 MaxFrame=%d, CurrentFrame=%d, IsVisible=%d",
+            m_TrembleEffect1.GetMaxFrame(), m_TrembleEffect1.GetCurrentFrame(),
+            m_TrembleEffect1.IsVisible());
     } else if (m_nStatus == STATUS_TREMBLING) {
         if (!PlayEffect()) {
             m_nStatus = STATUS_CHANGING_ITEM;
@@ -766,23 +769,32 @@ void KUiCompound::Breathe() {
 int KUiCompound::PlayEffect() {
     // Advance frame on all 3 effects simultaneously
     // Check if sprite is loaded first
-    if (m_TrembleEffect1.GetMaxFrame() == 0) {
+    int nMaxFrame = m_TrembleEffect1.GetMaxFrame();
+    int nCurrentFrame = m_TrembleEffect1.GetCurrentFrame();
+
+    if (nMaxFrame == 0) {
         // Sprite not loaded yet, keep waiting
+        g_DebugLog("[COMPOUND] PlayEffect: Sprite not loaded yet (MaxFrame=0)");
         return 1;
     }
 
     // Check if animation is complete (current frame reached max)
-    if (m_TrembleEffect1.GetCurrentFrame() >= m_TrembleEffect1.GetMaxFrame() - 1) {
+    if (nCurrentFrame >= nMaxFrame - 1) {
         m_TrembleEffect1.SetFrame(0);
         m_TrembleEffect2.SetFrame(0);
         m_TrembleEffect3.SetFrame(0);
-        g_DebugLog("[COMPOUND] Animation reached max frame (%d), resetting",
-            m_TrembleEffect1.GetMaxFrame());
+        g_DebugLog("[COMPOUND] Animation COMPLETE: CurrentFrame=%d reached MaxFrame=%d",
+            nCurrentFrame, nMaxFrame);
         return 0;  // Animation complete
     } else {
         m_TrembleEffect1.NextFrame();
         m_TrembleEffect2.NextFrame();
         m_TrembleEffect3.NextFrame();
+
+        // Log every 10 frames to avoid spam
+        if (nCurrentFrame % 10 == 0) {
+            g_DebugLog("[COMPOUND] PlayEffect: Frame %d/%d", nCurrentFrame, nMaxFrame);
+        }
         return 1;  // Still animating
     }
 }
@@ -809,6 +821,8 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         m_TrembleEffect1.Init(&Ini, "Effect_0");
         m_TrembleEffect2.Init(&Ini, "Effect_1");
         m_TrembleEffect3.Init(&Ini, "Effect_2");
+        g_DebugLog("[COMPOUND] Effects initialized from Effect_0/1/2 sections");
+        g_DebugLog("[COMPOUND] Effect1: MaxFrame=%d", m_TrembleEffect1.GetMaxFrame());
         //m_ListBtn.Init(&Ini,"GuideList_Scroll_Btn");
 
         // Bring boxes to top so they can receive mouse events
@@ -947,7 +961,7 @@ void KUiCompound::SetPosText(int i) {
             m_Pos1.SetText("[1] Nh?n");
             m_Pos2.SetText("[1] D?y chuy?n/h? th?n ph?");
             m_Pos3.SetText("[1] Ng?c b?i/h??ng nang");
-            g_DebugLog("[COMPOUND] SetPosText: Switched to case 1 (Equipment) - [1] Nh?n, Dây chuy?n, Ng?c b?i");
+            g_DebugLog("[COMPOUND] SetPosText: Switched to case 1 (Equipment) - [1] Nh?n, Dï¿½y chuy?n, Ng?c b?i");
             break;
         case 2:
             m_nSelect = 1;
@@ -961,7 +975,7 @@ void KUiCompound::SetPosText(int i) {
             m_Pos1.SetText("[3] Kho?ng th?ch 1");
             m_Pos2.SetText("[3] Kho?ng th?ch 2");
             m_Pos3.SetText("[3] Kho?ng th?ch 3");
-            g_DebugLog("[COMPOUND] SetPosText: Switched to case 3 (Mineral) - [3] Khoáng th?ch 1, 2, 3");
+            g_DebugLog("[COMPOUND] SetPosText: Switched to case 3 (Mineral) - [3] Khoï¿½ng th?ch 1, 2, 3");
             break;
     }
 
