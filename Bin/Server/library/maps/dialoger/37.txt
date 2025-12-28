@@ -26,7 +26,7 @@ NpcID	MapID	PosX	PosY	ScriptFile	Name	IsLoad
 305	37	52485	97387		T©n §¹i C« 	1
 327	37	53108	98111		B¹ch C«ng Tö 	1
 378	37	55445	97852		¤ng chñ C¬ 	1
-387	37	55903	97604		Khóc ThiÕt T­îng	1
+387	37	55903	97604	\script\npc\purple_smith_v2.lua	Khóc ThiÕt T­îng	1
 306	37	56042	98203		§­êng L·o gia	1
 308	37	56168	97370		Vâ L©m truyÒn nh©n	1
 351	37	58896	97773		§«ng Mai	1

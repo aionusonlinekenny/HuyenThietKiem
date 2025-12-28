@@ -319,7 +319,7 @@ enum enumMSG_ID
 	enumMSG_ID_LIXIAN,//Lixian by kinnox;
 	enumMSG_ID_TREMBLE,//TrembleItem by kinnox;
 	enumMSG_ID_UPGRADE_ATTRIB,//UpgradeAttrib - Upgrade equipment attributes
-
+	enumMSG_ID_COMPOUND,//Compound system - Purple item crafting
 	enumMSG_ID_NUM,
 };
 

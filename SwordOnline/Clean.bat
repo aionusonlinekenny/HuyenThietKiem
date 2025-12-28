@@ -6,7 +6,7 @@ echo Visual C++/.Net junk files in C:\ThienDieuOnline
 echo ----------------------------------------------------
 pause
 
-cd /d "D:\HuyenThietKiem\SwordOnline"
+cd /d "E:\HuyenThietKiem\SwordOnline"
 del /F /Q /S *.obj
 echo Cleanup complete.
 pause

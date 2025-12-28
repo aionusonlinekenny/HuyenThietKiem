@@ -103,7 +103,7 @@
 #define		defMAX_AUTO_FILTERL				40
 #define		defMAX_ARRAY_FIGHT				10
 //TrembleItem by kinnox;
-#define		MAX_PART_BUILD						9		// Max so part item kham nam
+#define		MAX_PART_BUILD						17		// Max so part item kham nam
 enum UI_BUILDITEM_POSITION
 {
 	UIEP_BUILDITEM1 = 0,
@@ -115,6 +115,14 @@ enum UI_BUILDITEM_POSITION
 	UIEP_BUILDITEM7 = 6,
 	UIEP_BUILDITEM8 = 7,
 	UIEP_BUILDITEM9 = 8,	
+	UIEP_BUILDITEM10 = 9,   // Extended for Purple Smith
+	UIEP_BUILDITEM11 = 10,
+	UIEP_BUILDITEM12 = 11,
+	UIEP_BUILDITEM13 = 12,
+	UIEP_BUILDITEM14 = 13,
+	UIEP_BUILDITEM15 = 14,
+	UIEP_BUILDITEM16 = 15,
+	UIEP_BUILDITEM17 = 16,			   
 };
 
 enum BUILD_PART
@@ -128,6 +136,14 @@ enum BUILD_PART
 	itempart_build7,
 	itempart_build8,
 	itempart_build9,
+	itempart_build10,        // Extended for Purple Smith
+	itempart_build11,
+	itempart_build12,
+	itempart_build13,
+	itempart_build14,
+	itempart_build15,
+	itempart_build16,
+	itempart_build17,
 	buildpart_num,
 };
 
@@ -545,6 +561,9 @@ enum UIOBJECT_CONTAINER
 	UOC_SKILL_LIST,			
 	UOC_SKILL_TREE,
 	UOC_BUILD_ITEM,//TrembleItem by kinnox;
+	UOC_COMPOUND,//CompoundItem object boxes
+	UOC_COMPOUND_BOX,//CompoundItem matrix boxes
+	
 };
 
 //==================================

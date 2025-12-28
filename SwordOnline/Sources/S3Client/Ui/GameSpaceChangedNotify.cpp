@@ -41,6 +41,7 @@
 #include "UiCase/UiNotification.h"//Notification by kinnox;
 #include "UiCase/UiTrembleItem.h"//TrembleItem by kinnox;
 #include "UiCase/UiUpgradeAttrib.h"//UpgradeAttrib - Upgrade equipment attributes
+#include "UiCase/UiCompoundItem.h"//Compound system - Purple item crafting
 #include "../Login/Login.h"
 #include "UiCase/UiParadeItem.h"
 #include "UiCase/UiGetNumber.h"
@@ -262,6 +263,13 @@ void CoreDataChangedCallback(unsigned int uDataId, unsigned int uParam, int nPar
 				if (pUpgrade)
 					pUpgrade->UpdateItem((KUiObjAtRegion*)uParam, nParam);
 			}
+			else if (pObject->eContainer == UOC_COMPOUND || pObject->eContainer == UOC_COMPOUND_BOX)//CompoundItem
+			{
+				KUiComItem* pCompound = KUiComItem::GetIfVisible();
+				if (pCompound)
+					pCompound->UpdateItem((KUiObjAtRegion*)uParam, nParam);
+			}
+
 		}
 		break;
 	case GDCNI_FIGHT_SKILL_POINT:	
@@ -563,7 +571,12 @@ void CoreDataChangedCallback(unsigned int uDataId, unsigned int uParam, int nPar
 		{
 			KUiUpgradeAttrib::OpenWindow();
 		}
-		break;	
+		break;
+	case GDCNI_OPEN_COMPOUND://Compound system - Purple item crafting
+		{
+			KUiComItem::OpenWindow();
+		}
+		break;
 	case GDCNI_EXIT_GAME:
 		UiEndGame();
 		UiPostQuitMsg();

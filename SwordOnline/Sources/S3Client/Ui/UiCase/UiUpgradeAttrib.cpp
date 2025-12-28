@@ -447,7 +447,7 @@ void KUiUpgradeAttrib::UpdateData()
 
 	// CRITICAL FIX: GetGameData returns ALL 9 build container slots, not just our 3!
 	// Must allocate array for 9 items to prevent buffer overflow and stack corruption
-	const int BUILD_CONTAINER_SIZE = 9;  // Same as UiTrembleItem
+	const int BUILD_CONTAINER_SIZE = 20;  // Same as UiTrembleItem
 	g_DebugLog("[CLIENT] Creating Item array, size = %d (was %d)", BUILD_CONTAINER_SIZE, _UPGRADE_ATTRIB_SLOT_COUNT);
 	KUiObjAtRegion Item[BUILD_CONTAINER_SIZE];
 
@@ -550,7 +550,7 @@ void KUiUpgradeAttrib::OnCancel()
 	if (g_pCoreShell)
 	{
 		// CRITICAL FIX: Same buffer overflow bug as UpdateData!
-		const int BUILD_CONTAINER_SIZE = 9;
+		const int BUILD_CONTAINER_SIZE = 20;
 		KUiObjAtRegion Item[BUILD_CONTAINER_SIZE];
 		int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Item, 0);
 		if (nCount)

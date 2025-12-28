@@ -3,158 +3,317 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
-Configuration: Bishop - Win32 Debug
+--------------------Configuration: LuaLibDll - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPD545.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I ".\LuaLibDll\src" /I ".\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "LUALIBDLL_EXPORTS" /Fp"Release/LuaLibDll.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lapi.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lcode.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ldebug.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ldo.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lfunc.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lgc.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\llex.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lmem.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lobject.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lparser.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lstate.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lstring.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltable.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltests.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltm.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lua.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\LuaExtend.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lundump.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lvm.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lzio.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lauxlib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lbaselib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\ldblib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\liolib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lmathlib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lstrlib.c"
+]
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPD545.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPD546.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"Release/LuaLibDll.pdb" /machine:I386 /out:"Release/LuaLibDll.dll" /implib:"Release/LuaLibDll.lib" 
+.\Release\lapi.obj
+.\Release\lcode.obj
+.\Release\ldebug.obj
+.\Release\ldo.obj
+.\Release\lfunc.obj
+.\Release\lgc.obj
+.\Release\llex.obj
+.\Release\lmem.obj
+.\Release\lobject.obj
+.\Release\lparser.obj
+.\Release\lstate.obj
+.\Release\lstring.obj
+.\Release\ltable.obj
+.\Release\ltests.obj
+.\Release\ltm.obj
+.\Release\lua.obj
+.\Release\LuaExtend.obj
+.\Release\lundump.obj
+.\Release\lvm.obj
+.\Release\lzio.obj
+.\Release\lauxlib.obj
+.\Release\lbaselib.obj
+.\Release\ldblib.obj
+.\Release\liolib.obj
+.\Release\lmathlib.obj
+.\Release\lstrlib.obj
+]
+Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSPD546.tmp"
+<h3>Output Window</h3>
+Compiling...
+lapi.c
+Create LUA dllexport
+lcode.c
+Create LUA dllexport
+ldebug.c
+Create LUA dllexport
+ldo.c
+Create LUA dllexport
+lfunc.c
+Create LUA dllexport
+lgc.c
+Create LUA dllexport
+llex.c
+Create LUA dllexport
+lmem.c
+Create LUA dllexport
+lobject.c
+Create LUA dllexport
+lparser.c
+Create LUA dllexport
+lstate.c
+Create LUA dllexport
+lstring.c
+Create LUA dllexport
+ltable.c
+Create LUA dllexport
+ltests.c
+Create LUA dllexport
+ltm.c
+Create LUA dllexport
+lua.c
+Create LUA dllexport
+LuaExtend.c
+Create LUA dllexport
+lundump.c
+Create LUA dllexport
+lvm.c
+Create LUA dllexport
+lzio.c
+Create LUA dllexport
+lauxlib.c
+Create LUA dllexport
+lbaselib.c
+Create LUA dllexport
+ldblib.c
+Create LUA dllexport
+liolib.c
+Create LUA dllexport
+lmathlib.c
+Create LUA dllexport
+lstrlib.c
+Create LUA dllexport
+Linking...
+   Creating library Release/LuaLibDll.lib and object Release/LuaLibDll.exp
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPD864.bat" with contents
+[
+@echo off
+copy Release\lualibdll.lib ..\..\..\Lib\lualibdll.lib
+copy Release\lualibdll.dll ..\..\..\Lib\lualibdll.dll
+md ..\..\..\..\bin\client
+copy Release\lualibdll.dll ..\..\..\..\bin\client\lualibdll.dll
+md ..\..\..\..\bin\Server
+copy Release\lualibdll.dll ..\..\..\..\bin\Server\lualibdll.dll
+md ..\..\..\..\bin\client\release\
+copy Release\lualibdll.dll ..\..\..\..\bin\client\release\lualibdll.dll
+md ..\..\..\..\bin\Server\release\
+copy Release\lualibdll.dll ..\..\..\..\bin\\Server\release\lualibdll.dll
+]
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPD864.bat"
 
-
-
-<h3>Results</h3>
-Bishop.exe - 0 error(s), 0 warning(s)
-<h3>
-Configuration: Core - Win32 Server Debug
-</h3>
-<h3>Command Lines</h3>
-
-
-
-<h3>Results</h3>
-CoreServer.dll - 0 error(s), 0 warning(s)
-<h3>
-Configuration: Core - Win32 Client Debug
-</h3>
-<h3>Command Lines</h3>
-
-
-
-<h3>Results</h3>
-CoreClient.dll - 0 error(s), 0 warning(s)
-<h3>
-Configuration: Engine - Win32 Debug
-</h3>
-<h3>Command Lines</h3>
-
-
-
-<h3>Results</h3>
-Engine.dll - 0 error(s), 0 warning(s)
-<h3>
-Configuration: ExpandPackage - Win32 Debug
-</h3>
-<h3>Command Lines</h3>
-
-
-
-<h3>Results</h3>
-ExpandPackage.dll - 0 error(s), 0 warning(s)
-<h3>
-Configuration: FilterText - Win32 Debug
-</h3>
-<h3>Command Lines</h3>
-
-
-
-<h3>Results</h3>
-FilterText.dll - 0 error(s), 0 warning(s)
-<h3>
-Configuration: GameServer - Win32 Debug
-</h3>
-<h3>Command Lines</h3>
-
-
-
-<h3>Results</h3>
-GameServer.exe - 0 error(s), 0 warning(s)
-<h3>
-Configuration: Goddess - Win32 Debug
-</h3>
-<h3>Command Lines</h3>
-
-
-
-<h3>Results</h3>
-Goddess.exe - 0 error(s), 0 warning(s)
-<h3>
-Configuration: Heaven - Win32 Debug
-</h3>
-<h3>Command Lines</h3>
-
-
-
-<h3>Results</h3>
-Heaven.dll - 0 error(s), 0 warning(s)
-<h3>
-Configuration: LuaLibDll - Win32 Debug
-</h3>
-<h3>Command Lines</h3>
+        1 file(s) copied.
+        1 file(s) copied.
+A subdirectory or file ..\..\..\..\bin\client already exists.
+        1 file(s) copied.
+A subdirectory or file ..\..\..\..\bin\Server already exists.
+        1 file(s) copied.
+A subdirectory or file ..\..\..\..\bin\client\release\ already exists.
+        1 file(s) copied.
+A subdirectory or file ..\..\..\..\bin\Server\release\ already exists.
+        1 file(s) copied.
 
 
 
 <h3>Results</h3>
 LuaLibDll.dll - 0 error(s), 0 warning(s)
 <h3>
-Configuration: Rainbow - Win32 Debug
+--------------------Configuration: LuaLibDll - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPD920.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I ".\src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "LUALIBDLL_EXPORTS" /Fp"Debug/LuaLibDll.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lapi.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lcode.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ldebug.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ldo.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lfunc.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lgc.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\llex.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lmem.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lobject.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lparser.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lstate.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lstring.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltable.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltests.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltm.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lua.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\LuaExtend.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lundump.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lvm.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lzio.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lauxlib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lbaselib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\ldblib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\liolib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lmathlib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lstrlib.c"
+]
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPD920.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPD921.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:yes /pdb:"Debug/LuaLibDll.pdb" /debug /machine:I386 /out:"Debug/LuaLibDll.dll" /implib:"Debug/LuaLibDll.lib" /pdbtype:sept 
+.\Debug\lapi.obj
+.\Debug\lcode.obj
+.\Debug\ldebug.obj
+.\Debug\ldo.obj
+.\Debug\lfunc.obj
+.\Debug\lgc.obj
+.\Debug\llex.obj
+.\Debug\lmem.obj
+.\Debug\lobject.obj
+.\Debug\lparser.obj
+.\Debug\lstate.obj
+.\Debug\lstring.obj
+.\Debug\ltable.obj
+.\Debug\ltests.obj
+.\Debug\ltm.obj
+.\Debug\lua.obj
+.\Debug\LuaExtend.obj
+.\Debug\lundump.obj
+.\Debug\lvm.obj
+.\Debug\lzio.obj
+.\Debug\lauxlib.obj
+.\Debug\lbaselib.obj
+.\Debug\ldblib.obj
+.\Debug\liolib.obj
+.\Debug\lmathlib.obj
+.\Debug\lstrlib.obj
+]
+Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSPD921.tmp"
+<h3>Output Window</h3>
+Compiling...
+lapi.c
+Create LUA dllexport
+lcode.c
+Create LUA dllexport
+ldebug.c
+Create LUA dllexport
+ldo.c
+Create LUA dllexport
+lfunc.c
+Create LUA dllexport
+lgc.c
+Create LUA dllexport
+llex.c
+Create LUA dllexport
+lmem.c
+Create LUA dllexport
+lobject.c
+Create LUA dllexport
+lparser.c
+Create LUA dllexport
+lstate.c
+Create LUA dllexport
+lstring.c
+Create LUA dllexport
+ltable.c
+Create LUA dllexport
+ltests.c
+Create LUA dllexport
+ltm.c
+Create LUA dllexport
+lua.c
+Create LUA dllexport
+LuaExtend.c
+Create LUA dllexport
+lundump.c
+Create LUA dllexport
+lvm.c
+Create LUA dllexport
+lzio.c
+Create LUA dllexport
+lauxlib.c
+Create LUA dllexport
+lbaselib.c
+Create LUA dllexport
+ldblib.c
+Create LUA dllexport
+liolib.c
+Create LUA dllexport
+lmathlib.c
+Create LUA dllexport
+lstrlib.c
+Create LUA dllexport
+Linking...
+   Creating library Debug/LuaLibDll.lib and object Debug/LuaLibDll.exp
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPDBB3.bat" with contents
+[
+@echo off
+copy Debug\lualibdll.dll ..\..\..\Lib\lualibdll.dll
+copy Debug\lualibdll.lib ..\..\..\Lib\lualibdll.lib
+md ..\..\..\..\bin\Client\Debug\
+copy Debug\lualibdll.dll ..\..\..\..\bin\Client\Debug\lualibdll.dll
+copy Debug\lualibdll.map ..\..\..\..\bin\Client\Debug\lualibdll.map
+copy Debug\lualibdll.pdb ..\..\..\..\bin\Client\Debug\lualibdll.pdb
+md ..\..\..\..\bin\GameServer\Debug\
+copy Debug\lualibdll.dll ..\..\..\..\bin\GameServer\Debug\lualibdll.dll
+copy Debug\lualibdll.map ..\..\..\..\bin\GameServer\Debug\lualibdll.map
+copy Debug\lualibdll.pdb ..\..\..\..\bin\GameServer\Debug\lualibdll.pdb
+md ..\..\..\..\bin\MultiServer\Debug\
+copy Debug\lualibdll.dll ..\..\..\..\bin\MultiServer\Debug\lualibdll.dll
+copy Debug\lualibdll.map ..\..\..\..\bin\MultiServer\Debug\lualibdll.map
+copy Debug\lualibdll.pdb ..\..\..\..\bin\MultiServer\Debug\lualibdll.pdb
+]
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPDBB3.bat"
+
+        1 file(s) copied.
+        1 file(s) copied.
+A subdirectory or file ..\..\..\..\bin\Client\Debug\ already exists.
+        1 file(s) copied.
+The system cannot find the file specified.
+        1 file(s) copied.
+        1 file(s) copied.
+The system cannot find the file specified.
+        1 file(s) copied.
+        1 file(s) copied.
+The system cannot find the file specified.
+        1 file(s) copied.
 
 
 
 <h3>Results</h3>
-Rainbow.dll - 0 error(s), 0 warning(s)
-<h3>
-Configuration: Represent2 - Win32 Debug
-</h3>
-<h3>Command Lines</h3>
-
-
-
-<h3>Results</h3>
-Represent2.dll - 0 error(s), 0 warning(s)
-<h3>
-Configuration: Represent3 - Win32 Debug
-</h3>
-<h3>Command Lines</h3>
-
-
-
-<h3>Results</h3>
-Represent3.dll - 0 error(s), 0 warning(s)
-<h3>
-Configuration: S3Client - Win32 Debug
-</h3>
-<h3>Command Lines</h3>
-
-
-
-<h3>Results</h3>
-Game.exe - 0 error(s), 0 warning(s)
-<h3>
-Configuration: S3Relay - Win32 Debug
-</h3>
-<h3>Command Lines</h3>
-
-
-
-<h3>Results</h3>
-S3Relay.exe - 0 error(s), 0 warning(s)
-<h3>
-Configuration: S3RelayServer - Win32 Debug
-</h3>
-<h3>Command Lines</h3>
-
-
-
-<h3>Results</h3>
-S3RelayServer.exe - 0 error(s), 0 warning(s)
-<h3>
-Configuration: Sword3PaySys - Win32 Debug
-</h3>
-<h3>Command Lines</h3>
-
-
-
-<h3>Results</h3>
-Sword3PaySys.exe - 0 error(s), 0 warning(s)
+LuaLibDll.dll - 0 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

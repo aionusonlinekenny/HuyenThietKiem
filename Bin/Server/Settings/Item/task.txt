@@ -16,8 +16,22 @@ Nh¹c V­¬ng KiÕm	6	13	1	\spr\item\questkey\ÔÀÍõ½£.spr	41	2	3	<color=green>T­îng t
 Nh¹c V­¬ng Hån Th¹ch	6	14	1	\spr\Ui3\±íÇé\417.spr	41	1	1	Thu thËp ®ñ 50 viªn ®Õn thî rÌn T­¬ng D­¬ng chÕ t¹o Nh¹c V­¬ng KiÕm	50
 Tinh Hång B¶o Th¹ch	6	15	1	\spr\item\obj_item_red.spr	333	1	1	"Mét viªn b¶o th¹ch thÇn bİ, ng­êi luyÖn vâ cã thÓ dïng ®Ó ®¶ th«ng kinh m¹ch."	0
 Lam Thñy Tinh	6	16	1	\spr\item\questkey\baoshi_zhuanxu.spr	333	1	1	Lo¹i Thñy tinh cã thÓ lµm thay ®æi ngò hµnh cña trang bŞ 	0
+Lam Thñy Tinh CÊp 2	6	16	2	\spr\item\questkey\baoshi_zhuanxu.spr	333	1	1	HuyÒn Tinh cÊp thÊp, +2 Luck cho trang bŞ Tİm	50
+Lam Thñy Tinh CÊp 3	6	16	3	\spr\item\questkey\baoshi_zhuanxu.spr	333	1	1	HuyÒn Tinh cÊp thÊp, +3 Luck cho trang bŞ Tİm	50
 Tö Thñy Tinh	6	17	1	\spr\item\questkey\baoshi_xingtian.spr	333	1	1	Lo¹i Thñy tinh cã thÓ n©ng cÊp trang bŞ.  	0
+Tö Thñy Tinh CÊp 2	6	17	2	\spr\item\questkey\baoshi_xingtian.spr	333	1	1	HuyÒn Tinh trung b×nh, +4 Luck cho trang bŞ Tİm	50
+Tö Thñy Tinh CÊp 3	6	17	3	\spr\item\questkey\baoshi_xingtian.spr	333	1	1	HuyÒn Tinh trung b×nh, +5 Luck cho trang bŞ Tİm	50
+Tö Thñy Tinh CÊp 4	6	17	4	\spr\item\questkey\baoshi_xingtian.spr	333	1	1	HuyÒn Tinh trung b×nh, +6 Luck cho trang bŞ Tİm	50
 Lôc Thñy Tinh	6	18	1	\spr\item\questkey\baoshi_nvwa.spr	333	1	1	Lo¹i thñy tinh cã thÓ gióp thay ®æi c¸c thuéc tİnh cña trang bŞ 	0
+Lôc Thñy Tinh CÊp 2	6	18	2	\spr\item\questkey\baoshi_nvwa.spr	333	1	1	HuyÒn Tinh cao cÊp, +6 Luck cho trang bŞ Tİm	50
+Lôc Thñy Tinh CÊp 3	6	18	3	\spr\item\questkey\baoshi_nvwa.spr	333	1	1	HuyÒn Tinh cao cÊp, +7 Luck cho trang bŞ Tİm	50
+Lôc Thñy Tinh CÊp 4	6	18	4	\spr\item\questkey\baoshi_nvwa.spr	333	1	1	HuyÒn Tinh cao cÊp, +8 Luck cho trang bŞ Tİm	50
+Lôc Thñy Tinh CÊp 5	6	18	5	\spr\item\questkey\baoshi_nvwa.spr	333	1	1	HuyÒn Tinh rÊt cao cÊp, +9 Luck cho trang bŞ Tİm	50
+Hång Thñuy Tinh CÊp 1	6	100	1	\spr\item\questkey\baoshi_red.spr	333	1	1	HuyÒn Tinh huyÒn tho¹i, +8 Luck cho trang bŞ Tİm	50
+Hång Thñuy Tinh CÊp 2	6	100	2	\spr\item\questkey\baoshi_red.spr	333	1	1	HuyÒn Tinh huyÒn tho¹i, +9 Luck cho trang bŞ Tİm	50
+Hång Thñuy Tinh CÊp 3	6	100	3	\spr\item\questkey\baoshi_red.spr	333	1	1	HuyÒn Tinh huyÒn tho¹i, +10 Luck cho trang bŞ Tİm	50
+Hång Thñuy Tinh CÊp 4	6	100	4	\spr\item\questkey\baoshi_red.spr	333	1	1	HuyÒn Tinh siªu huyÒn tho¹i, +11 Luck cho trang bŞ Tİm	50
+Hång Thñuy Tinh CÊp 5	6	100	5	\spr\item\questkey\baoshi_red.spr	333	1	1	HuyÒn Tinh tèi th­îng, +12 Luck cho trang bŞ Tİm	50
 TiÒn §ång	6	19	1	\spr\item\tongqian.spr	373	1	1	Dïng ®Ó mua nh÷ng vËt phÈm ®Æc thï.	50
 Kim Nguyªn b¶o	6	20	1	\spr\item\questkey\obj_item_cardg.spr	340	1	1	§¹i Nguyªn b¶o	0
 Tİn vËt D­¬ng Anh	6	21	1	\spr\item\script\nvtianwangling.spr	41	1	1	VËt phÈm cÇn thiÕt ®Ó nh©n vËt n÷ gia nhËp Thiªn V­¬ng Bang	0

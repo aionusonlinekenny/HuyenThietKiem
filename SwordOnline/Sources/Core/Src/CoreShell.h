@@ -266,8 +266,11 @@ enum GAMEDATA_CHANGED_NOTIFY_INDEX
 	GDCNI_OPEN_NOTIFICATION,//Notification by kinnox;
 
 	GDCNI_OPEN_TREMBLE,//TrembleItem by kinnox;
-	GDCNI_OPEN_UPGRADE_ATTRIB,//UpgradeAttrib - Upgrade equipment attributes	
-
+	
+	GDCNI_OPEN_UPGRADE_ATTRIB,//UpgradeAttrib - Upgrade equipment attributes
+	
+	GDCNI_OPEN_COMPOUND,//Compound system - Purple item crafting	
+	
 	GDCNI_EXIT_GAME,
 	
 
@@ -407,6 +410,16 @@ enum GAMEOPERATION_INDEX
 	GOI_SET_IMAGE_PLAYER,//Player Avatar by kinnox;
 
 	GOI_RECOVERY_BOX_COMMAND,//TrembleItem by kinnox;
+
+	GOI_COMPITEM_COM,//Compound system - Combine crystals
+
+	GOI_COMPITEM_DISTILL,//Compound system - Distill property stones
+
+	GOI_COMPITEM_FORGE,//Compound system - Forge purple items
+
+	GOI_COMPITEM_ENCHASE,//Compound system - Enchase purple items
+
+	GOI_COMPITEM_ALTAL,//Compound system - Atlas crafting					  
 };
 
 //=========================================================

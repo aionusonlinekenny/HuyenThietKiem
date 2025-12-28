@@ -3,10 +3,41 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
-Configuration: LuaLib - Win32 Release
+--------------------Configuration: LuaLib - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\Ken\AppData\Local\Temp\RSP352C.tmp" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPAD2B.tmp" with contents
+[
+/nologo /ML /W3 /GX /O2 /I ".\src" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /Fp"Release/LuaLib.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lapi.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lcode.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ldebug.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ldo.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lfunc.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lgc.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\llex.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lmem.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lobject.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lparser.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lstate.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lstring.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltable.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltests.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltm.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lua.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\LuaExtend.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lundump.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lvm.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lzio.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lauxlib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lbaselib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\ldblib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\liolib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lmathlib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lstrlib.c"
+]
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPAD2B.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPAD2C.tmp" with contents
 [
 /nologo /out:"Release\LuaLib.lib" 
 .\Release\lapi.obj
@@ -36,15 +67,68 @@ Creating temporary file "C:\Users\Ken\AppData\Local\Temp\RSP352C.tmp" with conte
 .\Release\lmathlib.obj
 .\Release\lstrlib.obj
 ]
-Creating command line "link.exe -lib @C:\Users\Ken\AppData\Local\Temp\RSP352C.tmp"
+Creating command line "link.exe -lib @C:\Users\kenny\AppData\Local\Temp\RSPAD2C.tmp"
 <h3>Output Window</h3>
+Compiling...
+lapi.c
+LIB
+lcode.c
+LIB
+ldebug.c
+LIB
+ldo.c
+LIB
+lfunc.c
+LIB
+lgc.c
+LIB
+llex.c
+LIB
+lmem.c
+LIB
+lobject.c
+LIB
+lparser.c
+LIB
+lstate.c
+LIB
+lstring.c
+LIB
+ltable.c
+LIB
+ltests.c
+LIB
+ltm.c
+LIB
+lua.c
+LIB
+LuaExtend.c
+LIB
+lundump.c
+LIB
+lvm.c
+LIB
+lzio.c
+LIB
+lauxlib.c
+LIB
+lbaselib.c
+LIB
+ldblib.c
+LIB
+liolib.c
+LIB
+lmathlib.c
+LIB
+lstrlib.c
+LIB
 Creating library...
-Creating temporary file "C:\Users\Ken\AppData\Local\Temp\RSP356B.bat" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPB03B.bat" with contents
 [
 @echo off
 copy debug\lualib.lib ..\..\..\Lib\lualib.lib
 ]
-Creating command line "C:\Users\Ken\AppData\Local\Temp\RSP356B.bat"
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPB03B.bat"
 
 The system cannot find the file specified.
 Error executing c:\windows\system32\cmd.exe.
@@ -53,6 +137,140 @@ Error executing c:\windows\system32\cmd.exe.
 
 <h3>Results</h3>
 LuaLib.lib - 1 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: LuaLib - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPB0B9.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /I "src" /I ".\src" /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /Fp"Debug/LuaLib.pch" /YX"Dprintf.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lapi.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lcode.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ldebug.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ldo.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lfunc.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lgc.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\llex.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lmem.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lobject.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lparser.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lstate.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lstring.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltable.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltests.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltm.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lua.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\LuaExtend.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lundump.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lvm.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lzio.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lauxlib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lbaselib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\ldblib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\liolib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lmathlib.c"
+"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lstrlib.c"
+]
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPB0B9.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPB0BA.tmp" with contents
+[
+/nologo /out:"Debug\LuaLib.lib" 
+.\Debug\lapi.obj
+.\Debug\lcode.obj
+.\Debug\ldebug.obj
+.\Debug\ldo.obj
+.\Debug\lfunc.obj
+.\Debug\lgc.obj
+.\Debug\llex.obj
+.\Debug\lmem.obj
+.\Debug\lobject.obj
+.\Debug\lparser.obj
+.\Debug\lstate.obj
+.\Debug\lstring.obj
+.\Debug\ltable.obj
+.\Debug\ltests.obj
+.\Debug\ltm.obj
+.\Debug\lua.obj
+.\Debug\LuaExtend.obj
+.\Debug\lundump.obj
+.\Debug\lvm.obj
+.\Debug\lzio.obj
+.\Debug\lauxlib.obj
+.\Debug\lbaselib.obj
+.\Debug\ldblib.obj
+.\Debug\liolib.obj
+.\Debug\lmathlib.obj
+.\Debug\lstrlib.obj
+]
+Creating command line "link.exe -lib @C:\Users\kenny\AppData\Local\Temp\RSPB0BA.tmp"
+<h3>Output Window</h3>
+Compiling...
+lapi.c
+LIB
+lcode.c
+LIB
+ldebug.c
+LIB
+ldo.c
+LIB
+lfunc.c
+LIB
+lgc.c
+LIB
+llex.c
+LIB
+lmem.c
+LIB
+lobject.c
+LIB
+lparser.c
+LIB
+lstate.c
+LIB
+lstring.c
+LIB
+ltable.c
+LIB
+ltests.c
+LIB
+ltm.c
+LIB
+lua.c
+LIB
+LuaExtend.c
+LIB
+lundump.c
+LIB
+lvm.c
+LIB
+lzio.c
+LIB
+lauxlib.c
+LIB
+lbaselib.c
+LIB
+ldblib.c
+LIB
+liolib.c
+LIB
+lmathlib.c
+LIB
+lstrlib.c
+LIB
+Creating library...
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPB37A.bat" with contents
+[
+@echo off
+copy debug\lualib.lib ..\..\..\Lib\lualib.lib
+]
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPB37A.bat"
+
+        1 file(s) copied.
+
+
+
+<h3>Results</h3>
+LuaLib.lib - 0 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

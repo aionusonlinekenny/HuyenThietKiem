@@ -3013,6 +3013,11 @@ void	KProtocolProcess::s2cShowMsg(BYTE *pMsg)
 			CoreDataChanged(GDCNI_OPEN_UPGRADE_ATTRIB, 0, 0);
 		}
 		break;
+	case enumMSG_ID_COMPOUND://Compound system - Purple item crafting
+		{
+			CoreDataChanged(GDCNI_OPEN_COMPOUND, 0, 0);
+		}
+		break;
 	default:
 		break;
 	}

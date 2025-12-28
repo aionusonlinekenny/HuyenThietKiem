@@ -1235,6 +1235,18 @@ SOURCE=.\Ui\UiCase\UiUpgradeAttrib.cpp
 SOURCE=.\Ui\UiCase\UiUpgradeAttrib.h
 # End Source File
 # End Group
+# Begin Group "UiPurple"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Ui\UiCase\UiCompoundItem.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Ui\UiCase\UiCompoundItem.h
+# End Source File
+# End Group
 # End Group
 # Begin Group "Sound"
 

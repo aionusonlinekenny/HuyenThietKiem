@@ -1,6 +1,7 @@
 #include "KCore.h"
 #include "GameDataDef.h"
 #include "CoreShell.h"
+#include "KItemGenerator.h"						   
 
 #include "CoreDrawGameObj.h"
 #include "ImgRef.h"
@@ -13,7 +14,6 @@
 #include "KMagicDesc.h"//AutoAI by kinnox;
 #include "KSubWorldSet.h"
 #include "KProtocolProcess.h"
-
 #include "KNpcResList.h"
 #include "Scene/KScenePlaceC.h"
 #include "kskills.h"
@@ -2789,6 +2789,15 @@ int	KCoreShell::OperationRequest(unsigned int uOper, unsigned int uParam, int nP
 						P1.nX = PartBuildItem[pObject1->Region.v];
 					}
 					break;
+				case UOC_COMPOUND://CompoundItem object boxes
+				case UOC_COMPOUND_BOX://CompoundItem matrix boxes
+				{
+					if (pObject1->Region.h == 1)
+						break;
+					P1.nPlace = pos_builditem;
+					P1.nX = PartBuildItem[pObject1->Region.v];
+				}
+				break;
 				case UOC_ITEM_TAKE_WITH:
 					P1.nPlace = pos_equiproom;
 					P1.nX = pObject1->Region.h;
@@ -3012,6 +3021,15 @@ int	KCoreShell::OperationRequest(unsigned int uOper, unsigned int uParam, int nP
 						P2.nX = PartBuildItem[pObject2->Region.v];
 					}
 					break;
+				case UOC_COMPOUND://CompoundItem object boxes
+				case UOC_COMPOUND_BOX://CompoundItem matrix boxes
+				{
+					if (pObject2->Region.h == 1)
+						break;
+					P2.nPlace = pos_builditem;
+					P2.nX = PartBuildItem[pObject2->Region.v];
+				}
+				break;
 				case UOC_ITEM_TAKE_WITH:
 					P2.nPlace = pos_equiproom;
 					P2.nX = pObject2->Region.h;
@@ -3751,6 +3769,179 @@ int	KCoreShell::OperationRequest(unsigned int uOper, unsigned int uParam, int nP
 			Player[CLIENT_PLAYER_INDEX].OnSelectFromUI(&command, UI_CHANGETAXDIALOG);
 		}
 		break;
+	// REMOVED: GOI_COMPITEM_FORGE now handled by server-side Lua script (ExeCompoundForge)
+	// Client calls GOI_EXESCRIPT_BUTTON with "ExeCompoundForge" instead
+	/*case GOI_COMPITEM_FORGE://CompoundItem Forge - Create purple equipment (OLD CLIENT-SIDE - REMOVED)
+		{
+			g_DebugLog("[FORGE] GOI_COMPITEM_FORGE handler START");
+
+			// Get the two items from build slots
+			int nEquipItemId = Player[CLIENT_PLAYER_INDEX].m_ItemList.GetBuildItem(0); // BigBox = slot 0
+			int nCrystalItemId = Player[CLIENT_PLAYER_INDEX].m_ItemList.GetBuildItem(1); // SmallBox = slot 1
+
+			g_DebugLog("[FORGE] EquipItem ID: %d, CrystalItem ID: %d", nEquipItemId, nCrystalItemId);
+
+			// Validate both items exist
+			if (nEquipItemId <= 0 || nCrystalItemId <= 0)
+			{
+				g_DebugLog("[FORGE] ERROR: Missing items (Equip: %d, Crystal: %d)", nEquipItemId, nCrystalItemId);
+				KSystemMessage sMsg;
+				strcpy(sMsg.szMessage, "Vui long dat du 2 vat pham (trang bi + Huyen Tinh) de che tao!");
+				sMsg.eType = SMT_NORMAL;
+				sMsg.byConfirmType = SMCT_CLICK;
+				sMsg.byPriority = 1;
+				sMsg.byParamSize = 0;
+				CoreDataChanged(GDCNI_SYSTEM_MESSAGE, (unsigned int)&sMsg, 0);
+				break;
+			}
+
+			// Extract equipment properties
+			int nDetailType = Item[nEquipItemId].GetDetailType();
+			int nParticular = Item[nEquipItemId].GetParticular();
+			int nSeries = Item[nEquipItemId].GetSeries();
+			int nLevel = Item[nEquipItemId].GetLevel();
+
+			g_DebugLog("[FORGE] Equipment: Detail=%d, Particular=%d, Series=%d, Level=%d",
+				nDetailType, nParticular, nSeries, nLevel);
+
+			// Extract Huy?n Tinh level from detail (74-79 ? level 1-6)
+			int nCrystalDetail = Item[nCrystalItemId].GetDetailType();
+			int nCrystalLevel = nCrystalDetail - 73; // 74?1, 75?2, ..., 79?6
+
+			g_DebugLog("[FORGE] Huyen Tinh: Detail=%d, Level=%d", nCrystalDetail, nCrystalLevel);
+
+			// Validate Huy?n Tinh level
+			if (nCrystalLevel < 1 || nCrystalLevel > 6)
+			{
+				g_DebugLog("[FORGE] ERROR: Invalid Huyen Tinh level: %d", nCrystalLevel);
+				KSystemMessage sMsg;
+				strcpy(sMsg.szMessage, "Huyen Tinh khong hop le!");
+				sMsg.eType = SMT_NORMAL;
+				sMsg.byConfirmType = SMCT_CLICK;
+				sMsg.byPriority = 1;
+				sMsg.byParamSize = 0;
+				CoreDataChanged(GDCNI_SYSTEM_MESSAGE, (unsigned int)&sMsg, 0);
+				break;
+			}
+
+			// Determine number of attribute lines based on Huy?n Tinh level
+			int nNumLines = 0;
+			if (nCrystalLevel >= 5) // Level 5-6 (detail 78-79) ? 100% 6 lines
+			{
+				nNumLines = 6;
+				g_DebugLog("[FORGE] Huyen Tinh level %d >= 5: Guaranteed 6 lines", nCrystalLevel);
+			}
+			else // Level 1-4: Random based on luck
+			{
+				// Random distribution: higher crystal level = better chance for more lines
+				// Level 1: 2-4 lines, Level 2: 2-5 lines, Level 3: 3-5 lines, Level 4: 3-6 lines
+				int nMinLines = (nCrystalLevel <= 2) ? 2 : 3;
+				int nMaxLines = nCrystalLevel + 2; // Level 1?3, Level 2?4, Level 3?5, Level 4?6
+				nNumLines = nMinLines + (rand() % (nMaxLines - nMinLines + 1));
+				g_DebugLog("[FORGE] Huyen Tinh level %d: Random %d-%d lines, got %d",
+					nCrystalLevel, nMinLines, nMaxLines, nNumLines);
+			}
+
+			// Create magic attribute level array (all attributes at level 10 for now)
+			int pnaryMALevel[6] = {0, 0, 0, 0, 0, 0};
+			for (int i = 0; i < nNumLines && i < 6; i++)
+			{
+				pnaryMALevel[i] = 10; // Level 10 attributes
+			}
+
+			// Calculate equipment record index (same as Gen_PurpleEquipment does internally)
+			WORD wRecord = (WORD)(nParticular * 10 + nLevel - 1);
+
+
+			// Create new purple equipment item using ItemSet.Add()
+			// This will call ItemGen.Gen_ExistPurpleEquipment() internally
+			// Signature: Add(nItemGenre, nSeries, nLevel, wRecord, nLuck, nDetail, nParticular, pnMagicLevel, nVersion, dwRandomSeed, ...)
+			int nLuck = 1000000000 + (rand() % 1000); // Flag for purple (>= 1000000000)
+			int nNewItemIdx = ItemSet.Add(
+				item_purpleequip,  // nItemGenre
+
+				nSeries,           // nSeries
+				nLevel,            // nLevel
+				wRecord,           // wRecord (equipment record index)
+				nLuck,             // nLuck
+				nDetailType,       // nDetail
+				nParticular,       // nParticular
+				pnaryMALevel,      // pnMagicLevel
+				0,                 // nVersion
+				0                  // dwRandomSeed
+			);
+
+			if (nNewItemIdx <= 0)
+			{
+				g_DebugLog("[FORGE] ERROR: Failed to create purple equipment (ItemSet.Add returned %d)", nNewItemIdx);
+				KSystemMessage sMsg;
+				strcpy(sMsg.szMessage, "Loi: Khong the tao trang bi tim!");
+				sMsg.eType = SMT_NORMAL;
+				sMsg.byConfirmType = SMCT_CLICK;
+				sMsg.byPriority = 1;
+				sMsg.byParamSize = 0;
+				CoreDataChanged(GDCNI_SYSTEM_MESSAGE, (unsigned int)&sMsg, 0);
+				break;
+			}
+
+			g_DebugLog("[FORGE] Purple equipment created successfully: ItemIdx=%d", nNewItemIdx);
+
+			// Find empty slot in player inventory
+			ItemPos Pos;
+			int nWidth = Item[nNewItemIdx].GetWidth();
+			int nHeight = Item[nNewItemIdx].GetHeight();
+
+			if (!Player[CLIENT_PLAYER_INDEX].m_ItemList.SearchPosition(nWidth, nHeight, &Pos))
+			{
+				g_DebugLog("[FORGE] ERROR: No room in inventory");
+				ItemSet.Remove(nNewItemIdx);
+				KSystemMessage sMsg;
+				strcpy(sMsg.szMessage, "Khong du cho trong hanh trang!");
+				sMsg.eType = SMT_NORMAL;
+				sMsg.byConfirmType = SMCT_CLICK;
+				sMsg.byPriority = 1;
+				sMsg.byParamSize = 0;
+				CoreDataChanged(GDCNI_SYSTEM_MESSAGE, (unsigned int)&sMsg, 0);
+				break;
+			}
+
+			// Add purple equipment to inventory
+			Player[CLIENT_PLAYER_INDEX].m_ItemList.Add(nNewItemIdx, Pos.nPlace, Pos.nX, Pos.nY);
+			g_DebugLog("[FORGE] Added purple equipment to inventory at pos(%d,%d,%d)",
+				Pos.nPlace, Pos.nX, Pos.nY);
+
+			// Remove the two source items
+			Player[CLIENT_PLAYER_INDEX].m_ItemList.Remove(nEquipItemId);
+			Player[CLIENT_PLAYER_INDEX].m_ItemList.Remove(nCrystalItemId);
+			g_DebugLog("[FORGE] Removed source items (Equip: %d, Crystal: %d)",
+				nEquipItemId, nCrystalItemId);
+
+			// Notify UI to update - clear both boxes
+			KUiObjAtContRegion Region;
+			Region.Obj.uGenre = CGOG_NOTHING;
+			Region.Obj.uId = 0;
+			Region.Region.h = 0;
+			Region.Region.v = 0; // BigBox = slot 0
+			Region.Region.Width = 0;
+			Region.Region.Height = 0;
+			Region.eContainer = UOC_COMPOUND;
+			CoreDataChanged(GDCNI_CONTAINER_OBJECT_CHANGED, (unsigned int)&Region, 1); // Clear BigBox
+
+			Region.Region.v = 1; // SmallBox = slot 1
+			CoreDataChanged(GDCNI_CONTAINER_OBJECT_CHANGED, (unsigned int)&Region, 1); // Clear SmallBox
+
+			// Success message
+			KSystemMessage sMsg;
+			sprintf(sMsg.szMessage, "Che tao thanh cong trang bi tim voi %d dong thuoc tinh!", nNumLines);
+			sMsg.eType = SMT_NORMAL;
+			sMsg.byConfirmType = SMCT_CLICK;
+			sMsg.byPriority = 1;
+			sMsg.byParamSize = 0;
+			CoreDataChanged(GDCNI_SYSTEM_MESSAGE, (unsigned int)&sMsg, 0);
+
+			g_DebugLog("[FORGE] GOI_COMPITEM_FORGE handler END - SUCCESS");
+		}
+		break;*/
 	case GOI_PLAYER_CREATE_PWD://LockPlayer by kinnox;
 		{
 			SendClientCreatPWCmd(uParam);
