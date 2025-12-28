@@ -642,36 +642,48 @@ int KUiCompound::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             if (uParam == (unsigned int) &m_Cancle) {
                 CleanItem();
             } else if (uParam == (unsigned int) &m_Compound) {
-                KUiComItem *pSelf = KUiComItem::GetIfVisible();
+                g_DebugLog("[COMPOUND] Compound button clicked");
 
+                // Don't allow crafting if animation is running
+                if (m_nStatus != STATUS_WAITING_MATERIALS) {
+                    g_DebugLog("[COMPOUND] Animation already running, ignoring click");
+                    return 1;
+                }
+
+                // Validate all 3 items exist BEFORE starting effect
                 KUiDraggedObject pObj;
-                unsigned int pUP[3];
-
                 m_Box1.GetObject(pObj);
-                if (pObj.uId > 0) {
-                    pUP[0] = pObj.uId;
-                } else {
+                if (pObj.uId <= 0) {
+                    g_DebugLog("[COMPOUND] No item in Box1");
+                    KUiMsgCentrePad::SystemMessageArrival("Vui long dat item vao o 1!", 256);
                     return 1;
                 }
 
                 pObj.uId = 0;
                 m_Box2.GetObject(pObj);
-                if (pObj.uId > 0) {
-                    pUP[1] = pObj.uId;
-                } else {
+                if (pObj.uId <= 0) {
+                    g_DebugLog("[COMPOUND] No item in Box2");
+                    KUiMsgCentrePad::SystemMessageArrival("Vui long dat item vao o 2!", 256);
                     return 1;
                 }
 
                 pObj.uId = 0;
                 m_Box3.GetObject(pObj);
-                if (pObj.uId > 0) {
-                    pUP[2] = pObj.uId;
-                } else {
+                if (pObj.uId <= 0) {
+                    g_DebugLog("[COMPOUND] No item in Box3");
+                    KUiMsgCentrePad::SystemMessageArrival("Vui long dat item vao o 3!", 256);
                     return 1;
                 }
-                PlayEffect();
-                pSelf->ComItem((unsigned int) (&pUP), m_nSelect, 3);
-                CleanItem();
+
+                // Start animation effect
+                // Request will be sent AFTER animation finishes in UpdateResult()
+                g_DebugLog("[COMPOUND] All items validated, starting effect animation");
+                m_nStatus = STATUS_BEGIN_TREMBLE;
+
+                // Disable picking during animation
+                m_Box1.EnablePickPut(false);
+                m_Box2.EnablePickPut(false);
+                m_Box3.EnablePickPut(false);
             }
             break;
 
@@ -682,7 +694,47 @@ int KUiCompound::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
 }
 
 void KUiCompound::UpdateResult() {
+    g_DebugLog("[COMPOUND] UpdateResult: Animation finished, sending craft request");
 
+    // Send crafting request based on mode
+    KUiComItem *pSelf = KUiComItem::GetIfVisible();
+    if (!pSelf) {
+        g_DebugLog("[COMPOUND] ERROR: KUiComItem not visible!");
+        m_nStatus = STATUS_WAITING_MATERIALS;
+        return;
+    }
+
+    // Get item IDs for all 3 boxes
+    KUiDraggedObject pObj;
+    unsigned int pUP[3];
+
+    m_Box1.GetObject(pObj);
+    pUP[0] = pObj.uId;
+
+    pObj.uId = 0;
+    m_Box2.GetObject(pObj);
+    pUP[1] = pObj.uId;
+
+    pObj.uId = 0;
+    m_Box3.GetObject(pObj);
+    pUP[2] = pObj.uId;
+
+    // Send request to server
+    pSelf->ComItem((unsigned int) (&pUP), m_nSelect, 3);
+    g_DebugLog("[COMPOUND] Craft request sent, m_nSelect=%d", m_nSelect);
+
+    // Clean boxes to remove visual representation
+    // Server will delete actual items
+    CleanItem();
+
+    // Re-enable picking
+    m_Box1.EnablePickPut(true);
+    m_Box2.EnablePickPut(true);
+    m_Box3.EnablePickPut(true);
+
+    // Reset status
+    m_nStatus = STATUS_WAITING_MATERIALS;
+    g_DebugLog("[COMPOUND] UpdateResult complete, status reset");
 }
 
 void KUiCompound::Breathe() {
