@@ -807,8 +807,12 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         m_Guide.Init(&Ini, "GuideList");
         m_ListScroll.Init(&Ini, "GuideList_Scroll");
         m_TrembleEffect1.Init(&Ini, "Effect_0");
+        m_TrembleEffect1.Hide();  // Hide by default like FORGE
         m_TrembleEffect2.Init(&Ini, "Effect_1");
+        m_TrembleEffect2.Hide();  // Hide by default like FORGE
         m_TrembleEffect3.Init(&Ini, "Effect_2");
+        m_TrembleEffect3.Hide();  // Hide by default like FORGE
+        g_DebugLog("[COMPOUND] Effects initialized and hidden, MaxFrame=%d", m_TrembleEffect1.GetMaxFrame());
         //m_ListBtn.Init(&Ini,"GuideList_Scroll_Btn");
 
         // Bring boxes to top so they can receive mouse events
