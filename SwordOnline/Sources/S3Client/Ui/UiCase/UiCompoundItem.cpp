@@ -751,6 +751,13 @@ void KUiCompound::Breathe() {
         g_DebugLog("[COMPOUND] Effect1: MaxFrame=%d, CurrentFrame=%d, IsVisible=%d",
             m_TrembleEffect1.GetMaxFrame(), m_TrembleEffect1.GetCurrentFrame(),
             m_TrembleEffect1.IsVisible());
+
+        // TEMPORARY WORKAROUND: If sprite didn't load (MaxFrame=0), skip animation
+        // and go straight to crafting
+        if (m_TrembleEffect1.GetMaxFrame() == 0) {
+            g_DebugLog("[COMPOUND] WARNING: Sprite not loaded (MaxFrame=0), skipping animation!");
+            m_nStatus = STATUS_CHANGING_ITEM;
+        }
     } else if (m_nStatus == STATUS_TREMBLING) {
         if (!PlayEffect()) {
             m_nStatus = STATUS_CHANGING_ITEM;
