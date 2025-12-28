@@ -631,6 +631,8 @@ void KUiCompound::PaintWindow() {
 }
 
 void KUiCompound::LoadScheme(const char *pScheme) {
+    g_DebugLog("[COMPOUND] LoadScheme START - initializing from INI");
+
     char Buff[128], Buffer[64];
     KIniFile Ini;
     sprintf(Buff, "%s\\%s", pScheme, SCHEME_INI_COMPE);
@@ -683,11 +685,12 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         m_Pos3.SetTextColor(nColor);
         m_Pos3.BringToTop();  // Bring text to top of boxes
 
-        g_DebugLog("[COMPOUND] LoadScheme: Text labels positioned and brought to top");
+        g_DebugLog("[COMPOUND] LoadScheme: Default text set to case 1 (Equipment), m_nSelect=0");
 
         // 		m_pSelf->m_LiveSkillPad.LoadScheme(pScheme);
         // 		m_pSelf->m_FightSkillPad.LoadScheme(pScheme);
     }
+    g_DebugLog("[COMPOUND] LoadScheme COMPLETE");
 }
 
 void KUiCompound::Initialize() {
@@ -770,26 +773,41 @@ void KUiCompound::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
 }
 
 void KUiCompound::SetPosText(int i) {
+    g_DebugLog("[COMPOUND] SetPosText called with case=%d", i);
+
     switch (i) {
         case 1:
             m_nSelect = 0;
             m_Pos1.SetText("Nh�n");
             m_Pos2.SetText("D�y chuy�n/h� th�n ph�");
             m_Pos3.SetText("Ng�c b�i/h��ng nang");
+            g_DebugLog("[COMPOUND] SetPosText: Switched to case 1 (Equipment) - Nhẫn, Dây chuyền, Ngọc bội");
             break;
         case 2:
             m_nSelect = 1;
             m_Pos1.SetText("Huy�n tinh 1");
             m_Pos2.SetText("Huy�n tinh 2");
             m_Pos3.SetText("Huy�n tinh 3");
+            g_DebugLog("[COMPOUND] SetPosText: Switched to case 2 (Crystal) - Huyền tinh 1, 2, 3");
             break;
         case 3:
             m_nSelect = 2;
             m_Pos1.SetText("Kho�ng th�ch 1");
             m_Pos2.SetText("Kho�ng th�ch 2");
             m_Pos3.SetText("Kho�ng th�ch 3");
+            g_DebugLog("[COMPOUND] SetPosText: Switched to case 3 (Mineral) - Khoáng thạch 1, 2, 3");
             break;
     }
+
+    // Force update text labels visibility and position
+    m_Pos1.Show();
+    m_Pos2.Show();
+    m_Pos3.Show();
+    m_Pos1.BringToTop();
+    m_Pos2.BringToTop();
+    m_Pos3.BringToTop();
+
+    g_DebugLog("[COMPOUND] SetPosText: m_nSelect=%d, text labels updated and shown", m_nSelect);
 }
 
 void KUiCompound::CleanItem() {
