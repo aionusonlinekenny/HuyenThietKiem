@@ -843,7 +843,7 @@ void KUiCompound::SetPosText(int i) {
                 break;
             case 2: // Crystal mode
                 key1 = "Compound";
-                key2 = "CompoundRule";
+                key2 = "UpCryoliteRule";  // Use crystal-specific text, not equipment text
                 g_DebugLog("[COMPOUND] SetPosText: Loading Crystal guide text");
                 break;
             case 3: // Mineral mode
