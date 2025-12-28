@@ -751,13 +751,6 @@ void KUiCompound::Breathe() {
         g_DebugLog("[COMPOUND] Effect1: MaxFrame=%d, CurrentFrame=%d, IsVisible=%d",
             m_TrembleEffect1.GetMaxFrame(), m_TrembleEffect1.GetCurrentFrame(),
             m_TrembleEffect1.IsVisible());
-
-        // TEMPORARY WORKAROUND: If sprite didn't load (MaxFrame=0), skip animation
-        // and go straight to crafting
-        if (m_TrembleEffect1.GetMaxFrame() == 0) {
-            g_DebugLog("[COMPOUND] WARNING: Sprite not loaded (MaxFrame=0), skipping animation!");
-            m_nStatus = STATUS_CHANGING_ITEM;
-        }
     } else if (m_nStatus == STATUS_TREMBLING) {
         if (!PlayEffect()) {
             m_nStatus = STATUS_CHANGING_ITEM;
@@ -779,14 +772,29 @@ int KUiCompound::PlayEffect() {
     int nMaxFrame = m_TrembleEffect1.GetMaxFrame();
     int nCurrentFrame = m_TrembleEffect1.GetCurrentFrame();
 
+    static int nWaitCount = 0;  // Track how long we've waited for sprite to load
+
     if (nMaxFrame == 0) {
         // Sprite not loaded yet, keep waiting
-        static int nWaitCount = 0;
         nWaitCount++;
+
+        // Timeout after 300 frames (~6 seconds at 50fps) - sprite definitely won't load
+        if (nWaitCount >= 300) {
+            g_DebugLog("[COMPOUND] PlayEffect: Sprite failed to load after %d frames, giving up", nWaitCount);
+            nWaitCount = 0;  // Reset for next time
+            return 0;  // Finish animation and proceed to crafting
+        }
+
         if (nWaitCount % 50 == 0) {  // Log every 50 frames to avoid spam
             g_DebugLog("[COMPOUND] PlayEffect: Waiting for sprite to load, MaxFrame still 0 (waited %d frames)", nWaitCount);
         }
-        return 1;
+        return 1;  // Keep waiting
+    }
+
+    // Sprite loaded successfully! Reset wait counter
+    if (nWaitCount > 0) {
+        g_DebugLog("[COMPOUND] PlayEffect: Sprite loaded successfully after %d frames! MaxFrame=%d", nWaitCount, nMaxFrame);
+        nWaitCount = 0;
     }
 
     // Check if animation is complete (current frame reached max)
