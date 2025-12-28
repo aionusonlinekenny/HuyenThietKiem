@@ -226,12 +226,6 @@ private:
             m_TrembleEffect2;                   //�ϳ��е���Ч
     KCanGetNumImage2
             m_TrembleEffect3;                   //�ϳ��е���Ч
-    KCanGetNumImage2
-            m_CrystalEffect1;                   // Crystal mode effect 1
-    KCanGetNumImage2
-            m_CrystalEffect2;                   // Crystal mode effect 2
-    KCanGetNumImage2
-            m_CrystalEffect3;                   // Crystal mode effect 3
 private:
     enum THIS_INTERFACE_STATUS {
         STATUS_WAITING_MATERIALS,

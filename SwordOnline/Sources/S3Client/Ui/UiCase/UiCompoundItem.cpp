@@ -739,40 +739,22 @@ void KUiCompound::UpdateResult() {
 
 void KUiCompound::Breathe() {
     if (m_nStatus == STATUS_BEGIN_TREMBLE) {
-        // Show appropriate effects based on mode
-        if (m_nSelect == 1) {
-            // Crystal mode - use crystal effects
-            m_CrystalEffect1.Show();
-            m_CrystalEffect1.SetFrame(0);
-            m_CrystalEffect2.Show();
-            m_CrystalEffect2.SetFrame(0);
-            m_CrystalEffect3.Show();
-            m_CrystalEffect3.SetFrame(0);
-            g_DebugLog("[COMPOUND] Started CRYSTAL effect animation on all 3 boxes");
-        } else {
-            // Equipment/Mineral mode - use equipment effects
-            m_TrembleEffect1.Show();
-            m_TrembleEffect1.SetFrame(0);
-            m_TrembleEffect2.Show();
-            m_TrembleEffect2.SetFrame(0);
-            m_TrembleEffect3.Show();
-            m_TrembleEffect3.SetFrame(0);
-            g_DebugLog("[COMPOUND] Started EQUIPMENT effect animation on all 3 boxes");
-        }
+        // Show all 3 effects for the 3 boxes
+        m_TrembleEffect1.Show();
+        m_TrembleEffect1.SetFrame(0);
+        m_TrembleEffect2.Show();
+        m_TrembleEffect2.SetFrame(0);
+        m_TrembleEffect3.Show();
+        m_TrembleEffect3.SetFrame(0);
         m_nStatus = STATUS_TREMBLING;
+        g_DebugLog("[COMPOUND] Started effect animation on all 3 boxes");
     } else if (m_nStatus == STATUS_TREMBLING) {
         if (!PlayEffect()) {
             m_nStatus = STATUS_CHANGING_ITEM;
-            // Hide appropriate effects based on mode
-            if (m_nSelect == 1) {
-                m_CrystalEffect1.Hide();
-                m_CrystalEffect2.Hide();
-                m_CrystalEffect3.Hide();
-            } else {
-                m_TrembleEffect1.Hide();
-                m_TrembleEffect2.Hide();
-                m_TrembleEffect3.Hide();
-            }
+            // Hide all 3 effects when animation finishes
+            m_TrembleEffect1.Hide();
+            m_TrembleEffect2.Hide();
+            m_TrembleEffect3.Hide();
             g_DebugLog("[COMPOUND] Animation finished, hiding effects");
         }
     } else if (m_nStatus == STATUS_CHANGING_ITEM) {
@@ -782,35 +764,18 @@ void KUiCompound::Breathe() {
 }
 
 int KUiCompound::PlayEffect() {
-    // Advance frame on all 3 effects simultaneously, based on mode
-    if (m_nSelect == 1) {
-        // Crystal mode - advance crystal effects
-        if (m_CrystalEffect1.GetMaxFrame() == 0 ||
-            m_CrystalEffect1.GetMaxFrame() >= m_CrystalEffect1.GetCurrentFrame() - 1) {
-            m_CrystalEffect1.SetFrame(0);
-            m_CrystalEffect2.SetFrame(0);
-            m_CrystalEffect3.SetFrame(0);
-            return 0;  // Animation complete
-        } else {
-            m_CrystalEffect1.NextFrame();
-            m_CrystalEffect2.NextFrame();
-            m_CrystalEffect3.NextFrame();
-            return 1;  // Still animating
-        }
+    // Advance frame on all 3 effects simultaneously
+    if (m_TrembleEffect1.GetMaxFrame() == 0 ||
+        m_TrembleEffect1.GetMaxFrame() >= m_TrembleEffect1.GetCurrentFrame() - 1) {
+        m_TrembleEffect1.SetFrame(0);
+        m_TrembleEffect2.SetFrame(0);
+        m_TrembleEffect3.SetFrame(0);
+        return 0;  // Animation complete
     } else {
-        // Equipment/Mineral mode - advance equipment effects
-        if (m_TrembleEffect1.GetMaxFrame() == 0 ||
-            m_TrembleEffect1.GetMaxFrame() >= m_TrembleEffect1.GetCurrentFrame() - 1) {
-            m_TrembleEffect1.SetFrame(0);
-            m_TrembleEffect2.SetFrame(0);
-            m_TrembleEffect3.SetFrame(0);
-            return 0;  // Animation complete
-        } else {
-            m_TrembleEffect1.NextFrame();
-            m_TrembleEffect2.NextFrame();
-            m_TrembleEffect3.NextFrame();
-            return 1;  // Still animating
-        }
+        m_TrembleEffect1.NextFrame();
+        m_TrembleEffect2.NextFrame();
+        m_TrembleEffect3.NextFrame();
+        return 1;  // Still animating
     }
 }
 
@@ -836,9 +801,6 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         m_TrembleEffect1.Init(&Ini, "Effect_0");
         m_TrembleEffect2.Init(&Ini, "Effect_1");
         m_TrembleEffect3.Init(&Ini, "Effect_2");
-        m_CrystalEffect1.Init(&Ini, "CrystalEffect_0");
-        m_CrystalEffect2.Init(&Ini, "CrystalEffect_1");
-        m_CrystalEffect3.Init(&Ini, "CrystalEffect_2");
         //m_ListBtn.Init(&Ini,"GuideList_Scroll_Btn");
 
         // Bring boxes to top so they can receive mouse events
