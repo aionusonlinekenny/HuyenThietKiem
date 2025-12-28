@@ -775,6 +775,7 @@ void KUiCompound::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
 void KUiCompound::SetPosText(int i) {
     g_DebugLog("[COMPOUND] SetPosText called with case=%d", i);
 
+    // Update box labels based on mode
     switch (i) {
         case 1:
             m_nSelect = 0;
@@ -816,6 +817,58 @@ void KUiCompound::SetPosText(int i) {
     m_Pos3.Show();
 
     g_DebugLog("[COMPOUND] SetPosText: m_nSelect=%d, text labels force refreshed with [%d] prefix", m_nSelect, i);
+
+    // Update guide text based on mode
+    char Scheme[256];
+    char Buff[128];
+    KIniFile Ini;
+
+    g_UiBase.GetCurSchemePath(Scheme, 256);
+    sprintf(Buff, "%s\\%s", Scheme, SCHEME_INI_SHEET);
+
+    if (Ini.Load(Buff)) {
+        // Clear current guide text
+        m_Guide.Clear();
+        g_DebugLog("[COMPOUND] SetPosText: Cleared guide text");
+
+        // Load appropriate text based on mode
+        const char* key1 = "";
+        const char* key2 = "";
+
+        switch (i) {
+            case 1: // Equipment mode
+                key1 = "CompoundRule";
+                key2 = "CompoundRule2";
+                g_DebugLog("[COMPOUND] SetPosText: Loading Equipment guide text");
+                break;
+            case 2: // Crystal mode
+                key1 = "Compound";
+                key2 = "CompoundRule";
+                g_DebugLog("[COMPOUND] SetPosText: Loading Crystal guide text");
+                break;
+            case 3: // Mineral mode
+                key1 = "UpPropMine";
+                key2 = "UpPropMineRule";
+                g_DebugLog("[COMPOUND] SetPosText: Loading Mineral guide text");
+                break;
+        }
+
+        // Add first message
+        ZeroMemory(Buff, sizeof(Buff));
+        Ini.GetString("RuleInfo", key1, "", Buff, sizeof(Buff));
+        if (Buff[0] != '\0') {
+            m_Guide.AddOneMessage(Buff, sizeof(Buff));
+            g_DebugLog("[COMPOUND] SetPosText: Added guide text 1: %s", key1);
+        }
+
+        // Add second message
+        ZeroMemory(Buff, sizeof(Buff));
+        Ini.GetString("RuleInfo", key2, "", Buff, sizeof(Buff));
+        if (Buff[0] != '\0') {
+            m_Guide.AddOneMessage(Buff, sizeof(Buff));
+            g_DebugLog("[COMPOUND] SetPosText: Added guide text 2: %s", key2);
+        }
+    }
 }
 
 void KUiCompound::CleanItem() {
