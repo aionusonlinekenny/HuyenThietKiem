@@ -665,7 +665,7 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         }
         m_nSelect = 0;
         m_Pos1.SetPosition(nX - 14, nY - 4);
-        m_Pos1.SetText("Nh�n");
+        m_Pos1.SetText("[1] Nh�n");  // Add [1] prefix for case 1
         m_Pos1.SetTextColor(nColor);
         m_Pos1.BringToTop();  // Bring text to top of boxes
 
@@ -673,7 +673,7 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         Ini.GetInteger2("Ore3", "Pos", &nX, &nY);
 
         m_Pos2.SetPosition(nX - 14, nY - 4);
-        m_Pos2.SetText("D�y chuy�n/h� th�n ph�");
+        m_Pos2.SetText("[1] D�y chuy�n/h� th�n ph�");  // Add [1] prefix for case 1
         m_Pos2.SetTextColor(nColor);
         m_Pos2.BringToTop();  // Bring text to top of boxes
 
@@ -681,7 +681,7 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         Ini.GetInteger2("Ore2", "Pos", &nX, &nY);
 
         m_Pos3.SetPosition(nX - 14, nY - 4);
-        m_Pos3.SetText("Ng�c b�i/h��ng nang");
+        m_Pos3.SetText("[1] Ng�c b�i/h��ng nang");  // Add [1] prefix for case 1
         m_Pos3.SetTextColor(nColor);
         m_Pos3.BringToTop();  // Bring text to top of boxes
 
@@ -778,24 +778,24 @@ void KUiCompound::SetPosText(int i) {
     switch (i) {
         case 1:
             m_nSelect = 0;
-            m_Pos1.SetText("Nh�n");
-            m_Pos2.SetText("D�y chuy�n/h� th�n ph�");
-            m_Pos3.SetText("Ng�c b�i/h��ng nang");
-            g_DebugLog("[COMPOUND] SetPosText: Switched to case 1 (Equipment) - Nhẫn, Dây chuyền, Ngọc bội");
+            m_Pos1.SetText("[1] Nh�n");
+            m_Pos2.SetText("[1] D�y chuy�n/h� th�n ph�");
+            m_Pos3.SetText("[1] Ng�c b�i/h��ng nang");
+            g_DebugLog("[COMPOUND] SetPosText: Switched to case 1 (Equipment) - [1] Nhẫn, Dây chuyền, Ngọc bội");
             break;
         case 2:
             m_nSelect = 1;
-            m_Pos1.SetText("Huy�n tinh 1");
-            m_Pos2.SetText("Huy�n tinh 2");
-            m_Pos3.SetText("Huy�n tinh 3");
-            g_DebugLog("[COMPOUND] SetPosText: Switched to case 2 (Crystal) - Huyền tinh 1, 2, 3");
+            m_Pos1.SetText("[2] Huy�n tinh 1");
+            m_Pos2.SetText("[2] Huy�n tinh 2");
+            m_Pos3.SetText("[2] Huy�n tinh 3");
+            g_DebugLog("[COMPOUND] SetPosText: Switched to case 2 (Crystal) - [2] Huyền tinh 1, 2, 3");
             break;
         case 3:
             m_nSelect = 2;
-            m_Pos1.SetText("Kho�ng th�ch 1");
-            m_Pos2.SetText("Kho�ng th�ch 2");
-            m_Pos3.SetText("Kho�ng th�ch 3");
-            g_DebugLog("[COMPOUND] SetPosText: Switched to case 3 (Mineral) - Khoáng thạch 1, 2, 3");
+            m_Pos1.SetText("[3] Kho�ng th�ch 1");
+            m_Pos2.SetText("[3] Kho�ng th�ch 2");
+            m_Pos3.SetText("[3] Kho�ng th�ch 3");
+            g_DebugLog("[COMPOUND] SetPosText: Switched to case 3 (Mineral) - [3] Khoáng thạch 1, 2, 3");
             break;
     }
 
@@ -807,7 +807,15 @@ void KUiCompound::SetPosText(int i) {
     m_Pos2.BringToTop();
     m_Pos3.BringToTop();
 
-    g_DebugLog("[COMPOUND] SetPosText: m_nSelect=%d, text labels updated and shown", m_nSelect);
+    // Force redraw/repaint by hiding and showing
+    m_Pos1.Hide();
+    m_Pos2.Hide();
+    m_Pos3.Hide();
+    m_Pos1.Show();
+    m_Pos2.Show();
+    m_Pos3.Show();
+
+    g_DebugLog("[COMPOUND] SetPosText: m_nSelect=%d, text labels force refreshed with [%d] prefix", m_nSelect, i);
 }
 
 void KUiCompound::CleanItem() {
