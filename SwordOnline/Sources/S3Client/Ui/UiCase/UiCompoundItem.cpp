@@ -24,7 +24,7 @@ KUiComItem *KUiComItem::m_pSelf = NULL;
 #define    SCHEME_INI_COMPE            "UiCompoundItem_Compe.ini"
 #define    SCHEME_INI_BUILD            "UiCompoundItem_Build.ini"
 #define    SCHEME_INI_OUTIN            "UiCompoundItem_Outin.ini"
-//#define		SCHEME_INI_INOUT			"UiCompoundItem_Inout.ini"//them
+#define    SCHEME_INI_INOUT            "UiCompoundItem_Inout.ini"
 
 void KUiComItem::LoadScheme(const char *pScheme) {
     char Buff[128];
@@ -2314,7 +2314,7 @@ int KUiEnchaseTim::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
 void KUiEnchaseTim::LoadScheme(const char *pScheme) {
     char Buff[128];
     KIniFile Ini;
-//	sprintf(Buff, "%s\\%s", pScheme, SCHEME_INI_INOUT);
+    sprintf(Buff, "%s\\%s", pScheme, SCHEME_INI_INOUT);
     if (Ini.Load(Buff)) {
         KWndImage::Init(&Ini, "Main");
         m_BigBox.Init(&Ini, "BigBox");
