@@ -145,3 +145,9 @@ Giá Hoa Quèc Kh¸nh	7	142	1	\spr\vng\item\womenday2011\bunchofroses.spr	41	1	1	VË
 Bã Hoa Quèc Kh¸nh	7	143	1	\spr\item\funvjie_jieri\200803\shumeigui.spr	41	1	2	VËt PhÈm Sù KiÖn Quèc Kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	\script\item\event\event0323.lua	500		
 Tói Mõng Quèc Kh¸nh	7	144	1	\spr\vng\item\120530_lua_nuoc\tuihuong.spr	387	1	1	Sù kiÖn mõng quèc kh¸nh<enter><color=blue>XÕp chång tèi ®a:500 c¸i<color>	\script\Event\quockhanh\tuinguyenlieu.lua	500		
 R­¬ng VËn Tiªu	7	145	1	\spr\item\script\songjinmibao.spr	41	1	1	PhÇn th­ëng cho VËn Tiªu. Më ra ®Ó nhËn ®­îc vËt phÈm quı gi¸.	\script\item\luascript\ruongvantieu.lua	999		
+HuyÃ’n ThiÃ•t NguyÂªn KhoÂ¸ng	7	146	1	\spr\item\script\item_xuantiekuang.spr	425	1	1	"<color=yellow>KhoÂ¸ng thÂ¹ch cÃ£ thuÃ©c tÃnh - thuÃ©c tÃnh hiÃ–n 1<color>"		50		
+KhÃ¦ng TÂ­Ã­c NguyÂªn ThÂ¹ch	7	147	1	\spr\item\script\item_kongqueshi.spr	425	1	1	"<color=yellow>KhoÂ¸ng thÂ¹ch cÃ£ thuÃ©c tÃnh - thuÃ©c tÃnh Â¶n 1<color>"		50		
+MÃ‹t NgÂ©n NguyÂªn KhoÂ¸ng	7	148	1	\spr\item\script\item_miyinkuang.spr	425	1	1	"<color=yellow>KhoÂ¸ng thÂ¹ch cÃ£ thuÃ©c tÃnh - thuÃ©c tÃnh hiÃ–n 2<color>"		50		
+PhÃ¯ Dung NguyÂªn ThÂ¹ch	7	149	1	\spr\item\script\item_furongshi.spr	425	1	1	"<color=yellow>KhoÂ¸ng thÂ¹ch cÃ£ thuÃ©c tÃnh - thuÃ©c tÃnh Â¶n 2<color>"		50		
+Chu Sa NguyÂªn KhoÂ¸ng	7	150	1	\spr\item\script\item_zhushakuang.spr	425	1	1	"<color=yellow>KhoÂ¸ng thÂ¹ch cÃ£ thuÃ©c tÃnh - thuÃ©c tÃnh hiÃ–n 3<color>"		50		
+Chung NhÃ² NguyÂªn ThÂ¹ch	7	151	1	\spr\item\script\item_zhongrushi.spr	425	1	1	"<color=yellow>KhoÂ¸ng thÂ¹ch cÃ£ thuÃ©c tÃnh - thuÃ©c tÃnh Â¶n 3<color>"		50		
