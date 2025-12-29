@@ -42,3 +42,15 @@ Th� ��a ph� (s� d�ng v� h�n)	6	25	1	\spr\item\special\Obj_TownPo
 Th�n H�nh Ph�	6	26	1	\spr\item\special\Obj_TownPortal_l.spr	38	1	1	"Th�n H�nh Thu�t, l�m cho ��i hi�p �i b�t c� th�nh th� th�n tr�n ch� ��nh n�o"	0
 S� �� thi�p	6	27	1	\spr\item\questkey\taskobj091.spr	38	1	1	"Ng��i ch�i d��i c�p 80 d�ng �� nh�n s� ph�, tr�n c�p 80 d�ng �� nh�n �� t�."	0
 Khi�u chi�n l�nh	6	28	1	\spr\item\vietnam\tiaozhanling.spr	41	1	1	T�ch l�y �� 50 c�I g�p B�o nh�n � m�c b�c th�o nguy�n �� ��i Ki�m hi�p l�nh	100
+Huy�n Tinh C�p 1	6	74	1	\spr\item\questkey\baoshi_zhuanxu.spr	333	1	1	Huy�n Tinh c�p th�p nh�t d�ng �� ch� t�o trang b� TIM	50
+Huy�n Tinh C�p 2	6	75	1	\spr\item\questkey\baoshi_zhuanxu.spr	333	1	1	Huy�n Tinh c�p th�p d�ng �� ch� t�o trang b� TIM	50
+Huy�n Tinh C�p 3	6	76	1	\spr\item\questkey\baoshi_xingtian.spr	333	1	1	Huy�n Tinh c�p trung b�nh d�ng �� ch� t�o trang b� TIM	50
+Huy�n Tinh C�p 4	6	77	1	\spr\item\questkey\baoshi_xingtian.spr	333	1	1	Huy�n Tinh c�p trung b�nh d�ng �� ch� t�o trang b� TIM	50
+Huy�n Tinh C�p 5	6	78	1	\spr\item\questkey\baoshi_nvwa.spr	333	1	1	Huy�n Tinh c�p cao d�ng �� ch� t�o trang b� TIM	50
+Huy�n Tinh C�p 6	6	79	1	\spr\item\questkey\baoshi_nvwa.spr	333	1	1	Huy�n Tinh c�p cao nh�t d�ng �� ch� t�o trang b� TIM	50
+Huy�n Thi�t Nguy�n Kho�ng	6	80	1	\spr\item\script\item_xuantiekuang.spr	425	1	1	"<color=yellow>M�t lo�i <color=yellow>Kho�ng th�ch c� thu�c t�nh<color>, c� th� l�m thay ��i <color=yellow>thu�c t�nh hi�n 1<color> tr�n trang b� (Nh�n chu�t ph�i xem chi ti�t)"	50
+Kh�ng T��c Nguy�n Th�ch	6	81	1	\spr\item\script\item_kongqueshi.spr	425	1	1	"<color=yellow>M�t lo�i <color=yellow>Kho�ng th�ch c� thu�c t�nh<color>, c� th� l�m thay ��i <color=yellow>thu�c t�nh �n 1<color> tr�n trang b� c�ng Ng� h�nh (Nh�n chu�t ph�i xem chi ti�t)"	50
+M�t Ng�n Nguy�n Kho�ng	6	82	1	\spr\item\script\item_miyinkuang.spr	425	1	1	"<color=yellow>M�t lo�i <color=yellow>Kho�ng th�ch c� thu�c t�nh<color>, c� th� l�m thay ��i <color=yellow> thu�c t�nh hi�n 2<color> tr�n trang b� (Nh�n chu�t ph�i xem chi ti�t)"	50
+Ph� Dung Nguy�n Th�ch	6	83	1	\spr\item\script\item_furongshi.spr	425	1	1	"<color=yellow>M�t lo�i <color=yellow>Kho�ng th�ch c� thu�c t�nh<color>, c� th� l�m thay ��i <color=yellow>thu�c t�nh �n 2<color> tr�n trang b� c�ng Ng� h�nh (Nh�n chu�t ph�i xem chi ti�t)"	50
+Chu Sa Nguy�n Kho�ng	6	84	1	\spr\item\script\item_zhushakuang.spr	425	1	1	"<color=yellow>M�t lo�i <color=yellow>Kho�ng th�ch c� thu�c t�nh<color>, c� th� l�m thay ��i <color=yellow>thu�c t�nh hi�n 3<color> tr�n trang b� (Nh�n chu�t ph�i xem chi ti�t)"	50
+Chung Nh� Nguy�n Th�ch	6	85	1	\spr\item\script\item_zhongrushi.spr	425	1	1	"<color=yellow>M�t lo�i <color=yellow>Kho�ng th�ch c� thu�c t�nh<color>, c� th� l�m thay ��i <color=yellow>thu�c t�nh �n 3<color> tr�n trang b� c�ng Ng� h�nh (Nh�n chu�t ph�i xem chi ti�t)"	50
