@@ -460,7 +460,7 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 		nItemX									= pItemData->ix;
 		nItemY									= pItemData->iy;
 
-		//	
+		//
 		NewItem.m_GeneratorParam.dwRandomSeed		= pItemData->irandseed;
 		NewItem.m_GeneratorParam.nGeneratorLevel[0] = pItemData->imagiclevel1;
 		NewItem.m_GeneratorParam.nGeneratorLevel[1] = pItemData->imagiclevel2;
@@ -470,7 +470,18 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 		NewItem.m_GeneratorParam.nGeneratorLevel[5] = pItemData->imagiclevel6;
 		NewItem.m_GeneratorParam.nLuck				= pItemData->ilucky;
 		NewItem.m_GeneratorParam.nVersion			= pItemData->iversion;
-		
+
+		// Save khoang thach attributes BEFORE Gen_ExistScript to prevent overwriting
+		int nSavedAttribType = 0, nSavedMin = 0, nSavedMax = 0, nSavedValue = 0;
+		BOOL bIsKhoangThach = (pItemData->igenre == 7 && pItemData->idetailtype >= 146 && pItemData->idetailtype <= 151);
+		if (bIsKhoangThach)
+		{
+			nSavedAttribType = pItemData->iparam2;
+			nSavedMin = pItemData->iparam3;
+			nSavedMax = pItemData->iparam4;
+			nSavedValue = pItemData->iparam5;
+		}
+
 		BOOL bGetEquiptResult = 0;
 		switch(pItemData->igenre)
 		{
@@ -545,16 +556,18 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 		if(pItemData->ishopprice)
 			NewItem.SetPlayerShopPrice(pItemData->ishopprice);
 
-		// Restore magic attribute data for khoang thach items (genre 7, details 146-151)
-		if (pItemData->igenre == 7 && pItemData->idetailtype >= 146 && pItemData->idetailtype <= 151)
+		// Restore magic attribute data for khoang thach items - use saved values from BEFORE Gen_ExistScript
+		if (bIsKhoangThach)
 		{
-			// Restore first magic attribute (slot 0) from iparam2-iparam5
-			NewItem.m_aryMagicAttrib[0].nAttribType = pItemData->iparam2;
-			NewItem.m_aryMagicAttrib[0].nMin = (short)pItemData->iparam3;
-			NewItem.m_aryMagicAttrib[0].nMax = (short)pItemData->iparam4;
-			NewItem.m_aryMagicAttrib[0].nValue[0] = pItemData->iparam5;
+			NewItem.m_aryMagicAttrib[0].nAttribType = nSavedAttribType;
+			NewItem.m_aryMagicAttrib[0].nMin = (short)nSavedMin;
+			NewItem.m_aryMagicAttrib[0].nMax = (short)nSavedMax;
+			NewItem.m_aryMagicAttrib[0].nValue[0] = nSavedValue;
 			NewItem.m_aryMagicAttrib[0].nValue[1] = 0;
 			NewItem.m_aryMagicAttrib[0].nValue[2] = 0;
+
+			g_DebugLog("[KHOANG LOAD] Detail=%d, AttribType=%d, Min=%d, Max=%d, Value=%d",
+				pItemData->idetailtype, nSavedAttribType, nSavedMin, nSavedMax, nSavedValue);
 		}
 
 		pItemData++;
@@ -928,13 +941,29 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 		pItemData->iparam1			= Item[nItemIndex].GetParam1();
 		//
 		// Store magic attribute data for khoang thach items (genre 7, details 146-151)
+		// Use item's unique ID + attribute type as composite key for instance-specific storage
 		if (pItemData->igenre == 7 && pItemData->idetailtype >= 146 && pItemData->idetailtype <= 151)
 		{
-			// Store first magic attribute (slot 0) in iparam2-iparam5
+			// Store first magic attribute (slot 0) in iparam2-iparam6
+			// Each khoáng thạch instance has unique ID stored in high bits of iparam2
 			pItemData->iparam2 = Item[nItemIndex].m_aryMagicAttrib[0].nAttribType;
 			pItemData->iparam3 = Item[nItemIndex].m_aryMagicAttrib[0].nMin;
 			pItemData->iparam4 = Item[nItemIndex].m_aryMagicAttrib[0].nMax;
 			pItemData->iparam5 = Item[nItemIndex].m_aryMagicAttrib[0].nValue[0];
+			pItemData->iparam6 = Item[nItemIndex].GetID();  // Store unique item ID for verification
+
+			g_DebugLog("[KHOANG SAVE] ItemID=%d, Detail=%d, AttribType=%d, Min=%d, Max=%d, Value=%d",
+				Item[nItemIndex].GetID(), pItemData->idetailtype, pItemData->iparam2,
+				pItemData->iparam3, pItemData->iparam4, pItemData->iparam5);
+		}
+		else
+		{
+			// Initialize to zero for non-khoang-thach items
+			pItemData->iparam2 = 0;
+			pItemData->iparam3 = 0;
+			pItemData->iparam4 = 0;
+			pItemData->iparam5 = 0;
+			pItemData->iparam6 = 0;
 		}
 		//
 		pItemData->ibindstate		= Item[nItemIndex].GetBindState();
