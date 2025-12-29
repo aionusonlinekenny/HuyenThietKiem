@@ -545,14 +545,26 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 		if(pItemData->ishopprice)
 			NewItem.SetPlayerShopPrice(pItemData->ishopprice);
 
+		// Restore magic attribute data for khoang thach items (genre 7, details 146-151)
+		if (pItemData->igenre == 7 && pItemData->idetailtype >= 146 && pItemData->idetailtype <= 151)
+		{
+			// Restore first magic attribute (slot 0) from iparam2-iparam5
+			NewItem.m_aryMagicAttrib[0].nAttribType = pItemData->iparam2;
+			NewItem.m_aryMagicAttrib[0].nMin = (short)pItemData->iparam3;
+			NewItem.m_aryMagicAttrib[0].nMax = (short)pItemData->iparam4;
+			NewItem.m_aryMagicAttrib[0].nValue[0] = pItemData->iparam5;
+			NewItem.m_aryMagicAttrib[0].nValue[1] = 0;
+			NewItem.m_aryMagicAttrib[0].nValue[2] = 0;
+		}
+
 		pItemData++;
-		
+
 		if( NewItem.GetTime() )
 			if( NewItem.CheckVaildTime() == FALSE )
 				continue;
 
 		const int nGameIndex = ItemSet.Add(&NewItem);
-		if( (nGameIndex <= 0) || (nGameIndex >= MAX_ITEM) ) 
+		if( (nGameIndex <= 0) || (nGameIndex >= MAX_ITEM) )
 			continue ;
 		m_ItemList.Add(nGameIndex, nLocal, nItemX, nItemY);		
 	}
@@ -914,6 +926,16 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 		pItemData->irecord			= Item[nItemIndex].GetRecord();
 		//
 		pItemData->iparam1			= Item[nItemIndex].GetParam1();
+		//
+		// Store magic attribute data for khoang thach items (genre 7, details 146-151)
+		if (pItemData->igenre == 7 && pItemData->idetailtype >= 146 && pItemData->idetailtype <= 151)
+		{
+			// Store first magic attribute (slot 0) in iparam2-iparam5
+			pItemData->iparam2 = Item[nItemIndex].m_aryMagicAttrib[0].nAttribType;
+			pItemData->iparam3 = Item[nItemIndex].m_aryMagicAttrib[0].nMin;
+			pItemData->iparam4 = Item[nItemIndex].m_aryMagicAttrib[0].nMax;
+			pItemData->iparam5 = Item[nItemIndex].m_aryMagicAttrib[0].nValue[0];
+		}
 		//
 		pItemData->ibindstate		= Item[nItemIndex].GetBindState();
 		//
