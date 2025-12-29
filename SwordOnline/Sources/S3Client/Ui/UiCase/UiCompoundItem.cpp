@@ -836,13 +836,24 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         m_Cancle.Init(&Ini, "CancleBtn");
         m_Guide.Init(&Ini, "GuideList");
         m_ListScroll.Init(&Ini, "GuideList_Scroll");
+
+        g_DebugLog("[COMPOUND] Before Init Effect_0: INI file loaded from %s", Buff);
         m_TrembleEffect1.Init(&Ini, "Effect_0");
-        m_TrembleEffect1.Hide();  // Hide by default like FORGE
+        g_DebugLog("[COMPOUND] After Init Effect_0: MaxFrame=%d, IsVisible=%d",
+            m_TrembleEffect1.GetMaxFrame(), m_TrembleEffect1.IsVisible());
+        m_TrembleEffect1.Hide();
+        g_DebugLog("[COMPOUND] After Hide Effect_0: IsVisible=%d", m_TrembleEffect1.IsVisible());
+
         m_TrembleEffect2.Init(&Ini, "Effect_1");
-        m_TrembleEffect2.Hide();  // Hide by default like FORGE
+        g_DebugLog("[COMPOUND] After Init Effect_1: MaxFrame=%d", m_TrembleEffect2.GetMaxFrame());
+        m_TrembleEffect2.Hide();
+
         m_TrembleEffect3.Init(&Ini, "Effect_2");
-        m_TrembleEffect3.Hide();  // Hide by default like FORGE
-        g_DebugLog("[COMPOUND] Effects initialized and hidden, MaxFrame=%d", m_TrembleEffect1.GetMaxFrame());
+        g_DebugLog("[COMPOUND] After Init Effect_2: MaxFrame=%d", m_TrembleEffect3.GetMaxFrame());
+        m_TrembleEffect3.Hide();
+
+        g_DebugLog("[COMPOUND] All effects initialized - Effect1 MaxFrame=%d, Effect2 MaxFrame=%d, Effect3 MaxFrame=%d",
+            m_TrembleEffect1.GetMaxFrame(), m_TrembleEffect2.GetMaxFrame(), m_TrembleEffect3.GetMaxFrame());
         //m_ListBtn.Init(&Ini,"GuideList_Scroll_Btn");
 
         // Bring boxes to top so they can receive mouse events
