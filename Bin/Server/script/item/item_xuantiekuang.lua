@@ -1,12 +1,9 @@
--- Huyen Thiet Nguyen Khoang (Detail 146)
--- Stores visible attribute 1 from green equipment
--- Right-click to view stored attribute
-
+-- Huyen Thiet Nguyen Khoang (Detail 146) - Thuoc tinh hien 1
 Include("\\script\\lib\\TaskLib.lua")
+Include("\\script\\lib\\MagicAttribName.lua")
 
 function OnUse(nIdx)
     -- Get stored attribute data from magic attribute slot 1
-    -- This was set by SetItemMagicAttrib in compound_master.lua
     local nOp, nValueMin, nValueMax = GetItemMagicAttrib(nIdx, 1)
 
     if not nOp or nOp <= 0 then
@@ -19,10 +16,13 @@ function OnUse(nIdx)
     local szSeriesName = {"Kim", "Moc", "Thuy", "Hoa", "Tho"}
     local szSeries = szSeriesName[nSeries + 1] or "Unknown"
 
+    -- Get attribute name from ID
+    local szAttribName = GetMagicAttribName(nOp)
+
     local szMsg = "<color=green>===== THONG TIN THUOC TINH =====<color>"
     szMsg = szMsg .. "\n<color=cyan>Loai khoang thach:<color> <color=yellow>Thuoc tinh hien 1<color>"
-    szMsg = szMsg .. "\n<color=cyan>Ngu Hanh (Series):<color> <color=orange>" .. szSeries .. "<color>"
-    szMsg = szMsg .. "\n<color=cyan>Ma thuoc tinh:<color> <color=white>" .. nOp .. "<color>"
+    szMsg = szMsg .. "\n<color=cyan>Ngu Hanh:<color> <color=orange>" .. szSeries .. "<color>"
+    szMsg = szMsg .. "\n<color=cyan>Thuoc tinh:<color> <color=white>" .. szAttribName .. "<color>"
     szMsg = szMsg .. "\n<color=cyan>Gia tri:<color> <color=white>" .. nValueMin .. " - " .. nValueMax .. "<color>"
     szMsg = szMsg .. "\n<color=green>================================<color>"
 
