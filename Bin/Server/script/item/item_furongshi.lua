@@ -5,7 +5,7 @@
 Include("\\script\\lib\\TaskLib.lua")
 
 function OnUse(nIdx)
-    local _, _, nOp, nValueMin, nValueMax = GetItemProp(nIdx)
+    local nOp, nValueMin, nValueMax = GetItemMagicAttrib(nIdx, 1)
 
     if not nOp or nOp <= 0 then
         Talk(1, "", "<color=yellow>Khoang thach chua rong (chua co thuoc tinh)<color>")

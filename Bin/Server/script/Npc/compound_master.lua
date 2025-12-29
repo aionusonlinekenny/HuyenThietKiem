@@ -539,25 +539,29 @@ function ExeExtractAttribute()
     DelItemByIndex(nHuyenTinhIdx)
     DelItemByIndex(nKhoangIdx)
 
-    -- Create new khoang thach with extracted attribute data
-    -- Store attribute info in item properties (NOT magic attributes):
-    -- particular = attribute type (nOp)
-    -- level = attribute min value (nValueMin)
-    -- series = attribute max value (nValueMax)
+    -- Create new khoang thach item
     local nNewKhoangIdx = AddItemEx(
         7,                   -- genre = 7 (script items)
         nKhoangDetail,       -- detail = same as original khoang thach (146-151)
-        nOp,                 -- particular = attribute type (nOp)
-        nValueMin,           -- level = min value
-        nValueMax,           -- series = max value
+        0,                   -- particular
+        0,                   -- level
+        0,                   -- series
         0,                   -- luck
-        0, 0, 0, 0, 0, 0,   -- ma1-ma6 = not used for khoang thach
+        0, 0, 0, 0, 0, 0,   -- ma1-ma6 = not used
         1,                   -- version
         0                    -- randomSeed
     )
 
     if not nNewKhoangIdx or nNewKhoangIdx <= 0 then
         Talk(1, "", "<color=red>Loi: Khong the tao Khoang thach!<color>")
+        return
+    end
+
+    -- Store extracted attribute data in magic attribute slot 1
+    -- This allows GetItemMagicAttrib to read it back in item scripts
+    local bSuccess = SetItemMagicAttrib(nNewKhoangIdx, 0, nOp, nValueMin, nValueMax)
+    if not bSuccess or bSuccess == 0 then
+        Talk(1, "", "<color=red>Loi: Khong the luu thuoc tinh vao Khoang thach!<color>")
         return
     end
 
