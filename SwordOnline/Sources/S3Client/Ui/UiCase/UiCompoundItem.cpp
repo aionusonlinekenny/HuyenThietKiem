@@ -1341,22 +1341,22 @@ int KUiDistill::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM3;  // Slot 2
                     g_DebugLog("[DISTILL] Mapped to Box2 (slot 2)");
 
-                    // VALIDATION: Box2 only accepts Khoang thach (genre=6, detail=80-85)
+                    // VALIDATION: Box2 only accepts Khoang thach (genre=7, detail=146-151)
                     if (pDropPos) {
                         int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
                         int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
 
-                        // Must be item_task (genre = 6)
-                        if (nGenre != item_task) {
-                            g_DebugLog("[DISTILL] REJECT Box2: Genre %d is not item_task", nGenre);
+                        // Must be item_script (genre = 7)
+                        if (nGenre != item_script) {
+                            g_DebugLog("[DISTILL] REJECT Box2: Genre %d is not item_script", nGenre);
                             KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat KHOANG THACH vao o nay!", 256);
                             break;
                         }
 
-                        // Must be Khoang thach (detail = 80-85)
-                        if (nDetail < 80 || nDetail > 85) {
-                            g_DebugLog("[DISTILL] REJECT Box2: Detail %d is not Khoang thach (need 80-85)", nDetail);
-                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat KHOANG THACH (detail 80-85)!", 256);
+                        // Must be Khoang thach (detail = 146-151)
+                        if (nDetail < 146 || nDetail > 151) {
+                            g_DebugLog("[DISTILL] REJECT Box2: Detail %d is not Khoang thach (need 146-151)", nDetail);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat KHOANG THACH (detail 146-151)!", 256);
                             break;
                         }
 

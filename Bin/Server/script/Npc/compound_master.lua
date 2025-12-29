@@ -510,20 +510,20 @@ function ExeExtractAttribute()
         return
     end
 
-    -- Validate Khoang thach (detail 80-85)
-    if nKhoangGenre ~= 6 or nKhoangDetail < 80 or nKhoangDetail > 85 then
-        Talk(1, "", "<color=red>O 2 phai la KHOANG THACH (detail 80-85)!<color>")
+    -- Validate Khoang thach (genre 7, detail 146-151)
+    if nKhoangGenre ~= 7 or nKhoangDetail < 146 or nKhoangDetail > 151 then
+        Talk(1, "", "<color=red>O 2 phai la KHOANG THACH (detail 146-151)!<color>")
         return
     end
 
     -- Map khoang thach detail to attribute slot:
-    -- 80 = visible attrib 1 (slot 1)
-    -- 81 = hidden attrib 1 (slot 2)
-    -- 82 = visible attrib 2 (slot 3)
-    -- 83 = hidden attrib 2 (slot 4)
-    -- 84 = visible attrib 3 (slot 5)
-    -- 85 = hidden attrib 3 (slot 6)
-    local nAttribSlot = nKhoangDetail - 79  -- 80->1, 81->2, 82->3, 83->4, 84->5, 85->6
+    -- 146 = visible attrib 1 (slot 1)
+    -- 147 = hidden attrib 1 (slot 2)
+    -- 148 = visible attrib 2 (slot 3)
+    -- 149 = hidden attrib 2 (slot 4)
+    -- 150 = visible attrib 3 (slot 5)
+    -- 151 = hidden attrib 3 (slot 6)
+    local nAttribSlot = nKhoangDetail - 145  -- 146->1, 147->2, 148->3, 149->4, 150->5, 151->6
 
     -- Extract attribute from equipment
     local nOp, nValueMin, nValueMax, nValueMax2 = GetItemMagicAttrib(nEquipIdx, nAttribSlot)
@@ -546,8 +546,8 @@ function ExeExtractAttribute()
     -- ma3 = attribute max value (nValueMax)
     -- ma4-ma6 = reserved (0)
     local nNewKhoangIdx = AddItemEx(
-        6,                   -- genre = item_task
-        nKhoangDetail,       -- detail = same as original khoang thach (80-85)
+        7,                   -- genre = 7 (script items)
+        nKhoangDetail,       -- detail = same as original khoang thach (146-151)
         0,                   -- particular
         0,                   -- level
         0,                   -- series
