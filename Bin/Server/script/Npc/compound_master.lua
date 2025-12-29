@@ -540,22 +540,18 @@ function ExeExtractAttribute()
     DelItemByIndex(nKhoangIdx)
 
     -- Create new khoang thach with extracted attribute data
-    -- Store attribute info in magic attribute parameters:
-    -- ma1 = attribute type (nOp)
-    -- ma2 = attribute min value (nValueMin)
-    -- ma3 = attribute max value (nValueMax)
-    -- ma4-ma6 = reserved (0)
+    -- Store attribute info in item properties (NOT magic attributes):
+    -- particular = attribute type (nOp)
+    -- level = attribute min value (nValueMin)
+    -- series = attribute max value (nValueMax)
     local nNewKhoangIdx = AddItemEx(
         7,                   -- genre = 7 (script items)
         nKhoangDetail,       -- detail = same as original khoang thach (146-151)
-        0,                   -- particular
-        0,                   -- level
-        0,                   -- series
+        nOp,                 -- particular = attribute type (nOp)
+        nValueMin,           -- level = min value
+        nValueMax,           -- series = max value
         0,                   -- luck
-        nOp,                 -- ma1 = attribute type
-        nValueMin,           -- ma2 = min value
-        nValueMax,           -- ma3 = max value
-        0, 0, 0,            -- ma4-ma6 = reserved
+        0, 0, 0, 0, 0, 0,   -- ma1-ma6 = not used for khoang thach
         1,                   -- version
         0                    -- randomSeed
     )

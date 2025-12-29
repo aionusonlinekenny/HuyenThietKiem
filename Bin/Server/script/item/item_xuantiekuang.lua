@@ -5,9 +5,11 @@
 Include("\\script\\lib\\TaskLib.lua")
 
 function OnUse(nIdx)
-    -- Get stored attribute data from magic attribute parameters
-    -- ma1 = attribute type (nOp), ma2 = min value, ma3 = max value
-    local nOp, nValueMin, nValueMax = GetItemMagicAttrib(nIdx, 1)
+    -- Get stored attribute data from item properties
+    -- particular = attribute type (nOp)
+    -- level = min value (nValueMin)
+    -- series = max value (nValueMax)
+    local _, _, nOp, nValueMin, nValueMax = GetItemProp(nIdx)
 
     if not nOp or nOp <= 0 then
         Talk(1, "", "<color=yellow>Khoang thach chua rong (chua co thuoc tinh)<color>")
