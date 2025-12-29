@@ -526,7 +526,8 @@ function ExeExtractAttribute()
     local nAttribSlot = nKhoangDetail - 145  -- 146->1, 147->2, 148->3, 149->4, 150->5, 151->6
 
     -- Extract attribute from equipment
-    local nOp, nValueMin, nValueMax, nValueMax2 = GetItemMagicAttrib(nEquipIdx, nAttribSlot)
+    -- GetItemMagicAttribInfo returns: nAttribType, nValue[0], nMin, nMax
+    local nOp, nValue, nValueMin, nValueMax = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
 
     -- Check if attribute exists (nOp > 0)
     if not nOp or nOp <= 0 then
