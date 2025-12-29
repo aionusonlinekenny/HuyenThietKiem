@@ -840,6 +840,11 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         m_Guide.Init(&Ini, "GuideList");
         m_ListScroll.Init(&Ini, "GuideList_Scroll");
 
+        // Log sprite paths to verify what we're trying to load
+        char szSpritePath[256];
+        Ini.GetString("Effect_0", "Image", "", szSpritePath, sizeof(szSpritePath));
+        g_DebugLog("[COMPOUND] Effect_0 sprite path from INI: %s", szSpritePath);
+
         g_DebugLog("[COMPOUND] Before Init Effect_0: INI file loaded from %s", Buff);
         m_TrembleEffect1.Init(&Ini, "Effect_0");
         g_DebugLog("[COMPOUND] After Init Effect_0: MaxFrame=%d, IsVisible=%d",
@@ -847,10 +852,14 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         m_TrembleEffect1.Hide();
         g_DebugLog("[COMPOUND] After Hide Effect_0: IsVisible=%d", m_TrembleEffect1.IsVisible());
 
+        Ini.GetString("Effect_1", "Image", "", szSpritePath, sizeof(szSpritePath));
+        g_DebugLog("[COMPOUND] Effect_1 sprite path from INI: %s", szSpritePath);
         m_TrembleEffect2.Init(&Ini, "Effect_1");
         g_DebugLog("[COMPOUND] After Init Effect_1: MaxFrame=%d", m_TrembleEffect2.GetMaxFrame());
         m_TrembleEffect2.Hide();
 
+        Ini.GetString("Effect_2", "Image", "", szSpritePath, sizeof(szSpritePath));
+        g_DebugLog("[COMPOUND] Effect_2 sprite path from INI: %s", szSpritePath);
         m_TrembleEffect3.Init(&Ini, "Effect_2");
         g_DebugLog("[COMPOUND] After Init Effect_2: MaxFrame=%d", m_TrembleEffect3.GetMaxFrame());
         m_TrembleEffect3.Hide();
