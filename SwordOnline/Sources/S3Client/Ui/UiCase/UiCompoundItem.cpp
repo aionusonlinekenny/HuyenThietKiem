@@ -768,30 +768,37 @@ void KUiCompound::Breathe() {
 
 int KUiCompound::PlayEffect() {
     // Advance frame on all 3 effects simultaneously
-    // Check if sprite is loaded first
     int nMaxFrame = m_TrembleEffect1.GetMaxFrame();
     int nCurrentFrame = m_TrembleEffect1.GetCurrentFrame();
 
     static int nWaitCount = 0;  // Track how long we've waited for sprite to load
 
-    if (nMaxFrame == 0) {
-        // Sprite not loaded yet, keep waiting
-        nWaitCount++;
-
-        // Timeout after 300 frames (~6 seconds at 50fps) - sprite definitely won't load
-        if (nWaitCount >= 300) {
-            g_DebugLog("[COMPOUND] PlayEffect: Sprite failed to load after %d frames, giving up", nWaitCount);
-            nWaitCount = 0;  // Reset for next time
-            return 0;  // Finish animation and proceed to crafting
-        }
-
-        if (nWaitCount % 50 == 0) {  // Log every 50 frames to avoid spam
-            g_DebugLog("[COMPOUND] PlayEffect: Waiting for sprite to load, MaxFrame still 0 (waited %d frames)", nWaitCount);
-        }
-        return 1;  // Keep waiting
+    // CRITICAL: Call NextFrame() even when MaxFrame=0 to trigger sprite loading!
+    // This matches FORGE behavior where sprite loads asynchronously during animation
+    if (m_TrembleEffect1.IsVisible()) {
+        m_TrembleEffect1.NextFrame();
+        m_TrembleEffect2.NextFrame();
+        m_TrembleEffect3.NextFrame();
     }
 
-    // Sprite loaded successfully! Reset wait counter
+    if (nMaxFrame == 0) {
+        // Sprite not loaded yet, but keep calling NextFrame() to trigger load
+        nWaitCount++;
+
+        // Timeout after 300 frames (~6 seconds at 50fps)
+        if (nWaitCount >= 300) {
+            g_DebugLog("[COMPOUND] PlayEffect: Sprite failed to load after %d frames, giving up", nWaitCount);
+            nWaitCount = 0;
+            return 0;  // Finish animation
+        }
+
+        if (nWaitCount % 50 == 0) {
+            g_DebugLog("[COMPOUND] PlayEffect: Waiting for sprite to load, MaxFrame still 0 (waited %d frames)", nWaitCount);
+        }
+        return 1;  // Keep waiting and calling NextFrame()
+    }
+
+    // Sprite loaded successfully!
     if (nWaitCount > 0) {
         g_DebugLog("[COMPOUND] PlayEffect: Sprite loaded successfully after %d frames! MaxFrame=%d", nWaitCount, nMaxFrame);
         nWaitCount = 0;
@@ -804,17 +811,13 @@ int KUiCompound::PlayEffect() {
         m_TrembleEffect3.SetFrame(0);
         g_DebugLog("[COMPOUND] Animation COMPLETE: CurrentFrame=%d reached MaxFrame=%d", nCurrentFrame, nMaxFrame);
         return 0;  // Animation complete
-    } else {
-        m_TrembleEffect1.NextFrame();
-        m_TrembleEffect2.NextFrame();
-        m_TrembleEffect3.NextFrame();
-
-        // Log every 10 frames to track progress
-        if (nCurrentFrame % 10 == 0) {
-            g_DebugLog("[COMPOUND] Animating: Frame %d/%d", nCurrentFrame, nMaxFrame);
-        }
-        return 1;  // Still animating
     }
+
+    // Log progress
+    if (nCurrentFrame % 10 == 0) {
+        g_DebugLog("[COMPOUND] Animating: Frame %d/%d", nCurrentFrame, nMaxFrame);
+    }
+    return 1;  // Still animating
 }
 
 void KUiCompound::PaintWindow() {
