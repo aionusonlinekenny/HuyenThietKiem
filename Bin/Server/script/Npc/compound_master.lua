@@ -535,13 +535,11 @@ function ExeExtractAttribute()
         return
     end
 
-    -- Delete source items
-    DelItemByIndex(nEquipIdx)
-    DelItemByIndex(nHuyenTinhIdx)
-    DelItemByIndex(nKhoangIdx)
+    -- Pre-calculate average value to avoid inline math operations
+    local nAvgValue = floor((nValueMin + nValueMax) / 2)
 
-    -- Create new khoang thach item WITH generator levels set from the start
-    -- This ensures ITEM_SYNC includes the attributes immediately
+    -- Create new khoang thach item FIRST (before deleting anything)
+    -- Pass generator levels directly in AddItemEx to ensure ITEM_SYNC includes attributes
     local nNewKhoangIdx = AddItemEx(
         7,                   -- genre = 7 (script items)
         nKhoangDetail,       -- detail = same as original khoang thach (146-151)
@@ -549,7 +547,7 @@ function ExeExtractAttribute()
         0,                   -- level
         nEquipSeries,        -- series = KEEP equipment series (Kim/Moc/Thuy/Hoa/Tho)
         0,                   -- luck
-        nOp, nValueMin, nValueMax, math.floor((nValueMin + nValueMax) / 2), 0, 0,   -- ma1-ma6 = generator levels!
+        nOp, nValueMin, nValueMax, nAvgValue, 0, 0,   -- ma1-ma6 = generator levels!
         1,                   -- version
         0                    -- randomSeed
     )
@@ -559,12 +557,19 @@ function ExeExtractAttribute()
         return
     end
 
-    -- Also set m_aryMagicAttrib directly for server-side logic
+    -- Set m_aryMagicAttrib directly for server-side logic
     local bSuccess = SetItemMagicAttrib(nNewKhoangIdx, 0, nOp, nValueMin, nValueMax)
     if not bSuccess or bSuccess == 0 then
         Talk(1, "", "<color=red>Loi: Khong the luu thuoc tinh vao Khoang thach!<color>")
+        -- Delete the failed new item before returning
+        DelItemByIndex(nNewKhoangIdx)
         return
     end
+
+    -- Only NOW delete the source items (after successful creation)
+    DelItemByIndex(nEquipIdx)
+    DelItemByIndex(nHuyenTinhIdx)
+    DelItemByIndex(nKhoangIdx)
 
     -- No need for explicit SyncItem - AddItemEx already synced with generator levels!
 
