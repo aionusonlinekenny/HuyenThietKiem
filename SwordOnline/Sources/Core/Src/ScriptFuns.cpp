@@ -10389,15 +10389,19 @@ int LuaSetItemMagicAttrib(Lua_State * L)
 	int nDetail = Item[nItemIdx].GetDetailType();
 	if (nGenre == 7 && nDetail >= 146 && nDetail <= 151 && nSlot == 0)
 	{
-		Item[nItemIdx].m_GeneratorParam.nGeneratorLevel[0] = nAttribType;
-		Item[nItemIdx].m_GeneratorParam.nGeneratorLevel[1] = nMin;
-		Item[nItemIdx].m_GeneratorParam.nGeneratorLevel[2] = nMax;
-		Item[nItemIdx].m_GeneratorParam.nGeneratorLevel[3] = Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0];
-		Item[nItemIdx].m_GeneratorParam.nGeneratorLevel[4] = 0;
-		Item[nItemIdx].m_GeneratorParam.nGeneratorLevel[5] = 0;
+		KItemGeneratorParam* pGenParam = Item[nItemIdx].GetGeneratorParam();
+		if (pGenParam)
+		{
+			pGenParam->nGeneratorLevel[0] = nAttribType;
+			pGenParam->nGeneratorLevel[1] = nMin;
+			pGenParam->nGeneratorLevel[2] = nMax;
+			pGenParam->nGeneratorLevel[3] = Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0];
+			pGenParam->nGeneratorLevel[4] = 0;
+			pGenParam->nGeneratorLevel[5] = 0;
 
-		g_DebugLog("[KHOANG SETATTRIB] ItemIdx=%d, Detail=%d, Type=%d, Min=%d, Max=%d, Val=%d",
-			nItemIdx, nDetail, nAttribType, nMin, nMax, Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0]);
+			g_DebugLog("[KHOANG SETATTRIB] ItemIdx=%d, Detail=%d, Type=%d, Min=%d, Max=%d, Val=%d",
+				nItemIdx, nDetail, nAttribType, nMin, nMax, Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0]);
+		}
 	}
 
 	Lua_PushNumber(L, 1);  // Success
