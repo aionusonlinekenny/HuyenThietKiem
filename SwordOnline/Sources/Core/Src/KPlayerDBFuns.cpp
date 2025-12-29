@@ -472,14 +472,15 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 		NewItem.m_GeneratorParam.nVersion			= pItemData->iversion;
 
 		// Save khoang thach attributes BEFORE Gen_ExistScript to prevent overwriting
+		// Read from generator levels (imagiclevel1-4) since that's where SavePlayerItemList stores them
 		int nSavedAttribType = 0, nSavedMin = 0, nSavedMax = 0, nSavedValue = 0;
 		BOOL bIsKhoangThach = (pItemData->igenre == 7 && pItemData->idetailtype >= 146 && pItemData->idetailtype <= 151);
 		if (bIsKhoangThach)
 		{
-			nSavedAttribType = pItemData->iparam2;
-			nSavedMin = pItemData->iparam3;
-			nSavedMax = pItemData->iparam4;
-			nSavedValue = pItemData->iparam5;
+			nSavedAttribType = pItemData->imagiclevel1;
+			nSavedMin = pItemData->imagiclevel2;
+			nSavedMax = pItemData->imagiclevel3;
+			nSavedValue = pItemData->imagiclevel4;
 		}
 
 		BOOL bGetEquiptResult = 0;
@@ -927,12 +928,31 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 		pItemData->iy =  m_ItemList.m_Items[nIdx].nY;
 		pItemData->iversion = Item[nItemIndex].GetGeneratorParam()->nVersion;
 		pItemData->irandseed = Item[nItemIndex].GetGeneratorParam()->dwRandomSeed;
-		pItemData->imagiclevel1 =  Item[nItemIndex].GetGeneratorParam()->nGeneratorLevel[0];
-		pItemData->imagiclevel2 =  Item[nItemIndex].GetGeneratorParam()->nGeneratorLevel[1];
-		pItemData->imagiclevel3 =  Item[nItemIndex].GetGeneratorParam()->nGeneratorLevel[2];
-		pItemData->imagiclevel4 =  Item[nItemIndex].GetGeneratorParam()->nGeneratorLevel[3];
-		pItemData->imagiclevel5 =  Item[nItemIndex].GetGeneratorParam()->nGeneratorLevel[4];
-		pItemData->imagiclevel6 =  Item[nItemIndex].GetGeneratorParam()->nGeneratorLevel[5];
+
+		// For khoang thach: store magic attributes in generator levels (syncs to client!)
+		if (pItemData->igenre == 7 && pItemData->idetailtype >= 146 && pItemData->idetailtype <= 151)
+		{
+			pItemData->imagiclevel1 = Item[nItemIndex].m_aryMagicAttrib[0].nAttribType;
+			pItemData->imagiclevel2 = Item[nItemIndex].m_aryMagicAttrib[0].nMin;
+			pItemData->imagiclevel3 = Item[nItemIndex].m_aryMagicAttrib[0].nMax;
+			pItemData->imagiclevel4 = Item[nItemIndex].m_aryMagicAttrib[0].nValue[0];
+			pItemData->imagiclevel5 = 0;
+			pItemData->imagiclevel6 = 0;
+
+			g_DebugLog("[KHOANG SAVE] Detail=%d, GenLvl=%d,%d,%d,%d (will sync to client)",
+				pItemData->idetailtype, pItemData->imagiclevel1, pItemData->imagiclevel2,
+				pItemData->imagiclevel3, pItemData->imagiclevel4);
+		}
+		else
+		{
+			pItemData->imagiclevel1 =  Item[nItemIndex].GetGeneratorParam()->nGeneratorLevel[0];
+			pItemData->imagiclevel2 =  Item[nItemIndex].GetGeneratorParam()->nGeneratorLevel[1];
+			pItemData->imagiclevel3 =  Item[nItemIndex].GetGeneratorParam()->nGeneratorLevel[2];
+			pItemData->imagiclevel4 =  Item[nItemIndex].GetGeneratorParam()->nGeneratorLevel[3];
+			pItemData->imagiclevel5 =  Item[nItemIndex].GetGeneratorParam()->nGeneratorLevel[4];
+			pItemData->imagiclevel6 =  Item[nItemIndex].GetGeneratorParam()->nGeneratorLevel[5];
+		}
+
 		pItemData->ilucky = 	 Item[nItemIndex].GetGeneratorParam()->nLuck;
 		pItemData->idurability = Item[nItemIndex].GetDurability();
 		//
@@ -940,31 +960,9 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 		//
 		pItemData->iparam1			= Item[nItemIndex].GetParam1();
 		//
-		// Store magic attribute data for khoang thach items (genre 7, details 146-151)
-		// Use item's unique ID + attribute type as composite key for instance-specific storage
-		if (pItemData->igenre == 7 && pItemData->idetailtype >= 146 && pItemData->idetailtype <= 151)
-		{
-			// Store first magic attribute (slot 0) in iparam2-iparam6
-			// Each khoáng thạch instance has unique ID stored in high bits of iparam2
-			pItemData->iparam2 = Item[nItemIndex].m_aryMagicAttrib[0].nAttribType;
-			pItemData->iparam3 = Item[nItemIndex].m_aryMagicAttrib[0].nMin;
-			pItemData->iparam4 = Item[nItemIndex].m_aryMagicAttrib[0].nMax;
-			pItemData->iparam5 = Item[nItemIndex].m_aryMagicAttrib[0].nValue[0];
-			pItemData->iparam6 = Item[nItemIndex].GetID();  // Store unique item ID for verification
-
-			g_DebugLog("[KHOANG SAVE] ItemID=%d, Detail=%d, AttribType=%d, Min=%d, Max=%d, Value=%d",
-				Item[nItemIndex].GetID(), pItemData->idetailtype, pItemData->iparam2,
-				pItemData->iparam3, pItemData->iparam4, pItemData->iparam5);
-		}
-		else
-		{
-			// Initialize to zero for non-khoang-thach items
-			pItemData->iparam2 = 0;
-			pItemData->iparam3 = 0;
-			pItemData->iparam4 = 0;
-			pItemData->iparam5 = 0;
-			pItemData->iparam6 = 0;
-		}
+		// For khoang thach items: DON'T use iparam, use generator levels instead!
+		// Generator levels ARE synced to client via ITEM_SYNC, iparam are NOT.
+		// This is handled below where imagiclevel1-6 are normally set.
 		//
 		pItemData->ibindstate		= Item[nItemIndex].GetBindState();
 		//

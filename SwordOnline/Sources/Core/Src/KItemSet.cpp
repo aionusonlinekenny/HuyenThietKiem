@@ -274,6 +274,25 @@ int KItemSet::AddExist(IN int nItemGenre, IN int nSeries, IN int nLevel,
 		break;
 	}
 
+	// For khoang thach items: convert generator levels to magic attributes
+	// This allows attributes stored in generator levels (which sync via ITEM_SYNC)
+	// to display automatically in tooltip
+	if (nItemGenre == 7 && nDetailType >= 146 && nDetailType <= 151)
+	{
+		if (pnMagicLevel && pnMagicLevel[0] > 0)
+		{
+			pItem->m_aryMagicAttrib[0].nAttribType = pnMagicLevel[0];
+			pItem->m_aryMagicAttrib[0].nMin = (short)pnMagicLevel[1];
+			pItem->m_aryMagicAttrib[0].nMax = (short)pnMagicLevel[2];
+			pItem->m_aryMagicAttrib[0].nValue[0] = pnMagicLevel[3];
+			pItem->m_aryMagicAttrib[0].nValue[1] = 0;
+			pItem->m_aryMagicAttrib[0].nValue[2] = 0;
+
+			g_DebugLog("[KHOANG ADDEXIST] Detail=%d, GenLvl=%d,%d,%d,%d -> MagicAttrib",
+				nDetailType, pnMagicLevel[0], pnMagicLevel[1], pnMagicLevel[2], pnMagicLevel[3]);
+		}
+	}
+
 #ifdef _SERVER
 	if(!SetID(i))
 	{	
