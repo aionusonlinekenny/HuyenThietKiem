@@ -348,11 +348,10 @@ int KUiComItem::GetWindowsNum() {
 
 void KUiComItem::ComItem(unsigned int pItem, int nWindowNum, int nNum) {
     switch (nWindowNum) {
-        case WINDOWS_COMP:
+        case WINDOWS_COMP:  // Mode 1: Equipment ? Huyen Tinh
             g_DebugLog("[CLIENT COMPOUND Mode1] Equipment crafting button clicked!");
             if (g_pCoreShell) {
                 g_DebugLog("[CLIENT COMPOUND Mode1] g_pCoreShell is valid");
-                // Call server-side Lua script to handle Equipment->Huyen Tinh crafting
                 if (g_pCoreShell->GetLixian()) {
                     g_DebugLog("[CLIENT COMPOUND Mode1] GetLixian() = TRUE, sending GOI_EXESCRIPT_BUTTON");
                     char szFunc[32];
@@ -367,9 +366,22 @@ void KUiComItem::ComItem(unsigned int pItem, int nWindowNum, int nNum) {
                 g_DebugLog("[CLIENT COMPOUND Mode1] ERROR: g_pCoreShell is NULL!");
             }
             break;
-        case WINDOWS_COMP2:
+        case WINDOWS_COMP2:  // Mode 2: Crystal ? Higher level crystal (m_nSelect = 1)
+            g_DebugLog("[CLIENT COMPOUND Mode2] Crystal upgrade button clicked!");
             if (g_pCoreShell) {
-                g_pCoreShell->OperationRequest(GOI_COMPITEM_COM, pItem, 2);
+                g_DebugLog("[CLIENT COMPOUND Mode2] g_pCoreShell is valid");
+                if (g_pCoreShell->GetLixian()) {
+                    g_DebugLog("[CLIENT COMPOUND Mode2] GetLixian() = TRUE, sending GOI_EXESCRIPT_BUTTON");
+                    char szFunc[32];
+                    sprintf(szFunc, "ExeCompoundCrystal");
+                    g_DebugLog("[CLIENT COMPOUND Mode2] Function name: %s", szFunc);
+                    g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
+                    g_DebugLog("[CLIENT COMPOUND Mode2] OperationRequest sent successfully");
+                } else {
+                    g_DebugLog("[CLIENT COMPOUND Mode2] ERROR: GetLixian() = FALSE! Cannot execute script!");
+                }
+            } else {
+                g_DebugLog("[CLIENT COMPOUND Mode2] ERROR: g_pCoreShell is NULL!");
             }
             break;
         case WINDOWS_COMP3:
@@ -538,6 +550,29 @@ int KUiCompound::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                         g_DebugLog("[COMPOUND] Box1 Mode1 validation PASSED: ring accepted");
                     }
 
+                    // VALIDATION: Mode 2 (Crystal) - Box1 only accepts HUYEN TINH
+                    if (pDropPos && m_nSelect == 1) {
+                        int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
+
+                        // Must be item_task (genre = 6)
+                        if (nGenre != item_task) {
+                            g_DebugLog("[COMPOUND] REJECT Box1 Mode2: Genre %d is not item_task", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH vao o nay!", 256);
+                            break;
+                        }
+
+                        // Must be Huyen Tinh (detail = 74-79 for levels 1-6)
+                        if (nDetail < 74 || nDetail > 79) {
+                            g_DebugLog("[COMPOUND] REJECT Box1 Mode2: Detail %d is not Huyen Tinh (need 74-79)", nDetail);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH cap 1-6!", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[COMPOUND] Box1 Mode2 validation PASSED: Huyen Tinh accepted (detail=%d)", nDetail);
+                    }
+
+
                 } else if (pWnd == (KWndWindow*)&m_Box2) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM2;  // Slot 1
                     g_DebugLog("[COMPOUND] Mapped to Box2 (UIEP_BUILDITEM2 = %d)", UIEP_BUILDITEM2);
@@ -565,6 +600,27 @@ int KUiCompound::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                         g_DebugLog("[COMPOUND] Box2 Mode1 validation PASSED: necklace accepted");
                     }
 
+                    // VALIDATION: Mode 2 (Crystal) - Box2 only accepts HUYEN TINH
+                    if (pDropPos && m_nSelect == 1) {
+                        int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
+
+                        if (nGenre != item_task) {
+                            g_DebugLog("[COMPOUND] REJECT Box2 Mode2: Genre %d is not item_task", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH vao o nay!", 256);
+                            break;
+                        }
+
+                        if (nDetail < 74 || nDetail > 79) {
+                            g_DebugLog("[COMPOUND] REJECT Box2 Mode2: Detail %d is not Huyen Tinh (need 74-79)", nDetail);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH cap 1-6!", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[COMPOUND] Box2 Mode2 validation PASSED: Huyen Tinh accepted (detail=%d)", nDetail);
+                    }
+
+
                 } else if (pWnd == (KWndWindow*)&m_Box3) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM3;  // Slot 2
                     g_DebugLog("[COMPOUND] Mapped to Box3 (UIEP_BUILDITEM3 = %d)", UIEP_BUILDITEM3);
@@ -591,6 +647,27 @@ int KUiCompound::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
 
                         g_DebugLog("[COMPOUND] Box3 Mode1 validation PASSED: pendant accepted");
                     }
+
+                    // VALIDATION: Mode 2 (Crystal) - Box3 only accepts HUYEN TINH
+                    if (pDropPos && m_nSelect == 1) {
+                        int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
+
+                        if (nGenre != item_task) {
+                            g_DebugLog("[COMPOUND] REJECT Box3 Mode2: Genre %d is not item_task", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH vao o nay!", 256);
+                            break;
+                        }
+
+                        if (nDetail < 74 || nDetail > 79) {
+                            g_DebugLog("[COMPOUND] REJECT Box3 Mode2: Detail %d is not Huyen Tinh (need 74-79)", nDetail);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH cap 1-6!", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[COMPOUND] Box3 Mode2 validation PASSED: Huyen Tinh accepted (detail=%d)", nDetail);
+                    }
+
 
                 } else {
                     g_DebugLog("[COMPOUND] ERROR: pWnd doesn't match any box!");
@@ -748,6 +825,9 @@ void KUiCompound::Breathe() {
         m_TrembleEffect3.SetFrame(0);
         m_nStatus = STATUS_TREMBLING;
         g_DebugLog("[COMPOUND] Started effect animation on all 3 boxes");
+        g_DebugLog("[COMPOUND] Effect1: MaxFrame=%d, CurrentFrame=%d, IsVisible=%d",
+            m_TrembleEffect1.GetMaxFrame(), m_TrembleEffect1.GetCurrentFrame(),
+            m_TrembleEffect1.IsVisible());
     } else if (m_nStatus == STATUS_TREMBLING) {
         if (!PlayEffect()) {
             m_nStatus = STATUS_CHANGING_ITEM;
@@ -760,31 +840,66 @@ void KUiCompound::Breathe() {
     } else if (m_nStatus == STATUS_CHANGING_ITEM) {
         UpdateResult();
         m_nStatus = STATUS_FINISH;
+        g_DebugLog("[COMPOUND] Breathe: Set status to STATUS_FINISH");
+    } else if (m_nStatus == STATUS_FINISH) {
+        // Reset to waiting state for next crafting
+        m_nStatus = STATUS_WAITING_MATERIALS;
+        g_DebugLog("[COMPOUND] Breathe: Reset status to STATUS_WAITING_MATERIALS, ready for next craft");
     }
 }
 
 int KUiCompound::PlayEffect() {
     // Advance frame on all 3 effects simultaneously
-    // Check if sprite is loaded first
-    if (m_TrembleEffect1.GetMaxFrame() == 0) {
-        // Sprite not loaded yet, keep waiting
-        return 1;
-    }
+    int nMaxFrame = m_TrembleEffect1.GetMaxFrame();
+    int nCurrentFrame = m_TrembleEffect1.GetCurrentFrame();
 
-    // Check if animation is complete (current frame reached max)
-    if (m_TrembleEffect1.GetCurrentFrame() >= m_TrembleEffect1.GetMaxFrame() - 1) {
-        m_TrembleEffect1.SetFrame(0);
-        m_TrembleEffect2.SetFrame(0);
-        m_TrembleEffect3.SetFrame(0);
-        g_DebugLog("[COMPOUND] Animation reached max frame (%d), resetting",
-            m_TrembleEffect1.GetMaxFrame());
-        return 0;  // Animation complete
-    } else {
+    static int nWaitCount = 0;  // Track how long we've waited for sprite to load
+
+    // CRITICAL: Call NextFrame() even when MaxFrame=0 to trigger sprite loading!
+    // This matches FORGE behavior where sprite loads asynchronously during animation
+    if (m_TrembleEffect1.IsVisible()) {
         m_TrembleEffect1.NextFrame();
         m_TrembleEffect2.NextFrame();
         m_TrembleEffect3.NextFrame();
-        return 1;  // Still animating
     }
+
+    if (nMaxFrame == 0) {
+        // Sprite not loaded yet, but keep calling NextFrame() to trigger load
+        nWaitCount++;
+
+        // Timeout after 300 frames (~6 seconds at 50fps)
+        if (nWaitCount >= 300) {
+            g_DebugLog("[COMPOUND] PlayEffect: Sprite failed to load after %d frames, giving up", nWaitCount);
+            nWaitCount = 0;
+            return 0;  // Finish animation
+        }
+
+        if (nWaitCount % 50 == 0) {
+            g_DebugLog("[COMPOUND] PlayEffect: Waiting for sprite to load, MaxFrame still 0 (waited %d frames)", nWaitCount);
+        }
+        return 1;  // Keep waiting and calling NextFrame()
+    }
+
+    // Sprite loaded successfully!
+    if (nWaitCount > 0) {
+        g_DebugLog("[COMPOUND] PlayEffect: Sprite loaded successfully after %d frames! MaxFrame=%d", nWaitCount, nMaxFrame);
+        nWaitCount = 0;
+    }
+
+    // Check if animation is complete (current frame reached max)
+    if (nCurrentFrame >= nMaxFrame - 1) {
+        m_TrembleEffect1.SetFrame(0);
+        m_TrembleEffect2.SetFrame(0);
+        m_TrembleEffect3.SetFrame(0);
+        g_DebugLog("[COMPOUND] Animation COMPLETE: CurrentFrame=%d reached MaxFrame=%d", nCurrentFrame, nMaxFrame);
+        return 0;  // Animation complete
+    }
+
+    // Log progress
+    if (nCurrentFrame % 10 == 0) {
+        g_DebugLog("[COMPOUND] Animating: Frame %d/%d", nCurrentFrame, nMaxFrame);
+    }
+    return 1;  // Still animating
 }
 
 void KUiCompound::PaintWindow() {
@@ -806,9 +921,33 @@ void KUiCompound::LoadScheme(const char *pScheme) {
         m_Cancle.Init(&Ini, "CancleBtn");
         m_Guide.Init(&Ini, "GuideList");
         m_ListScroll.Init(&Ini, "GuideList_Scroll");
+
+        // Log sprite paths to verify what we're trying to load
+        char szSpritePath[256];
+        Ini.GetString("Effect_0", "Image", "", szSpritePath, sizeof(szSpritePath));
+        g_DebugLog("[COMPOUND] Effect_0 sprite path from INI: %s", szSpritePath);
+
+        g_DebugLog("[COMPOUND] Before Init Effect_0: INI file loaded from %s", Buff);
         m_TrembleEffect1.Init(&Ini, "Effect_0");
+        g_DebugLog("[COMPOUND] After Init Effect_0: MaxFrame=%d, IsVisible=%d",
+            m_TrembleEffect1.GetMaxFrame(), m_TrembleEffect1.IsVisible());
+        m_TrembleEffect1.Hide();
+        g_DebugLog("[COMPOUND] After Hide Effect_0: IsVisible=%d", m_TrembleEffect1.IsVisible());
+
+        Ini.GetString("Effect_1", "Image", "", szSpritePath, sizeof(szSpritePath));
+        g_DebugLog("[COMPOUND] Effect_1 sprite path from INI: %s", szSpritePath);
         m_TrembleEffect2.Init(&Ini, "Effect_1");
+        g_DebugLog("[COMPOUND] After Init Effect_1: MaxFrame=%d", m_TrembleEffect2.GetMaxFrame());
+        m_TrembleEffect2.Hide();
+
+        Ini.GetString("Effect_2", "Image", "", szSpritePath, sizeof(szSpritePath));
+        g_DebugLog("[COMPOUND] Effect_2 sprite path from INI: %s", szSpritePath);
         m_TrembleEffect3.Init(&Ini, "Effect_2");
+        g_DebugLog("[COMPOUND] After Init Effect_2: MaxFrame=%d", m_TrembleEffect3.GetMaxFrame());
+        m_TrembleEffect3.Hide();
+
+        g_DebugLog("[COMPOUND] All effects initialized - Effect1 MaxFrame=%d, Effect2 MaxFrame=%d, Effect3 MaxFrame=%d",
+            m_TrembleEffect1.GetMaxFrame(), m_TrembleEffect2.GetMaxFrame(), m_TrembleEffect3.GetMaxFrame());
         //m_ListBtn.Init(&Ini,"GuideList_Scroll_Btn");
 
         // Bring boxes to top so they can receive mouse events

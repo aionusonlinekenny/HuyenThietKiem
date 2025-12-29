@@ -73,9 +73,15 @@ Hå Tiªu LÖnh	6	70	1	\spr\item\questkey\card_xnk.spr	385	1	1	PhÇn th­ëng tõ event
 T¨ng Tèc	6	71	1	\spr\item\questkey\taskobj105.spr	41	1	1	T¨ng tôc ®Ó di chuyÓn trong thêi gian ng¾n. Dµnh cho event VËn Tiªu.	50
 Håi M¸u	6	72	1	\spr\item\questkey\huihuangzhiguo.spr	380	1	1	Håi phôc sinh lùc nhanh chãng. Dµng riªng cho VËn Tiªu.	50
 DŞch ChuyÓn	6	73	1	\spr\item\questkey\006.spr	385	1	1	DŞch chuyÓn ®Õn vŞ trİ an toµn. Dµnh riªng cho VËn Tiªu.	50
-HuyÒn Tinh CÊp 1	6	74	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	HuyÒn Tinh huyÒn tho¹i, +8 Luck cho trang bŞ Tİm.	50
-HuyÒn Tinh CÊp 2	6	75	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	HuyÒn Tinh huyÒn tho¹i, +9 Luck cho trang bŞ Tİm.	50
-HuyÒn Tinh CÊp 3	6	76	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	HuyÒn Tinh huyÒn tho¹i, +10 Luck cho trang bŞ Tİm.	50
-HuyÒn Tinh CÊp 4	6	77	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	HuyÒn Tinh huyÒn tho¹i, +11 Luck cho trang bŞ Tİm.	50
-HuyÒn Tinh CÊp 5	6	78	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	HuyÒn Tinh huyÒn tho¹i, +12 Luck cho trang bŞ Tİm.	50
-HuyÒn Tinh CÊp 6	6	79	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	HuyÒn Tinh huyÒn tho¹i, +13 Luck cho trang bŞ Tİm.	50
+HuyÒn Tinh CÊp 1	6	74	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +8 Luck cho trang bŞ Tİm."	50
+HuyÒn Tinh CÊp 2	6	75	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +9 Luck cho trang bŞ Tİm."	50
+HuyÒn Tinh CÊp 3	6	76	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +10 Luck cho trang bŞ Tİm."	50
+HuyÒn Tinh CÊp 4	6	77	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +11 Luck cho trang bŞ Tİm."	50
+HuyÒn Tinh CÊp 5	6	78	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +12 Luck cho trang bŞ Tİm."	50
+HuyÒn Tinh CÊp 6	6	79	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +13 Luck cho trang bŞ Tİm."	50
+HuyÒn ThiÕt Nguyªn Kho¸ng	6	80	1	\spr\item\script\item_xuantiekuang.spr	425	1	1	"<color=yellow>Mét lo¹i <color=yellow>Kho¸ng th¹ch cã thuéc tİnh<color>, cã thÓ lµm thay ®æi <color=yellow>thuéc tİnh hiÖn 1<color> trªn trang bŞ (NhÊn chuét ph¶i xem chi tiÕt)"	50
+Khæng T­íc Nguyªn Th¹ch	6	81	1	\spr\item\script\item_kongqueshi.spr	425	1	1	"<color=yellow>Mét lo¹i <color=yellow>Kho¸ng th¹ch cã thuéc tİnh<color>, cã thÓ lµm thay ®æi <color=yellow>thuéc tİnh Èn 1<color> trªn trang bŞ cïng Ngò hµnh (NhÊn chuét ph¶i xem chi tiÕt)"	50
+MËt Ng©n Nguyªn Kho¸ng	6	82	1	\spr\item\script\item_miyinkuang.spr	425	1	1	"<color=yellow>Mét lo¹i <color=yellow>Kho¸ng th¹ch cã thuéc tİnh<color>, cã thÓ lµm thay ®æi <color=yellow> thuéc tİnh hiÖn 2<color> trªn trang bŞ (NhÊn chuét ph¶i xem chi tiÕt)"	50
+Phï Dung Nguyªn Th¹ch	6	83	1	\spr\item\script\item_furongshi.spr	425	1	1	"<color=yellow>Mét lo¹i <color=yellow>Kho¸ng th¹ch cã thuéc tİnh<color>, cã thÓ lµm thay ®æi <color=yellow>thuéc tİnh Èn 2<color> trªn trang bŞ cïng Ngò hµnh (NhÊn chuét ph¶i xem chi tiÕt)"	50
+Chu Sa Nguyªn Kho¸ng	6	84	1	\spr\item\script\item_zhushakuang.spr	425	1	1	"<color=yellow>Mét lo¹i <color=yellow>Kho¸ng th¹ch cã thuéc tİnh<color>, cã thÓ lµm thay ®æi <color=yellow>thuéc tİnh hiÖn 3<color> trªn trang bŞ (NhÊn chuét ph¶i xem chi tiÕt)"	50
+Chung Nhò Nguyªn Th¹ch	6	85	1	\spr\item\script\item_zhongrushi.spr	425	1	1	"<color=yellow>Mét lo¹i <color=yellow>Kho¸ng th¹ch cã thuéc tİnh<color>, cã thÓ lµm thay ®æi <color=yellow>thuéc tİnh Èn 3<color> trªn trang bŞ cïng Ngò hµnh (NhÊn chuét ph¶i xem chi tiÕt)"	50

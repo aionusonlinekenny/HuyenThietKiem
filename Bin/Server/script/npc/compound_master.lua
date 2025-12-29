@@ -191,9 +191,9 @@ function ExeCompoundForge()
     DelItemByIndex(nCrystalIdx) -- Delete crystal
 
     -- Success message
-    local szMsg = string.format("<color=green>Che tao thanh cong trang bi tim voi %d dong thuoc tinh!<color>", nNumLines)
+    local szMsg = "<color=green>Che tao thanh cong trang bi tim voi " .. nNumLines .. " dong thuoc tinh!<color>"
     Talk(1, "", szMsg)
-    Msg2SubWorld(string.format("<pic=135><color=green> %s<color> da hop thanh <color=purple>TRANG BI TIM<color> voi %d dong!", GetName(), nNumLines))
+    Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da hop thanh <color=purple>TRANG BI TIM<color> voi " .. nNumLines .. " dong!")
 end
 
 -- ------------------------------------------------------------
@@ -247,7 +247,8 @@ function ExeCompoundEquipment()
     end
 
     -- Calculate average level of 3 items
-    local nAvgLevel = math.floor((nRingLevel + nNeckLevel + nPendLevel) / 3)
+    -- No need to floor - comparisons work fine with decimal values
+    local nAvgLevel = (nRingLevel + nNeckLevel + nPendLevel) / 3
 
     -- Determine Huyen Tinh level (1-6) based on average equipment level
     -- Level mapping:
@@ -334,9 +335,133 @@ function ExeCompoundEquipment()
 
     -- Success message
     local szLevelName = {"I", "II", "III", "IV", "V", "VI"}
-    local szMsg = string.format("<color=green>Hop thanh thanh cong Huyen Tinh cap %s!<color>", szLevelName[nHuyenTinhLevel])
+    local szMsg = "<color=green>Hop thanh thanh cong Huyen Tinh cap " .. szLevelName[nHuyenTinhLevel] .. "!<color>"
     Talk(1, "", szMsg)
-    Msg2SubWorld(string.format("<pic=135><color=green> %s<color> da hop thanh <color=cyan>HUYEN TINH CAP %s<color> tu 3 trang bi!", GetName(), szLevelName[nHuyenTinhLevel]))
+    Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da hop thanh <color=cyan>HUYEN TINH CAP " .. szLevelName[nHuyenTinhLevel] .. "<color> tu 3 trang bi!")
+end
+
+-- ------------------------------------------------------------
+-- Execute Compound Crystal (Mode 2 - Crystal Upgrading)
+-- Called when player clicks "Tinh Luyen" in COMPOUND tab Mode 2
+-- ------------------------------------------------------------
+function ExeCompoundCrystal()
+    local nPos = 15  -- pos_builditem
+
+    -- Get items from 3 UI slots
+    local nCrystal1Idx = GetPOItem(nPos, 0)  -- Box1 = slot 0
+    local nCrystal2Idx = GetPOItem(nPos, 1)  -- Box2 = slot 1
+    local nCrystal3Idx = GetPOItem(nPos, 2)  -- Box3 = slot 2
+
+    -- Validate all 3 items exist
+    if not nCrystal1Idx or nCrystal1Idx <= 0 then
+        Talk(1, "", "<color=red>Vui long dat HUYEN TINH vao o 1!<color>")
+        return
+    end
+
+    if not nCrystal2Idx or nCrystal2Idx <= 0 then
+        Talk(1, "", "<color=red>Vui long dat HUYEN TINH vao o 2!<color>")
+        return
+    end
+
+    if not nCrystal3Idx or nCrystal3Idx <= 0 then
+        Talk(1, "", "<color=red>Vui long dat HUYEN TINH vao o 3!<color>")
+        return
+    end
+
+    -- Get properties of all 3 crystals
+    local nGenre1, nDetail1 = GetItemProp(nCrystal1Idx)
+    local nGenre2, nDetail2 = GetItemProp(nCrystal2Idx)
+    local nGenre3, nDetail3 = GetItemProp(nCrystal3Idx)
+
+    -- Validate all are Huyen Tinh (genre = 6)
+    if nGenre1 ~= HUYEN_TINH_GENRE then
+        Talk(1, "", "<color=red>O 1 phai la HUYEN TINH!<color>")
+        return
+    end
+
+    if nGenre2 ~= HUYEN_TINH_GENRE then
+        Talk(1, "", "<color=red>O 2 phai la HUYEN TINH!<color>")
+        return
+    end
+
+    if nGenre3 ~= HUYEN_TINH_GENRE then
+        Talk(1, "", "<color=red>O 3 phai la HUYEN TINH!<color>")
+        return
+    end
+
+    -- Validate all are within valid range (74-79 for levels 1-6)
+    if nDetail1 < HUYEN_TINH_MIN_DETAIL or nDetail1 > HUYEN_TINH_MAX_DETAIL then
+        Talk(1, "", "<color=red>O 1 phai la Huyen Tinh cap 1-6!<color>")
+        return
+    end
+
+    if nDetail2 < HUYEN_TINH_MIN_DETAIL or nDetail2 > HUYEN_TINH_MAX_DETAIL then
+        Talk(1, "", "<color=red>O 2 phai la Huyen Tinh cap 1-6!<color>")
+        return
+    end
+
+    if nDetail3 < HUYEN_TINH_MIN_DETAIL or nDetail3 > HUYEN_TINH_MAX_DETAIL then
+        Talk(1, "", "<color=red>O 3 phai la Huyen Tinh cap 1-6!<color>")
+        return
+    end
+
+    -- Check that all 3 crystals are the same level
+    if nDetail1 ~= nDetail2 or nDetail1 ~= nDetail3 then
+        Talk(1, "", "<color=red>Ca 3 Huyen Tinh phai cung cap!<color>")
+        return
+    end
+
+    -- Check if already at max level (detail = 79 = level 6)
+    if nDetail1 >= HUYEN_TINH_MAX_DETAIL then
+        Talk(1, "", "<color=red>Huyen Tinh da dat cap toi da, khong the nang cap!<color>")
+        return
+    end
+
+    -- Calculate success rate based on crystal level
+    -- Level 1: 80% success, Level 2: 70%, Level 3: 60%, Level 4: 50%, Level 5: 40%
+    local nCrystalLevel = nDetail1 - 73
+    local nSuccessRate = 90 - (nCrystalLevel * 10)  -- 80, 70, 60, 50, 40
+
+    -- Random check for success/failure
+    local nRand = random(1, 100)
+    local bSuccess = (nRand <= nSuccessRate)
+
+    -- Always delete the 3 source crystals
+    DelItemByIndex(nCrystal1Idx)
+    DelItemByIndex(nCrystal2Idx)
+    DelItemByIndex(nCrystal3Idx)
+
+    if bSuccess then
+        -- Create higher level crystal (detail + 1)
+        local nNewDetail = nDetail1 + 1
+        local nNewCrystalIdx = AddItemEx(
+            HUYEN_TINH_GENRE,    -- genre = 6 (item_task)
+            nNewDetail,          -- detail = current + 1
+            0,                   -- particular
+            0,                   -- level
+            0,                   -- series
+            0,                   -- luck
+            0, 0, 0, 0, 0, 0,   -- magic attributes
+            1,                   -- version
+            0                    -- randomSeed
+        )
+
+        if not nNewCrystalIdx or nNewCrystalIdx <= 0 then
+            Talk(1, "", "<color=red>Loi: Khong the tao Huyen Tinh!<color>")
+            return
+        end
+
+        -- Success message
+        local szLevelName = {"I", "II", "III", "IV", "V", "VI"}
+        local nNewLevel = nNewDetail - 73
+        local szMsg = "<color=green>Nang cap thanh cong! Nhan duoc Huyen Tinh cap " .. szLevelName[nNewLevel] .. "!<color>"
+        Talk(1, "", szMsg)
+        Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da nang cap thanh cong <color=cyan>HUYEN TINH CAP " .. szLevelName[nNewLevel] .. "<color>!")
+    else
+        -- Failure message
+        Talk(1, "", "<color=red>Nang cap that bai! Mat tat ca Huyen Tinh!<color>")
+        Msg2SubWorld("<color=red> " .. GetName() .. "<color> da that bai khi nang cap Huyen Tinh!")
+    end
 end
 
 function no()
