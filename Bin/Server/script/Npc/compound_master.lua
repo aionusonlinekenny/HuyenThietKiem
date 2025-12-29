@@ -493,8 +493,8 @@ function ExeExtractAttribute()
         return
     end
 
-    -- Get properties
-    local nEquipGenre, nEquipDetail = GetItemProp(nEquipIdx)
+    -- Get properties (including series for element checking)
+    local nEquipGenre, nEquipDetail, _, _, nEquipSeries = GetItemProp(nEquipIdx)
     local nHTGenre, nHTDetail = GetItemProp(nHuyenTinhIdx)
     local nKhoangGenre, nKhoangDetail = GetItemProp(nKhoangIdx)
 
@@ -540,12 +540,13 @@ function ExeExtractAttribute()
     DelItemByIndex(nKhoangIdx)
 
     -- Create new khoang thach item
+    -- Store the equipment's series so we can validate element matching later
     local nNewKhoangIdx = AddItemEx(
         7,                   -- genre = 7 (script items)
         nKhoangDetail,       -- detail = same as original khoang thach (146-151)
         0,                   -- particular
         0,                   -- level
-        0,                   -- series
+        nEquipSeries,        -- series = KEEP equipment series (Kim/Moc/Thuy/Hoa/Tho)
         0,                   -- luck
         0, 0, 0, 0, 0, 0,   -- ma1-ma6 = not used
         1,                   -- version

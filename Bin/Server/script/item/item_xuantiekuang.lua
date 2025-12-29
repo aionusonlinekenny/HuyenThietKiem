@@ -14,8 +14,14 @@ function OnUse(nIdx)
         return 0
     end
 
+    -- Get series (element type) from item properties
+    local _, _, _, _, nSeries = GetItemProp(nIdx)
+    local szSeriesName = {"Kim", "Moc", "Thuy", "Hoa", "Tho"}
+    local szSeries = szSeriesName[nSeries + 1] or "Unknown"
+
     local szMsg = "<color=green>===== THONG TIN THUOC TINH =====<color>"
     szMsg = szMsg .. "\n<color=cyan>Loai khoang thach:<color> <color=yellow>Thuoc tinh hien 1<color>"
+    szMsg = szMsg .. "\n<color=cyan>Ngu Hanh (Series):<color> <color=orange>" .. szSeries .. "<color>"
     szMsg = szMsg .. "\n<color=cyan>Ma thuoc tinh:<color> <color=white>" .. nOp .. "<color>"
     szMsg = szMsg .. "\n<color=cyan>Gia tri:<color> <color=white>" .. nValueMin .. " - " .. nValueMax .. "<color>"
     szMsg = szMsg .. "\n<color=green>================================<color>"
