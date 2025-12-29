@@ -567,14 +567,14 @@ function ExeExtractAttribute()
 
     -- Success message
     local szKhoangName = {
-        "Huyen Thiet Nguyen Khoang",   -- 80
-        "Khong Tuoc Nguyen Thach",     -- 81
-        "Mat Ngan Nguyen Khoang",      -- 82
-        "Phu Dung Nguyen Thach",       -- 83
-        "Chu Sa Nguyen Khoang",        -- 84
-        "Chung Nho Nguyen Thach"       -- 85
+        "Huyen Thiet Nguyen Khoang",   -- 146
+        "Khong Tuoc Nguyen Thach",     -- 147
+        "Mat Ngan Nguyen Khoang",      -- 148
+        "Phu Dung Nguyen Thach",       -- 149
+        "Chu Sa Nguyen Khoang",        -- 150
+        "Chung Nho Nguyen Thach"       -- 151
     }
-    local nKhoangIdx = nKhoangDetail - 79  -- 80->1, 81->2, etc.
+    local nKhoangIdx = nKhoangDetail - 145  -- 146->1, 147->2, etc.
     local szMsg = "<color=green>Chiet xuat thanh cong! Nhan duoc <color=yellow>" .. szKhoangName[nKhoangIdx] .. "<color=green> chua thuoc tinh!<color>"
     Talk(1, "", szMsg)
     Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da chiet xuat thanh cong thuoc tinh tu trang bi!")

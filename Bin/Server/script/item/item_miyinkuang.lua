@@ -1,5 +1,7 @@
--- Mat Ngan Nguyen Khoang (Detail 82)
+-- Mat Ngan Nguyen Khoang (Detail 148)
 -- Stores visible attribute 2 from green equipment
+
+Include("\\script\\lib\\TaskLib.lua")
 
 function main(nItemIdx)
     Talk(1, "", GetDesc(nItemIdx))

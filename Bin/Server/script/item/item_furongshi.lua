@@ -1,5 +1,7 @@
--- Phu Dung Nguyen Thach (Detail 83)
+-- Phu Dung Nguyen Thach (Detail 149)
 -- Stores hidden attribute 2 from green equipment (same element)
+
+Include("\\script\\lib\\TaskLib.lua")
 
 function main(nItemIdx)
     Talk(1, "", GetDesc(nItemIdx))

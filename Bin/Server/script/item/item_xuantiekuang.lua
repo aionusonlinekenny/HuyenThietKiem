@@ -1,6 +1,8 @@
--- Huyen Thiet Nguyen Khoang (Detail 80)
+-- Huyen Thiet Nguyen Khoang (Detail 146)
 -- Stores attribute extracted from green equipment
 -- Used to apply attribute to purple equipment
+
+Include("\\script\\lib\\TaskLib.lua")
 
 function main(nItemIdx)
     -- Right-click to view detailed attribute information

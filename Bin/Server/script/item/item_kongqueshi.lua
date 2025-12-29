@@ -1,5 +1,7 @@
--- Khong Tuoc Nguyen Thach (Detail 81)
+-- Khong Tuoc Nguyen Thach (Detail 147)
 -- Stores hidden attribute 1 from green equipment (same element)
+
+Include("\\script\\lib\\TaskLib.lua")
 
 function main(nItemIdx)
     Talk(1, "", GetDesc(nItemIdx))

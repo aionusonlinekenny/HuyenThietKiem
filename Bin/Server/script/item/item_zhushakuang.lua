@@ -1,5 +1,7 @@
--- Chu Sa Nguyen Khoang (Detail 84)
+-- Chu Sa Nguyen Khoang (Detail 150)
 -- Stores visible attribute 3 from green equipment
+
+Include("\\script\\lib\\TaskLib.lua")
 
 function main(nItemIdx)
     Talk(1, "", GetDesc(nItemIdx))

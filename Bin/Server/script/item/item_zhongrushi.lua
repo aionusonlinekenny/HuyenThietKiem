@@ -1,5 +1,7 @@
--- Chung Nho Nguyen Thach (Detail 85)
+-- Chung Nho Nguyen Thach (Detail 151)
 -- Stores hidden attribute 3 from green equipment (same element)
+
+Include("\\script\\lib\\TaskLib.lua")
 
 function main(nItemIdx)
     Talk(1, "", GetDesc(nItemIdx))
