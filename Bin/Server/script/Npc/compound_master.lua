@@ -464,5 +464,121 @@ function ExeCompoundCrystal()
     end
 end
 
+-- ------------------------------------------------------------
+-- Execute Extract Attribute (DISTILL Tab)
+-- Called when player clicks "Tinh Luyen" in DISTILL tab
+-- Extracts attribute from green equipment and stores in khoang thach
+-- ------------------------------------------------------------
+function ExeExtractAttribute()
+    local nPos = 15  -- pos_builditem
+
+    -- Get items from UI slots
+    local nEquipIdx = GetPOItem(nPos, 0)     -- BigBox (slot 0) = Green equipment
+    local nHuyenTinhIdx = GetPOItem(nPos, 1) -- Box1 (slot 1) = Huyen Tinh
+    local nKhoangIdx = GetPOItem(nPos, 2)    -- Box2 (slot 2) = Khoang thach
+
+    -- Validate all 3 items exist
+    if not nEquipIdx or nEquipIdx <= 0 then
+        Talk(1, "", "<color=red>Vui long dat TRANG BI XANH vao o lon!<color>")
+        return
+    end
+
+    if not nHuyenTinhIdx or nHuyenTinhIdx <= 0 then
+        Talk(1, "", "<color=red>Vui long dat HUYEN TINH vao o 1!<color>")
+        return
+    end
+
+    if not nKhoangIdx or nKhoangIdx <= 0 then
+        Talk(1, "", "<color=red>Vui long dat KHOANG THACH vao o 2!<color>")
+        return
+    end
+
+    -- Get properties
+    local nEquipGenre, nEquipDetail = GetItemProp(nEquipIdx)
+    local nHTGenre, nHTDetail = GetItemProp(nHuyenTinhIdx)
+    local nKhoangGenre, nKhoangDetail = GetItemProp(nKhoangIdx)
+
+    -- Validate equipment
+    if nEquipGenre ~= 0 then  -- item_equip = 0
+        Talk(1, "", "<color=red>O lon phai la TRANG BI!<color>")
+        return
+    end
+
+    -- Validate Huyen Tinh
+    if nHTGenre ~= HUYEN_TINH_GENRE or nHTDetail < HUYEN_TINH_MIN_DETAIL or nHTDetail > HUYEN_TINH_MAX_DETAIL then
+        Talk(1, "", "<color=red>O 1 phai la HUYEN TINH cap 1-6!<color>")
+        return
+    end
+
+    -- Validate Khoang thach (detail 80-85)
+    if nKhoangGenre ~= 6 or nKhoangDetail < 80 or nKhoangDetail > 85 then
+        Talk(1, "", "<color=red>O 2 phai la KHOANG THACH (detail 80-85)!<color>")
+        return
+    end
+
+    -- Map khoang thach detail to attribute slot:
+    -- 80 = visible attrib 1 (slot 1)
+    -- 81 = hidden attrib 1 (slot 2)
+    -- 82 = visible attrib 2 (slot 3)
+    -- 83 = hidden attrib 2 (slot 4)
+    -- 84 = visible attrib 3 (slot 5)
+    -- 85 = hidden attrib 3 (slot 6)
+    local nAttribSlot = nKhoangDetail - 79  -- 80->1, 81->2, 82->3, 83->4, 84->5, 85->6
+
+    -- Extract attribute from equipment
+    local nOp, nValueMin, nValueMax, nValueMax2 = GetItemMagicAttrib(nEquipIdx, nAttribSlot)
+
+    -- Check if attribute exists (nOp > 0)
+    if not nOp or nOp <= 0 then
+        Talk(1, "", "<color=red>Trang bi khong co thuoc tinh nay!<color>")
+        return
+    end
+
+    -- Delete source items
+    DelItemByIndex(nEquipIdx)
+    DelItemByIndex(nHuyenTinhIdx)
+    DelItemByIndex(nKhoangIdx)
+
+    -- Create new khoang thach with extracted attribute data
+    -- Store attribute info in magic attribute parameters:
+    -- ma1 = attribute type (nOp)
+    -- ma2 = attribute min value (nValueMin)
+    -- ma3 = attribute max value (nValueMax)
+    -- ma4-ma6 = reserved (0)
+    local nNewKhoangIdx = AddItemEx(
+        6,                   -- genre = item_task
+        nKhoangDetail,       -- detail = same as original khoang thach (80-85)
+        0,                   -- particular
+        0,                   -- level
+        0,                   -- series
+        0,                   -- luck
+        nOp,                 -- ma1 = attribute type
+        nValueMin,           -- ma2 = min value
+        nValueMax,           -- ma3 = max value
+        0, 0, 0,            -- ma4-ma6 = reserved
+        1,                   -- version
+        0                    -- randomSeed
+    )
+
+    if not nNewKhoangIdx or nNewKhoangIdx <= 0 then
+        Talk(1, "", "<color=red>Loi: Khong the tao Khoang thach!<color>")
+        return
+    end
+
+    -- Success message
+    local szKhoangName = {
+        "Huyen Thiet Nguyen Khoang",   -- 80
+        "Khong Tuoc Nguyen Thach",     -- 81
+        "Mat Ngan Nguyen Khoang",      -- 82
+        "Phu Dung Nguyen Thach",       -- 83
+        "Chu Sa Nguyen Khoang",        -- 84
+        "Chung Nho Nguyen Thach"       -- 85
+    }
+    local nKhoangIdx = nKhoangDetail - 79  -- 80->1, 81->2, etc.
+    local szMsg = "<color=green>Chiet xuat thanh cong! Nhan duoc <color=yellow>" .. szKhoangName[nKhoangIdx] .. "<color=green> chua thuoc tinh!<color>"
+    Talk(1, "", szMsg)
+    Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da chiet xuat thanh cong thuoc tinh tu trang bi!")
+end
+
 function no()
 end

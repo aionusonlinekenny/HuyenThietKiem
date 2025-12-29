@@ -8934,14 +8934,15 @@ void	KPlayer::ExeScriptButton(BYTE* pProtocol)
 
 			g_DebugLog("[SERVER KPLAYER] GOI_EXESCRIPT_BUTTON received, function: %s", pExe->m_szContent);
 
-			// Allow ExeTremble, ExeUpgradeAttrib, ExeCompoundForge, ExeCompoundEquipment, and ExeCompoundCrystal functions
+			// Allow ExeTremble, ExeUpgradeAttrib, ExeCompoundForge, ExeCompoundEquipment, ExeCompoundCrystal, and ExeExtractAttribute functions
 			if( strcmp(pExe->m_szContent, "ExeTremble") &&
 			    strcmp(pExe->m_szContent, "ExeUpgradeAttrib") &&
 			    strcmp(pExe->m_szContent, "ExeCompoundForge") &&
 			    strcmp(pExe->m_szContent, "ExeCompoundEquipment") &&
-			    strcmp(pExe->m_szContent, "ExeCompoundCrystal") )
+			    strcmp(pExe->m_szContent, "ExeCompoundCrystal") &&
+			    strcmp(pExe->m_szContent, "ExeExtractAttribute") )
 			{
-				g_DebugLog("[SERVER KPLAYER] ERROR: Function '%s' not allowed! Only ExeTremble, ExeUpgradeAttrib, ExeCompoundForge, ExeCompoundEquipment, ExeCompoundCrystal allowed", pExe->m_szContent);
+				g_DebugLog("[SERVER KPLAYER] ERROR: Function '%s' not allowed! Only ExeTremble, ExeUpgradeAttrib, ExeCompoundForge, ExeCompoundEquipment, ExeCompoundCrystal, ExeExtractAttribute allowed", pExe->m_szContent);
 				break;
 			}
 
@@ -8968,6 +8969,11 @@ void	KPlayer::ExeScriptButton(BYTE* pProtocol)
 			{
 				g_GameSettingFile.GetString("COMPOUNDFORGE", "Script", "", szScriptFile, sizeof(szScriptFile));
 				g_DebugLog("[SERVER KPLAYER] ExeCompoundCrystal: Script file = %s", szScriptFile);
+			}
+			else if( strcmp(pExe->m_szContent, "ExeExtractAttribute") == 0 )
+			{
+				g_GameSettingFile.GetString("COMPOUNDFORGE", "Script", "", szScriptFile, sizeof(szScriptFile));
+				g_DebugLog("[SERVER KPLAYER] ExeExtractAttribute: Script file = %s", szScriptFile);
 			}
 			else
 			{

@@ -390,8 +390,21 @@ void KUiComItem::ComItem(unsigned int pItem, int nWindowNum, int nNum) {
             }
             break;
         case WINDOWS_DISTill:
+            g_DebugLog("[CLIENT DISTILL] Extract attribute button clicked!");
             if (g_pCoreShell) {
-                g_pCoreShell->OperationRequest(GOI_COMPITEM_DISTILL, pItem, nNum);
+                g_DebugLog("[CLIENT DISTILL] g_pCoreShell is valid");
+                if (g_pCoreShell->GetLixian()) {
+                    g_DebugLog("[CLIENT DISTILL] GetLixian() = TRUE, sending GOI_EXESCRIPT_BUTTON");
+                    char szFunc[32];
+                    sprintf(szFunc, "ExeExtractAttribute");
+                    g_DebugLog("[CLIENT DISTILL] Function name: %s", szFunc);
+                    g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
+                    g_DebugLog("[CLIENT DISTILL] OperationRequest sent successfully");
+                } else {
+                    g_DebugLog("[CLIENT DISTILL] ERROR: GetLixian() = FALSE! Cannot execute script!");
+                }
+            } else {
+                g_DebugLog("[CLIENT DISTILL] ERROR: g_pCoreShell is NULL!");
             }
             break;
         case WINDOWS_FORG:
@@ -1284,12 +1297,71 @@ int KUiDistill::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                 if (pWnd == (KWndWindow*)&m_BigBox) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM1;  // Slot 0
                     g_DebugLog("[DISTILL] Mapped to BigBox (slot 0)");
+
+                    // VALIDATION: BigBox only accepts green equipment (item_equip with quality)
+                    if (pDropPos) {
+                        int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
+
+                        // Must be equipment (genre = 0)
+                        if (nGenre != item_equip) {
+                            g_DebugLog("[DISTILL] REJECT BigBox: Genre %d is not item_equip", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat TRANG BI XANH vao o nay!", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[DISTILL] BigBox validation PASSED: Equipment accepted (genre=%d, detail=%d)", nGenre, nDetail);
+                    }
                 } else if (pWnd == (KWndWindow*)&m_Box1) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM2;  // Slot 1
                     g_DebugLog("[DISTILL] Mapped to Box1 (slot 1)");
+
+                    // VALIDATION: Box1 only accepts Huyen Tinh (genre=6, detail=74-79)
+                    if (pDropPos) {
+                        int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
+
+                        // Must be item_task (genre = 6)
+                        if (nGenre != item_task) {
+                            g_DebugLog("[DISTILL] REJECT Box1: Genre %d is not item_task", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH vao o nay!", 256);
+                            break;
+                        }
+
+                        // Must be Huyen Tinh (detail = 74-79 for levels 1-6)
+                        if (nDetail < 74 || nDetail > 79) {
+                            g_DebugLog("[DISTILL] REJECT Box1: Detail %d is not Huyen Tinh (need 74-79)", nDetail);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH cap 1-6!", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[DISTILL] Box1 validation PASSED: Huyen Tinh accepted (detail=%d)", nDetail);
+                    }
                 } else if (pWnd == (KWndWindow*)&m_Box2) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM3;  // Slot 2
                     g_DebugLog("[DISTILL] Mapped to Box2 (slot 2)");
+
+                    // VALIDATION: Box2 only accepts Khoang thach (genre=6, detail=80-85)
+                    if (pDropPos) {
+                        int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
+
+                        // Must be item_task (genre = 6)
+                        if (nGenre != item_task) {
+                            g_DebugLog("[DISTILL] REJECT Box2: Genre %d is not item_task", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat KHOANG THACH vao o nay!", 256);
+                            break;
+                        }
+
+                        // Must be Khoang thach (detail = 80-85)
+                        if (nDetail < 80 || nDetail > 85) {
+                            g_DebugLog("[DISTILL] REJECT Box2: Detail %d is not Khoang thach (need 80-85)", nDetail);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat KHOANG THACH (detail 80-85)!", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[DISTILL] Box2 validation PASSED: Khoang thach accepted (detail=%d)", nDetail);
+                    }
                 } else {
                     g_DebugLog("[DISTILL] ERROR: Unknown window, aborting");
                     return 0;
