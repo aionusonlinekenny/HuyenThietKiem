@@ -540,8 +540,8 @@ function ExeExtractAttribute()
     DelItemByIndex(nHuyenTinhIdx)
     DelItemByIndex(nKhoangIdx)
 
-    -- Create new khoang thach item
-    -- Store the equipment's series so we can validate element matching later
+    -- Create new khoang thach item WITH generator levels set from the start
+    -- This ensures ITEM_SYNC includes the attributes immediately
     local nNewKhoangIdx = AddItemEx(
         7,                   -- genre = 7 (script items)
         nKhoangDetail,       -- detail = same as original khoang thach (146-151)
@@ -549,7 +549,7 @@ function ExeExtractAttribute()
         0,                   -- level
         nEquipSeries,        -- series = KEEP equipment series (Kim/Moc/Thuy/Hoa/Tho)
         0,                   -- luck
-        0, 0, 0, 0, 0, 0,   -- ma1-ma6 = not used
+        nOp, nValueMin, nValueMax, math.floor((nValueMin + nValueMax) / 2), 0, 0,   -- ma1-ma6 = generator levels!
         1,                   -- version
         0                    -- randomSeed
     )
@@ -559,18 +559,14 @@ function ExeExtractAttribute()
         return
     end
 
-    -- Store extracted attribute data in magic attribute slot 1
-    -- This allows GetItemMagicAttrib to read it back in item scripts
+    -- Also set m_aryMagicAttrib directly for server-side logic
     local bSuccess = SetItemMagicAttrib(nNewKhoangIdx, 0, nOp, nValueMin, nValueMax)
     if not bSuccess or bSuccess == 0 then
         Talk(1, "", "<color=red>Loi: Khong the luu thuoc tinh vao Khoang thach!<color>")
         return
     end
 
-    -- Sync item to client so attributes display automatically in tooltip
-    -- SyncItem(itemIdx, syncType) where syncType 1 = stack count change
-    -- This triggers client to refresh item display with new m_aryMagicAttrib data
-    SyncItem(nNewKhoangIdx, 1)
+    -- No need for explicit SyncItem - AddItemEx already synced with generator levels!
 
     -- Success message
     local szKhoangName = {
