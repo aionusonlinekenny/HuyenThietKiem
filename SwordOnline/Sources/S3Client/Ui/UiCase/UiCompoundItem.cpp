@@ -366,7 +366,7 @@ void KUiComItem::ComItem(unsigned int pItem, int nWindowNum, int nNum) {
                 g_DebugLog("[CLIENT COMPOUND Mode1] ERROR: g_pCoreShell is NULL!");
             }
             break;
-        case 1:  // Mode 2: Crystal → Higher level crystal
+        case WINDOWS_COMP2:  // Mode 2: Crystal → Higher level crystal (m_nSelect = 1)
             g_DebugLog("[CLIENT COMPOUND Mode2] Crystal upgrade button clicked!");
             if (g_pCoreShell) {
                 g_DebugLog("[CLIENT COMPOUND Mode2] g_pCoreShell is valid");
@@ -382,11 +382,6 @@ void KUiComItem::ComItem(unsigned int pItem, int nWindowNum, int nNum) {
                 }
             } else {
                 g_DebugLog("[CLIENT COMPOUND Mode2] ERROR: g_pCoreShell is NULL!");
-            }
-            break;
-        case WINDOWS_COMP2:
-            if (g_pCoreShell) {
-                g_pCoreShell->OperationRequest(GOI_COMPITEM_COM, pItem, 2);
             }
             break;
         case WINDOWS_COMP3:
