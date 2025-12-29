@@ -763,6 +763,11 @@ void KUiCompound::Breathe() {
     } else if (m_nStatus == STATUS_CHANGING_ITEM) {
         UpdateResult();
         m_nStatus = STATUS_FINISH;
+        g_DebugLog("[COMPOUND] Breathe: Set status to STATUS_FINISH");
+    } else if (m_nStatus == STATUS_FINISH) {
+        // Reset to waiting state for next crafting
+        m_nStatus = STATUS_WAITING_MATERIALS;
+        g_DebugLog("[COMPOUND] Breathe: Reset status to STATUS_WAITING_MATERIALS, ready for next craft");
     }
 }
 
