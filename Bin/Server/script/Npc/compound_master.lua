@@ -566,6 +566,11 @@ function ExeExtractAttribute()
         return
     end
 
+    -- Sync item to client so attributes display automatically in tooltip
+    -- SyncItem(itemIdx, syncType) where syncType 1 = stack count change
+    -- This triggers client to refresh item display with new m_aryMagicAttrib data
+    SyncItem(nNewKhoangIdx, 1)
+
     -- Success message
     local szKhoangName = {
         "Huyen Thiet Nguyen Khoang",   -- 146
