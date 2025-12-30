@@ -3,8 +3,9 @@ Include("\\script\\lib\\TaskLib.lua")
 Include("\\script\\lib\\MagicAttribName.lua")
 
 function OnUse(nIdx)
-    -- Get stored attribute data from magic attribute slot 1
-    local nOp, nValueMin, nValueMax = GetItemMagicAttrib(nIdx, 1)
+    -- Get stored attribute data using GetItemMagicAttribInfo (returns Type, Value, Min, Max)
+    -- Use slot 0 for detail 146 (visible attribute 1)
+    local nOp, nValue, nValueMin, nValueMax = GetItemMagicAttribInfo(nIdx, 0)
 
     if not nOp or nOp <= 0 then
         Talk(1, "", "<color=yellow>Khoang thach chua rong (chua co thuoc tinh)<color>")
