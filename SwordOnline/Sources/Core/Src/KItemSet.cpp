@@ -242,6 +242,30 @@ int KItemSet::AddExist(IN int nItemGenre, IN int nSeries, IN int nLevel,
 	pItem->SetGeneratorLevel(pnMagicLevel);
 	pItem->SetGeneratorLuck(nLuck);
 	pItem->SetGeneratorVersion(nVersion);
+
+	// For khoang thach items: save generator levels BEFORE Gen_ExistScript
+	// Gen_ExistScript overwrites the entire item with template (*pItem = *pScript)
+	// which wipes out generator levels, so we need to restore them after
+	int nSavedGenLevels[6] = {0};
+	int nSavedLuck = 0;
+	int nSavedVersion = 0;
+	DWORD dwSavedSeed = 0;
+	BOOL bNeedRestore = FALSE;
+
+	if (nItemGenre == item_script && nDetailType >= 146 && nDetailType <= 151 && pnMagicLevel)
+	{
+		// Save generator levels for khoang thach
+		memcpy(nSavedGenLevels, pnMagicLevel, sizeof(int) * 6);
+		nSavedLuck = nLuck;
+		nSavedVersion = nVersion;
+		dwSavedSeed = dwRandomSeed;
+		bNeedRestore = TRUE;
+
+		g_DebugLog("[KHOANG SAVE] Detail=%d, Saving GenLvl=[%d,%d,%d,%d,%d,%d] before Gen_ExistScript",
+			nDetailType, nSavedGenLevels[0], nSavedGenLevels[1], nSavedGenLevels[2],
+			nSavedGenLevels[3], nSavedGenLevels[4], nSavedGenLevels[5]);
+	}
+
 	switch(nItemGenre)
 	{
 	case item_equip:
@@ -269,9 +293,23 @@ int KItemSet::AddExist(IN int nItemGenre, IN int nSeries, IN int nLevel,
 		break;
 	case item_mine:
 		ItemGen.Gen_ExistMine(wRecord, nLevel, nSeries, pItem);
-		break; 
+		break;
 	default:
 		break;
+	}
+
+	// For khoang thach items: restore generator levels AFTER Gen_ExistScript
+	// Gen_ExistScript overwrites the entire item, so we restore what we saved earlier
+	if (bNeedRestore)
+	{
+		pItem->SetRandomSeed(dwSavedSeed);
+		pItem->SetGeneratorLevel(nSavedGenLevels);
+		pItem->SetGeneratorLuck(nSavedLuck);
+		pItem->SetGeneratorVersion(nSavedVersion);
+
+		g_DebugLog("[KHOANG RESTORE] Detail=%d, Restored GenLvl=[%d,%d,%d,%d,%d,%d] after Gen_ExistScript",
+			nDetailType, nSavedGenLevels[0], nSavedGenLevels[1], nSavedGenLevels[2],
+			nSavedGenLevels[3], nSavedGenLevels[4], nSavedGenLevels[5]);
 	}
 
 	// For khoang thach items: convert generator levels to magic attributes
