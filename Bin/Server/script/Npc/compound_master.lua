@@ -544,7 +544,7 @@ function ExeExtractAttribute()
     end
 
     -- Pre-calculate average value to avoid inline math operations
-    local nAvgValue = math.floor((nValueMin + nValueMax) / 2)
+    local nAvgValue = floor((nValueMin + nValueMax) / 2)
 
     -- Create new khoang thach item FIRST (before deleting anything)
     -- Pass generator levels directly in AddItemEx to ensure ITEM_SYNC includes attributes
