@@ -12,8 +12,8 @@ function OnUse(nIdx)
         return 0
     end
 
-    -- Get series (element type) from item properties
-    local _, _, _, _, nSeries = GetItemProp(nIdx)
+    -- Get series from generator level[4] (more reliable than GetItemProp for script items)
+    local nGL0, nGL1, nGL2, nGL3, nSeries, nGL5 = GetItemGeneratorLevels(nIdx)
     local szSeriesName = {"Kim", "Moc", "Thuy", "Hoa", "Tho"}
     local szSeries = szSeriesName[nSeries + 1] or "Unknown"
 

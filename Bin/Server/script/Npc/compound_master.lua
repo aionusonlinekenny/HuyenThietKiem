@@ -546,10 +546,11 @@ function ExeExtractAttribute()
     Msg2Player(format("[EXTRACT DEBUG] Using ACTUAL value from equipment: Value=%d (NOT average)", nValue))
 
     -- Debug: log AddItemEx parameters
-    Msg2Player(format("[EXTRACT DEBUG] Calling AddItemEx with: Genre=7, Detail=%d, Series=%d, GenLvl=[%d,%d,%d,%d,0,0]", nKhoangDetail, nEquipSeries or -999, nOp, nValueMin, nValueMax, nValue))
+    Msg2Player(format("[EXTRACT DEBUG] Calling AddItemEx with: Genre=7, Detail=%d, Series=%d, GenLvl=[%d,%d,%d,%d,%d,0]", nKhoangDetail, nEquipSeries or -999, nOp, nValueMin, nValueMax, nValue, nEquipSeries))
 
     -- Create new khoang thach item FIRST (before deleting anything)
     -- Pass generator levels directly in AddItemEx to ensure ITEM_SYNC includes attributes
+    -- GenLvl[0]=Type, [1]=Min, [2]=Max, [3]=Value, [4]=Series, [5]=unused
     local nNewKhoangIdx = AddItemEx(
         7,                   -- genre = 7 (script items)
         nKhoangDetail,       -- detail = same as original khoang thach (146-151)
@@ -557,7 +558,7 @@ function ExeExtractAttribute()
         0,                   -- level
         nEquipSeries,        -- series = KEEP equipment series (Kim/Moc/Thuy/Hoa/Tho)
         0,                   -- luck
-        nOp, nValueMin, nValueMax, nValue, 0, 0,   -- ma1-ma6: use ACTUAL value, not average!
+        nOp, nValueMin, nValueMax, nValue, nEquipSeries, 0,   -- ma1-ma6: Type,Min,Max,Value,Series,unused
         1,                   -- version
         0                    -- randomSeed
     )

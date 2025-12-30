@@ -7,10 +7,12 @@ function OnUse(nIdx)
     -- Use slot 0 for detail 146 (visible attribute 1)
     local nOp, nValue, nValueMin, nValueMax = GetItemMagicAttribInfo(nIdx, 0)
 
+    -- Get series from generator level[4] (more reliable than GetItemProp for script items)
+    local nGL0, nGL1, nGL2, nGL3, nSeries, nGL5 = GetItemGeneratorLevels(nIdx)
+
     -- Debug: check what series and values we got
-    local nGenre, nDetail, _, _, nSeries = GetItemProp(nIdx)
-    Msg2Player(format("[ONUSE DEBUG] Idx=%d, Genre=%d, Detail=%d, Series=%d, Type=%d, Min=%d, Max=%d",
-        nIdx, nGenre or -1, nDetail or -1, nSeries or -999, nOp or -1, nValueMin or -1, nValueMax or -1))
+    Msg2Player(format("[ONUSE DEBUG] Idx=%d, Type=%d, Min=%d, Max=%d, Value=%d, Series=%d (from GenLvl[4])",
+        nIdx, nOp or -1, nValueMin or -1, nValueMax or -1, nValue or -1, nSeries or -999))
 
     if not nOp or nOp <= 0 then
         Talk(1, "", "<color=yellow>Khoang thach chua rong (chua co thuoc tinh)<color>")
