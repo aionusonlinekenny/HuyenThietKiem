@@ -526,14 +526,18 @@ function ExeExtractAttribute()
     local nAttribSlot = nKhoangDetail - 146  -- 146->0, 147->1, 148->2, 149->3, 150->4, 151->5
 
     -- Debug log
-    Msg2Player(format("[DEBUG] Equipment Series=%d, KhoangDetail=%d, Slot=%d", nEquipSeries or -999, nKhoangDetail, nAttribSlot))
+    local szDebug1 = string.format("[DEBUG] Equipment Series=%d, KhoangDetail=%d, Slot=%d", nEquipSeries or -999, nKhoangDetail, nAttribSlot)
+    Talk(1, "", "<color=yellow>" .. szDebug1 .. "<color>")
+    WriteLog(szDebug1)
 
     -- Extract attribute from equipment
     -- GetItemMagicAttribInfo returns: nAttribType, nValue[0], nMin, nMax
     local nOp, nValue, nValueMin, nValueMax = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
 
     -- Debug log
-    Msg2Player(format("[DEBUG] GetItemMagicAttribInfo returned: Type=%d, Value=%d, Min=%d, Max=%d", nOp or -1, nValue or -1, nValueMin or -1, nValueMax or -1))
+    local szDebug2 = string.format("[DEBUG] GetItemMagicAttribInfo returned: Type=%d, Value=%d, Min=%d, Max=%d", nOp or -1, nValue or -1, nValueMin or -1, nValueMax or -1)
+    Talk(1, "", "<color=yellow>" .. szDebug2 .. "<color>")
+    WriteLog(szDebug2)
 
     -- Check if attribute exists (nOp > 0)
     if not nOp or nOp <= 0 then
