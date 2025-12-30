@@ -10396,15 +10396,20 @@ int LuaSetItemMagicAttrib(Lua_State * L)
 		KItemGeneratorParam* pGenParam = Item[nItemIdx].GetGeneratorParam();
 		if (pGenParam)
 		{
+			// CRITICAL: Preserve existing GenLvl[4] (Series) - do NOT overwrite it!
+			// The item was created with the correct Series by AddItemEx, so keep it.
+			int nExistingSeries = pGenParam->nGeneratorLevel[4];
+
 			pGenParam->nGeneratorLevel[0] = nAttribType;
 			pGenParam->nGeneratorLevel[1] = nMin;
 			pGenParam->nGeneratorLevel[2] = nMax;
 			pGenParam->nGeneratorLevel[3] = Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0];
-			pGenParam->nGeneratorLevel[4] = 0;
+			// Keep existing Series instead of hardcoding to 0!
+			pGenParam->nGeneratorLevel[4] = nExistingSeries;
 			pGenParam->nGeneratorLevel[5] = 0;
 
-			g_DebugLog("[KHOANG SETATTRIB] ItemIdx=%d, Detail=%d, Type=%d, Min=%d, Max=%d, Val=%d",
-				nItemIdx, nDetail, nAttribType, nMin, nMax, Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0]);
+			g_DebugLog("[KHOANG SETATTRIB] ItemIdx=%d, Detail=%d, Type=%d, Min=%d, Max=%d, Val=%d, Series=%d (preserved)",
+				nItemIdx, nDetail, nAttribType, nMin, nMax, Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0], nExistingSeries);
 		}
 	}
 
