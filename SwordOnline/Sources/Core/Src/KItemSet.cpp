@@ -209,9 +209,33 @@ int KItemSet::Add(int nItemGenre, int nSeries,
 		break;
 	}
 
+	// CRITICAL FIX: For khoang thach items created via Add() (Lua AddItemEx)
+	// Convert generator levels to magic attributes for tooltip display
+	// AND ensure generator levels persist for OnUse GetItemGeneratorLevels
+	if (nItemGenre == item_script && nDetailType >= 146 && nDetailType <= 151)
+	{
+		if (pnMagicLevel && pnMagicLevel[0] > 0)
+		{
+			pItem->m_aryMagicAttrib[0].nAttribType = pnMagicLevel[0];
+			pItem->m_aryMagicAttrib[0].nMin = (short)pnMagicLevel[1];
+			pItem->m_aryMagicAttrib[0].nMax = (short)pnMagicLevel[2];
+			pItem->m_aryMagicAttrib[0].nValue[0] = pnMagicLevel[3];
+			pItem->m_aryMagicAttrib[0].nValue[1] = 0;
+			pItem->m_aryMagicAttrib[0].nValue[2] = 0;
+
+			// CRITICAL: Call SetGeneratorLevel again to ensure all 6 values persist
+			// (Gen_Script may have cleared them, so we set again after MagicAttrib)
+			pItem->SetGeneratorLevel(pnMagicLevel);
+
+			g_DebugLog("[KHOANG ADD] Detail=%d, GenLvl=%d,%d,%d,%d,%d,%d -> MagicAttrib+GenParam",
+				nDetailType, pnMagicLevel[0], pnMagicLevel[1], pnMagicLevel[2],
+				pnMagicLevel[3], pnMagicLevel[4], pnMagicLevel[5]);
+		}
+	}
+
 #ifdef _SERVER
 	if( !SetID(i) )
-	{	
+	{
 		return 0;
 	}
 #endif
