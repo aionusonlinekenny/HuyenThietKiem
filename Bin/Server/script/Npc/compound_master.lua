@@ -565,8 +565,8 @@ function ExeExtractAttribute()
     -- nValue is the equipment's current attribute value (e.g., 74)
     Msg2Player(format("[EXTRACT DEBUG] Using ACTUAL value from equipment: Value=%d (NOT average)", nValue))
 
-    -- Debug: log AddItemEx parameters
-    Msg2Player(format("[EXTRACT DEBUG] Calling AddItemEx with: Genre=7, Detail=%d, Series=%d, GenLvl=[%d,%d,%d,%d,%d,0]", nKhoangDetail, nEquipSeries or -999, nOp, nValueMin, nValueMax, nValue, nEquipSeries))
+    -- Debug: log AddItemEx parameters (all 6 generator levels)
+    Msg2Player(format("[EXTRACT DEBUG] Calling AddItemEx with: Genre=7, Detail=%d, Series=%d, GenLvl=[%d,%d,%d,%d,%d,%d]", nKhoangDetail, nEquipSeries or -999, nOp, nValueMin, nValueMax, nValue, nEquipSeries, 0))
 
     -- Create new khoang thach item FIRST (before deleting anything)
     -- Pass generator levels directly in AddItemEx to ensure ITEM_SYNC includes attributes
