@@ -516,28 +516,48 @@ function ExeExtractAttribute()
         return
     end
 
-    -- Map khoang thach detail to attribute slot (C++ uses 0-based indexing):
-    -- 146 = visible attrib 1 (slot 0)
-    -- 147 = hidden attrib 1 (slot 1)
-    -- 148 = visible attrib 2 (slot 2)
-    -- 149 = hidden attrib 2 (slot 3)
-    -- 150 = visible attrib 3 (slot 4)
-    -- 151 = hidden attrib 3 (slot 5)
-    local nAttribSlot = nKhoangDetail - 146  -- 146->0, 147->1, 148->2, 149->3, 150->4, 151->5
+    -- Map khoang thach detail to attribute POSITION (user wants 1st, 2nd, 3rd visible attribute):
+    -- 146 = 1st visible attribute
+    -- 147 = 2nd visible attribute
+    -- 148 = 3rd visible attribute
+    -- etc.
+    local nTargetPosition = nKhoangDetail - 145  -- 146->1, 147->2, 148->3, 149->4, 150->5, 151->6
 
-    -- Debug log
-    Msg2Player(format("[EXTRACT DEBUG] Equipment Series=%d, KhoangDetail=%d, Slot=%d", nEquipSeries or -999, nKhoangDetail, nAttribSlot))
+    -- Debug: enumerate ALL attribute slots to understand equipment structure
+    Msg2Player(format("[EXTRACT DEBUG] Equipment Series=%d, KhoangDetail=%d, TargetPosition=%d", nEquipSeries or -999, nKhoangDetail, nTargetPosition))
+    Msg2Player("[EXTRACT DEBUG] Enumerating ALL equipment attributes:")
 
-    -- Extract attribute from equipment
-    -- GetItemMagicAttribInfo returns: nAttribType, nValue[0], nMin, nMax
-    local nOp, nValue, nValueMin, nValueMax = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
+    -- Find the Nth visible attribute by enumerating all 6 slots
+    local nCurrentPosition = 0
+    local nOp, nValue, nValueMin, nValueMax = 0, 0, 0, 0
+    local nFoundSlot = -1
 
-    -- Debug log
-    Msg2Player(format("[EXTRACT DEBUG] GetItemMagicAttribInfo returned: Type=%d, Value=%d, Min=%d, Max=%d", nOp or -1, nValue or -1, nValueMin or -1, nValueMax or -1))
+    for nSlot = 0, 5 do
+        local nSlotOp, nSlotValue, nSlotMin, nSlotMax = GetItemMagicAttribInfo(nEquipIdx, nSlot)
 
-    -- Check if attribute exists (nOp > 0)
-    if not nOp or nOp <= 0 then
-        Talk(1, "", "<color=red>Trang bi khong co thuoc tinh nay!<color>")
+        -- Debug: show ALL slots
+        Msg2Player(format("  Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d", nSlot, nSlotOp or 0, nSlotValue or 0, nSlotMin or 0, nSlotMax or 0))
+
+        -- Count non-empty attributes (Type > 0 means attribute exists)
+        if nSlotOp and nSlotOp > 0 then
+            nCurrentPosition = nCurrentPosition + 1
+
+            -- Is this the attribute position we want?
+            if nCurrentPosition == nTargetPosition then
+                nOp = nSlotOp
+                nValue = nSlotValue
+                nValueMin = nSlotMin
+                nValueMax = nSlotMax
+                nFoundSlot = nSlot
+                Msg2Player(format("[EXTRACT DEBUG] FOUND! Position %d is in Slot %d: Type=%d, Value=%d, Min=%d, Max=%d", nTargetPosition, nSlot, nOp, nValue, nValueMin, nValueMax))
+                break
+            end
+        end
+    end
+
+    -- Check if we found the target attribute
+    if nFoundSlot == -1 or nOp <= 0 then
+        Talk(1, "", format("<color=red>Trang bi khong co thuoc tinh thu %d!<color>", nTargetPosition))
         return
     end
 
