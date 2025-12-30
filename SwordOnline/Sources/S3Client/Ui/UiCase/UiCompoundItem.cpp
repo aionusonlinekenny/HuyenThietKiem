@@ -443,7 +443,8 @@ void KUiComItem::Breathe() {
     // Call Breathe() on child pages to update their animations
     m_ForgePad.Breathe();
     m_CompoundPad.Breathe();
-    // m_DistillPad and m_EnchasePad don't have custom Breathe() yet
+    m_DistillPad.Breathe();
+    // m_EnchasePad doesn't have custom Breathe() yet
 
 // 	if(m_nStatus == STATUS_BEGIN_TREMBLE)
 // 	{
@@ -1246,7 +1247,7 @@ void KUiCompound::UpdateData() {
 }
 
 KUiDistill::KUiDistill() {
-
+    m_nStatus = STATUS_WAITING_MATERIALS;
 }
 
 void KUiDistill::PaintWindow() {
@@ -1412,54 +1413,46 @@ int KUiDistill::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             if (uParam == (unsigned int) &m_Cancle) {
                 CleanItem();
             } else if (uParam == (unsigned int) &m_Distill) {
-                int nNum = 0;
+                g_DebugLog("[DISTILL] Distill button clicked");
 
+                // Don't allow extraction if animation is running
+                if (m_nStatus != STATUS_WAITING_MATERIALS) {
+                    g_DebugLog("[DISTILL] Animation already running, ignoring click");
+                    return 1;
+                }
+
+                // Validate all required items exist BEFORE starting effect
                 KUiDraggedObject pObj;
-                unsigned int pUP[11];
-
                 m_BigBox.GetObject(pObj);
-                if (pObj.uId > 0) {
-                    pUP[nNum] = pObj.uId;
-                    nNum++;
-                } else {
+                if (pObj.uId <= 0) {
+                    g_DebugLog("[DISTILL] No item in BigBox");
+                    KUiMsgCentrePad::SystemMessageArrival("Vui long dat trang bi vao o lon!", 256);
                     return 1;
                 }
 
                 pObj.uId = 0;
                 m_Box1.GetObject(pObj);
-                if (pObj.uId > 0) {
-                    pUP[nNum] = pObj.uId;
-                    nNum++;
-                } else {
+                if (pObj.uId <= 0) {
+                    g_DebugLog("[DISTILL] No item in Box1");
+                    KUiMsgCentrePad::SystemMessageArrival("Vui long dat huyen tinh vao o 1!", 256);
                     return 1;
                 }
 
                 pObj.uId = 0;
                 m_Box2.GetObject(pObj);
-                if (pObj.uId > 0) {
-                    pUP[nNum] = pObj.uId;
-                    nNum++;
-                } else {
+                if (pObj.uId <= 0) {
+                    g_DebugLog("[DISTILL] No item in Box2");
+                    KUiMsgCentrePad::SystemMessageArrival("Vui long dat khoang thach vao o 2!", 256);
                     return 1;
                 }
 
-                for (int i = 0; i < 2; i++) {
-                    for (int j = 0; j < 4; j++) {
-                        pObj.uId = 0;
-                        m_ItemBox.GetObject(pObj, i, j);
-                        if (pObj.uId > 0) {
-                            pUP[nNum] = pObj.uId;
-                            nNum++;
-                        } else {
-                            break;
-                        }
-                    }
-                }
-
-                KUiComItem *pSelf = KUiComItem::GetIfVisible();
-                pSelf->ComItem((unsigned int) (&pUP), 3, nNum);
-
-                CleanItem();
+                // All items validated - start the extraction effect!
+                m_nStatus = STATUS_BEGIN_TREMBLE;
+                m_BigBox.EnablePickPut(false);
+                m_Box1.EnablePickPut(false);
+                m_Box2.EnablePickPut(false);
+                m_ItemBox.EnablePickPut(false);
+                g_DebugLog("[DISTILL] Starting extraction effect, boxes disabled");
             }
             break;
 
@@ -1514,6 +1507,13 @@ void KUiDistill::LoadScheme(const char *pScheme) {
         m_Pos4.SetTextColor(nColor);
         m_Pos4.BringToTop();
         m_Pos4.SetText("C� th� ch�n nguy�n li�u");
+
+        // Load effect sprite for BigBox animation (matching UiCompoundItem_Build.ini)
+        AddChild(&m_TrembleEffect1);
+        m_TrembleEffect1.Init(pScheme, "EquipEffect");
+        m_TrembleEffect1.Hide();
+        g_DebugLog("[DISTILL] LoadScheme: Effect sprite loaded from EquipEffect section");
+
         // 		m_pSelf->m_LiveSkillPad.LoadScheme(pScheme);
         // 		m_pSelf->m_FightSkillPad.LoadScheme(pScheme);
     }
@@ -1654,6 +1654,104 @@ void KUiDistill::UpdateData() {
     m_Box2.EnablePickPut(true);
 
     g_DebugLog("[DISTILL] UpdateData: All boxes shown, pick/put enabled, ready for drag-drop");
+}
+
+// Animation frame update - called every frame to handle extraction effect
+void KUiDistill::Breathe() {
+    if (m_nStatus == STATUS_BEGIN_TREMBLE) {
+        // Show effect on BigBox only
+        m_TrembleEffect1.Show();
+        m_TrembleEffect1.SetFrame(0);
+        m_nStatus = STATUS_TREMBLING;
+        g_DebugLog("[DISTILL] Started extraction effect animation on BigBox");
+    } else if (m_nStatus == STATUS_TREMBLING) {
+        if (!PlayEffect()) {
+            m_nStatus = STATUS_CHANGING_ITEM;
+            m_TrembleEffect1.Hide();
+            g_DebugLog("[DISTILL] Animation finished, hiding effect");
+        }
+    } else if (m_nStatus == STATUS_CHANGING_ITEM) {
+        UpdateResult();
+        m_nStatus = STATUS_FINISH;
+        g_DebugLog("[DISTILL] Breathe: Set status to STATUS_FINISH");
+    } else if (m_nStatus == STATUS_FINISH) {
+        // Reset to waiting state for next extraction
+        m_nStatus = STATUS_WAITING_MATERIALS;
+        // Re-enable boxes for next operation
+        m_BigBox.EnablePickPut(true);
+        m_Box1.EnablePickPut(true);
+        m_Box2.EnablePickPut(true);
+        m_ItemBox.EnablePickPut(true);
+        g_DebugLog("[DISTILL] Breathe: Reset status to STATUS_WAITING_MATERIALS, boxes re-enabled, ready for next extraction");
+    }
+}
+
+// Advances the effect animation - returns 1 if still animating, 0 if complete
+int KUiDistill::PlayEffect() {
+    // Advance frame on BigBox effect
+    int nMaxFrame = m_TrembleEffect1.GetMaxFrame();
+    int nCurrentFrame = m_TrembleEffect1.GetCurrentFrame();
+
+    static int nWaitCount = 0;  // Track how long we've waited for sprite to load
+
+    // CRITICAL: Call NextFrame() even when MaxFrame=0 to trigger sprite loading!
+    if (m_TrembleEffect1.IsVisible()) {
+        m_TrembleEffect1.NextFrame();
+    }
+
+    if (nMaxFrame == 0) {
+        // Sprite not loaded yet, but keep calling NextFrame() to trigger load
+        nWaitCount++;
+
+        // Timeout after 300 frames (~6 seconds at 50fps)
+        if (nWaitCount >= 300) {
+            g_DebugLog("[DISTILL] PlayEffect: Sprite failed to load after %d frames, giving up", nWaitCount);
+            nWaitCount = 0;
+            return 0;  // Finish animation
+        }
+
+        if (nWaitCount % 50 == 0) {
+            g_DebugLog("[DISTILL] PlayEffect: Waiting for sprite to load, MaxFrame still 0 (waited %d frames)", nWaitCount);
+        }
+        return 1;  // Keep waiting and calling NextFrame()
+    }
+
+    // Sprite loaded successfully!
+    if (nWaitCount > 0) {
+        g_DebugLog("[DISTILL] PlayEffect: Sprite loaded successfully after %d frames! MaxFrame=%d", nWaitCount, nMaxFrame);
+        nWaitCount = 0;
+    }
+
+    // Check if animation is complete (current frame reached max)
+    if (nCurrentFrame >= nMaxFrame - 1) {
+        m_TrembleEffect1.SetFrame(0);
+        g_DebugLog("[DISTILL] Animation COMPLETE: CurrentFrame=%d reached MaxFrame=%d", nCurrentFrame, nMaxFrame);
+        return 0;  // Animation complete
+    }
+
+    // Log progress
+    if (nCurrentFrame % 10 == 0) {
+        g_DebugLog("[DISTILL] Animating: Frame %d/%d", nCurrentFrame, nMaxFrame);
+    }
+    return 1;  // Still animating
+}
+
+// Called after animation completes to send extraction request to server
+void KUiDistill::UpdateResult() {
+    g_DebugLog("[DISTILL] UpdateResult: Animation finished, sending extraction request");
+
+    // Send extraction request to server
+    if (g_pCoreShell) {
+        g_DebugLog("[DISTILL] Calling GOI_EXESCRIPT_BUTTON with ExeExtractAttribute");
+        char szFunc[32];
+        sprintf(szFunc, "ExeExtractAttribute");
+        g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
+        g_DebugLog("[DISTILL] Extraction request sent successfully");
+    } else {
+        g_DebugLog("[DISTILL] ERROR: g_pCoreShell is NULL!");
+    }
+
+    g_DebugLog("[DISTILL] UpdateResult complete");
 }
 
 KUiForge::KUiForge() {
