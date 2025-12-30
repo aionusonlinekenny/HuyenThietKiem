@@ -4,8 +4,8 @@ Include("\\script\\lib\\MagicAttribName.lua")
 
 function OnUse(nIdx)
     -- Get stored attribute data using GetItemMagicAttribInfo (returns Type, Value, Min, Max)
-    -- Use slot 3 for detail 149 (hidden attribute 2)
-    local nOp, nValue, nValueMin, nValueMax = GetItemMagicAttribInfo(nIdx, 3)
+    -- ALL khoang thach items store data in slot 0 (as per KItemSet.cpp AddExist)
+    local nOp, nValue, nValueMin, nValueMax = GetItemMagicAttribInfo(nIdx, 0)
 
     if not nOp or nOp <= 0 then
         Talk(1, "", "<color=yellow>Khoang thach chua rong (chua co thuoc tinh)<color>")
