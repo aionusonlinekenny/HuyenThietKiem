@@ -936,12 +936,13 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 			pItemData->imagiclevel2 = Item[nItemIndex].m_aryMagicAttrib[0].nMin;
 			pItemData->imagiclevel3 = Item[nItemIndex].m_aryMagicAttrib[0].nMax;
 			pItemData->imagiclevel4 = Item[nItemIndex].m_aryMagicAttrib[0].nValue[0];
-			pItemData->imagiclevel5 = 0;
-			pItemData->imagiclevel6 = 0;
+			pItemData->imagiclevel5 = Item[nItemIndex].m_GeneratorParam.nGeneratorLevel[4];  // Series
+			pItemData->imagiclevel6 = Item[nItemIndex].m_GeneratorParam.nGeneratorLevel[5];  // Unused
 
-			g_DebugLog("[KHOANG SAVE] Detail=%d, GenLvl=%d,%d,%d,%d (will sync to client)",
+			g_DebugLog("[KHOANG SAVE] Detail=%d, GenLvl=%d,%d,%d,%d,%d,%d (will sync to client)",
 				pItemData->idetailtype, pItemData->imagiclevel1, pItemData->imagiclevel2,
-				pItemData->imagiclevel3, pItemData->imagiclevel4);
+				pItemData->imagiclevel3, pItemData->imagiclevel4, pItemData->imagiclevel5,
+				pItemData->imagiclevel6);
 		}
 		else
 		{
