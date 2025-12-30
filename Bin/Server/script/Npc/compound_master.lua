@@ -525,17 +525,15 @@ function ExeExtractAttribute()
     -- 151 = hidden attrib 3 (slot 5)
     local nAttribSlot = nKhoangDetail - 146  -- 146->0, 147->1, 148->2, 149->3, 150->4, 151->5
 
-    -- Debug log
-    local szDebug1 = format("[DEBUG] Equipment Series=%d, KhoangDetail=%d, Slot=%d", nEquipSeries or -999, nKhoangDetail, nAttribSlot)
-    Talk(1, "", "<color=yellow>" .. szDebug1 .. "<color>")
+    -- Debug log to server log file
+    g_DebugLog("[EXTRACT DEBUG] Equipment Series=%d, KhoangDetail=%d, Slot=%d", nEquipSeries or -999, nKhoangDetail, nAttribSlot)
 
     -- Extract attribute from equipment
     -- GetItemMagicAttribInfo returns: nAttribType, nValue[0], nMin, nMax
     local nOp, nValue, nValueMin, nValueMax = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
 
-    -- Debug log
-    local szDebug2 = format("[DEBUG] GetItemMagicAttribInfo returned: Type=%d, Value=%d, Min=%d, Max=%d", nOp or -1, nValue or -1, nValueMin or -1, nValueMax or -1)
-    Talk(1, "", "<color=yellow>" .. szDebug2 .. "<color>")
+    -- Debug log to server log file
+    g_DebugLog("[EXTRACT DEBUG] GetItemMagicAttribInfo returned: Type=%d, Value=%d, Min=%d, Max=%d", nOp or -1, nValue or -1, nValueMin or -1, nValueMax or -1)
 
     -- Check if attribute exists (nOp > 0)
     if not nOp or nOp <= 0 then
@@ -545,6 +543,9 @@ function ExeExtractAttribute()
 
     -- Pre-calculate average value to avoid inline math operations
     local nAvgValue = floor((nValueMin + nValueMax) / 2)
+
+    -- Debug: log AddItemEx parameters
+    g_DebugLog("[EXTRACT DEBUG] Calling AddItemEx with: Genre=7, Detail=%d, Series=%d, GenLvl=[%d,%d,%d,%d,0,0]", nKhoangDetail, nEquipSeries or -999, nOp, nValueMin, nValueMax, nAvgValue)
 
     -- Create new khoang thach item FIRST (before deleting anything)
     -- Pass generator levels directly in AddItemEx to ensure ITEM_SYNC includes attributes
@@ -564,6 +565,10 @@ function ExeExtractAttribute()
         Talk(1, "", "<color=red>Loi: Khong the tao Khoang thach!<color>")
         return
     end
+
+    -- Debug: check what series the new item actually has
+    local _, _, _, _, nNewSeries = GetItemProp(nNewKhoangIdx)
+    g_DebugLog("[EXTRACT DEBUG] Created khoang thach idx=%d, checking series: Expected=%d, Actual=%d", nNewKhoangIdx, nEquipSeries or -999, nNewSeries or -999)
 
     -- Set m_aryMagicAttrib directly for server-side logic
     local bSuccess = SetItemMagicAttrib(nNewKhoangIdx, 0, nOp, nValueMin, nValueMax)
