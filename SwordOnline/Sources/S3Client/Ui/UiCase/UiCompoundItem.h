@@ -151,6 +151,11 @@ public:
 
     void CleanItem();
 
+    // Effect animation methods (added for extraction effect)
+    void Breathe();          // Called every frame to update animation
+    int PlayEffect();        // Returns 1 if still animating, 0 if complete
+    void UpdateResult();     // Called after effect completes to send server request
+
 private:
     int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//���ں���
     void PaintWindow();                                //���ƴ���
@@ -169,6 +174,9 @@ private:
     KWndButton m_ListBtn;
     KWndButton m_Distill;
     KWndButton m_Cancle;
+
+    // Animation status (added for extraction effect)
+    int m_nStatus;  // STATUS_WAITING_MATERIALS, STATUS_BEGIN_TREMBLE, STATUS_TREMBLING, etc.
 
     KCanGetNumImage2
             m_TrembleEffect1;                   //�ϳ��е���Ч
