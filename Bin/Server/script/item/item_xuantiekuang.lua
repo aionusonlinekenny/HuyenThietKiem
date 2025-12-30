@@ -7,13 +7,16 @@ function OnUse(nIdx)
     -- Use slot 0 for detail 146 (visible attribute 1)
     local nOp, nValue, nValueMin, nValueMax = GetItemMagicAttribInfo(nIdx, 0)
 
+    -- Debug: check what series and values we got
+    local nGenre, nDetail, _, _, nSeries = GetItemProp(nIdx)
+    Msg2Player(format("[ONUSE DEBUG] Idx=%d, Genre=%d, Detail=%d, Series=%d, Type=%d, Min=%d, Max=%d",
+        nIdx, nGenre or -1, nDetail or -1, nSeries or -999, nOp or -1, nValueMin or -1, nValueMax or -1))
+
     if not nOp or nOp <= 0 then
         Talk(1, "", "<color=yellow>Khoang thach chua rong (chua co thuoc tinh)<color>")
         return 0
     end
 
-    -- Get series (element type) from item properties
-    local _, _, _, _, nSeries = GetItemProp(nIdx)
     local szSeriesName = {"Kim", "Moc", "Thuy", "Hoa", "Tho"}
     local szSeries = szSeriesName[nSeries + 1] or "Unknown"
 
