@@ -541,11 +541,12 @@ function ExeExtractAttribute()
         return
     end
 
-    -- Pre-calculate average value to avoid inline math operations
-    local nAvgValue = floor((nValueMin + nValueMax) / 2)
+    -- Use the ACTUAL value from equipment, not calculated average!
+    -- nValue is the equipment's current attribute value (e.g., 74)
+    Msg2Player(format("[EXTRACT DEBUG] Using ACTUAL value from equipment: Value=%d (NOT average)", nValue))
 
     -- Debug: log AddItemEx parameters
-    Msg2Player(format("[EXTRACT DEBUG] Calling AddItemEx with: Genre=7, Detail=%d, Series=%d, GenLvl=[%d,%d,%d,%d,0,0]", nKhoangDetail, nEquipSeries or -999, nOp, nValueMin, nValueMax, nAvgValue))
+    Msg2Player(format("[EXTRACT DEBUG] Calling AddItemEx with: Genre=7, Detail=%d, Series=%d, GenLvl=[%d,%d,%d,%d,0,0]", nKhoangDetail, nEquipSeries or -999, nOp, nValueMin, nValueMax, nValue))
 
     -- Create new khoang thach item FIRST (before deleting anything)
     -- Pass generator levels directly in AddItemEx to ensure ITEM_SYNC includes attributes
@@ -556,7 +557,7 @@ function ExeExtractAttribute()
         0,                   -- level
         nEquipSeries,        -- series = KEEP equipment series (Kim/Moc/Thuy/Hoa/Tho)
         0,                   -- luck
-        nOp, nValueMin, nValueMax, nAvgValue, 0, 0,   -- ma1-ma6 = generator levels!
+        nOp, nValueMin, nValueMax, nValue, 0, 0,   -- ma1-ma6: use ACTUAL value, not average!
         1,                   -- version
         0                    -- randomSeed
     )
@@ -571,7 +572,8 @@ function ExeExtractAttribute()
     Msg2Player(format("[EXTRACT DEBUG] Created khoang thach idx=%d, checking series: Expected=%d, Actual=%d", nNewKhoangIdx, nEquipSeries or -999, nNewSeries or -999))
 
     -- Set m_aryMagicAttrib directly for server-side logic
-    local bSuccess = SetItemMagicAttrib(nNewKhoangIdx, 0, nOp, nValueMin, nValueMax)
+    -- Pass the 6th parameter (nValue) to use ACTUAL value instead of average
+    local bSuccess = SetItemMagicAttrib(nNewKhoangIdx, 0, nOp, nValueMin, nValueMax, nValue)
     if not bSuccess or bSuccess == 0 then
         Talk(1, "", "<color=red>Loi: Khong the luu thuoc tinh vao Khoang thach!<color>")
         -- Delete the failed new item before returning

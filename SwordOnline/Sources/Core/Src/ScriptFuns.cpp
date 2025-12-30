@@ -10375,11 +10375,15 @@ int LuaSetItemMagicAttrib(Lua_State * L)
 	int nMin = (int)Lua_ValueToNumber(L, 4);
 	int nMax = (int)Lua_ValueToNumber(L, 5);
 
+	// Optional 6th parameter: actual value (if not provided, use average)
+	int nParamCount = Lua_GetTopIndex(L);
+	int nActualValue = (nParamCount >= 6) ? (int)Lua_ValueToNumber(L, 6) : ((nMin + nMax) / 2);
+
 	// Set the magic attribute directly
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nAttribType = nAttribType;
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nMin = nMin;
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nMax = nMax;
-	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0] = (nMin + nMax) / 2; // Set value to average
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0] = nActualValue; // Use actual value if provided, otherwise average
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[1] = 0;
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[2] = 0;
 
