@@ -326,8 +326,18 @@ int KItemSet::AddExist(IN int nItemGenre, IN int nSeries, IN int nLevel,
 			pItem->m_aryMagicAttrib[0].nValue[1] = 0;
 			pItem->m_aryMagicAttrib[0].nValue[2] = 0;
 
-			g_DebugLog("[KHOANG ADDEXIST] Detail=%d, GenLvl=%d,%d,%d,%d -> MagicAttrib",
-				nDetailType, pnMagicLevel[0], pnMagicLevel[1], pnMagicLevel[2], pnMagicLevel[3]);
+			// CRITICAL: Also ensure GenLvl[4-5] are set correctly in m_GeneratorParam
+			// because Gen_ExistScript may have cleared them
+			pItem->m_GeneratorParam.nGeneratorLevel[0] = pnMagicLevel[0];  // Type
+			pItem->m_GeneratorParam.nGeneratorLevel[1] = pnMagicLevel[1];  // Min
+			pItem->m_GeneratorParam.nGeneratorLevel[2] = pnMagicLevel[2];  // Max
+			pItem->m_GeneratorParam.nGeneratorLevel[3] = pnMagicLevel[3];  // Value
+			pItem->m_GeneratorParam.nGeneratorLevel[4] = pnMagicLevel[4];  // Series
+			pItem->m_GeneratorParam.nGeneratorLevel[5] = pnMagicLevel[5];  // Unused
+
+			g_DebugLog("[KHOANG ADDEXIST] Detail=%d, GenLvl=%d,%d,%d,%d,%d,%d -> MagicAttrib+GenParam",
+				nDetailType, pnMagicLevel[0], pnMagicLevel[1], pnMagicLevel[2],
+				pnMagicLevel[3], pnMagicLevel[4], pnMagicLevel[5]);
 		}
 	}
 
