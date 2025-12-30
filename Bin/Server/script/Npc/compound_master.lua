@@ -516,18 +516,24 @@ function ExeExtractAttribute()
         return
     end
 
-    -- Map khoang thach detail to attribute slot:
-    -- 146 = visible attrib 1 (slot 1)
-    -- 147 = hidden attrib 1 (slot 2)
-    -- 148 = visible attrib 2 (slot 3)
-    -- 149 = hidden attrib 2 (slot 4)
-    -- 150 = visible attrib 3 (slot 5)
-    -- 151 = hidden attrib 3 (slot 6)
-    local nAttribSlot = nKhoangDetail - 145  -- 146->1, 147->2, 148->3, 149->4, 150->5, 151->6
+    -- Map khoang thach detail to attribute slot (C++ uses 0-based indexing):
+    -- 146 = visible attrib 1 (slot 0)
+    -- 147 = hidden attrib 1 (slot 1)
+    -- 148 = visible attrib 2 (slot 2)
+    -- 149 = hidden attrib 2 (slot 3)
+    -- 150 = visible attrib 3 (slot 4)
+    -- 151 = hidden attrib 3 (slot 5)
+    local nAttribSlot = nKhoangDetail - 146  -- 146->0, 147->1, 148->2, 149->3, 150->4, 151->5
+
+    -- Debug log
+    Msg2Player(format("[DEBUG] Equipment Series=%d, KhoangDetail=%d, Slot=%d", nEquipSeries or -999, nKhoangDetail, nAttribSlot))
 
     -- Extract attribute from equipment
     -- GetItemMagicAttribInfo returns: nAttribType, nValue[0], nMin, nMax
     local nOp, nValue, nValueMin, nValueMax = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
+
+    -- Debug log
+    Msg2Player(format("[DEBUG] GetItemMagicAttribInfo returned: Type=%d, Value=%d, Min=%d, Max=%d", nOp or -1, nValue or -1, nValueMin or -1, nValueMax or -1))
 
     -- Check if attribute exists (nOp > 0)
     if not nOp or nOp <= 0 then
