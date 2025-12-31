@@ -694,33 +694,65 @@ function ExeEnchaseAttribute()
 
     local nSlot = nKDetail - 146
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 7: Enchasing slot %d with Type=%d...<color>", nSlot + 1, nType))
+    Msg2Player(format("<color=green>[ENCHASE] STEP 7: Reading purple item properties...<color>"))
 
-    -- Use new SetPurpleItemMagicAttrib function specifically designed for purple items
-    -- This function properly sets attributes on purple items and ensures they persist
-    local bSuccess = SetPurpleItemMagicAttrib(nPurpleIdx, nSlot, nType, nMin, nMax, nValue)
+    -- Get purple item's base properties
+    local nPurpleGenre, nPurpleDetail, nPurpleParticular, nPurpleLevel, nPurpleSeries = GetItemProp(nPurpleIdx)
 
-    if not bSuccess or bSuccess == 0 then
-        Msg2Player("<color=red>[ENCHASE] ERROR: SetPurpleItemMagicAttrib failed!<color>")
+    -- Read ALL existing attributes from purple item
+    local tAttribs = {}
+    for i = 0, 5 do
+        local nOp, nValue, nMin, nMax = GetItemMagicAttribInfo(nPurpleIdx, i)
+        tAttribs[i] = {nType = nOp or 0, nMin = nMin or 0, nMax = nMax or 0, nValue = nValue or 0}
+        Msg2Player(format("<color=cyan>[ENCHASE] Old Slot %d: Type=%d, Min=%d, Max=%d, Val=%d<color>",
+            i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue))
+    end
+
+    -- Update target slot with new attribute from khoang thach
+    tAttribs[nSlot] = {nType = nType, nMin = nMin, nMax = nMax, nValue = nValue}
+    Msg2Player(format("<color=yellow>[ENCHASE] New Slot %d: Type=%d, Min=%d, Max=%d, Val=%d<color>",
+        nSlot, nType, nMin, nMax, nValue))
+
+    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new item with ALL attributes...<color>"))
+
+    -- Create as BLUE equipment (genre=0) to avoid purple's luck/randomSeed encoding
+    -- Then we'll change it to purple after setting attributes
+    local nNewItemIdx = AddItemEx(
+        0,                  -- genre = 0 (blue equipment) - NO luck/randomSeed encoding!
+        nPurpleDetail,      -- detail (same as original)
+        nPurpleParticular,  -- particular
+        nPurpleLevel,       -- level
+        nPurpleSeries,      -- series
+        0,                  -- luck
+        0, 0, 0, 0, 0, 0,   -- ma1-ma6 (not used for blue)
+        1,                  -- version
+        0                   -- randomSeed
+    )
+
+    if not nNewItemIdx or nNewItemIdx <= 0 then
+        Msg2Player("<color=red>[ENCHASE] ERROR: Failed to create new item!<color>")
         return
     end
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Attribute set successfully on server<color>"))
+    Msg2Player(format("<color=green>[ENCHASE] STEP 9: Setting all 6 attributes on new item...<color>"))
 
-    -- Delete materials (khoang thach and Huyen Tinh)
+    -- Set ALL 6 attributes on the new item
+    for i = 0, 5 do
+        if tAttribs[i].nType > 0 then
+            SetPurpleItemMagicAttrib(nNewItemIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
+            Msg2Player(format("<color=green>[ENCHASE] Set Slot %d: Type=%d<color>", i, tAttribs[i].nType))
+        end
+    end
+
+    Msg2Player(format("<color=green>[ENCHASE] STEP 10: Deleting old items...<color>"))
+
+    -- Delete old purple item and materials
+    DelItemByIndex(nPurpleIdx)
     DelItemByIndex(nKhoangIdx)
     DelItemByIndex(nHuyenTinhIdx)
 
-    -- CRITICAL: Remove purple item from UI position and add to inventory to force sync
-    -- This ensures the client receives the updated item with new attribute
-    Msg2Player(format("<color=green>[ENCHASE] STEP 9: Syncing item to client...<color>"))
-
-    -- Note: When UI closes, the purple item will automatically move back to inventory
-    -- and sync to client with the new attribute. No need to manually move it here.
-
-    Msg2Player(format("<color=green>[ENCHASE] SUCCESS! Enchased slot %d with Type=%d (Min=%d, Max=%d, Value=%d)!<color>",
-        nSlot + 1, nType, nMin, nMax, nValue))
-    Msg2Player(format("<color=yellow>Dong cua so de thay item duoc cap nhat!<color>"))
+    Msg2Player(format("<color=green>[ENCHASE] SUCCESS! Created new item with enchased slot %d!<color>", nSlot + 1))
+    Msg2Player(format("<color=yellow>Item moi da duoc tao voi TẤT CẢ attributes! Kiem tra hanh trang!<color>"))
 end
 
 function no()
