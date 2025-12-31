@@ -630,12 +630,20 @@ end
 -- Inlays khoang thach attribute into purple item at matching slot
 -- ------------------------------------------------------------
 function ExeEnchaseAttribute()
+    -- DEBUG: Function entry log
+    Msg2Player("=== ExeEnchaseAttribute CALLED ===")
+    WriteLog("[LUA ENCHASE] ExeEnchaseAttribute function started")
+
     local nPos = 15  -- pos_builditem
 
     -- Get items from UI slots
     local nPurpleIdx = GetPOItem(nPos, 0)    -- BigBox (slot 0) = Purple equipment
     local nHuyenTinhIdx = GetPOItem(nPos, 1) -- Box1 (slot 1) = Huyen Tinh (catalyst)
     local nKhoangIdx = GetPOItem(nPos, 2)    -- Box2 (slot 2) = Khoang thach (attribute)
+
+    -- DEBUG: Log retrieved item indices
+    Msg2Player(format("[LUA ENCHASE] Items: Purple=%d, HuyenTinh=%d, Khoang=%d",
+        nPurpleIdx or -1, nHuyenTinhIdx or -1, nKhoangIdx or -1))
 
     -- Validate purple item exists
     if not nPurpleIdx or nPurpleIdx <= 0 then
