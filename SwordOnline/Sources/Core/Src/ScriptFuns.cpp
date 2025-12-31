@@ -10476,9 +10476,10 @@ int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 	g_DebugLog("[PURPLE SETATTRIB] ItemIdx=%d, Slot=%d, Type=%d, Min=%d, Max=%d, Value=%d",
 		nItemIdx, nSlot, nAttribType, nMin, nMax, nValue);
 
-	// CRITICAL: For purple items, we need to ensure the item syncs to client
-	// The item will sync when it's added to player inventory
-	// No need for explicit sync here - caller should handle item placement
+	// CRITICAL: Sync item to client so player sees the new attribute
+	// Call SyncItem to force client update for items in UI temporary storage
+	Player[nPlayerIndex].m_ItemList.SyncItem(nItemIdx);
+	g_DebugLog("[PURPLE SETATTRIB] SyncItem called for ItemIdx=%d", nItemIdx);
 
 	Lua_PushNumber(L, 1);  // Success
 	return 1;

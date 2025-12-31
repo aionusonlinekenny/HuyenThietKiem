@@ -705,14 +705,22 @@ function ExeEnchaseAttribute()
         return
     end
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Attribute set successfully, deleting materials...<color>"))
+    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Attribute set successfully on server<color>"))
 
-    -- Delete materials only (keep the purple item - it now has the new attribute)
+    -- Delete materials (khoang thach and Huyen Tinh)
     DelItemByIndex(nKhoangIdx)
     DelItemByIndex(nHuyenTinhIdx)
 
+    -- CRITICAL: Remove purple item from UI position and add to inventory to force sync
+    -- This ensures the client receives the updated item with new attribute
+    Msg2Player(format("<color=green>[ENCHASE] STEP 9: Syncing item to client...<color>"))
+
+    -- Note: When UI closes, the purple item will automatically move back to inventory
+    -- and sync to client with the new attribute. No need to manually move it here.
+
     Msg2Player(format("<color=green>[ENCHASE] SUCCESS! Enchased slot %d with Type=%d (Min=%d, Max=%d, Value=%d)!<color>",
         nSlot + 1, nType, nMin, nMax, nValue))
+    Msg2Player(format("<color=yellow>Dong cua so de thay item duoc cap nhat!<color>"))
 end
 
 function no()
