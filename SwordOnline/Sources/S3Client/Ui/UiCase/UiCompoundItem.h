@@ -75,7 +75,7 @@ public:
     void CleanItem();
 
     // Effect animation methods (added for enchase effect)
-    virtual void Breathe();          // Called every frame to update animation
+    void Breathe();          // Called every frame to update animation
     int PlayEffect();        // Returns 1 if still animating, 0 if complete
     void UpdateResult();     // Called after effect completes to send server request
 
@@ -169,7 +169,7 @@ public:
     void CleanItem();
 
     // Effect animation methods (added for extraction effect)
-    virtual void Breathe();          // Called every frame to update animation
+    void Breathe();          // Called every frame to update animation
     int PlayEffect();        // Returns 1 if still animating, 0 if complete
     void UpdateResult();     // Called after effect completes to send server request
 
