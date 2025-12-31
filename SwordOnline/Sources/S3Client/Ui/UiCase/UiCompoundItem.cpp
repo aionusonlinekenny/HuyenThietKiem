@@ -1510,7 +1510,7 @@ void KUiDistill::LoadScheme(const char *pScheme) {
 
         // Load effect sprite for BigBox animation (matching UiCompoundItem_Build.ini)
         AddChild(&m_TrembleEffect1);
-        m_TrembleEffect1.Init(pScheme, "EquipEffect");
+        m_TrembleEffect1.Init(&Ini, "EquipEffect");
         m_TrembleEffect1.Hide();
         g_DebugLog("[DISTILL] LoadScheme: Effect sprite loaded from EquipEffect section");
 

@@ -184,6 +184,15 @@ private:
             m_TrembleEffect2;                   //�ϳ��е���Ч
     KCanGetNumImage2
             m_TrembleEffect3;                   //�ϳ��е���Ч
+
+private:
+    enum THIS_INTERFACE_STATUS {
+        STATUS_WAITING_MATERIALS,
+        STATUS_BEGIN_TREMBLE,
+        STATUS_TREMBLING,
+        STATUS_CHANGING_ITEM,
+        STATUS_FINISH,
+    };
 };
 
 class KUiCompound : public KWndPage {
