@@ -679,9 +679,20 @@ function ExeEnchaseAttribute()
         return
     end
 
+    Talk(1, "", "STEP 5.5: Calling GetItemGeneratorLevels...")
+
     local GenLvl = GetItemGeneratorLevels(nKhoangIdx)
 
-    if not GenLvl or not GenLvl[1] or GenLvl[1] <= 0 then
+    Talk(1, "", format("STEP 5.7: GenLvl=%s", tostring(GenLvl)))
+
+    if not GenLvl then
+        Talk(1, "", "ERROR: GenLvl is nil!")
+        return
+    end
+
+    Talk(1, "", format("STEP 5.8: GenLvl[1]=%s", tostring(GenLvl[1])))
+
+    if not GenLvl[1] or GenLvl[1] <= 0 then
         Talk(1, "", "ERROR: No attribute!")
         return
     end
