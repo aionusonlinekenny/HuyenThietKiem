@@ -713,21 +713,21 @@ function ExeEnchaseAttribute()
     Msg2Player(format("<color=yellow>[ENCHASE] New Slot %d: Type=%d, Min=%d, Max=%d, Val=%d<color>",
         nSlot, nType, nMin, nMax, nValue))
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new PURPLE item with ALL attributes...<color>"))
+    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new equipment with enchased attributes...<color>"))
 
-    -- Create as PURPLE equipment (genre=1, luck>=1000000000) BUT randomSeed=0
-    -- DecodePurple requires BOTH luck AND randomSeed >= 1000000000
-    -- With randomSeed=0, DecodePurple returns FALSE → NO regeneration!
+    -- Create as NORMAL equipment (genre=0, item_equip)
+    -- Purple items require luck/randomSeed encoding which is complex
+    -- Normal equipment displays m_aryMagicAttrib directly without encoding
     local nNewItemIdx = AddItemEx(
-        1,                  -- genre = 1 (item_purpleequip)
+        0,                  -- genre = 0 (item_equip - normal equipment)
         nPurpleDetail,      -- detail (same as original)
         nPurpleParticular,  -- particular
         nPurpleLevel,       -- level
         nPurpleSeries,      -- series
-        1000000000,         -- luck = 1000000000 (PURPLE threshold)
-        0, 0, 0, 0, 0, 0,   -- ma1-ma6 (not used)
+        0,                  -- luck = 0 (normal equipment)
+        0, 0, 0, 0, 0, 0,   -- ma1-ma6 (will be set below)
         1,                  -- version
-        0                   -- randomSeed = 0 → BLOCKS DecodePurple regeneration!
+        0                   -- randomSeed = 0
     )
 
     if not nNewItemIdx or nNewItemIdx <= 0 then
@@ -739,9 +739,10 @@ function ExeEnchaseAttribute()
 
     -- Set ALL 6 attributes on the new item
     -- IMPORTANT: Skip Type=53 (empty attribute type) and Type=0 (no attribute)
+    -- Use SetItemMagicAttrib (not SetPurpleItemMagicAttrib) for normal equipment
     for i = 0, 5 do
         if tAttribs[i].nType > 0 and tAttribs[i].nType ~= 53 then
-            SetPurpleItemMagicAttrib(nNewItemIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
+            SetItemMagicAttrib(nNewItemIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
             Msg2Player(format("<color=green>[ENCHASE] Set Slot %d: Type=%d<color>", i, tAttribs[i].nType))
         else
             Msg2Player(format("<color=yellow>[ENCHASE] Skip Slot %d: Type=%d (empty)<color>", i, tAttribs[i].nType))
