@@ -630,7 +630,10 @@ end
 -- Inlays khoang thach attribute into purple item at matching slot
 -- ------------------------------------------------------------
 function ExeEnchaseAttribute()
-    -- DEBUG: Function entry log
+    -- DEBUG: Function entry log - using Talk to ensure visibility
+    Talk(1, "", "=== DEBUG: ExeEnchaseAttribute CALLED ===")
+
+    -- Also try other logging methods
     Msg2Player("=== ExeEnchaseAttribute CALLED ===")
     WriteLog("[LUA ENCHASE] ExeEnchaseAttribute function started")
 
@@ -642,7 +645,7 @@ function ExeEnchaseAttribute()
     local nKhoangIdx = GetPOItem(nPos, 2)    -- Box2 (slot 2) = Khoang thach (attribute)
 
     -- DEBUG: Log retrieved item indices
-    Msg2Player(format("[LUA ENCHASE] Items: Purple=%d, HuyenTinh=%d, Khoang=%d",
+    Talk(1, "", format("DEBUG: Items - Purple=%d, HuyenTinh=%d, Khoang=%d",
         nPurpleIdx or -1, nHuyenTinhIdx or -1, nKhoangIdx or -1))
 
     -- Validate purple item exists
