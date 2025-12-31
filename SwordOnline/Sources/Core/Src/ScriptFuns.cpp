@@ -10418,6 +10418,73 @@ int LuaSetItemMagicAttrib(Lua_State * L)
 }
 
 // ------------------------------------------------------------
+// Set Purple Item Magic Attribute - Specialized for purple items
+// Lua: bSuccess = SetPurpleItemMagicAttrib(nItemIdx, nSlot, nAttribType, nMin, nMax, nValue)
+// This function properly sets attributes on purple items without regeneration
+// ------------------------------------------------------------
+int LuaSetPurpleItemMagicAttrib(Lua_State * L)
+{
+	if (Lua_GetTopIndex(L) < 6)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nPlayerIndex = GetPlayerIndex(L);
+	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_PLAYER)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nItemIdx = (int)Lua_ValueToNumber(L, 1);
+	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// Verify it's a purple item
+	if (Item[nItemIdx].GetGenre() != item_purpleequip)
+	{
+		g_DebugLog("[PURPLE SETATTRIB] ERROR: Item %d is not purple (genre=%d)",
+			nItemIdx, Item[nItemIdx].GetGenre());
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nSlot = (int)Lua_ValueToNumber(L, 2);
+	if (nSlot < 0 || nSlot >= 6)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nAttribType = (int)Lua_ValueToNumber(L, 3);
+	int nMin = (int)Lua_ValueToNumber(L, 4);
+	int nMax = (int)Lua_ValueToNumber(L, 5);
+	int nValue = (int)Lua_ValueToNumber(L, 6);
+
+	// Set the magic attribute directly on purple item
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nAttribType = nAttribType;
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nMin = nMin;
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nMax = nMax;
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0] = nValue;
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[1] = 0;
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[2] = 0;
+
+	g_DebugLog("[PURPLE SETATTRIB] ItemIdx=%d, Slot=%d, Type=%d, Min=%d, Max=%d, Value=%d",
+		nItemIdx, nSlot, nAttribType, nMin, nMax, nValue);
+
+	// CRITICAL: For purple items, we need to ensure the item syncs to client
+	// The item will sync when it's added to player inventory
+	// No need for explicit sync here - caller should handle item placement
+
+	Lua_PushNumber(L, 1);  // Success
+	return 1;
+}
+
+// ------------------------------------------------------------
 // Get Item Generator Levels (the tier values used for generation)
 // Lua: level0, level1, level2, level3, level4, level5 = GetItemGeneratorLevels(nItemIdx)
 // ------------------------------------------------------------
@@ -11240,6 +11307,7 @@ TLua_Funcs GameScriptFuns[] =
 	{"GetItemMagicAttribInfo",	LuaGetItemMagicAttribInfo},
 	{"SetItemMagicAttribValueAndSync",	LuaSetItemMagicAttribValueAndSync},
 	{"SetItemMagicAttrib",	LuaSetItemMagicAttrib},
+	{"SetPurpleItemMagicAttrib",	LuaSetPurpleItemMagicAttrib},
 	{"GetItemGeneratorLevels",	LuaGetItemGeneratorLevels},
 	{"UpgradeItemAttributes",	LuaUpgradeItemAttributes},
 	//

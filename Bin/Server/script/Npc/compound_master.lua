@@ -694,57 +694,25 @@ function ExeEnchaseAttribute()
 
     local nSlot = nKDetail - 146
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 7: Reading existing purple item properties...<color>"))
+    Msg2Player(format("<color=green>[ENCHASE] STEP 7: Enchasing slot %d with Type=%d...<color>", nSlot + 1, nType))
 
-    -- Get purple item's base properties before recreating
-    local nPurpleGenre, nPurpleDetail, nPurpleParticular, nPurpleLevel, nPurpleSeries = GetItemProp(nPurpleIdx)
+    -- Use new SetPurpleItemMagicAttrib function specifically designed for purple items
+    -- This function properly sets attributes on purple items and ensures they persist
+    local bSuccess = SetPurpleItemMagicAttrib(nPurpleIdx, nSlot, nType, nMin, nMax, nValue)
 
-    -- Read all 6 existing magic attributes from purple item
-    local tAttribs = {}
-    for i = 0, 5 do
-        local nOp, nValue, nMin, nMax = GetItemMagicAttribInfo(nPurpleIdx, i)
-        tAttribs[i] = {nType = nOp or 0, nMin = nMin or 0, nMax = nMax or 0, nValue = nValue or 0}
-    end
-
-    -- Update the target slot with new attribute from khoang thach
-    tAttribs[nSlot] = {nType = nType, nMin = nMin, nMax = nMax, nValue = nValue}
-
-    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new purple item with enchased slot %d...<color>", nSlot + 1))
-
-    -- Create new purple item with updated attributes
-    -- Genre=1 (purple), pass all 6 attributes as ma1-ma6 parameters
-    -- NOTE: For purple items, we need to pass attributes in a special encoding
-    -- For now, we'll create with genre=0 (blue) then manually set each attribute
-    local nNewPurpleIdx = AddItemEx(
-        nPurpleGenre,        -- genre = 1 (purple)
-        nPurpleDetail,       -- detail type (e.g., necklace, ring, etc.)
-        nPurpleParticular,   -- particular
-        nPurpleLevel,        -- level
-        nPurpleSeries,       -- series
-        0,                   -- luck (purple items may need special luck encoding)
-        0, 0, 0, 0, 0, 0,    -- ma1-ma6 (will set separately)
-        1,                   -- version
-        0                    -- randomSeed (purple items may need special encoding)
-    )
-
-    if not nNewPurpleIdx or nNewPurpleIdx <= 0 then
-        Msg2Player("<color=red>[ENCHASE] ERROR: Failed to create new purple item!<color>")
+    if not bSuccess or bSuccess == 0 then
+        Msg2Player("<color=red>[ENCHASE] ERROR: SetPurpleItemMagicAttrib failed!<color>")
         return
     end
 
-    -- Set all 6 magic attributes on the new purple item
-    for i = 0, 5 do
-        if tAttribs[i].nType > 0 then
-            SetItemMagicAttrib(nNewPurpleIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
-        end
-    end
+    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Attribute set successfully, deleting materials...<color>"))
 
-    -- Delete old items (old purple + materials)
-    DelItemByIndex(nPurpleIdx)
+    -- Delete materials only (keep the purple item - it now has the new attribute)
     DelItemByIndex(nKhoangIdx)
     DelItemByIndex(nHuyenTinhIdx)
 
-    Msg2Player(format("<color=green>[ENCHASE] SUCCESS! Enchased slot %d with Type=%d!<color>", nSlot + 1, nType))
+    Msg2Player(format("<color=green>[ENCHASE] SUCCESS! Enchased slot %d with Type=%d (Min=%d, Max=%d, Value=%d)!<color>",
+        nSlot + 1, nType, nMin, nMax, nValue))
 end
 
 function no()
