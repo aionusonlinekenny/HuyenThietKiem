@@ -2320,26 +2320,26 @@ int KUiEnchaseTim::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM2;  // Slot 1
                     g_DebugLog("[ENCHASE] Mapped to Box1 (UIEP_BUILDITEM2 = %d)", UIEP_BUILDITEM2);
 
-                    // VALIDATION: Box1 only accepts Khoang thach (genre=7, detail=146-151)
+                    // VALIDATION: Box1 only accepts Huyen Tinh level 3+ (genre=6, detail=76-79)
                     if (pDropPos) {
                         int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
                         int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
 
-                        // Must be item_script (genre = 7)
-                        if (nGenre != 7) {
-                            g_DebugLog("[ENCHASE] REJECT Box1: Genre %d is not item_script", nGenre);
-                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat KHOANG THACH vao o nay!", 256);
+                        // Must be item_task (genre = 6)
+                        if (nGenre != 6) {
+                            g_DebugLog("[ENCHASE] REJECT Box1: Genre %d is not item_task", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH vao o nay!", 256);
                             break;
                         }
 
-                        // Must be Khoang thach (detail = 146-151)
-                        if (nDetail < 146 || nDetail > 151) {
-                            g_DebugLog("[ENCHASE] REJECT Box1: Detail %d is not Khoang thach (need 146-151)", nDetail);
-                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat KHOANG THACH (detail 146-151)!", 256);
+                        // Must be Huyen Tinh level 3+ (detail = 76-79, levels 3-6)
+                        if (nDetail < 76 || nDetail > 79) {
+                            g_DebugLog("[ENCHASE] REJECT Box1: Detail %d - need Huyen Tinh cap 3+ (detail 76-79)", nDetail);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH CAP 3 TRO LEN vao o nay!", 256);
                             break;
                         }
 
-                        g_DebugLog("[ENCHASE] Box1 validation PASSED: Khoang thach accepted (detail=%d)", nDetail);
+                        g_DebugLog("[ENCHASE] Box1 validation PASSED: Huyen Tinh cap %d accepted (detail=%d)", nDetail - 73, nDetail);
                     }
                 } else if (pWnd == (KWndWindow*)&m_Box2) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM3;  // Slot 2
@@ -2435,16 +2435,17 @@ int KUiEnchaseTim::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
 
                 pObj.uId = 0;
                 m_Box1.GetObject(pObj);
-                int bHasBox1 = (pObj.uId > 0) ? 1 : 0;
+                if (pObj.uId <= 0) {
+                    g_DebugLog("[ENCHASE] No Huyen Tinh in Box1");
+                    KUiMsgCentrePad::SystemMessageArrival("Vui long dat HUYEN TINH CAP 3+ vao o 1!", 256);
+                    return 1;
+                }
 
                 pObj.uId = 0;
                 m_Box2.GetObject(pObj);
-                int bHasBox2 = (pObj.uId > 0) ? 1 : 0;
-
-                // Must have at least one khoang thach
-                if (!bHasBox1 && !bHasBox2) {
-                    g_DebugLog("[ENCHASE] No khoang thach in Box1 or Box2");
-                    KUiMsgCentrePad::SystemMessageArrival("Vui long dat KHOANG THACH vao o 1 hoac o 2!", 256);
+                if (pObj.uId <= 0) {
+                    g_DebugLog("[ENCHASE] No Khoang thach in Box2");
+                    KUiMsgCentrePad::SystemMessageArrival("Vui long dat KHOANG THACH vao o 2!", 256);
                     return 1;
                 }
 
