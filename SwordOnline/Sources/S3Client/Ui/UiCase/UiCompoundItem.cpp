@@ -1751,6 +1751,10 @@ void KUiDistill::UpdateResult() {
         g_DebugLog("[DISTILL] ERROR: g_pCoreShell is NULL!");
     }
 
+    // Clear all boxes after sending request
+    CleanItem();
+    g_DebugLog("[DISTILL] Boxes cleared after extraction request");
+
     g_DebugLog("[DISTILL] UpdateResult complete");
 }
 
