@@ -630,121 +630,85 @@ end
 -- Inlays khoang thach attribute into purple item at matching slot
 -- ------------------------------------------------------------
 function ExeEnchaseAttribute()
-    -- ULTRA SIMPLE TEST - just one Talk() call
-    Talk(1, "", "FUNCTION STARTED!!!")
+    Talk(1, "", "STEP 1: Function started")
 
-    -- DEBUG: Function entry log - using Talk to ensure visibility
-    Talk(1, "", "=== DEBUG: ExeEnchaseAttribute CALLED ===")
+    local nPos = 15
 
-    -- Also try other logging methods
-    Msg2Player("=== ExeEnchaseAttribute CALLED ===")
-    WriteLog("[LUA ENCHASE] ExeEnchaseAttribute function started")
+    local nPurpleIdx = GetPOItem(nPos, 0)
+    local nHuyenTinhIdx = GetPOItem(nPos, 1)
+    local nKhoangIdx = GetPOItem(nPos, 2)
 
-    local nPos = 15  -- pos_builditem
+    Talk(1, "", format("STEP 2: Items=%d,%d,%d", nPurpleIdx or -999, nHuyenTinhIdx or -999, nKhoangIdx or -999))
 
-    -- Get items from UI slots
-    local nPurpleIdx = GetPOItem(nPos, 0)    -- BigBox (slot 0) = Purple equipment
-    local nHuyenTinhIdx = GetPOItem(nPos, 1) -- Box1 (slot 1) = Huyen Tinh (catalyst)
-    local nKhoangIdx = GetPOItem(nPos, 2)    -- Box2 (slot 2) = Khoang thach (attribute)
-
-    -- DEBUG: Log retrieved item indices
-    Talk(1, "", format("DEBUG: Items - Purple=%d, HuyenTinh=%d, Khoang=%d",
-        nPurpleIdx or -1, nHuyenTinhIdx or -1, nKhoangIdx or -1))
-
-    -- Validate purple item exists
     if not nPurpleIdx or nPurpleIdx <= 0 then
-        Talk(1, "", "<color=red>Vui long dat TRANG BI TIM vao o lon!<color>")
+        Talk(1, "", "ERROR: No purple!")
         return
     end
 
-    -- Get purple item properties
-    local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nPurpleIdx)
+    local nGenre, nDetail = GetItemProp(nPurpleIdx)
+    Talk(1, "", format("STEP 3: Purple genre=%d", nGenre or -1))
 
-    -- Validate purple item (genre = 1 = item_purpleequip)
     if nGenre ~= 1 then
-        Talk(1, "", "<color=red>O lon phai la TRANG BI TIM!<color>")
+        Talk(1, "", format("ERROR: Not purple! Genre=%d", nGenre))
         return
     end
 
-    -- Validate Huyen Tinh exists and is level 3+
     if not nHuyenTinhIdx or nHuyenTinhIdx <= 0 then
-        Talk(1, "", "<color=red>Vui long dat HUYEN TINH CAP 3+ vao o 1!<color>")
+        Talk(1, "", "ERROR: No HT!")
         return
     end
 
     local nHTGenre, nHTDetail = GetItemProp(nHuyenTinhIdx)
+    Talk(1, "", format("STEP 4: HT g=%d, d=%d", nHTGenre or -1, nHTDetail or -1))
 
-    -- Must be Huyen Tinh (genre = 6, detail = 76-79 for levels 3-6)
     if nHTGenre ~= HUYEN_TINH_GENRE or nHTDetail < 76 or nHTDetail > HUYEN_TINH_MAX_DETAIL then
-        Talk(1, "", "<color=red>O 1 phai la HUYEN TINH CAP 3 TRO LEN!<color>")
+        Talk(1, "", "ERROR: HT invalid!")
         return
     end
 
-    -- Validate Khoang thach exists
     if not nKhoangIdx or nKhoangIdx <= 0 then
-        Talk(1, "", "<color=red>Vui long dat KHOANG THACH vao o 2!<color>")
+        Talk(1, "", "ERROR: No khoang!")
         return
     end
 
-    -- Get khoang thach properties
     local nKGenre, nKDetail = GetItemProp(nKhoangIdx)
+    Talk(1, "", format("STEP 5: Khoang g=%d, d=%d", nKGenre or -1, nKDetail or -1))
 
-    -- Validate khoang thach (genre=7, detail=146-151)
     if nKGenre ~= 7 or nKDetail < 146 or nKDetail > 151 then
-        Talk(1, "", "<color=red>Khoang thach khong hop le (phai la detail 146-151)!<color>")
+        Talk(1, "", "ERROR: Khoang invalid!")
         return
     end
 
-    -- Get attribute from khoang thach using GetItemGeneratorLevels
-    -- Returns table with [1]=Type, [2]=Min, [3]=Max, [4]=Value, [5]=Series, [6]=unused
     local GenLvl = GetItemGeneratorLevels(nKhoangIdx)
 
     if not GenLvl or not GenLvl[1] or GenLvl[1] <= 0 then
-        Talk(1, "", "<color=red>Khoang thach khong chua thuoc tinh!<color>")
+        Talk(1, "", "ERROR: No attribute!")
         return
     end
 
-    local nType = GenLvl[1]        -- Attribute type
-    local nMin = GenLvl[2]         -- Min value
-    local nMax = GenLvl[3]         -- Max value
-    local nValue = GenLvl[4]       -- Current value
-    local nAttrSeries = GenLvl[5]  -- Series from attribute (not used for enchase)
+    Talk(1, "", format("STEP 6: Attr type=%d", GenLvl[1]))
 
-    -- Map khoang detail to slot: 146→0, 147→1, 148→2, 149→3, 150→4, 151→5
+    local nType = GenLvl[1]
+    local nMin = GenLvl[2]
+    local nMax = GenLvl[3]
+    local nValue = GenLvl[4]
     local nSlot = nKDetail - 146
 
-    Msg2Player(format("[ENCHASE DEBUG] Khoang Detail=%d → Slot=%d, Attrib=[Type=%d, Min=%d, Max=%d, Value=%d]",
-        nKDetail, nSlot, nType, nMin, nMax, nValue))
+    Talk(1, "", format("STEP 7: Slot=%d, Writing...", nSlot))
 
-    -- Success rate (100% for testing - can be changed later)
-    local nSuccessRate = 100  -- TODO: Adjust success rate based on game balance
-    local nRand = random(1, 100)
+    local bSuccess = SetItemMagicAttrib(nPurpleIdx, nSlot, nType, nMin, nMax, nValue)
 
-    if nRand <= nSuccessRate then
-        -- SUCCESS: Write attribute to purple item at the matching slot
-        -- SetItemMagicAttrib(itemIdx, slot, type, min, max, value)
-        local bSuccess = SetItemMagicAttrib(nPurpleIdx, nSlot, nType, nMin, nMax, nValue)
+    Talk(1, "", format("STEP 8: Result=%s", tostring(bSuccess)))
 
-        if not bSuccess or bSuccess == 0 then
-            Talk(1, "", "<color=red>Loi: Khong the kham nam thuoc tinh vao dong " .. (nSlot + 1) .. "!<color>")
-            return
-        end
-
-        -- Delete consumed items after successful enchase
-        DelItemByIndex(nKhoangIdx)    -- Delete khoang thach
-        DelItemByIndex(nHuyenTinhIdx) -- Delete Huyen Tinh catalyst
-
-        Msg2Player(format("<color=green>Kham nam THANH CONG dong %d!<color>", nSlot + 1))
-        Talk(1, "", format("<color=green>Da kham nam thanh cong dong %d vao trang bi tim!<color>", nSlot + 1))
-        Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da kham nam thanh cong dong " .. (nSlot + 1) .. " vao trang bi tim!")
-    else
-        -- FAILURE: Delete both khoang thach and Huyen Tinh, purple item unchanged
-        DelItemByIndex(nKhoangIdx)
-        DelItemByIndex(nHuyenTinhIdx)
-
-        Msg2Player(format("<color=red>Kham nam THAT BAI dong %d! Mat nguyen lieu!<color>", nSlot + 1))
-        Talk(1, "", "<color=yellow>Kham nam that bai! Da mat Khoang thach va Huyen Tinh!<color>")
+    if not bSuccess or bSuccess == 0 then
+        Talk(1, "", "ERROR: Write failed!")
+        return
     end
+
+    DelItemByIndex(nKhoangIdx)
+    DelItemByIndex(nHuyenTinhIdx)
+
+    Talk(1, "", format("<color=green>SUCCESS! Slot %d!<color>", nSlot + 1))
 end
 
 function no()
