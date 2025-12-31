@@ -715,18 +715,18 @@ function ExeEnchaseAttribute()
 
     Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new item with ALL attributes...<color>"))
 
-    -- Create as BLUE equipment (genre=0) to avoid purple's luck/randomSeed encoding
-    -- Then we'll change it to purple after setting attributes
+    -- Create as BLUE equipment (genre=1, luck<1000000000) to support magic attributes
+    -- without purple's luck/randomSeed regeneration issue
     local nNewItemIdx = AddItemEx(
-        0,                  -- genre = 0 (blue equipment) - NO luck/randomSeed encoding!
+        1,                  -- genre = 1 (equipment with attributes)
         nPurpleDetail,      -- detail (same as original)
         nPurpleParticular,  -- particular
         nPurpleLevel,       -- level
         nPurpleSeries,      -- series
-        0,                  -- luck
-        0, 0, 0, 0, 0, 0,   -- ma1-ma6 (not used for blue)
+        1,                  -- luck = 1 (low luck = BLUE equipment, not purple)
+        0, 0, 0, 0, 0, 0,   -- ma1-ma6 (not used)
         1,                  -- version
-        0                   -- randomSeed
+        0                   -- randomSeed = 0 (no regeneration)
     )
 
     if not nNewItemIdx or nNewItemIdx <= 0 then
