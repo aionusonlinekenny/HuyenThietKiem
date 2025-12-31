@@ -10476,8 +10476,8 @@ int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 	// CRITICAL: Set special luck marker to prevent attribute regeneration
 	// Use luck=1000000001 as marker for "custom enchased purple item"
 	// This will be checked in Gen_ExistPurpleEquipment to skip DecodePurple
-	Item[nItemIdx].SetLuck(1000000001);
-	Item[nItemIdx].SetRandomSeed(1000000001);
+	Item[nItemIdx].m_GeneratorParam.nLuck = 1000000001;
+	Item[nItemIdx].m_GeneratorParam.dwRandomSeed = 1000000001;
 
 	g_DebugLog("[PURPLE SETATTRIB] ItemIdx=%d, Slot=%d, Type=%d, Min=%d, Max=%d, Value=%d",
 		nItemIdx, nSlot, nAttribType, nMin, nMax, nValue);
