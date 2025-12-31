@@ -370,7 +370,17 @@ BOOL KItemGenerator::Gen_PurpleEquipment(IN int nDetailType,
 	
 	if(pnaryMALevel == NULL)
 		return TRUE;
-	
+
+	// CUSTOM PURPLE CHECK: If luck==1000000001, this is a custom enchased purple item
+	// Skip DecodePurple and Gen_PurpleMagicAttrib - keep attributes as manually set
+	if(pItem->m_GeneratorParam.nLuck == 1000000001)
+	{
+#ifdef _DEBUG
+		g_DebugLog("[GEN_PURPLE] Custom enchased purple detected (luck=1000000001), skipping regeneration");
+#endif
+		return TRUE;  // Keep existing m_aryMagicAttrib set by SetPurpleItemMagicAttrib
+	}
+
 	int j;
 	for(j = 0; j < 6;j++)
 	{
@@ -389,8 +399,8 @@ BOOL KItemGenerator::Gen_PurpleEquipment(IN int nDetailType,
 
 	if(bEC)
 		pItem->SetAttrib_MA(sMA);
-	
-	
+
+
 #ifdef _DEBUG
 #ifdef _SERVER
 	//g_DebugLog("[SERVER]GenPurpleEq: Record[%d] Name[%s] Series[%d]", i, pItem->GetName(), nSeriesReq);
@@ -478,7 +488,17 @@ BOOL KItemGenerator::Gen_ExistPurpleEquipment(IN int nRecord,
 	
 	if(pnaryMALevel == NULL)
 		return TRUE;
-	
+
+	// CUSTOM PURPLE CHECK: If luck==1000000001, this is a custom enchased purple item
+	// Skip DecodePurple and Gen_PurpleMagicAttrib - keep attributes as manually set
+	if(pItem->m_GeneratorParam.nLuck == 1000000001)
+	{
+#ifdef _DEBUG
+		g_DebugLog("[GEN_EXIST_PURPLE] Custom enchased purple detected (luck=1000000001), skipping regeneration");
+#endif
+		return TRUE;  // Keep existing m_aryMagicAttrib set by SetPurpleItemMagicAttrib
+	}
+
 	int j;
 	for(j = 0; j < 6;j++)
 	{
@@ -491,7 +511,7 @@ BOOL KItemGenerator::Gen_ExistPurpleEquipment(IN int nRecord,
 	memset(pnaryMARecord, 0, sizeof(pnaryMARecord));
 
 	bEC = DecodePurple(j, pnaryMARecord, pItem->m_GeneratorParam.dwRandomSeed, pItem->m_GeneratorParam.nLuck);
-	
+
 	//g_DebugLog("RECORD[%d]", pnaryMARecord[0]);
 
 	if(bEC)

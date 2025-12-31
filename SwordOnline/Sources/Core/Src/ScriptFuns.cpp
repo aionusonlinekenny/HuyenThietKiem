@@ -10473,8 +10473,15 @@ int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[1] = 0;
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[2] = 0;
 
+	// CRITICAL: Set special luck marker to prevent attribute regeneration
+	// Use luck=1000000001 as marker for "custom enchased purple item"
+	// This will be checked in Gen_ExistPurpleEquipment to skip DecodePurple
+	Item[nItemIdx].SetLuck(1000000001);
+	Item[nItemIdx].SetRandomSeed(1000000001);
+
 	g_DebugLog("[PURPLE SETATTRIB] ItemIdx=%d, Slot=%d, Type=%d, Min=%d, Max=%d, Value=%d",
 		nItemIdx, nSlot, nAttribType, nMin, nMax, nValue);
+	g_DebugLog("[PURPLE SETATTRIB] Set special luck/randomSeed=1000000001 to mark custom purple");
 
 	// CRITICAL: Sync item to client so player sees the new attribute
 	// Call SyncItem to force client update for items in UI temporary storage

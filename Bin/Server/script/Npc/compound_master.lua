@@ -713,21 +713,21 @@ function ExeEnchaseAttribute()
     Msg2Player(format("<color=yellow>[ENCHASE] New Slot %d: Type=%d, Min=%d, Max=%d, Val=%d<color>",
         nSlot, nType, nMin, nMax, nValue))
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new equipment with enchased attributes...<color>"))
+    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new PURPLE item with custom attributes...<color>"))
 
-    -- Create as NORMAL equipment (genre=0, item_equip)
-    -- Purple items require luck/randomSeed encoding which is complex
-    -- Normal equipment displays m_aryMagicAttrib directly without encoding
+    -- Create as PURPLE equipment (genre=1, item_purpleequip)
+    -- SetPurpleItemMagicAttrib will set luck=1000000001 as special marker
+    -- C++ code checks for this marker and skips attribute regeneration
     local nNewItemIdx = AddItemEx(
-        0,                  -- genre = 0 (item_equip - normal equipment)
+        1,                  -- genre = 1 (item_purpleequip - PURPLE!)
         nPurpleDetail,      -- detail (same as original)
         nPurpleParticular,  -- particular
         nPurpleLevel,       -- level
         nPurpleSeries,      -- series
-        0,                  -- luck = 0 (normal equipment)
-        0, 0, 0, 0, 0, 0,   -- ma1-ma6 (will be set below)
+        1000000000,         -- luck = 1000000000 (purple base, will be overwritten to 1000000001)
+        0, 0, 0, 0, 0, 0,   -- ma1-ma6 (not used for purple)
         1,                  -- version
-        0                   -- randomSeed = 0
+        0                   -- randomSeed (will be set to 1000000001 by SetPurpleItemMagicAttrib)
     )
 
     if not nNewItemIdx or nNewItemIdx <= 0 then
@@ -735,15 +735,15 @@ function ExeEnchaseAttribute()
         return
     end
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 9: Setting all 6 attributes on new item...<color>"))
+    Msg2Player(format("<color=green>[ENCHASE] STEP 9: Setting custom attributes on purple item...<color>"))
 
-    -- Set ALL 6 attributes on the new item
+    -- Set ALL 6 attributes on the new purple item
     -- IMPORTANT: Skip Type=53 (empty attribute type) and Type=0 (no attribute)
-    -- Use SetItemMagicAttrib (not SetPurpleItemMagicAttrib) for normal equipment
+    -- Use SetPurpleItemMagicAttrib which automatically sets luck=1000000001 marker
     for i = 0, 5 do
         if tAttribs[i].nType > 0 and tAttribs[i].nType ~= 53 then
-            SetItemMagicAttrib(nNewItemIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
-            Msg2Player(format("<color=green>[ENCHASE] Set Slot %d: Type=%d<color>", i, tAttribs[i].nType))
+            SetPurpleItemMagicAttrib(nNewItemIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
+            Msg2Player(format("<color=green>[ENCHASE] Set Slot %d: Type=%d (purple mode)<color>", i, tAttribs[i].nType))
         else
             Msg2Player(format("<color=yellow>[ENCHASE] Skip Slot %d: Type=%d (empty)<color>", i, tAttribs[i].nType))
         end
