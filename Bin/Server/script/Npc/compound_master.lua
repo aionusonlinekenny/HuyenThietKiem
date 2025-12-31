@@ -679,30 +679,19 @@ function ExeEnchaseAttribute()
         return
     end
 
-    Msg2Player("<color=green>[ENCHASE] STEP 5.5: Calling GetItemGeneratorLevels...<color>")
+    Msg2Player("<color=green>[ENCHASE] STEP 5.5: Reading khoang thach attribute...<color>")
 
-    local GenLvl = GetItemGeneratorLevels(nKhoangIdx)
+    -- GetItemGeneratorLevels returns 6 values: Type, Min, Max, Value, Series, Unused
+    local nType, nMin, nMax, nValue, nSeries, nUnused = GetItemGeneratorLevels(nKhoangIdx)
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 5.7: GenLvl=%s<color>", tostring(GenLvl)))
+    Msg2Player(format("<color=green>[ENCHASE] STEP 6: Type=%d, Min=%d, Max=%d, Value=%d<color>",
+        nType or -1, nMin or -1, nMax or -1, nValue or -1))
 
-    if not GenLvl then
-        Msg2Player("<color=red>[ENCHASE] ERROR: GenLvl is nil!<color>")
+    if not nType or nType <= 0 then
+        Msg2Player("<color=red>[ENCHASE] ERROR: No attribute in khoang thach!<color>")
         return
     end
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 5.8: GenLvl[1]=%s<color>", tostring(GenLvl[1])))
-
-    if not GenLvl[1] or GenLvl[1] <= 0 then
-        Msg2Player("<color=red>[ENCHASE] ERROR: No attribute!<color>")
-        return
-    end
-
-    Msg2Player(format("<color=green>[ENCHASE] STEP 6: Attr type=%d<color>", GenLvl[1]))
-
-    local nType = GenLvl[1]
-    local nMin = GenLvl[2]
-    local nMax = GenLvl[3]
-    local nValue = GenLvl[4]
     local nSlot = nKDetail - 146
 
     Msg2Player(format("<color=green>[ENCHASE] STEP 7: Slot=%d, Writing...<color>", nSlot))
