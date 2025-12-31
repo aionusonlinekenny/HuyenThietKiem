@@ -630,6 +630,9 @@ end
 -- Inlays khoang thach attribute into purple item at matching slot
 -- ------------------------------------------------------------
 function ExeEnchaseAttribute()
+    -- ULTRA SIMPLE TEST - just one Talk() call
+    Talk(1, "", "FUNCTION STARTED!!!")
+
     -- DEBUG: Function entry log - using Talk to ensure visibility
     Talk(1, "", "=== DEBUG: ExeEnchaseAttribute CALLED ===")
 
