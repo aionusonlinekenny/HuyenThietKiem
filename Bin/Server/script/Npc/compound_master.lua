@@ -624,5 +624,122 @@ function ExeExtractAttribute()
     Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da chiet xuat thanh cong thuoc tinh tu trang bi!")
 end
 
+-- ------------------------------------------------------------
+-- Execute Enchase Attribute (ENCHASE Tab)
+-- Called when player clicks button in ENCHASE tab
+-- Inlays khoang thach attribute into purple item at matching slot
+-- ------------------------------------------------------------
+function ExeEnchaseAttribute()
+    local nPos = 15  -- pos_builditem
+
+    -- Get items from UI slots
+    local nPurpleIdx = GetPOItem(nPos, 0)   -- BigBox (slot 0) = Purple equipment
+    local nKhoang1Idx = GetPOItem(nPos, 1)  -- Box1 (slot 1) = Khoang thach (optional)
+    local nKhoang2Idx = GetPOItem(nPos, 2)  -- Box2 (slot 2) = Khoang thach (optional)
+
+    -- Validate purple item exists
+    if not nPurpleIdx or nPurpleIdx <= 0 then
+        Talk(1, "", "<color=red>Vui long dat TRANG BI TIM vao o lon!<color>")
+        return
+    end
+
+    -- Get purple item properties
+    local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nPurpleIdx)
+
+    -- Validate purple item (genre = 1 = item_purpleequip)
+    if nGenre ~= 1 then
+        Talk(1, "", "<color=red>O lon phai la TRANG BI TIM!<color>")
+        return
+    end
+
+    -- Must have at least one khoang thach
+    if (not nKhoang1Idx or nKhoang1Idx <= 0) and (not nKhoang2Idx or nKhoang2Idx <= 0) then
+        Talk(1, "", "<color=red>Vui long dat KHOANG THACH vao o 1 hoac o 2!<color>")
+        return
+    end
+
+    -- Collect khoang thach items to process
+    local khoangList = {}
+    if nKhoang1Idx and nKhoang1Idx > 0 then
+        table.insert(khoangList, nKhoang1Idx)
+    end
+    if nKhoang2Idx and nKhoang2Idx > 0 then
+        table.insert(khoangList, nKhoang2Idx)
+    end
+
+    local nSuccessCount = 0
+    local nFailCount = 0
+
+    -- Process each khoang thach
+    for i, nKhoangIdx in ipairs(khoangList) do
+        -- Get khoang thach properties
+        local nKGenre, nKDetail = GetItemProp(nKhoangIdx)
+
+        -- Validate khoang thach (genre=7, detail=146-151)
+        if nKGenre ~= 7 or nKDetail < 146 or nKDetail > 151 then
+            Talk(1, "", "<color=red>O " .. i .. " phai la KHOANG THACH (genre=7, detail=146-151)!<color>")
+            return
+        end
+
+        -- Get attribute from khoang thach using GetItemGeneratorLevels
+        -- Returns table with [1]=Type, [2]=Min, [3]=Max, [4]=Value, [5]=Series, [6]=unused
+        local GenLvl = GetItemGeneratorLevels(nKhoangIdx)
+
+        if not GenLvl or not GenLvl[1] or GenLvl[1] <= 0 then
+            Talk(1, "", "<color=red>Khoang thach khong chua thuoc tinh!<color>")
+            return
+        end
+
+        local nType = GenLvl[1]        -- Attribute type
+        local nMin = GenLvl[2]         -- Min value
+        local nMax = GenLvl[3]         -- Max value
+        local nValue = GenLvl[4]       -- Current value
+        local nAttrSeries = GenLvl[5]  -- Series from attribute (not used for enchase)
+
+        -- Map khoang detail to slot: 146→0, 147→1, 148→2, 149→3, 150→4, 151→5
+        local nSlot = nKDetail - 146
+
+        Msg2Player(format("[ENCHASE DEBUG] Processing Khoang %d: Detail=%d → Slot=%d, Attrib=[Type=%d, Min=%d, Max=%d, Value=%d]",
+            i, nKDetail, nSlot, nType, nMin, nMax, nValue))
+
+        -- Success rate (100% for testing - can be changed later)
+        local nSuccessRate = 100  -- TODO: Adjust success rate based on game balance
+        local nRand = random(1, 100)
+
+        if nRand <= nSuccessRate then
+            -- SUCCESS: Write attribute to purple item at the matching slot
+            -- SetItemMagicAttrib(itemIdx, slot, type, min, max, value)
+            local bSuccess = SetItemMagicAttrib(nPurpleIdx, nSlot, nType, nMin, nMax, nValue)
+
+            if not bSuccess or bSuccess == 0 then
+                Talk(1, "", "<color=red>Loi: Khong the kham nam thuoc tinh vao dong " .. (nSlot + 1) .. "!<color>")
+                return
+            end
+
+            -- Delete the khoang thach after successful enchase
+            DelItemByIndex(nKhoangIdx)
+
+            nSuccessCount = nSuccessCount + 1
+            Msg2Player(format("<color=green>Kham nam THANH CONG dong %d!<color>", nSlot + 1))
+        else
+            -- FAILURE: Delete khoang thach, purple item unchanged
+            DelItemByIndex(nKhoangIdx)
+
+            nFailCount = nFailCount + 1
+            Msg2Player(format("<color=red>Kham nam THAT BAI dong %d! Mat Khoang thach!<color>", nSlot + 1))
+        end
+    end
+
+    -- Success summary message
+    if nSuccessCount > 0 then
+        Talk(1, "", format("<color=green>Kham nam thanh cong %d dong thuoc tinh!<color>", nSuccessCount))
+        Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da kham nam thanh cong " .. nSuccessCount .. " dong thuoc tinh vao trang bi tim!")
+    end
+
+    if nFailCount > 0 then
+        Talk(1, "", format("<color=yellow>That bai %d lan kham nam!<color>", nFailCount))
+    end
+end
+
 function no()
 end

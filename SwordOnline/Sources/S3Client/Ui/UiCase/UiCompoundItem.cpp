@@ -444,7 +444,7 @@ void KUiComItem::Breathe() {
     m_ForgePad.Breathe();
     m_CompoundPad.Breathe();
     m_DistillPad.Breathe();
-    // m_EnchasePad doesn't have custom Breathe() yet
+    m_EnchasePad.Breathe();
 
 // 	if(m_nStatus == STATUS_BEGIN_TREMBLE)
 // 	{
@@ -2246,7 +2246,7 @@ void KUiForge::CleanItem() {
 }
 
 KUiEnchaseTim::KUiEnchaseTim() {
-
+    m_nStatus = STATUS_WAITING_MATERIALS;
 }
 
 void KUiEnchaseTim::PaintWindow() {
@@ -2301,12 +2301,71 @@ int KUiEnchaseTim::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                 if (pWnd == (KWndWindow*)&m_BigBox) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM1;  // Slot 0
                     g_DebugLog("[ENCHASE] Mapped to BigBox (UIEP_BUILDITEM1 = %d)", UIEP_BUILDITEM1);
+
+                    // VALIDATION: BigBox only accepts PURPLE items (genre = 1)
+                    if (pDropPos) {
+                        int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
+
+                        // Must be purple equipment (genre = 1 = item_purpleequip)
+                        if (nGenre != 1) {
+                            g_DebugLog("[ENCHASE] REJECT BigBox: Genre %d is not item_purpleequip", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat TRANG BI TIM vao o lon!", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[ENCHASE] BigBox validation PASSED: Purple item accepted (genre=%d, detail=%d)", nGenre, nDetail);
+                    }
                 } else if (pWnd == (KWndWindow*)&m_Box1) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM2;  // Slot 1
                     g_DebugLog("[ENCHASE] Mapped to Box1 (UIEP_BUILDITEM2 = %d)", UIEP_BUILDITEM2);
+
+                    // VALIDATION: Box1 only accepts Khoang thach (genre=7, detail=146-151)
+                    if (pDropPos) {
+                        int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
+
+                        // Must be item_script (genre = 7)
+                        if (nGenre != 7) {
+                            g_DebugLog("[ENCHASE] REJECT Box1: Genre %d is not item_script", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat KHOANG THACH vao o nay!", 256);
+                            break;
+                        }
+
+                        // Must be Khoang thach (detail = 146-151)
+                        if (nDetail < 146 || nDetail > 151) {
+                            g_DebugLog("[ENCHASE] REJECT Box1: Detail %d is not Khoang thach (need 146-151)", nDetail);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat KHOANG THACH (detail 146-151)!", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[ENCHASE] Box1 validation PASSED: Khoang thach accepted (detail=%d)", nDetail);
+                    }
                 } else if (pWnd == (KWndWindow*)&m_Box2) {
                     Drop.Region.v = Pick.Region.v = UIEP_BUILDITEM3;  // Slot 2
                     g_DebugLog("[ENCHASE] Mapped to Box2 (UIEP_BUILDITEM3 = %d)", UIEP_BUILDITEM3);
+
+                    // VALIDATION: Box2 only accepts Khoang thach (genre=7, detail=146-151)
+                    if (pDropPos) {
+                        int nGenre = g_pCoreShell->GetGenreItem(Obj.uId, Obj.uGenre);
+                        int nDetail = g_pCoreShell->GetDetailItem(Obj.uId);
+
+                        // Must be item_script (genre = 7)
+                        if (nGenre != 7) {
+                            g_DebugLog("[ENCHASE] REJECT Box2: Genre %d is not item_script", nGenre);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat KHOANG THACH vao o nay!", 256);
+                            break;
+                        }
+
+                        // Must be Khoang thach (detail = 146-151)
+                        if (nDetail < 146 || nDetail > 151) {
+                            g_DebugLog("[ENCHASE] REJECT Box2: Detail %d is not Khoang thach (need 146-151)", nDetail);
+                            KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat KHOANG THACH (detail 146-151)!", 256);
+                            break;
+                        }
+
+                        g_DebugLog("[ENCHASE] Box2 validation PASSED: Khoang thach accepted (detail=%d)", nDetail);
+                    }
                 } else {
                     g_DebugLog("[ENCHASE] ERROR: pWnd doesn't match any box!");
                     break;
@@ -2357,54 +2416,45 @@ int KUiEnchaseTim::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             if (uParam == (unsigned int) &m_Cancle) {
                 CleanItem();
             } else if (uParam == (unsigned int) &m_Distill) {
-                int nNum = 0;
+                g_DebugLog("[ENCHASE] Enchase button clicked");
 
+                // Don't allow enchase if animation is running
+                if (m_nStatus != STATUS_WAITING_MATERIALS) {
+                    g_DebugLog("[ENCHASE] Animation already running, ignoring click");
+                    return 1;
+                }
+
+                // Validate all required items exist BEFORE starting effect
                 KUiDraggedObject pObj;
-                unsigned int pUP[11];
-
                 m_BigBox.GetObject(pObj);
-                if (pObj.uId > 0) {
-                    pUP[nNum] = pObj.uId;
-                    nNum++;
-                } else {
-                    return 0;
+                if (pObj.uId <= 0) {
+                    g_DebugLog("[ENCHASE] No item in BigBox");
+                    KUiMsgCentrePad::SystemMessageArrival("Vui long dat trang bi tim vao o lon!", 256);
+                    return 1;
                 }
 
                 pObj.uId = 0;
                 m_Box1.GetObject(pObj);
-                if (pObj.uId > 0) {
-                    pUP[nNum] = pObj.uId;
-                    nNum++;
-                } else {
-                    return 0;
-                }
+                int bHasBox1 = (pObj.uId > 0) ? 1 : 0;
 
                 pObj.uId = 0;
                 m_Box2.GetObject(pObj);
-                if (pObj.uId > 0) {
-                    pUP[nNum] = pObj.uId;
-                    nNum++;
-                } else {
-                    return 0;
+                int bHasBox2 = (pObj.uId > 0) ? 1 : 0;
+
+                // Must have at least one khoang thach
+                if (!bHasBox1 && !bHasBox2) {
+                    g_DebugLog("[ENCHASE] No khoang thach in Box1 or Box2");
+                    KUiMsgCentrePad::SystemMessageArrival("Vui long dat KHOANG THACH vao o 1 hoac o 2!", 256);
+                    return 1;
                 }
 
-                for (int i = 0; i < 2; i++) {
-                    for (int j = 0; j < 4; j++) {
-                        pObj.uId = 0;
-                        m_ItemBox.GetObject(pObj, i, j);
-                        if (pObj.uId > 0) {
-                            pUP[nNum] = pObj.uId;
-                            nNum++;
-                        } else {
-                            break;
-                        }
-                    }
-                }
-
-                KUiComItem *pSelf = KUiComItem::GetIfVisible();
-                pSelf->ComItem((unsigned int) (&pUP), 5, nNum);
-
-                CleanItem();
+                // All items validated - start the enchase effect!
+                m_nStatus = STATUS_BEGIN_TREMBLE;
+                m_BigBox.EnablePickPut(false);
+                m_Box1.EnablePickPut(false);
+                m_Box2.EnablePickPut(false);
+                m_ItemBox.EnablePickPut(false);
+                g_DebugLog("[ENCHASE] Starting enchase effect, boxes disabled");
             }
             break;
         default:
@@ -2459,6 +2509,22 @@ void KUiEnchaseTim::LoadScheme(const char *pScheme) {
         m_Pos4.SetTextColor(nColor);
         m_Pos4.BringToTop();
         m_Pos4.SetText("C� th� ch�n nguy�n li�u");
+
+        // Load effect sprites for enchase animation
+        AddChild(&m_TrembleEffect1);
+        m_TrembleEffect1.Init(&Ini, "Effect_0");
+        m_TrembleEffect1.Hide();
+
+        AddChild(&m_TrembleEffect2);
+        m_TrembleEffect2.Init(&Ini, "Effect_1");
+        m_TrembleEffect2.Hide();
+
+        AddChild(&m_TrembleEffect3);
+        m_TrembleEffect3.Init(&Ini, "Effect_2");
+        m_TrembleEffect3.Hide();
+
+        g_DebugLog("[ENCHASE] LoadScheme: All 3 effect sprites loaded and hidden");
+
         // 		m_pSelf->m_LiveSkillPad.LoadScheme(pScheme);
         // 		m_pSelf->m_FightSkillPad.LoadScheme(pScheme);
     }
@@ -2603,6 +2669,123 @@ void KUiEnchaseTim::UpdateData() {
 
 KUiAtlas::KUiAtlas() {
 
+}
+
+// Animation frame update - called every frame to handle enchase effect
+void KUiEnchaseTim::Breathe() {
+    if (m_nStatus == STATUS_BEGIN_TREMBLE) {
+        // Show all 3 effects (BigBox, Box1, Box2)
+        m_TrembleEffect1.Show();
+        m_TrembleEffect1.SetFrame(0);
+        m_TrembleEffect2.Show();
+        m_TrembleEffect2.SetFrame(0);
+        m_TrembleEffect3.Show();
+        m_TrembleEffect3.SetFrame(0);
+        m_nStatus = STATUS_TREMBLING;
+        g_DebugLog("[ENCHASE] Started enchase effect animation on all 3 boxes");
+    } else if (m_nStatus == STATUS_TREMBLING) {
+        if (!PlayEffect()) {
+            m_nStatus = STATUS_CHANGING_ITEM;
+            m_TrembleEffect1.Hide();
+            m_TrembleEffect2.Hide();
+            m_TrembleEffect3.Hide();
+            g_DebugLog("[ENCHASE] Animation finished, hiding all effects");
+        }
+    } else if (m_nStatus == STATUS_CHANGING_ITEM) {
+        UpdateResult();
+        m_nStatus = STATUS_FINISH;
+        g_DebugLog("[ENCHASE] Breathe: Set status to STATUS_FINISH");
+    } else if (m_nStatus == STATUS_FINISH) {
+        // Reset to waiting state for next enchase
+        m_nStatus = STATUS_WAITING_MATERIALS;
+        // Re-enable boxes for next operation
+        m_BigBox.EnablePickPut(true);
+        m_Box1.EnablePickPut(true);
+        m_Box2.EnablePickPut(true);
+        m_ItemBox.EnablePickPut(true);
+        g_DebugLog("[ENCHASE] Breathe: Reset status to STATUS_WAITING_MATERIALS, boxes re-enabled");
+    }
+}
+
+// Advances the effect animation - returns 1 if still animating, 0 if complete
+int KUiEnchaseTim::PlayEffect() {
+    // Advance frames on all 3 effects
+    int nMaxFrame1 = m_TrembleEffect1.GetMaxFrame();
+    int nMaxFrame2 = m_TrembleEffect2.GetMaxFrame();
+    int nMaxFrame3 = m_TrembleEffect3.GetMaxFrame();
+    int nCurrentFrame1 = m_TrembleEffect1.GetCurrentFrame();
+
+    static int nWaitCount = 0;  // Track how long we've waited for sprites to load
+
+    // CRITICAL: Call NextFrame() even when MaxFrame=0 to trigger sprite loading!
+    if (m_TrembleEffect1.IsVisible()) {
+        m_TrembleEffect1.NextFrame();
+    }
+    if (m_TrembleEffect2.IsVisible()) {
+        m_TrembleEffect2.NextFrame();
+    }
+    if (m_TrembleEffect3.IsVisible()) {
+        m_TrembleEffect3.NextFrame();
+    }
+
+    if (nMaxFrame1 == 0 || nMaxFrame2 == 0 || nMaxFrame3 == 0) {
+        // Sprites not loaded yet, but keep calling NextFrame() to trigger load
+        nWaitCount++;
+
+        // Timeout after 300 frames (~6 seconds at 50fps)
+        if (nWaitCount >= 300) {
+            g_DebugLog("[ENCHASE] PlayEffect: Sprites failed to load after %d frames, giving up", nWaitCount);
+            nWaitCount = 0;
+            return 0;  // Give up and finish
+        }
+
+        if (nWaitCount % 50 == 0) {
+            g_DebugLog("[ENCHASE] PlayEffect: Waiting for sprites to load, MaxFrames still 0 (waited %d frames)", nWaitCount);
+        }
+        return 1;  // Still waiting
+    }
+
+    if (nWaitCount > 0) {
+        g_DebugLog("[ENCHASE] PlayEffect: Sprites loaded successfully after %d frames! MaxFrames=%d,%d,%d",
+            nWaitCount, nMaxFrame1, nMaxFrame2, nMaxFrame3);
+        nWaitCount = 0;
+    }
+
+    // Use Effect1's frame as reference (all should be in sync)
+    if (nCurrentFrame1 >= nMaxFrame1 - 1) {
+        m_TrembleEffect1.SetFrame(0);
+        m_TrembleEffect2.SetFrame(0);
+        m_TrembleEffect3.SetFrame(0);
+        g_DebugLog("[ENCHASE] Animation COMPLETE: CurrentFrame=%d reached MaxFrame=%d", nCurrentFrame1, nMaxFrame1);
+        return 0;  // Animation complete
+    }
+
+    if (nCurrentFrame1 % 10 == 0) {
+        g_DebugLog("[ENCHASE] Animating: Frame %d/%d", nCurrentFrame1, nMaxFrame1);
+    }
+    return 1;  // Still animating
+}
+
+// Called after animation completes to send enchase request to server
+void KUiEnchaseTim::UpdateResult() {
+    g_DebugLog("[ENCHASE] UpdateResult: Animation finished, sending enchase request");
+
+    // Send enchase request to server via Lua script
+    if (g_pCoreShell) {
+        g_DebugLog("[ENCHASE] Calling GOI_EXESCRIPT_BUTTON with ExeEnchaseAttribute");
+        char szFunc[32];
+        sprintf(szFunc, "ExeEnchaseAttribute");
+        g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 5);
+        g_DebugLog("[ENCHASE] Enchase request sent successfully");
+    } else {
+        g_DebugLog("[ENCHASE] ERROR: g_pCoreShell is NULL!");
+    }
+
+    // Clear all boxes after sending request
+    CleanItem();
+    g_DebugLog("[ENCHASE] Boxes cleared after enchase request");
+
+    g_DebugLog("[ENCHASE] UpdateResult complete");
 }
 
 void KUiAtlas::PaintWindow() {

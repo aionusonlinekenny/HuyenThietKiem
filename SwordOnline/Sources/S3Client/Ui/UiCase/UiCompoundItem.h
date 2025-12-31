@@ -74,6 +74,11 @@ public:
 
     void CleanItem();
 
+    // Effect animation methods (added for enchase effect)
+    void Breathe();          // Called every frame to update animation
+    int PlayEffect();        // Returns 1 if still animating, 0 if complete
+    void UpdateResult();     // Called after effect completes to send server request
+
 private:
     int WndProc(unsigned int uMsg, unsigned int uParam, int nParam);//���ں���
     void PaintWindow();                                //���ƴ���
@@ -93,12 +98,24 @@ private:
     KWndButton m_Distill;
     KWndButton m_Cancle;
 
+    // Animation status (added for enchase effect)
+    int m_nStatus;  // STATUS_WAITING_MATERIALS, STATUS_BEGIN_TREMBLE, STATUS_TREMBLING, etc.
+
     KCanGetNumImage2
             m_TrembleEffect1;                   //�ϳ��е���Ч
     KCanGetNumImage2
             m_TrembleEffect2;                   //�ϳ��е���Ч
     KCanGetNumImage2
             m_TrembleEffect3;                   //�ϳ��е���Ч
+
+private:
+    enum THIS_INTERFACE_STATUS {
+        STATUS_WAITING_MATERIALS,
+        STATUS_BEGIN_TREMBLE,
+        STATUS_TREMBLING,
+        STATUS_CHANGING_ITEM,
+        STATUS_FINISH,
+    };
 };
 
 class KUiForge : public KWndPage {
