@@ -631,7 +631,6 @@ end
 -- ------------------------------------------------------------
 function ExeEnchaseAttribute()
     Msg2Player("<color=green>[ENCHASE] STEP 1: Function started<color>")
-    Talk(1, "", "STEP 1: Function started")
 
     local nPos = 15
 
@@ -640,81 +639,65 @@ function ExeEnchaseAttribute()
     local nKhoangIdx = GetPOItem(nPos, 2)
 
     Msg2Player(format("<color=green>[ENCHASE] STEP 2: Items=%d,%d,%d<color>", nPurpleIdx or -999, nHuyenTinhIdx or -999, nKhoangIdx or -999))
-    Talk(1, "", format("STEP 2: Items=%d,%d,%d", nPurpleIdx or -999, nHuyenTinhIdx or -999, nKhoangIdx or -999))
 
     if not nPurpleIdx or nPurpleIdx <= 0 then
         Msg2Player("<color=red>[ENCHASE] ERROR: No purple!<color>")
-        Talk(1, "", "ERROR: No purple!")
         return
     end
 
     local nGenre, nDetail = GetItemProp(nPurpleIdx)
     Msg2Player(format("<color=green>[ENCHASE] STEP 3: Purple genre=%d<color>", nGenre or -1))
-    Talk(1, "", format("STEP 3: Purple genre=%d", nGenre or -1))
 
     if nGenre ~= 1 then
         Msg2Player(format("<color=red>[ENCHASE] ERROR: Not purple! Genre=%d<color>", nGenre))
-        Talk(1, "", format("ERROR: Not purple! Genre=%d", nGenre))
         return
     end
 
     if not nHuyenTinhIdx or nHuyenTinhIdx <= 0 then
         Msg2Player("<color=red>[ENCHASE] ERROR: No HT!<color>")
-        Talk(1, "", "ERROR: No HT!")
         return
     end
 
     local nHTGenre, nHTDetail = GetItemProp(nHuyenTinhIdx)
     Msg2Player(format("<color=green>[ENCHASE] STEP 4: HT g=%d, d=%d<color>", nHTGenre or -1, nHTDetail or -1))
-    Talk(1, "", format("STEP 4: HT g=%d, d=%d", nHTGenre or -1, nHTDetail or -1))
 
     if nHTGenre ~= HUYEN_TINH_GENRE or nHTDetail < 76 or nHTDetail > HUYEN_TINH_MAX_DETAIL then
         Msg2Player("<color=red>[ENCHASE] ERROR: HT invalid!<color>")
-        Talk(1, "", "ERROR: HT invalid!")
         return
     end
 
     if not nKhoangIdx or nKhoangIdx <= 0 then
         Msg2Player("<color=red>[ENCHASE] ERROR: No khoang!<color>")
-        Talk(1, "", "ERROR: No khoang!")
         return
     end
 
     local nKGenre, nKDetail = GetItemProp(nKhoangIdx)
     Msg2Player(format("<color=green>[ENCHASE] STEP 5: Khoang g=%d, d=%d<color>", nKGenre or -1, nKDetail or -1))
-    Talk(1, "", format("STEP 5: Khoang g=%d, d=%d", nKGenre or -1, nKDetail or -1))
 
     if nKGenre ~= 7 or nKDetail < 146 or nKDetail > 151 then
         Msg2Player("<color=red>[ENCHASE] ERROR: Khoang invalid!<color>")
-        Talk(1, "", "ERROR: Khoang invalid!")
         return
     end
 
     Msg2Player("<color=green>[ENCHASE] STEP 5.5: Calling GetItemGeneratorLevels...<color>")
-    Talk(1, "", "STEP 5.5: Calling GetItemGeneratorLevels...")
 
     local GenLvl = GetItemGeneratorLevels(nKhoangIdx)
 
     Msg2Player(format("<color=green>[ENCHASE] STEP 5.7: GenLvl=%s<color>", tostring(GenLvl)))
-    Talk(1, "", format("STEP 5.7: GenLvl=%s", tostring(GenLvl)))
 
     if not GenLvl then
         Msg2Player("<color=red>[ENCHASE] ERROR: GenLvl is nil!<color>")
-        Talk(1, "", "ERROR: GenLvl is nil!")
         return
     end
 
     Msg2Player(format("<color=green>[ENCHASE] STEP 5.8: GenLvl[1]=%s<color>", tostring(GenLvl[1])))
-    Talk(1, "", format("STEP 5.8: GenLvl[1]=%s", tostring(GenLvl[1])))
 
     if not GenLvl[1] or GenLvl[1] <= 0 then
         Msg2Player("<color=red>[ENCHASE] ERROR: No attribute!<color>")
-        Talk(1, "", "ERROR: No attribute!")
         return
     end
 
     Msg2Player(format("<color=green>[ENCHASE] STEP 6: Attr type=%d<color>", GenLvl[1]))
-    Talk(1, "", format("STEP 6: Attr type=%d", GenLvl[1]))
 
     local nType = GenLvl[1]
     local nMin = GenLvl[2]
@@ -723,16 +706,13 @@ function ExeEnchaseAttribute()
     local nSlot = nKDetail - 146
 
     Msg2Player(format("<color=green>[ENCHASE] STEP 7: Slot=%d, Writing...<color>", nSlot))
-    Talk(1, "", format("STEP 7: Slot=%d, Writing...", nSlot))
 
     local bSuccess = SetItemMagicAttrib(nPurpleIdx, nSlot, nType, nMin, nMax, nValue)
 
     Msg2Player(format("<color=green>[ENCHASE] STEP 8: Result=%s<color>", tostring(bSuccess)))
-    Talk(1, "", format("STEP 8: Result=%s", tostring(bSuccess)))
 
     if not bSuccess or bSuccess == 0 then
         Msg2Player("<color=red>[ENCHASE] ERROR: Write failed!<color>")
-        Talk(1, "", "ERROR: Write failed!")
         return
     end
 
@@ -740,7 +720,6 @@ function ExeEnchaseAttribute()
     DelItemByIndex(nHuyenTinhIdx)
 
     Msg2Player(format("<color=green>[ENCHASE] SUCCESS! Slot %d!<color>", nSlot + 1))
-    Talk(1, "", format("<color=green>SUCCESS! Slot %d!<color>", nSlot + 1))
 end
 
 function no()
