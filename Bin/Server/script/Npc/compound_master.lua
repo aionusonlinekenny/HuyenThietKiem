@@ -713,20 +713,21 @@ function ExeEnchaseAttribute()
     Msg2Player(format("<color=yellow>[ENCHASE] New Slot %d: Type=%d, Min=%d, Max=%d, Val=%d<color>",
         nSlot, nType, nMin, nMax, nValue))
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new item with ALL attributes...<color>"))
+    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new PURPLE item with ALL attributes...<color>"))
 
-    -- Create as BLUE equipment (genre=1, luck<1000000000) to support magic attributes
-    -- without purple's luck/randomSeed regeneration issue
+    -- Create as PURPLE equipment (genre=1, luck>=1000000000) BUT randomSeed=0
+    -- DecodePurple requires BOTH luck AND randomSeed >= 1000000000
+    -- With randomSeed=0, DecodePurple returns FALSE → NO regeneration!
     local nNewItemIdx = AddItemEx(
-        1,                  -- genre = 1 (equipment with attributes)
+        1,                  -- genre = 1 (item_purpleequip)
         nPurpleDetail,      -- detail (same as original)
         nPurpleParticular,  -- particular
         nPurpleLevel,       -- level
         nPurpleSeries,      -- series
-        1,                  -- luck = 1 (low luck = BLUE equipment, not purple)
+        1000000000,         -- luck = 1000000000 (PURPLE threshold)
         0, 0, 0, 0, 0, 0,   -- ma1-ma6 (not used)
         1,                  -- version
-        0                   -- randomSeed = 0 (no regeneration)
+        0                   -- randomSeed = 0 → BLOCKS DecodePurple regeneration!
     )
 
     if not nNewItemIdx or nNewItemIdx <= 0 then
