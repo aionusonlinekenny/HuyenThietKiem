@@ -738,10 +738,13 @@ function ExeEnchaseAttribute()
     Msg2Player(format("<color=green>[ENCHASE] STEP 9: Setting all 6 attributes on new item...<color>"))
 
     -- Set ALL 6 attributes on the new item
+    -- IMPORTANT: Skip Type=53 (empty attribute type) and Type=0 (no attribute)
     for i = 0, 5 do
-        if tAttribs[i].nType > 0 then
+        if tAttribs[i].nType > 0 and tAttribs[i].nType ~= 53 then
             SetPurpleItemMagicAttrib(nNewItemIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
             Msg2Player(format("<color=green>[ENCHASE] Set Slot %d: Type=%d<color>", i, tAttribs[i].nType))
+        else
+            Msg2Player(format("<color=yellow>[ENCHASE] Skip Slot %d: Type=%d (empty)<color>", i, tAttribs[i].nType))
         end
     end
 
