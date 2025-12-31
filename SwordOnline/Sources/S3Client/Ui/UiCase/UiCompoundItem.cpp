@@ -2776,7 +2776,7 @@ void KUiEnchaseTim::UpdateResult() {
         g_DebugLog("[ENCHASE] Calling GOI_EXESCRIPT_BUTTON with ExeEnchaseAttribute");
         char szFunc[32];
         sprintf(szFunc, "ExeEnchaseAttribute");
-        g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 5);
+        g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
         g_DebugLog("[ENCHASE] Enchase request sent successfully");
     } else {
         g_DebugLog("[ENCHASE] ERROR: g_pCoreShell is NULL!");
