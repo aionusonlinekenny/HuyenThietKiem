@@ -750,11 +750,11 @@ function ExeEnchaseAttribute()
     Msg2Player(format("<color=green>[ENCHASE] STEP 9: Setting custom attributes on item...<color>"))
 
     -- Set ALL 6 attributes on the new item
-    -- IMPORTANT: Skip Type=53 (empty attribute type) and Type=0 (no attribute)
-    -- Use SetItemMagicAttrib (not SetPurpleItemMagicAttrib since genre=0)
+    -- CRITICAL: Use SetPurpleItemMagicAttrib for purple items (genre=1)
+    -- This function properly handles purple items AND syncs to client
     for i = 0, 5 do
         if tAttribs[i].nType > 0 and tAttribs[i].nType ~= 53 then
-            SetItemMagicAttrib(nNewItemIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
+            SetPurpleItemMagicAttrib(nNewItemIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
             Msg2Player(format("<color=green>[ENCHASE] Set Slot %d: Type=%d<color>", i, tAttribs[i].nType))
         else
             Msg2Player(format("<color=yellow>[ENCHASE] Skip Slot %d: Type=%d (empty)<color>", i, tAttribs[i].nType))
