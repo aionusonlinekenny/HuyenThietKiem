@@ -1008,9 +1008,9 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 				pItemData->imagiclevel3, pItemData->imagiclevel4, pItemData->imagiclevel5,
 				pItemData->imagiclevel6);
 		}
-		// SPECIAL CASE 2: Custom enchased purple items (luck=1000000001) - save ALL 6 attributes
 		else if (pItemData->igenre == item_purpleequip && pItemData->ilucky == 1000000001)
 		{
+			// SPECIAL CASE 2: Custom enchased purple items (luck=1000000001) - save ALL 6 attributes
 			g_DebugLog("[PURPLE SAVE] Saving purple item ItemIdx=%d, luck=%d", nItemIndex, pItemData->ilucky);
 
 			// Save ALL 6 magic attributes using iparam1-6 and imagiclevel1-6
