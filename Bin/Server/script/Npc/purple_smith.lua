@@ -268,24 +268,22 @@ function ExecuteCreatePurple()
     -- CREATE PURPLE ITEM!
     Msg2Player("Creating PURPLE item with " .. nMagicLines .. " magic lines...")
 
-    -- NEW ARCHITECTURE: Use genre=1 (item_purpleequip) directly
-    -- This creates a proper purple equipment using Gen_PurpleEquipment() in C++
+    -- Use AddItemEx to create purple item
+    -- Luck >= 1000000000 = Purple item in HuyenThietKiem
+    local nPurpleLuck = 1000000000
+
     -- Add to BUILD_POS slot 0
-    AddItemEx(ITEM_GENRE_PURPLE,  -- genre = 1 (item_purpleequip) - proper purple
-              nBlueDetail,        -- detail type
-              nBlueParti,         -- particular
-              nBlueLevel,         -- level
-              nBlueSeries,        -- series
-              0,                  -- luck = 0 (not used for detection)
-              nMagicLines,        -- Level for magic line 1
-              nMagicLines,        -- Level for magic line 2
-              nMagicLines,        -- Level for magic line 3
-              nMagicLines,        -- Level for magic line 4
-              nMagicLines,        -- Level for magic line 5
-              nMagicLines,        -- Level for magic line 6
-              1,                  -- version
-              0,                  -- randomSeed
-              BUILD_POS)          -- Position
+    AddItemEx(nBlueGenre, nBlueDetail, nBlueParti, nBlueLevel, nBlueSeries,
+              nPurpleLuck,      -- Luck = 1 billion = PURPLE
+              nMagicLines,      -- Level for magic line 1
+              nMagicLines,      -- Level for magic line 2
+              nMagicLines,      -- Level for magic line 3
+              nMagicLines,      -- Level for magic line 4
+              nMagicLines,      -- Level for magic line 5
+              nMagicLines,      -- Level for magic line 6
+              1,                -- Bind
+              0,                -- Expire time
+              BUILD_POS)        -- Position
 
     -- Success message
     local szSuccess = "<color=green>HOP THANH THANH CONG!<color>\n" ..
