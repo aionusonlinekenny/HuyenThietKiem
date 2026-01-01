@@ -633,143 +633,75 @@ end
 -- Inlays khoang thach attribute into purple item at matching slot
 -- ------------------------------------------------------------
 function ExeEnchaseAttribute()
-    Msg2Player("<color=green>[ENCHASE] STEP 1: Function started<color>")
-
     local nPos = 15
 
     local nPurpleIdx = GetPOItem(nPos, 0)
     local nHuyenTinhIdx = GetPOItem(nPos, 1)
     local nKhoangIdx = GetPOItem(nPos, 2)
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 2: Items=%d,%d,%d<color>", nPurpleIdx or -999, nHuyenTinhIdx or -999, nKhoangIdx or -999))
-
+    -- Validate purple item
     if not nPurpleIdx or nPurpleIdx <= 0 then
-        Msg2Player("<color=red>[ENCHASE] ERROR: No purple!<color>")
+        Talk(1, "", "<color=red>Vui long dat TRANG BI TIM vao o lon!<color>")
         return
     end
 
-    -- Check if item is purple using new genre-based detection
     if not IsPurpleEquipment(nPurpleIdx) then
-        local nGenre, nDetail, _, _, _, nLuck = GetItemProp(nPurpleIdx)
-        local itemType = GetItemTypeByGenre(nPurpleIdx)
-        Msg2Player(format("<color=red>[ENCHASE] ERROR: Not purple! Genre=%d, Type=%s<color>", nGenre or -1, itemType))
+        Talk(1, "", "<color=red>O lon phai la TRANG BI TIM!<color>")
         return
     end
 
-    local nGenre, nDetail, _, _, _, nLuck = GetItemProp(nPurpleIdx)
-    Msg2Player(format("<color=green>[ENCHASE] STEP 3: Purple genre=%d (confirmed purple)<color>", nGenre or -1))
-
+    -- Validate Huyen Tinh
     if not nHuyenTinhIdx or nHuyenTinhIdx <= 0 then
-        Msg2Player("<color=red>[ENCHASE] ERROR: No HT!<color>")
+        Talk(1, "", "<color=red>Vui long dat HUYEN TINH vao o 1!<color>")
         return
     end
 
     local nHTGenre, nHTDetail = GetItemProp(nHuyenTinhIdx)
-    Msg2Player(format("<color=green>[ENCHASE] STEP 4: HT g=%d, d=%d<color>", nHTGenre or -1, nHTDetail or -1))
-
     if nHTGenre ~= HUYEN_TINH_GENRE or nHTDetail < 76 or nHTDetail > HUYEN_TINH_MAX_DETAIL then
-        Msg2Player("<color=red>[ENCHASE] ERROR: HT invalid!<color>")
+        Talk(1, "", "<color=red>O 1 phai la HUYEN TINH cap 4-6!<color>")
         return
     end
 
+    -- Validate Khoang thach
     if not nKhoangIdx or nKhoangIdx <= 0 then
-        Msg2Player("<color=red>[ENCHASE] ERROR: No khoang!<color>")
+        Talk(1, "", "<color=red>Vui long dat KHOANG THACH vao o 2!<color>")
         return
     end
 
     local nKGenre, nKDetail = GetItemProp(nKhoangIdx)
-    Msg2Player(format("<color=green>[ENCHASE] STEP 5: Khoang g=%d, d=%d<color>", nKGenre or -1, nKDetail or -1))
-
     if nKGenre ~= 7 or nKDetail < 146 or nKDetail > 151 then
-        Msg2Player("<color=red>[ENCHASE] ERROR: Khoang invalid!<color>")
+        Talk(1, "", "<color=red>O 2 phai la KHOANG THACH!<color>")
         return
     end
 
-    Msg2Player("<color=green>[ENCHASE] STEP 5.5: Reading khoang thach attribute...<color>")
-
-    -- GetItemGeneratorLevels returns 6 values: Type, Min, Max, Value, Series, Unused
+    -- Get attribute from khoang thach
     local nType, nMin, nMax, nValue, nSeries, nUnused = GetItemGeneratorLevels(nKhoangIdx)
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 6: Type=%d, Min=%d, Max=%d, Value=%d<color>",
-        nType or -1, nMin or -1, nMax or -1, nValue or -1))
-
     if not nType or nType <= 0 then
-        Msg2Player("<color=red>[ENCHASE] ERROR: No attribute in khoang thach!<color>")
+        Talk(1, "", "<color=red>Khoang thach khong chua thuoc tinh!<color>")
         return
     end
 
+    -- Calculate target slot (146->0, 147->1, ..., 151->5)
     local nSlot = nKDetail - 146
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 7: Reading purple item properties...<color>"))
+    -- CRITICAL FIX: Set attribute DIRECTLY on the existing purple item
+    -- This avoids the problem of encoding multiple attributes in GenLvl[]
+    -- SetPurpleItemMagicAttrib will:
+    -- 1. Set m_aryMagicAttrib[nSlot]
+    -- 2. Encode into GenLvl[] for client sync
+    -- 3. Call SyncItem to update client
+    SetPurpleItemMagicAttrib(nPurpleIdx, nSlot, nType, nMin, nMax, nValue)
 
-    -- Get purple item's base properties
-    local nPurpleGenre, nPurpleDetail, nPurpleParticular, nPurpleLevel, nPurpleSeries, nPurpleLuck = GetItemProp(nPurpleIdx)
-
-    -- Verify it's purple using genre-based detection
-    if not IsPurpleEquipment(nPurpleIdx) then
-        Msg2Player("<color=red>[ENCHASE] ERROR: Not a purple item!<color>")
-        return
-    end
-
-    -- Read ALL existing attributes from purple item
-    local tAttribs = {}
-    for i = 0, 5 do
-        local nOp, nValue, nMin, nMax = GetItemMagicAttribInfo(nPurpleIdx, i)
-        tAttribs[i] = {nType = nOp or 0, nMin = nMin or 0, nMax = nMax or 0, nValue = nValue or 0}
-        Msg2Player(format("<color=cyan>[ENCHASE] Old Slot %d: Type=%d, Min=%d, Max=%d, Val=%d<color>",
-            i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue))
-    end
-
-    -- Update target slot with new attribute from khoang thach
-    tAttribs[nSlot] = {nType = nType, nMin = nMin, nMax = nMax, nValue = nValue}
-    Msg2Player(format("<color=yellow>[ENCHASE] New Slot %d: Type=%d, Min=%d, Max=%d, Val=%d<color>",
-        nSlot, nType, nMin, nMax, nValue))
-
-    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new purple item with custom attributes...<color>"))
-
-    -- Create as PURPLE equipment (genre=1) - proper purple item
-    -- CRITICAL: Use luck=1000000001 AND randomSeed=1000000001 to mark as custom enchased purple
-    -- This prevents DecodePurple from overwriting our custom attributes (see KItemGenerator.CPP:374)
-    local nNewItemIdx = AddItemEx(
-        ITEM_GENRE_PURPLE,  -- genre = 1 (item_purpleequip - proper purple)
-        nPurpleDetail,      -- detail (same as original)
-        nPurpleParticular,  -- particular
-        nPurpleLevel,       -- level
-        nPurpleSeries,      -- series
-        1000000001,         -- luck = 1000000001 (marker to skip DecodePurple, allow custom attrs)
-        0, 0, 0, 0, 0, 0,   -- ma1-ma6 (not used)
-        1,                  -- version
-        1000000001          -- randomSeed = 1000000001 (marker for custom enchased purple)
-    )
-
-    if not nNewItemIdx or nNewItemIdx <= 0 then
-        Msg2Player("<color=red>[ENCHASE] ERROR: Failed to create new item!<color>")
-        return
-    end
-
-    Msg2Player(format("<color=green>[ENCHASE] STEP 9: Setting custom attributes on item...<color>"))
-
-    -- Set ALL 6 attributes on the new item
-    -- CRITICAL: Use SetPurpleItemMagicAttrib for purple items (genre=1)
-    -- This function properly handles purple items AND syncs to client
-    for i = 0, 5 do
-        if tAttribs[i].nType > 0 and tAttribs[i].nType ~= 53 then
-            SetPurpleItemMagicAttrib(nNewItemIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
-            Msg2Player(format("<color=green>[ENCHASE] Set Slot %d: Type=%d<color>", i, tAttribs[i].nType))
-        else
-            Msg2Player(format("<color=yellow>[ENCHASE] Skip Slot %d: Type=%d (empty)<color>", i, tAttribs[i].nType))
-        end
-    end
-
-    Msg2Player(format("<color=green>[ENCHASE] STEP 10: Deleting old items...<color>"))
-
-    -- Delete old purple item and materials
-    DelItemByIndex(nPurpleIdx)
+    -- Delete only the materials (keep the purple item!)
     DelItemByIndex(nKhoangIdx)
     DelItemByIndex(nHuyenTinhIdx)
 
-    Msg2Player(format("<color=green>[ENCHASE] SUCCESS! Created new item with enchased slot %d!<color>", nSlot + 1))
-    Msg2Player(format("<color=yellow>Item moi da duoc tao voi TẤT CẢ attributes! Kiem tra hanh trang!<color>"))
+    -- Success message
+    local szSlotName = {"1st", "2nd", "3rd", "4th", "5th", "6th"}
+    local szMsg = format("<color=green>Kham nam thanh cong! Thuoc tinh da duoc ep vao o thu %d!<color>", nSlot + 1)
+    Talk(1, "", szMsg)
+    Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da kham nam thanh cong thuoc tinh vao trang bi tim!")
 end
 
 function no()
