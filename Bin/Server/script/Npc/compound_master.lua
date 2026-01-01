@@ -157,24 +157,31 @@ function ExeCompoundForge()
         nNumLines = random(nMinLines, nMaxLines)
     end
 
-    -- Create purple equipment with empty slots
-    -- NEW ARCHITECTURE: Use genre=1 (item_purpleequip) for proper purple items
-    -- Try approach: Set magic levels to 0 to create empty "chưa khảm nạm" slots
+    -- Create purple equipment with encoded empty slots
+    -- NEW ARCHITECTURE: Use genre=1 (item_purpleequip) for purple detection
+    -- BUT use luck+randomSeed encoding for empty sockets
+    -- DecodePurple() decodes luck and randomSeed to get magic attribute records:
+    --   randomSeed % 1000000000 → encodes records for slots 0,1,2
+    --   luck % 1000000000 → encodes records for slots 3,4,5
+    -- When value=1000000000: 1000000000 % 1000000000 = 0 → all records=0 → Type=53 (empty)
+    local nPurpleLuck = 1000000000      -- Encodes to [0,0,0] for slots 3,4,5
+    local nRandomSeed = 1000000000      -- Encodes to [0,0,0] for slots 0,1,2
+
     local nPurpleIdx = AddItemEx(
-        ITEM_GENRE_PURPLE,  -- genre = 1 (item_purpleequip) - proper purple in new system
+        ITEM_GENRE_PURPLE,  -- genre = 1 (item_purpleequip) - use genre for detection (new system)
         nDetail,            -- detail type (weapon, armor, etc.)
         nParti,             -- particular type
         nLevel,             -- level
         nSeries,            -- series
-        0,                  -- luck = 0 (not used in new system)
-        0,                  -- magic level slot 1 = 0 (empty slot?)
-        0,                  -- magic level slot 2 = 0 (empty slot?)
-        0,                  -- magic level slot 3 = 0 (empty slot?)
-        0,                  -- magic level slot 4 = 0 (empty slot?)
-        0,                  -- magic level slot 5 = 0 (empty slot?)
-        0,                  -- magic level slot 6 = 0 (empty slot?)
+        nPurpleLuck,        -- luck = 1000000000 (for encoding empty slots, NOT for detection)
+        10,                 -- magic level slot 1 (need >0 to trigger DecodePurple)
+        10,                 -- magic level slot 2
+        10,                 -- magic level slot 3
+        10,                 -- magic level slot 4
+        10,                 -- magic level slot 5
+        10,                 -- magic level slot 6
         1,                  -- version = 1
-        0                   -- randomSeed = 0
+        nRandomSeed         -- randomSeed = 1000000000 (for encoding empty slots)
     )
 
     if not nPurpleIdx or nPurpleIdx <= 0 then

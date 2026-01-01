@@ -268,15 +268,20 @@ function ExecuteCreatePurple()
     -- CREATE PURPLE ITEM!
     Msg2Player("Creating PURPLE item with " .. nMagicLines .. " magic lines...")
 
-    -- NEW ARCHITECTURE: Use genre=1 (item_purpleequip) to follow genre-based system
-    -- This creates a proper purple equipment using Gen_PurpleEquipment() in C++
+    -- NEW ARCHITECTURE: Use genre=1 (item_purpleequip) for purple detection
+    -- Use random luck+randomSeed for attribute generation (NOT for detection)
+    -- DecodePurple requires both >= 1000000000, so use random values in that range
+    -- Random values will decode to random attribute records (actual attributes, not empty)
+    local nPurpleLuck = 1000000000 + random(1, 999999999)
+    local nRandomSeed = 1000000000 + random(1, 999999999)
+
     -- Add to BUILD_POS slot 0
-    AddItemEx(ITEM_GENRE_PURPLE,  -- genre = 1 (item_purpleequip) - proper purple
+    AddItemEx(ITEM_GENRE_PURPLE,  -- genre = 1 (item_purpleequip) - use genre for detection
               nBlueDetail,        -- detail type
               nBlueParti,         -- particular
               nBlueLevel,         -- level
               nBlueSeries,        -- series
-              0,                  -- luck = 0 (not used for purple detection anymore)
+              nPurpleLuck,        -- luck >= 1000000000 (for encoding attributes, NOT detection)
               nMagicLines,        -- Level for magic line 1
               nMagicLines,        -- Level for magic line 2
               nMagicLines,        -- Level for magic line 3
@@ -284,7 +289,7 @@ function ExecuteCreatePurple()
               nMagicLines,        -- Level for magic line 5
               nMagicLines,        -- Level for magic line 6
               1,                  -- version
-              0,                  -- randomSeed
+              nRandomSeed,        -- randomSeed >= 1000000000 (for encoding attributes)
               BUILD_POS)          -- Position
 
     -- Success message
