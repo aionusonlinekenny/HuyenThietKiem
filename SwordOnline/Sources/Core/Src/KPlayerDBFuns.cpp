@@ -501,10 +501,59 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 						NewItem.m_wRecord,
 						NewItem.m_CommonAttrib.nDetailType,
 						NewItem.m_CommonAttrib.cSeries,
-						NewItem.m_GeneratorParam.nGeneratorLevel, 
+						NewItem.m_GeneratorParam.nGeneratorLevel,
 						NewItem.m_GeneratorParam.nLuck,
 						NewItem.m_GeneratorParam.nVersion,
 						&NewItem);
+
+				// CRITICAL FIX: Decode ALL 6 enchased purple item attributes from iparam/imagiclevel
+				// When luck=1000000001, Gen_ExistPurpleEquipment skips regeneration but resets
+				// m_aryMagicAttrib via SetAttrib_CBR. We must restore ALL 6 attributes from DB.
+				// Encoding: iparam[i] = (type << 16) | value, imagiclevel[i] = (min << 16) | max
+				if (NewItem.m_GeneratorParam.nLuck == 1000000001)
+				{
+					g_DebugLog("[SERVER PURPLE LOAD] Custom purple detected (luck=1000000001), restoring ALL 6 attributes");
+
+					// Restore ALL 6 attributes from iparam1-6 and imagiclevel1-6
+					for (int s = 0; s < 6; s++)
+					{
+						int nTypeValue = 0;
+						int nMinMax = 0;
+
+						// Read iparam and imagiclevel based on slot index
+						switch(s)
+						{
+							case 0: nTypeValue = pItemData->iparam1; nMinMax = pItemData->imagiclevel1; break;
+							case 1: nTypeValue = pItemData->iparam2; nMinMax = pItemData->imagiclevel2; break;
+							case 2: nTypeValue = pItemData->iparam3; nMinMax = pItemData->imagiclevel3; break;
+							case 3: nTypeValue = pItemData->iparam4; nMinMax = pItemData->imagiclevel4; break;
+							case 4: nTypeValue = pItemData->iparam5; nMinMax = pItemData->imagiclevel5; break;
+							case 5: nTypeValue = pItemData->iparam6; nMinMax = pItemData->imagiclevel6; break;
+						}
+
+						// Decode type and value from iparam
+						int nType = (nTypeValue >> 16) & 0xFFFF;
+						int nValue = nTypeValue & 0xFFFF;
+
+						// Decode min and max from imagiclevel
+						int nMin = (nMinMax >> 16) & 0xFFFF;
+						int nMax = nMinMax & 0xFFFF;
+
+						// Only restore if attribute type is valid
+						if (nType > 0)
+						{
+							NewItem.m_aryMagicAttrib[s].nAttribType = nType;
+							NewItem.m_aryMagicAttrib[s].nMin = (short)nMin;
+							NewItem.m_aryMagicAttrib[s].nMax = (short)nMax;
+							NewItem.m_aryMagicAttrib[s].nValue[0] = nValue;
+							NewItem.m_aryMagicAttrib[s].nValue[1] = 0;
+							NewItem.m_aryMagicAttrib[s].nValue[2] = 0;
+
+							g_DebugLog("[SERVER PURPLE LOAD] Restored Slot %d: Type=%d, Value=%d, Min=%d, Max=%d",
+								s, nType, nValue, nMin, nMax);
+						}
+					}
+				}
 				break;
 			case item_goldequip:
 				bGetEquiptResult = ItemGen.Gen_GoldEquipment(NewItem.m_wRecord, NewItem.m_CommonAttrib.cSeries, &NewItem);
@@ -929,7 +978,7 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 		pItemData->iversion = Item[nItemIndex].GetGeneratorParam()->nVersion;
 		pItemData->irandseed = Item[nItemIndex].GetGeneratorParam()->dwRandomSeed;
 
-		// For khoang thach: store magic attributes in generator levels (syncs to client!)
+		// SPECIAL CASE 1: Khoang thach - store magic attributes in generator levels (syncs to client!)
 		if (pItemData->igenre == 7 && pItemData->idetailtype >= 146 && pItemData->idetailtype <= 151)
 		{
 			pItemData->imagiclevel1 = Item[nItemIndex].m_aryMagicAttrib[0].nAttribType;
@@ -943,6 +992,35 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 				pItemData->idetailtype, pItemData->imagiclevel1, pItemData->imagiclevel2,
 				pItemData->imagiclevel3, pItemData->imagiclevel4, pItemData->imagiclevel5,
 				pItemData->imagiclevel6);
+		}
+		// SPECIAL CASE 2: Custom enchased purple items (luck=1000000001) - save ALL 6 attributes
+		else if (pItemData->igenre == item_purpleequip && pItemData->ilucky == 1000000001)
+		{
+			// Save ALL 6 magic attributes using iparam1-6 and imagiclevel1-6
+			// Encoding: iparam[i] = (type << 16) | value, imagiclevel[i] = (min << 16) | max
+			for (int s = 0; s < 6; s++)
+			{
+				int nType = Item[nItemIndex].m_aryMagicAttrib[s].nAttribType;
+				int nMin = Item[nItemIndex].m_aryMagicAttrib[s].nMin;
+				int nMax = Item[nItemIndex].m_aryMagicAttrib[s].nMax;
+				int nValue = Item[nItemIndex].m_aryMagicAttrib[s].nValue[0];
+
+				int nTypeValue = (nType << 16) | (nValue & 0xFFFF);
+				int nMinMax = (nMin << 16) | (nMax & 0xFFFF);
+
+				// Save to iparam and imagiclevel based on slot index
+				switch(s)
+				{
+					case 0: pItemData->iparam1 = nTypeValue; pItemData->imagiclevel1 = nMinMax; break;
+					case 1: pItemData->iparam2 = nTypeValue; pItemData->imagiclevel2 = nMinMax; break;
+					case 2: pItemData->iparam3 = nTypeValue; pItemData->imagiclevel3 = nMinMax; break;
+					case 3: pItemData->iparam4 = nTypeValue; pItemData->imagiclevel4 = nMinMax; break;
+					case 4: pItemData->iparam5 = nTypeValue; pItemData->imagiclevel5 = nMinMax; break;
+					case 5: pItemData->iparam6 = nTypeValue; pItemData->imagiclevel6 = nMinMax; break;
+				}
+			}
+
+			g_DebugLog("[PURPLE SAVE] Saved ALL 6 attributes for custom purple item (luck=1000000001)");
 		}
 		else
 		{
