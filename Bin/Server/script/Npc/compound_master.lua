@@ -728,14 +728,15 @@ function ExeEnchaseAttribute()
     Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new purple item with custom attributes...<color>"))
 
     -- Create as PURPLE equipment (genre=1) - proper purple item
-    -- Use randomSeed=1000000001 to mark as custom enchased purple (different from forge's 1000000000)
+    -- CRITICAL: Use luck=1000000001 AND randomSeed=1000000001 to mark as custom enchased purple
+    -- This prevents DecodePurple from overwriting our custom attributes (see KItemGenerator.CPP:374)
     local nNewItemIdx = AddItemEx(
         ITEM_GENRE_PURPLE,  -- genre = 1 (item_purpleequip - proper purple)
         nPurpleDetail,      -- detail (same as original)
         nPurpleParticular,  -- particular
         nPurpleLevel,       -- level
         nPurpleSeries,      -- series
-        0,                  -- luck = 0 (not used for detection)
+        1000000001,         -- luck = 1000000001 (marker to skip DecodePurple, allow custom attrs)
         0, 0, 0, 0, 0, 0,   -- ma1-ma6 (not used)
         1,                  -- version
         1000000001          -- randomSeed = 1000000001 (marker for custom enchased purple)
