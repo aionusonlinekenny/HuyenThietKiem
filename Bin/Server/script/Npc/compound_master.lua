@@ -164,13 +164,15 @@ function ExeCompoundForge()
     local nRandomSeed = 1000000000      -- Encodes to empty records [0,0,0]
 
     -- Create purple equipment using AddItemEx with encoded empty slots
+    -- Use genre=0 (normal equipment) so it can be equipped even with empty slots
+    -- luck >= 1000000000 marks it as purple for color/display
     local nPurpleIdx = AddItemEx(
-        1,           -- genre = 1 (item_purpleequip) for purple equipment
+        0,           -- genre = 0 (item_equip) - normal equipment that can be equipped
         nDetail,     -- detail type (weapon, armor, etc.)
         nParti,      -- particular type
         nLevel,      -- level
         nSeries,     -- series
-        nPurpleLuck, -- luck = 1000000000 (encodes slots 3,4,5 as empty)
+        nPurpleLuck, -- luck = 1000000000 (marks as purple, encodes slots 3,4,5 as empty)
         10,          -- magic attribute levels (need > 0 to create slots)
         10,          -- but records=0 will override to create empty slots
         10,
@@ -645,11 +647,13 @@ function ExeEnchaseAttribute()
         return
     end
 
-    local nGenre, nDetail = GetItemProp(nPurpleIdx)
-    Msg2Player(format("<color=green>[ENCHASE] STEP 3: Purple genre=%d<color>", nGenre or -1))
+    -- Check if item is purple based on luck value, not genre
+    -- Purple items can be genre=0 (normal equipment) with luck >= 1000000000
+    local nGenre, nDetail, _, _, _, nLuck = GetItemProp(nPurpleIdx)
+    Msg2Player(format("<color=green>[ENCHASE] STEP 3: Purple genre=%d, luck=%d<color>", nGenre or -1, nLuck or -1))
 
-    if nGenre ~= 1 then
-        Msg2Player(format("<color=red>[ENCHASE] ERROR: Not purple! Genre=%d<color>", nGenre))
+    if not nLuck or nLuck < PURPLE_LUCK_FLAG then
+        Msg2Player(format("<color=red>[ENCHASE] ERROR: Not purple! Luck=%d (need >= %d)<color>", nLuck or 0, PURPLE_LUCK_FLAG))
         return
     end
 
@@ -697,7 +701,14 @@ function ExeEnchaseAttribute()
     Msg2Player(format("<color=green>[ENCHASE] STEP 7: Reading purple item properties...<color>"))
 
     -- Get purple item's base properties
-    local nPurpleGenre, nPurpleDetail, nPurpleParticular, nPurpleLevel, nPurpleSeries = GetItemProp(nPurpleIdx)
+    -- Note: Purple items created with genre=0 can still be purple (luck >= 1000000000)
+    local nPurpleGenre, nPurpleDetail, nPurpleParticular, nPurpleLevel, nPurpleSeries, nPurpleLuck = GetItemProp(nPurpleIdx)
+
+    -- Verify it's purple based on luck, not genre
+    if not nPurpleLuck or nPurpleLuck < PURPLE_LUCK_FLAG then
+        Msg2Player("<color=red>[ENCHASE] ERROR: Not a purple item! Luck too low<color>")
+        return
+    end
 
     -- Read ALL existing attributes from purple item
     local tAttribs = {}
@@ -713,21 +724,20 @@ function ExeEnchaseAttribute()
     Msg2Player(format("<color=yellow>[ENCHASE] New Slot %d: Type=%d, Min=%d, Max=%d, Val=%d<color>",
         nSlot, nType, nMin, nMax, nValue))
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new PURPLE item with custom attributes...<color>"))
+    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new item with custom attributes...<color>"))
 
-    -- Create as PURPLE equipment (genre=1, item_purpleequip)
-    -- SetPurpleItemMagicAttrib will set luck=1000000001 as special marker
-    -- C++ code checks for this marker and skips attribute regeneration
+    -- Create as NORMAL equipment (genre=0) so it can be equipped
+    -- Use luck=1000000001 to mark as custom enchased purple
     local nNewItemIdx = AddItemEx(
-        1,                  -- genre = 1 (item_purpleequip - PURPLE!)
+        0,                  -- genre = 0 (item_equip - can be equipped normally)
         nPurpleDetail,      -- detail (same as original)
         nPurpleParticular,  -- particular
         nPurpleLevel,       -- level
         nPurpleSeries,      -- series
-        1000000000,         -- luck = 1000000000 (purple base, will be overwritten to 1000000001)
-        0, 0, 0, 0, 0, 0,   -- ma1-ma6 (not used for purple)
+        1000000001,         -- luck = 1000000001 (marks as custom enchased purple)
+        0, 0, 0, 0, 0, 0,   -- ma1-ma6 (not used)
         1,                  -- version
-        0                   -- randomSeed (will be set to 1000000001 by SetPurpleItemMagicAttrib)
+        1000000001          -- randomSeed = 1000000001 (marker for custom purple)
     )
 
     if not nNewItemIdx or nNewItemIdx <= 0 then
@@ -735,15 +745,15 @@ function ExeEnchaseAttribute()
         return
     end
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 9: Setting custom attributes on purple item...<color>"))
+    Msg2Player(format("<color=green>[ENCHASE] STEP 9: Setting custom attributes on item...<color>"))
 
-    -- Set ALL 6 attributes on the new purple item
+    -- Set ALL 6 attributes on the new item
     -- IMPORTANT: Skip Type=53 (empty attribute type) and Type=0 (no attribute)
-    -- Use SetPurpleItemMagicAttrib which automatically sets luck=1000000001 marker
+    -- Use SetItemMagicAttrib (not SetPurpleItemMagicAttrib since genre=0)
     for i = 0, 5 do
         if tAttribs[i].nType > 0 and tAttribs[i].nType ~= 53 then
-            SetPurpleItemMagicAttrib(nNewItemIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
-            Msg2Player(format("<color=green>[ENCHASE] Set Slot %d: Type=%d (purple mode)<color>", i, tAttribs[i].nType))
+            SetItemMagicAttrib(nNewItemIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
+            Msg2Player(format("<color=green>[ENCHASE] Set Slot %d: Type=%d<color>", i, tAttribs[i].nType))
         else
             Msg2Player(format("<color=yellow>[ENCHASE] Skip Slot %d: Type=%d (empty)<color>", i, tAttribs[i].nType))
         end
