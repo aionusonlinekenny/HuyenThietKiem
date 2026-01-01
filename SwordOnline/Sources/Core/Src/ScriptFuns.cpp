@@ -10479,9 +10479,23 @@ int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 	Item[nItemIdx].SetGeneratorLuck(1000000001);
 	Item[nItemIdx].SetRandomSeed(1000000001);
 
+	// CRITICAL: Encode attribute into generator levels so it syncs to client via ITEM_SYNC
+	// ITEM_SYNC only sends BYTE m_MagicLevel[6], so we encode as:
+	// [0]=slot, [1]=type, [2]=value, [3]=min, [4]=max, [5]=0
+	int nGenLevels[6] = {0};
+	nGenLevels[0] = nSlot;        // Which slot (0-5)
+	nGenLevels[1] = nAttribType;  // Attribute type
+	nGenLevels[2] = nValue;       // Attribute value
+	nGenLevels[3] = nMin;         // Min value
+	nGenLevels[4] = nMax;         // Max value
+	nGenLevels[5] = 0;            // Reserved
+	Item[nItemIdx].SetGeneratorLevel(nGenLevels);
+
 	g_DebugLog("[PURPLE SETATTRIB] ItemIdx=%d, Slot=%d, Type=%d, Min=%d, Max=%d, Value=%d",
 		nItemIdx, nSlot, nAttribType, nMin, nMax, nValue);
 	g_DebugLog("[PURPLE SETATTRIB] Set special luck/randomSeed=1000000001 to mark custom purple");
+	g_DebugLog("[PURPLE SETATTRIB] Encoded into GenLvl=[%d,%d,%d,%d,%d,%d] for client sync",
+		nGenLevels[0], nGenLevels[1], nGenLevels[2], nGenLevels[3], nGenLevels[4], nGenLevels[5]);
 
 	// CRITICAL: Sync item to client so player sees the new attribute
 	// Call SyncItem to force client update for items in UI temporary storage

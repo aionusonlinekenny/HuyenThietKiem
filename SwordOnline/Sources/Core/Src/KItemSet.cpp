@@ -297,6 +297,32 @@ int KItemSet::AddExist(IN int nItemGenre, IN int nSeries, IN int nLevel,
 		break;
 	case item_purpleequip:
 		ItemGen.Gen_ExistPurpleEquipment(wRecord, nDetailType, nSeries, pnMagicLevel, nLuck, nVersion, pItem);
+
+		// CRITICAL FIX: If this is a custom enchased purple (luck=1000000001),
+		// Gen_ExistPurpleEquipment skipped regeneration, so we need to decode
+		// the attribute from MagicLevel[] which was encoded by server
+		// Format: [0]=slot, [1]=type, [2]=value, [3]=min, [4]=max, [5]=reserved
+		if (nLuck == 1000000001 && pnMagicLevel && pnMagicLevel[0] >= 0 && pnMagicLevel[0] < 6)
+		{
+			int nSlot = pnMagicLevel[0];
+			int nType = pnMagicLevel[1];
+			int nValue = pnMagicLevel[2];
+			int nMin = pnMagicLevel[3];
+			int nMax = pnMagicLevel[4];
+
+			if (nType > 0)  // Valid attribute
+			{
+				pItem->m_aryMagicAttrib[nSlot].nAttribType = nType;
+				pItem->m_aryMagicAttrib[nSlot].nMin = nMin;
+				pItem->m_aryMagicAttrib[nSlot].nMax = nMax;
+				pItem->m_aryMagicAttrib[nSlot].nValue[0] = nValue;
+				pItem->m_aryMagicAttrib[nSlot].nValue[1] = 0;
+				pItem->m_aryMagicAttrib[nSlot].nValue[2] = 0;
+
+				g_DebugLog("[CLIENT PURPLE DECODE] Decoded enchased attribute: Slot=%d, Type=%d, Value=%d, Min=%d, Max=%d",
+					nSlot, nType, nValue, nMin, nMax);
+			}
+		}
 		break;
 	case item_goldequip:
 		ItemGen.Gen_GoldEquipment(wRecord, nSeries, pItem);
