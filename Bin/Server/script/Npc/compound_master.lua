@@ -699,9 +699,9 @@ function ExeEnchaseAttribute()
 
     -- Success message
     local szSlotName = {"1st", "2nd", "3rd", "4th", "5th", "6th"}
-    local szMsg = format("<color=green>Kham nam thanh cong! Thuoc tinh da duoc ep vao o thu %d!<color>", nSlot + 1)
+    local szMsg = format("<color=yellow>Kham nam thanh cong! Thuoc tinh da duoc ep vao o thu %d!<color>", nSlot + 1)
     Talk(1, "", szMsg)
-    Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da kham nam thanh cong thuoc tinh vao trang bi tim!")
+    Msg2SubWorld("<pic=135><color=yellow> " .. GetName() .. "<color> da kham nam thanh cong thuoc tinh vao trang bi tim!")
 end
 
 function no()

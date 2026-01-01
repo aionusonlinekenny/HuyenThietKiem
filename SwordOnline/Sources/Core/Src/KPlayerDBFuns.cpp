@@ -513,6 +513,12 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 				if (NewItem.m_GeneratorParam.nLuck == 1000000001)
 				{
 					g_DebugLog("[SERVER PURPLE LOAD] Custom purple detected (luck=1000000001), restoring ALL 6 attributes");
+					g_DebugLog("[SERVER PURPLE LOAD] Raw iparam: %d,%d,%d,%d,%d,%d",
+						pItemData->iparam1, pItemData->iparam2, pItemData->iparam3,
+						pItemData->iparam4, pItemData->iparam5, pItemData->iparam6);
+					g_DebugLog("[SERVER PURPLE LOAD] Raw imagiclevel: %d,%d,%d,%d,%d,%d",
+						pItemData->imagiclevel1, pItemData->imagiclevel2, pItemData->imagiclevel3,
+						pItemData->imagiclevel4, pItemData->imagiclevel5, pItemData->imagiclevel6);
 
 					// Restore ALL 6 attributes from iparam1-6 and imagiclevel1-6
 					for (int s = 0; s < 6; s++)
@@ -539,6 +545,9 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 						int nMin = (nMinMax >> 16) & 0xFFFF;
 						int nMax = nMinMax & 0xFFFF;
 
+						g_DebugLog("[SERVER PURPLE LOAD] Slot %d: nTypeValue=%d, nMinMax=%d -> Type=%d, Value=%d, Min=%d, Max=%d",
+							s, nTypeValue, nMinMax, nType, nValue, nMin, nMax);
+
 						// Only restore if attribute type is valid
 						if (nType > 0)
 						{
@@ -549,8 +558,11 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 							NewItem.m_aryMagicAttrib[s].nValue[1] = 0;
 							NewItem.m_aryMagicAttrib[s].nValue[2] = 0;
 
-							g_DebugLog("[SERVER PURPLE LOAD] Restored Slot %d: Type=%d, Value=%d, Min=%d, Max=%d",
-								s, nType, nValue, nMin, nMax);
+							g_DebugLog("[SERVER PURPLE LOAD] Restored Slot %d successfully!", s);
+						}
+						else
+						{
+							g_DebugLog("[SERVER PURPLE LOAD] Slot %d SKIPPED (nType=0)", s);
 						}
 					}
 				}
@@ -978,6 +990,9 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 		pItemData->iversion = Item[nItemIndex].GetGeneratorParam()->nVersion;
 		pItemData->irandseed = Item[nItemIndex].GetGeneratorParam()->dwRandomSeed;
 
+		// CRITICAL: Set luck BEFORE checking it in conditions below!
+		pItemData->ilucky = Item[nItemIndex].GetGeneratorParam()->nLuck;
+
 		// SPECIAL CASE 1: Khoang thach - store magic attributes in generator levels (syncs to client!)
 		if (pItemData->igenre == 7 && pItemData->idetailtype >= 146 && pItemData->idetailtype <= 151)
 		{
@@ -996,6 +1011,8 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 		// SPECIAL CASE 2: Custom enchased purple items (luck=1000000001) - save ALL 6 attributes
 		else if (pItemData->igenre == item_purpleequip && pItemData->ilucky == 1000000001)
 		{
+			g_DebugLog("[PURPLE SAVE] Saving purple item ItemIdx=%d, luck=%d", nItemIndex, pItemData->ilucky);
+
 			// Save ALL 6 magic attributes using iparam1-6 and imagiclevel1-6
 			// Encoding: iparam[i] = (type << 16) | value, imagiclevel[i] = (min << 16) | max
 			for (int s = 0; s < 6; s++)
@@ -1018,9 +1035,17 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 					case 4: pItemData->iparam5 = nTypeValue; pItemData->imagiclevel5 = nMinMax; break;
 					case 5: pItemData->iparam6 = nTypeValue; pItemData->imagiclevel6 = nMinMax; break;
 				}
+
+				g_DebugLog("[PURPLE SAVE] Slot %d: Type=%d, Value=%d, Min=%d, Max=%d -> iparam=%d, imagiclevel=%d",
+					s, nType, nValue, nMin, nMax, nTypeValue, nMinMax);
 			}
 
-			g_DebugLog("[PURPLE SAVE] Saved ALL 6 attributes for custom purple item (luck=1000000001)");
+			g_DebugLog("[PURPLE SAVE] Final iparam: %d,%d,%d,%d,%d,%d",
+				pItemData->iparam1, pItemData->iparam2, pItemData->iparam3,
+				pItemData->iparam4, pItemData->iparam5, pItemData->iparam6);
+			g_DebugLog("[PURPLE SAVE] Final imagiclevel: %d,%d,%d,%d,%d,%d",
+				pItemData->imagiclevel1, pItemData->imagiclevel2, pItemData->imagiclevel3,
+				pItemData->imagiclevel4, pItemData->imagiclevel5, pItemData->imagiclevel6);
 		}
 		else
 		{
@@ -1032,12 +1057,16 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 			pItemData->imagiclevel6 =  Item[nItemIndex].GetGeneratorParam()->nGeneratorLevel[5];
 		}
 
-		pItemData->ilucky = 	 Item[nItemIndex].GetGeneratorParam()->nLuck;
+		// ilucky is already set above (line 982)
 		pItemData->idurability = Item[nItemIndex].GetDurability();
 		//
 		pItemData->irecord			= Item[nItemIndex].GetRecord();
 		//
-		pItemData->iparam1			= Item[nItemIndex].GetParam1();
+		// CRITICAL: Do NOT overwrite iparam1-6 for custom purple items! They store magic attributes.
+		if (pItemData->igenre != item_purpleequip || pItemData->ilucky != 1000000001)
+		{
+			pItemData->iparam1		= Item[nItemIndex].GetParam1();
+		}
 		//
 		// For khoang thach items: DON'T use iparam, use generator levels instead!
 		// Generator levels ARE synced to client via ITEM_SYNC, iparam are NOT.
