@@ -157,33 +157,24 @@ function ExeCompoundForge()
         nNumLines = random(nMinLines, nMaxLines)
     end
 
-    -- Create purple equipment with encoded empty slots
-    -- DecodePurple() decodes luck and randomSeed to get magic attribute records
-    -- When record = 0, it creates "Chưa khảm nạm" (empty enchantable slot)
-    -- luck = 1000000000 encodes to [0,0,0] for slots 3,4,5
-    -- randomSeed = 1000000000 encodes to [0,0,0] for slots 0,1,2
-    -- Result: All 6 slots will be "Chưa khảm nạm" (empty)
-    local nPurpleLuck = 1000000000      -- Encodes to empty records [0,0,0]
-    local nRandomSeed = 1000000000      -- Encodes to empty records [0,0,0]
-
-    -- Create purple equipment using AddItemEx with encoded empty slots
-    -- Use genre=0 (normal equipment) so it can be equipped even with empty slots
-    -- luck >= 1000000000 marks it as purple for color/display
+    -- Create purple equipment with empty slots
+    -- NEW ARCHITECTURE: Use genre=1 (item_purpleequip) for proper purple items
+    -- Try approach: Set magic levels to 0 to create empty "chưa khảm nạm" slots
     local nPurpleIdx = AddItemEx(
-        0,           -- genre = 0 (item_equip) - normal equipment that can be equipped
-        nDetail,     -- detail type (weapon, armor, etc.)
-        nParti,      -- particular type
-        nLevel,      -- level
-        nSeries,     -- series
-        nPurpleLuck, -- luck = 1000000000 (marks as purple, encodes slots 3,4,5 as empty)
-        10,          -- magic attribute levels (need > 0 to create slots)
-        10,          -- but records=0 will override to create empty slots
-        10,
-        10,
-        10,
-        10,
-        1,           -- version = 1
-        nRandomSeed  -- randomSeed = 1000000000 (encodes slots 0,1,2 as empty)
+        ITEM_GENRE_PURPLE,  -- genre = 1 (item_purpleequip) - proper purple in new system
+        nDetail,            -- detail type (weapon, armor, etc.)
+        nParti,             -- particular type
+        nLevel,             -- level
+        nSeries,            -- series
+        0,                  -- luck = 0 (not used in new system)
+        0,                  -- magic level slot 1 = 0 (empty slot?)
+        0,                  -- magic level slot 2 = 0 (empty slot?)
+        0,                  -- magic level slot 3 = 0 (empty slot?)
+        0,                  -- magic level slot 4 = 0 (empty slot?)
+        0,                  -- magic level slot 5 = 0 (empty slot?)
+        0,                  -- magic level slot 6 = 0 (empty slot?)
+        1,                  -- version = 1
+        0                   -- randomSeed = 0
     )
 
     if not nPurpleIdx or nPurpleIdx <= 0 then
