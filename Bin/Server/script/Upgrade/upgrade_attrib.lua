@@ -6,6 +6,7 @@
 -----------------------------------------------------------------
 
 Include("\\script\\lib\\TaskLib.lua")
+Include("\\script\\lib\\item_helpers.lua")
 
 -- ------------------------------------------------------------
 -- Configuration - Item IDs
@@ -81,17 +82,15 @@ function ExeUpgradeAttrib()
 
     -- Get equipment info
     local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
-    WriteLog(string.format("[UPGRADE_ATTRIB] Equipment: genre=%d, detail=%d, luck=%d",
-        nGenre or -1, nDetail or -1, nLuck or -1))
+    local itemType = GetItemTypeByGenre(nEquipIdx)
+    WriteLog(string.format("[UPGRADE_ATTRIB] Equipment: genre=%d, detail=%d, type=%s",
+        nGenre or -1, nDetail or -1, itemType))
 
-    -- Check if equipment is blue (genre 0 with luck < 1000000000)
-    if nGenre ~= 0 then
+    -- Check if equipment is blue using new genre-based detection
+    if not IsBlueEquipment(nEquipIdx) then
+        WriteLog(string.format("[UPGRADE_ATTRIB] ERROR: Not blue equipment (genre=%d, type=%s)",
+            nGenre or -1, itemType))
         Talk(1, "", "<color=red>Chi co the nang cap trang bi xanh!<color>")
-        return
-    end
-
-    if nLuck >= 1000000000 then
-        Talk(1, "", "<color=red>Trang bi nay la tim/vang, khong the nang cap!<color>")
         return
     end
 
@@ -216,10 +215,8 @@ function CountBlueEquipment()
     for i = 0, 59 do
         local nItemIdx = GetItemIndex(i)
         if nItemIdx > 0 then
-            local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nItemIdx)
-
-            -- Blue equipment: genre 0, luck < 1000000000
-            if nGenre == 0 and nLuck < 1000000000 then
+            -- Use new genre-based detection
+            if IsBlueEquipment(nItemIdx) then
                 -- Check if has magic attributes
                 for j = 0, 5 do
                     local nAttribType = GetItemMagicAttribInfo(nItemIdx, j)

@@ -2928,7 +2928,7 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 		break;
 	//
 	case pos_builditem: //TrembleItem by kinnox;
-		if (Player[this->m_PlayerIdx].CheckTrading())	// Èç¹ûÕýÔÚ½»Ò×
+		if (Player[this->m_PlayerIdx].CheckTrading())	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½
 			return;
 		if (SrcPos->nX < 0 || SrcPos->nX >= MAX_PART_BUILD || DesPos->nX < 0 || DesPos->nX >= MAX_PART_BUILD)
 			return;
@@ -4652,12 +4652,22 @@ BOOL KItemList::RestoreBrokenEquip(const int nGameIdx)
 	const DWORD dwBindState = Item[nGameIdx].GetBindState();
 	const DWORD dwExpiredTime = Item[nGameIdx].GetTime();
 	//
-	char cGenre = item_equip;
-	if(nLuck == 7531)
-		cGenre = item_goldequip;
-	else if(nLuck >= 1000000000)
-		cGenre = item_purpleequip;
-	
+	// NEW ARCHITECTURE: Use existing genre directly instead of luck-based conversion
+	// This allows proper purple items (genre=1) created by new Lua code to work correctly
+	char cGenre = Item[nGameIdx].GetGenre();
+
+	// LEGACY SUPPORT: Convert luck to genre for old items in database
+	// This ensures old purple items (created with genre=0, luck>=1000000000)
+	// still work correctly after server restart or AddItemAgain
+	// Only convert if current genre is item_equip (0)
+	if (cGenre == item_equip)
+	{
+		if (nLuck == 7531)
+			cGenre = item_goldequip;
+		else if (nLuck >= 1000000000)
+			cGenre = item_purpleequip;
+	}
+
 	//
 	Remove(nGameIdx);
 	ItemSet.Remove(nGameIdx);
@@ -4720,12 +4730,22 @@ BOOL KItemList::AddAgain(const int nGameIdx)
 	const DWORD dwBindState = Item[nGameIdx].GetBindState();
 	const DWORD dwExpiredTime = Item[nGameIdx].GetTime();
 	//
-	char cGenre = item_equip;
-	if(nLuck == 7531)
-		cGenre = item_goldequip;
-	else if(nLuck >= 1000000000)
-		cGenre = item_purpleequip;
-	
+	// NEW ARCHITECTURE: Use existing genre directly instead of luck-based conversion
+	// This allows proper purple items (genre=1) created by new Lua code to work correctly
+	char cGenre = Item[nGameIdx].GetGenre();
+
+	// LEGACY SUPPORT: Convert luck to genre for old items in database
+	// This ensures old purple items (created with genre=0, luck>=1000000000)
+	// still work correctly after server restart or AddItemAgain
+	// Only convert if current genre is item_equip (0)
+	if (cGenre == item_equip)
+	{
+		if (nLuck == 7531)
+			cGenre = item_goldequip;
+		else if (nLuck >= 1000000000)
+			cGenre = item_purpleequip;
+	}
+
 	//
 	Remove(nGameIdx);
 	ItemSet.Remove(nGameIdx);
@@ -4793,14 +4813,14 @@ void KItemList::SetItemBindState(int nIndex, BYTE btState, BYTE btDay)
 		// if(btDay > 0)
 		// {	
 			// char szMsg[512];//80  //luu y do dai cua ky tu khi build release by kinnox;
-			// sprintf(szMsg, "§· më khãa b¶o hiÓm vËt phÈm <color=green>[%s]<color>.", Item[nIndex].GetName());
-			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "VËt phÈm", szMsg, strlen(szMsg));
+			// sprintf(szMsg, "ï¿½ï¿½ mï¿½ khï¿½a bï¿½o hiï¿½m vï¿½t phï¿½m <color=green>[%s]<color>.", Item[nIndex].GetName());
+			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "Vï¿½t phï¿½m", szMsg, strlen(szMsg));
 		// }
 		// else
 		// {	
 			// char szMsg[512];//80  //luu y do dai cua ky tu khi build release by kinnox;
-			// sprintf(szMsg, "§· khãa b¶o hiÓm vËt phÈm <color=green>[%s]<color>.", Item[nIndex].GetName());
-			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "VËt phÈm", szMsg, strlen(szMsg));
+			// sprintf(szMsg, "ï¿½ï¿½ khï¿½a bï¿½o hiï¿½m vï¿½t phï¿½m <color=green>[%s]<color>.", Item[nIndex].GetName());
+			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "Vï¿½t phï¿½m", szMsg, strlen(szMsg));
 		// }
 	// }
 	ITEM_CHANGE_INFO sChange;
@@ -5215,9 +5235,9 @@ int KItemList::MapPlaceToUIContainer(int nPlace)
     case pos_expandtoryroom1:  return UOC_EXPAND_BOX1;
     case pos_givebox:          return UOC_GIVE_BOX;
 
-    // N?u c?n thì b? sung thêm các place khác ? ?ây
+    // N?u c?n thï¿½ b? sung thï¿½m cï¿½c place khï¿½c ? ?ï¿½y
 
-    default:                   return 0; // 0/NULL: container không h?p l?
+    default:                   return 0; // 0/NULL: container khï¿½ng h?p l?
     }
 }
 #endif // !_SERVER
@@ -5321,7 +5341,7 @@ void KItemList::UnBuildItem(int nIdx, int nPos/* = -1*/)
 	}
 	else
 	{
-		if (m_BuildItem[nPos] != nIdx)	// ¶«Î÷²»¶Ô
+		if (m_BuildItem[nPos] != nIdx)	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			return;
 		i = nPos;
 	}
@@ -5338,7 +5358,7 @@ int KItemList::PositionToRoom(int nPlace)
     else if (nPlace >= pos_repositoryroom && nPlace < pos_repositoryroom + 10)
         return room_repository + (nPlace - pos_repositoryroom);
     else
-        return -1;  // ? Không h?p l?
+        return -1;  // ? Khï¿½ng h?p l?
 }
 
 #ifdef _SERVER

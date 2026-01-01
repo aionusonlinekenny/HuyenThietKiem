@@ -5,6 +5,7 @@
 -----------------------------------------------------------------
 
 Include("\\script\\lib\\TaskLib.lua")
+Include("\\script\\lib\\item_helpers.lua")
 
 -- ------------------------------------------------------------
 -- Configuration - Item IDs
@@ -79,18 +80,13 @@ function ExeUpgradeAttrib()
 
     -- Get equipment info
     local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
-    Msg2Player("Equipment: genre=" .. tostring(nGenre) .. " detail=" .. tostring(nDetail) .. " luck=" .. tostring(nLuck))
+    local itemType = GetItemTypeByGenre(nEquipIdx)
+    Msg2Player("Equipment: genre=" .. tostring(nGenre) .. " detail=" .. tostring(nDetail) .. " type=" .. itemType)
 
-    -- Check if equipment is blue (genre 0 with luck < 1000000000)
-    if nGenre ~= 0 then
-        Msg2Player("ERROR: Not equipment (genre != 0)")
+    -- Check if equipment is blue using new genre-based detection
+    if not IsBlueEquipment(nEquipIdx) then
+        Msg2Player("ERROR: Not blue equipment (genre=" .. tostring(nGenre) .. ", type=" .. itemType .. ")")
         Talk(1, "", "<color=red>Chi co the nang cap trang bi xanh!<color>")
-        return
-    end
-
-    if nLuck >= 1000000000 then
-        Msg2Player("ERROR: Purple/Gold equipment (luck >= 1000000000)")
-        Talk(1, "", "<color=red>Trang bi nay la tim/vang, khong the nang cap!<color>")
         return
     end
 

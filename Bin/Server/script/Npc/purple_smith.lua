@@ -6,6 +6,7 @@
 -----------------------------------------------------------------
 
 Include("\\script\\lib\\TaskLib.lua")
+Include("\\script\\lib\\item_helpers.lua")
 
 -- ------------------------------------------------------------
 -- Configuration - Purple Item Creation
@@ -107,8 +108,8 @@ function ExecuteCreatePurple()
             if nItemIdx > 0 then
                 local nG, nD, nP, nL, nS, nLuck = GetItemProp(nItemIdx)
 
-                -- Check if blue equipment (genre=0, luck < 1000000000)
-                if nG == 0 and nLuck < 1000000000 then
+                -- Check if blue equipment using new genre-based detection
+                if IsBlueEquipment(nItemIdx) then
                     if nBlueCount == 0 then
                         -- Save first blue item properties
                         nFirstBlueIdx = nItemIdx
@@ -245,8 +246,8 @@ function ExecuteCreatePurple()
         for j = 0, 3 do
             local nItemIdx = GetROItem(ROOMG, i, j)
             if nItemIdx > 0 then
-                local nG, nD, nP, nL, nS, nLuck = GetItemProp(nItemIdx)
-                if nG == 0 and nLuck < 1000000000 then
+                -- Delete all blue equipment using new genre-based detection
+                if IsBlueEquipment(nItemIdx) then
                     DelItemByIndex(nItemIdx)
                 end
             end
@@ -267,27 +268,28 @@ function ExecuteCreatePurple()
     -- CREATE PURPLE ITEM!
     Msg2Player("Creating PURPLE item with " .. nMagicLines .. " magic lines...")
 
-    -- Use AddItemEx to create purple item
-    -- Luck >= 1000000000 = Purple item in HuyenThietKiem
-    local nPurpleLuck = 1000000000
-
+    -- NEW ARCHITECTURE: Use genre=1 (item_purpleequip) directly
+    -- This creates a proper purple equipment using Gen_PurpleEquipment() in C++
     -- Add to BUILD_POS slot 0
-    AddItemEx(nBlueGenre, nBlueDetail, nBlueParti, nBlueLevel, nBlueSeries,
-              nPurpleLuck,      -- Luck = 1 billion = PURPLE
-              nMagicLines,      -- Level for magic line 1
-              nMagicLines,      -- Level for magic line 2
-              nMagicLines,      -- Level for magic line 3
-              nMagicLines,      -- Level for magic line 4
-              nMagicLines,      -- Level for magic line 5
-              nMagicLines,      -- Level for magic line 6
-              1,                -- Bind
-              0,                -- Expire time
-              BUILD_POS)        -- Position
+    AddItemEx(ITEM_GENRE_PURPLE,  -- genre = 1 (item_purpleequip) - proper purple
+              nBlueDetail,        -- detail type
+              nBlueParti,         -- particular
+              nBlueLevel,         -- level
+              nBlueSeries,        -- series
+              0,                  -- luck = 0 (not used for detection)
+              nMagicLines,        -- Level for magic line 1
+              nMagicLines,        -- Level for magic line 2
+              nMagicLines,        -- Level for magic line 3
+              nMagicLines,        -- Level for magic line 4
+              nMagicLines,        -- Level for magic line 5
+              nMagicLines,        -- Level for magic line 6
+              1,                  -- version
+              0,                  -- randomSeed
+              BUILD_POS)          -- Position
 
     -- Success message
     local szSuccess = "<color=green>HOP THANH THANH CONG!<color>\n" ..
-                      "Trang bi TIM voi <color=yellow>" .. nMagicLines .. " dong<color> thuoc tinh!\n" ..
-                      "Luck: <color=orange>" .. nPurpleLuck .. "<color>"
+                      "Trang bi TIM voi <color=yellow>" .. nMagicLines .. " dong<color> thuoc tinh!"
 
     Msg2Player(szSuccess)
     Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da hop thanh thanh cong <color=purple>TRANG BI TIM<color> voi " .. nMagicLines .. " dong!")

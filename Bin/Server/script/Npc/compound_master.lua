@@ -2,12 +2,15 @@
 -- Opens the Compound UI for purple item crafting
 
 Include("\\script\\lib\\TaskLib.lua")
+Include("\\script\\lib\\item_helpers.lua")
 
 -- Configuration
 HUYEN_TINH_GENRE = 6      -- item_task
 HUYEN_TINH_MIN_DETAIL = 74    -- Huyen Tinh Cap 1
 HUYEN_TINH_MAX_DETAIL = 79    -- Huyen Tinh Cap 6
-PURPLE_LUCK_FLAG = 1000000000
+
+-- DEPRECATED: Old luck-based detection (kept for reference only)
+-- PURPLE_LUCK_FLAG = 1000000000
 
 function main(NpcIndex)
     Say("Ta la tho ren huyen bien, co the giup nguoi che tao trang bi tim tu nhung vat pham thuong thuong. Hay chon loai dich vu nguoi can:", 4,
@@ -103,14 +106,14 @@ function ExeCompoundForge()
     -- Get equipment properties
     local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
 
-    -- Validate equipment is blue (genre 0, luck < purple flag)
-    if nGenre ~= 0 then
-        Talk(1, "", "<color=red>Chi duoc dat trang bi vao o lon!<color>")
-        return
-    end
-
-    if nLuck >= PURPLE_LUCK_FLAG then
-        Talk(1, "", "<color=red>Trang bi nay da la tim/vang, khong the che tao lai!<color>")
+    -- Validate equipment is blue (using new genre-based detection)
+    if not IsBlueEquipment(nEquipIdx) then
+        local itemType = GetItemTypeByGenre(nEquipIdx)
+        if itemType == "purple" or itemType == "gold" or itemType == "platinum" then
+            Talk(1, "", "<color=red>Trang bi nay da la tim/vang, khong the che tao lai!<color>")
+        else
+            Talk(1, "", "<color=red>Chi duoc dat trang bi xanh vao o lon!<color>")
+        end
         return
     end
 
@@ -155,32 +158,31 @@ function ExeCompoundForge()
     end
 
     -- Create purple equipment with encoded empty slots
-    -- DecodePurple() decodes luck and randomSeed to get magic attribute records
+    -- NEW ARCHITECTURE: Use genre=1 (item_purpleequip) directly instead of luck-based detection
+    -- DecodePurple() decodes randomSeed to get magic attribute records
     -- When record = 0, it creates "Chưa khảm nạm" (empty enchantable slot)
-    -- luck = 1000000000 encodes to [0,0,0] for slots 3,4,5
-    -- randomSeed = 1000000000 encodes to [0,0,0] for slots 0,1,2
+    -- randomSeed = 1000000000 encodes to [0,0,0,0,0,0] for all 6 slots
     -- Result: All 6 slots will be "Chưa khảm nạm" (empty)
-    local nPurpleLuck = 1000000000      -- Encodes to empty records [0,0,0]
-    local nRandomSeed = 1000000000      -- Encodes to empty records [0,0,0]
+    local nRandomSeed = 1000000000      -- Encodes to empty records [0,0,0,0,0,0]
 
-    -- Create purple equipment using AddItemEx with encoded empty slots
-    -- Use genre=0 (normal equipment) so it can be equipped even with empty slots
-    -- luck >= 1000000000 marks it as purple for color/display
+    -- Create purple equipment using AddItemEx
+    -- Use genre=1 (item_purpleequip) to create true purple item
+    -- This calls Gen_PurpleEquipment() in C++ which handles purple attributes correctly
     local nPurpleIdx = AddItemEx(
-        0,           -- genre = 0 (item_equip) - normal equipment that can be equipped
-        nDetail,     -- detail type (weapon, armor, etc.)
-        nParti,      -- particular type
-        nLevel,      -- level
-        nSeries,     -- series
-        nPurpleLuck, -- luck = 1000000000 (marks as purple, encodes slots 3,4,5 as empty)
-        10,          -- magic attribute levels (need > 0 to create slots)
-        10,          -- but records=0 will override to create empty slots
+        ITEM_GENRE_PURPLE,  -- genre = 1 (item_purpleequip) - proper purple equipment
+        nDetail,            -- detail type (weapon, armor, etc.)
+        nParti,             -- particular type
+        nLevel,             -- level
+        nSeries,            -- series
+        0,                  -- luck = 0 (not used for purple detection anymore)
+        10,                 -- magic attribute levels (need > 0 to create slots)
+        10,                 -- but records=0 will override to create empty slots
         10,
         10,
         10,
         10,
-        1,           -- version = 1
-        nRandomSeed  -- randomSeed = 1000000000 (encodes slots 0,1,2 as empty)
+        1,                  -- version = 1
+        nRandomSeed         -- randomSeed = 1000000000 (encodes all 6 slots as empty)
     )
 
     if not nPurpleIdx or nPurpleIdx <= 0 then
@@ -647,15 +649,16 @@ function ExeEnchaseAttribute()
         return
     end
 
-    -- Check if item is purple based on luck value, not genre
-    -- Purple items can be genre=0 (normal equipment) with luck >= 1000000000
-    local nGenre, nDetail, _, _, _, nLuck = GetItemProp(nPurpleIdx)
-    Msg2Player(format("<color=green>[ENCHASE] STEP 3: Purple genre=%d, luck=%d<color>", nGenre or -1, nLuck or -1))
-
-    if not nLuck or nLuck < PURPLE_LUCK_FLAG then
-        Msg2Player(format("<color=red>[ENCHASE] ERROR: Not purple! Luck=%d (need >= %d)<color>", nLuck or 0, PURPLE_LUCK_FLAG))
+    -- Check if item is purple using new genre-based detection
+    if not IsPurpleEquipment(nPurpleIdx) then
+        local nGenre, nDetail, _, _, _, nLuck = GetItemProp(nPurpleIdx)
+        local itemType = GetItemTypeByGenre(nPurpleIdx)
+        Msg2Player(format("<color=red>[ENCHASE] ERROR: Not purple! Genre=%d, Type=%s<color>", nGenre or -1, itemType))
         return
     end
+
+    local nGenre, nDetail, _, _, _, nLuck = GetItemProp(nPurpleIdx)
+    Msg2Player(format("<color=green>[ENCHASE] STEP 3: Purple genre=%d (confirmed purple)<color>", nGenre or -1))
 
     if not nHuyenTinhIdx or nHuyenTinhIdx <= 0 then
         Msg2Player("<color=red>[ENCHASE] ERROR: No HT!<color>")
@@ -701,12 +704,11 @@ function ExeEnchaseAttribute()
     Msg2Player(format("<color=green>[ENCHASE] STEP 7: Reading purple item properties...<color>"))
 
     -- Get purple item's base properties
-    -- Note: Purple items created with genre=0 can still be purple (luck >= 1000000000)
     local nPurpleGenre, nPurpleDetail, nPurpleParticular, nPurpleLevel, nPurpleSeries, nPurpleLuck = GetItemProp(nPurpleIdx)
 
-    -- Verify it's purple based on luck, not genre
-    if not nPurpleLuck or nPurpleLuck < PURPLE_LUCK_FLAG then
-        Msg2Player("<color=red>[ENCHASE] ERROR: Not a purple item! Luck too low<color>")
+    -- Verify it's purple using genre-based detection
+    if not IsPurpleEquipment(nPurpleIdx) then
+        Msg2Player("<color=red>[ENCHASE] ERROR: Not a purple item!<color>")
         return
     end
 
@@ -724,20 +726,20 @@ function ExeEnchaseAttribute()
     Msg2Player(format("<color=yellow>[ENCHASE] New Slot %d: Type=%d, Min=%d, Max=%d, Val=%d<color>",
         nSlot, nType, nMin, nMax, nValue))
 
-    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new item with custom attributes...<color>"))
+    Msg2Player(format("<color=green>[ENCHASE] STEP 8: Creating new purple item with custom attributes...<color>"))
 
-    -- Create as NORMAL equipment (genre=0) so it can be equipped
-    -- Use luck=1000000001 to mark as custom enchased purple
+    -- Create as PURPLE equipment (genre=1) - proper purple item
+    -- Use randomSeed=1000000001 to mark as custom enchased purple (different from forge's 1000000000)
     local nNewItemIdx = AddItemEx(
-        0,                  -- genre = 0 (item_equip - can be equipped normally)
+        ITEM_GENRE_PURPLE,  -- genre = 1 (item_purpleequip - proper purple)
         nPurpleDetail,      -- detail (same as original)
         nPurpleParticular,  -- particular
         nPurpleLevel,       -- level
         nPurpleSeries,      -- series
-        1000000001,         -- luck = 1000000001 (marks as custom enchased purple)
+        0,                  -- luck = 0 (not used for detection)
         0, 0, 0, 0, 0, 0,   -- ma1-ma6 (not used)
         1,                  -- version
-        1000000001          -- randomSeed = 1000000001 (marker for custom purple)
+        1000000001          -- randomSeed = 1000000001 (marker for custom enchased purple)
     )
 
     if not nNewItemIdx or nNewItemIdx <= 0 then
