@@ -1040,6 +1040,13 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 		// CRITICAL: Set luck BEFORE checking it in conditions below!
 		pItemData->ilucky = Item[nItemIndex].GetGeneratorParam()->nLuck;
 
+		// DEBUG: Log all purple items to check save condition
+		if (pItemData->igenre == item_purpleequip)
+		{
+			g_DebugLog("[PURPLE SAVE CHECK] ItemIdx=%d, genre=%d, luck=%d, detail=%d",
+				nItemIndex, pItemData->igenre, pItemData->ilucky, pItemData->idetailtype);
+		}
+
 		// SPECIAL CASE 1: Khoang thach - store magic attributes in generator levels (syncs to client!)
 		if (pItemData->igenre == 7 && pItemData->idetailtype >= 146 && pItemData->idetailtype <= 151)
 		{

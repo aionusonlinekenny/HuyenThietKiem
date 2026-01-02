@@ -686,11 +686,11 @@ function ExeEnchaseAttribute()
     local nSlot = nKDetail - 146
 
     -- CRITICAL FIX: Set attribute DIRECTLY on the existing purple item
-    -- This avoids the problem of encoding multiple attributes in GenLvl[]
     -- SetPurpleItemMagicAttrib will:
     -- 1. Set m_aryMagicAttrib[nSlot]
-    -- 2. Encode into GenLvl[] for client sync
-    -- 3. Call SyncItem to update client
+    -- 2. Set luck=1000000001
+    -- 3. Encode into GenLvl[] for client sync
+    -- 4. Call SyncItem to update client
     SetPurpleItemMagicAttrib(nPurpleIdx, nSlot, nType, nMin, nMax, nValue)
 
     -- Delete only the materials (keep the purple item!)
@@ -698,7 +698,6 @@ function ExeEnchaseAttribute()
     DelItemByIndex(nHuyenTinhIdx)
 
     -- Success message
-    local szSlotName = {"1st", "2nd", "3rd", "4th", "5th", "6th"}
     local szMsg = format("<color=yellow>Kham nam thanh cong! Thuoc tinh da duoc ep vao o thu %d!<color>", nSlot + 1)
     Talk(1, "", szMsg)
     Msg2SubWorld("<pic=135><color=yellow> " .. GetName() .. "<color> da kham nam thanh cong thuoc tinh vao trang bi tim!")
