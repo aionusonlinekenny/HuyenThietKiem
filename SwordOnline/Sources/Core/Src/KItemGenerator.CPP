@@ -364,15 +364,17 @@ BOOL KItemGenerator::Gen_PurpleEquipment(IN int nDetailType,
 		return bEC;
 
 	// CRITICAL FIX: Check luck BEFORE SetAttrib_CBR to prevent attribute deletion
-	// If luck==1000000001, this is a custom enchased purple - DON'T reset attributes
-	if(pItem->m_GeneratorParam.nLuck == 1000000001)
+	// If luck >= 1000000000, this is a custom purple item - DON'T reset attributes
+	// luck=1000000000: Newly created with Type=53 empty slots
+	// luck=1000000001: Enchased with filled slots
+	if(pItem->m_GeneratorParam.nLuck >= 1000000000)
 	{
 		// Only set basic properties, DON'T call SetAttrib_CBR (it would erase m_aryMagicAttrib)
 		pItem->SetGenre(item_purpleequip);
 		pItem->SetSeries(nSeriesReq);
 		pItem->SetRecord(i);
 #ifdef _DEBUG
-		g_DebugLog("[GEN_PURPLE] Custom enchased purple detected (luck=1000000001), preserving attributes");
+		g_DebugLog("[GEN_PURPLE] Custom purple detected (luck=%d), preserving attributes", pItem->m_GeneratorParam.nLuck);
 #endif
 		return TRUE;  // Keep existing m_aryMagicAttrib set by decode or SetPurpleItemMagicAttrib
 	}
@@ -486,15 +488,17 @@ BOOL KItemGenerator::Gen_ExistPurpleEquipment(IN int nRecord,
 		return bEC;
 
 	// CRITICAL FIX: Check luck BEFORE SetAttrib_CBR to prevent attribute deletion
-	// If luck==1000000001, this is a custom enchased purple - DON'T reset attributes
-	if(pItem->m_GeneratorParam.nLuck == 1000000001)
+	// If luck >= 1000000000, this is a custom purple item - DON'T reset attributes
+	// luck=1000000000: Newly created with Type=53 empty slots
+	// luck=1000000001: Enchased with filled slots
+	if(pItem->m_GeneratorParam.nLuck >= 1000000000)
 	{
 		// Only set basic properties, DON'T call SetAttrib_CBR (it would erase m_aryMagicAttrib)
 		pItem->SetSeries(nSeries);
 		pItem->SetRecord(i);
 		pItem->SetGenre(item_purpleequip);
 #ifdef _DEBUG
-		g_DebugLog("[GEN_EXIST_PURPLE] Custom enchased purple detected (luck=1000000001), preserving attributes");
+		g_DebugLog("[GEN_EXIST_PURPLE] Custom purple detected (luck=%d), preserving attributes", pItem->m_GeneratorParam.nLuck);
 #endif
 		return TRUE;  // Keep existing m_aryMagicAttrib set by decode or SetPurpleItemMagicAttrib
 	}
