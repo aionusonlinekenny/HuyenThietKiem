@@ -361,25 +361,30 @@ BOOL KItemGenerator::Gen_PurpleEquipment(IN int nDetailType,
 		break;
 	}
 	if(pEqu == NULL)
-		return bEC; 
-	
+		return bEC;
+
+	// CRITICAL FIX: Check luck BEFORE SetAttrib_CBR to prevent attribute deletion
+	// If luck==1000000001, this is a custom enchased purple - DON'T reset attributes
+	if(pItem->m_GeneratorParam.nLuck == 1000000001)
+	{
+		// Only set basic properties, DON'T call SetAttrib_CBR (it would erase m_aryMagicAttrib)
+		pItem->SetGenre(item_purpleequip);
+		pItem->SetSeries(nSeriesReq);
+		pItem->SetRecord(i);
+#ifdef _DEBUG
+		g_DebugLog("[GEN_PURPLE] Custom enchased purple detected (luck=1000000001), preserving attributes");
+#endif
+		return TRUE;  // Keep existing m_aryMagicAttrib set by decode or SetPurpleItemMagicAttrib
+	}
+
+	// Normal purple item - set base attributes
 	pItem->SetAttrib_CBR(pEqu);
 	pItem->SetGenre(item_purpleequip);
 	pItem->SetSeries(nSeriesReq);
 	pItem->SetRecord(i);
-	
+
 	if(pnaryMALevel == NULL)
 		return TRUE;
-
-	// CUSTOM PURPLE CHECK: If luck==1000000001, this is a custom enchased purple item
-	// Skip DecodePurple and Gen_PurpleMagicAttrib - keep attributes as manually set
-	if(pItem->m_GeneratorParam.nLuck == 1000000001)
-	{
-#ifdef _DEBUG
-		g_DebugLog("[GEN_PURPLE] Custom enchased purple detected (luck=1000000001), skipping regeneration");
-#endif
-		return TRUE;  // Keep existing m_aryMagicAttrib set by SetPurpleItemMagicAttrib
-	}
 	int j;
 	for(j = 0; j < 6;j++)
 	{
@@ -479,24 +484,29 @@ BOOL KItemGenerator::Gen_ExistPurpleEquipment(IN int nRecord,
 	}
 	if(pEqu == NULL)
 		return bEC;
-	
+
+	// CRITICAL FIX: Check luck BEFORE SetAttrib_CBR to prevent attribute deletion
+	// If luck==1000000001, this is a custom enchased purple - DON'T reset attributes
+	if(pItem->m_GeneratorParam.nLuck == 1000000001)
+	{
+		// Only set basic properties, DON'T call SetAttrib_CBR (it would erase m_aryMagicAttrib)
+		pItem->SetSeries(nSeries);
+		pItem->SetRecord(i);
+		pItem->SetGenre(item_purpleequip);
+#ifdef _DEBUG
+		g_DebugLog("[GEN_EXIST_PURPLE] Custom enchased purple detected (luck=1000000001), preserving attributes");
+#endif
+		return TRUE;  // Keep existing m_aryMagicAttrib set by decode or SetPurpleItemMagicAttrib
+	}
+
+	// Normal purple item - set base attributes
 	pItem->SetAttrib_CBR(pEqu);
 	pItem->SetSeries(nSeries);
 	pItem->SetRecord(i);
 	pItem->SetGenre(item_purpleequip);
-	
+
 	if(pnaryMALevel == NULL)
 		return TRUE;
-
-	// CUSTOM PURPLE CHECK: If luck==1000000001, this is a custom enchased purple item
-	// Skip DecodePurple and Gen_PurpleMagicAttrib - keep attributes as manually set
-	if(pItem->m_GeneratorParam.nLuck == 1000000001)
-	{
-#ifdef _DEBUG
-		g_DebugLog("[GEN_EXIST_PURPLE] Custom enchased purple detected (luck=1000000001), skipping regeneration");
-#endif
-		return TRUE;  // Keep existing m_aryMagicAttrib set by SetPurpleItemMagicAttrib
-	}
 	int j;
 	for(j = 0; j < 6;j++)
 	{
