@@ -363,27 +363,46 @@ BOOL KItemGenerator::Gen_PurpleEquipment(IN int nDetailType,
 	if(pEqu == NULL)
 		return bEC;
 
-	// CRITICAL FIX: Check luck BEFORE SetAttrib_CBR to prevent attribute deletion
-	// If luck >= 1000000000, this is a custom purple item - DON'T reset attributes
-	// luck=1000000000: Newly created with Type=53 empty slots
-	// luck=1000000001: Enchased with filled slots
-	if(pItem->m_GeneratorParam.nLuck >= 1000000000)
+	// CRITICAL FIX: Check luck to determine attribute handling
+	// luck=1000000001: Enchased purple - SKIP everything (attributes already set manually)
+	// luck=1000000000: Newly created purple - SKIP SetAttrib_CBR but RUN DecodePurple for Type=53
+	// luck < 1000000000: Normal purple - RUN SetAttrib_CBR and DecodePurple normally
+
+	if(pItem->m_GeneratorParam.nLuck == 1000000001)
 	{
-		// Only set basic properties, DON'T call SetAttrib_CBR (it would erase m_aryMagicAttrib)
+		// Enchased purple: attributes already set by SetPurpleItemMagicAttrib
+		// Don't call SetAttrib_CBR (would erase) and don't run DecodePurple (would overwrite)
 		pItem->SetGenre(item_purpleequip);
 		pItem->SetSeries(nSeriesReq);
 		pItem->SetRecord(i);
 #ifdef _DEBUG
-		g_DebugLog("[GEN_PURPLE] Custom purple detected (luck=%d), preserving attributes", pItem->m_GeneratorParam.nLuck);
+		g_DebugLog("[GEN_PURPLE] Enchased purple detected (luck=1000000001), preserving manually set attributes");
 #endif
-		return TRUE;  // Keep existing m_aryMagicAttrib set by decode or SetPurpleItemMagicAttrib
+		return TRUE;  // Keep existing m_aryMagicAttrib set by SetPurpleItemMagicAttrib
 	}
 
-	// Normal purple item - set base attributes
-	pItem->SetAttrib_CBR(pEqu);
+	// For luck=1000000000 (newly created) and normal purples:
+	// Set basic properties first
 	pItem->SetGenre(item_purpleequip);
 	pItem->SetSeries(nSeriesReq);
 	pItem->SetRecord(i);
+
+	// For luck=1000000000: SKIP SetAttrib_CBR but continue to DecodePurple
+	// For normal purples: Call SetAttrib_CBR then DecodePurple
+	if(pItem->m_GeneratorParam.nLuck != 1000000000)
+	{
+		// Normal purple item - set base attributes
+		pItem->SetAttrib_CBR(pEqu);
+#ifdef _DEBUG
+		g_DebugLog("[GEN_PURPLE] Normal purple, calling SetAttrib_CBR");
+#endif
+	}
+	else
+	{
+#ifdef _DEBUG
+		g_DebugLog("[GEN_PURPLE] Newly created purple (luck=1000000000), skipping SetAttrib_CBR, will run DecodePurple for Type=53");
+#endif
+	}
 
 	if(pnaryMALevel == NULL)
 		return TRUE;
@@ -487,27 +506,46 @@ BOOL KItemGenerator::Gen_ExistPurpleEquipment(IN int nRecord,
 	if(pEqu == NULL)
 		return bEC;
 
-	// CRITICAL FIX: Check luck BEFORE SetAttrib_CBR to prevent attribute deletion
-	// If luck >= 1000000000, this is a custom purple item - DON'T reset attributes
-	// luck=1000000000: Newly created with Type=53 empty slots
-	// luck=1000000001: Enchased with filled slots
-	if(pItem->m_GeneratorParam.nLuck >= 1000000000)
+	// CRITICAL FIX: Check luck to determine attribute handling
+	// luck=1000000001: Enchased purple - SKIP everything (attributes already set manually)
+	// luck=1000000000: Newly created purple - SKIP SetAttrib_CBR but RUN DecodePurple for Type=53
+	// luck < 1000000000: Normal purple - RUN SetAttrib_CBR and DecodePurple normally
+
+	if(pItem->m_GeneratorParam.nLuck == 1000000001)
 	{
-		// Only set basic properties, DON'T call SetAttrib_CBR (it would erase m_aryMagicAttrib)
+		// Enchased purple: attributes already set by SetPurpleItemMagicAttrib
+		// Don't call SetAttrib_CBR (would erase) and don't run DecodePurple (would overwrite)
 		pItem->SetSeries(nSeries);
 		pItem->SetRecord(i);
 		pItem->SetGenre(item_purpleequip);
 #ifdef _DEBUG
-		g_DebugLog("[GEN_EXIST_PURPLE] Custom purple detected (luck=%d), preserving attributes", pItem->m_GeneratorParam.nLuck);
+		g_DebugLog("[GEN_EXIST_PURPLE] Enchased purple detected (luck=1000000001), preserving manually set attributes");
 #endif
-		return TRUE;  // Keep existing m_aryMagicAttrib set by decode or SetPurpleItemMagicAttrib
+		return TRUE;  // Keep existing m_aryMagicAttrib set by SetPurpleItemMagicAttrib
 	}
 
-	// Normal purple item - set base attributes
-	pItem->SetAttrib_CBR(pEqu);
+	// For luck=1000000000 (newly created) and normal purples:
+	// Set basic properties first
 	pItem->SetSeries(nSeries);
 	pItem->SetRecord(i);
 	pItem->SetGenre(item_purpleequip);
+
+	// For luck=1000000000: SKIP SetAttrib_CBR but continue to DecodePurple
+	// For normal purples: Call SetAttrib_CBR then DecodePurple
+	if(pItem->m_GeneratorParam.nLuck != 1000000000)
+	{
+		// Normal purple item - set base attributes
+		pItem->SetAttrib_CBR(pEqu);
+#ifdef _DEBUG
+		g_DebugLog("[GEN_EXIST_PURPLE] Normal purple, calling SetAttrib_CBR");
+#endif
+	}
+	else
+	{
+#ifdef _DEBUG
+		g_DebugLog("[GEN_EXIST_PURPLE] Newly created purple (luck=1000000000), skipping SetAttrib_CBR, will run DecodePurple for Type=53");
+#endif
+	}
 
 	if(pnaryMALevel == NULL)
 		return TRUE;
