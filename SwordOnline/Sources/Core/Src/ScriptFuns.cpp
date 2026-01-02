@@ -10508,7 +10508,109 @@ int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 	Lua_PushNumber(L, 1);  // Success
 	return 1;
 }
-// ------------------------------------------------------------															   
+
+// ------------------------------------------------------------
+// Add Purple Item - Creates a NEW purple equipment with 6 empty Type=53 slots
+// Lua: nItemIdx = AddItemPurple(nDetail, nParti, nLevel, nSeries)
+// This is a CLEAN implementation specifically for purple items
+// Returns item index in player's equipment room (pos_equiproom)
+// ------------------------------------------------------------
+int LuaAddItemPurple(Lua_State * L)
+{
+	if (Lua_GetTopIndex(L) < 4)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nPlayerIndex = GetPlayerIndex(L);
+	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_PLAYER)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nDetail = (int)Lua_ValueToNumber(L, 1);
+	int nParti = (int)Lua_ValueToNumber(L, 2);
+	int nLevel = (int)Lua_ValueToNumber(L, 3);
+	int nSeries = (int)Lua_ValueToNumber(L, 4);
+
+	g_DebugLog("[ADD_PURPLE] Creating purple item: Detail=%d, Parti=%d, Level=%d, Series=%d",
+		nDetail, nParti, nLevel, nSeries);
+
+	// Create the item object
+	KItem NewItem;
+	NewItem.Init();
+
+	// Set basic properties
+	NewItem.SetGenre(item_purpleequip);  // Genre = 5 (purple)
+	NewItem.SetDetailType(nDetail);
+	NewItem.SetParticular(nParti);
+	NewItem.SetLevel(nLevel);
+	NewItem.SetSeries(nSeries);
+
+	// CRITICAL: Set luck=1000000000 to mark this as "newly created purple with empty slots"
+	// This prevents Gen_ExistPurpleEquipment from calling SetAttrib_CBR
+	NewItem.SetGeneratorLuck(1000000000);
+	NewItem.SetRandomSeed(1000000000);  // For DecodePurple to generate Type=53
+	NewItem.SetGeneratorVersion(1);
+
+	// Set generator levels to trigger DecodePurple
+	// All 10s will make DecodePurple decode from luck/randomSeed
+	int nGenLevels[6] = {10, 10, 10, 10, 10, 10};
+	NewItem.SetGeneratorLevel(nGenLevels);
+
+	// Generate the equipment using ItemGenerator
+	// This will call Gen_PurpleEquipment which will:
+	// 1. Skip SetAttrib_CBR (because luck=1000000000)
+	// 2. Run DecodePurple to decode Type=53 from randomSeed=1000000000
+	// 3. Set 6 Type=53 empty slots via Gen_PurpleMagicAttrib
+	if (!ItemGen.Gen_PurpleEquipment(
+		NewItem.GetRecord(),
+		NewItem.GetDetailType(),
+		NewItem.GetParticular(),
+		NewItem.GetLevel(),
+		NewItem.GetSeries(),
+		nGenLevels,
+		1000000000,  // luck
+		1,           // version
+		&NewItem))
+	{
+		g_DebugLog("[ADD_PURPLE] ERROR: Gen_PurpleEquipment failed!");
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// Add item to ItemSet (global item array)
+	int nItemIdx = ItemSet.Add(&NewItem);
+	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
+	{
+		g_DebugLog("[ADD_PURPLE] ERROR: ItemSet.Add failed!");
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// Add to player's equipment room (pos_equiproom)
+	int nX = 0, nY = 0;
+	if (!Player[nPlayerIndex].m_ItemList.SearchPosition(pos_equiproom, &nX, &nY))
+	{
+		// No space in equipment room
+		g_DebugLog("[ADD_PURPLE] ERROR: No space in equipment room!");
+		ItemSet.Remove(nItemIdx);
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	Player[nPlayerIndex].m_ItemList.Add(nItemIdx, pos_equiproom, nX, nY);
+
+	g_DebugLog("[ADD_PURPLE] SUCCESS: ItemIdx=%d added to equipment room at (%d,%d)", nItemIdx, nX, nY);
+	g_DebugLog("[ADD_PURPLE] Item has 6 Type=53 empty slots ready for enchasing");
+
+	Lua_PushNumber(L, nItemIdx);
+	return 1;
+}
+
+// ------------------------------------------------------------
 // Get Item Generator Levels (the tier values used for generation)
 // Lua: level0, level1, level2, level3, level4, level5 = GetItemGeneratorLevels(nItemIdx)
 // ------------------------------------------------------------
@@ -11332,6 +11434,7 @@ TLua_Funcs GameScriptFuns[] =
 	{"SetItemMagicAttribValueAndSync",	LuaSetItemMagicAttribValueAndSync},
 	{"SetItemMagicAttrib",	LuaSetItemMagicAttrib},
 	{"SetPurpleItemMagicAttrib",	LuaSetPurpleItemMagicAttrib},
+	{"AddItemPurple",	LuaAddItemPurple},
 	{"GetItemGeneratorLevels",	LuaGetItemGeneratorLevels},
 	{"UpgradeItemAttributes",	LuaUpgradeItemAttributes},
 	//
