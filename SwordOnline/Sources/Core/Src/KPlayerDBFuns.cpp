@@ -658,10 +658,11 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 				int nMax = Item[nGameIndex].m_aryMagicAttrib[s].nMax;
 				int nValue = Item[nGameIndex].m_aryMagicAttrib[s].nValue[0];
 
-				// Skip empty attribute slots
-				if (nType <= 0)
+				// Skip invalid attribute slots (Type<=0 or Type==53 garbage)
+				// Type=53 is default purple equipment attribute, not enchased attribute
+				if (nType <= 0 || nType == 53)
 				{
-					g_DebugLog("[PURPLE LOGIN SYNC] Slot %d: EMPTY, skipping", s);
+					g_DebugLog("[PURPLE LOGIN SYNC] Slot %d: SKIPPED (Type=%d invalid), not syncing", s, nType);
 					continue;
 				}
 
@@ -1069,12 +1070,36 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 
 			// Save ALL 6 magic attributes using iparam1-6 and imagiclevel1-6
 			// Encoding: iparam[i] = (type << 16) | value, imagiclevel[i] = (min << 16) | max
+			// CRITICAL: Skip invalid attributes (Type <= 0 or Type == 53)
+			// Type 53 is garbage from SetAttrib_CBR, not a real enchased attribute
 			for (int s = 0; s < 6; s++)
 			{
 				int nType = Item[nItemIndex].m_aryMagicAttrib[s].nAttribType;
 				int nMin = Item[nItemIndex].m_aryMagicAttrib[s].nMin;
 				int nMax = Item[nItemIndex].m_aryMagicAttrib[s].nMax;
 				int nValue = Item[nItemIndex].m_aryMagicAttrib[s].nValue[0];
+
+				// CRITICAL FIX: Skip invalid attributes
+				// Type=53 is default purple equipment attribute (garbage), not enchased attribute
+				// Type<=0 means empty slot
+				// Only save valid enchased attributes
+				if (nType <= 0 || nType == 53)
+				{
+					// Save as empty slot (Type=0)
+					int nTypeValue = 0;
+					int nMinMax = 0;
+					switch(s)
+					{
+						case 0: pItemData->iparam1 = nTypeValue; pItemData->imagiclevel1 = nMinMax; break;
+						case 1: pItemData->iparam2 = nTypeValue; pItemData->imagiclevel2 = nMinMax; break;
+						case 2: pItemData->iparam3 = nTypeValue; pItemData->imagiclevel3 = nMinMax; break;
+						case 3: pItemData->iparam4 = nTypeValue; pItemData->imagiclevel4 = nMinMax; break;
+						case 4: pItemData->iparam5 = nTypeValue; pItemData->imagiclevel5 = nMinMax; break;
+						case 5: pItemData->iparam6 = nTypeValue; pItemData->imagiclevel6 = nMinMax; break;
+					}
+					g_DebugLog("[PURPLE SAVE] Slot %d: SKIPPED (Type=%d is invalid, saved as Type=0)", s, nType);
+					continue;
+				}
 
 				int nTypeValue = (nType << 16) | (nValue & 0xFFFF);
 				int nMinMax = (nMin << 16) | (nMax & 0xFFFF);
