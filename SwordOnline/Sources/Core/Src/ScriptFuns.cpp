@@ -10620,7 +10620,7 @@ int LuaAddItemPurple(Lua_State * L)
 
 	// Equipment room full - put in hand
 	int nHandIdx = Player[nPlayerIndex].m_ItemList.Hand();
-	if (nHandIdx > 0)
+	if (nHandIdx)
 	{
 		// Hand occupied - drop existing item on ground
 		Player[nPlayerIndex].m_ItemList.Remove(nHandIdx);
@@ -10633,14 +10633,35 @@ int LuaAddItemPurple(Lua_State * L)
 		sInfo.m_dwItemID = Item[nHandIdx].GetID();
 		sInfo.m_nItemWidth = Item[nHandIdx].GetWidth();
 		sInfo.m_nItemHeight = Item[nHandIdx].GetHeight();
-		sMapPos.nSubWorld = Player[nPlayerIndex].m_SubWorldIndex;
+		sInfo.m_nMoneyNum = 0;
+		strcpy(sInfo.m_szName, Item[nHandIdx].GetName());
+		sInfo.m_nColorID = 0;
+		sInfo.m_nGenre = Item[nHandIdx].GetGenre();
+		sInfo.m_nDetailType = Item[nHandIdx].GetDetailType();
+		sInfo.m_nMovieFlag = 1;
+		sInfo.m_nSoundFlag = 1;
+		sInfo.m_dwNpcId = 0;
 
-		Player[nPlayerIndex].DropItemInWorld(sMapPos, &sInfo,
-			Player[nPlayerIndex].m_cDeathCalcExp.GetLevel(), -1);
+		int nObj = ObjSet.Add(Item[nHandIdx].GetObjID(), sMapPos, sInfo);
+		if (nObj == -1)
+		{
+			ItemSet.Remove(nHandIdx);
+		}
+		else
+		{
+			if (Item[nHandIdx].GetGenre() == item_task)
+			{
+				Object[nObj].SetEntireBelong(nPlayerIndex);
+			}
+			else
+			{
+				Object[nObj].SetItemBelong(nPlayerIndex);
+			}
+		}
 	}
 
 	// Put purple item in hand
-	Player[nPlayerIndex].m_ItemList.Hand(nItemIdx, pos_equiproom);
+	Player[nPlayerIndex].m_ItemList.Add(nItemIdx, pos_hand, 0, 0);
 
 	g_DebugLog("[ADD_PURPLE] SUCCESS - Added to hand (equipment room full)");
 	g_DebugLog("[ADD_PURPLE] Purple item idx=%d has 6 Type=53 empty slots", nItemIdx);
