@@ -10475,35 +10475,53 @@ int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 	// This will be checked in Gen_ExistPurpleEquipment to skip DecodePurple
 	Item[nItemIdx].SetGeneratorLuck(1000000001);
 
-	// CRITICAL FIX: Encode min/max into RandomSeed to support values > 255
-	// m_MagicLevel[] is BYTE array (0-255), but we need to support max=300+
-	// Format: RandomSeed = 1000000000 + (min << 10) + max
-	// This allows min up to 1023 and max up to 1023 (10 bits each)
-	DWORD dwEncodedSeed = 1000000000 + ((nMin & 0x3FF) << 10) + (nMax & 0x3FF);
-	Item[nItemIdx].SetRandomSeed(dwEncodedSeed);
-
-	// CRITICAL: Encode attribute into generator levels so it syncs to client via ITEM_SYNC
-	// ITEM_SYNC only sends BYTE m_MagicLevel[6], so we encode as:
-	// [0]=slot, [1]=type, [2]=value_low, [3]=value_high, [4]=0, [5]=0
-	// Min/Max are now in RandomSeed to support values > 255
-	int nGenLevels[6] = {0};
-	nGenLevels[0] = nSlot;              // Which slot (0-5)
-	nGenLevels[1] = nAttribType;        // Attribute type (must be < 256)
-	nGenLevels[2] = nValue & 0xFF;      // Value low byte
-	nGenLevels[3] = (nValue >> 8) & 0xFF; // Value high byte (supports value up to 65535)
-	nGenLevels[4] = 0;                  // Reserved (min/max now in RandomSeed)
-	nGenLevels[5] = 0;                  // Reserved
-	Item[nItemIdx].SetGeneratorLevel(nGenLevels);
 	g_DebugLog("[PURPLE SETATTRIB] ItemIdx=%d, Slot=%d, Type=%d, Min=%d, Max=%d, Value=%d",
 		nItemIdx, nSlot, nAttribType, nMin, nMax, nValue);
-	g_DebugLog("[PURPLE SETATTRIB] Set special luck=1000000001, RandomSeed=%u (min=%d, max=%d encoded)",
-		dwEncodedSeed, nMin, nMax);
-	g_DebugLog("[PURPLE SETATTRIB] Encoded into GenLvl=[%d,%d,%d,%d,%d,%d] for client sync",
-		nGenLevels[0], nGenLevels[1], nGenLevels[2], nGenLevels[3], nGenLevels[4], nGenLevels[5]);
-	// CRITICAL: Sync item to client so player sees the new attribute
-	// Call SyncItem to force client update for items in UI temporary storage
-	Player[nPlayerIndex].m_ItemList.SyncItem(nItemIdx);
-	g_DebugLog("[PURPLE SETATTRIB] SyncItem called for ItemIdx=%d", nItemIdx);
+
+	// CRITICAL: Sync ALL 6 attributes to client, not just the one we set!
+	// Purple items have 6 slots, and client needs to see all of them:
+	// - The slot we just enchased (Type=89, 126, etc.)
+	// - The 5 remaining empty slots (Type=53 "Chua kham nam")
+	// Without syncing all 6, client will only see the enchased slot!
+	g_DebugLog("[PURPLE SETATTRIB] Syncing ALL 6 attributes to client (not just slot %d)", nSlot);
+
+	for (int s = 0; s < 6; s++)
+	{
+		int nType = Item[nItemIdx].m_aryMagicAttrib[s].nAttribType;
+		int nMin = Item[nItemIdx].m_aryMagicAttrib[s].nMin;
+		int nMax = Item[nItemIdx].m_aryMagicAttrib[s].nMax;
+		int nValue = Item[nItemIdx].m_aryMagicAttrib[s].nValue[0];
+
+		// Skip only Type<=0 (truly empty)
+		// Type=53 is VALID: "Chua kham nam" (empty slot)
+		if (nType <= 0)
+		{
+			g_DebugLog("[PURPLE SETATTRIB] Slot %d: EMPTY (Type=0), skipping", s);
+			continue;
+		}
+
+		// Encode this attribute into GenLvl[] for ITEM_SYNC
+		int nGenLevels[6] = {0};
+		nGenLevels[0] = s;                    // Which slot (0-5)
+		nGenLevels[1] = nType;                // Attribute type
+		nGenLevels[2] = nValue & 0xFF;        // Value low byte
+		nGenLevels[3] = (nValue >> 8) & 0xFF; // Value high byte
+		nGenLevels[4] = 0;
+		nGenLevels[5] = 0;
+		Item[nItemIdx].SetGeneratorLevel(nGenLevels);
+
+		// Encode min/max into RandomSeed (supports values > 255)
+		DWORD dwEncodedSeed = 1000000000 + ((nMin & 0x3FF) << 10) + (nMax & 0x3FF);
+		Item[nItemIdx].SetRandomSeed(dwEncodedSeed);
+
+		// Send ITEM_SYNC to client for this attribute
+		Player[nPlayerIndex].m_ItemList.SyncItem(nItemIdx);
+
+		g_DebugLog("[PURPLE SETATTRIB] Synced Slot %d: Type=%d, Min=%d, Max=%d, Value=%d",
+			s, nType, nMin, nMax, nValue);
+	}
+
+	g_DebugLog("[PURPLE SETATTRIB] All 6 attributes synced for ItemIdx=%d", nItemIdx);
 
 	Lua_PushNumber(L, 1);  // Success
 	return 1;
