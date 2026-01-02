@@ -10538,76 +10538,93 @@ int LuaAddItemPurple(Lua_State * L)
 	g_DebugLog("[ADD_PURPLE] Creating purple item: Detail=%d, Parti=%d, Level=%d, Series=%d",
 		nDetail, nParti, nLevel, nSeries);
 
-	// Create the item object
-	KItem NewItem;
-	NewItem.Init();
-
-	// Set basic properties
-	NewItem.SetGenre(item_purpleequip);  // Genre = 5 (purple)
-	NewItem.SetDetailType(nDetail);
-	NewItem.SetParticular(nParti);
-	NewItem.SetLevel(nLevel);
-	NewItem.SetSeries(nSeries);
-
-	// CRITICAL: Set luck=1000000000 to mark this as "newly created purple with empty slots"
-	// This prevents Gen_ExistPurpleEquipment from calling SetAttrib_CBR
-	NewItem.SetGeneratorLuck(1000000000);
-	NewItem.SetRandomSeed(1000000000);  // For DecodePurple to generate Type=53
-	NewItem.SetGeneratorVersion(1);
+	// Prepare generator parameters for purple item
+	// luck=1000000000 marks this as "newly created purple with empty slots"
+	// randomSeed=1000000000 for DecodePurple to generate Type=53
+	int nLuck = 1000000000;
+	DWORD dwRandSeed = 1000000000;
+	int nVersion = 1;
 
 	// Set generator levels to trigger DecodePurple
 	// All 10s will make DecodePurple decode from luck/randomSeed
-	int nGenLevels[6] = {10, 10, 10, 10, 10, 10};
-	NewItem.SetGeneratorLevel(nGenLevels);
+	int nItemLevel[6];
+	ZeroMemory(nItemLevel, sizeof(nItemLevel));
+	nItemLevel[0] = 10;
+	nItemLevel[1] = 10;
+	nItemLevel[2] = 10;
+	nItemLevel[3] = 10;
+	nItemLevel[4] = 10;
+	nItemLevel[5] = 10;
 
-	// Generate the equipment using ItemGenerator
-	// This will call Gen_PurpleEquipment which will:
+	// Create item using ItemSet.Add (same pattern as AddItemEx)
+	// ItemSet.Add calls ItemGen.Gen_PurpleEquipment internally which will:
 	// 1. Skip SetAttrib_CBR (because luck=1000000000)
 	// 2. Run DecodePurple to decode Type=53 from randomSeed=1000000000
 	// 3. Set 6 Type=53 empty slots via Gen_PurpleMagicAttrib
-	if (!ItemGen.Gen_PurpleEquipment(
-		NewItem.GetRecord(),
-		NewItem.GetDetailType(),
-		NewItem.GetParticular(),
-		NewItem.GetLevel(),
-		NewItem.GetSeries(),
-		nGenLevels,
-		1000000000,  // luck
-		1,           // version
-		&NewItem))
-	{
-		g_DebugLog("[ADD_PURPLE] ERROR: Gen_PurpleEquipment failed!");
-		Lua_PushNumber(L, 0);
-		return 1;
-	}
+	const int nIndex = ItemSet.Add(
+		item_purpleequip,  // nItemClass = 5 (item_purpleequip)
+		nSeries,           // nSeries
+		nLevel,            // nLevel
+		0,                 // nQuality
+		nLuck,             // nLuck = 1000000000
+		nDetail,           // nDetailType
+		nParti,            // nParticularType
+		nItemLevel,        // pnGeneratorLevel[6]
+		nVersion,          // nVersion
+		dwRandSeed         // dwRandomSeed = 1000000000
+	);
 
-	// Add item to ItemSet (global item array)
-	int nItemIdx = ItemSet.Add(&NewItem);
-	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
+	if (nIndex <= 0 || nIndex >= MAX_ITEM)
 	{
 		g_DebugLog("[ADD_PURPLE] ERROR: ItemSet.Add failed!");
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
 
-	// Add to player's equipment room (pos_equiproom)
-	int nX = 0, nY = 0;
-	if (!Player[nPlayerIndex].m_ItemList.SearchPosition(pos_equiproom, &nX, &nY))
+	// Find available position in equipment room
+	int x = 0, y = 0;
+	if (Player[nPlayerIndex].m_ItemList.CheckCanPlaceInEquipment(
+		Item[nIndex].GetWidth(),
+		Item[nIndex].GetHeight(),
+		&x, &y))
 	{
-		// No space in equipment room
-		g_DebugLog("[ADD_PURPLE] ERROR: No space in equipment room!");
-		ItemSet.Remove(nItemIdx);
-		Lua_PushNumber(L, 0);
+		// Add to equipment room
+		Player[nPlayerIndex].m_ItemList.Add(nIndex, pos_equiproom, x, y);
+
+		g_DebugLog("[ADD_PURPLE] SUCCESS: ItemIdx=%d added to equipment room at (%d,%d)", nIndex, x, y);
+		g_DebugLog("[ADD_PURPLE] Item has 6 Type=53 empty slots ready for enchasing");
+
+		Lua_PushNumber(L, nIndex);
 		return 1;
 	}
+	else
+	{
+		// No space - try to place in hand
+		int nIdx = Player[nPlayerIndex].m_ItemList.Hand();
+		if (nIdx)
+		{
+			// Hand is occupied, drop the item on ground
+			Player[nPlayerIndex].m_ItemList.Remove(nIdx);
+			KMapPos sMapPos;
+			KObjItemInfo sInfo;
+			Player[nPlayerIndex].GetAboutPos(&sMapPos);
+			sInfo.m_nItemID = nIdx;
+			sInfo.m_dwItemID = Item[nIdx].GetID();
+			sInfo.m_nItemWidth = Item[nIdx].GetWidth();
+			sInfo.m_nItemHeight = Item[nIdx].GetHeight();
+			sMapPos.nSubWorld = Player[nPlayerIndex].m_SubWorldIndex;
+			Player[nPlayerIndex].DropItemInWorld(sMapPos, &sInfo, Player[nPlayerIndex].m_cDeathCalcExp.GetLevel(), -1);
+		}
 
-	Player[nPlayerIndex].m_ItemList.Add(nItemIdx, pos_equiproom, nX, nY);
+		// Put new purple item in hand
+		Player[nPlayerIndex].m_ItemList.Hand(nIndex, pos_equiproom);
 
-	g_DebugLog("[ADD_PURPLE] SUCCESS: ItemIdx=%d added to equipment room at (%d,%d)", nItemIdx, nX, nY);
-	g_DebugLog("[ADD_PURPLE] Item has 6 Type=53 empty slots ready for enchasing");
+		g_DebugLog("[ADD_PURPLE] SUCCESS: ItemIdx=%d added to hand (no space in equipment room)", nIndex);
+		g_DebugLog("[ADD_PURPLE] Item has 6 Type=53 empty slots ready for enchasing");
 
-	Lua_PushNumber(L, nItemIdx);
-	return 1;
+		Lua_PushNumber(L, nIndex);
+		return 1;
+	}
 }
 
 // ------------------------------------------------------------
