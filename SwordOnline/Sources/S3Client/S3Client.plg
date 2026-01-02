@@ -6,13 +6,153 @@
 --------------------Configuration: S3Client - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\letan\AppData\Local\Temp\RSP7F79.tmp" with contents
+Creating command line "rc.exe /l 0x804 /fo"Debug/Script1.res" /d "_DEBUG" "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Script1.rc"" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP9E66.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../Engine/src" /I "../Core/src" /I "../Engine/include" /I "../../Headers" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "SWORDONLINE_SHOW_DBUG_INFO" /D "SWORDONLINE_USE_MD5_PASSWORD" /D "_USE_GM_TOOL" /FR"Debug/" /Fp"Debug/S3Client.pch" /Yu"KWin32.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\Wnds.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\AutoLocateWnd.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\ComWindow.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\LightLoop.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\MouseHover.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\PopupMenu.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\SpaceOver.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\SpecialFuncs.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\TextPic.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\UiCursor.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\UiImage.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndButton.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndChessPanel.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndEdit.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndImage.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndImage2.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndImagePart.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndLabeledButton.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndList.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndList2.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndListFilterItem.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndListPoint.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndMessageListBox.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndMovingImage.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndObjContainer.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndPage.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndPureTextBtn.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\Wnds.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndScrollBar.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\elem\WndShadow.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndShowAnimate.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndText.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndToolBar.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndValueImage.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndWindow.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiConnectInfo.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiLogin.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiLoginBg.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSelServer.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChooseFace.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiFaceSelector.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiPlayerBar.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiStatus.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiOptions.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiInit.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTeamBuild.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChaPW.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiCreatPW.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiExpandItem.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiGetMoney.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiGiveBox.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiItem.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiKeyBoard.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiLoginPW.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiReWard.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSkills.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSkillTree.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\uicase\UiStoreBox.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTimeBox.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiESCDlg.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiGetNumber.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiGetString.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMsgSel.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMsgSel2.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiParadeItem.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSelPlayerNearby.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiNewPlayer.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSelNativePlace.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSelPlayer.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChannelSubscibe.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChatCentre.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiChatPhrase.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChatStatus.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiInformation.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiInformation2.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiInformation3.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTeamManage.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTeamStatus.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChatItemInfo.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiHeaderControlBar.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\uicase\UiMsgCentrePad.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMakeAdv.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMarket.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMarkPrice.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiPlayerShop.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UIcase\UiShop.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiShoppingCart.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTrade.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTradeConfirmWnd.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiGame.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiNotification.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSysMsgCentre.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiCaveMap.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiFindPos.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\uicase\UiMiniMap.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiWorldMap.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSelColor.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiNewPlayerStartMsg.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiPlayVideo.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiHelper.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiHelper2.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiHelperMission.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiReconnect.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiRevive.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTaskDataFile.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTaskNote.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiNewsMessage.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiNewsMessageEx.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiStrengthRank.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\ui\uicase\UiPopupPasswordQuery.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\ui\uicase\UiTongAssignBox.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTongChangeTitle.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\ui\uicase\UiTongCreateSheet.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTongInformation.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\ui\uicase\UiTongManager.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTongSetTax .cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiAutoPlay.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMiniBuff.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTopTKNew.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTrembleItem.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiUpgradeAttrib.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiCompoundItem.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\TrayMode.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiSoundSetting.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\GameSpaceChangedNotify.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\ShortcutKey.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiBase.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiShell.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\ChatFilter.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\FilterTextLib.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\S3Client.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\NetConnect\NetConnectAgent.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Login\Login.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\TextCtrlCmd\TextCtrlCmd.cpp"
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\ErrorCode.cpp"
 ]
-Creating command line "cl.exe @C:\Users\letan\AppData\Local\Temp\RSP7F79.tmp" 
-Creating temporary file "C:\Users\letan\AppData\Local\Temp\RSP7F7A.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP9E66.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP9E67.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /Zi /Od /I "../Engine/src" /I "../Core/src" /I "../Engine/include" /I "../../Headers" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "SWORDONLINE_SHOW_DBUG_INFO" /D "SWORDONLINE_USE_MD5_PASSWORD" /D "_USE_GM_TOOL" /FR"Debug/" /Fp"Debug/S3Client.pch" /Yc"KWin32.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\stdafx.cpp"
+]
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP9E67.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP9E68.tmp" with contents
 [
 Winmm.lib shlwapi.lib lualibdll.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:no /pdb:"Debug/Game.pdb" /map:"Debug/Game.map" /debug /machine:I386 /out:"Debug/Game.exe" /libpath:"../../lib/" 
 .\Debug\AutoLocateWnd.obj
@@ -134,6 +274,8 @@ Winmm.lib shlwapi.lib lualibdll.lib kernel32.lib user32.lib gdi32.lib winspool.l
 .\Debug\UiMiniBuff.obj
 .\Debug\UiTopTKNew.obj
 .\Debug\UiTrembleItem.obj
+.\Debug\UiUpgradeAttrib.obj
+.\Debug\UiCompoundItem.obj
 .\Debug\TrayMode.obj
 .\Debug\UiSoundSetting.obj
 .\Debug\GameSpaceChangedNotify.obj
@@ -152,36 +294,189 @@ Winmm.lib shlwapi.lib lualibdll.lib kernel32.lib user32.lib gdi32.lib winspool.l
 ..\..\Lib\debug\engine.lib
 ..\..\Lib\debug\CoreClient.lib
 ]
-Creating command line "link.exe @C:\Users\letan\AppData\Local\Temp\RSP7F7A.tmp"
+Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP9E68.tmp"
 <h3>Output Window</h3>
+Compiling resources...
 Compiling...
+stdafx.cpp
+Compiling...
+AutoLocateWnd.cpp
+ComWindow.cpp
+LightLoop.cpp
+MouseHover.cpp
+PopupMenu.cpp
+SpaceOver.cpp
+SpecialFuncs.cpp
+TextPic.cpp
+UiCursor.cpp
+UiImage.cpp
+WndButton.cpp
+WndChessPanel.cpp
+WndEdit.cpp
+WndImage.cpp
+WndImage2.cpp
+WndImagePart.cpp
+WndLabeledButton.cpp
+WndList.cpp
+WndList2.cpp
+WndListFilterItem.cpp
+Generating Code...
+Compiling...
+WndListPoint.cpp
+WndMessageListBox.cpp
+WndMovingImage.cpp
+WndObjContainer.cpp
+WndPage.cpp
+WndPureTextBtn.cpp
 Wnds.cpp
+WndScrollBar.cpp
+WndShadow.cpp
+WndShowAnimate.cpp
+WndText.cpp
+WndToolBar.cpp
+WndValueImage.cpp
+WndWindow.cpp
+UiConnectInfo.cpp
+UiLogin.cpp
+UiLoginBg.cpp
+UiSelServer.cpp
+UiChooseFace.cpp
+UiFaceSelector.cpp
+Generating Code...
+Compiling...
+UiPlayerBar.cpp
+UiStatus.cpp
+UiOptions.cpp
+UiInit.cpp
+UiTeamBuild.cpp
+UiChaPW.cpp
+UiCreatPW.cpp
+UiExpandItem.cpp
+UiGetMoney.cpp
+UiGiveBox.cpp
+UiItem.cpp
+UiKeyBoard.cpp
+UiLoginPW.cpp
+UiReWard.cpp
+UiSkills.cpp
+UiSkillTree.cpp
+UiStoreBox.cpp
+UiTimeBox.cpp
+UiESCDlg.cpp
+UiGetNumber.cpp
+Generating Code...
+Compiling...
+UiGetString.cpp
+UiMsgSel.cpp
+UiMsgSel2.cpp
+UiParadeItem.cpp
+UiSelPlayerNearby.cpp
+UiNewPlayer.cpp
+UiSelNativePlace.cpp
+UiSelPlayer.cpp
+UiChannelSubscibe.cpp
+UiChatCentre.cpp
+UiChatPhrase.cpp
+UiChatStatus.cpp
+UiInformation.cpp
+UiInformation2.cpp
+UiInformation3.cpp
+UiTeamManage.cpp
+UiTeamStatus.cpp
+UiChatItemInfo.cpp
+UiHeaderControlBar.cpp
+UiMsgCentrePad.cpp
+Generating Code...
+Compiling...
+UiMakeAdv.cpp
+UiMarket.cpp
+UiMarkPrice.cpp
+UiPlayerShop.cpp
+UiShop.cpp
+UiShoppingCart.cpp
+UiTrade.cpp
+UiTradeConfirmWnd.cpp
+UiGame.cpp
+UiNotification.cpp
+UiSysMsgCentre.cpp
+UiCaveMap.cpp
+UiFindPos.cpp
+UiMiniMap.cpp
+UiWorldMap.cpp
+UiSelColor.cpp
+UiNewPlayerStartMsg.cpp
+UiPlayVideo.cpp
+UiHelper.cpp
+UiHelper2.cpp
+Generating Code...
+Compiling...
+UiHelperMission.cpp
+UiReconnect.cpp
+UiRevive.cpp
+UiTaskDataFile.cpp
+UiTaskNote.cpp
+UiNewsMessage.cpp
+UiNewsMessageEx.cpp
+UiStrengthRank.cpp
+UiPopupPasswordQuery.cpp
+UiTongAssignBox.cpp
+UiTongChangeTitle.cpp
+UiTongCreateSheet.cpp
+UiTongInformation.cpp
+UiTongManager.cpp
+UiTongSetTax .cpp
+UiAutoPlay.cpp
+UiMiniBuff.cpp
+UiTopTKNew.cpp
+UiTrembleItem.cpp
+UiUpgradeAttrib.cpp
+Generating Code...
+Compiling...
+UiCompoundItem.cpp
+TrayMode.cpp
+UiSoundSetting.cpp
+GameSpaceChangedNotify.cpp
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\utility(17) : warning C4786: '?$pair@Viterator@?$_Tree@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@U_Kfn@?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@_N' : identifier was truncated to '255' characters in the browser information
+        C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\map(93) : see reference to class template instantiation 'std::pair<class std::_Tree<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct std::pair<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const ,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,struct std::map<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > >::_Kfn,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > >::iterator,bool>' being compiled
+        C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\map(93) : while compiling class-template member function 'class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &__thiscall std::map<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > >::operator [](const class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &)'
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\utility(21) : warning C4786: '??0?$pair@Viterator@?$_Tree@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@U_Kfn@?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@_N@std@@QAE@XZ' : identifier was truncated to '255' characters in the browser information
+        C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\map(93) : see reference to class template instantiation 'std::pair<class std::_Tree<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct std::pair<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const ,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,struct std::map<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > >::_Kfn,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > >::iterator,bool>' being compiled
+        C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\map(93) : while compiling class-template member function 'class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &__thiscall std::map<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > >::operator [](const class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &)'
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\utility(23) : warning C4786: '??0?$pair@Viterator@?$_Tree@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@U_Kfn@?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@_N@std@@QAE@ABViterator@?$_Tree@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@U_Kfn@?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@1@AB_N@Z' : identifier was truncated to '255' characters in the browser information
+        C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\map(93) : see reference to class template instantiation 'std::pair<class std::_Tree<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct std::pair<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const ,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,struct std::map<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > >::_Kfn,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > >::iterator,bool>' being compiled
+        C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\map(93) : while compiling class-template member function 'class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &__thiscall std::map<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > >::operator [](const class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &)'
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\utility(25) : warning C4786: '??0?$pair@Viterator@?$_Tree@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@@2@U_Kfn@?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@2@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@_N@std@@QAE@ABU?$pair@$DCAB@$DCAC@@1@@Z' : identifier was truncated to '255' characters in the browser information
+        C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\map(93) : see reference to class template instantiation 'std::pair<class std::_Tree<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct std::pair<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const ,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,struct std::map<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > >::_Kfn,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > >::iterator,bool>' being compiled
+        C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\map(93) : while compiling class-template member function 'class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &__thiscall std::map<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > >::operator [](const class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &)'
+ShortcutKey.cpp
+UiBase.cpp
+UiShell.cpp
+ChatFilter.cpp
+FilterTextLib.cpp
+S3Client.cpp
+NetConnectAgent.cpp
+Login.cpp
+TextCtrlCmd.cpp
+ErrorCode.cpp
+Generating Code...
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\xmemory(38) : warning C4786: 'std::_Tree<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,void *>,std::map<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,void *,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<void *> >::_Kfn,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<void *> >' : identifier was truncated to '255' characters in the debug information
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\xmemory(38) : warning C4786: 'std::_Tree<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,void *>,std::map<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,void *,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<void *> >::_Kfn,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<void *> >::const_iterator' : identifier was truncated to '255' characters in the debug information
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\xmemory(38) : warning C4786: 'std::_Tree<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,void *>,std::map<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,void *,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<void *> >::_Kfn,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<void *> >::_Redbl' : identifier was truncated to '255' characters in the debug information
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\xmemory(38) : warning C4786: 'std::_Tree<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,void *>,std::map<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,void *,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<void *> >::_Kfn,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<void *> >::iterator' : identifier was truncated to '255' characters in the debug information
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\xmemory(38) : warning C4786: 'std::_Tree<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,void *>,std::map<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,void *,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<void *> >::_Kfn,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<void *> >::_Node' : identifier was truncated to '255' characters in the debug information
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\utility(21) : warning C4786: 'std::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,std::basic_string<char,std::char_traits<char>,std::allocator<char> > >::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,std::basic_string<char,std::char_traits<char>,std::allocator<char> > >' : identifier was truncated to '255' characters in the debug information
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\utility(21) : warning C4786: 'std::pair<std::_Tree<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::map<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<std::basic_string<char,std::char_traits<char>,std::allocator<char> > > >::_Kfn,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<std::basic_string<char,std::char_traits<char>,std::allocator<char> > > >::iterator,bool>::pair<std::_Tree<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::map<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<std::basic_string<char,std::char_traits<char>,std::allocator<char> > > >::_Kfn,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<std::basic_string<char,std::char_traits<char>,std::allocator<char> > > >::iterator,bool>' : identifier was truncated to '255' characters in the debug information
 Linking...
-Creating temporary file "C:\Users\letan\AppData\Local\Temp\RSP80B4.bat" with contents
-[
-@echo off
-md ..\..\..\bin\client\debug\
-copy debug\Game.exe ..\..\..\bin\Client\Game.exe
-copy debug\Game.exe ..\..\..\bin\Client\Game.map
-copy debug\Game.exe ..\..\..\bin\Client\Game.pdb
-copy debug\Game.exe ..\..\..\bin\Client\Debug\Game.exe
-copy debug\Game.exe ..\..\..\bin\Client\Debug\Game.map
-copy debug\Game.exe ..\..\..\bin\Client\Debug\Game.pdb
-]
-Creating command line "C:\Users\letan\AppData\Local\Temp\RSP80B4.bat"
-
-A subdirectory or file ..\..\..\bin\client\debug\ already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
+UiAutoPlay.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) struct IClient * g_pClient" (__imp_?g_pClient@@3PAUIClient@@A)
+UiCompoundItem.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall KUiDistill::Breathe(void)" (?Breathe@KUiDistill@@UAEXXZ)
+UiCompoundItem.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall KUiEnchaseTim::Breathe(void)" (?Breathe@KUiEnchaseTim@@UAEXXZ)
+Debug/Game.exe : fatal error LNK1120: 3 unresolved externals
+Error executing link.exe.
 
 
 
 <h3>Results</h3>
-Game.exe - 0 error(s), 0 warning(s)
+Game.exe - 4 error(s), 11 warning(s)
 </pre>
 </body>
 </html>

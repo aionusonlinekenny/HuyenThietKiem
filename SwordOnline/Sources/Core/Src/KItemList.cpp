@@ -4652,13 +4652,21 @@ BOOL KItemList::RestoreBrokenEquip(const int nGameIdx)
 	const DWORD dwBindState = Item[nGameIdx].GetBindState();
 	const DWORD dwExpiredTime = Item[nGameIdx].GetTime();
 	//
-	char cGenre = item_equip;
-	if(nLuck == 7531)
-		cGenre = item_goldequip;
-	else if(nLuck >= 1000000000)
-		cGenre = item_purpleequip;
-	
-	//
+	// NEW ARCHITECTURE: Use existing genre directly instead of luck-based conversion
+	// This allows proper purple items (genre=1) created by new Lua code to work correctly
+	char cGenre = Item[nGameIdx].GetGenre();
+
+	// LEGACY SUPPORT: Convert luck to genre for old items in database
+	// This ensures old purple items (created with genre=0, luck>=1000000000)
+	// still work correctly after server restart or AddItemAgain
+	// Only convert if current genre is item_equip (0)
+	if (cGenre == item_equip)
+	{
+		if (nLuck == 7531)
+			cGenre = item_goldequip;
+		else if (nLuck >= 1000000000)
+			cGenre = item_purpleequip;
+	}
 	Remove(nGameIdx);
 	ItemSet.Remove(nGameIdx);
 
@@ -4720,12 +4728,22 @@ BOOL KItemList::AddAgain(const int nGameIdx)
 	const DWORD dwBindState = Item[nGameIdx].GetBindState();
 	const DWORD dwExpiredTime = Item[nGameIdx].GetTime();
 	//
-	char cGenre = item_equip;
-	if(nLuck == 7531)
-		cGenre = item_goldequip;
-	else if(nLuck >= 1000000000)
-		cGenre = item_purpleequip;
-	
+  	// NEW ARCHITECTURE: Use existing genre directly instead of luck-based conversion
+	// This allows proper purple items (genre=1) created by new Lua code to work correctly
+	char cGenre = Item[nGameIdx].GetGenre();
+
+	// LEGACY SUPPORT: Convert luck to genre for old items in database
+	// This ensures old purple items (created with genre=0, luck>=1000000000)
+	// still work correctly after server restart or AddItemAgain
+	// Only convert if current genre is item_equip (0)
+	if (cGenre == item_equip)
+	{
+		if (nLuck == 7531)
+			cGenre = item_goldequip;
+		else if (nLuck >= 1000000000)
+			cGenre = item_purpleequip;
+	}
+
 	//
 	Remove(nGameIdx);
 	ItemSet.Remove(nGameIdx);

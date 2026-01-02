@@ -2043,6 +2043,19 @@ BOOL KItem::CanStack()
 	if (m_aryBaseAttrib[0].nAttribType != magic_durability_v)
 		return FALSE;
 
+	// Khoang thach items (genre 7, detail 146-151) with attributes cannot stack
+	// Each khoang thach with unique attributes must remain separate
+	if (m_CommonAttrib.cGenre == 7 &&
+		m_CommonAttrib.nDetailType >= 146 &&
+		m_CommonAttrib.nDetailType <= 151)
+	{
+		// Check if this khoang thach has extracted attributes
+		if (m_aryMagicAttrib[0].nAttribType > 0)
+		{
+			return FALSE;  // Has attributes - cannot stack
+		}
+		// Empty khoang thach can still stack
+	}
 	return TRUE;
 }
 // --

@@ -10336,6 +10336,171 @@ int LuaSetItemMagicAttribValueAndSync(Lua_State * L)
 }
 
 // ------------------------------------------------------------
+// Set complete magic attribute (type, min, max) for khoang thach items
+// Lua: bSuccess = SetItemMagicAttrib(nItemIdx, nSlot, nAttribType, nMin, nMax)
+// ------------------------------------------------------------
+int LuaSetItemMagicAttrib(Lua_State * L)
+{
+	if (Lua_GetTopIndex(L) < 5)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nPlayerIndex = GetPlayerIndex(L);
+	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_PLAYER)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nItemIdx = (int)Lua_ValueToNumber(L, 1);
+	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nSlot = (int)Lua_ValueToNumber(L, 2);
+		if (nSlot < 0 || nSlot >= 6)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nAttribType = (int)Lua_ValueToNumber(L, 3);
+	int nMin = (int)Lua_ValueToNumber(L, 4);
+	int nMax = (int)Lua_ValueToNumber(L, 5);
+
+	// Optional 6th parameter: actual value (if not provided, use average)
+	int nParamCount = Lua_GetTopIndex(L);
+	int nActualValue = (nParamCount >= 6) ? (int)Lua_ValueToNumber(L, 6) : ((nMin + nMax) / 2);
+	
+	// Set the magic attribute directly
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nAttribType = nAttribType;
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nMin = nMin;
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nMax = nMax;
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0] = nActualValue; // Use actual value if provided, otherwise average
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[1] = 0;
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[2] = 0;
+
+	// For khoang thach items: ALSO store in generator levels so ITEM_SYNC syncs to client
+	// This allows attributes to display automatically in tooltip without extra code
+											   
+	int nGenre = Item[nItemIdx].GetGenre();
+	int nDetail = Item[nItemIdx].GetDetailType();
+	if (nGenre == 7 && nDetail >= 146 && nDetail <= 151 && nSlot == 0)
+	{
+		KItemGeneratorParam* pGenParam = Item[nItemIdx].GetGeneratorParam();
+		if (pGenParam)
+		{
+			// CRITICAL: Preserve existing GenLvl[4] (Series) - do NOT overwrite it!
+			// The item was created with the correct Series by AddItemEx, so keep it.
+			int nExistingSeries = pGenParam->nGeneratorLevel[4];
+
+			pGenParam->nGeneratorLevel[0] = nAttribType;
+			pGenParam->nGeneratorLevel[1] = nMin;
+			pGenParam->nGeneratorLevel[2] = nMax;
+			pGenParam->nGeneratorLevel[3] = Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0];
+			// Keep existing Series instead of hardcoding to 0!
+			pGenParam->nGeneratorLevel[4] = nExistingSeries;
+			pGenParam->nGeneratorLevel[5] = 0;
+
+			g_DebugLog("[KHOANG SETATTRIB] ItemIdx=%d, Detail=%d, Type=%d, Min=%d, Max=%d, Val=%d, Series=%d (preserved)",
+				nItemIdx, nDetail, nAttribType, nMin, nMax, Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0], nExistingSeries);
+		}
+	}
+	Lua_PushNumber(L, 1);  // Success
+	return 1;
+}
+
+// ------------------------------------------------------------
+// Set Purple Item Magic Attribute - Specialized for purple items
+// Lua: bSuccess = SetPurpleItemMagicAttrib(nItemIdx, nSlot, nAttribType, nMin, nMax, nValue)
+// This function properly sets attributes on purple items without regeneration
+// ------------------------------------------------------------
+int LuaSetPurpleItemMagicAttrib(Lua_State * L)
+{
+	if (Lua_GetTopIndex(L) < 6)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nPlayerIndex = GetPlayerIndex(L);
+	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_PLAYER)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nItemIdx = (int)Lua_ValueToNumber(L, 1);
+	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	// Verify it's a purple item
+	if (Item[nItemIdx].GetGenre() != item_purpleequip)
+	{
+		g_DebugLog("[PURPLE SETATTRIB] ERROR: Item %d is not purple (genre=%d)",
+			nItemIdx, Item[nItemIdx].GetGenre());
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nSlot = (int)Lua_ValueToNumber(L, 2);
+	if (nSlot < 0 || nSlot >= 6)
+	{
+		Lua_PushNumber(L, 0);
+		return 1;
+	}
+
+	int nAttribType = (int)Lua_ValueToNumber(L, 3);
+	int nMin = (int)Lua_ValueToNumber(L, 4);
+	int nMax = (int)Lua_ValueToNumber(L, 5);
+	int nValue = (int)Lua_ValueToNumber(L, 6);
+
+	// Set the magic attribute directly on purple item
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nAttribType = nAttribType;
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nMin = nMin;
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nMax = nMax;
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[0] = nValue;
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[1] = 0;
+	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[2] = 0;
+
+	// CRITICAL: Set special luck marker to prevent attribute regeneration
+	// Use luck=1000000001 as marker for "custom enchased purple item"
+	// This will be checked in Gen_ExistPurpleEquipment to skip DecodePurple
+	Item[nItemIdx].SetGeneratorLuck(1000000001);
+	Item[nItemIdx].SetRandomSeed(1000000001);
+
+	// CRITICAL: Encode attribute into generator levels so it syncs to client via ITEM_SYNC
+	// ITEM_SYNC only sends BYTE m_MagicLevel[6], so we encode as:
+	// [0]=slot, [1]=type, [2]=value, [3]=min, [4]=max, [5]=0
+	int nGenLevels[6] = {0};
+	nGenLevels[0] = nSlot;        // Which slot (0-5)
+	nGenLevels[1] = nAttribType;  // Attribute type
+	nGenLevels[2] = nValue;       // Attribute value
+	nGenLevels[3] = nMin;         // Min value
+	nGenLevels[4] = nMax;         // Max value
+	nGenLevels[5] = 0;            // Reserved
+	Item[nItemIdx].SetGeneratorLevel(nGenLevels);
+	g_DebugLog("[PURPLE SETATTRIB] ItemIdx=%d, Slot=%d, Type=%d, Min=%d, Max=%d, Value=%d",
+		nItemIdx, nSlot, nAttribType, nMin, nMax, nValue);
+	g_DebugLog("[PURPLE SETATTRIB] Set special luck/randomSeed=1000000001 to mark custom purple");
+	g_DebugLog("[PURPLE SETATTRIB] Encoded into GenLvl=[%d,%d,%d,%d,%d,%d] for client sync",
+		nGenLevels[0], nGenLevels[1], nGenLevels[2], nGenLevels[3], nGenLevels[4], nGenLevels[5]);
+	// CRITICAL: Sync item to client so player sees the new attribute
+	// Call SyncItem to force client update for items in UI temporary storage
+	Player[nPlayerIndex].m_ItemList.SyncItem(nItemIdx);
+	g_DebugLog("[PURPLE SETATTRIB] SyncItem called for ItemIdx=%d", nItemIdx);
+
+	Lua_PushNumber(L, 1);  // Success
+	return 1;
+}
+// ------------------------------------------------------------															   
 // Get Item Generator Levels (the tier values used for generation)
 // Lua: level0, level1, level2, level3, level4, level5 = GetItemGeneratorLevels(nItemIdx)
 // ------------------------------------------------------------
@@ -11157,6 +11322,8 @@ TLua_Funcs GameScriptFuns[] =
 	{"OpenCompoundUI",		LuaOpenCompoundUI},
 	{"GetItemMagicAttribInfo",	LuaGetItemMagicAttribInfo},
 	{"SetItemMagicAttribValueAndSync",	LuaSetItemMagicAttribValueAndSync},
+	{"SetItemMagicAttrib",	LuaSetItemMagicAttrib},
+	{"SetPurpleItemMagicAttrib",	LuaSetPurpleItemMagicAttrib},
 	{"GetItemGeneratorLevels",	LuaGetItemGeneratorLevels},
 	{"UpgradeItemAttributes",	LuaUpgradeItemAttributes},
 	//

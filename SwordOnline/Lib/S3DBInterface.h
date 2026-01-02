@@ -148,6 +148,11 @@ struct TDBItemData
 	int	idurability;
 	//
 	int		iparam1;
+	int		iparam2;
+	int		iparam3;
+	int		iparam4;
+	int		iparam5;
+	int		iparam6;
 	int		ishopprice;
 	DWORD	irandseed;
 	DWORD	ibindstate;

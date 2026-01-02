@@ -17,6 +17,8 @@ function GM_Item()
 			"NhËn Ngùa/GMHouse",
 			"NhËn Item/GMItem",
 			"NhËn ng©n l­îng/GMMoney",
+			"NhËn HuyÒn Tinh/NhanHuyenTinh",
+			"NhËn Kho¸ng Th¹ch/Nhankhoangthach",
 			"NhËn xu/GMCoin",
 			"Tho¸t/ExitFunc",
 		}
@@ -64,7 +66,16 @@ end;
 function GMScript()
 AskClientForNumber("AddScriptItems" ,0,999,"NhËp ID.")
 end;
-
+function NhanHuyenTinh()
+for i=0, 20 do
+AddTaskItem(77);
+end
+end;
+function Nhankhoangthach()
+for i=146, 151 do
+AddScriptItem(i);
+end
+end
 function AddScriptItems(nIndex,nID)
 AddScriptItem(nID);
 Msg2Player("C¸c h¹ nhËn ®­îc vËt phÈm ScriptsItem");

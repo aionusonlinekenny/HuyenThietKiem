@@ -209,6 +209,29 @@ int KItemSet::Add(int nItemGenre, int nSeries,
 		break;
 	}
 
+	// CRITICAL FIX: For khoang thach items created via Add() (Lua AddItemEx)
+	// Convert generator levels to magic attributes for tooltip display
+	// AND ensure generator levels persist for OnUse GetItemGeneratorLevels
+	if (nItemGenre == item_script && nDetailType >= 146 && nDetailType <= 151)
+	{
+		if (pnMagicLevel && pnMagicLevel[0] > 0)
+		{
+			pItem->m_aryMagicAttrib[0].nAttribType = pnMagicLevel[0];
+			pItem->m_aryMagicAttrib[0].nMin = (short)pnMagicLevel[1];
+			pItem->m_aryMagicAttrib[0].nMax = (short)pnMagicLevel[2];
+			pItem->m_aryMagicAttrib[0].nValue[0] = pnMagicLevel[3];
+			pItem->m_aryMagicAttrib[0].nValue[1] = 0;
+			pItem->m_aryMagicAttrib[0].nValue[2] = 0;
+
+			// CRITICAL: Call SetGeneratorLevel again to ensure all 6 values persist
+			// (Gen_Script may have cleared them, so we set again after MagicAttrib)
+			pItem->SetGeneratorLevel(pnMagicLevel);
+
+			g_DebugLog("[KHOANG ADD] Detail=%d, GenLvl=%d,%d,%d,%d,%d,%d -> MagicAttrib+GenParam",
+				nDetailType, pnMagicLevel[0], pnMagicLevel[1], pnMagicLevel[2],
+				pnMagicLevel[3], pnMagicLevel[4], pnMagicLevel[5]);
+		}
+	}
 #ifdef _SERVER
 	if( !SetID(i) )
 	{	
@@ -242,6 +265,29 @@ int KItemSet::AddExist(IN int nItemGenre, IN int nSeries, IN int nLevel,
 	pItem->SetGeneratorLevel(pnMagicLevel);
 	pItem->SetGeneratorLuck(nLuck);
 	pItem->SetGeneratorVersion(nVersion);
+
+	// For khoang thach items: save generator levels BEFORE Gen_ExistScript
+	// Gen_ExistScript overwrites the entire item with template (*pItem = *pScript)
+	// which wipes out generator levels, so we need to restore them after
+	int nSavedGenLevels[6] = {0};
+	int nSavedLuck = 0;
+	int nSavedVersion = 0;
+	DWORD dwSavedSeed = 0;
+	BOOL bNeedRestore = FALSE;
+
+	if (nItemGenre == item_script && nDetailType >= 146 && nDetailType <= 151 && pnMagicLevel)
+	{
+		// Save generator levels for khoang thach
+		memcpy(nSavedGenLevels, pnMagicLevel, sizeof(int) * 6);
+		nSavedLuck = nLuck;
+		nSavedVersion = nVersion;
+		dwSavedSeed = dwRandomSeed;
+		bNeedRestore = TRUE;
+
+		g_DebugLog("[KHOANG SAVE] Detail=%d, Saving GenLvl=[%d,%d,%d,%d,%d,%d] before Gen_ExistScript",
+			nDetailType, nSavedGenLevels[0], nSavedGenLevels[1], nSavedGenLevels[2],
+			nSavedGenLevels[3], nSavedGenLevels[4], nSavedGenLevels[5]);
+	}
 	switch(nItemGenre)
 	{
 	case item_equip:
@@ -249,6 +295,32 @@ int KItemSet::AddExist(IN int nItemGenre, IN int nSeries, IN int nLevel,
 		break;
 	case item_purpleequip:
 		ItemGen.Gen_ExistPurpleEquipment(wRecord, nDetailType, nSeries, pnMagicLevel, nLuck, nVersion, pItem);
+
+		// CRITICAL FIX: If this is a custom enchased purple (luck=1000000001),
+		// Gen_ExistPurpleEquipment skipped regeneration, so we need to decode
+		// the attribute from MagicLevel[] which was encoded by server
+		// Format: [0]=slot, [1]=type, [2]=value, [3]=min, [4]=max, [5]=reserved
+		if (nLuck == 1000000001 && pnMagicLevel && pnMagicLevel[0] >= 0 && pnMagicLevel[0] < 6)
+		{
+			int nSlot = pnMagicLevel[0];
+			int nType = pnMagicLevel[1];
+			int nValue = pnMagicLevel[2];
+			int nMin = pnMagicLevel[3];
+			int nMax = pnMagicLevel[4];
+
+			if (nType > 0)  // Valid attribute
+			{
+				pItem->m_aryMagicAttrib[nSlot].nAttribType = nType;
+				pItem->m_aryMagicAttrib[nSlot].nMin = nMin;
+				pItem->m_aryMagicAttrib[nSlot].nMax = nMax;
+				pItem->m_aryMagicAttrib[nSlot].nValue[0] = nValue;
+				pItem->m_aryMagicAttrib[nSlot].nValue[1] = 0;
+				pItem->m_aryMagicAttrib[nSlot].nValue[2] = 0;
+
+				g_DebugLog("[CLIENT PURPLE DECODE] Decoded enchased attribute: Slot=%d, Type=%d, Value=%d, Min=%d, Max=%d",
+					nSlot, nType, nValue, nMin, nMax);
+			}
+		}
 		break;
 	case item_goldequip:
 		ItemGen.Gen_GoldEquipment(wRecord, nSeries, pItem);
@@ -274,6 +346,44 @@ int KItemSet::AddExist(IN int nItemGenre, IN int nSeries, IN int nLevel,
 		break;
 	}
 
+	// For khoang thach items: restore generator levels AFTER Gen_ExistScript
+	// Gen_ExistScript overwrites the entire item, so we restore what we saved earlier
+	if (bNeedRestore)
+	{
+		pItem->SetRandomSeed(dwSavedSeed);
+		pItem->SetGeneratorLevel(nSavedGenLevels);
+		pItem->SetGeneratorLuck(nSavedLuck);
+		pItem->SetGeneratorVersion(nSavedVersion);
+
+		g_DebugLog("[KHOANG RESTORE] Detail=%d, Restored GenLvl=[%d,%d,%d,%d,%d,%d] after Gen_ExistScript",
+			nDetailType, nSavedGenLevels[0], nSavedGenLevels[1], nSavedGenLevels[2],
+			nSavedGenLevels[3], nSavedGenLevels[4], nSavedGenLevels[5]);
+	}
+	// For khoang thach items: convert generator levels to magic attributes
+	// This allows attributes stored in generator levels (which sync via ITEM_SYNC)
+	// to display automatically in tooltip
+	if (nItemGenre == 7 && nDetailType >= 146 && nDetailType <= 151)
+	{
+		if (pnMagicLevel && pnMagicLevel[0] > 0)
+		{
+			pItem->m_aryMagicAttrib[0].nAttribType = pnMagicLevel[0];
+			pItem->m_aryMagicAttrib[0].nMin = (short)pnMagicLevel[1];
+			pItem->m_aryMagicAttrib[0].nMax = (short)pnMagicLevel[2];
+			pItem->m_aryMagicAttrib[0].nValue[0] = pnMagicLevel[3];
+			pItem->m_aryMagicAttrib[0].nValue[1] = 0;
+			pItem->m_aryMagicAttrib[0].nValue[2] = 0;
+
+			// CRITICAL: Also call SetGeneratorLevel to ensure all 6 values persist
+			// (Gen_ExistScript may have cleared them, so we set again after MagicAttrib)
+																		 
+																		
+			pItem->SetGeneratorLevel(pnMagicLevel);
+
+			g_DebugLog("[KHOANG ADDEXIST] Detail=%d, GenLvl=%d,%d,%d,%d,%d,%d -> MagicAttrib+GenParam",
+				nDetailType, pnMagicLevel[0], pnMagicLevel[1], pnMagicLevel[2],
+				pnMagicLevel[3], pnMagicLevel[4], pnMagicLevel[5]);
+		}
+	}
 #ifdef _SERVER
 	if(!SetID(i))
 	{	
