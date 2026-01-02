@@ -308,7 +308,7 @@ int KItemSet::AddExist(IN int nItemGenre, IN int nSeries, IN int nLevel,
 			int nValue = pnMagicLevel[2] | (pnMagicLevel[3] << 8);  // Combine 2 bytes for value
 
 			// Decode min/max from RandomSeed (supports values > 255)
-			DWORD dwSeedOffset = nRandomSeed - 1000000000;
+			DWORD dwSeedOffset = dwRandomSeed - 1000000000;
 			int nMin = (dwSeedOffset >> 10) & 0x3FF;  // Upper 10 bits
 			int nMax = dwSeedOffset & 0x3FF;          // Lower 10 bits
 
@@ -324,7 +324,7 @@ int KItemSet::AddExist(IN int nItemGenre, IN int nSeries, IN int nLevel,
 				g_DebugLog("[CLIENT PURPLE DECODE] Decoded enchased attribute: Slot=%d, Type=%d, Value=%d, Min=%d, Max=%d",
 					nSlot, nType, nValue, nMin, nMax);
 				g_DebugLog("[CLIENT PURPLE DECODE] RandomSeed=%u, decoded Min=%d, Max=%d",
-					nRandomSeed, nMin, nMax);
+					dwRandomSeed, nMin, nMax);
 			}
 		}
 		break;
