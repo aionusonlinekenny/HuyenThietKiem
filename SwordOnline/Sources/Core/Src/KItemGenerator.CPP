@@ -385,14 +385,21 @@ BOOL KItemGenerator::Gen_PurpleEquipment(IN int nDetailType,
 	}
 
 	// For luck=1000000000 (newly created) and normal purples:
-	// Set basic properties first
-	pItem->SetGenre(item_purpleequip);
+	// CRITICAL: SetAttrib_CBR must be called BEFORE setting genre!
+	// Reason: SetAttrib_CBR does "*this = *pData" which copies genre from equipment table (genre=0)
+	// If we set genre=purple first, SetAttrib_CBR will overwrite it back to genre=equip!
+
+	// Step 1: Set series and record first
 	pItem->SetSeries(nSeriesReq);
 	pItem->SetRecord(i);
 
-	// ALWAYS call SetAttrib_CBR to set base attributes (damage, defense, requirements)
-	// This does NOT affect m_aryMagicAttrib - only sets m_aryBaseAttrib and m_aryRequireAttrib
+	// Step 2: Call SetAttrib_CBR to copy base attributes from equipment table
+	// This will set genre=item_equip (0) temporarily - we'll override it in step 3
 	pItem->SetAttrib_CBR(pEqu);
+
+	// Step 3: NOW set genre to purple (this overwrites the genre from SetAttrib_CBR)
+	// This MUST be after SetAttrib_CBR to ensure genre stays as item_purpleequip
+	pItem->SetGenre(item_purpleequip);
 
 #ifdef _DEBUG
 	if(pItem->m_GeneratorParam.nLuck == 1000000000)
@@ -529,14 +536,21 @@ BOOL KItemGenerator::Gen_ExistPurpleEquipment(IN int nRecord,
 	}
 
 	// For luck=1000000000 (newly created) and normal purples:
-	// Set basic properties first
+	// CRITICAL: SetAttrib_CBR must be called BEFORE setting genre!
+	// Reason: SetAttrib_CBR does "*this = *pData" which copies genre from equipment table (genre=0)
+	// If we set genre=purple first, SetAttrib_CBR will overwrite it back to genre=equip!
+
+	// Step 1: Set series and record first
 	pItem->SetSeries(nSeries);
 	pItem->SetRecord(i);
-	pItem->SetGenre(item_purpleequip);
 
-	// ALWAYS call SetAttrib_CBR to set base attributes (damage, defense, requirements)
-	// This does NOT affect m_aryMagicAttrib - only sets m_aryBaseAttrib and m_aryRequireAttrib
+	// Step 2: Call SetAttrib_CBR to copy base attributes from equipment table
+	// This will set genre=item_equip (0) temporarily - we'll override it in step 3
 	pItem->SetAttrib_CBR(pEqu);
+
+	// Step 3: NOW set genre to purple (this overwrites the genre from SetAttrib_CBR)
+	// This MUST be after SetAttrib_CBR to ensure genre stays as item_purpleequip
+	pItem->SetGenre(item_purpleequip);
 
 #ifdef _DEBUG
 	if(pItem->m_GeneratorParam.nLuck == 1000000000)
