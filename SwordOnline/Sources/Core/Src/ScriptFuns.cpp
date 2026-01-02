@@ -10574,7 +10574,7 @@ int LuaAddItemPurple(Lua_State * L)
 	// ========================================
 	// Call ItemSet.Add to allocate item and run Gen_PurpleEquipment
 	// Gen_PurpleEquipment will:
-	//   1. Check luck=1000000000 and SKIP SetAttrib_CBR (preserve empty slots)
+	//   1. Check luck=1000000000 and CALL SetAttrib_CBR (set base attributes)
 	//   2. Call DecodePurple to extract records from luck/randomSeed
 	//   3. When randomSeed=1000000000: decodes to [0,0,0] = all Type=53 (empty)
 	//   4. Generate 6 "Chua kham nam" slots via Gen_PurpleMagicAttrib
@@ -10610,6 +10610,11 @@ int LuaAddItemPurple(Lua_State * L)
 		&x, &y))
 	{
 		Player[nPlayerIndex].m_ItemList.Add(nItemIdx, pos_equiproom, x, y);
+
+		// Log item creation (same as AddItemEx)
+		char szData[128];
+		Item[nItemIdx].GetItemBackupInfo(szData);
+		Player[nPlayerIndex].SaveLog(2, szData, "LUA_ADD PURPLE", Item[nItemIdx].GetName());
 
 		g_DebugLog("[ADD_PURPLE] SUCCESS - Added to equipment room at (%d,%d)", x, y);
 		g_DebugLog("[ADD_PURPLE] Purple item idx=%d has 6 Type=53 empty slots", nItemIdx);
