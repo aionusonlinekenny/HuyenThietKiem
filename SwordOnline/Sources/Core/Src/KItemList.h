@@ -16,7 +16,7 @@
 #define	REQUEST_EQUIP_ITEM_TO_REPOSITORY4		9
 #define	REQUEST_EQUIP_ITEM_TO_REPOSITORY5		10
 #ifndef _SERVER
-extern bool g_RightMoveBusy;   // ch? khai báo (extern)
+extern bool g_RightMoveBusy;   // ch? khai bï¿½o (extern)
 #endif
 typedef struct
 {
@@ -188,6 +188,7 @@ public:
 	BOOL		RemoveStackItem(const int nGameIdx);
 	//
 	void		SyncItem(int nIdx, BOOL bIsNew = FALSE, int nPlace = 0, int nX = 0, int nY = 0, int nPlayerIndex = 0);
+	void		SyncPurpleItem(int nIdx, BOOL bIsNew = FALSE, int nPlace = 0, int nX = 0, int nY = 0, int nPlayerIndex = 0);
 	void		GetTradeRoomItemInfo();
 	BOOL		TradeCheckCanPlace();
 	//

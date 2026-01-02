@@ -646,53 +646,17 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 
 		// CRITICAL FIX: For custom purple items (luck >= 1000000000), sync ALL 6 attributes to client
 		// After loading from database, attributes are in server m_aryMagicAttrib[] but not synced to client
-		// We must send 6 separate ITEM_SYNC messages, one for each attribute
+		// We use the new ITEM_PURPLE_SYNC protocol to send all 6 attributes in a single message
 		// luck=1000000000: Newly created purple with Type=53 empty slots (need sync for "Chua kham nam")
 		// luck=1000000001: Enchased purple with filled slots (need sync for attributes)
 		if (NewItem.GetGenre() == item_purpleequip && NewItem.m_GeneratorParam.nLuck >= 1000000000)
 		{
-			g_DebugLog("[PURPLE LOGIN SYNC] Custom purple item loaded from DB, syncing %d attributes to client", nGameIndex);
+			g_DebugLog("[PURPLE LOGIN SYNC] Custom purple item %d loaded from DB, using ITEM_PURPLE_SYNC protocol to sync all 6 attributes in single message", nGameIndex);
 
-			// Loop through all 6 attribute slots
-			for (int s = 0; s < 6; s++)
-			{
-				int nType = Item[nGameIndex].m_aryMagicAttrib[s].nAttribType;
-				int nMin = Item[nGameIndex].m_aryMagicAttrib[s].nMin;
-				int nMax = Item[nGameIndex].m_aryMagicAttrib[s].nMax;
-				int nValue = Item[nGameIndex].m_aryMagicAttrib[s].nValue[0];
+			// Send the purple item with all 6 attributes using the new protocol
+			m_ItemList.SyncPurpleItem(nGameIndex);
 
-				// Skip ONLY Type<=0 (truly empty)
-				// Type=53 is VALID: it means "Chua kham nam" (empty slot waiting for enchase)
-				// DO sync Type=53 to client so player sees empty slots correctly
-				if (nType <= 0)
-				{
-					g_DebugLog("[PURPLE LOGIN SYNC] Slot %d: EMPTY (Type=0), skipping", s);
-					continue;
-				}
-
-				// Encode this attribute into GenLvl[] for ITEM_SYNC transmission
-				// Format: [0]=slot, [1]=type, [2]=value_low, [3]=value_high, [4]=0, [5]=0
-				int nGenLevels[6] = {0};
-				nGenLevels[0] = s;                    // Which slot (0-5)
-				nGenLevels[1] = nType;                // Attribute type
-				nGenLevels[2] = nValue & 0xFF;        // Value low byte
-				nGenLevels[3] = (nValue >> 8) & 0xFF; // Value high byte
-				nGenLevels[4] = 0;
-				nGenLevels[5] = 0;
-				Item[nGameIndex].SetGeneratorLevel(nGenLevels);
-
-				// Encode min/max into RandomSeed
-				DWORD dwEncodedSeed = 1000000000 + ((nMin & 0x3FF) << 10) + (nMax & 0x3FF);
-				Item[nGameIndex].SetRandomSeed(dwEncodedSeed);
-
-				// Send ITEM_SYNC to client for this attribute
-				m_ItemList.SyncItem(nGameIndex);
-
-				g_DebugLog("[PURPLE LOGIN SYNC] Slot %d: Type=%d, Min=%d, Max=%d, Value=%d synced",
-					s, nType, nMin, nMax, nValue);
-			}
-
-			g_DebugLog("[PURPLE LOGIN SYNC] All attributes synced for item %d", nGameIndex);
+			g_DebugLog("[PURPLE LOGIN SYNC] All 6 attributes synced via ITEM_PURPLE_SYNC for item %d", nGameIndex);
 		}
 	}
 
