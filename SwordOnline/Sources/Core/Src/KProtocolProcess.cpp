@@ -1438,7 +1438,13 @@ void KProtocolProcess::s2cSyncItem(BYTE* pMsg)
 //	NEW: Handle s2c_syncpurpleitem - Purple item sync with all 6 magic attributes
 void KProtocolProcess::s2cSyncPurpleItem(BYTE* pMsg)
 {
+	g_DebugLog("[CLIENT-PURPLE] s2cSyncPurpleItem called - receiving purple item");
+
 	ITEM_PURPLE_SYNC* pPurpleSync = (ITEM_PURPLE_SYNC*)pMsg;
+
+	g_DebugLog("[CLIENT-PURPLE] Purple item: ID=%d, Genre=%d, Detail=%d, Level=%d, Luck=%d",
+		pPurpleSync->m_ID, pPurpleSync->m_Genre, pPurpleSync->m_Detail,
+		pPurpleSync->m_Level, pPurpleSync->m_Luck);
 
 	// First, use standard AddExist to create/update the item with base properties
 	int pnMagicParam[6] = {0};  // Purple items don't use standard magic encoding
@@ -1454,8 +1460,11 @@ void KProtocolProcess::s2cSyncPurpleItem(BYTE* pMsg)
 		pPurpleSync->m_Version,
 		pPurpleSync->m_RandomSeed);
 
+	g_DebugLog("[CLIENT-PURPLE] ItemSet.AddExist returned nIndex=%d", nIndex);
+
 	if( (nIndex <= 0) || (nIndex >= MAX_ITEM) )
 	{
+		g_DebugLog("[CLIENT-PURPLE] ERROR: Invalid item index %d, aborting", nIndex);
 		Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 		return;
 	}
@@ -1474,6 +1483,7 @@ void KProtocolProcess::s2cSyncPurpleItem(BYTE* pMsg)
 
 	// CRITICAL: Set all 6 magic attributes from the protocol message
 	// This is the main difference from standard ITEM_SYNC - we get full attribute data
+	g_DebugLog("[CLIENT-PURPLE] Setting 6 magic attributes:");
 	for (int i = 0; i < 6; i++)
 	{
 		Item[nIndex].m_aryMagicAttrib[i].nAttribType = pPurpleSync->m_MagicAttrib[i].nType;
@@ -1482,10 +1492,19 @@ void KProtocolProcess::s2cSyncPurpleItem(BYTE* pMsg)
 		Item[nIndex].m_aryMagicAttrib[i].nValue[2] = 0;
 		Item[nIndex].m_aryMagicAttrib[i].nMin = pPurpleSync->m_MagicAttrib[i].nMin;
 		Item[nIndex].m_aryMagicAttrib[i].nMax = pPurpleSync->m_MagicAttrib[i].nMax;
+
+		g_DebugLog("[CLIENT-PURPLE]   Slot %d: Type=%d, Value=%d, Min=%d, Max=%d",
+			i, pPurpleSync->m_MagicAttrib[i].nType, pPurpleSync->m_MagicAttrib[i].nValue,
+			pPurpleSync->m_MagicAttrib[i].nMin, pPurpleSync->m_MagicAttrib[i].nMax);
 	}
 
 	// Add to player's item list
+	g_DebugLog("[CLIENT-PURPLE] Adding item to inventory: Place=%d, X=%d, Y=%d",
+		pPurpleSync->m_Place, pPurpleSync->m_X, pPurpleSync->m_Y);
+
 	Player[CLIENT_PLAYER_INDEX].m_ItemList.Add(nIndex, pPurpleSync->m_Place, pPurpleSync->m_X, pPurpleSync->m_Y);
+
+	g_DebugLog("[CLIENT-PURPLE] Purple item sync complete, item added to inventory");
 
 	Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 }
