@@ -674,6 +674,7 @@ typedef struct
 	BYTE	m_X;
 	BYTE	m_Y;
 	int		m_Luck;
+	BYTE	m_MagicLevel[6];	// CRITICAL: Must keep same layout as ITEM_SYNC for alignment!
 	WORD	m_Version;
 	WORD	m_Durability;
 	DWORD	m_RandomSeed;

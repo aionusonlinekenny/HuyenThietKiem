@@ -5565,6 +5565,12 @@ void KItemList::SyncPurpleItem(int nIdx, BOOL bIsNew, int nPlace, int nX, int nY
     sPurpleItem.m_X          = (BYTE)nX;
     sPurpleItem.m_Y          = (BYTE)nY;
     sPurpleItem.m_Luck       = Item[nIdx].m_GeneratorParam.nLuck;
+
+    // Fill m_MagicLevel[6] to maintain structure alignment with ITEM_SYNC
+    // Purple items don't use this field (we use m_MagicAttrib instead), so set to 0
+    for (int i = 0; i < 6; ++i)
+        sPurpleItem.m_MagicLevel[i] = 0;
+
     sPurpleItem.m_Version    = Item[nIdx].m_GeneratorParam.nVersion;
     sPurpleItem.m_Durability = Item[nIdx].GetDurability();
     sPurpleItem.m_RandomSeed = Item[nIdx].m_GeneratorParam.dwRandomSeed;
