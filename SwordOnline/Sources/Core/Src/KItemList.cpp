@@ -5550,6 +5550,10 @@ void KItemList::SyncItem(int nIdx, BOOL bIsNew, int nPlace, int nX, int nY, int 
 
 void KItemList::SyncPurpleItem(int nIdx, BOOL bIsNew, int nPlace, int nX, int nY, int nPlayerIndex)
 {
+    g_DebugLog("[SERVER-SYNC-PURPLE] SyncPurpleItem called for ItemIdx=%d", nIdx);
+    g_DebugLog("[SERVER-SYNC-PURPLE] Item properties: Genre=%d, Detail=%d, Level=%d, Luck=%d",
+        Item[nIdx].GetGenre(), Item[nIdx].GetDetailType(), Item[nIdx].GetLevel(), Item[nIdx].m_GeneratorParam.nLuck);
+
     ITEM_PURPLE_SYNC sPurpleItem;
     sPurpleItem.ProtocolType = s2c_syncpurpleitem;
     sPurpleItem.m_ID         = Item[nIdx].GetID();
@@ -5569,19 +5573,32 @@ void KItemList::SyncPurpleItem(int nIdx, BOOL bIsNew, int nPlace, int nX, int nY
     sPurpleItem.m_ExpiredTime = Item[nIdx].GetTime();
     sPurpleItem.m_ShopPrice  = Item[nIdx].GetPlayerShopPrice();
 
+    g_DebugLog("[SERVER-SYNC-PURPLE] Filled structure: Genre=%d, Detail=%d, Level=%d, Luck=%d, Place=%d",
+        sPurpleItem.m_Genre, sPurpleItem.m_Detail, sPurpleItem.m_Level, sPurpleItem.m_Luck, sPurpleItem.m_Place);
+
     // Copy all 6 magic attributes with full data (Type, Value, Min, Max)
+    g_DebugLog("[SERVER-SYNC-PURPLE] Copying 6 magic attributes:");
     for (int i = 0; i < 6; ++i)
     {
         sPurpleItem.m_MagicAttrib[i].nType  = (WORD)Item[nIdx].m_aryMagicAttrib[i].nAttribType;
         sPurpleItem.m_MagicAttrib[i].nValue = (WORD)Item[nIdx].m_aryMagicAttrib[i].nValue[0];
         sPurpleItem.m_MagicAttrib[i].nMin   = (WORD)Item[nIdx].m_aryMagicAttrib[i].nMin;
         sPurpleItem.m_MagicAttrib[i].nMax   = (WORD)Item[nIdx].m_aryMagicAttrib[i].nMax;
+
+        g_DebugLog("[SERVER-SYNC-PURPLE]   Slot %d: Type=%d, Value=%d, Min=%d, Max=%d",
+            i, sPurpleItem.m_MagicAttrib[i].nType, sPurpleItem.m_MagicAttrib[i].nValue,
+            sPurpleItem.m_MagicAttrib[i].nMin, sPurpleItem.m_MagicAttrib[i].nMax);
     }
 
     int netIdx = (nPlayerIndex > 0 && nPlayerIndex < MAX_PLAYER)
                  ? Player[nPlayerIndex].m_nNetConnectIdx
                  : Player[m_PlayerIdx].m_nNetConnectIdx;
 
+    g_DebugLog("[SERVER-SYNC-PURPLE] Sending ITEM_PURPLE_SYNC, size=%d bytes, to netIdx=%d",
+        sizeof(ITEM_PURPLE_SYNC), netIdx);
+
     g_pServer->PackDataToClient(netIdx, (BYTE*)&sPurpleItem, sizeof(ITEM_PURPLE_SYNC));
+
+    g_DebugLog("[SERVER-SYNC-PURPLE] SyncPurpleItem complete");
 }
 #endif // !_SERVER
