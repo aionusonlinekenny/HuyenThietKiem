@@ -644,19 +644,20 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 			continue ;
 		m_ItemList.Add(nGameIndex, nLocal, nItemX, nItemY);
 
-		// CRITICAL FIX: For custom purple items (luck >= 1000000000), sync ALL 6 attributes to client
-		// After loading from database, attributes are in server m_aryMagicAttrib[] but not synced to client
-		// We use the new ITEM_PURPLE_SYNC protocol to send all 6 attributes in a single message
-		// luck=1000000000: Newly created purple with Type=53 empty slots (need sync for "Chua kham nam")
-		// luck=1000000001: Enchased purple with filled slots (need sync for attributes)
+		// TEMPORARY: Skip extra sync for purple items during login
+		// The m_ItemList.Add() above should already sync the item to client
+		// Client will decode the item based on luck/version/randomseed/magiclevel
+		// For custom purple items (luck >= 1000000000), client should use Gen_ExistPurpleEquipment
+		// which will skip DecodePurple and preserve manual attributes
+		//
+		// NOTE: This means client will only see attributes that can be encoded in ITEM_SYNC
+		// Once client supports ITEM_PURPLE_SYNC protocol, we can enable full attribute sync here
 		if (NewItem.GetGenre() == item_purpleequip && NewItem.m_GeneratorParam.nLuck >= 1000000000)
 		{
-			g_DebugLog("[PURPLE LOGIN SYNC] Custom purple item %d loaded from DB, using ITEM_PURPLE_SYNC protocol to sync all 6 attributes in single message", nGameIndex);
-
-			// Send the purple item with all 6 attributes using the new protocol
-			m_ItemList.SyncPurpleItem(nGameIndex);
-
-			g_DebugLog("[PURPLE LOGIN SYNC] All 6 attributes synced via ITEM_PURPLE_SYNC for item %d", nGameIndex);
+			g_DebugLog("[PURPLE LOGIN SYNC] Custom purple item %d loaded from DB (luck=%d)",
+				nGameIndex, NewItem.m_GeneratorParam.nLuck);
+			g_DebugLog("[PURPLE LOGIN SYNC] Item will be synced via standard ITEM_SYNC during Add()");
+			// No additional sync needed here - waiting for client to support ITEM_PURPLE_SYNC
 		}
 	}
 
