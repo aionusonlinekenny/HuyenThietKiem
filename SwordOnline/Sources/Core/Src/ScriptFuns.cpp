@@ -10454,19 +10454,19 @@ int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 	g_DebugLog("[ENCHASE FLOW] BEFORE enchasing:");
 	g_DebugLog("[ENCHASE FLOW]   Genre=%d, Detail=%d, Level=%d, Luck=%d",
 		Item[nItemIdx].GetGenre(), Item[nItemIdx].GetDetailType(),
-		Item[nItemIdx].GetLevel(), Item[nItemIdx].m_GeneratorParam.nLuck);
+		Item[nItemIdx].GetLevel(), Item[nItemIdx].GetGeneratorParam()->nLuck);
 	g_DebugLog("[ENCHASE FLOW]   Item name: %s", Item[nItemIdx].GetName());
 
 	// Log all 6 current attributes BEFORE enchasing
 	g_DebugLog("[ENCHASE FLOW]   Current 6 attributes BEFORE:");
-	for (int i = 0; i < 6; i++)
+	for (int s = 0; s < 6; s++)
 	{
 		g_DebugLog("[ENCHASE FLOW]     Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
-			i,
-			Item[nItemIdx].m_aryMagicAttrib[i].nAttribType,
-			Item[nItemIdx].m_aryMagicAttrib[i].nValue[0],
-			Item[nItemIdx].m_aryMagicAttrib[i].nMin,
-			Item[nItemIdx].m_aryMagicAttrib[i].nMax);
+			s,
+			Item[nItemIdx].m_aryMagicAttrib[s].nAttribType,
+			Item[nItemIdx].m_aryMagicAttrib[s].nValue[0],
+			Item[nItemIdx].m_aryMagicAttrib[s].nMin,
+			Item[nItemIdx].m_aryMagicAttrib[s].nMax);
 	}
 
 	// Verify it's a purple item
@@ -10507,7 +10507,7 @@ int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 	// CRITICAL: Set special luck marker to prevent attribute regeneration
 	// Use luck=1000000001 as marker for "custom enchased purple item"
 	// This will be checked in Gen_ExistPurpleEquipment to skip DecodePurple
-	int nOldLuck = Item[nItemIdx].m_GeneratorParam.nLuck;
+	int nOldLuck = Item[nItemIdx].GetGeneratorParam()->nLuck;
 	Item[nItemIdx].SetGeneratorLuck(1000000001);
 	g_DebugLog("[ENCHASE FLOW] Changed luck: %d -> 1000000001 (enchased marker)", nOldLuck);
 
@@ -10515,18 +10515,18 @@ int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 	g_DebugLog("[ENCHASE FLOW] AFTER enchasing:");
 	g_DebugLog("[ENCHASE FLOW]   Genre=%d, Detail=%d, Level=%d, Luck=%d",
 		Item[nItemIdx].GetGenre(), Item[nItemIdx].GetDetailType(),
-		Item[nItemIdx].GetLevel(), Item[nItemIdx].m_GeneratorParam.nLuck);
+		Item[nItemIdx].GetLevel(), Item[nItemIdx].GetGeneratorParam()->nLuck);
 
 	// Log all 6 attributes AFTER enchasing
 	g_DebugLog("[ENCHASE FLOW]   Current 6 attributes AFTER:");
-	for (int i = 0; i < 6; i++)
+	for (int a = 0; a < 6; a++)
 	{
 		g_DebugLog("[ENCHASE FLOW]     Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
-			i,
-			Item[nItemIdx].m_aryMagicAttrib[i].nAttribType,
-			Item[nItemIdx].m_aryMagicAttrib[i].nValue[0],
-			Item[nItemIdx].m_aryMagicAttrib[i].nMin,
-			Item[nItemIdx].m_aryMagicAttrib[i].nMax);
+			a,
+			Item[nItemIdx].m_aryMagicAttrib[a].nAttribType,
+			Item[nItemIdx].m_aryMagicAttrib[a].nValue[0],
+			Item[nItemIdx].m_aryMagicAttrib[a].nMin,
+			Item[nItemIdx].m_aryMagicAttrib[a].nMax);
 	}
 
 	// Use ITEM_PURPLE_SYNC protocol to send ALL 6 attributes in a single message
@@ -10657,19 +10657,19 @@ int LuaAddItemPurple(Lua_State * L)
 	g_DebugLog("[CREATE FLOW]   Detail = %d", Item[nItemIdx].GetDetailType());
 	g_DebugLog("[CREATE FLOW]   Level = %d", Item[nItemIdx].GetLevel());
 	g_DebugLog("[CREATE FLOW]   Series = %d", Item[nItemIdx].GetSeries());
-	g_DebugLog("[CREATE FLOW]   Luck = %d", Item[nItemIdx].m_GeneratorParam.nLuck);
+	g_DebugLog("[CREATE FLOW]   Luck = %d", Item[nItemIdx].GetGeneratorParam()->nLuck);
 	g_DebugLog("[CREATE FLOW]   Name = %s", Item[nItemIdx].GetName());
 
 	// Log all 6 magic attributes after creation
 	g_DebugLog("[CREATE FLOW]   Initial 6 magic attributes:");
-	for (int i = 0; i < 6; i++)
+	for (int a = 0; a < 6; a++)
 	{
 		g_DebugLog("[CREATE FLOW]     Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
-			i,
-			Item[nItemIdx].m_aryMagicAttrib[i].nAttribType,
-			Item[nItemIdx].m_aryMagicAttrib[i].nValue[0],
-			Item[nItemIdx].m_aryMagicAttrib[i].nMin,
-			Item[nItemIdx].m_aryMagicAttrib[i].nMax);
+			a,
+			Item[nItemIdx].m_aryMagicAttrib[a].nAttribType,
+			Item[nItemIdx].m_aryMagicAttrib[a].nValue[0],
+			Item[nItemIdx].m_aryMagicAttrib[a].nMin,
+			Item[nItemIdx].m_aryMagicAttrib[a].nMax);
 	}
 
 	// If genre is NOT purple, something went wrong in Gen_PurpleEquipment
