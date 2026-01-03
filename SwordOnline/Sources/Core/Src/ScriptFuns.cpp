@@ -10478,29 +10478,17 @@ int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 	g_DebugLog("[PURPLE SETATTRIB] ItemIdx=%d, Slot=%d, Type=%d, Min=%d, Max=%d, Value=%d",
 		nItemIdx, nSlot, nAttribType, nMin, nMax, nValue);
 
-	// TEMPORARY FIX: Client doesn't support ITEM_PURPLE_SYNC yet, so use old ITEM_SYNC approach
-	// We sync ONLY the slot we just enchased, not all 6 slots
-	// The client should already have the other slots (Type=53 empty) from item creation
-	g_DebugLog("[PURPLE SETATTRIB] Using ITEM_SYNC to sync only the enchased slot %d", nSlot);
+	// Use ITEM_PURPLE_SYNC protocol to send ALL 6 attributes in a single message
+	// Purple items have 6 slots, and client needs to see all of them:
+	// - The slot we just enchased (Type=89, 126, etc.)
+	// - The 5 remaining slots (could be Type=53 "Chua kham nam" or other enchased attributes)
+	// The new ITEM_PURPLE_SYNC protocol sends all 6 attributes with full data (Type, Value, Min, Max)
+	g_DebugLog("[PURPLE SETATTRIB] Using ITEM_PURPLE_SYNC protocol to sync all 6 attributes in single message");
 
-	// Encode the enchased attribute into GenLvl for ITEM_SYNC transmission
-	int nGenLevels[6] = {0};
-	nGenLevels[0] = nSlot;                    // Which slot (0-5)
-	nGenLevels[1] = nAttribType;              // Attribute type
-	nGenLevels[2] = nValue & 0xFF;            // Value low byte
-	nGenLevels[3] = (nValue >> 8) & 0xFF;     // Value high byte
-	nGenLevels[4] = 0;
-	nGenLevels[5] = 0;
-	Item[nItemIdx].SetGeneratorLevel(nGenLevels);
+	// Send the purple item with all 6 attributes in one protocol message
+	Player[nPlayerIndex].m_ItemList.SyncPurpleItem(nItemIdx);
 
-	// Encode min/max into RandomSeed (supports values > 255)
-	DWORD dwEncodedSeed = 1000000000 + ((nMin & 0x3FF) << 10) + (nMax & 0x3FF);
-	Item[nItemIdx].SetRandomSeed(dwEncodedSeed);
-
-	// Send ITEM_SYNC to client for this attribute only
-	Player[nPlayerIndex].m_ItemList.SyncItem(nItemIdx);
-
-	g_DebugLog("[PURPLE SETATTRIB] Synced enchased slot %d via ITEM_SYNC for ItemIdx=%d", nSlot, nItemIdx);
+	g_DebugLog("[PURPLE SETATTRIB] All 6 attributes synced via ITEM_PURPLE_SYNC for ItemIdx=%d", nItemIdx);
 
 	Lua_PushNumber(L, 1);  // Success
 	return 1;
