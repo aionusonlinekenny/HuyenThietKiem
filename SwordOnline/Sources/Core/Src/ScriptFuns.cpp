@@ -10583,6 +10583,18 @@ int LuaAddItemPurple(Lua_State * L)
 		return 1;
 	}
 
+	// CRITICAL: Check genre after ItemSet.Add - should be item_purpleequip (5)
+	g_DebugLog("[ADD_PURPLE] Item created: nItemIdx=%d, Genre=%d, Detail=%d, Luck=%d",
+		nItemIdx, Item[nItemIdx].GetGenre(), Item[nItemIdx].GetDetailType(), Item[nItemIdx].m_GeneratorParam.nLuck);
+
+	// If genre is NOT purple, something went wrong in Gen_PurpleEquipment
+	if (Item[nItemIdx].GetGenre() != item_purpleequip)
+	{
+		g_DebugLog("[ADD_PURPLE] ERROR: Genre is %d, expected %d (item_purpleequip)!",
+			Item[nItemIdx].GetGenre(), item_purpleequip);
+		g_DebugLog("[ADD_PURPLE] This means Gen_PurpleEquipment did not set genre correctly!");
+	}
+
 	// ========================================
 	// ADD TO PLAYER INVENTORY
 	// ========================================
