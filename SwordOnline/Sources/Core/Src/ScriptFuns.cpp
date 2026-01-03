@@ -10421,8 +10421,13 @@ int LuaSetItemMagicAttrib(Lua_State * L)
 // ------------------------------------------------------------
 int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 {
+	g_DebugLog("========================================");
+	g_DebugLog("[ENCHASE FLOW] SetPurpleItemMagicAttrib called");
+	g_DebugLog("========================================");
+
 	if (Lua_GetTopIndex(L) < 6)
 	{
+		g_DebugLog("[ENCHASE FLOW] ERROR: Not enough parameters (need 6)");
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
@@ -10430,22 +10435,45 @@ int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 	int nPlayerIndex = GetPlayerIndex(L);
 	if (nPlayerIndex <= 0 || nPlayerIndex >= MAX_PLAYER)
 	{
+		g_DebugLog("[ENCHASE FLOW] ERROR: Invalid player index %d", nPlayerIndex);
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
+	g_DebugLog("[ENCHASE FLOW] Player index: %d", nPlayerIndex);
 
 	int nItemIdx = (int)Lua_ValueToNumber(L, 1);
 	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
 	{
+		g_DebugLog("[ENCHASE FLOW] ERROR: Invalid item index %d", nItemIdx);
 		Lua_PushNumber(L, 0);
 		return 1;
+	}
+	g_DebugLog("[ENCHASE FLOW] Item index: %d", nItemIdx);
+
+	// Log BEFORE state
+	g_DebugLog("[ENCHASE FLOW] BEFORE enchasing:");
+	g_DebugLog("[ENCHASE FLOW]   Genre=%d, Detail=%d, Level=%d, Luck=%d",
+		Item[nItemIdx].GetGenre(), Item[nItemIdx].GetDetailType(),
+		Item[nItemIdx].GetLevel(), Item[nItemIdx].m_GeneratorParam.nLuck);
+	g_DebugLog("[ENCHASE FLOW]   Item name: %s", Item[nItemIdx].GetName());
+
+	// Log all 6 current attributes BEFORE enchasing
+	g_DebugLog("[ENCHASE FLOW]   Current 6 attributes BEFORE:");
+	for (int i = 0; i < 6; i++)
+	{
+		g_DebugLog("[ENCHASE FLOW]     Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
+			i,
+			Item[nItemIdx].m_aryMagicAttrib[i].nAttribType,
+			Item[nItemIdx].m_aryMagicAttrib[i].nValue[0],
+			Item[nItemIdx].m_aryMagicAttrib[i].nMin,
+			Item[nItemIdx].m_aryMagicAttrib[i].nMax);
 	}
 
 	// Verify it's a purple item
 	if (Item[nItemIdx].GetGenre() != item_purpleequip)
 	{
-		g_DebugLog("[PURPLE SETATTRIB] ERROR: Item %d is not purple (genre=%d)",
-			nItemIdx, Item[nItemIdx].GetGenre());
+		g_DebugLog("[ENCHASE FLOW] ERROR: Item %d is not purple (genre=%d, expected %d)",
+			nItemIdx, Item[nItemIdx].GetGenre(), item_purpleequip);
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
@@ -10453,6 +10481,7 @@ int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 	int nSlot = (int)Lua_ValueToNumber(L, 2);
 	if (nSlot < 0 || nSlot >= 6)
 	{
+		g_DebugLog("[ENCHASE FLOW] ERROR: Invalid slot %d (must be 0-5)", nSlot);
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
@@ -10462,6 +10491,9 @@ int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 	int nMax = (int)Lua_ValueToNumber(L, 5);
 	int nValue = (int)Lua_ValueToNumber(L, 6);
 
+	g_DebugLog("[ENCHASE FLOW] Enchasing slot %d with: Type=%d, Min=%d, Max=%d, Value=%d",
+		nSlot, nAttribType, nMin, nMax, nValue);
+
 	// Set the magic attribute directly on purple item
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nAttribType = nAttribType;
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nMin = nMin;
@@ -10470,25 +10502,47 @@ int LuaSetPurpleItemMagicAttrib(Lua_State * L)
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[1] = 0;
 	Item[nItemIdx].m_aryMagicAttrib[nSlot].nValue[2] = 0;
 
+	g_DebugLog("[ENCHASE FLOW] Attribute set in memory");
+
 	// CRITICAL: Set special luck marker to prevent attribute regeneration
 	// Use luck=1000000001 as marker for "custom enchased purple item"
 	// This will be checked in Gen_ExistPurpleEquipment to skip DecodePurple
+	int nOldLuck = Item[nItemIdx].m_GeneratorParam.nLuck;
 	Item[nItemIdx].SetGeneratorLuck(1000000001);
+	g_DebugLog("[ENCHASE FLOW] Changed luck: %d -> 1000000001 (enchased marker)", nOldLuck);
 
-	g_DebugLog("[PURPLE SETATTRIB] ItemIdx=%d, Slot=%d, Type=%d, Min=%d, Max=%d, Value=%d",
-		nItemIdx, nSlot, nAttribType, nMin, nMax, nValue);
+	// Log AFTER state
+	g_DebugLog("[ENCHASE FLOW] AFTER enchasing:");
+	g_DebugLog("[ENCHASE FLOW]   Genre=%d, Detail=%d, Level=%d, Luck=%d",
+		Item[nItemIdx].GetGenre(), Item[nItemIdx].GetDetailType(),
+		Item[nItemIdx].GetLevel(), Item[nItemIdx].m_GeneratorParam.nLuck);
+
+	// Log all 6 attributes AFTER enchasing
+	g_DebugLog("[ENCHASE FLOW]   Current 6 attributes AFTER:");
+	for (int i = 0; i < 6; i++)
+	{
+		g_DebugLog("[ENCHASE FLOW]     Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
+			i,
+			Item[nItemIdx].m_aryMagicAttrib[i].nAttribType,
+			Item[nItemIdx].m_aryMagicAttrib[i].nValue[0],
+			Item[nItemIdx].m_aryMagicAttrib[i].nMin,
+			Item[nItemIdx].m_aryMagicAttrib[i].nMax);
+	}
 
 	// Use ITEM_PURPLE_SYNC protocol to send ALL 6 attributes in a single message
 	// Purple items have 6 slots, and client needs to see all of them:
 	// - The slot we just enchased (Type=89, 126, etc.)
 	// - The 5 remaining slots (could be Type=53 "Chua kham nam" or other enchased attributes)
 	// The new ITEM_PURPLE_SYNC protocol sends all 6 attributes with full data (Type, Value, Min, Max)
-	g_DebugLog("[PURPLE SETATTRIB] Using ITEM_PURPLE_SYNC protocol to sync all 6 attributes in single message");
+	g_DebugLog("[ENCHASE FLOW] Calling SyncPurpleItem to send via ITEM_PURPLE_SYNC protocol");
+	g_DebugLog("[ENCHASE FLOW] This will send ALL 6 attributes to client in single message");
 
 	// Send the purple item with all 6 attributes in one protocol message
 	Player[nPlayerIndex].m_ItemList.SyncPurpleItem(nItemIdx);
 
-	g_DebugLog("[PURPLE SETATTRIB] All 6 attributes synced via ITEM_PURPLE_SYNC for ItemIdx=%d", nItemIdx);
+	g_DebugLog("[ENCHASE FLOW] SyncPurpleItem completed");
+	g_DebugLog("[ENCHASE FLOW] Enchasing workflow finished successfully");
+	g_DebugLog("========================================");
 
 	Lua_PushNumber(L, 1);  // Success
 	return 1;
@@ -10537,7 +10591,10 @@ int LuaAddItemPurple(Lua_State * L)
 	int nLevel = (int)Lua_ValueToNumber(L, 3);    // Equipment level
 	int nSeries = (int)Lua_ValueToNumber(L, 4);   // Kim/Moc/Thuy/Hoa/Tho
 
-	g_DebugLog("[ADD_PURPLE] Creating purple: Detail=%d, Parti=%d, Level=%d, Series=%d",
+	g_DebugLog("========================================");
+	g_DebugLog("[CREATE FLOW] AddItemPurple called");
+	g_DebugLog("========================================");
+	g_DebugLog("[CREATE FLOW] Creating purple: Detail=%d, Parti=%d, Level=%d, Series=%d",
 		nDetail, nParti, nLevel, nSeries);
 
 	// ========================================
@@ -10554,6 +10611,12 @@ int LuaAddItemPurple(Lua_State * L)
 	// records from base-1000 encoding of luck and randomSeed values
 	int nPurpleGenLevels[6] = {10, 10, 10, 10, 10, 10};
 
+	g_DebugLog("[CREATE FLOW] Purple generation parameters:");
+	g_DebugLog("[CREATE FLOW]   Luck = %d (new purple marker)", PURPLE_LUCK_NEW);
+	g_DebugLog("[CREATE FLOW]   RandomSeed = %d (creates Type=53 empty slots)", PURPLE_RANDSEED);
+	g_DebugLog("[CREATE FLOW]   Version = %d", PURPLE_VERSION);
+	g_DebugLog("[CREATE FLOW]   GenLevels = [10,10,10,10,10,10] (triggers DecodePurple)");
+
 	// ========================================
 	// CREATE PURPLE ITEM
 	// ========================================
@@ -10563,8 +10626,10 @@ int LuaAddItemPurple(Lua_State * L)
 	//   2. Call DecodePurple to extract records from luck/randomSeed
 	//   3. When randomSeed=1000000000: decodes to [0,0,0] = all Type=53 (empty)
 	//   4. Generate 6 "Chua kham nam" slots via Gen_PurpleMagicAttrib
+	g_DebugLog("[CREATE FLOW] Calling ItemSet.Add with genre=item_purpleequip (%d)", item_purpleequip);
+
 	const int nItemIdx = ItemSet.Add(
-		item_purpleequip,      // genre = 5 (PURPLE-SPECIFIC!)
+		item_purpleequip,      // genre = item_purpleequip (PURPLE-SPECIFIC!)
 		nSeries,               // series (element)
 		nLevel,                // equipment level
 		0,                     // record (not used for purple)
@@ -10578,26 +10643,53 @@ int LuaAddItemPurple(Lua_State * L)
 
 	if (nItemIdx <= 0 || nItemIdx >= MAX_ITEM)
 	{
-		g_DebugLog("[ADD_PURPLE] FAILED to create item!");
+		g_DebugLog("[CREATE FLOW] ERROR: ItemSet.Add FAILED! Returned invalid index %d", nItemIdx);
+		g_DebugLog("========================================");
 		Lua_PushNumber(L, 0);
 		return 1;
 	}
 
-	// CRITICAL: Check genre after ItemSet.Add - should be item_purpleequip (5)
-	g_DebugLog("[ADD_PURPLE] Item created: nItemIdx=%d, Genre=%d, Detail=%d, Luck=%d",
-		nItemIdx, Item[nItemIdx].GetGenre(), Item[nItemIdx].GetDetailType(), Item[nItemIdx].m_GeneratorParam.nLuck);
+	// CRITICAL: Check genre after ItemSet.Add - should be item_purpleequip
+	g_DebugLog("[CREATE FLOW] ItemSet.Add returned index %d", nItemIdx);
+	g_DebugLog("[CREATE FLOW] Checking item properties after creation:");
+	g_DebugLog("[CREATE FLOW]   Genre = %d (expected %d for item_purpleequip)",
+		Item[nItemIdx].GetGenre(), item_purpleequip);
+	g_DebugLog("[CREATE FLOW]   Detail = %d", Item[nItemIdx].GetDetailType());
+	g_DebugLog("[CREATE FLOW]   Level = %d", Item[nItemIdx].GetLevel());
+	g_DebugLog("[CREATE FLOW]   Series = %d", Item[nItemIdx].GetSeries());
+	g_DebugLog("[CREATE FLOW]   Luck = %d", Item[nItemIdx].m_GeneratorParam.nLuck);
+	g_DebugLog("[CREATE FLOW]   Name = %s", Item[nItemIdx].GetName());
+
+	// Log all 6 magic attributes after creation
+	g_DebugLog("[CREATE FLOW]   Initial 6 magic attributes:");
+	for (int i = 0; i < 6; i++)
+	{
+		g_DebugLog("[CREATE FLOW]     Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
+			i,
+			Item[nItemIdx].m_aryMagicAttrib[i].nAttribType,
+			Item[nItemIdx].m_aryMagicAttrib[i].nValue[0],
+			Item[nItemIdx].m_aryMagicAttrib[i].nMin,
+			Item[nItemIdx].m_aryMagicAttrib[i].nMax);
+	}
 
 	// If genre is NOT purple, something went wrong in Gen_PurpleEquipment
 	if (Item[nItemIdx].GetGenre() != item_purpleequip)
 	{
-		g_DebugLog("[ADD_PURPLE] ERROR: Genre is %d, expected %d (item_purpleequip)!",
+		g_DebugLog("[CREATE FLOW] ********************************************");
+		g_DebugLog("[CREATE FLOW] ERROR: Genre is %d, expected %d (item_purpleequip)!",
 			Item[nItemIdx].GetGenre(), item_purpleequip);
-		g_DebugLog("[ADD_PURPLE] This means Gen_PurpleEquipment did not set genre correctly!");
+		g_DebugLog("[CREATE FLOW] This means Gen_PurpleEquipment did not set genre correctly!");
+		g_DebugLog("[CREATE FLOW] ********************************************");
+	}
+	else
+	{
+		g_DebugLog("[CREATE FLOW] Genre check PASSED - item is correctly purple");
 	}
 
 	// ========================================
 	// ADD TO PLAYER INVENTORY
 	// ========================================
+	g_DebugLog("[CREATE FLOW] Adding purple item to player inventory...");
 	int x = 0, y = 0;
 
 	// Try equipment room first
@@ -10606,6 +10698,7 @@ int LuaAddItemPurple(Lua_State * L)
 		Item[nItemIdx].GetHeight(),
 		&x, &y))
 	{
+		g_DebugLog("[CREATE FLOW] Found space in equipment room at (%d,%d)", x, y);
 		Player[nPlayerIndex].m_ItemList.Add(nItemIdx, pos_equiproom, x, y);
 
 		// Log item creation (same as AddItemEx)
@@ -10613,17 +10706,21 @@ int LuaAddItemPurple(Lua_State * L)
 		Item[nItemIdx].GetItemBackupInfo(szData);
 		Player[nPlayerIndex].SaveLog(2, szData, "LUA_ADD PURPLE", Item[nItemIdx].GetName());
 
-		g_DebugLog("[ADD_PURPLE] SUCCESS - Added to equipment room at (%d,%d)", x, y);
-		g_DebugLog("[ADD_PURPLE] Purple item idx=%d has 6 Type=53 empty slots", nItemIdx);
+		g_DebugLog("[CREATE FLOW] Item added to equipment room successfully");
+		g_DebugLog("[CREATE FLOW] Purple item created with 6 Type=53 empty slots ready for enchasing");
+		g_DebugLog("[CREATE FLOW] Creation workflow completed successfully");
+		g_DebugLog("========================================");
 
 		Lua_PushNumber(L, nItemIdx);
 		return 1;
 	}
 
 	// Equipment room full - put in hand
+	g_DebugLog("[CREATE FLOW] Equipment room full, placing in hand");
 	int nHandIdx = Player[nPlayerIndex].m_ItemList.Hand();
 	if (nHandIdx)
 	{
+		g_DebugLog("[CREATE FLOW] Hand occupied, dropping existing item on ground");
 		// Hand occupied - drop existing item on ground
 		Player[nPlayerIndex].m_ItemList.Remove(nHandIdx);
 
@@ -10665,8 +10762,10 @@ int LuaAddItemPurple(Lua_State * L)
 	// Put purple item in hand
 	Player[nPlayerIndex].m_ItemList.Add(nItemIdx, pos_hand, 0, 0);
 
-	g_DebugLog("[ADD_PURPLE] SUCCESS - Added to hand (equipment room full)");
-	g_DebugLog("[ADD_PURPLE] Purple item idx=%d has 6 Type=53 empty slots", nItemIdx);
+	g_DebugLog("[CREATE FLOW] Item added to hand successfully");
+	g_DebugLog("[CREATE FLOW] Purple item created with 6 Type=53 empty slots ready for enchasing");
+	g_DebugLog("[CREATE FLOW] Creation workflow completed successfully");
+	g_DebugLog("========================================");
 
 	Lua_PushNumber(L, nItemIdx);
 	return 1;
