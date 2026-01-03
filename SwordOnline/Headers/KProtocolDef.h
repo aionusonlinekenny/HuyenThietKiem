@@ -112,7 +112,6 @@ enum s2c_PROTOCOL
 	s2c_playerskilllevel,
 	s2c_playerskillremove,
 	s2c_syncitem,
-	s2c_syncpurpleitem,
 	s2c_removeitem,
 	s2c_syncmoney,
 	s2c_playermoveitem,
@@ -192,6 +191,7 @@ enum s2c_PROTOCOL
 	s2c_notification,//Notification by kinnox;
 	//s2c_show_lien_tram,
 	s2c_rightitemautomove,
+	s2c_syncpurpleitem,		// NEW: Purple item sync protocol - sends all 6 attributes in one message
 	s2c_extend = 250,
 	s2c_extendchat = 251,
 	s2c_extendfriend = 252,
