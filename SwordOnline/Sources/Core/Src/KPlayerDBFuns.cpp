@@ -706,6 +706,14 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 			g_DebugLog("[LOGIN SYNC] Purple item synced to client successfully");
 			g_DebugLog("========================================");
 		}
+		else
+		{
+			// For regular items (non-purple or regular purple items), sync using standard ITEM_SYNC protocol
+			// This ensures all items loaded from database are sent to client, not just purple items
+			g_DebugLog("[LOGIN SYNC] Syncing regular item to client: ItemIdx=%d, Genre=%d, Detail=%d, Name=%s",
+				nGameIndex, Item[nGameIndex].GetGenre(), Item[nGameIndex].GetDetailType(), Item[nGameIndex].GetName());
+			m_ItemList.SyncItem(nGameIndex, FALSE, nLocal, nItemX, nItemY);
+		}
 	}
 
 	pItemBuffer	= (BYTE*)pItemData;
