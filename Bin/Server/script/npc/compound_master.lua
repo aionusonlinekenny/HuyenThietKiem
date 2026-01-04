@@ -157,6 +157,17 @@ function ExeCompoundForge()
         nNumLines = random(nMinLines, nMaxLines)
     end
 
+    -- CRITICAL: Delete source items BEFORE creating purple item!
+    -- If we create purple item first, it changes inventory indices and
+    -- nEquipIdx/nCrystalIdx become invalid, causing DelItemByIndex to fail
+    Msg2Player("[LUA DEBUG] Deleting source items BEFORE creating purple item")
+    Msg2Player("[LUA DEBUG] About to delete nEquipIdx=" .. nEquipIdx .. ", nCrystalIdx=" .. nCrystalIdx)
+
+    DelItemByIndex(nEquipIdx)   -- Delete equipment
+    DelItemByIndex(nCrystalIdx) -- Delete crystal
+
+    Msg2Player("[LUA DEBUG] Source items deleted successfully")
+
     -- Create purple equipment using dedicated AddItemPurple function
     -- This function handles all the complexity internally:
     -- - Sets genre = item_purpleequip
@@ -164,25 +175,17 @@ function ExeCompoundForge()
     -- - Sets randomSeed = 1000000000 (for DecodePurple to generate Type=53 empty slots)
     -- - Calls Gen_PurpleEquipment to generate 6 "Chua kham nam" slots
     -- - Adds item directly to player's equipment room
-    Msg2Player("[LUA DEBUG] Before AddItemPurple: Detail=" .. nDetail .. ", Parti=" .. nParti .. ", Level=" .. nLevel .. ", Series=" .. nSeries)
+    Msg2Player("[LUA DEBUG] Now creating purple item: Detail=" .. nDetail .. ", Parti=" .. nParti .. ", Level=" .. nLevel .. ", Series=" .. nSeries)
     local nPurpleIdx = AddItemPurple(nDetail, nParti, nLevel, nSeries)
-    Msg2Player("[LUA DEBUG] After AddItemPurple: nPurpleIdx=" .. tostring(nPurpleIdx))
+    Msg2Player("[LUA DEBUG] AddItemPurple returned: nPurpleIdx=" .. tostring(nPurpleIdx))
 
     if not nPurpleIdx or nPurpleIdx <= 0 then
-        Msg2Player("[LUA DEBUG] AddItemPurple FAILED! nPurpleIdx=" .. tostring(nPurpleIdx))
+        Msg2Player("[LUA DEBUG] ERROR: AddItemPurple FAILED! nPurpleIdx=" .. tostring(nPurpleIdx))
         Talk(1, "", "<color=red>Loi: Khong the tao trang bi tim!<color>")
         return
     end
 
-    Msg2Player("[LUA DEBUG] AddItemPurple SUCCESS! Now deleting source items...")
-    Msg2Player("[LUA DEBUG] About to delete nEquipIdx=" .. nEquipIdx)
-
-    -- Remove source items from build slots using DelItemByIndex
-    DelItemByIndex(nEquipIdx)   -- Delete equipment
-    Msg2Player("[LUA DEBUG] Deleted equipment, now deleting nCrystalIdx=" .. nCrystalIdx)
-
-    DelItemByIndex(nCrystalIdx) -- Delete crystal
-    Msg2Player("[LUA DEBUG] Both items deleted successfully")
+    Msg2Player("[LUA DEBUG] Purple item created successfully!")
 
     -- Success message
     local szMsg = "<color=green>Che tao thanh cong trang bi tim voi " .. nNumLines .. " dong thuoc tinh!<color>"
