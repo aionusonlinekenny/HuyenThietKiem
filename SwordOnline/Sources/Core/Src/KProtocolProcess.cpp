@@ -1479,7 +1479,6 @@ void KProtocolProcess::s2cSyncPurpleItem(BYTE* pMsg)
 	if( (nIndex <= 0) || (nIndex >= MAX_ITEM) )
 	{
 		g_DebugLog("[CLIENT-PURPLE] ERROR: Invalid item index %d, aborting", nIndex);
-		Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 		return;
 	}
 
@@ -1519,8 +1518,6 @@ void KProtocolProcess::s2cSyncPurpleItem(BYTE* pMsg)
 	Player[CLIENT_PLAYER_INDEX].m_ItemList.Add(nIndex, pPurpleSync->m_Place, pPurpleSync->m_X, pPurpleSync->m_Y);
 
 	g_DebugLog("[CLIENT-PURPLE] Purple item sync complete, item added to inventory");
-
-	Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 }
 
 
