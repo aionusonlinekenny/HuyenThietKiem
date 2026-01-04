@@ -442,9 +442,15 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 	if(nEnd > nItemCount)
 		nEnd = nItemCount;
 
-	nParam = nEnd;		
-	
-	KItem NewItem;	
+	nParam = nEnd;
+
+	g_DebugLog("========================================");
+	g_DebugLog("[LOAD ITEMLIST] LoadPlayerItemList called");
+	g_DebugLog("[LOAD ITEMLIST] nItemCount=%d, nBegin=%d, nEnd=%d, loading %d items in this batch",
+		nItemCount, nBegin, nEnd, nEnd - nBegin);
+	g_DebugLog("========================================");
+
+	KItem NewItem;
 	int i;
 	for(i = nBegin ; i < nEnd; i ++)
 	{	
@@ -704,10 +710,19 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 
 	pItemBuffer	= (BYTE*)pItemData;
 
+	g_DebugLog("[LOAD ITEMLIST] Batch complete: nBegin=%d, nEnd=%d, nParam=%d, nItemCount=%d",
+		nBegin, nEnd, nParam, nItemCount);
+
 	if(nParam >= nItemCount)
+	{
+		g_DebugLog("[LOAD ITEMLIST] All items loaded, returning 1");
 		return 1;
-	else 
+	}
+	else
+	{
+		g_DebugLog("[LOAD ITEMLIST] More items to load, returning 0");
 		return 0;
+	}
 }
 
 // --
