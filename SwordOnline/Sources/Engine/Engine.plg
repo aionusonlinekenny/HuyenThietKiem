@@ -6,28 +6,18 @@
 --------------------Configuration: Bishop - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Release/Bishop.res" /d "NDEBUG" "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\Bishop.rc"" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPA44A.tmp" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP3B7C.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /I "..\Common" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\..\lib" /I "..\..\..\Headers" /I "..\..\Sword3PaySys\S3AccServer" /I "..\..\s3client\login" /I "..\..\RoleDBManager" /I "..\..\Core\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Bishop.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\Application.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\Bishop.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Event.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\GamePlayer.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\GameServer.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\Intercessor.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\Network.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\PlayerCreator.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\SmartClient.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPA44A.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPA44B.tmp" with contents
-[
-/nologo /MT /W3 /GX /O2 /I "..\Common" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\..\lib" /I "..\..\..\Headers" /I "..\..\Sword3PaySys\S3AccServer" /I "..\..\s3client\login" /I "..\..\RoleDBManager" /I "..\..\Core\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Bishop.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Bishop\StdAfx.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPA44B.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPA44C.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP3B7C.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP3B7D.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Bishop.pdb" /map:"Release/Bishop.map" /debug /machine:I386 /out:"Release/Bishop.exe" 
 .\Release\Application.obj
@@ -44,24 +34,18 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 ..\..\..\Lib\release\common.lib
 ..\..\..\Lib\release\engine.lib
 ]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSPA44C.tmp"
+Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP3B7D.tmp"
 <h3>Output Window</h3>
-Compiling resources...
-Compiling...
-StdAfx.cpp
 Compiling...
 Application.cpp
 Bishop.cpp
-Event.cpp
 GamePlayer.cpp
 GameServer.cpp
 Intercessor.cpp
-Network.cpp
 PlayerCreator.cpp
-SmartClient.cpp
 Generating Code...
 Linking...
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPB65E.bat" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4BCA.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\Server
@@ -73,7 +57,7 @@ copy release\Bishop.exe ..\..\..\..\bin\Server\release\Bishop.exe
 copy release\Bishop.map ..\..\..\..\bin\Server\release\Bishop.map
 copy release\Bishop.pdb ..\..\..\..\bin\Server\release\Bishop.pdb
 ]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPB65E.bat"
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP4BCA.bat"
 
 A subdirectory or file ..\..\..\..\bin\Server already exists.
         1 file(s) copied.
@@ -92,7 +76,7 @@ Bishop.exe - 0 error(s), 0 warning(s)
 --------------------Configuration: Core - Win32 Server Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPB7C6.tmp" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4DEE.tmp" with contents
 [
 /nologo /MT /W2 /GX /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /D "NDEBUG" /D "_SERVER" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FR"ServerRelease/" /Fp"ServerRelease/Core.pch" /Yu"KCore.h" /Fo"ServerRelease/" /Fd"ServerRelease/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KPartnerSkill.cpp"
@@ -174,14 +158,14 @@ Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPB7C6.tmp" with con
 "E:\HuyenThietKiem\SwordOnline\Sources\Core\KJXPathFinder.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KLittleMap.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPB7C6.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPB7C7.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP4DEE.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4DEF.tmp" with contents
 [
 /nologo /MT /W2 /GX /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /D "NDEBUG" /D "_SERVER" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FR"ServerRelease/" /Fp"ServerRelease/Core.pch" /Yc"KCore.h" /Fo"ServerRelease/" /Fd"ServerRelease/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\stdafx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPB7C7.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPB7C8.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP4DEF.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4DF0.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib lualibdll.lib Ws2_32.lib Winmm.lib Shlwapi.lib /nologo /dll /incremental:no /pdb:"ServerRelease/CoreServer.pdb" /map:"ServerRelease/CoreServer.map" /debug /machine:I386 /out:"ServerRelease\CoreServer.dll" /implib:"ServerRelease/CoreServer.lib" 
 .\ServerRelease\KPartnerSkill.obj
@@ -268,7 +252,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Src\USBKey\EP1KDL20.LIB
 .\Src\USBKey\EpsForJoLib.lib
 ]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSPB7C8.tmp"
+Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP4DF0.tmp"
 <h3>Output Window</h3>
 Compiling...
 stdafx.cpp
@@ -302,6 +286,10 @@ KPlayer.cpp
 KPlayerAI.cpp
 KPlayerChat.cpp
 KPlayerDBFuns.cpp
+E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerDBFuns.cpp(579) : error C2374: 's' : redefinition; multiple initialization
+        E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerDBFuns.cpp(532) : see declaration of 's'
+E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerDBFuns.cpp(1104) : error C2374: 's' : redefinition; multiple initialization
+        E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerDBFuns.cpp(1089) : see declaration of 's'
 KPlayerFaction.cpp
 KPlayerMenuState.cpp
 KPlayerMove.cpp
@@ -322,6 +310,10 @@ KItem.cpp
 KItemChangeRes.cpp
 KItemGenerator.CPP
 KItemList.cpp
+E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KItemList.cpp(5617) : error C2374: 'i' : redefinition; multiple initialization
+        E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KItemList.cpp(5592) : see declaration of 'i'
+E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KItemList.cpp(5643) : error C2374: 'i' : redefinition; multiple initialization
+        E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KItemList.cpp(5592) : see declaration of 'i'
 KItemSet.cpp
 KObj.cpp
 KObjSet.cpp
@@ -358,45 +350,17 @@ Kautoai.cpp
 KJXPathFinder.cpp
 KLittleMap.cpp
 Generating Code...
-Linking...
-   Creating library ServerRelease/CoreServer.lib and object ServerRelease/CoreServer.exp
-ServerRelease\CoreServer.dll : warning LNK4084: total image size 674762752 exceeds max (268435456); image may not run
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPD479.bat" with contents
-[
-@echo off
-md ..\..\lib\release
-copy ServerRelease\CoreServer.lib ..\..\lib\release\CoreServer.lib
-md ..\..\..\bin\Server
-copy ServerRelease\CoreServer.map ..\..\..\bin\Server\Coreserver.map
-copy ServerRelease\CoreServer.pdb ..\..\..\bin\Server\Coreserver.pdb
-copy ServerRelease\CoreServer.dll ..\..\..\bin\Server\Coreserver.dll
-md ..\..\..\bin\Server\release
-copy ServerRelease\CoreServer.map ..\..\..\bin\Server\release\Coreserver.map
-copy ServerRelease\CoreServer.pdb ..\..\..\bin\Server\release\Coreserver.pdb
-copy ServerRelease\CoreServer.dll ..\..\..\bin\Server\release\Coreserver.dll
-]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPD479.bat"
-
-A subdirectory or file ..\..\lib\release already exists.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\Server already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\Server\release already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
+Error executing cl.exe.
 
 
 
 <h3>Results</h3>
-CoreServer.dll - 0 error(s), 1 warning(s)
+CoreServer.dll - 4 error(s), 0 warning(s)
 <h3>
 --------------------Configuration: Core - Win32 Client Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPD72A.tmp" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP6AEF.tmp" with contents
 [
 /nologo /MD /W2 /GX /Zi /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /I "src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FR"ClientRelease/" /Fp"ClientRelease/Core.pch" /Yu"KCore.h" /Fo"ClientRelease/" /Fd"ClientRelease/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KPartnerSkill.cpp"
@@ -482,26 +446,26 @@ Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPD72A.tmp" with con
 "E:\HuyenThietKiem\SwordOnline\Sources\Core\KJXPathFinder.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KLittleMap.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPD72A.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPD72B.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP6AEF.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP6AF0.tmp" with contents
 [
 /nologo /MD /W2 /GX /Zi /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /I "src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FAs /Fa"ClientRelease/" /FR"ClientRelease/" /Fp"ClientRelease/Core.pch" /Yu"KCore.h" /Fo"ClientRelease/" /Fd"ClientRelease/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\KMissle.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPD72B.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPD72C.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP6AF0.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP6AF1.tmp" with contents
 [
 /nologo /MD /W2 /GX /Zi /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /I "src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FAs /Fa"ClientRelease/" /FR"ClientRelease/" /Fo"ClientRelease/" /Fd"ClientRelease/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\Scene\KIpoTree.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPD72C.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPD72D.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP6AF1.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP6AF2.tmp" with contents
 [
 /nologo /MD /W2 /GX /Zi /O2 /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /I "src" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FR"ClientRelease/" /Fp"ClientRelease/Core.pch" /Yc"KCore.h" /Fo"ClientRelease/" /Fd"ClientRelease/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\Core\Src\stdafx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPD72D.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPD72E.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP6AF2.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP6B03.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib lualibdll.lib Shlwapi.lib Winmm.lib /nologo /dll /incremental:no /pdb:"ClientRelease/CoreClient.pdb" /map:"ClientRelease/CoreClient.map" /debug /machine:I386 /out:"ClientRelease\CoreClient.dll" /implib:"ClientRelease/CoreClient.lib" /libpath:"../../lib/" 
 .\ClientRelease\KPartnerSkill.obj
@@ -594,7 +558,7 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Src\USBKey\EP1KDL20.LIB
 .\Src\USBKey\EpsForJoLib.lib
 ]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSPD72E.tmp"
+Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP6B03.tmp"
 <h3>Output Window</h3>
 Compiling...
 stdafx.cpp
@@ -696,7 +660,7 @@ Compiling...
 KIpoTree.cpp
 Linking...
    Creating library ClientRelease/CoreClient.lib and object ClientRelease/CoreClient.exp
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPFECB.bat" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP9242.bat" with contents
 [
 @echo off
 md ..\..\..\bin\Client\release
@@ -709,13 +673,14 @@ copy ClientRelease\CoreClient.lib ..\..\lib\release\CoreClient.lib
 copy ClientRelease\CoreClient.map ..\..\..\bin\Client\release\CoreClient.map
 copy ClientRelease\CoreClient.pdb ..\..\..\bin\Client\release\CoreClient.pdb
 ]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPFECB.bat"
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP9242.bat"
 
 A subdirectory or file ..\..\..\bin\Client\release already exists.
 A subdirectory or file ..\..\lib\release already exists.
         1 file(s) copied.
         1 file(s) copied.
-        1 file(s) copied.
+The process cannot access the file because it is being used by another process.
+        0 file(s) copied.
         1 file(s) copied.
         1 file(s) copied.
         1 file(s) copied.
@@ -729,1044 +694,15 @@ CoreClient.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: Engine - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP43.tmp" with contents
-[
-/nologo /MD /W3 /GX /Zi /O2 /I "include" /I "..\Pack\ucl-1.01\include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ENGINE_EXPORTS" /D WINVER=0x0500 /Fp"Release/Engine.pch" /YX"KWin32.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\CLogFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KAutoMutex.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KAviFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KBitmap.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KBitmap16.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KBitmapConvert.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KBmp2Spr.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KBmpFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KBmpFile24.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KCache.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KCanvas.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KCodec.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KCodecLzo.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KColors.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDDraw.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDebug.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDError.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDInput.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDrawBase.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDrawBitmap.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDrawBitmap16.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDrawFade.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDrawFont.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDrawSprite.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDrawSpriteAlpha.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDSound.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KEicScript.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KEicScriptSet.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KEngine.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KEvent.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KFileCopy.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KFileDialog.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KFilePath.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KFindBinTree.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KFont.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KGifFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KGraphics.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KHashList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KHashNode.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KHashTable.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\Kime.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KIniFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KJpgFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KKeyboard.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KLicense.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KLinkArray.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KLuaScript.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KLuaScriptSet.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KLubCmpl_Blocker.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMemBase.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMemClass.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMemClass1.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMemManager.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMemStack.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMessage.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMouse.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMp3Music.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMp4Audio.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMp4Movie.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMp4Video.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMpgMusic.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMsgNode.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMusic.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMutex.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KNode.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KOctree.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KOctreeNode.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPakData.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPakFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPakList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPakTool.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPalette.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPcxFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPolygon.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPolyRelation.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KRandom.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSafeList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KScanDir.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KScript.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KScriptCache.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KScriptList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KScriptSet.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSG_MD5_String.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSG_StringProcess.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSortBinTree.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSortList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSoundCache.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSprite.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSpriteCache.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSpriteCodec.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSpriteMaker.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KStepLuaScript.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KStrBase.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KStrList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KStrNode.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KTabFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KTabFileCtrl.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KTgaFile32.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KThread.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KTimer.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KVideo.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KWavCodec.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KWavFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KWavMusic.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KWavSound.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KWin32.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KWin32App.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KWin32Wnd.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KZipCodec.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KZipData.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KZipFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KZipList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\md5.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\XPackFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\Cryptography\EDOneTimePad.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\Text.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP43.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP44.tmp" with contents
-[
-/nologo /MD /W3 /GX /Zi /O2 /I "include" /I "..\Pack\ucl-1.01\include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ENGINE_EXPORTS" /D WINVER=0x0500 /Fp"Release/Engine.pch" /Yc"kwin32.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\stdafx.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP44.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP55.tmp" with contents
-[
-/nologo /MD /W3 /GX /Zi /O2 /I "include" /I "..\Pack\ucl-1.01\include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ENGINE_EXPORTS" /D WINVER=0x0500 /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\alloc.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\io.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2b_99.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2b_d.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2b_ds.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2b_to.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2d_99.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2d_d.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2d_ds.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2d_to.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2e_99.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2e_d.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2e_ds.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2e_to.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_crc.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_dll.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_init.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_ptr.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_str.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_util.c"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP55.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP56.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib comdlg32.lib ddraw.lib dsound.lib dxguid.lib winmm.lib wsock32.lib dinput8.lib /nologo /dll /incremental:no /pdb:"Release/Engine.pdb" /map:"Release/Engine.map" /debug /machine:I386 /out:"Release/Engine.dll" /implib:"Release/Engine.lib" 
-.\Release\CLogFile.obj
-.\Release\KAutoMutex.obj
-.\Release\KAviFile.obj
-.\Release\KBitmap.obj
-.\Release\KBitmap16.obj
-.\Release\KBitmapConvert.obj
-.\Release\KBmp2Spr.obj
-.\Release\KBmpFile.obj
-.\Release\KBmpFile24.obj
-.\Release\KCache.obj
-.\Release\KCanvas.obj
-.\Release\KCodec.obj
-.\Release\KCodecLzo.obj
-.\Release\KColors.obj
-.\Release\KDDraw.obj
-.\Release\KDebug.obj
-.\Release\KDError.obj
-.\Release\KDInput.obj
-.\Release\KDrawBase.obj
-.\Release\KDrawBitmap.obj
-.\Release\KDrawBitmap16.obj
-.\Release\KDrawFade.obj
-.\Release\KDrawFont.obj
-.\Release\KDrawSprite.obj
-.\Release\KDrawSpriteAlpha.obj
-.\Release\KDSound.obj
-.\Release\KEicScript.obj
-.\Release\KEicScriptSet.obj
-.\Release\KEngine.obj
-.\Release\KEvent.obj
-.\Release\KFile.obj
-.\Release\KFileCopy.obj
-.\Release\KFileDialog.obj
-.\Release\KFilePath.obj
-.\Release\KFindBinTree.obj
-.\Release\KFont.obj
-.\Release\KGifFile.obj
-.\Release\KGraphics.obj
-.\Release\KHashList.obj
-.\Release\KHashNode.obj
-.\Release\KHashTable.obj
-.\Release\Kime.obj
-.\Release\KIniFile.obj
-.\Release\KJpgFile.obj
-.\Release\KKeyboard.obj
-.\Release\KLicense.obj
-.\Release\KLinkArray.obj
-.\Release\KList.obj
-.\Release\KLuaScript.obj
-.\Release\KLuaScriptSet.obj
-.\Release\KLubCmpl_Blocker.obj
-.\Release\KMemBase.obj
-.\Release\KMemClass.obj
-.\Release\KMemClass1.obj
-.\Release\KMemManager.obj
-.\Release\KMemStack.obj
-.\Release\KMessage.obj
-.\Release\KMouse.obj
-.\Release\KMp3Music.obj
-.\Release\KMp4Audio.obj
-.\Release\KMp4Movie.obj
-.\Release\KMp4Video.obj
-.\Release\KMpgMusic.obj
-.\Release\KMsgNode.obj
-.\Release\KMusic.obj
-.\Release\KMutex.obj
-.\Release\KNode.obj
-.\Release\KOctree.obj
-.\Release\KOctreeNode.obj
-.\Release\KPakData.obj
-.\Release\KPakFile.obj
-.\Release\KPakList.obj
-.\Release\KPakTool.obj
-.\Release\KPalette.obj
-.\Release\KPcxFile.obj
-.\Release\KPolygon.obj
-.\Release\KPolyRelation.obj
-.\Release\KRandom.obj
-.\Release\KSafeList.obj
-.\Release\KScanDir.obj
-.\Release\KScript.obj
-.\Release\KScriptCache.obj
-.\Release\KScriptList.obj
-.\Release\KScriptSet.obj
-.\Release\KSG_MD5_String.obj
-.\Release\KSG_StringProcess.obj
-.\Release\KSortBinTree.obj
-.\Release\KSortList.obj
-.\Release\KSoundCache.obj
-.\Release\KSprite.obj
-.\Release\KSpriteCache.obj
-.\Release\KSpriteCodec.obj
-.\Release\KSpriteMaker.obj
-.\Release\KStepLuaScript.obj
-.\Release\KStrBase.obj
-.\Release\KStrList.obj
-.\Release\KStrNode.obj
-.\Release\KTabFile.obj
-.\Release\KTabFileCtrl.obj
-.\Release\KTgaFile32.obj
-.\Release\KThread.obj
-.\Release\KTimer.obj
-.\Release\KVideo.obj
-.\Release\KWavCodec.obj
-.\Release\KWavFile.obj
-.\Release\KWavMusic.obj
-.\Release\KWavSound.obj
-.\Release\KWin32.obj
-.\Release\KWin32App.obj
-.\Release\KWin32Wnd.obj
-.\Release\KZipCodec.obj
-.\Release\KZipData.obj
-.\Release\KZipFile.obj
-.\Release\KZipList.obj
-.\Release\md5.obj
-.\Release\stdafx.obj
-.\Release\XPackFile.obj
-.\Release\EDOneTimePad.obj
-.\Release\Text.obj
-.\Release\alloc.obj
-.\Release\io.obj
-.\Release\n2b_99.obj
-.\Release\n2b_d.obj
-.\Release\n2b_ds.obj
-.\Release\n2b_to.obj
-.\Release\n2d_99.obj
-.\Release\n2d_d.obj
-.\Release\n2d_ds.obj
-.\Release\n2d_to.obj
-.\Release\n2e_99.obj
-.\Release\n2e_d.obj
-.\Release\n2e_ds.obj
-.\Release\n2e_to.obj
-.\Release\ucl_crc.obj
-.\Release\ucl_dll.obj
-.\Release\ucl_init.obj
-.\Release\ucl_ptr.obj
-.\Release\ucl_str.obj
-.\Release\ucl_util.obj
-..\..\Lib\release\JpgLib.lib
-..\..\Lib\release\LuaLibDll.lib
-..\..\Lib\release\mp3lib.lib
-]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP56.tmp"
-<h3>Output Window</h3>
-Compiling...
-stdafx.cpp
-
-NOTE: WINVER has been defined as 0x0500 or greater which enables
-Windows NT 5.0 and Windows 98 features. When these headers were released,
-Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
-
-For this release when WINVER is defined as 0x0500 or greater, you can only
-build beta or test applications.  To build a retail application,
-set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
-to see if retail Windows NT 5.0 or Windows 98 headers are available.
-
-See the SDK release notes for more information.
-
-Compiling...
-CLogFile.cpp
-
-NOTE: WINVER has been defined as 0x0500 or greater which enables
-Windows NT 5.0 and Windows 98 features. When these headers were released,
-Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
-
-For this release when WINVER is defined as 0x0500 or greater, you can only
-build beta or test applications.  To build a retail application,
-set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
-to see if retail Windows NT 5.0 or Windows 98 headers are available.
-
-See the SDK release notes for more information.
-
-KAutoMutex.cpp
-KAviFile.cpp
-KBitmap.cpp
-KBitmap16.cpp
-KBitmapConvert.cpp
-KBmp2Spr.cpp
-KBmpFile.cpp
-KBmpFile24.cpp
-KCache.cpp
-KCanvas.cpp
-KCodec.cpp
-KCodecLzo.cpp
-KColors.cpp
-KDDraw.cpp
-KDebug.cpp
-KDError.cpp
-KDInput.cpp
-KDrawBase.cpp
-KDrawBitmap.cpp
-KDrawBitmap16.cpp
-KDrawFade.cpp
-KDrawFont.cpp
-KDrawSprite.cpp
-KDrawSpriteAlpha.cpp
-KDSound.cpp
-KEicScript.cpp
-KEicScriptSet.cpp
-KEngine.cpp
-KEvent.cpp
-KFile.cpp
-KFileCopy.cpp
-KFileDialog.cpp
-KFilePath.cpp
-KFindBinTree.cpp
-KFont.cpp
-KGifFile.cpp
-KGraphics.cpp
-KHashList.cpp
-KHashNode.cpp
-KHashTable.cpp
-Kime.cpp
-KIniFile.cpp
-KIniFile 当前不支持 KeyName 为中文! by Romandou
-KJpgFile.cpp
-KKeyboard.cpp
-KLicense.cpp
-KLinkArray.cpp
-KList.cpp
-KLuaScript.cpp
-KLuaScriptSet.cpp
-KLubCmpl_Blocker.cpp
-KMemBase.cpp
-KMemClass.cpp
-KMemClass1.cpp
-KMemManager.cpp
-KMemStack.cpp
-KMessage.cpp
-KMouse.cpp
-KMp3Music.cpp
-KMp4Audio.cpp
-KMp4Movie.cpp
-KMp4Video.cpp
-KMpgMusic.cpp
-KMsgNode.cpp
-KMusic.cpp
-KMutex.cpp
-KNode.cpp
-KOctree.cpp
-KOctreeNode.cpp
-KPakData.cpp
-KPakFile.cpp
-KPakList.cpp
-
-NOTE: WINVER has been defined as 0x0500 or greater which enables
-Windows NT 5.0 and Windows 98 features. When these headers were released,
-Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
-
-For this release when WINVER is defined as 0x0500 or greater, you can only
-build beta or test applications.  To build a retail application,
-set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
-to see if retail Windows NT 5.0 or Windows 98 headers are available.
-
-See the SDK release notes for more information.
-
-KPakTool.cpp
-
-NOTE: WINVER has been defined as 0x0500 or greater which enables
-Windows NT 5.0 and Windows 98 features. When these headers were released,
-Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
-
-For this release when WINVER is defined as 0x0500 or greater, you can only
-build beta or test applications.  To build a retail application,
-set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
-to see if retail Windows NT 5.0 or Windows 98 headers are available.
-
-See the SDK release notes for more information.
-
-KPalette.cpp
-KPcxFile.cpp
-KPolygon.cpp
-KPolyRelation.cpp
-KRandom.cpp
-KSafeList.cpp
-KScanDir.cpp
-KScript.cpp
-KScriptCache.cpp
-KScriptList.cpp
-KScriptSet.cpp
-KSG_MD5_String.cpp
-KSG_StringProcess.cpp
-KSortBinTree.cpp
-KSortList.cpp
-KSoundCache.cpp
-KSprite.cpp
-KSpriteCache.cpp
-KSpriteCodec.cpp
-KSpriteMaker.cpp
-KStepLuaScript.cpp
-KStrBase.cpp
-KStrList.cpp
-KStrNode.cpp
-KTabFile.cpp
-KTabFileCtrl.cpp
-KTgaFile32.cpp
-KThread.cpp
-KTimer.cpp
-KVideo.cpp
-KWavCodec.cpp
-KWavFile.cpp
-KWavMusic.cpp
-KWavSound.cpp
-KWin32.cpp
-KWin32App.cpp
-KWin32Wnd.cpp
-KZipCodec.cpp
-KZipData.cpp
-KZipFile.cpp
-KZipList.cpp
-md5.cpp
-XPackFile.cpp
-EDOneTimePad.cpp
-Text.cpp
-Compiling...
-alloc.c
-io.c
-n2b_99.c
-n2b_d.c
-n2b_ds.c
-n2b_to.c
-n2d_99.c
-n2d_d.c
-n2d_ds.c
-n2d_to.c
-n2e_99.c
-n2e_d.c
-n2e_ds.c
-n2e_to.c
-ucl_crc.c
-ucl_dll.c
-ucl_init.c
-ucl_ptr.c
-ucl_str.c
-ucl_util.c
-Generating Code...
-Linking...
-   Creating library Release/Engine.lib and object Release/Engine.exp
-LINK : warning LNK4098: defaultlib "LIBC" conflicts with use of other libs; use /NODEFAULTLIB:library
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP1C8A.bat" with contents
-[
-@echo off
-md ..\..\lib\release
-copy release\engine.lib ..\..\lib\release\engine.lib
-md ..\..\..\bin\client
-copy release\engine.dll ..\..\..\bin\client\engine.dll
-copy release\engine.pdb ..\..\..\bin\client\engine.pdb
-copy release\engine.map ..\..\..\bin\client\engine.map
-md ..\..\..\bin\client\release
-copy release\engine.dll ..\..\..\bin\client\release\engine.dll
-copy release\engine.pdb ..\..\..\bin\client\release\engine.pdb
-copy release\engine.map ..\..\..\bin\client\release\engine.map
-md ..\..\..\bin\Server
-copy release\engine.dll ..\..\..\bin\Server\engine.dll
-copy release\engine.pdb ..\..\..\bin\Server\engine.pdb
-copy release\engine.map ..\..\..\bin\Server\engine.map
-md ..\..\..\bin\Server\release
-copy release\engine.dll ..\..\..\bin\Server\release\engine.dll
-copy release\engine.pdb ..\..\..\bin\Server\release\engine.pdb
-copy release\engine.map ..\..\..\bin\Server\release\engine.map
-]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP1C8A.bat"
-
-A subdirectory or file ..\..\lib\release already exists.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\client already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\client\release already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\Server already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\Server\release already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
 
 
 
 <h3>Results</h3>
-Engine.dll - 0 error(s), 1 warning(s)
+Engine.dll - 0 error(s), 0 warning(s)
 <h3>
 --------------------Configuration: Engine - Win32 OuRead Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP1DD3.tmp" with contents
-[
-/nologo /MD /W3 /GX /Zi /O2 /I "include" /I "..\Pack\ucl-1.01\include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ENGINE_EXPORTS" /D "USE_STANDALONE_SPR" /Fp"Engine___Win32_OuRead_Release/Engine.pch" /YX"KWin32.h" /Fo"Engine___Win32_OuRead_Release/" /Fd"Engine___Win32_OuRead_Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\CLogFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KAutoMutex.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KAviFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KBitmap.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KBitmap16.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KBitmapConvert.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KBmp2Spr.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KBmpFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KBmpFile24.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KCache.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KCanvas.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KCodec.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KCodecLzo.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KColors.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDDraw.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDebug.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDError.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDInput.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDrawBase.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDrawBitmap.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDrawBitmap16.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDrawFade.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDrawFont.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDrawSprite.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDrawSpriteAlpha.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KDSound.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KEicScript.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KEicScriptSet.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KEngine.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KEvent.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KFileCopy.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KFileDialog.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KFilePath.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KFindBinTree.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KFont.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KGifFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KGraphics.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KHashList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KHashNode.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KHashTable.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\Kime.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KIniFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KJpgFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KKeyboard.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KLicense.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KLinkArray.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KLuaScript.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KLuaScriptSet.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KLubCmpl_Blocker.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMemBase.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMemClass.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMemClass1.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMemManager.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMemStack.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMessage.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMouse.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMp3Music.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMp4Audio.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMp4Movie.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMp4Video.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMpgMusic.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMsgNode.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMusic.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KMutex.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KNode.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KOctree.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KOctreeNode.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPakData.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPakFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPakList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPakTool.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPalette.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPcxFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPolygon.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KPolyRelation.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KRandom.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSafeList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KScanDir.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KScript.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KScriptCache.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KScriptList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KScriptSet.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSG_MD5_String.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSG_StringProcess.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSortBinTree.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSortList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSoundCache.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSprite.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSpriteCache.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSpriteCodec.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KSpriteMaker.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KStepLuaScript.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KStrBase.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KStrList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KStrNode.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KTabFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KTabFileCtrl.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KTgaFile32.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KThread.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KTimer.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KVideo.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KWavCodec.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KWavFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KWavMusic.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KWavSound.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KWin32.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KWin32App.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KWin32Wnd.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KZipCodec.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KZipData.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KZipFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\KZipList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\md5.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\XPackFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\Cryptography\EDOneTimePad.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\Text.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP1DD3.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP1DD4.tmp" with contents
-[
-/nologo /MD /W3 /GX /Zi /O2 /I "include" /I "..\Pack\ucl-1.01\include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ENGINE_EXPORTS" /D "USE_STANDALONE_SPR" /Fp"Engine___Win32_OuRead_Release/Engine.pch" /Yc"kwin32.h" /Fo"Engine___Win32_OuRead_Release/" /Fd"Engine___Win32_OuRead_Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\stdafx.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP1DD4.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP1DD5.tmp" with contents
-[
-/nologo /MD /W3 /GX /Zi /O2 /I "include" /I "..\Pack\ucl-1.01\include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ENGINE_EXPORTS" /D "USE_STANDALONE_SPR" /Fo"Engine___Win32_OuRead_Release/" /Fd"Engine___Win32_OuRead_Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\alloc.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\io.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2b_99.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2b_d.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2b_ds.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2b_to.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2d_99.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2d_d.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2d_ds.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2d_to.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2e_99.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2e_d.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2e_ds.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\n2e_to.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_crc.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_dll.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_init.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_ptr.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_str.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Engine\Src\ucl\ucl_util.c"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP1DD5.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP1DD6.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib comdlg32.lib ddraw.lib dsound.lib dxguid.lib winmm.lib wsock32.lib dinput8.lib /nologo /dll /incremental:no /pdb:"Engine___Win32_OuRead_Release/Engine.pdb" /map:"Engine___Win32_OuRead_Release/Engine.map" /debug /machine:I386 /nodefaultlib:"LIBC" /out:"Engine___Win32_OuRead_Release/Engine.dll" /implib:"Engine___Win32_OuRead_Release/Engine.lib" 
-.\Engine___Win32_OuRead_Release\CLogFile.obj
-.\Engine___Win32_OuRead_Release\KAutoMutex.obj
-.\Engine___Win32_OuRead_Release\KAviFile.obj
-.\Engine___Win32_OuRead_Release\KBitmap.obj
-.\Engine___Win32_OuRead_Release\KBitmap16.obj
-.\Engine___Win32_OuRead_Release\KBitmapConvert.obj
-.\Engine___Win32_OuRead_Release\KBmp2Spr.obj
-.\Engine___Win32_OuRead_Release\KBmpFile.obj
-.\Engine___Win32_OuRead_Release\KBmpFile24.obj
-.\Engine___Win32_OuRead_Release\KCache.obj
-.\Engine___Win32_OuRead_Release\KCanvas.obj
-.\Engine___Win32_OuRead_Release\KCodec.obj
-.\Engine___Win32_OuRead_Release\KCodecLzo.obj
-.\Engine___Win32_OuRead_Release\KColors.obj
-.\Engine___Win32_OuRead_Release\KDDraw.obj
-.\Engine___Win32_OuRead_Release\KDebug.obj
-.\Engine___Win32_OuRead_Release\KDError.obj
-.\Engine___Win32_OuRead_Release\KDInput.obj
-.\Engine___Win32_OuRead_Release\KDrawBase.obj
-.\Engine___Win32_OuRead_Release\KDrawBitmap.obj
-.\Engine___Win32_OuRead_Release\KDrawBitmap16.obj
-.\Engine___Win32_OuRead_Release\KDrawFade.obj
-.\Engine___Win32_OuRead_Release\KDrawFont.obj
-.\Engine___Win32_OuRead_Release\KDrawSprite.obj
-.\Engine___Win32_OuRead_Release\KDrawSpriteAlpha.obj
-.\Engine___Win32_OuRead_Release\KDSound.obj
-.\Engine___Win32_OuRead_Release\KEicScript.obj
-.\Engine___Win32_OuRead_Release\KEicScriptSet.obj
-.\Engine___Win32_OuRead_Release\KEngine.obj
-.\Engine___Win32_OuRead_Release\KEvent.obj
-.\Engine___Win32_OuRead_Release\KFile.obj
-.\Engine___Win32_OuRead_Release\KFileCopy.obj
-.\Engine___Win32_OuRead_Release\KFileDialog.obj
-.\Engine___Win32_OuRead_Release\KFilePath.obj
-.\Engine___Win32_OuRead_Release\KFindBinTree.obj
-.\Engine___Win32_OuRead_Release\KFont.obj
-.\Engine___Win32_OuRead_Release\KGifFile.obj
-.\Engine___Win32_OuRead_Release\KGraphics.obj
-.\Engine___Win32_OuRead_Release\KHashList.obj
-.\Engine___Win32_OuRead_Release\KHashNode.obj
-.\Engine___Win32_OuRead_Release\KHashTable.obj
-.\Engine___Win32_OuRead_Release\Kime.obj
-.\Engine___Win32_OuRead_Release\KIniFile.obj
-.\Engine___Win32_OuRead_Release\KJpgFile.obj
-.\Engine___Win32_OuRead_Release\KKeyboard.obj
-.\Engine___Win32_OuRead_Release\KLicense.obj
-.\Engine___Win32_OuRead_Release\KLinkArray.obj
-.\Engine___Win32_OuRead_Release\KList.obj
-.\Engine___Win32_OuRead_Release\KLuaScript.obj
-.\Engine___Win32_OuRead_Release\KLuaScriptSet.obj
-.\Engine___Win32_OuRead_Release\KLubCmpl_Blocker.obj
-.\Engine___Win32_OuRead_Release\KMemBase.obj
-.\Engine___Win32_OuRead_Release\KMemClass.obj
-.\Engine___Win32_OuRead_Release\KMemClass1.obj
-.\Engine___Win32_OuRead_Release\KMemManager.obj
-.\Engine___Win32_OuRead_Release\KMemStack.obj
-.\Engine___Win32_OuRead_Release\KMessage.obj
-.\Engine___Win32_OuRead_Release\KMouse.obj
-.\Engine___Win32_OuRead_Release\KMp3Music.obj
-.\Engine___Win32_OuRead_Release\KMp4Audio.obj
-.\Engine___Win32_OuRead_Release\KMp4Movie.obj
-.\Engine___Win32_OuRead_Release\KMp4Video.obj
-.\Engine___Win32_OuRead_Release\KMpgMusic.obj
-.\Engine___Win32_OuRead_Release\KMsgNode.obj
-.\Engine___Win32_OuRead_Release\KMusic.obj
-.\Engine___Win32_OuRead_Release\KMutex.obj
-.\Engine___Win32_OuRead_Release\KNode.obj
-.\Engine___Win32_OuRead_Release\KOctree.obj
-.\Engine___Win32_OuRead_Release\KOctreeNode.obj
-.\Engine___Win32_OuRead_Release\KPakData.obj
-.\Engine___Win32_OuRead_Release\KPakFile.obj
-.\Engine___Win32_OuRead_Release\KPakList.obj
-.\Engine___Win32_OuRead_Release\KPakTool.obj
-.\Engine___Win32_OuRead_Release\KPalette.obj
-.\Engine___Win32_OuRead_Release\KPcxFile.obj
-.\Engine___Win32_OuRead_Release\KPolygon.obj
-.\Engine___Win32_OuRead_Release\KPolyRelation.obj
-.\Engine___Win32_OuRead_Release\KRandom.obj
-.\Engine___Win32_OuRead_Release\KSafeList.obj
-.\Engine___Win32_OuRead_Release\KScanDir.obj
-.\Engine___Win32_OuRead_Release\KScript.obj
-.\Engine___Win32_OuRead_Release\KScriptCache.obj
-.\Engine___Win32_OuRead_Release\KScriptList.obj
-.\Engine___Win32_OuRead_Release\KScriptSet.obj
-.\Engine___Win32_OuRead_Release\KSG_MD5_String.obj
-.\Engine___Win32_OuRead_Release\KSG_StringProcess.obj
-.\Engine___Win32_OuRead_Release\KSortBinTree.obj
-.\Engine___Win32_OuRead_Release\KSortList.obj
-.\Engine___Win32_OuRead_Release\KSoundCache.obj
-.\Engine___Win32_OuRead_Release\KSprite.obj
-.\Engine___Win32_OuRead_Release\KSpriteCache.obj
-.\Engine___Win32_OuRead_Release\KSpriteCodec.obj
-.\Engine___Win32_OuRead_Release\KSpriteMaker.obj
-.\Engine___Win32_OuRead_Release\KStepLuaScript.obj
-.\Engine___Win32_OuRead_Release\KStrBase.obj
-.\Engine___Win32_OuRead_Release\KStrList.obj
-.\Engine___Win32_OuRead_Release\KStrNode.obj
-.\Engine___Win32_OuRead_Release\KTabFile.obj
-.\Engine___Win32_OuRead_Release\KTabFileCtrl.obj
-.\Engine___Win32_OuRead_Release\KTgaFile32.obj
-.\Engine___Win32_OuRead_Release\KThread.obj
-.\Engine___Win32_OuRead_Release\KTimer.obj
-.\Engine___Win32_OuRead_Release\KVideo.obj
-.\Engine___Win32_OuRead_Release\KWavCodec.obj
-.\Engine___Win32_OuRead_Release\KWavFile.obj
-.\Engine___Win32_OuRead_Release\KWavMusic.obj
-.\Engine___Win32_OuRead_Release\KWavSound.obj
-.\Engine___Win32_OuRead_Release\KWin32.obj
-.\Engine___Win32_OuRead_Release\KWin32App.obj
-.\Engine___Win32_OuRead_Release\KWin32Wnd.obj
-.\Engine___Win32_OuRead_Release\KZipCodec.obj
-.\Engine___Win32_OuRead_Release\KZipData.obj
-.\Engine___Win32_OuRead_Release\KZipFile.obj
-.\Engine___Win32_OuRead_Release\KZipList.obj
-.\Engine___Win32_OuRead_Release\md5.obj
-.\Engine___Win32_OuRead_Release\stdafx.obj
-.\Engine___Win32_OuRead_Release\XPackFile.obj
-.\Engine___Win32_OuRead_Release\EDOneTimePad.obj
-.\Engine___Win32_OuRead_Release\Text.obj
-.\Engine___Win32_OuRead_Release\alloc.obj
-.\Engine___Win32_OuRead_Release\io.obj
-.\Engine___Win32_OuRead_Release\n2b_99.obj
-.\Engine___Win32_OuRead_Release\n2b_d.obj
-.\Engine___Win32_OuRead_Release\n2b_ds.obj
-.\Engine___Win32_OuRead_Release\n2b_to.obj
-.\Engine___Win32_OuRead_Release\n2d_99.obj
-.\Engine___Win32_OuRead_Release\n2d_d.obj
-.\Engine___Win32_OuRead_Release\n2d_ds.obj
-.\Engine___Win32_OuRead_Release\n2d_to.obj
-.\Engine___Win32_OuRead_Release\n2e_99.obj
-.\Engine___Win32_OuRead_Release\n2e_d.obj
-.\Engine___Win32_OuRead_Release\n2e_ds.obj
-.\Engine___Win32_OuRead_Release\n2e_to.obj
-.\Engine___Win32_OuRead_Release\ucl_crc.obj
-.\Engine___Win32_OuRead_Release\ucl_dll.obj
-.\Engine___Win32_OuRead_Release\ucl_init.obj
-.\Engine___Win32_OuRead_Release\ucl_ptr.obj
-.\Engine___Win32_OuRead_Release\ucl_str.obj
-.\Engine___Win32_OuRead_Release\ucl_util.obj
-..\..\Lib\release\JpgLib.lib
-..\..\Lib\release\LuaLibDll.lib
-..\..\Lib\release\mp3lib.lib
-]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP1DD6.tmp"
-<h3>Output Window</h3>
-Compiling...
-stdafx.cpp
-Compiling...
-CLogFile.cpp
-KAutoMutex.cpp
-KAviFile.cpp
-KBitmap.cpp
-KBitmap16.cpp
-KBitmapConvert.cpp
-KBmp2Spr.cpp
-KBmpFile.cpp
-KBmpFile24.cpp
-KCache.cpp
-KCanvas.cpp
-KCodec.cpp
-KCodecLzo.cpp
-KColors.cpp
-KDDraw.cpp
-KDebug.cpp
-KDError.cpp
-KDInput.cpp
-KDrawBase.cpp
-KDrawBitmap.cpp
-KDrawBitmap16.cpp
-KDrawFade.cpp
-KDrawFont.cpp
-KDrawSprite.cpp
-KDrawSpriteAlpha.cpp
-KDSound.cpp
-KEicScript.cpp
-KEicScriptSet.cpp
-KEngine.cpp
-KEvent.cpp
-KFile.cpp
-KFileCopy.cpp
-KFileDialog.cpp
-KFilePath.cpp
-KFindBinTree.cpp
-KFont.cpp
-KGifFile.cpp
-KGraphics.cpp
-KHashList.cpp
-KHashNode.cpp
-KHashTable.cpp
-Kime.cpp
-KIniFile.cpp
-KIniFile 当前不支持 KeyName 为中文! by Romandou
-KJpgFile.cpp
-KKeyboard.cpp
-KLicense.cpp
-KLinkArray.cpp
-KList.cpp
-KLuaScript.cpp
-KLuaScriptSet.cpp
-KLubCmpl_Blocker.cpp
-KMemBase.cpp
-KMemClass.cpp
-KMemClass1.cpp
-KMemManager.cpp
-KMemStack.cpp
-KMessage.cpp
-KMouse.cpp
-KMp3Music.cpp
-KMp4Audio.cpp
-KMp4Movie.cpp
-KMp4Video.cpp
-KMpgMusic.cpp
-KMsgNode.cpp
-KMusic.cpp
-KMutex.cpp
-KNode.cpp
-KOctree.cpp
-KOctreeNode.cpp
-KPakData.cpp
-KPakFile.cpp
-KPakList.cpp
-KPakTool.cpp
-KPalette.cpp
-KPcxFile.cpp
-KPolygon.cpp
-KPolyRelation.cpp
-KRandom.cpp
-KSafeList.cpp
-KScanDir.cpp
-KScript.cpp
-KScriptCache.cpp
-KScriptList.cpp
-KScriptSet.cpp
-KSG_MD5_String.cpp
-KSG_StringProcess.cpp
-KSortBinTree.cpp
-KSortList.cpp
-KSoundCache.cpp
-KSprite.cpp
-KSpriteCache.cpp
-KSpriteCodec.cpp
-KSpriteMaker.cpp
-KStepLuaScript.cpp
-KStrBase.cpp
-KStrList.cpp
-KStrNode.cpp
-KTabFile.cpp
-KTabFileCtrl.cpp
-KTgaFile32.cpp
-KThread.cpp
-KTimer.cpp
-KVideo.cpp
-KWavCodec.cpp
-KWavFile.cpp
-KWavMusic.cpp
-KWavSound.cpp
-KWin32.cpp
-KWin32App.cpp
-KWin32Wnd.cpp
-KZipCodec.cpp
-KZipData.cpp
-KZipFile.cpp
-KZipList.cpp
-md5.cpp
-XPackFile.cpp
-EDOneTimePad.cpp
-Text.cpp
-Compiling...
-alloc.c
-io.c
-n2b_99.c
-n2b_d.c
-n2b_ds.c
-n2b_to.c
-n2d_99.c
-n2d_d.c
-n2d_ds.c
-n2d_to.c
-n2e_99.c
-n2e_d.c
-n2e_ds.c
-n2e_to.c
-ucl_crc.c
-ucl_dll.c
-ucl_init.c
-ucl_ptr.c
-ucl_str.c
-ucl_util.c
-Generating Code...
-Linking...
-   Creating library Engine___Win32_OuRead_Release/Engine.lib and object Engine___Win32_OuRead_Release/Engine.exp
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP3660.bat" with contents
-[
-@echo off
-md ..\..\lib\release
-copy Engine___Win32_OuRead_Release\Engine.lib ..\..\lib\release\engine.lib
-md ..\..\..\bin\Client\
-copy Engine___Win32_OuRead_Release\engine.dll ..\..\..\bin\Client\engine.dll
-copy Engine___Win32_OuRead_Release\engine.pdb ..\..\..\bin\client\engine.pdb
-copy Engine___Win32_OuRead_Release\engine.map ..\..\..\bin\client\engine.map
-md ..\..\..\bin\Client\release\
-copy Engine___Win32_OuRead_Release\engine.dll ..\..\..\bin\Client\release\engine.dll
-copy Engine___Win32_OuRead_Release\engine.pdb ..\..\..\bin\Client\release\engine.pdb
-copy Engine___Win32_OuRead_Release\engine.map ..\..\..\bin\Client\release\engine.map
-md ..\..\..\bin\Server\
-copy Engine___Win32_OuRead_Release\Engine.dll ..\..\..\bin\Server\engine.dll
-copy Engine___Win32_OuRead_Release\Engine.pdb ..\..\..\bin\Server\engine.pdb
-copy Engine___Win32_OuRead_Release\Engine.map ..\..\..\bin\Server\engine.map
-md ..\..\..\bin\Server\release\
-copy Engine___Win32_OuRead_Release\Engine.dll ..\..\..\bin\Server\release\engine.dll
-copy Engine___Win32_OuRead_Release\Engine.pdb ..\..\..\bin\Server\release\engine.pdb
-copy Engine___Win32_OuRead_Release\Engine.map ..\..\..\bin\Server\release\engine.map
-]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP3660.bat"
-
-A subdirectory or file ..\..\lib\release already exists.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\Client\ already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\Client\release\ already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\Server\ already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\Server\release\ already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
 
 
 
@@ -1776,65 +712,6 @@ Engine.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: ExpandPackage - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP37C8.tmp" with contents
-[
-/nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "EXPANDPACKAGE_EXPORTS" /Fp"Release/ExpandPackage.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\BlockSource.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\DataPointFromStream.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\DataSource.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\ExpandPackage.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\Interval.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\Package.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\PackageFileHead.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP37C8.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP37C9.tmp" with contents
-[
-/nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "EXPANDPACKAGE_EXPORTS" /Fp"Release/ExpandPackage.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\StdAfx.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP37C9.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP37CA.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"Release/ExpandPackage.pdb" /machine:I386 /def:".\ExpandPackage.def" /out:"Release/ExpandPackage.dll" /implib:"Release/ExpandPackage.lib" 
-.\Release\BlockSource.obj
-.\Release\DataPointFromStream.obj
-.\Release\DataSource.obj
-.\Release\ExpandPackage.obj
-.\Release\Interval.obj
-.\Release\Package.obj
-.\Release\PackageFileHead.obj
-.\Release\StdAfx.obj
-]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP37CA.tmp"
-<h3>Output Window</h3>
-Compiling...
-StdAfx.cpp
-Compiling...
-BlockSource.cpp
-DataPointFromStream.cpp
-DataSource.cpp
-ExpandPackage.cpp
-Interval.cpp
-Package.cpp
-PackageFileHead.cpp
-Generating Code...
-Linking...
-   Creating library Release/ExpandPackage.lib and object Release/ExpandPackage.exp
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP3BF2.bat" with contents
-[
-@echo off
-md ..\..\..\bin\Client
-copy release\ExpandPackage.dll ..\..\..\bin\Client\ExpandPackage.dll
-md ..\..\..\bin\Client\release
-copy release\ExpandPackage.dll ..\..\..\bin\Client\release\ExpandPackage.dll
-]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP3BF2.bat"
-
-A subdirectory or file ..\..\..\bin\Client already exists.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\Client\release already exists.
-        1 file(s) copied.
 
 
 
@@ -1844,74 +721,6 @@ ExpandPackage.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: FilterText - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP400A.tmp" with contents
-[
-/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FILTERTEXT_EXPORTS" /Fp"Release/FilterText.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\FilterText\FilterText.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\FilterText\Regexp.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP400A.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP400B.tmp" with contents
-[
-/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "FILTERTEXT_EXPORTS" /Fp"Release/FilterText.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\FilterText\StdAfx.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP400B.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP400C.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"Release/FilterText.pdb" /map:"Release/FilterText.map" /debug /machine:I386 /out:"Release/FilterText.dll" /implib:"Release/FilterText.lib" 
-.\Release\FilterText.obj
-.\Release\Regexp.obj
-.\Release\StdAfx.obj
-]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP400C.tmp"
-<h3>Output Window</h3>
-Compiling...
-StdAfx.cpp
-Compiling...
-FilterText.cpp
-Regexp.cpp
-Generating Code...
-Linking...
-   Creating library Release/FilterText.lib and object Release/FilterText.exp
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4339.bat" with contents
-[
-@echo off
-md ..\..\..\bin\Client
-copy Release\FilterText.dll ..\..\..\bin\Client\FilterText.dll
-copy Release\FilterText.map ..\..\..\bin\Client\FilterText.map
-copy Release\FilterText.pdb ..\..\..\bin\Client\FilterText.pdb
-md ..\..\..\bin\Client\release\
-copy Release\FilterText.dll ..\..\..\bin\Client\release\FilterText.dll
-copy Release\FilterText.map ..\..\..\bin\Client\release\FilterText.map
-copy Release\FilterText.pdb ..\..\..\bin\Client\release\FilterText.pdb
-md ..\..\..\bin\Server
-copy Release\FilterText.dll ..\..\..\bin\Server\FilterText.dll
-copy Release\FilterText.map ..\..\..\bin\Server\FilterText.map
-copy Release\FilterText.pdb ..\..\..\bin\Server\FilterText.pdb
-md ..\..\..\bin\Server\release\
-copy Release\FilterText.dll ..\..\..\bin\Server\release\FilterText.dll
-copy Release\FilterText.map ..\..\..\bin\Server\release\FilterText.map
-copy Release\FilterText.pdb ..\..\..\bin\Server\release\FilterText.pdb
-]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP4339.bat"
-
-A subdirectory or file ..\..\..\bin\Client already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\Client\release\ already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\Server already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\bin\Server\release\ already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
 
 
 
@@ -1921,22 +730,14 @@ FilterText.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: GameServer - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Release/Script1.res" /i "res" /d "NDEBUG" "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\GameServer\res\Script1.rc"" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4463.tmp" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP99C5.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /I "..\Common\\" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\roledbserver" /I "..\..\..\lib\\" /I "..\..\..\Headers\\" /I "..\..\..\Sources\Engine\src" /I "..\..\..\Sources\Engine\include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D _WIN32_WINNT=0x0400 /FR"Release/" /Fp"Release/GameServer.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\GameServer\GameServer.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\GameServer\KSOServer.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\GameServer\KTransferUnit.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP4463.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4464.tmp" with contents
-[
-/nologo /MT /W3 /GX /O2 /I "..\Common\\" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\roledbserver" /I "..\..\..\lib\\" /I "..\..\..\Headers\\" /I "..\..\..\Sources\Engine\src" /I "..\..\..\Sources\Engine\include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D _WIN32_WINNT=0x0400 /FR"Release/" /Fp"Release/GameServer.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\GameServer\StdAfx.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP4464.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4465.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP99C5.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP99C6.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/GameServer.pdb" /map:"Release/GameServer.map" /debug /machine:I386 /out:"Release/GameServer.exe" 
 .\Release\GameServer.obj
@@ -1948,18 +749,14 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 ..\..\..\Lib\release\CoreServer.lib
 ..\..\..\Lib\release\common.lib
 ]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP4465.tmp"
+Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP99C6.tmp"
 <h3>Output Window</h3>
-Compiling resources...
-Compiling...
-StdAfx.cpp
 Compiling...
 GameServer.cpp
 KSOServer.cpp
-KTransferUnit.cpp
 Generating Code...
 Linking...
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4BC9.bat" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPA030.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\Server
@@ -1977,7 +774,7 @@ copy Release\GameServer.exe ..\..\..\..\bin\Server\release\GS2.exe
 copy Release\GameServer.exe ..\..\..\..\bin\Server\release\GS3.exe
 copy Release\GameServer.exe ..\..\..\..\bin\Server\release\GS4.exe
 ]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP4BC9.bat"
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPA030.bat"
 
 A subdirectory or file ..\..\..\..\bin\Server already exists.
         1 file(s) copied.
@@ -2002,27 +799,16 @@ GameServer.exe - 0 error(s), 0 warning(s)
 --------------------Configuration: Goddess - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Release/Goddess.res" /d "NDEBUG" "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\Goddess.rc"" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4D02.tmp" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPA179.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /I "..\Common\\" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\..\lib" /I "..\..\..\Headers" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Goddess.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\ClientNode.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\DBBackup.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\DBDumpLoad.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\DBTable.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\FilterTextLib.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\Goddess.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\IDBRoleServer.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\RoleNameFilter.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP4D02.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4D03.tmp" with contents
-[
-/nologo /MT /W3 /GX /O2 /I "..\Common\\" /I "..\Rainbow\Interface" /I "..\Heaven\Interface" /I "..\..\..\lib" /I "..\..\..\Headers" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Goddess.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Goddess\StdAfx.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP4D03.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4D04.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPA179.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPA17A.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib libcmtd.lib libcmt.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Goddess.pdb" /map:"Release/Goddess.map" /debug /machine:I386 /out:"Release/Goddess.exe" 
 .\Release\ClientNode.obj
@@ -2038,23 +824,16 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 ..\..\..\Lib\release\common.lib
 ..\..\..\Lib\libdb41s.lib
 ]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP4D04.tmp"
+Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSPA17A.tmp"
 <h3>Output Window</h3>
-Compiling resources...
-Compiling...
-StdAfx.cpp
 Compiling...
 ClientNode.cpp
 DBBackup.cpp
-DBDumpLoad.cpp
-DBTable.cpp
-FilterTextLib.cpp
 Goddess.cpp
 IDBRoleServer.cpp
-RoleNameFilter.cpp
 Generating Code...
 Linking...
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP5572.bat" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPAD72.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\Server
@@ -2066,7 +845,7 @@ copy release\Goddess.exe ..\..\..\..\bin\Server\release\Goddess.exe
 copy release\Goddess.map ..\..\..\..\bin\Server\release\Goddess.map
 copy release\Goddess.pdb ..\..\..\..\bin\Server\release\Goddess.pdb
 ]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP5572.bat"
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPAD72.bat"
 
 A subdirectory or file ..\..\..\..\bin\Server already exists.
         1 file(s) copied.
@@ -2085,64 +864,6 @@ Goddess.exe - 0 error(s), 0 warning(s)
 --------------------Configuration: Heaven - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Release/Script1.res" /i "res" /d "NDEBUG" "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Heaven\res\Script1.rc"" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP568C.tmp" with contents
-[
-/nologo /MT /W3 /GX /O2 /I "..\Common" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "HEAVEN_EXPORTS" /Fp"Release/Heaven.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Heaven\Heaven.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Heaven\IServer.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Heaven\ServerStage.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP568C.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP568D.tmp" with contents
-[
-winspool.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib netapi32.lib /nologo /dll /incremental:no /pdb:"Release/Heaven.pdb" /map:"Release/Heaven.map" /debug /machine:I386 /def:".\Heaven.def" /out:"Release/Heaven.dll" /implib:"Release/Heaven.lib" 
-.\Release\Heaven.obj
-.\Release\IServer.obj
-.\Release\ServerStage.obj
-.\Release\Script1.res
-..\..\..\Lib\release\common.lib
-]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP568D.tmp"
-<h3>Output Window</h3>
-Compiling resources...
-Compiling...
-Heaven.cpp
-* ATTENTION : PLEASE USE IT IN ANSI SETTING *
-IServer.cpp
-ServerStage.cpp
-Linking...
-   Creating library Release/Heaven.lib and object Release/Heaven.exp
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP5B31.bat" with contents
-[
-@echo off
-md ..\..\..\..\bin\Client
-copy release\heaven.dll ..\..\..\..\bin\Client\heaven.dll
-copy release\heaven.pdb ..\..\..\..\bin\Client\heaven.pdb
-md ..\..\..\..\bin\Server
-copy release\heaven.dll ..\..\..\..\bin\Server\heaven.dll
-copy release\heaven.pdb ..\..\..\..\bin\Server\heaven.pdb
-md ..\..\..\..\bin\Client\Release
-copy release\heaven.dll ..\..\..\..\bin\Client\Release\heaven.dll
-copy release\heaven.pdb ..\..\..\..\bin\Client\Release\heaven.pdb
-md ..\..\..\..\bin\Server\release\
-copy release\heaven.dll   ..\..\..\..\bin\Server\Release\heaven.dll
-copy release\heaven.pdb ..\..\..\..\bin\Server\Release\heaven.pdb
-]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP5B31.bat"
-
-A subdirectory or file ..\..\..\..\bin\Client already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\Server already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\Client\Release already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\Server\release\ already exists.
-        1 file(s) copied.
-        1 file(s) copied.
 
 
 
@@ -2152,150 +873,6 @@ Heaven.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: LuaLibDll - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP5C5B.tmp" with contents
-[
-/nologo /MD /W3 /GX /O2 /I ".\LuaLibDll\src" /I ".\src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "LUALIBDLL_EXPORTS" /Fp"Release/LuaLibDll.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lapi.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lcode.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ldebug.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ldo.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lfunc.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lgc.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\llex.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lmem.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lobject.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lparser.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lstate.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lstring.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltable.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltests.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\ltm.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lua.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\LuaExtend.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lundump.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lvm.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\lzio.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lauxlib.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lbaselib.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\ldblib.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\liolib.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lmathlib.c"
-"E:\HuyenThietKiem\SwordOnline\Sources\Library\LuaLib\src\baselib\lstrlib.c"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP5C5B.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP5C5C.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"Release/LuaLibDll.pdb" /machine:I386 /out:"Release/LuaLibDll.dll" /implib:"Release/LuaLibDll.lib" 
-.\Release\lapi.obj
-.\Release\lcode.obj
-.\Release\ldebug.obj
-.\Release\ldo.obj
-.\Release\lfunc.obj
-.\Release\lgc.obj
-.\Release\llex.obj
-.\Release\lmem.obj
-.\Release\lobject.obj
-.\Release\lparser.obj
-.\Release\lstate.obj
-.\Release\lstring.obj
-.\Release\ltable.obj
-.\Release\ltests.obj
-.\Release\ltm.obj
-.\Release\lua.obj
-.\Release\LuaExtend.obj
-.\Release\lundump.obj
-.\Release\lvm.obj
-.\Release\lzio.obj
-.\Release\lauxlib.obj
-.\Release\lbaselib.obj
-.\Release\ldblib.obj
-.\Release\liolib.obj
-.\Release\lmathlib.obj
-.\Release\lstrlib.obj
-]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP5C5C.tmp"
-<h3>Output Window</h3>
-Compiling...
-lapi.c
-Create LUA dllexport
-lcode.c
-Create LUA dllexport
-ldebug.c
-Create LUA dllexport
-ldo.c
-Create LUA dllexport
-lfunc.c
-Create LUA dllexport
-lgc.c
-Create LUA dllexport
-llex.c
-Create LUA dllexport
-lmem.c
-Create LUA dllexport
-lobject.c
-Create LUA dllexport
-lparser.c
-Create LUA dllexport
-lstate.c
-Create LUA dllexport
-lstring.c
-Create LUA dllexport
-ltable.c
-Create LUA dllexport
-ltests.c
-Create LUA dllexport
-ltm.c
-Create LUA dllexport
-lua.c
-Create LUA dllexport
-LuaExtend.c
-Create LUA dllexport
-lundump.c
-Create LUA dllexport
-lvm.c
-Create LUA dllexport
-lzio.c
-Create LUA dllexport
-lauxlib.c
-Create LUA dllexport
-lbaselib.c
-Create LUA dllexport
-ldblib.c
-Create LUA dllexport
-liolib.c
-Create LUA dllexport
-lmathlib.c
-Create LUA dllexport
-lstrlib.c
-Create LUA dllexport
-Linking...
-   Creating library Release/LuaLibDll.lib and object Release/LuaLibDll.exp
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP61CC.bat" with contents
-[
-@echo off
-copy Release\lualibdll.lib ..\..\..\Lib\lualibdll.lib
-copy Release\lualibdll.dll ..\..\..\Lib\lualibdll.dll
-md ..\..\..\..\bin\client
-copy Release\lualibdll.dll ..\..\..\..\bin\client\lualibdll.dll
-md ..\..\..\..\bin\Server
-copy Release\lualibdll.dll ..\..\..\..\bin\Server\lualibdll.dll
-md ..\..\..\..\bin\client\release\
-copy Release\lualibdll.dll ..\..\..\..\bin\client\release\lualibdll.dll
-md ..\..\..\..\bin\Server\release\
-copy Release\lualibdll.dll ..\..\..\..\bin\\Server\release\lualibdll.dll
-]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP61CC.bat"
-
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\client already exists.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\Server already exists.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\client\release\ already exists.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\Server\release\ already exists.
-        1 file(s) copied.
 
 
 
@@ -2305,72 +882,6 @@ LuaLibDll.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: Rainbow - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Release/Script1.res" /i "res" /d "NDEBUG" "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Rainbow\res\Script1.rc"" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP6315.tmp" with contents
-[
-/nologo /MT /W3 /GX /O2 /I "..\Common" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "RAINBOW_EXPORTS" /Fp"Release/Rainbow.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Rainbow\IClient.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Rainbow\Rainbow.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Rainbow\ClientStage.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP6315.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP6316.tmp" with contents
-[
-winspool.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib netapi32.lib /nologo /dll /incremental:no /pdb:"Release/Rainbow.pdb" /map:"Release/Rainbow.map" /debug /machine:I386 /def:".\Rainbow.def" /out:"Release/Rainbow.dll" /implib:"Release/Rainbow.lib" 
-.\Release\IClient.obj
-.\Release\Rainbow.obj
-.\Release\ClientStage.obj
-.\Release\Script1.res
-..\..\..\Lib\release\common.lib
-]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP6316.tmp"
-<h3>Output Window</h3>
-Compiling resources...
-Compiling...
-IClient.cpp
-Rainbow.cpp
-* ATTENTION : PLEASE USE IT IN ANSI SETTING *
-ClientStage.cpp
-Linking...
-   Creating library Release/Rainbow.lib and object Release/Rainbow.exp
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP66FF.bat" with contents
-[
-@echo off
-md ..\..\..\..\bin\Client\Release
-copy release\Rainbow.dll ..\..\..\..\bin\Client\Rainbow.dll
-copy release\Rainbow.map ..\..\..\..\bin\Client\Rainbow.map
-copy release\Rainbow.pdb ..\..\..\..\bin\Client\Rainbow.pdb
-md ..\..\..\..\bin\Client
-copy release\Rainbow.dll ..\..\..\..\bin\Client\Release\Rainbow.dll
-copy release\Rainbow.map ..\..\..\..\bin\Client\Release\Rainbow.map
-copy release\Rainbow.pdb ..\..\..\..\bin\Client\Release\Rainbow.pdb
-md ..\..\..\..\bin\Server\Release
-copy release\Rainbow.dll ..\..\..\..\bin\Server\Release\Rainbow.dll
-copy release\Rainbow.map ..\..\..\..\bin\Server\Release\Rainbow.map
-copy release\Rainbow.pdb ..\..\..\..\bin\Server\Release\Rainbow.pdb
-md ..\..\..\..\bin\Server
-copy release\Rainbow.dll ..\..\..\..\bin\Server\Rainbow.dll
-copy release\Rainbow.map ..\..\..\..\bin\Server\Rainbow.map
-copy release\Rainbow.pdb ..\..\..\..\bin\Server\Rainbow.pdb
-]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP66FF.bat"
-
-A subdirectory or file ..\..\..\..\bin\Client\Release already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\Client already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\Server\Release already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\Server already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
 
 
 
@@ -2380,64 +891,6 @@ Rainbow.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: Represent2 - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP6829.tmp" with contents
-[
-/nologo /MD /W3 /GX /O2 /I "..\..\engine\include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "REPRESENT2_EXPORTS" /Fp"Release/Represent2.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\Represent2\KImageStore2.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\iRepresent\RepresentUtility.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\Represent2\KRepresentShell2.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\iRepresent\Font\KFont2.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\iRepresent\Font\KFontData.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\iRepresent\Text\TextProcess.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\iRepresent\Image\ImageOperation.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP6829.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP682A.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib GdiPlus.lib /nologo /dll /incremental:no /pdb:"Release/Represent2.pdb" /map:"Release/Represent2.map" /debug /machine:I386 /out:"Release/Represent2.dll" /implib:"Release/Represent2.lib" 
-.\Release\KImageStore2.obj
-.\Release\RepresentUtility.obj
-.\Release\KRepresentShell2.obj
-.\Release\KFont2.obj
-.\Release\KFontData.obj
-.\Release\TextProcess.obj
-.\Release\ImageOperation.obj
-..\..\..\Lib\release\engine.lib
-]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP682A.tmp"
-<h3>Output Window</h3>
-Compiling...
-KImageStore2.cpp
-RepresentUtility.cpp
-KRepresentShell2.cpp
-KFont2.cpp
-KFontData.cpp
-TextProcess.cpp
-ImageOperation.cpp
-Linking...
-   Creating library Release/Represent2.lib and object Release/Represent2.exp
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP6EE2.bat" with contents
-[
-@echo off
-md ..\..\..\..\bin\client
-copy Release\Represent2.dll ..\..\..\..\bin\client\Represent2.dll
-copy Release\Represent2.pdb ..\..\..\..\bin\client\Represent2.pdb
-copy Release\Represent2.map ..\..\..\..\bin\client\Represent2.map
-md ..\..\..\..\bin\client\release\
-copy Release\Represent2.dll ..\..\..\..\bin\client\release\Represent2.dll
-copy Release\Represent2.pdb ..\..\..\..\bin\client\release\Represent2.pdb
-copy Release\Represent2.map ..\..\..\..\bin\client\release\Represent2.map
-]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP6EE2.bat"
-
-A subdirectory or file ..\..\..\..\bin\client already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\client\release\ already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
 
 
 
@@ -2447,92 +900,6 @@ Represent2.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: Represent3 - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP701B.tmp" with contents
-[
-/nologo /MD /W3 /GX /O2 /I "..\..\engine\include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "REPRESENT3_EXPORTS" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\Represent3\D3D_Device.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\Represent3\D3D_Shell.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\Represent3\D3D_Utils.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\iRepresent\Font\KCharSet.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\iRepresent\Font\KFont3.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\iRepresent\Font\KFontData.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\iRepresent\Font\KFontRes.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\iRepresent\Font\KMRU.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\Represent3\KRepresentShell3.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\iRepresent\RepresentUtility.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\iRepresent\Text\TextProcess.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\Represent3\TextureRes.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\Represent3\TextureResMgr.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP701B.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP701C.tmp" with contents
-[
-/nologo /MD /W3 /GX /O2 /I "..\..\engine\include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "REPRESENT3_EXPORTS" /Fp"Release/Represent3.pch" /Yc"precompile.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\Represent\Represent3\precompile.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP701C.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP701D.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib d3dx9dt.lib d3d9.lib winmm.lib dxguid.lib ddraw.lib GdiPlus.lib /nologo /dll /incremental:no /pdb:"Release/Represent3.pdb" /map:"Release/Represent3.map" /debug /machine:I386 /out:"Release/Represent3.dll" /implib:"Release/Represent3.lib" /libpath:"..\..\..\Lib" 
-.\Release\D3D_Device.obj
-.\Release\D3D_Shell.obj
-.\Release\D3D_Utils.obj
-.\Release\KCharSet.obj
-.\Release\KFont3.obj
-.\Release\KFontData.obj
-.\Release\KFontRes.obj
-.\Release\KMRU.obj
-.\Release\KRepresentShell3.obj
-.\Release\precompile.obj
-.\Release\RepresentUtility.obj
-.\Release\TextProcess.obj
-.\Release\TextureRes.obj
-.\Release\TextureResMgr.obj
-..\..\..\Lib\release\engine.lib
-]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP701D.tmp"
-<h3>Output Window</h3>
-Compiling...
-precompile.cpp
-Compiling...
-D3D_Device.cpp
-D3D_Shell.cpp
-D3D_Utils.cpp
-KCharSet.cpp
-KFont3.cpp
-KFontData.cpp
-KFontRes.cpp
-KMRU.cpp
-KRepresentShell3.cpp
-RepresentUtility.cpp
-TextProcess.cpp
-TextureRes.cpp
-TextureResMgr.cpp
-Generating Code...
-Linking...
-   Creating library Release/Represent3.lib and object Release/Represent3.exp
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP81C2.bat" with contents
-[
-@echo off
-md ..\..\..\..\bin\client
-copy Release\Represent3.dll ..\..\..\..\bin\client\Represent3.dll
-copy Release\Represent3.map ..\..\..\..\bin\client\Represent3.map
-copy Release\Represent3.pdb ..\..\..\..\bin\client\Represent3.pdb
-md ..\..\..\..\bin\client\release\
-copy Release\Represent3.dll ..\..\..\..\bin\client\release\Represent3.dll
-copy Release\Represent3.map ..\..\..\..\bin\client\release\Represent3.map
-copy Release\Represent3.pdb ..\..\..\..\bin\client\release\Represent3.pdb
-]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP81C2.bat"
-
-A subdirectory or file ..\..\..\..\bin\client already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\client\release\ already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
 
 
 
@@ -2542,158 +909,32 @@ Represent3.dll - 0 error(s), 0 warning(s)
 --------------------Configuration: S3Client - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Release/Script1.res" /d "NDEBUG" "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Script1.rc"" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP8359.tmp" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPAF76.tmp" with contents
 [
 /nologo /MD /W3 /GX /Zi /O2 /I "../Engine/src" /I "../Core/src" /I "../Engine/include" /I "../../Headers" /D "WIN32" /D "NDEBUG_WINDOWS" /D "_MBCS" /D "SWORDONLINE_USE_MD5_PASSWORD" /Fp"Release/S3Client.pch" /Yu"KWin32.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\AutoLocateWnd.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\ComWindow.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\LightLoop.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\MouseHover.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\PopupMenu.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\SpaceOver.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\SpecialFuncs.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\TextPic.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\UiCursor.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\UiImage.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndButton.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndChessPanel.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndEdit.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndImage.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndImage2.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndImagePart.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndLabeledButton.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndList.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndList2.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndListFilterItem.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndListPoint.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndMessageListBox.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndMovingImage.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndObjContainer.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndPage.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndPureTextBtn.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\Wnds.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndScrollBar.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\elem\WndShadow.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndShowAnimate.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndText.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndToolBar.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndValueImage.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndWindow.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiConnectInfo.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiLogin.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiLoginBg.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSelServer.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChooseFace.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiFaceSelector.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiPlayerBar.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiStatus.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiOptions.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiInit.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTeamBuild.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChaPW.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiCreatPW.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiExpandItem.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiGetMoney.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiGiveBox.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiItem.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiKeyBoard.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiLoginPW.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiReWard.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSkills.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSkillTree.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\uicase\UiStoreBox.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTimeBox.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiESCDlg.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiGetNumber.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiGetString.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMsgSel.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMsgSel2.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiParadeItem.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSelPlayerNearby.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiNewPlayer.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSelNativePlace.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSelPlayer.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChannelSubscibe.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChatCentre.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiChatPhrase.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChatStatus.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiInformation.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiInformation2.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiInformation3.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTeamManage.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTeamStatus.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChatItemInfo.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiHeaderControlBar.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\uicase\UiMsgCentrePad.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMakeAdv.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMarket.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMarkPrice.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiPlayerShop.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UIcase\UiShop.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiShoppingCart.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTrade.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTradeConfirmWnd.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiGame.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiNotification.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSysMsgCentre.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiCaveMap.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiFindPos.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\uicase\UiMiniMap.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiWorldMap.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSelColor.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiNewPlayerStartMsg.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiPlayVideo.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiHelper.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiHelper2.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiHelperMission.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiReconnect.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiRevive.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTaskDataFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTaskNote.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiNewsMessage.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiNewsMessageEx.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiStrengthRank.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\ui\uicase\UiTongAssignBox.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTongChangeTitle.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTongInformation.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTongSetTax .cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiAutoPlay.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMiniBuff.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTopTKNew.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTrembleItem.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiUpgradeAttrib.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiCompoundItem.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\TrayMode.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiSoundSetting.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\GameSpaceChangedNotify.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\ShortcutKey.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiBase.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiShell.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\ChatFilter.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Ui\FilterTextLib.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\S3Client.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\NetConnect\NetConnectAgent.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\S3Client\Login\Login.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\TextCtrlCmd\TextCtrlCmd.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\ErrorCode.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP8359.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP835A.tmp" with contents
-[
-/nologo /MD /W3 /GX /Zi /O2 /I "../Engine/src" /I "../Core/src" /I "../Engine/include" /I "../../Headers" /D "WIN32" /D "NDEBUG_WINDOWS" /D "_MBCS" /D "SWORDONLINE_USE_MD5_PASSWORD" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\ui\uicase\UiPopupPasswordQuery.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\ui\uicase\UiTongCreateSheet.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\ui\uicase\UiTongManager.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP835A.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP835B.tmp" with contents
-[
-/nologo /MD /W3 /GX /Zi /O2 /I "../Engine/src" /I "../Core/src" /I "../Engine/include" /I "../../Headers" /D "WIN32" /D "NDEBUG_WINDOWS" /D "_MBCS" /D "SWORDONLINE_USE_MD5_PASSWORD" /Fp"Release/S3Client.pch" /Yc"KWin32.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\S3Client\stdafx.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP835B.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP835C.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPAF76.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPAF77.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib Winmm.lib shlwapi.lib lualibdll.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Game.pdb" /map:"Release/Game.map" /debug /machine:I386 /out:"Release/Game.exe" /libpath:"../../lib/" 
 .\Release\AutoLocateWnd.obj
@@ -2835,155 +1076,29 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 ..\..\Lib\release\engine.lib
 ..\..\Lib\release\CoreClient.lib
 ]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSP835C.tmp"
+Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSPAF77.tmp"
 <h3>Output Window</h3>
-Compiling resources...
 Compiling...
-stdafx.cpp
-Compiling...
-AutoLocateWnd.cpp
-ComWindow.cpp
-LightLoop.cpp
-MouseHover.cpp
-PopupMenu.cpp
-SpaceOver.cpp
-SpecialFuncs.cpp
-TextPic.cpp
-UiCursor.cpp
-UiImage.cpp
-WndButton.cpp
-WndChessPanel.cpp
-WndEdit.cpp
-WndImage.cpp
-WndImage2.cpp
-WndImagePart.cpp
-WndLabeledButton.cpp
-WndList.cpp
-WndList2.cpp
-WndListFilterItem.cpp
-Generating Code...
-Compiling...
-WndListPoint.cpp
-WndMessageListBox.cpp
-WndMovingImage.cpp
-WndObjContainer.cpp
-WndPage.cpp
-WndPureTextBtn.cpp
-Wnds.cpp
-WndScrollBar.cpp
-WndShadow.cpp
-WndShowAnimate.cpp
-WndText.cpp
-WndToolBar.cpp
-WndValueImage.cpp
-WndWindow.cpp
 UiConnectInfo.cpp
 UiLogin.cpp
-UiLoginBg.cpp
 UiSelServer.cpp
-UiChooseFace.cpp
-UiFaceSelector.cpp
-Generating Code...
-Compiling...
 UiPlayerBar.cpp
-UiStatus.cpp
-UiOptions.cpp
 UiInit.cpp
 UiTeamBuild.cpp
-UiChaPW.cpp
-UiCreatPW.cpp
-UiExpandItem.cpp
-UiGetMoney.cpp
-UiGiveBox.cpp
-UiItem.cpp
-UiKeyBoard.cpp
-UiLoginPW.cpp
-UiReWard.cpp
-UiSkills.cpp
-UiSkillTree.cpp
-UiStoreBox.cpp
-UiTimeBox.cpp
 UiESCDlg.cpp
-UiGetNumber.cpp
-Generating Code...
-Compiling...
-UiGetString.cpp
-UiMsgSel.cpp
-UiMsgSel2.cpp
-UiParadeItem.cpp
-UiSelPlayerNearby.cpp
 UiNewPlayer.cpp
 UiSelNativePlace.cpp
 UiSelPlayer.cpp
-UiChannelSubscibe.cpp
 UiChatCentre.cpp
-UiChatPhrase.cpp
-UiChatStatus.cpp
-UiInformation.cpp
-UiInformation2.cpp
-UiInformation3.cpp
-UiTeamManage.cpp
-UiTeamStatus.cpp
-UiChatItemInfo.cpp
-UiHeaderControlBar.cpp
-UiMsgCentrePad.cpp
-Generating Code...
-Compiling...
-UiMakeAdv.cpp
-UiMarket.cpp
-UiMarkPrice.cpp
-UiPlayerShop.cpp
-UiShop.cpp
-UiShoppingCart.cpp
-UiTrade.cpp
-UiTradeConfirmWnd.cpp
-UiGame.cpp
-UiNotification.cpp
 UiSysMsgCentre.cpp
-UiCaveMap.cpp
-UiFindPos.cpp
-UiMiniMap.cpp
-UiWorldMap.cpp
-UiSelColor.cpp
-UiNewPlayerStartMsg.cpp
-UiPlayVideo.cpp
-UiHelper.cpp
-UiHelper2.cpp
-Generating Code...
-Compiling...
-UiHelperMission.cpp
 UiReconnect.cpp
-UiRevive.cpp
-UiTaskDataFile.cpp
-UiTaskNote.cpp
-UiNewsMessage.cpp
-UiNewsMessageEx.cpp
-UiStrengthRank.cpp
-UiTongAssignBox.cpp
-UiTongChangeTitle.cpp
-UiTongInformation.cpp
-UiTongSetTax .cpp
 UiAutoPlay.cpp
-UiMiniBuff.cpp
-UiTopTKNew.cpp
-UiTrembleItem.cpp
-UiUpgradeAttrib.cpp
-UiCompoundItem.cpp
-TrayMode.cpp
-UiSoundSetting.cpp
-Generating Code...
-Compiling...
 GameSpaceChangedNotify.cpp
 ShortcutKey.cpp
-UiBase.cpp
 UiShell.cpp
-ChatFilter.cpp
-FilterTextLib.cpp
 S3Client.cpp
 NetConnectAgent.cpp
 Login.cpp
-TextCtrlCmd.cpp
-ErrorCode.cpp
 Generating Code...
 C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\xmemory(34) : warning C4786: 'std::_Tree<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::map<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<std::basic_string<char,std::char_traits<char>,std::allocator<char> > > >::_Kfn,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<std::basic_string<char,std::char_traits<char>,std::allocator<char> > > >::_Nil' : identifier was truncated to '255' characters in the debug information
 C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\xmemory(34) : warning C4786: 'std::_Tree<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::map<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<std::basic_string<char,std::char_traits<char>,std::allocator<char> > > >::_Kfn,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<std::basic_string<char,std::char_traits<char>,std::allocator<char> > > >::_Nilrefs' : identifier was truncated to '255' characters in the debug information
@@ -3002,13 +1117,8 @@ C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\xmemory(34) : warning C478
 C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\xmemory(34) : warning C4786: 'std::_Tree<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,unsigned char>,std::map<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,unsigned char,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<unsigned char> >::_Kfn,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<unsigned char> >::const_iterator' : identifier was truncated to '255' characters in the debug information
 C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\xmemory(34) : warning C4786: 'std::_Tree<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::map<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<std::basic_string<char,std::char_traits<char>,std::allocator<char> > > >::_Kfn,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<std::basic_string<char,std::char_traits<char>,std::allocator<char> > > >::_Node' : identifier was truncated to '255' characters in the debug information
 C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\xmemory(34) : warning C4786: 'std::_Tree<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,std::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,unsigned char>,std::map<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,unsigned char,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<unsigned char> >::_Kfn,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<unsigned char> >::_Node' : identifier was truncated to '255' characters in the debug information
-Compiling...
-UiPopupPasswordQuery.cpp
-UiTongCreateSheet.cpp
-UiTongManager.cpp
-Generating Code...
 Linking...
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPDC79.bat" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPCD22.bat" with contents
 [
 @echo off
 md ..\..\..\bin\client
@@ -3020,10 +1130,11 @@ copy Release\Game.exe ..\..\..\bin\Client\release\Game.exe
 copy Release\Game.pdb ..\..\..\bin\Client\release\Game.pdb
 copy Release\Game.map ..\..\..\bin\Client\release\Game.map
 ]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPDC79.bat"
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPCD22.bat"
 
 A subdirectory or file ..\..\..\bin\client already exists.
-        1 file(s) copied.
+The process cannot access the file because it is being used by another process.
+        0 file(s) copied.
         1 file(s) copied.
         1 file(s) copied.
 A subdirectory or file ..\..\..\bin\client\release\ already exists.
@@ -3039,56 +1150,35 @@ Game.exe - 0 error(s), 17 warning(s)
 --------------------Configuration: S3Relay - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Release/S3Relay.res" /d "NDEBUG" "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\S3Relay.rc"" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPDDC3.tmp" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPCF55.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_WORKMODE_SINGLETHREAD" /D "_TESTING" /Fp"Release/S3Relay.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\ChannelMgr.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\ChatConnect.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\ChatServer.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\DBConnect.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\DBTable.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\DealRelay.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\DoScript.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\FriendMgr.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\GatewayCenter.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\GatewayClient.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\Global.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\HeavenLib.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\HostConnect.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\HostServer.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\KThread.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\Lock.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\LogFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\Memory.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\NetCenter.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\NetClient.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\NetConnect.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\NetServer.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\NetSockDupEx.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\RainbowLib.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\RelayCenter.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\RelayClient.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\RelayConnect.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\RelayServer.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\RootCenter.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\RootClient.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\S3Relay.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\SockThread.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\TongConnect.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\TongServer.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\KTongControl.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\KTongSet.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\TONGDB.CPP"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPDDC3.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPDDC4.tmp" with contents
-[
-/nologo /MT /W3 /GX /O2 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_WORKMODE_SINGLETHREAD" /D "_TESTING" /Fp"Release/S3Relay.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\S3Relay\StdAfx.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPDDC4.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPDDC5.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPCF55.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPCF56.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib Ws2_32.lib lualibdll.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/S3Relay.pdb" /map:"Release/S3Relay.map" /debug /machine:I386 /out:"Release/S3Relay.exe" 
 .\Release\ChannelMgr.obj
@@ -3133,54 +1223,37 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 ..\..\..\Lib\release\engine.lib
 .\libdb41s.lib
 ]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSPDDC5.tmp"
+Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSPCF56.tmp"
 <h3>Output Window</h3>
-Compiling resources...
-Compiling...
-StdAfx.cpp
 Compiling...
 ChannelMgr.cpp
 ChatConnect.cpp
-ChatServer.cpp
 DBConnect.cpp
-DBTable.cpp
 DealRelay.cpp
 DoScript.cpp
 FriendMgr.cpp
 GatewayCenter.cpp
 GatewayClient.cpp
 Global.cpp
-HeavenLib.cpp
 HostConnect.cpp
-HostServer.cpp
-KThread.cpp
-Lock.cpp
-LogFile.cpp
-Memory.cpp
-NetCenter.cpp
 NetClient.cpp
-Generating Code...
-Compiling...
 NetConnect.cpp
 NetServer.cpp
-NetSockDupEx.cpp
-RainbowLib.cpp
-RelayCenter.cpp
 RelayClient.cpp
 RelayConnect.cpp
-RelayServer.cpp
 RootCenter.cpp
 RootClient.cpp
 S3Relay.cpp
 SockThread.cpp
 TongConnect.cpp
-TongServer.cpp
+Generating Code...
+Compiling...
 KTongControl.cpp
 KTongSet.cpp
 TONGDB.CPP
 Generating Code...
 Linking...
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPFF86.bat" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPF0AB.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\Server
@@ -3192,7 +1265,7 @@ copy release\S3Relay.exe ..\..\..\..\bin\Server\release\S3Relay.exe
 copy release\S3Relay.map ..\..\..\..\bin\Server\release\S3Relay.map
 copy release\S3Relay.pdb ..\..\..\..\bin\Server\release\S3Relay.pdb
 ]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPFF86.bat"
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPF0AB.bat"
 
 A subdirectory or file ..\..\..\..\bin\Server already exists.
         1 file(s) copied.
@@ -3211,30 +1284,13 @@ S3Relay.exe - 0 error(s), 0 warning(s)
 --------------------Configuration: S3RelayServer - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Release/Sword3RelaySys.res" /d "NDEBUG" "E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\Sword3RelaySys.rc"" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPEF.tmp" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPF261.tmp" with contents
 [
 /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/S3RelayServer.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\GlobalFun.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\KThread.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\LogFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\main.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\S3P_MSSQLServer_Result.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\S3PAccount.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\S3PDB_MSSQLServer_Connection.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\S3PDBConnectionPool.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\S3PDBConVBC.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\S3PDBSocketPool.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\S3PResultVBC.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPEF.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPF0.tmp" with contents
-[
-/nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/S3RelayServer.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3RELAYSERVER\StdAfx.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPF0.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPF1.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPF261.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPF262.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib Ws2_32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/S3RelayServer.pdb" /map:"Release/S3RelayServer.map" /debug /machine:I386 /out:"Release/S3RelayServer.exe" 
 .\Release\GlobalFun.obj
@@ -3251,25 +1307,12 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Release\StdAfx.obj
 .\Release\Sword3RelaySys.res
 ]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSPF1.tmp"
+Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSPF262.tmp"
 <h3>Output Window</h3>
-Compiling resources...
 Compiling...
-StdAfx.cpp
-Compiling...
-GlobalFun.cpp
-KThread.cpp
-LogFile.cpp
-main.cpp
-S3P_MSSQLServer_Result.cpp
-S3PAccount.cpp
-S3PDB_MSSQLServer_Connection.cpp
-S3PDBConnectionPool.cpp
-S3PDBConVBC.cpp
 S3PDBSocketPool.cpp
-S3PResultVBC.cpp
 Linking...
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPEBD.bat" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPF590.bat" with contents
 [
 @echo off
 md ..\..\..\..\bin\Server
@@ -3281,7 +1324,7 @@ copy release\S3RelayServer.exe ..\..\..\..\bin\Server\release\S3RelayServer.exe
 copy release\S3RelayServer.map ..\..\..\..\bin\Server\release\S3RelayServer.map
 copy release\S3RelayServer.pdb ..\..\..\..\bin\Server\release\S3RelayServer.pdb
 ]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPEBD.bat"
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSPF590.bat"
 
 A subdirectory or file ..\..\..\..\bin\Server already exists.
         1 file(s) copied.
@@ -3300,86 +1343,6 @@ S3RelayServer.exe - 0 error(s), 0 warning(s)
 --------------------Configuration: Sword3PaySys - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating command line "rc.exe /l 0x804 /fo"Release/Sword3PaySys.res" /d "NDEBUG" "E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\Sword3PaySys.rc"" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPFB8.tmp" with contents
-[
-/nologo /MT /W3 /GX /O2 /I "..\..\..\Headers" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Sword3PaySys.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\GlobalFun.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\KThread.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\LogFile.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\main.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\S3P_MSSQLServer_Result.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\S3PAccount.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\S3PDB_MSSQLServer_Connection.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\S3PDBConnectionPool.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\S3PDBConVBC.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\S3PDBSocketPool.cpp"
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\S3PResultVBC.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPFB8.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPFB9.tmp" with contents
-[
-/nologo /MT /W3 /GX /O2 /I "..\..\..\Headers" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Release/Sword3PaySys.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
-"E:\HuyenThietKiem\SwordOnline\Sources\Sword3PaySys\S3AccServer\StdAfx.cpp"
-]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSPFB9.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSPFBA.tmp" with contents
-[
-kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib Ws2_32.lib /nologo /subsystem:windows /incremental:no /pdb:"Release/Sword3PaySys.pdb" /map:"Release/Sword3PaySys.map" /debug /machine:I386 /out:"Release/Sword3PaySys.exe" 
-.\Release\GlobalFun.obj
-.\Release\KThread.obj
-.\Release\LogFile.obj
-.\Release\main.obj
-.\Release\S3P_MSSQLServer_Result.obj
-.\Release\S3PAccount.obj
-.\Release\S3PDB_MSSQLServer_Connection.obj
-.\Release\S3PDBConnectionPool.obj
-.\Release\S3PDBConVBC.obj
-.\Release\S3PDBSocketPool.obj
-.\Release\S3PResultVBC.obj
-.\Release\StdAfx.obj
-.\Release\Sword3PaySys.res
-]
-Creating command line "link.exe @C:\Users\kenny\AppData\Local\Temp\RSPFBA.tmp"
-<h3>Output Window</h3>
-Compiling resources...
-Compiling...
-StdAfx.cpp
-Compiling...
-GlobalFun.cpp
-KThread.cpp
-LogFile.cpp
-main.cpp
-S3P_MSSQLServer_Result.cpp
-S3PAccount.cpp
-S3PDB_MSSQLServer_Connection.cpp
-S3PDBConnectionPool.cpp
-S3PDBConVBC.cpp
-S3PDBSocketPool.cpp
-S3PResultVBC.cpp
-Linking...
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP1FD8.bat" with contents
-[
-@echo off
-md ..\..\..\..\bin\Server
-copy release\Sword3PaySys.exe ..\..\..\..\bin\Server\Sword3PaySys.exe
-copy release\Sword3PaySys.map ..\..\..\..\bin\Server\Sword3PaySys.map
-copy release\Sword3PaySys.pdb ..\..\..\..\bin\Server\Sword3PaySys.pdb
-md ..\..\..\..\bin\Server\release\
-copy release\Sword3PaySys.exe ..\..\..\..\bin\Server\release\Sword3PaySys.exe
-copy release\Sword3PaySys.map ..\..\..\..\bin\Server\release\Sword3PaySys.map
-copy release\Sword3PaySys.pdb ..\..\..\..\bin\Server\release\Sword3PaySys.pdb
-]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP1FD8.bat"
-
-A subdirectory or file ..\..\..\..\bin\Server already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
-A subdirectory or file ..\..\..\..\bin\Server\release\ already exists.
-        1 file(s) copied.
-        1 file(s) copied.
-        1 file(s) copied.
 
 
 

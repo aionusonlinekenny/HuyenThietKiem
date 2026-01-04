@@ -111,7 +111,7 @@ enum s2c_PROTOCOL
 	s2c_playersyncattribute,
 	s2c_playerskilllevel,
 	s2c_playerskillremove,
-	s2c_syncitem,
+	s2c_syncitem,			
 	s2c_removeitem,
 	s2c_syncmoney,
 	s2c_playermoveitem,
@@ -143,10 +143,8 @@ enum s2c_PROTOCOL
 	s2c_syncstateeffect,
 	s2c_openstorebox,
 	s2c_playerrevive,
-
 	s2c_requestnpcfail,
 	s2c_tradeapplystart,
-	
 	s2c_rolenewdelresponse,
 	s2c_ItemAutoMove,
 	s2c_itemexchangefinish,
@@ -191,6 +189,7 @@ enum s2c_PROTOCOL
 	s2c_notification,//Notification by kinnox;
 	//s2c_show_lien_tram,
 	s2c_rightitemautomove,
+	s2c_syncpurpleitem,
 	s2c_extend = 250,
 	s2c_extendchat = 251,
 	s2c_extendfriend = 252,

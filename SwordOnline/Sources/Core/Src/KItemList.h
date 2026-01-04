@@ -188,6 +188,7 @@ public:
 	BOOL		RemoveStackItem(const int nGameIdx);
 	//
 	void		SyncItem(int nIdx, BOOL bIsNew = FALSE, int nPlace = 0, int nX = 0, int nY = 0, int nPlayerIndex = 0);
+	void		SyncPurpleItem(int nIdx, BOOL bIsNew = FALSE, int nPlace = 0, int nX = 0, int nY = 0, int nPlayerIndex = 0);
 	void		GetTradeRoomItemInfo();
 	BOOL		TradeCheckCanPlace();
 	//

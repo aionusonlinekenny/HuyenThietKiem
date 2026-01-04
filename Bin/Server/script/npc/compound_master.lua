@@ -157,32 +157,14 @@ function ExeCompoundForge()
         nNumLines = random(nMinLines, nMaxLines)
     end
 
-    -- Create purple equipment with encoded empty slots
-    -- NEW ARCHITECTURE: Use genre=1 (item_purpleequip) for purple detection
-    -- BUT use luck+randomSeed encoding for empty sockets
-    -- DecodePurple() decodes luck and randomSeed to get magic attribute records:
-    --   randomSeed % 1000000000 → encodes records for slots 0,1,2
-    --   luck % 1000000000 → encodes records for slots 3,4,5
-    -- When value=1000000000: 1000000000 % 1000000000 = 0 → all records=0 → Type=53 (empty)
-    local nPurpleLuck = 1000000000      -- Encodes to [0,0,0] for slots 3,4,5
-    local nRandomSeed = 1000000000      -- Encodes to [0,0,0] for slots 0,1,2
-
-    local nPurpleIdx = AddItemEx(
-        ITEM_GENRE_PURPLE,  -- genre = 1 (item_purpleequip) - use genre for detection (new system)
-        nDetail,            -- detail type (weapon, armor, etc.)
-        nParti,             -- particular type
-        nLevel,             -- level
-        nSeries,            -- series
-        nPurpleLuck,        -- luck = 1000000000 (for encoding empty slots, NOT for detection)
-        10,                 -- magic level slot 1 (need >0 to trigger DecodePurple)
-        10,                 -- magic level slot 2
-        10,                 -- magic level slot 3
-        10,                 -- magic level slot 4
-        10,                 -- magic level slot 5
-        10,                 -- magic level slot 6
-        1,                  -- version = 1
-        nRandomSeed         -- randomSeed = 1000000000 (for encoding empty slots)
-    )
+    -- Create purple equipment using dedicated AddItemPurple function
+    -- This function handles all the complexity internally:
+    -- - Sets genre = item_purpleequip
+    -- - Sets luck = 1000000000 (new purple item marker)
+    -- - Sets randomSeed = 1000000000 (for DecodePurple to generate Type=53 empty slots)
+    -- - Calls Gen_PurpleEquipment to generate 6 "Chua kham nam" slots
+    -- - Adds item directly to player's equipment room
+    local nPurpleIdx = AddItemPurple(nDetail, nParti, nLevel, nSeries)
 
     if not nPurpleIdx or nPurpleIdx <= 0 then
         Talk(1, "", "<color=red>Loi: Khong the tao trang bi tim!<color>")
@@ -686,11 +668,11 @@ function ExeEnchaseAttribute()
     local nSlot = nKDetail - 146
 
     -- CRITICAL FIX: Set attribute DIRECTLY on the existing purple item
-    -- This avoids the problem of encoding multiple attributes in GenLvl[]
     -- SetPurpleItemMagicAttrib will:
     -- 1. Set m_aryMagicAttrib[nSlot]
-    -- 2. Encode into GenLvl[] for client sync
-    -- 3. Call SyncItem to update client
+    -- 2. Set luck=1000000001
+    -- 3. Encode into GenLvl[] for client sync
+    -- 4. Call SyncItem to update client
     SetPurpleItemMagicAttrib(nPurpleIdx, nSlot, nType, nMin, nMax, nValue)
 
     -- Delete only the materials (keep the purple item!)
@@ -698,7 +680,6 @@ function ExeEnchaseAttribute()
     DelItemByIndex(nHuyenTinhIdx)
 
     -- Success message
-    local szSlotName = {"1st", "2nd", "3rd", "4th", "5th", "6th"}
     local szMsg = format("<color=yellow>Kham nam thanh cong! Thuoc tinh da duoc ep vao o thu %d!<color>", nSlot + 1)
     Talk(1, "", szMsg)
     Msg2SubWorld("<pic=135><color=yellow> " .. GetName() .. "<color> da kham nam thanh cong thuoc tinh vao trang bi tim!")

@@ -92,6 +92,7 @@ KProtocolProcess::KProtocolProcess()
 	ProcessFunc[s2c_playerskilllevel] = &KProtocolProcess::s2cGetSkillLevel;
 	ProcessFunc[s2c_playerskillremove] = &KProtocolProcess::s2cGetSkillRemove;
 	ProcessFunc[s2c_syncitem] = &KProtocolProcess::s2cSyncItem;
+	ProcessFunc[s2c_syncpurpleitem] = &KProtocolProcess::s2cSyncPurpleItem;
 	ProcessFunc[s2c_removeitem] = &KProtocolProcess::s2cRemoveItem;
 	ProcessFunc[s2c_syncmoney] = &KProtocolProcess::s2cSyncMoney;
 	ProcessFunc[s2c_playermoveitem] = &KProtocolProcess::s2cMoveItem;
@@ -1434,7 +1435,79 @@ void KProtocolProcess::s2cSyncItem(BYTE* pMsg)
 	Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 }
 
+//	NEW: Handle s2c_syncpurpleitem - Purple item sync with all 6 magic attributes
+void KProtocolProcess::s2cSyncPurpleItem(BYTE* pMsg)
+{
+	g_DebugLog("[CLIENT-PURPLE] s2cSyncPurpleItem called - receiving purple item");
 
+	ITEM_PURPLE_SYNC* pPurpleSync = (ITEM_PURPLE_SYNC*)pMsg;
+
+	g_DebugLog("[CLIENT-PURPLE] Purple item: ID=%d, Genre=%d, Detail=%d, Level=%d, Luck=%d",
+		pPurpleSync->m_ID, pPurpleSync->m_Genre, pPurpleSync->m_Detail,
+		pPurpleSync->m_Level, pPurpleSync->m_Luck);
+
+	// First, use standard AddExist to create/update the item with base properties
+	int pnMagicParam[6] = {0};  // Purple items don't use standard magic encoding
+
+	const int nIndex = ItemSet.AddExist(
+		pPurpleSync->m_Genre,
+		pPurpleSync->m_Series,
+		pPurpleSync->m_Level,
+		pPurpleSync->m_Record,
+		pPurpleSync->m_Luck,
+		pPurpleSync->m_Detail,
+		pnMagicParam,
+		pPurpleSync->m_Version,
+		pPurpleSync->m_RandomSeed);
+
+	g_DebugLog("[CLIENT-PURPLE] ItemSet.AddExist returned nIndex=%d", nIndex);
+
+	if( (nIndex <= 0) || (nIndex >= MAX_ITEM) )
+	{
+		g_DebugLog("[CLIENT-PURPLE] ERROR: Invalid item index %d, aborting", nIndex);
+		Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
+		return;
+	}
+
+	// Set standard item properties
+	Item[nIndex].SetID(pPurpleSync->m_ID);
+	Item[nIndex].SetDurability((short)pPurpleSync->m_Durability);
+
+	if(pPurpleSync->m_BindState > 2000000000)
+		Item[nIndex].SetBindState(pPurpleSync->m_BindState, TRUE);
+	else
+		Item[nIndex].SetBindState(pPurpleSync->m_BindState);
+
+	Item[nIndex].SetTime(pPurpleSync->m_ExpiredTime);
+	Item[nIndex].SetPlayerShopPrice(pPurpleSync->m_ShopPrice);
+
+	// CRITICAL: Set all 6 magic attributes from the protocol message
+	// This is the main difference from standard ITEM_SYNC - we get full attribute data
+	g_DebugLog("[CLIENT-PURPLE] Setting 6 magic attributes:");
+	for (int i = 0; i < 6; i++)
+	{
+		Item[nIndex].m_aryMagicAttrib[i].nAttribType = pPurpleSync->m_MagicAttrib[i].nType;
+		Item[nIndex].m_aryMagicAttrib[i].nValue[0] = pPurpleSync->m_MagicAttrib[i].nValue;
+		Item[nIndex].m_aryMagicAttrib[i].nValue[1] = 0;
+		Item[nIndex].m_aryMagicAttrib[i].nValue[2] = 0;
+		Item[nIndex].m_aryMagicAttrib[i].nMin = pPurpleSync->m_MagicAttrib[i].nMin;
+		Item[nIndex].m_aryMagicAttrib[i].nMax = pPurpleSync->m_MagicAttrib[i].nMax;
+
+		g_DebugLog("[CLIENT-PURPLE]   Slot %d: Type=%d, Value=%d, Min=%d, Max=%d",
+			i, pPurpleSync->m_MagicAttrib[i].nType, pPurpleSync->m_MagicAttrib[i].nValue,
+			pPurpleSync->m_MagicAttrib[i].nMin, pPurpleSync->m_MagicAttrib[i].nMax);
+	}
+
+	// Add to player's item list
+	g_DebugLog("[CLIENT-PURPLE] Adding item to inventory: Place=%d, X=%d, Y=%d",
+		pPurpleSync->m_Place, pPurpleSync->m_X, pPurpleSync->m_Y);
+
+	Player[CLIENT_PLAYER_INDEX].m_ItemList.Add(nIndex, pPurpleSync->m_Place, pPurpleSync->m_X, pPurpleSync->m_Y);
+
+	g_DebugLog("[CLIENT-PURPLE] Purple item sync complete, item added to inventory");
+
+	Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
+}
 //	功能：收到服务器发过来的同步money的消息
 
 void KProtocolProcess::s2cSyncMoney(BYTE* pMsg)

@@ -506,20 +506,28 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 						NewItem.m_GeneratorParam.nVersion,
 						&NewItem);
 
-				// CRITICAL FIX: Decode ALL 6 enchased purple item attributes from iparam/imagiclevel
-				// When luck=1000000001, Gen_ExistPurpleEquipment skips regeneration but resets
-				// m_aryMagicAttrib via SetAttrib_CBR. We must restore ALL 6 attributes from DB.
+				// CRITICAL FIX: Decode ALL 6 purple item attributes from iparam/imagiclevel
+				// luck=1000000000: Newly created purple with all Type=53 empty slots
+				// luck=1000000001: Enchased purple with some slots filled
+				// Both use iparam/imagiclevel encoding for attribute storage
 				// Encoding: iparam[i] = (type << 16) | value, imagiclevel[i] = (min << 16) | max
-				if (NewItem.m_GeneratorParam.nLuck == 1000000001)
+				if (NewItem.m_GeneratorParam.nLuck >= 1000000000)
 				{
-					g_DebugLog("[SERVER PURPLE LOAD] Custom purple detected (luck=1000000001), restoring ALL 6 attributes");
-					g_DebugLog("[SERVER PURPLE LOAD] Raw iparam: %d,%d,%d,%d,%d,%d",
+					g_DebugLog("========================================");
+					g_DebugLog("[LOAD FLOW] Loading purple item from database");
+					g_DebugLog("========================================");
+					g_DebugLog("[LOAD FLOW] Purple item: Genre=%d, Detail=%d, Level=%d, Luck=%d",
+						pItemData->igenre, pItemData->idetailtype, pItemData->ilevel, NewItem.m_GeneratorParam.nLuck);
+
+					g_DebugLog("[LOAD FLOW] Database encoded values:");
+					g_DebugLog("[LOAD FLOW]   iparam[1-6]: %d, %d, %d, %d, %d, %d",
 						pItemData->iparam1, pItemData->iparam2, pItemData->iparam3,
 						pItemData->iparam4, pItemData->iparam5, pItemData->iparam6);
-					g_DebugLog("[SERVER PURPLE LOAD] Raw imagiclevel: %d,%d,%d,%d,%d,%d",
+					g_DebugLog("[LOAD FLOW]   imagiclevel[1-6]: %d, %d, %d, %d, %d, %d",
 						pItemData->imagiclevel1, pItemData->imagiclevel2, pItemData->imagiclevel3,
 						pItemData->imagiclevel4, pItemData->imagiclevel5, pItemData->imagiclevel6);
 
+					g_DebugLog("[LOAD FLOW] Decoding 6 attributes from database:");
 					// Restore ALL 6 attributes from iparam1-6 and imagiclevel1-6
 					for (int s = 0; s < 6; s++)
 					{
@@ -545,8 +553,8 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 						int nMin = (nMinMax >> 16) & 0xFFFF;
 						int nMax = nMinMax & 0xFFFF;
 
-						g_DebugLog("[SERVER PURPLE LOAD] Slot %d: nTypeValue=%d, nMinMax=%d -> Type=%d, Value=%d, Min=%d, Max=%d",
-							s, nTypeValue, nMinMax, nType, nValue, nMin, nMax);
+						g_DebugLog("[LOAD FLOW]   Slot[%d]: iparam=%d (0x%08X), imagiclevel=%d (0x%08X) -> Type=%d, Value=%d, Min=%d, Max=%d",
+							s, nTypeValue, nTypeValue, nMinMax, nMinMax, nType, nValue, nMin, nMax);
 
 						// Only restore if attribute type is valid
 						if (nType > 0)
@@ -558,13 +566,27 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 							NewItem.m_aryMagicAttrib[s].nValue[1] = 0;
 							NewItem.m_aryMagicAttrib[s].nValue[2] = 0;
 
-							g_DebugLog("[SERVER PURPLE LOAD] Restored Slot %d successfully!", s);
+							g_DebugLog("[LOAD FLOW]     Restored successfully");
 						}
 						else
 						{
-							g_DebugLog("[SERVER PURPLE LOAD] Slot %d SKIPPED (nType=0)", s);
+							g_DebugLog("[LOAD FLOW]     Skipped (nType=0, empty attribute)");
 						}
 					}
+
+					// Log final decoded attributes
+					g_DebugLog("[LOAD FLOW] Decoded 6 attributes loaded into memory:");
+					for (int s = 0; s < 6; s++)
+					{
+						g_DebugLog("[LOAD FLOW]   Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
+							s,
+							NewItem.m_aryMagicAttrib[s].nAttribType,
+							NewItem.m_aryMagicAttrib[s].nValue[0],
+							NewItem.m_aryMagicAttrib[s].nMin,
+							NewItem.m_aryMagicAttrib[s].nMax);
+					}
+					g_DebugLog("[LOAD FLOW] Purple item load workflow completed");
+					g_DebugLog("========================================");
 				}
 				break;
 			case item_goldequip:
@@ -641,7 +663,43 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 		const int nGameIndex = ItemSet.Add(&NewItem);
 		if( (nGameIndex <= 0) || (nGameIndex >= MAX_ITEM) )
 			continue ;
-		m_ItemList.Add(nGameIndex, nLocal, nItemX, nItemY);		
+		m_ItemList.Add(nGameIndex, nLocal, nItemX, nItemY);
+
+		// For custom purple items (luck >= 1000000000), sync ALL 6 attributes to client
+		// After loading from database, attributes are in server m_aryMagicAttrib[] but not synced to client
+		// We use the new ITEM_PURPLE_SYNC protocol to send all 6 attributes in a single message
+		// luck=1000000000: Newly created purple with Type=53 empty slots (need sync for "Chua kham nam")
+		// luck=1000000001: Enchased purple with filled slots (need sync for attributes)
+		if (NewItem.GetGenre() == item_purpleequip && NewItem.m_GeneratorParam.nLuck >= 1000000000)
+		{
+			g_DebugLog("========================================");
+			g_DebugLog("[LOGIN SYNC] Syncing purple item to client on login");
+			g_DebugLog("========================================");
+			g_DebugLog("[LOGIN SYNC] ItemIdx=%d, Genre=%d, Detail=%d, Level=%d, Luck=%d",
+				nGameIndex, Item[nGameIndex].GetGenre(), Item[nGameIndex].GetDetailType(),
+				Item[nGameIndex].GetLevel(), NewItem.m_GeneratorParam.nLuck);
+			g_DebugLog("[LOGIN SYNC] Item name: %s", Item[nGameIndex].GetName());
+
+			// Log all 6 attributes that will be synced
+			g_DebugLog("[LOGIN SYNC] Current 6 attributes to sync:");
+			for (int i = 0; i < 6; i++)
+			{
+				g_DebugLog("[LOGIN SYNC]   Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
+					i,
+					Item[nGameIndex].m_aryMagicAttrib[i].nAttribType,
+					Item[nGameIndex].m_aryMagicAttrib[i].nValue[0],
+					Item[nGameIndex].m_aryMagicAttrib[i].nMin,
+					Item[nGameIndex].m_aryMagicAttrib[i].nMax);
+			}
+
+			g_DebugLog("[LOGIN SYNC] Calling SyncPurpleItem to send via ITEM_PURPLE_SYNC protocol");
+
+			// Send the purple item with all 6 attributes using the new protocol
+			m_ItemList.SyncPurpleItem(nGameIndex);
+
+			g_DebugLog("[LOGIN SYNC] Purple item synced to client successfully");
+			g_DebugLog("========================================");
+		}
 	}
 
 	pItemBuffer	= (BYTE*)pItemData;
@@ -992,7 +1050,12 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 
 		// CRITICAL: Set luck BEFORE checking it in conditions below!
 		pItemData->ilucky = Item[nItemIndex].GetGeneratorParam()->nLuck;
-
+		// DEBUG: Log all purple items to check save condition
+		if (pItemData->igenre == item_purpleequip)
+		{
+			g_DebugLog("[PURPLE SAVE CHECK] ItemIdx=%d, genre=%d, luck=%d, detail=%d",
+				nItemIndex, pItemData->igenre, pItemData->ilucky, pItemData->idetailtype);
+		}
 		// SPECIAL CASE 1: Khoang thach - store magic attributes in generator levels (syncs to client!)
 		if (pItemData->igenre == 7 && pItemData->idetailtype >= 146 && pItemData->idetailtype <= 151)
 		{
@@ -1008,13 +1071,36 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 				pItemData->imagiclevel3, pItemData->imagiclevel4, pItemData->imagiclevel5,
 				pItemData->imagiclevel6);
 		}
-		// SPECIAL CASE 2: Custom enchased purple items (luck=1000000001) - save ALL 6 attributes
-		else if (pItemData->igenre == item_purpleequip && pItemData->ilucky == 1000000001)
+		// SPECIAL CASE 2: Custom purple items (luck >= 1000000000) - save ALL 6 attributes
+		// luck=1000000000: Newly created purple item with all Type=53 empty slots
+		// luck=1000000001: Enchased purple item with some slots filled
+		// Both need to be saved so purple items persist across logout/login
+		else if (pItemData->igenre == item_purpleequip && pItemData->ilucky >= 1000000000)
 		{
-			g_DebugLog("[PURPLE SAVE] Saving purple item ItemIdx=%d, luck=%d", nItemIndex, pItemData->ilucky);
+			g_DebugLog("========================================");
+			g_DebugLog("[SAVE FLOW] Saving purple item to database");
+			g_DebugLog("========================================");
+			g_DebugLog("[SAVE FLOW] ItemIdx=%d, Genre=%d, Detail=%d, Level=%d, Luck=%d",
+				nItemIndex, pItemData->igenre, pItemData->idetailtype, pItemData->ilevel, pItemData->ilucky);
+			g_DebugLog("[SAVE FLOW] Item name: %s", Item[nItemIndex].GetName());
+
+			// Log current attributes from memory BEFORE encoding
+			g_DebugLog("[SAVE FLOW] Current 6 attributes in memory:");
+			for (int s = 0; s < 6; s++)
+			{
+				g_DebugLog("[SAVE FLOW]   Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
+					s,
+					Item[nItemIndex].m_aryMagicAttrib[s].nAttribType,
+					Item[nItemIndex].m_aryMagicAttrib[s].nValue[0],
+					Item[nItemIndex].m_aryMagicAttrib[s].nMin,
+					Item[nItemIndex].m_aryMagicAttrib[s].nMax);
+			}
 
 			// Save ALL 6 magic attributes using iparam1-6 and imagiclevel1-6
 			// Encoding: iparam[i] = (type << 16) | value, imagiclevel[i] = (min << 16) | max
+			// Type=53 is VALID: it means "Chua kham nam" (empty slot waiting for enchase)
+			// DO NOT skip Type=53! It's intentional marker for empty slots
+			g_DebugLog("[SAVE FLOW] Encoding attributes for database:");
 			for (int s = 0; s < 6; s++)
 			{
 				int nType = Item[nItemIndex].m_aryMagicAttrib[s].nAttribType;
@@ -1035,17 +1121,19 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 					case 4: pItemData->iparam5 = nTypeValue; pItemData->imagiclevel5 = nMinMax; break;
 					case 5: pItemData->iparam6 = nTypeValue; pItemData->imagiclevel6 = nMinMax; break;
 				}
-
-				g_DebugLog("[PURPLE SAVE] Slot %d: Type=%d, Value=%d, Min=%d, Max=%d -> iparam=%d, imagiclevel=%d",
-					s, nType, nValue, nMin, nMax, nTypeValue, nMinMax);
+				g_DebugLog("[SAVE FLOW]   Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d -> iparam=%d (0x%08X), imagiclevel=%d (0x%08X)",
+					s, nType, nValue, nMin, nMax, nTypeValue, nTypeValue, nMinMax, nMinMax);
 			}
 
-			g_DebugLog("[PURPLE SAVE] Final iparam: %d,%d,%d,%d,%d,%d",
+			g_DebugLog("[SAVE FLOW] Database encoded values:");
+			g_DebugLog("[SAVE FLOW]   iparam[1-6]: %d, %d, %d, %d, %d, %d",
 				pItemData->iparam1, pItemData->iparam2, pItemData->iparam3,
 				pItemData->iparam4, pItemData->iparam5, pItemData->iparam6);
-			g_DebugLog("[PURPLE SAVE] Final imagiclevel: %d,%d,%d,%d,%d,%d",
+			g_DebugLog("[SAVE FLOW]   imagiclevel[1-6]: %d, %d, %d, %d, %d, %d",
 				pItemData->imagiclevel1, pItemData->imagiclevel2, pItemData->imagiclevel3,
 				pItemData->imagiclevel4, pItemData->imagiclevel5, pItemData->imagiclevel6);
+			g_DebugLog("[SAVE FLOW] Purple item save workflow completed");
+			g_DebugLog("========================================");
 		}
 		else
 		{

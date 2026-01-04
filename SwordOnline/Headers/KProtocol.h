@@ -664,8 +664,37 @@ typedef struct
 
 typedef struct
 {
-	BYTE	ProtocolType;		
-	int		m_ID;				
+	BYTE	ProtocolType;
+	DWORD	m_ID;
+	char	m_Genre;
+	short	m_Detail;
+	BYTE	m_Level;
+	char	m_Series;
+	BYTE	m_Place;
+	BYTE	m_X;
+	BYTE	m_Y;
+	int		m_Luck;
+	BYTE	m_MagicLevel[6];	// CRITICAL: Must keep same layout as ITEM_SYNC for alignment!
+	WORD	m_Version;
+	WORD	m_Durability;
+	DWORD	m_RandomSeed;
+	WORD	m_Record;
+	DWORD	m_BindState;
+	DWORD	m_ExpiredTime;
+	int		m_ShopPrice;
+	// Purple item magic attributes: 6 slots with Type, Value, Min, Max
+	struct {
+		WORD	nType;		// Attribute type
+		WORD	nValue;		// Current value
+		WORD	nMin;		// Min value
+		WORD	nMax;		// Max value
+	} m_MagicAttrib[6];
+} ITEM_PURPLE_SYNC;
+
+typedef struct
+{
+	BYTE	ProtocolType;
+	int		m_ID;
 } ITEM_REMOVE_SYNC;
 
 typedef struct

@@ -75,6 +75,7 @@ public:
 	void	s2cMoveItem(BYTE* pMsg);
 	void	s2cRemoveItem(BYTE* pMsg);
 	void	s2cSyncItem(BYTE* pMsg);
+	void	s2cSyncPurpleItem(BYTE* pMsg);
 	void	SyncScriptAction(BYTE* pMsg);
 	void	s2cChatGetApplyAddFriend(BYTE* pMsg);
 	void	s2cSyncRoleList(BYTE* pMsg);

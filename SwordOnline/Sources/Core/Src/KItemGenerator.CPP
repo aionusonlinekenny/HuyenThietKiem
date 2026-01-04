@@ -361,25 +361,52 @@ BOOL KItemGenerator::Gen_PurpleEquipment(IN int nDetailType,
 		break;
 	}
 	if(pEqu == NULL)
-		return bEC; 
-	
-	pItem->SetAttrib_CBR(pEqu);
-	pItem->SetGenre(item_purpleequip);
+		return bEC;
+
+	// CRITICAL FIX: Check luck to determine attribute handling
+	// luck=1000000001: Enchased purple - SKIP everything (attributes already set manually)
+	// luck=1000000000: Newly created purple - RUN SetAttrib_CBR and DecodePurple for Type=53
+	// luck < 1000000000: Normal purple - RUN SetAttrib_CBR and DecodePurple normally
+	//
+	// SetAttrib_CBR sets base properties (damage, defense, requirements) - NOT magic attributes!
+	// DecodePurple sets magic attributes (6 slots) - Type=53 for empty slots
+
+	// Step 1: Set series and record first
 	pItem->SetSeries(nSeriesReq);
 	pItem->SetRecord(i);
-	
-	if(pnaryMALevel == NULL)
-		return TRUE;
 
-	// CUSTOM PURPLE CHECK: If luck==1000000001, this is a custom enchased purple item
-	// Skip DecodePurple and Gen_PurpleMagicAttrib - keep attributes as manually set
+	// Step 2: Call SetAttrib_CBR to copy base attributes from equipment table
+	// This will set genre=item_equip (0) temporarily - we'll override it in step 3
+	// CRITICAL: This is REQUIRED even for luck=1000000001 to get name, damage, defense, etc.
+	pItem->SetAttrib_CBR(pEqu);
+
+	// Step 3: NOW set genre to purple (this overwrites the genre from SetAttrib_CBR)
+	// This MUST be after SetAttrib_CBR to ensure genre stays as item_purpleequip
+	pItem->SetGenre(item_purpleequip);
+
+#ifdef _DEBUG
 	if(pItem->m_GeneratorParam.nLuck == 1000000001)
 	{
-#ifdef _DEBUG
-		g_DebugLog("[GEN_PURPLE] Custom enchased purple detected (luck=1000000001), skipping regeneration");
-#endif
-		return TRUE;  // Keep existing m_aryMagicAttrib set by SetPurpleItemMagicAttrib
+		g_DebugLog("[GEN_PURPLE] Enchased purple (luck=1000000001), skip DecodePurple to preserve manually set attributes");
 	}
+	else if(pItem->m_GeneratorParam.nLuck == 1000000000)
+	{
+		g_DebugLog("[GEN_PURPLE] Newly created purple (luck=1000000000), will run DecodePurple for Type=53 empty slots");
+	}
+	else
+	{
+		g_DebugLog("[GEN_PURPLE] Normal purple (luck=%d), running standard generation", pItem->m_GeneratorParam.nLuck);
+	}
+#endif
+
+	// For luck=1000000001: SKIP DecodePurple to preserve magic attributes set by SetPurpleItemMagicAttrib
+	if(pItem->m_GeneratorParam.nLuck == 1000000001)
+	{
+		return TRUE;  // Keep m_aryMagicAttrib set manually
+	}
+
+	if(pnaryMALevel == NULL)
+		return TRUE;
 	int j;
 	for(j = 0; j < 6;j++)
 	{
@@ -479,24 +506,51 @@ BOOL KItemGenerator::Gen_ExistPurpleEquipment(IN int nRecord,
 	}
 	if(pEqu == NULL)
 		return bEC;
-	
-	pItem->SetAttrib_CBR(pEqu);
+
+	// CRITICAL FIX: Check luck to determine attribute handling
+	// luck=1000000001: Enchased purple - RUN SetAttrib_CBR but SKIP DecodePurple
+	// luck=1000000000: Newly created purple - RUN SetAttrib_CBR and DecodePurple for Type=53
+	// luck < 1000000000: Normal purple - RUN SetAttrib_CBR and DecodePurple normally
+	//
+	// SetAttrib_CBR sets base properties (damage, defense, requirements) - ALWAYS NEEDED!
+	// DecodePurple sets magic attributes (6 slots) - SKIP for enchased items
+
+	// Step 1: Set series and record first
 	pItem->SetSeries(nSeries);
 	pItem->SetRecord(i);
-	pItem->SetGenre(item_purpleequip);
-	
-	if(pnaryMALevel == NULL)
-		return TRUE;
 
-	// CUSTOM PURPLE CHECK: If luck==1000000001, this is a custom enchased purple item
-	// Skip DecodePurple and Gen_PurpleMagicAttrib - keep attributes as manually set
+	// Step 2: Call SetAttrib_CBR to copy base attributes from equipment table
+	// This will set genre=item_equip (0) temporarily - we'll override it in step 3
+	// CRITICAL: This is REQUIRED even for luck=1000000001 to get name, damage, defense, etc.
+	pItem->SetAttrib_CBR(pEqu);
+
+	// Step 3: NOW set genre to purple (this overwrites the genre from SetAttrib_CBR)
+	// This MUST be after SetAttrib_CBR to ensure genre stays as item_purpleequip
+	pItem->SetGenre(item_purpleequip);
+
+#ifdef _DEBUG
 	if(pItem->m_GeneratorParam.nLuck == 1000000001)
 	{
-#ifdef _DEBUG
-		g_DebugLog("[GEN_EXIST_PURPLE] Custom enchased purple detected (luck=1000000001), skipping regeneration");
-#endif
-		return TRUE;  // Keep existing m_aryMagicAttrib set by SetPurpleItemMagicAttrib
+		g_DebugLog("[GEN_EXIST_PURPLE] Enchased purple (luck=1000000001), skip DecodePurple to preserve DB attributes");
 	}
+	else if(pItem->m_GeneratorParam.nLuck == 1000000000)
+	{
+		g_DebugLog("[GEN_EXIST_PURPLE] Newly created purple (luck=1000000000), will run DecodePurple for Type=53 empty slots");
+	}
+	else
+	{
+		g_DebugLog("[GEN_EXIST_PURPLE] Normal purple (luck=%d), running standard generation", pItem->m_GeneratorParam.nLuck);
+	}
+#endif
+
+	// For luck=1000000001: SKIP DecodePurple to preserve magic attributes from database
+	if(pItem->m_GeneratorParam.nLuck == 1000000001)
+	{
+		return TRUE;  // Keep m_aryMagicAttrib restored from database
+	}
+
+	if(pnaryMALevel == NULL)
+		return TRUE;
 	int j;
 	for(j = 0; j < 6;j++)
 	{

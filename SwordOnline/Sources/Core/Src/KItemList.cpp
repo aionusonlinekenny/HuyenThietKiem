@@ -5547,4 +5547,118 @@ void KItemList::SyncItem(int nIdx, BOOL bIsNew, int nPlace, int nX, int nY, int 
     g_pServer->PackDataToClient(netIdx, (BYTE*)&sItem, sizeof(ITEM_SYNC));
 
 }
+
+void KItemList::SyncPurpleItem(int nIdx, BOOL bIsNew, int nPlace, int nX, int nY, int nPlayerIndex)
+{
+    g_DebugLog("========================================");
+    g_DebugLog("[SERVER-SYNC-PURPLE] SyncPurpleItem called for ItemIdx=%d", nIdx);
+    g_DebugLog("[SERVER-SYNC-PURPLE] Parameters: nPlace=%d, nX=%d, nY=%d, nPlayerIndex=%d", nPlace, nX, nY, nPlayerIndex);
+    g_DebugLog("[SERVER-SYNC-PURPLE] Item properties: Genre=%d, Detail=%d, Level=%d, Luck=%d",
+        Item[nIdx].GetGenre(), Item[nIdx].GetDetailType(), Item[nIdx].GetLevel(), Item[nIdx].GetGeneratorParam()->nLuck);
+
+    // If place/position not provided, find the item's current location in inventory
+    if (nPlace == 0 && nX == 0 && nY == 0)
+    {
+        for (int i = 0; i < MAX_ITEM; i++)
+        {
+            if (m_Items[i].nIdx == nIdx)
+            {
+                nPlace = m_Items[i].nPlace;
+                nX = m_Items[i].nX;
+                nY = m_Items[i].nY;
+                g_DebugLog("[SERVER-SYNC-PURPLE] Found item at inventory slot %d: Place=%d, X=%d, Y=%d",
+                    i, nPlace, nX, nY);
+                break;
+            }
+        }
+    }
+
+    ITEM_PURPLE_SYNC sPurpleItem;
+    memset(&sPurpleItem, 0, sizeof(ITEM_PURPLE_SYNC));  // Initialize all bytes to 0
+
+    sPurpleItem.ProtocolType = s2c_syncpurpleitem;
+    sPurpleItem.m_ID         = Item[nIdx].GetID();
+    sPurpleItem.m_Genre      = Item[nIdx].GetGenre();
+    sPurpleItem.m_Detail     = Item[nIdx].GetDetailType();
+    sPurpleItem.m_Level      = Item[nIdx].GetLevel();
+    sPurpleItem.m_Series     = Item[nIdx].GetSeries();
+    sPurpleItem.m_Place      = (BYTE)nPlace;
+    sPurpleItem.m_X          = (BYTE)nX;
+    sPurpleItem.m_Y          = (BYTE)nY;
+    sPurpleItem.m_Luck       = Item[nIdx].GetGeneratorParam()->nLuck;
+
+    // Fill m_MagicLevel[6] to maintain structure alignment with ITEM_SYNC
+    // Purple items don't use this field (we use m_MagicAttrib instead), so set to 0
+    for (int i = 0; i < 6; ++i)
+        sPurpleItem.m_MagicLevel[i] = 0;
+
+    sPurpleItem.m_Version    = Item[nIdx].GetGeneratorParam()->nVersion;
+    sPurpleItem.m_Durability = Item[nIdx].GetDurability();
+    sPurpleItem.m_RandomSeed = Item[nIdx].GetGeneratorParam()->dwRandomSeed;
+    sPurpleItem.m_Record     = Item[nIdx].GetRecord();
+    sPurpleItem.m_BindState  = Item[nIdx].GetBindState();
+    sPurpleItem.m_ExpiredTime = Item[nIdx].GetTime();
+    sPurpleItem.m_ShopPrice  = Item[nIdx].GetPlayerShopPrice();
+
+    g_DebugLog("[SERVER-SYNC-PURPLE] Structure filled:");
+    g_DebugLog("[SERVER-SYNC-PURPLE]   ProtocolType=%d", sPurpleItem.ProtocolType);
+    g_DebugLog("[SERVER-SYNC-PURPLE]   m_ID=%d", sPurpleItem.m_ID);
+    g_DebugLog("[SERVER-SYNC-PURPLE]   Genre=%d, Detail=%d, Level=%d, Series=%d",
+        sPurpleItem.m_Genre, sPurpleItem.m_Detail, sPurpleItem.m_Level, sPurpleItem.m_Series);
+    g_DebugLog("[SERVER-SYNC-PURPLE]   Place=%d, X=%d, Y=%d", sPurpleItem.m_Place, sPurpleItem.m_X, sPurpleItem.m_Y);
+    g_DebugLog("[SERVER-SYNC-PURPLE]   Luck=%d", sPurpleItem.m_Luck);
+    g_DebugLog("[SERVER-SYNC-PURPLE]   Version=%d, Durability=%d, RandomSeed=%d",
+        sPurpleItem.m_Version, sPurpleItem.m_Durability, sPurpleItem.m_RandomSeed);
+    g_DebugLog("[SERVER-SYNC-PURPLE]   Record=%d, BindState=%d, ExpiredTime=%d, ShopPrice=%d",
+        sPurpleItem.m_Record, sPurpleItem.m_BindState, sPurpleItem.m_ExpiredTime, sPurpleItem.m_ShopPrice);
+
+    // Copy all 6 magic attributes with full data (Type, Value, Min, Max)
+    g_DebugLog("[SERVER-SYNC-PURPLE] Copying 6 magic attributes:");
+    for (int i = 0; i < 6; ++i)
+    {
+        sPurpleItem.m_MagicAttrib[i].nType  = (WORD)Item[nIdx].m_aryMagicAttrib[i].nAttribType;
+        sPurpleItem.m_MagicAttrib[i].nValue = (WORD)Item[nIdx].m_aryMagicAttrib[i].nValue[0];
+        sPurpleItem.m_MagicAttrib[i].nMin   = (WORD)Item[nIdx].m_aryMagicAttrib[i].nMin;
+        sPurpleItem.m_MagicAttrib[i].nMax   = (WORD)Item[nIdx].m_aryMagicAttrib[i].nMax;
+
+        g_DebugLog("[SERVER-SYNC-PURPLE]   Slot[%d]: Type=%d (0x%04X), Value=%d (0x%04X), Min=%d (0x%04X), Max=%d (0x%04X)",
+            i,
+            sPurpleItem.m_MagicAttrib[i].nType, sPurpleItem.m_MagicAttrib[i].nType,
+            sPurpleItem.m_MagicAttrib[i].nValue, sPurpleItem.m_MagicAttrib[i].nValue,
+            sPurpleItem.m_MagicAttrib[i].nMin, sPurpleItem.m_MagicAttrib[i].nMin,
+            sPurpleItem.m_MagicAttrib[i].nMax, sPurpleItem.m_MagicAttrib[i].nMax);
+    }
+
+    int netIdx = (nPlayerIndex > 0 && nPlayerIndex < MAX_PLAYER)
+                 ? Player[nPlayerIndex].m_nNetConnectIdx
+                 : Player[m_PlayerIdx].m_nNetConnectIdx;
+
+    g_DebugLog("[SERVER-SYNC-PURPLE] sizeof(ITEM_PURPLE_SYNC) = %d bytes", sizeof(ITEM_PURPLE_SYNC));
+    g_DebugLog("[SERVER-SYNC-PURPLE] Sending to netIdx=%d", netIdx);
+
+    // Log first 100 bytes of the structure in hex for debugging
+    BYTE* pBytes = (BYTE*)&sPurpleItem;
+    char szHexDump[512];
+    szHexDump[0] = '\0';
+    for (int i = 0; i < 93 && i < sizeof(ITEM_PURPLE_SYNC); i++)
+    {
+        char szByte[8];
+        sprintf(szByte, "%02X ", pBytes[i]);
+        strcat(szHexDump, szByte);
+        if ((i + 1) % 16 == 0)
+        {
+            g_DebugLog("[SERVER-SYNC-PURPLE] Bytes [%02d-%02d]: %s", i - 15, i, szHexDump);
+            szHexDump[0] = '\0';
+        }
+    }
+    if (szHexDump[0] != '\0')
+    {
+        g_DebugLog("[SERVER-SYNC-PURPLE] Bytes [remaining]: %s", szHexDump);
+    }
+
+    g_pServer->PackDataToClient(netIdx, (BYTE*)&sPurpleItem, sizeof(ITEM_PURPLE_SYNC));
+
+    g_DebugLog("[SERVER-SYNC-PURPLE] SyncPurpleItem complete");
+    g_DebugLog("========================================");
+}
 #endif // !_SERVER

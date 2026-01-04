@@ -295,18 +295,21 @@ int KItemSet::AddExist(IN int nItemGenre, IN int nSeries, IN int nLevel,
 		break;
 	case item_purpleequip:
 		ItemGen.Gen_ExistPurpleEquipment(wRecord, nDetailType, nSeries, pnMagicLevel, nLuck, nVersion, pItem);
-
 		// CRITICAL FIX: If this is a custom enchased purple (luck=1000000001),
 		// Gen_ExistPurpleEquipment skipped regeneration, so we need to decode
-		// the attribute from MagicLevel[] which was encoded by server
-		// Format: [0]=slot, [1]=type, [2]=value, [3]=min, [4]=max, [5]=reserved
+		// the attribute from MagicLevel[] and RandomSeed
+		// NEW Format: [0]=slot, [1]=type, [2]=value_low, [3]=value_high, [4]=0, [5]=0
+		// Min/Max are encoded in RandomSeed: RandomSeed = 1000000000 + (min << 10) + max
 		if (nLuck == 1000000001 && pnMagicLevel && pnMagicLevel[0] >= 0 && pnMagicLevel[0] < 6)
 		{
 			int nSlot = pnMagicLevel[0];
 			int nType = pnMagicLevel[1];
-			int nValue = pnMagicLevel[2];
-			int nMin = pnMagicLevel[3];
-			int nMax = pnMagicLevel[4];
+			int nValue = pnMagicLevel[2] | (pnMagicLevel[3] << 8);  // Combine 2 bytes for value
+
+			// Decode min/max from RandomSeed (supports values > 255)
+			DWORD dwSeedOffset = dwRandomSeed - 1000000000;
+			int nMin = (dwSeedOffset >> 10) & 0x3FF;  // Upper 10 bits
+			int nMax = dwSeedOffset & 0x3FF;          // Lower 10 bits
 
 			if (nType > 0)  // Valid attribute
 			{
@@ -319,6 +322,8 @@ int KItemSet::AddExist(IN int nItemGenre, IN int nSeries, IN int nLevel,
 
 				g_DebugLog("[CLIENT PURPLE DECODE] Decoded enchased attribute: Slot=%d, Type=%d, Value=%d, Min=%d, Max=%d",
 					nSlot, nType, nValue, nMin, nMax);
+				g_DebugLog("[CLIENT PURPLE DECODE] RandomSeed=%u, decoded Min=%d, Max=%d",
+					dwRandomSeed, nMin, nMax);
 			}
 		}
 		break;
