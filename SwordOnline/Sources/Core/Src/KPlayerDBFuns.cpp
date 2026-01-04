@@ -576,14 +576,14 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 
 					// Log final decoded attributes
 					g_DebugLog("[LOAD FLOW] Decoded 6 attributes loaded into memory:");
-					for (int s = 0; s < 6; s++)
+					for (int t = 0; t < 6; t++)
 					{
 						g_DebugLog("[LOAD FLOW]   Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
-							s,
-							NewItem.m_aryMagicAttrib[s].nAttribType,
-							NewItem.m_aryMagicAttrib[s].nValue[0],
-							NewItem.m_aryMagicAttrib[s].nMin,
-							NewItem.m_aryMagicAttrib[s].nMax);
+							t,
+							NewItem.m_aryMagicAttrib[t].nAttribType,
+							NewItem.m_aryMagicAttrib[t].nValue[0],
+							NewItem.m_aryMagicAttrib[t].nMin,
+							NewItem.m_aryMagicAttrib[t].nMax);
 					}
 					g_DebugLog("[LOAD FLOW] Purple item load workflow completed");
 					g_DebugLog("========================================");
@@ -1103,18 +1103,18 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 			// Type=53 is VALID: it means "Chua kham nam" (empty slot waiting for enchase)
 			// DO NOT skip Type=53! It's intentional marker for empty slots
 			g_DebugLog("[SAVE FLOW] Encoding attributes for database:");
-			for (int s = 0; s < 6; s++)
+			for (int t = 0; t < 6; t++)
 			{
-				int nType = Item[nItemIndex].m_aryMagicAttrib[s].nAttribType;
-				int nMin = Item[nItemIndex].m_aryMagicAttrib[s].nMin;
-				int nMax = Item[nItemIndex].m_aryMagicAttrib[s].nMax;
-				int nValue = Item[nItemIndex].m_aryMagicAttrib[s].nValue[0];
+				int nType = Item[nItemIndex].m_aryMagicAttrib[t].nAttribType;
+				int nMin = Item[nItemIndex].m_aryMagicAttrib[t].nMin;
+				int nMax = Item[nItemIndex].m_aryMagicAttrib[t].nMax;
+				int nValue = Item[nItemIndex].m_aryMagicAttrib[t].nValue[0];
 
 				int nTypeValue = (nType << 16) | (nValue & 0xFFFF);
 				int nMinMax = (nMin << 16) | (nMax & 0xFFFF);
 
 				// Save to iparam and imagiclevel based on slot index
-				switch(s)
+				switch(t)
 				{
 					case 0: pItemData->iparam1 = nTypeValue; pItemData->imagiclevel1 = nMinMax; break;
 					case 1: pItemData->iparam2 = nTypeValue; pItemData->imagiclevel2 = nMinMax; break;
@@ -1125,7 +1125,7 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 				}
 
 				g_DebugLog("[SAVE FLOW]   Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d -> iparam=%d (0x%08X), imagiclevel=%d (0x%08X)",
-					s, nType, nValue, nMin, nMax, nTypeValue, nTypeValue, nMinMax, nMinMax);
+					t, nType, nValue, nMin, nMax, nTypeValue, nTypeValue, nMinMax, nMinMax);
 			}
 
 			g_DebugLog("[SAVE FLOW] Database encoded values:");

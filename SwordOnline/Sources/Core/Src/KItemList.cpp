@@ -5614,19 +5614,19 @@ void KItemList::SyncPurpleItem(int nIdx, BOOL bIsNew, int nPlace, int nX, int nY
 
     // Copy all 6 magic attributes with full data (Type, Value, Min, Max)
     g_DebugLog("[SERVER-SYNC-PURPLE] Copying 6 magic attributes:");
-    for (int i = 0; i < 6; ++i)
+    for (int a = 0; a < 6; ++a)
     {
-        sPurpleItem.m_MagicAttrib[i].nType  = (WORD)Item[nIdx].m_aryMagicAttrib[i].nAttribType;
-        sPurpleItem.m_MagicAttrib[i].nValue = (WORD)Item[nIdx].m_aryMagicAttrib[i].nValue[0];
-        sPurpleItem.m_MagicAttrib[i].nMin   = (WORD)Item[nIdx].m_aryMagicAttrib[i].nMin;
-        sPurpleItem.m_MagicAttrib[i].nMax   = (WORD)Item[nIdx].m_aryMagicAttrib[i].nMax;
+        sPurpleItem.m_MagicAttrib[a].nType  = (WORD)Item[nIdx].m_aryMagicAttrib[a].nAttribType;
+        sPurpleItem.m_MagicAttrib[a].nValue = (WORD)Item[nIdx].m_aryMagicAttrib[a].nValue[0];
+        sPurpleItem.m_MagicAttrib[a].nMin   = (WORD)Item[nIdx].m_aryMagicAttrib[a].nMin;
+        sPurpleItem.m_MagicAttrib[a].nMax   = (WORD)Item[nIdx].m_aryMagicAttrib[a].nMax;
 
         g_DebugLog("[SERVER-SYNC-PURPLE]   Slot[%d]: Type=%d (0x%04X), Value=%d (0x%04X), Min=%d (0x%04X), Max=%d (0x%04X)",
-            i,
-            sPurpleItem.m_MagicAttrib[i].nType, sPurpleItem.m_MagicAttrib[i].nType,
-            sPurpleItem.m_MagicAttrib[i].nValue, sPurpleItem.m_MagicAttrib[i].nValue,
-            sPurpleItem.m_MagicAttrib[i].nMin, sPurpleItem.m_MagicAttrib[i].nMin,
-            sPurpleItem.m_MagicAttrib[i].nMax, sPurpleItem.m_MagicAttrib[i].nMax);
+            a,
+            sPurpleItem.m_MagicAttrib[a].nType, sPurpleItem.m_MagicAttrib[a].nType,
+            sPurpleItem.m_MagicAttrib[a].nValue, sPurpleItem.m_MagicAttrib[a].nValue,
+            sPurpleItem.m_MagicAttrib[a].nMin, sPurpleItem.m_MagicAttrib[a].nMin,
+            sPurpleItem.m_MagicAttrib[a].nMax, sPurpleItem.m_MagicAttrib[a].nMax);
     }
 
     int netIdx = (nPlayerIndex > 0 && nPlayerIndex < MAX_PLAYER)
@@ -5640,14 +5640,14 @@ void KItemList::SyncPurpleItem(int nIdx, BOOL bIsNew, int nPlace, int nX, int nY
     BYTE* pBytes = (BYTE*)&sPurpleItem;
     char szHexDump[512];
     szHexDump[0] = '\0';
-    for (int i = 0; i < 93 && i < sizeof(ITEM_PURPLE_SYNC); i++)
+    for (int b = 0; b < 93 && b < sizeof(ITEM_PURPLE_SYNC); b++)
     {
         char szByte[8];
-        sprintf(szByte, "%02X ", pBytes[i]);
+        sprintf(szByte, "%02X ", pBytes[b]);
         strcat(szHexDump, szByte);
-        if ((i + 1) % 16 == 0)
+        if ((b + 1) % 16 == 0)
         {
-            g_DebugLog("[SERVER-SYNC-PURPLE] Bytes [%02d-%02d]: %s", i - 15, i, szHexDump);
+            g_DebugLog("[SERVER-SYNC-PURPLE] Bytes [%02d-%02d]: %s", b - 15, b, szHexDump);
             szHexDump[0] = '\0';
         }
     }
