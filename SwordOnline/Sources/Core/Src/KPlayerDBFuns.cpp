@@ -1030,6 +1030,10 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 	TRoleData* pRoleData = (TRoleData*)pRoleBuffer;
 	TDBItemData* pItemData = (TDBItemData*)((BYTE*)pRoleData + pRoleData->dwItemOffset);
 
+	g_DebugLog("========================================");
+	g_DebugLog("[SAVE ITEMLIST] SavePlayerItemList called");
+	g_DebugLog("========================================");
+
 	int nIdx = 0, nItemIndex = 0, nItemCount = 0;
 	while(1)
 	{
@@ -1037,6 +1041,10 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 		if(nIdx == 0 )
 			break;
 		nItemIndex = m_ItemList.m_Items[nIdx].nIdx;
+
+		g_DebugLog("[SAVE ITEMLIST] Item %d: Idx=%d, ItemIndex=%d, Genre=%d, Detail=%d, Name=%s",
+			nItemCount + 1, nIdx, nItemIndex, Item[nItemIndex].GetGenre(),
+			Item[nItemIndex].GetDetailType(), Item[nItemIndex].GetName());
 		
 		pItemData->igenre =  Item[nItemIndex].GetGenre();
 		pItemData->idetailtype =  Item[nItemIndex].GetDetailType();
@@ -1173,9 +1181,12 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 		pItemData++;
 		nItemCount++;
 	}
-	
+
 	pRoleData->nItemCount = nItemCount;
-	
+
+	g_DebugLog("[SAVE ITEMLIST] Total items saved: %d", nItemCount);
+	g_DebugLog("========================================");
+
 	pRoleData->dwFriendOffset = (BYTE*)pItemData - (BYTE*)pRoleData;
 	pRoleData->dwDataLen = (BYTE*)pItemData - (BYTE*)pRoleBuffer;
 	return 1;
