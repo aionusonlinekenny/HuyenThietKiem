@@ -1446,6 +1446,21 @@ void KProtocolProcess::s2cSyncPurpleItem(BYTE* pMsg)
 		pPurpleSync->m_ID, pPurpleSync->m_Genre, pPurpleSync->m_Detail,
 		pPurpleSync->m_Level, pPurpleSync->m_Luck);
 
+	// CRITICAL: Remove existing item with same ID to prevent duplicates
+	// This happens when enchasing - item is moved to compound container,
+	// then server sends SyncPurpleItem which would create a duplicate
+	for (int idx = 0; idx < MAX_ITEM; idx++)
+	{
+		if (Item[idx].GetGenre() != item_unknown &&
+			Item[idx].GetID() == pPurpleSync->m_ID)
+		{
+			g_DebugLog("[CLIENT-PURPLE] Found existing item with ID=%d at index %d, removing to prevent duplicate",
+				pPurpleSync->m_ID, idx);
+			Player[CLIENT_PLAYER_INDEX].m_ItemList.Remove(idx);
+			break;
+		}
+	}
+
 	// First, use standard AddExist to create/update the item with base properties
 	int pnMagicParam[6] = {0};  // Purple items don't use standard magic encoding
 
