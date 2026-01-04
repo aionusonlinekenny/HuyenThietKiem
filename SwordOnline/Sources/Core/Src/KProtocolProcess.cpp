@@ -1451,8 +1451,7 @@ void KProtocolProcess::s2cSyncPurpleItem(BYTE* pMsg)
 	// then server sends SyncPurpleItem which would create a duplicate
 	for (int idx = 0; idx < MAX_ITEM; idx++)
 	{
-		if (Item[idx].GetGenre() != item_unknown &&
-			Item[idx].GetID() == pPurpleSync->m_ID)
+		if (Item[idx].GetID() == pPurpleSync->m_ID && pPurpleSync->m_ID > 0)
 		{
 			g_DebugLog("[CLIENT-PURPLE] Found existing item with ID=%d at index %d, removing to prevent duplicate",
 				pPurpleSync->m_ID, idx);
