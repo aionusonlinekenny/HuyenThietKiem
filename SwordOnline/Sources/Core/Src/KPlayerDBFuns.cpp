@@ -1154,7 +1154,9 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 		pItemData->irecord			= Item[nItemIndex].GetRecord();
 		//
 		// CRITICAL: Do NOT overwrite iparam1-6 for custom purple items! They store magic attributes.
-		if (pItemData->igenre != item_purpleequip || pItemData->ilucky != 1000000001)
+		// Exclude BOTH newly created (luck=1000000000) and enchased (luck=1000000001) purple items.
+		if (pItemData->igenre != item_purpleequip ||
+		    (pItemData->ilucky != 1000000000 && pItemData->ilucky != 1000000001))
 		{
 			pItemData->iparam1		= Item[nItemIndex].GetParam1();
 		}
