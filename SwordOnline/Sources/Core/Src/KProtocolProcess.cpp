@@ -1411,10 +1411,11 @@ void KProtocolProcess::s2cSyncItem(BYTE* pMsg)
 		pnMagicParam,
 		pItemSync->m_Version,
 		pItemSync->m_RandomSeed);
-	
+
 	if( (nIndex <= 0) || (nIndex >= MAX_ITEM) )
 	{
-		Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
+		// REMOVED: UnlockOperation() without corresponding LockOperation() causes crash
+		// Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 		return;
 	}
 
@@ -1431,8 +1432,8 @@ void KProtocolProcess::s2cSyncItem(BYTE* pMsg)
 	Item[nIndex].SetPlayerShopPrice(pItemSync->m_ShopPrice);
 
 	Player[CLIENT_PLAYER_INDEX].m_ItemList.Add(nIndex, pItemSync->m_Place, pItemSync->m_X, pItemSync->m_Y);
-	//
-	Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
+	// REMOVED: UnlockOperation() without corresponding LockOperation() causes crash/undefined behavior
+	// Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 }
 
 //	NEW: Handle s2c_syncpurpleitem - Purple item sync with all 6 magic attributes
