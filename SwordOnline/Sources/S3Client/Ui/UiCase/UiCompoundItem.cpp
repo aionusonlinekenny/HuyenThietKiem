@@ -112,6 +112,12 @@ KUiComItem *KUiComItem::OpenWindow() {
             KUiItem::OpenWindow();
         else
             UiSoundPlay(UI_SI_WND_OPENCLOSE);
+
+        // CRITICAL: Bring crafting UI to top AFTER opening inventory
+        // This ensures crafting UI receives keyboard input (like ESC) before inventory
+        m_pSelf->BringToTop();
+        g_DebugLog("[COMPOUND-MAIN] BringToTop called after inventory open to receive ESC key");
+
         // NOTE: Do NOT call OnNpcTradeMode(true) - it disables inventory drag!
         // Crafting UIs need players to drag items FROM inventory
     }
