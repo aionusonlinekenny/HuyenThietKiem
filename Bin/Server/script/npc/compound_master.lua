@@ -106,6 +106,10 @@ function ExeCompoundForge()
     -- Get equipment properties
     local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
 
+    -- Debug: Log blue item series
+    local szSeriesNames = {"Kim", "Moc", "Thuy", "Hoa", "Tho"}
+    Msg2Player(format("[SERIES DEBUG] Blue item series = %d (%s)", nSeries or -1, szSeriesNames[nSeries + 1] or "Unknown"))
+
     -- Validate equipment is blue (using new genre-based detection)
     if not IsBlueEquipment(nEquipIdx) then
         local itemType = GetItemTypeByGenre(nEquipIdx)
@@ -170,11 +174,20 @@ function ExeCompoundForge()
     -- - Sets randomSeed = 1000000000 (for DecodePurple to generate Type=53 empty slots)
     -- - Calls Gen_PurpleEquipment to generate 6 "Chua kham nam" slots
     -- - Adds item directly to player's equipment room
+    Msg2Player(format("[SERIES DEBUG] Creating purple with series = %d (%s)", nSeries or -1, szSeriesNames[nSeries + 1] or "Unknown"))
     local nPurpleIdx = AddItemPurple(nDetail, nParti, nLevel, nSeries)
 
     if not nPurpleIdx or nPurpleIdx <= 0 then
         Talk(1, "", "<color=red>Loi: Khong the tao trang bi tim!<color>")
         return
+    end
+
+    -- Verify purple item series
+    local _, _, _, _, nPurpleSeries = GetItemProp(nPurpleIdx)
+    Msg2Player(format("[SERIES DEBUG] Purple item created with series = %d (%s)", nPurpleSeries or -1, szSeriesNames[nPurpleSeries + 1] or "Unknown"))
+
+    if nPurpleSeries ~= nSeries then
+        Msg2Player(format("<color=red>[SERIES ERROR] Series mismatch! Blue=%d, Purple=%d<color>", nSeries, nPurpleSeries))
     end
 
     -- Success message

@@ -344,7 +344,8 @@ end
 
 ## Commit History
 ```
-[PENDING] - FEATURE: Add series validation for purple item enchasing system
+be051a15b - FIX: Keep materials in UI when enchasing validation fails
+8c861197d - FEATURE: Add series validation for purple item enchasing system
 62005161d - FIX: ESC key now closes crafting UI by closing it when inventory closes
 bee4a83df - FIX: ESC key not working - inventory window stealing keyboard input
 989ddfab5 - DEBUG: Add comprehensive logging to ESC key handlers
@@ -354,6 +355,28 @@ bc2d6b141 - FIX: Crash on close and ESC key not working
 
 ---
 
+## Latest Fix: Material Box Preservation (be051a15b)
+
+### Problem
+When series validation failed (e.g., Fire mineral on Water equipment), material boxes (Box1/Box2) were cleared even though enchasing didn't succeed. Items remained in BuildBox on server, but client UI showed empty boxes. User had to switch tabs to refresh UI.
+
+### Root Cause
+Animation `Breathe()` cleared boxes BEFORE sending request to server:
+1. Animation completes (55 frames)
+2. **Client clears Box1/Box2** ← Too early!
+3. Client sends enchase request
+4. Server validates series, fails, returns error
+5. Items still in BuildBox, but UI already cleared
+
+### Solution
+Removed premature box clearing (lines 2798-2799). Now boxes only clear when server successfully deletes items:
+- **Success**: Server deletes → `s2cRemoveItem` → `UpdateItem(bAdd=false)` → Boxes clear
+- **Validation fail**: Server returns error → Items stay in BuildBox → Boxes still show materials
+
+**File**: `SwordOnline/Sources/S3Client/Ui/UiCase/UiCompoundItem.cpp:2797-2801`
+
+---
+
 **Last Updated**: 2026-01-05
 **Branch**: claude/analyze-branch-differences-KD0Bv
-**Status**: Core system complete, series validation implemented
+**Status**: Core system complete, all fixes applied
