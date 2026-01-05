@@ -2247,6 +2247,7 @@ void KUiForge::CleanItem() {
 
 KUiEnchaseTim::KUiEnchaseTim() {
     m_nStatus = STATUS_WAITING_MATERIALS;
+    m_EffectTime = 0;  // Initialize effect timer
 }
 
 void KUiEnchaseTim::PaintWindow() {
@@ -2675,45 +2676,60 @@ KUiAtlas::KUiAtlas() {
 }
 
 // Animation frame update - called every frame to handle enchase effect
+// FIXED: Now follows Upgrade tab pattern - uses EffectTime counter
 void KUiEnchaseTim::Breathe() {
+    // START EFFECT: Show sprites and begin animation
     if (m_nStatus == STATUS_BEGIN_TREMBLE) {
-        // Show all 3 effects (BigBox, Box1, Box2)
         m_TrembleEffect1.Show();
         m_TrembleEffect1.SetFrame(0);
         m_TrembleEffect2.Show();
         m_TrembleEffect2.SetFrame(0);
         m_TrembleEffect3.Show();
         m_TrembleEffect3.SetFrame(0);
+
+        m_EffectTime = 1;  // Start counting from 1 (like Upgrade tab)
         m_nStatus = STATUS_TREMBLING;
-        g_DebugLog("[ENCHASE] Started enchase effect animation on all 3 boxes");
-    } else if (m_nStatus == STATUS_TREMBLING) {
-        if (!PlayEffect()) {
-            m_nStatus = STATUS_CHANGING_ITEM;
+        g_DebugLog("[ENCHASE] Effect started, EffectTime=1");
+    }
+
+    // ANIMATE: Advance frames and increment time counter
+    if (m_nStatus == STATUS_TREMBLING) {
+        // Advance frames
+        if (m_TrembleEffect1.IsVisible()) m_TrembleEffect1.NextFrame();
+        if (m_TrembleEffect2.IsVisible()) m_TrembleEffect2.NextFrame();
+        if (m_TrembleEffect3.IsVisible()) m_TrembleEffect3.NextFrame();
+
+        // Increment time
+        m_EffectTime++;
+
+        // CRITICAL: Run effect for at least 55 frames (matching Upgrade/Forge timing)
+        // This ensures effect is visible even if sprites load slowly
+        if (m_EffectTime >= 55) {
+            // STOP EFFECT: Hide sprites, clear shadow boxes, send request
             m_TrembleEffect1.Hide();
             m_TrembleEffect2.Hide();
             m_TrembleEffect3.Hide();
-            g_DebugLog("[ENCHASE] Animation finished, hiding all effects");
-        }
-    } else if (m_nStatus == STATUS_CHANGING_ITEM) {
-        UpdateResult();
-        m_nStatus = STATUS_FINISH;
-        g_DebugLog("[ENCHASE] Breathe: Set status to STATUS_FINISH");
-    } else if (m_nStatus == STATUS_FINISH) {
-        // CRITICAL FIX: Clear material boxes (Box1, Box2) to remove shadow items
-        // Server has deleted materials via DelItemByIndex, but UI still shows shadows
-        // BigBox is NOT cleared - it still contains the enchased purple item
-        m_Box1.Clear();
-        m_Box2.Clear();
-        g_DebugLog("[ENCHASE] Breathe: Cleared Box1 and Box2 shadow items");
 
-        // Reset to waiting state for next enchase
-        m_nStatus = STATUS_WAITING_MATERIALS;
-        // Re-enable boxes for next operation
-        m_BigBox.EnablePickPut(true);
-        m_Box1.EnablePickPut(true);
-        m_Box2.EnablePickPut(true);
-        m_ItemBox.EnablePickPut(true);
-        g_DebugLog("[ENCHASE] Breathe: Reset status to STATUS_WAITING_MATERIALS, boxes re-enabled");
+            // Clear material box shadows (server already deleted items)
+            m_Box1.Clear();
+            m_Box2.Clear();
+            g_DebugLog("[ENCHASE] Effect stopped at frame %d, material boxes cleared", m_EffectTime);
+
+            // Send enchase request to server
+            UpdateResult();
+
+            // Reset for next operation
+            m_EffectTime = 0;
+            m_nStatus = STATUS_WAITING_MATERIALS;
+
+            // Re-enable boxes
+            m_BigBox.EnablePickPut(true);
+            m_Box1.EnablePickPut(true);
+            m_Box2.EnablePickPut(true);
+            m_ItemBox.EnablePickPut(true);
+
+            g_DebugLog("[ENCHASE] Ready for next enchase");
+        }
     }
 }
 
