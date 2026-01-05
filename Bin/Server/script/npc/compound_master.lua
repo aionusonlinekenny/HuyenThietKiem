@@ -669,17 +669,57 @@ function ExeEnchaseAttribute()
     -- Calculate target slot (146->0, 147->1, ..., 151->5)
     local nSlot = nKDetail - 146
 
-    -- CRITICAL FIX: Set attribute DIRECTLY on the existing purple item
-    -- SetPurpleItemMagicAttrib will:
-    -- 1. Set m_aryMagicAttrib[nSlot]
-    -- 2. Set luck=1000000001
-    -- 3. Encode into GenLvl[] for client sync
-    -- 4. Call SyncItem to update client
-    SetPurpleItemMagicAttrib(nPurpleIdx, nSlot, nType, nMin, nMax, nValue)
+    -- Get purple item properties
+    local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nPurpleIdx)
 
-    -- Delete only the materials (keep the purple item!)
+    -- Get ALL 6 current attributes from purple item BEFORE modification
+    -- We need to preserve all existing attributes when recreating the item
+    local attribs = {}
+    for i = 0, 5 do
+        local nT, nV, nMin, nMax = GetItemMagicAttribInfo(nPurpleIdx, i)
+        attribs[i] = {type = nT, value = nV, min = nMin, max = nMax}
+    end
+
+    -- Update the target slot with new attribute from khoang thach
+    attribs[nSlot] = {type = nType, value = nValue, min = nMin, max = nMax}
+
+    -- Delete old purple item from BuildBox
+    DelItemByIndex(nPurpleIdx)
+
+    -- Delete materials
     DelItemByIndex(nKhoangIdx)
     DelItemByIndex(nHuyenTinhIdx)
+
+    -- Recreate purple item in equipment room with ALL attributes
+    -- Use AddItemEx with luck=1000000001 to preserve custom attributes
+    local nNewPurpleIdx = AddItemEx(
+        1,          -- genre: item_purpleequip
+        nDetail,    -- detail type
+        nParti,     -- particular type
+        nLevel,     -- level
+        nSeries,    -- series
+        1000000001, -- luck: enchased marker (prevents DecodePurple override)
+        attribs[0].type or 53,  -- GenLevel[0]: Type for slot 0
+        attribs[1].type or 53,  -- GenLevel[1]: Type for slot 1
+        attribs[2].type or 53,  -- GenLevel[2]: Type for slot 2
+        attribs[3].type or 53,  -- GenLevel[3]: Type for slot 3
+        attribs[4].type or 53,  -- GenLevel[4]: Type for slot 4
+        attribs[5].type or 53,  -- GenLevel[5]: Type for slot 5
+        1,          -- version
+        1000000001  -- randomSeed: enchased marker
+    )
+
+    if not nNewPurpleIdx or nNewPurpleIdx <= 0 then
+        Talk(1, "", "<color=red>Loi: Khong the tao lai trang bi tim sau khi kham nam!<color>")
+        return
+    end
+
+    -- Now set the full attribute data (Min/Max/Value) for each slot using SetPurpleItemMagicAttrib
+    for i = 0, 5 do
+        if attribs[i].type and attribs[i].type > 0 and attribs[i].type ~= 53 then
+            SetPurpleItemMagicAttrib(nNewPurpleIdx, i, attribs[i].type, attribs[i].min, attribs[i].max, attribs[i].value)
+        end
+    end
 
     -- Success message
     local szMsg = format("<color=yellow>Kham nam thanh cong! Thuoc tinh da duoc ep vao o thu %d!<color>", nSlot + 1)
