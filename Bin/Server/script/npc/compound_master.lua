@@ -673,11 +673,19 @@ function ExeEnchaseAttribute()
     -- Just update the target slot directly on the existing purple item in BuildBox
     -- This preserves ALL existing Type=53 slots
 
+    -- CRITICAL ORDER: Update attribute BEFORE deleting materials!
+    -- SetPurpleItemMagicAttrib will call SyncPurpleItem which needs item to still
+    -- be in m_Items[] array to find its BuildBox position (Place=15, X=0, Y=0).
+    -- If we delete materials first, client receives s2cRemoveItem and clears BuildBox
+    -- references, causing SyncPurpleItem to fail finding the item position!
+
     -- Update the target slot with new attribute from khoang thach
     -- This directly modifies Item[nPurpleIdx].m_aryMagicAttrib[nSlot]
+    -- AND calls SyncPurpleItem to send updated item to client
     SetPurpleItemMagicAttrib(nPurpleIdx, nSlot, nType, nMin, nMax, nValue)
 
-    -- Delete materials (but keep purple item!)
+    -- NOW delete materials after purple item is synced
+    -- Client will receive s2cRemoveItem for these and auto-clear Box1/Box2
     DelItemByIndex(nKhoangIdx)
     DelItemByIndex(nHuyenTinhIdx)
 

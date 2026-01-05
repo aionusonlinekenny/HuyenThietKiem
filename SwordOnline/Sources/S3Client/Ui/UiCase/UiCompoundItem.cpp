@@ -2784,10 +2784,14 @@ void KUiEnchaseTim::UpdateResult() {
         g_DebugLog("[ENCHASE] ERROR: g_pCoreShell is NULL!");
     }
 
-    // Clear all boxes after sending request
-    CleanItem();
-    g_DebugLog("[ENCHASE] Boxes cleared after enchase request");
+    // CRITICAL FIX: DO NOT call CleanItem() here!
+    // Server will modify the purple item in BuildBox and send s2cSyncPurpleItem
+    // which will automatically update the item display in BigBox.
+    // Calling CleanItem() here causes the item to disappear before server response.
+    // Materials (Box1, Box2) will be cleared by server when it deletes them.
 
+    // Wait for server to send updated purple item via s2cSyncPurpleItem
+    g_DebugLog("[ENCHASE] Waiting for server to sync updated purple item");
     g_DebugLog("[ENCHASE] UpdateResult complete");
 }
 
