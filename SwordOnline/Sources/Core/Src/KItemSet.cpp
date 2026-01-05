@@ -176,7 +176,7 @@ int KItemSet::Add(int nItemGenre, int nSeries,
 	pItem->SetGeneratorLevel(pnMagicLevel);
 	pItem->SetGeneratorLuck(nLuck);
 	pItem->SetGeneratorVersion(nVersion);
-	
+
 	switch(nItemGenre)
 	{
 	case item_equip:
@@ -200,7 +200,10 @@ int KItemSet::Add(int nItemGenre, int nSeries,
 		ItemGen.Gen_Quest(nDetailType, pItem);
 		break;
 	case item_script:
+		// CRITICAL: Gen_Script uses "*pItem = *pScript" which overrides series to -1
+		// We must restore series after Gen_Script (same issue as Gen_PurpleEquipment)
 		ItemGen.Gen_Script(nDetailType, pItem);
+		pItem->SetSeries(nSeries);  // Restore series after Gen_Script
 		break;
 	case item_mine:
 		ItemGen.Gen_Mine(nDetailType, nLevel, nSeries, pItem);
