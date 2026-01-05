@@ -2700,9 +2700,9 @@ void KUiEnchaseTim::Breathe() {
             int nMax1 = m_TrembleEffect1.GetMaxFrame();
             int nMax2 = m_TrembleEffect2.GetMaxFrame();
             int nMax3 = m_TrembleEffect3.GetMaxFrame();
-            bool bVis1 = m_TrembleEffect1.IsVisible();
-            bool bVis2 = m_TrembleEffect2.IsVisible();
-            bool bVis3 = m_TrembleEffect3.IsVisible();
+            int bVis1 = m_TrembleEffect1.IsVisible();
+            int bVis2 = m_TrembleEffect2.IsVisible();
+            int bVis3 = m_TrembleEffect3.IsVisible();
 
             g_DebugLog("[ENCHASE] Effect check: MaxFrames=%d,%d,%d Visible=%d,%d,%d",
                 nMax1, nMax2, nMax3, bVis1, bVis2, bVis3);
