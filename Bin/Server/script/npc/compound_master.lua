@@ -692,6 +692,7 @@ function ExeEnchaseAttribute()
 
     -- Recreate purple item in equipment room with ALL attributes
     -- Use AddItemEx with luck=1000000001 to preserve custom attributes
+    -- CRITICAL FIX: In Lua, 0 is truthy! Must check for nil AND 0 explicitly
     local nNewPurpleIdx = AddItemEx(
         1,          -- genre: item_purpleequip
         nDetail,    -- detail type
@@ -699,12 +700,12 @@ function ExeEnchaseAttribute()
         nLevel,     -- level
         nSeries,    -- series
         1000000001, -- luck: enchased marker (prevents DecodePurple override)
-        attribs[0].type or 53,  -- GenLevel[0]: Type for slot 0
-        attribs[1].type or 53,  -- GenLevel[1]: Type for slot 1
-        attribs[2].type or 53,  -- GenLevel[2]: Type for slot 2
-        attribs[3].type or 53,  -- GenLevel[3]: Type for slot 3
-        attribs[4].type or 53,  -- GenLevel[4]: Type for slot 4
-        attribs[5].type or 53,  -- GenLevel[5]: Type for slot 5
+        (attribs[0].type and attribs[0].type ~= 0) and attribs[0].type or 53,  -- GenLevel[0]
+        (attribs[1].type and attribs[1].type ~= 0) and attribs[1].type or 53,  -- GenLevel[1]
+        (attribs[2].type and attribs[2].type ~= 0) and attribs[2].type or 53,  -- GenLevel[2]
+        (attribs[3].type and attribs[3].type ~= 0) and attribs[3].type or 53,  -- GenLevel[3]
+        (attribs[4].type and attribs[4].type ~= 0) and attribs[4].type or 53,  -- GenLevel[4]
+        (attribs[5].type and attribs[5].type ~= 0) and attribs[5].type or 53,  -- GenLevel[5]
         1,          -- version
         1000000001  -- randomSeed: enchased marker
     )
