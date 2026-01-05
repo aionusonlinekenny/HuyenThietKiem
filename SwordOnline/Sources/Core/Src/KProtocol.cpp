@@ -13,7 +13,7 @@ typedef struct
 
 int	g_nProtocolSize[MAX_PROTOCOL_NUM] = 
 {
-#ifndef _SERVER				// ¿Í»§¶Ë½ÓÊÕµ½µÄ·þÎñÆ÷µ½¿Í»§¶ËµÄÐ­Òé³¤¶È
+#ifndef _SERVER				// ï¿½Í»ï¿½ï¿½Ë½ï¿½ï¿½Õµï¿½ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ëµï¿½Ð­ï¿½é³¤ï¿½ï¿½
 	-1,							// s2c_login,
 	-1,							// s2c_logout,
 	sizeof(BYTE),				// s2c_syncend,
@@ -144,7 +144,8 @@ int	g_nProtocolSize[MAX_PROTOCOL_NUM] =
 	sizeof(PLAYER_SEND_TOP_TK_NEW),			// s2c_playersendtoptknew /ID: 125 ////Report Battle by kinnox;
 	sizeof(S2C_NOTIFICATION),				// s2c_notification /ID: 126 //Notification by kinnox;
 	sizeof(ITEM_RIGHT_AUTO_MOVE),			// s2c_RightItemAutoMove
-	
+	sizeof(ITEM_PURPLE_SYNC),				// s2c_syncpurpleitem - Purple item sync with all 6 attributes
+
 #else
 	sizeof(LOGIN_COMMAND),		//	c2s_login,
 	sizeof(tagLogicLogin),		//	c2s_logicLogin,
