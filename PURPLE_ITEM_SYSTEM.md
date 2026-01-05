@@ -344,6 +344,9 @@ end
 
 ## Commit History
 ```
+e994ce103 - FIX: Khoang thach series inheritance - Gen_Script was overriding series
+8606da9a8 - FIX: Purple item series inheritance - SetAttrib_CBR was overriding series
+16b0bdcf7 - DEBUG: Add series validation logs for purple item creation
 be051a15b - FIX: Keep materials in UI when enchasing validation fails
 8c861197d - FEATURE: Add series validation for purple item enchasing system
 62005161d - FIX: ESC key now closes crafting UI by closing it when inventory closes
@@ -355,7 +358,65 @@ bc2d6b141 - FIX: Crash on close and ESC key not working
 
 ---
 
-## Latest Fix: Material Box Preservation (be051a15b)
+## Latest Fixes: Series Inheritance (e994ce103 + 8606da9a8)
+
+### Problem
+Purple items and khoang thach (minerals) were created with series = -1 (no element) even though correct series was passed to creation functions. Debug logs showed:
+- Blue item series = 2 (Thuy/Water)
+- Purple item series = -1 (Unknown) ← WRONG!
+- Khoang thach series = -1 (Unknown) ← WRONG!
+
+### Root Cause
+Both `Gen_PurpleEquipment()` and `Gen_Script()` use assignment operators that override series:
+1. **Purple items**: `SetAttrib_CBR()` uses `*this = *pData` to copy equipment table data
+2. **Khoang thach**: `Gen_Script()` uses `*pItem = *pScript` to copy script table data
+
+Equipment/script tables don't have fixed series (default -1), so assignment overwrites the series parameter.
+
+**Flow (BEFORE fix)**:
+```cpp
+// Purple item
+SetSeries(nSeriesReq);  // series = 2
+SetAttrib_CBR(pEqu);    // *this = *pData → series = -1 (OVERRIDE!)
+SetGenre(item_purpleequip);
+// Result: series = -1
+
+// Khoang thach
+Gen_Script(detail, pItem);  // *pItem = *pScript → series = -1 (OVERRIDE!)
+// Result: series = -1
+```
+
+### Solution
+Added `SetSeries()` calls AFTER the overriding operations to restore series value:
+
+**Flow (AFTER fix)**:
+```cpp
+// Purple item (KItemGenerator.CPP line 384-386)
+SetSeries(nSeriesReq);  // series = 2
+SetAttrib_CBR(pEqu);    // *this = *pData → series = -1
+SetSeries(nSeriesReq);  // series = 2 (RESTORE!)
+SetGenre(item_purpleequip);
+// Result: series = 2 ✓
+
+// Khoang thach (KItemSet.cpp line 203-206)
+Gen_Script(detail, pItem);  // *pItem = *pScript → series = -1
+SetSeries(nSeries);         // series = 2 (RESTORE!)
+// Result: series = 2 ✓
+```
+
+**Files Modified**:
+- `SwordOnline/Sources/Core/Src/KItemGenerator.CPP:384-386` (purple items)
+- `SwordOnline/Sources/Core/Src/KItemSet.cpp:203-206` (khoang thach)
+
+### Impact
+- Purple items now correctly inherit series from blue items
+- Khoang thach minerals retain series from source equipment during extraction
+- Series validation for enchasing works properly (147/149/151 minerals)
+- Cross-element enchasing allowed for flexible minerals (146/148/150)
+
+---
+
+## Earlier Fix: Material Box Preservation (be051a15b)
 
 ### Problem
 When series validation failed (e.g., Fire mineral on Water equipment), material boxes (Box1/Box2) were cleared even though enchasing didn't succeed. Items remained in BuildBox on server, but client UI showed empty boxes. User had to switch tabs to refresh UI.
