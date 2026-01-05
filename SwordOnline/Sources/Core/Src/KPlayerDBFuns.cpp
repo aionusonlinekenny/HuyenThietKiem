@@ -671,45 +671,21 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 			continue ;
 		m_ItemList.Add(nGameIndex, nLocal, nItemX, nItemY);
 
-		// For custom purple items (luck >= 1000000000), sync ALL 6 attributes to client
-		// After loading from database, attributes are in server m_aryMagicAttrib[] but not synced to client
-		// We use the new ITEM_PURPLE_SYNC protocol to send all 6 attributes in a single message
-		// luck=1000000000: Newly created purple with Type=53 empty slots (need sync for "Chua kham nam")
-		// luck=1000000001: Enchased purple with filled slots (need sync for attributes)
+		// CRITICAL FIX FOR RACE CONDITION:
+		// Purple items are synced AFTER all regular items to ensure deterministic message order
+		// For now, only sync REGULAR items. Purple items will be synced in second pass after all batches complete.
+		// This prevents race condition where purple at ItemIdx=36 loses attributes due to message queue timing
 		if (NewItem.GetGenre() == item_purpleequip && NewItem.m_GeneratorParam.nLuck >= 1000000000)
 		{
-			g_DebugLog("========================================");
-			g_DebugLog("[LOGIN SYNC] Syncing purple item to client on login");
-			g_DebugLog("========================================");
-			g_DebugLog("[LOGIN SYNC] ItemIdx=%d, Genre=%d, Detail=%d, Level=%d, Luck=%d",
-				nGameIndex, Item[nGameIndex].GetGenre(), Item[nGameIndex].GetDetailType(),
-				Item[nGameIndex].GetLevel(), NewItem.m_GeneratorParam.nLuck);
-			g_DebugLog("[LOGIN SYNC] Item name: %s", Item[nGameIndex].GetName());
-
-			// Log all 6 attributes that will be synced
-			g_DebugLog("[LOGIN SYNC] Current 6 attributes to sync:");
-			for (int i = 0; i < 6; i++)
-			{
-				g_DebugLog("[LOGIN SYNC]   Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
-					i,
-					Item[nGameIndex].m_aryMagicAttrib[i].nAttribType,
-					Item[nGameIndex].m_aryMagicAttrib[i].nValue[0],
-					Item[nGameIndex].m_aryMagicAttrib[i].nMin,
-					Item[nGameIndex].m_aryMagicAttrib[i].nMax);
-			}
-
-			g_DebugLog("[LOGIN SYNC] Calling SyncPurpleItem to send via ITEM_PURPLE_SYNC protocol");
-
-			// Send the purple item with all 6 attributes using the new protocol
-			m_ItemList.SyncPurpleItem(nGameIndex);
-
-			g_DebugLog("[LOGIN SYNC] Purple item synced to client successfully");
-			g_DebugLog("========================================");
+			// Purple item loaded into memory, but DON'T sync yet
+			// Will be synced in second pass after all items loaded (see below)
+			g_DebugLog("[LOGIN LOAD] Purple item loaded into memory (will sync in second pass): ItemIdx=%d, Genre=%d, Detail=%d, Luck=%d",
+				nGameIndex, Item[nGameIndex].GetGenre(), Item[nGameIndex].GetDetailType(), NewItem.m_GeneratorParam.nLuck);
 		}
 		else
 		{
-			// For regular items (non-purple or regular purple items), sync using standard ITEM_SYNC protocol
-			// This ensures all items loaded from database are sent to client, not just purple items
+			// For regular items (non-purple or regular purple items), sync immediately using standard ITEM_SYNC protocol
+			// This ensures all regular items are sent to client before any purple items
 			g_DebugLog("[LOGIN SYNC] Syncing regular item to client: ItemIdx=%d, Genre=%d, Detail=%d, Name=%s",
 				nGameIndex, Item[nGameIndex].GetGenre(), Item[nGameIndex].GetDetailType(), Item[nGameIndex].GetName());
 			m_ItemList.SyncItem(nGameIndex, FALSE, nLocal, nItemX, nItemY);
@@ -723,7 +699,47 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 
 	if(nParam >= nItemCount)
 	{
-		g_DebugLog("[LOAD ITEMLIST] All items loaded, returning 1");
+		// SECOND PASS: All items loaded, now sync ALL purple items to client
+		// This ensures purple items are ALWAYS sent AFTER regular items, preventing race condition
+		g_DebugLog("========================================");
+		g_DebugLog("[PURPLE SYNC PASS] All regular items synced, now syncing purple items...");
+		g_DebugLog("========================================");
+
+		int nPurpleCount = 0;
+		for (int j = 0; j < MAX_ITEM; j++)
+		{
+			// Find all purple items that belong to this player
+			if (m_ItemList.IsMyItem(j) &&
+			    Item[j].GetGenre() == item_purpleequip &&
+			    Item[j].GetGeneratorParam()->nLuck >= 1000000000)
+			{
+				g_DebugLog("[PURPLE SYNC PASS] Found purple item to sync: ItemIdx=%d, Genre=%d, Detail=%d, Level=%d, Luck=%d",
+					j, Item[j].GetGenre(), Item[j].GetDetailType(), Item[j].GetLevel(), Item[j].GetGeneratorParam()->nLuck);
+				g_DebugLog("[PURPLE SYNC PASS] Item name: %s", Item[j].GetName());
+
+				// Log all 6 attributes that will be synced
+				g_DebugLog("[PURPLE SYNC PASS] Current 6 attributes to sync:");
+				for (int attr = 0; attr < 6; attr++)
+				{
+					g_DebugLog("[PURPLE SYNC PASS]   Slot[%d]: Type=%d, Value=%d, Min=%d, Max=%d",
+						attr,
+						Item[j].m_aryMagicAttrib[attr].nAttribType,
+						Item[j].m_aryMagicAttrib[attr].nValue[0],
+						Item[j].m_aryMagicAttrib[attr].nMin,
+						Item[j].m_aryMagicAttrib[attr].nMax);
+				}
+
+				// Send the purple item with all 6 attributes using ITEM_PURPLE_SYNC protocol
+				m_ItemList.SyncPurpleItem(j);
+
+				nPurpleCount++;
+				g_DebugLog("[PURPLE SYNC PASS] Purple item synced successfully");
+			}
+		}
+
+		g_DebugLog("[PURPLE SYNC PASS] Total purple items synced: %d", nPurpleCount);
+		g_DebugLog("========================================");
+		g_DebugLog("[LOAD ITEMLIST] All items loaded (regular + purple), returning 1");
 		return 1;
 	}
 	else
