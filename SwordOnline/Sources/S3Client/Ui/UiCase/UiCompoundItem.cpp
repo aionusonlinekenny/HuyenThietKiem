@@ -2699,6 +2699,13 @@ void KUiEnchaseTim::Breathe() {
         m_nStatus = STATUS_FINISH;
         g_DebugLog("[ENCHASE] Breathe: Set status to STATUS_FINISH");
     } else if (m_nStatus == STATUS_FINISH) {
+        // CRITICAL FIX: Clear material boxes (Box1, Box2) to remove shadow items
+        // Server has deleted materials via DelItemByIndex, but UI still shows shadows
+        // BigBox is NOT cleared - it still contains the enchased purple item
+        m_Box1.Clear();
+        m_Box2.Clear();
+        g_DebugLog("[ENCHASE] Breathe: Cleared Box1 and Box2 shadow items");
+
         // Reset to waiting state for next enchase
         m_nStatus = STATUS_WAITING_MATERIALS;
         // Re-enable boxes for next operation

@@ -1313,7 +1313,7 @@ void KProtocolProcess::s2cRemoveItem(BYTE* pMsg)
 		Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 	}
 
-	
+
 }
 
 //	���ܣ��յ�������������������Ϣ
