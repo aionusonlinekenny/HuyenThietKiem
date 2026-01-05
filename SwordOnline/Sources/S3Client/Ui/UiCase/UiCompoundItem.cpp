@@ -2694,13 +2694,35 @@ void KUiEnchaseTim::Breathe() {
 
     // ANIMATE: Advance frames and increment time counter
     if (m_nStatus == STATUS_TREMBLING) {
-        // Advance frames
-        if (m_TrembleEffect1.IsVisible()) m_TrembleEffect1.NextFrame();
-        if (m_TrembleEffect2.IsVisible()) m_TrembleEffect2.NextFrame();
-        if (m_TrembleEffect3.IsVisible()) m_TrembleEffect3.NextFrame();
+        // Debug: Check if effects are actually visible
+        static bool bFirstLog = true;
+        if (bFirstLog) {
+            int nMax1 = m_TrembleEffect1.GetMaxFrame();
+            int nMax2 = m_TrembleEffect2.GetMaxFrame();
+            int nMax3 = m_TrembleEffect3.GetMaxFrame();
+            bool bVis1 = m_TrembleEffect1.IsVisible();
+            bool bVis2 = m_TrembleEffect2.IsVisible();
+            bool bVis3 = m_TrembleEffect3.IsVisible();
+
+            g_DebugLog("[ENCHASE] Effect check: MaxFrames=%d,%d,%d Visible=%d,%d,%d",
+                nMax1, nMax2, nMax3, bVis1, bVis2, bVis3);
+            bFirstLog = false;
+        }
+
+        // Advance frames - ALWAYS call NextFrame, don't check IsVisible
+        // (IsVisible may return false due to sprite loading issues)
+        m_TrembleEffect1.NextFrame();
+        m_TrembleEffect2.NextFrame();
+        m_TrembleEffect3.NextFrame();
 
         // Increment time
         m_EffectTime++;
+
+        // Log every 10 frames
+        if (m_EffectTime % 10 == 0) {
+            int nFrame1 = m_TrembleEffect1.GetCurrentFrame();
+            g_DebugLog("[ENCHASE] Animating: Frame %d, EffectTime=%d", nFrame1, m_EffectTime);
+        }
 
         // CRITICAL: Run effect for at least 55 frames (matching Upgrade/Forge timing)
         // This ensures effect is visible even if sprites load slowly
@@ -2721,6 +2743,7 @@ void KUiEnchaseTim::Breathe() {
             // Reset for next operation
             m_EffectTime = 0;
             m_nStatus = STATUS_WAITING_MATERIALS;
+            bFirstLog = true;  // Reset for next animation
 
             // Re-enable boxes
             m_BigBox.EnablePickPut(true);
