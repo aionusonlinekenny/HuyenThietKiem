@@ -634,6 +634,9 @@ function ExeEnchaseAttribute()
         return
     end
 
+    -- Get purple item properties (including series)
+    local nPurpleGenre, nPurpleDetail, nPurpleParti, nPurpleLevel, nPurpleSeries = GetItemProp(nPurpleIdx)
+
     -- Validate Huyen Tinh
     if not nHuyenTinhIdx or nHuyenTinhIdx <= 0 then
         Talk(1, "", "<color=red>Vui long dat HUYEN TINH vao o 1!<color>")
@@ -658,12 +661,53 @@ function ExeEnchaseAttribute()
         return
     end
 
-    -- Get attribute from khoang thach
-    local nType, nMin, nMax, nValue, nSeries, nUnused = GetItemGeneratorLevels(nKhoangIdx)
+    -- Get attribute from khoang thach (including its series)
+    local nType, nMin, nMax, nValue, nKhoangSeries, nUnused = GetItemGeneratorLevels(nKhoangIdx)
 
     if not nType or nType <= 0 then
         Talk(1, "", "<color=red>Khoang thach khong chua thuoc tinh!<color>")
         return
+    end
+
+    -- ============================================================
+    -- SERIES (NGU HANH) VALIDATION LOGIC
+    -- ============================================================
+    -- Minerals 147, 149, 151 (odd): MUST match purple item series
+    -- Minerals 146, 148, 150 (even): Can be any series (no validation needed)
+    --
+    -- Series values: 0=Kim, 1=Moc, 2=Thuy, 3=Hoa, 4=Tho
+    --
+    -- NOTE: Series is an item-level property, not attribute-level.
+    -- The enchased attribute inherits the series from the purple item automatically.
+    -- We only validate that certain minerals require matching series before enchasing.
+    -- ============================================================
+
+    local szSeriesNames = {"Kim", "Moc", "Thuy", "Hoa", "Tho"}
+    local bStrictMineral = (nKDetail == 147 or nKDetail == 149 or nKDetail == 151)
+
+    if bStrictMineral then
+        -- Minerals 147/149/151: Series MUST match purple item series
+        if nKhoangSeries ~= nPurpleSeries then
+            local szPurpleSeries = szSeriesNames[nPurpleSeries + 1] or "Unknown"
+            local szKhoangSeries = szSeriesNames[nKhoangSeries + 1] or "Unknown"
+            Talk(1, "", format(
+                "<color=red>Khoang thach (%s) khong cung ngu hanh voi trang bi (%s)! Khong the kham nam!<color>",
+                szKhoangSeries, szPurpleSeries
+            ))
+            return
+        end
+        -- Success message for matching series
+        Msg2Player(format(
+            "[NGU HANH] Khoang thach va trang bi cung ngu hanh (%s), cho phep kham nam",
+            szSeriesNames[nPurpleSeries + 1] or "Unknown"
+        ))
+    else
+        -- Minerals 146/148/150: No series validation needed
+        -- Allow enchasing regardless of mineral series
+        Msg2Player(format(
+            "[NGU HANH] Khoang thach loai %d khong can kiem tra ngu hanh, cho phep kham nam",
+            nKDetail
+        ))
     end
 
     -- Calculate target slot (146->0, 147->1, ..., 151->5)
