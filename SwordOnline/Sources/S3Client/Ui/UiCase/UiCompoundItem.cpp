@@ -2789,15 +2789,16 @@ void KUiEnchaseTim::Breathe() {
         // CRITICAL: Run effect for at least 55 frames (matching Upgrade/Forge timing)
         // This ensures effect is visible even if sprites load slowly
         if (m_EffectTime >= 55) {
-            // STOP EFFECT: Hide sprites, clear shadow boxes, send request
+            // STOP EFFECT: Hide sprites and send request
             m_TrembleEffect1.Hide();
             m_TrembleEffect2.Hide();
             m_TrembleEffect3.Hide();
 
-            // Clear material box shadows (server already deleted items)
-            m_Box1.Clear();
-            m_Box2.Clear();
-            g_DebugLog("[ENCHASE] Effect stopped at frame %d, material boxes cleared", m_EffectTime);
+            // DON'T clear boxes here! Server validation might fail (e.g., series mismatch)
+            // If validation fails, items remain in BuildBox and boxes should still show them
+            // If validation succeeds, server deletes items and sends s2cRemoveItem
+            // which triggers UpdateItem(bAdd=false) to clear boxes automatically
+            g_DebugLog("[ENCHASE] Effect stopped at frame %d, sending enchase request", m_EffectTime);
 
             // Send enchase request to server
             UpdateResult();
