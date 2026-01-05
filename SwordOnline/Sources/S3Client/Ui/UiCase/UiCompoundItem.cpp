@@ -135,13 +135,10 @@ KUiComItem *KUiComItem::GetIfVisible() {
 void KUiComItem::CloseWindow(bool bDestory) {
     if (m_pSelf) {
         // Return any items in BuildBox to player inventory before closing
+        // Server will only return items actually in pos_builditem container
         if (g_pCoreShell) {
-            KUiObjAtRegion Item[8];  // BuildBox can hold multiple items
-            int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Item, 0);
-            if (nCount > 0) {
-                g_pCoreShell->OperationRequest(GOI_RECOVERY_BOX_COMMAND, pos_builditem, 0);
-                g_DebugLog("[COMPOUND] Returning %d items from BuildBox to inventory on UI close", nCount);
-            }
+            g_pCoreShell->OperationRequest(GOI_RECOVERY_BOX_COMMAND, pos_builditem, 0);
+            g_DebugLog("[COMPOUND] Called GOI_RECOVERY_BOX_COMMAND on UI close");
         }
 
         // Unlock player movement when UI closes
@@ -798,6 +795,13 @@ int KUiCompound::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                 m_Box1.EnablePickPut(false);
                 m_Box2.EnablePickPut(false);
                 m_Box3.EnablePickPut(false);
+            }
+            break;
+
+        case WM_KEYDOWN:
+            if (uParam == VK_ESCAPE) {
+                KUiComItem::CloseWindow();
+                return 1;
             }
             break;
 
@@ -1479,6 +1483,13 @@ int KUiDistill::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             }
             break;
 
+        case WM_KEYDOWN:
+            if (uParam == VK_ESCAPE) {
+                KUiComItem::CloseWindow();
+                return 1;
+            }
+            break;
+
         default:
             return KWndImage::WndProc(uMsg, uParam, nParam);
     }
@@ -2071,6 +2082,12 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                 StartEffect();
             }
             break;
+        case WM_KEYDOWN:
+            if (uParam == VK_ESCAPE) {
+                KUiComItem::CloseWindow();
+                return 1;
+            }
+            break;
         default:
             return KWndImage::WndProc(uMsg, uParam, nParam);
     }
@@ -2482,6 +2499,12 @@ int KUiEnchaseTim::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                 g_DebugLog("[ENCHASE] Starting enchase effect, boxes disabled");
             }
             break;
+        case WM_KEYDOWN:
+            if (uParam == VK_ESCAPE) {
+                KUiComItem::CloseWindow();
+                return 1;
+            }
+            break;
         default:
             return KWndImage::WndProc(uMsg, uParam, nParam);
     }
@@ -2869,6 +2892,16 @@ void KUiAtlas::PaintWindow() {
 }
 
 int KUiAtlas::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
+    switch (uMsg) {
+        case WM_KEYDOWN:
+            if (uParam == VK_ESCAPE) {
+                KUiComItem::CloseWindow();
+                return 1;
+            }
+            break;
+        default:
+            return KWndImage::WndProc(uMsg, uParam, nParam);
+    }
     return 1;
 }
 
