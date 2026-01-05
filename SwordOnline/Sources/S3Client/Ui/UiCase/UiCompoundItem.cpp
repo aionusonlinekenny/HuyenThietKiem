@@ -1100,7 +1100,7 @@ void KUiCompound::SetPosText(int i) {
             m_Pos1.SetText("[1] Nh?n");
             m_Pos2.SetText("[1] D?y chuy?n/h? th?n ph?");
             m_Pos3.SetText("[1] Ng?c b?i/h??ng nang");
-            g_DebugLog("[COMPOUND] SetPosText: Switched to case 1 (Equipment) - [1] Nh?n, Dây chuy?n, Ng?c b?i");
+            g_DebugLog("[COMPOUND] SetPosText: Switched to case 1 (Equipment) - [1] Nh?n, Dï¿½y chuy?n, Ng?c b?i");
             break;
         case 2:
             m_nSelect = 1;
@@ -1114,7 +1114,7 @@ void KUiCompound::SetPosText(int i) {
             m_Pos1.SetText("[3] Kho?ng th?ch 1");
             m_Pos2.SetText("[3] Kho?ng th?ch 2");
             m_Pos3.SetText("[3] Kho?ng th?ch 3");
-            g_DebugLog("[COMPOUND] SetPosText: Switched to case 3 (Mineral) - [3] Khoáng th?ch 1, 2, 3");
+            g_DebugLog("[COMPOUND] SetPosText: Switched to case 3 (Mineral) - [3] Khoï¿½ng th?ch 1, 2, 3");
             break;
     }
 
@@ -2612,7 +2612,9 @@ void KUiEnchaseTim::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
 }
 
 void KUiEnchaseTim::CleanItem() {
-    m_BigBox.Clear();
+    // KEEP BigBox - player needs to manually retrieve enchased purple item
+    // Only clear material boxes (Box1=Huyen Tinh, Box2=Khoang thach)
+    // m_BigBox.Clear();  // REMOVED - keep purple item visible in BigBox
     m_Box1.Clear();
     m_Box2.Clear();
     m_ItemBox.Clear();
