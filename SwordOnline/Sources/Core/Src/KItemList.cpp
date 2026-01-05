@@ -2902,7 +2902,17 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 					m_Hand = 0;
 				}
 #ifdef _SERVER
-				g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
+				// CRITICAL FIX: For purple items, use SyncPurpleItem to preserve all 6 magic attributes
+				if (Item[nTempHand].GetGenre() == item_purpleequip &&
+				    Item[nTempHand].GetGeneratorParam()->nLuck >= 1000000000)
+				{
+					g_DebugLog("[EQUIPROOM SYNC] Purple item moved to inventory, syncing with SyncPurpleItem");
+					SyncPurpleItem(nTempHand);
+				}
+				else
+				{
+					g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
+				}
 #endif
 			}
 			else
@@ -2913,7 +2923,7 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 		else
 		{
 			if(nEquipIdx1)
-			{	
+			{
 				nListIdx = FindSame(nEquipIdx1);
 				if(nListIdx <= 0)
 					return;
@@ -2921,7 +2931,17 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 				m_Items[nListIdx].nPlace = pos_hand;
 				m_Hand = nEquipIdx1;
 #ifdef _SERVER
-				g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
+				// CRITICAL FIX: For purple items being picked up, use SyncPurpleItem
+				if (Item[nEquipIdx1].GetGenre() == item_purpleequip &&
+				    Item[nEquipIdx1].GetGeneratorParam()->nLuck >= 1000000000)
+				{
+					g_DebugLog("[EQUIPROOM SYNC] Purple item picked up to hand, syncing with SyncPurpleItem");
+					SyncPurpleItem(nEquipIdx1);
+				}
+				else
+				{
+					g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
+				}
 #endif
 			}
 		}
@@ -2945,13 +2965,26 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 				m_Hand = nEquipIdx1;
 				m_Items[FindSame(nEquipIdx1)].nPlace = pos_hand;
 #ifdef _SERVER
-				g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
+				// CRITICAL FIX: For purple items, use SyncPurpleItem to preserve all 6 magic attributes
+				// PLAYER_MOVE_ITEM_SYNC doesn't carry the 6 attributes, causing them to be lost
+				int nBuildItemListIdx = FindSame(m_BuildItem[DesPos->nX]);
+				if (nBuildItemListIdx > 0 &&
+				    Item[m_BuildItem[DesPos->nX]].GetGenre() == item_purpleequip &&
+				    Item[m_BuildItem[DesPos->nX]].GetGeneratorParam()->nLuck >= 1000000000)
+				{
+					g_DebugLog("[BUILDBOX SYNC] Purple item moved to BuildBox, syncing with SyncPurpleItem");
+					SyncPurpleItem(m_BuildItem[DesPos->nX]);
+				}
+				else
+				{
+					g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
+				}
 #endif
 			}
 			else if (nEquipIdx1)
 			{
 				BuildItem(nEquipIdx1, SrcPos->nX);
-			}	
+			}
 		}
 		else
 		{
@@ -2963,8 +2996,8 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 			m_Items[FindSame(nEquipIdx1)].nPlace = pos_hand;
 #ifdef _SERVER
 			g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
-#endif		
-			
+#endif
+
 		}
 		break;
 	//
