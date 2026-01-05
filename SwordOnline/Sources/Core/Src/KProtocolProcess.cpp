@@ -1397,6 +1397,10 @@ void KProtocolProcess::s2cSyncItem(BYTE* pMsg)
 {
 	ITEM_SYNC* pItemSync = (ITEM_SYNC*)pMsg;
 
+	g_DebugLog("[CLIENT-SYNC] s2cSyncItem called - ID=%d, Genre=%d, Detail=%d, Level=%d, Place=%d, X=%d, Y=%d",
+		pItemSync->m_ID, pItemSync->m_Genre, pItemSync->m_Detail, pItemSync->m_Level,
+		pItemSync->m_Place, pItemSync->m_X, pItemSync->m_Y);
+
 	int i, pnMagicParam[6];
 	for(i = 0; i < 6; i++)
 		pnMagicParam[i] = pItemSync->m_MagicLevel[i];
@@ -1414,10 +1418,13 @@ void KProtocolProcess::s2cSyncItem(BYTE* pMsg)
 
 	if( (nIndex <= 0) || (nIndex >= MAX_ITEM) )
 	{
+		g_DebugLog("[CLIENT-SYNC] ERROR: ItemSet.AddExist failed, nIndex=%d", nIndex);
 		// REMOVED: UnlockOperation() without corresponding LockOperation() causes crash
 		// Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 		return;
 	}
+
+	g_DebugLog("[CLIENT-SYNC] ItemSet.AddExist success, nIndex=%d, ItemName=%s", nIndex, Item[nIndex].GetName());
 
 	Item[nIndex].SetID(pItemSync->m_ID);
 	Item[nIndex].SetDurability((short)pItemSync->m_Durability);
@@ -1432,6 +1439,7 @@ void KProtocolProcess::s2cSyncItem(BYTE* pMsg)
 	Item[nIndex].SetPlayerShopPrice(pItemSync->m_ShopPrice);
 
 	Player[CLIENT_PLAYER_INDEX].m_ItemList.Add(nIndex, pItemSync->m_Place, pItemSync->m_X, pItemSync->m_Y);
+	g_DebugLog("[CLIENT-SYNC] Item added to inventory successfully");
 	// REMOVED: UnlockOperation() without corresponding LockOperation() causes crash/undefined behavior
 	// Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 }
