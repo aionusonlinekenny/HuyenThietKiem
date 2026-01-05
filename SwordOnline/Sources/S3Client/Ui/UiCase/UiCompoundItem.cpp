@@ -105,6 +105,9 @@ KUiComItem *KUiComItem::OpenWindow() {
         m_pSelf->BringToTop();
         m_pSelf->Show();
 
+        // Lock player movement when crafting UI is open
+        Wnd_GameSpaceHandleInput(false);
+
         if (KUiItem::GetIfVisible() == NULL)
             KUiItem::OpenWindow();
         else
@@ -131,6 +134,19 @@ KUiComItem *KUiComItem::GetIfVisible() {
 **********************************************************************/
 void KUiComItem::CloseWindow(bool bDestory) {
     if (m_pSelf) {
+        // Return any items in BuildBox to player inventory before closing
+        if (g_pCoreShell) {
+            KUiObjAtRegion Item[8];  // BuildBox can hold multiple items
+            int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Item, 0);
+            if (nCount > 0) {
+                g_pCoreShell->OperationRequest(GOI_RECOVERY_BOX_COMMAND, pos_builditem, 0);
+                g_DebugLog("[COMPOUND] Returning %d items from BuildBox to inventory on UI close", nCount);
+            }
+        }
+
+        // Unlock player movement when UI closes
+        Wnd_GameSpaceHandleInput(true);
+
         m_pSelf->Hide();
         if (bDestory) {
             m_pSelf->Destroy();
@@ -196,6 +212,13 @@ int KUiComItem::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             } else if (uParam == (unsigned int) &m_AtlasPadBtn) {
                 m_nNum = WINDOWS_ATLAS;
                 ShowWindow(4);
+            }
+            break;
+
+        case WM_KEYDOWN:
+            if (uParam == VK_ESCAPE) {
+                CloseWindow();
+                return 1;
             }
             break;
 
