@@ -213,7 +213,9 @@ int KUiComItem::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             break;
 
         case WM_KEYDOWN:
+            g_DebugLog("[COMPOUND-MAIN] WM_KEYDOWN received: uParam=%d (VK_ESCAPE=%d)", uParam, VK_ESCAPE);
             if (uParam == VK_ESCAPE) {
+                g_DebugLog("[COMPOUND-MAIN] ESC pressed, calling CloseWindow()");
                 CloseWindow();
                 return 1;
             }
@@ -799,7 +801,9 @@ int KUiCompound::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             break;
 
         case WM_KEYDOWN:
+            g_DebugLog("[COMPOUND-TAB] WM_KEYDOWN received: uParam=%d (VK_ESCAPE=%d)", uParam, VK_ESCAPE);
             if (uParam == VK_ESCAPE) {
+                g_DebugLog("[COMPOUND-TAB] ESC pressed, calling CloseWindow()");
                 KUiComItem::CloseWindow();
                 return 1;
             }
@@ -1484,7 +1488,9 @@ int KUiDistill::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             break;
 
         case WM_KEYDOWN:
+            g_DebugLog("[DISTILL-TAB] WM_KEYDOWN received: uParam=%d (VK_ESCAPE=%d)", uParam, VK_ESCAPE);
             if (uParam == VK_ESCAPE) {
+                g_DebugLog("[DISTILL-TAB] ESC pressed, calling CloseWindow()");
                 KUiComItem::CloseWindow();
                 return 1;
             }
@@ -2083,7 +2089,9 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             }
             break;
         case WM_KEYDOWN:
+            g_DebugLog("[FORGE-TAB] WM_KEYDOWN received: uParam=%d (VK_ESCAPE=%d)", uParam, VK_ESCAPE);
             if (uParam == VK_ESCAPE) {
+                g_DebugLog("[FORGE-TAB] ESC pressed, calling CloseWindow()");
                 KUiComItem::CloseWindow();
                 return 1;
             }
@@ -2500,7 +2508,9 @@ int KUiEnchaseTim::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             }
             break;
         case WM_KEYDOWN:
+            g_DebugLog("[ENCHASE-TAB] WM_KEYDOWN received: uParam=%d (VK_ESCAPE=%d)", uParam, VK_ESCAPE);
             if (uParam == VK_ESCAPE) {
+                g_DebugLog("[ENCHASE-TAB] ESC pressed, calling CloseWindow()");
                 KUiComItem::CloseWindow();
                 return 1;
             }
@@ -2894,7 +2904,9 @@ void KUiAtlas::PaintWindow() {
 int KUiAtlas::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
     switch (uMsg) {
         case WM_KEYDOWN:
+            g_DebugLog("[ATLAS-TAB] WM_KEYDOWN received: uParam=%d (VK_ESCAPE=%d)", uParam, VK_ESCAPE);
             if (uParam == VK_ESCAPE) {
+                g_DebugLog("[ATLAS-TAB] ESC pressed, calling CloseWindow()");
                 KUiComItem::CloseWindow();
                 return 1;
             }
