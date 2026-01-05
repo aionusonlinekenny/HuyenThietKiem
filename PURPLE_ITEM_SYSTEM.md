@@ -344,6 +344,7 @@ end
 
 ## Commit History
 ```
+(pending) - FIX: Series display in tooltip - Gen_ExistPurpleEquipment was overriding series
 e994ce103 - FIX: Khoang thach series inheritance - Gen_Script was overriding series
 8606da9a8 - FIX: Purple item series inheritance - SetAttrib_CBR was overriding series
 16b0bdcf7 - DEBUG: Add series validation logs for purple item creation
@@ -438,6 +439,51 @@ Removed premature box clearing (lines 2798-2799). Now boxes only clear when serv
 
 ---
 
+## Latest Fix: Series Display in Tooltip (2026-01-05)
+
+### Problem
+Purple items had series set correctly internally (debug logs showed series = 2), but tooltips didn't display "Thuộc tính ngũ hành: Thủy" line. The series appeared in debug logs when items were first created, but disappeared when items were loaded from inventory.
+
+### Root Cause
+**Gen_ExistPurpleEquipment()** - Used when loading existing purple items from database - was missing the second `SetSeries()` call after `SetAttrib_CBR()`.
+
+**Flow (BEFORE fix)**:
+```cpp
+// Gen_ExistPurpleEquipment (line 524-540)
+pItem->SetSeries(nSeries);      // series = 2
+pItem->SetAttrib_CBR(pEqu);     // *this = *pData → series = -1 (OVERRIDE!)
+pItem->SetGenre(item_purpleequip);
+// Result: series = -1, tooltip shows nothing
+```
+
+**Why tooltip was empty**:
+- `KItem::GetDesc()` checks `m_CommonAttrib.cSeries` in switch statement (KItem.cpp:1220-1237)
+- When series = -1, doesn't match any case (0=Kim, 1=Moc, 2=Thuy, 3=Hoa, 4=Tho)
+- No default case → no series text added to tooltip
+
+### Solution
+Added `SetSeries(nSeries)` call AFTER `SetAttrib_CBR()` to restore series value, matching the fix in `Gen_PurpleEquipment()`.
+
+**Flow (AFTER fix)**:
+```cpp
+// Gen_ExistPurpleEquipment (line 524-540)
+pItem->SetSeries(nSeries);      // series = 2
+pItem->SetAttrib_CBR(pEqu);     // *this = *pData → series = -1
+pItem->SetSeries(nSeries);      // series = 2 (RESTORE!)
+pItem->SetGenre(item_purpleequip);
+// Result: series = 2, tooltip shows "Thuộc tính ngũ hành: Thủy" ✓
+```
+
+**File Modified**:
+- `SwordOnline/Sources/Core/Src/KItemGenerator.CPP:534-536` (Gen_ExistPurpleEquipment)
+
+### Impact
+- Purple items now display correct series in tooltip when loaded from inventory
+- Consistent with newly created purple items
+- Series validation for enchasing works properly with loaded items
+
+---
+
 **Last Updated**: 2026-01-05
 **Branch**: claude/analyze-branch-differences-KD0Bv
-**Status**: Core system complete, all fixes applied
+**Status**: Core system complete, all fixes applied including tooltip display
