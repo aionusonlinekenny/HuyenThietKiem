@@ -251,8 +251,85 @@ const int nItemIdx = ItemSet.Add(
 
 ---
 
-### Enchasing (ENCHASE Tab) - Series Validation
-**File**: `Bin/Server/script/npc/compound_master.lua:619-736`
+### Enchasing (ENCHASE Tab) - Validation Rules
+**File**: `Bin/Server/script/npc/compound_master.lua:619-811`
+
+#### 1. Sequential Slot Filling (NEW)
+
+Slots must be filled in order from 0 to 5. Cannot skip empty slots.
+
+**Logic** (Lines 687-711):
+- Before enchasing to slot N, all slots 0 to N-1 must be filled
+- Empty slots are detected by checking if attribute type ≤ 0 or type = 53
+- Validation fails → Show error: "Phai kham nam tuan tu! Slot X con trong..."
+
+```lua
+-- Calculate target slot (146->0, 147->1, ..., 151->5)
+local nTargetSlot = nKDetail - 146
+
+-- Check all slots before target slot to ensure they're filled
+for nSlot = 0, nTargetSlot - 1 do
+    local nSlotType = GetItemMagicAttrib(nPurpleIdx, nSlot)
+    if not nSlotType or nSlotType <= 0 or nSlotType == 53 then
+        -- Found empty slot before target slot - reject enchasing
+        Talk(1, "", format(
+            "<color=red>Phai kham nam tuan tu! Slot %d con trong, khong the kham slot %d!<color>",
+            nSlot + 1, nTargetSlot + 1
+        ))
+        return
+    end
+end
+```
+
+**Examples**:
+- ✅ Slot 0 filled → Can enchase slot 1
+- ❌ Slot 0 empty → Cannot enchase slot 1, 2, 3, 4, or 5
+- ✅ Slots 0,1,2 filled → Can enchase slot 3
+- ❌ Slots 0,1 filled, slot 2 empty → Cannot enchase slot 3
+
+#### 2. Weapon Attribute Restriction (NEW)
+
+Attributes extracted from weapons can ONLY be enchased into purple weapons.
+Attributes from other equipment can be enchased into any purple item.
+
+**Equipment Types**:
+- **Weapons**: detail type 0 (meleeweapon), 1 (rangeweapon)
+- **Non-weapons**: detail type 2+ (armor, ring, amulet, boots, belt, helm, cuff, pendant, etc.)
+
+**Logic** (Lines 713-744):
+
+When extracting attribute from equipment:
+```lua
+-- Store source equipment detail type in generator level[5]
+local nNewKhoangIdx = AddItemEx(
+    7, nKhoangDetail, 0, 0, nEquipSeries, 0,
+    nOp, nValueMin, nValueMax, nValue, nEquipSeries, nEquipDetail,  -- GenLvl[5] = nEquipDetail
+    1, 0
+)
+```
+
+When enchasing khoang thach:
+```lua
+local bSourceIsWeapon = (nSourceEquipDetail == 0 or nSourceEquipDetail == 1)
+local bTargetIsWeapon = (nPurpleDetail == 0 or nPurpleDetail == 1)
+
+if bSourceIsWeapon and not bTargetIsWeapon then
+    -- Trying to put weapon attribute into non-weapon item - REJECT!
+    Talk(1, "", format(
+        "<color=red>Thuoc tinh tu %s chi co the kham vao VU KHI TIM!<color>",
+        szSourceType
+    ))
+    return
+end
+```
+
+**Examples**:
+- ✅ Sword attribute → Purple sword (ALLOWED)
+- ❌ Sword attribute → Purple armor (REJECTED: "Thuoc tinh tu Vu Khi chi co the kham vao VU KHI TIM!")
+- ✅ Armor attribute → Purple sword (ALLOWED)
+- ✅ Ring attribute → Purple boots (ALLOWED)
+
+#### 3. Series (Ngũ Hành) Validation
 
 #### Mineral Types
 - **146** (Huyen Thiet Nguyen Khoang) - Flexible series
@@ -344,7 +421,8 @@ end
 
 ## Commit History
 ```
-(pending) - FIX: Series display in tooltip - Gen_ExistPurpleEquipment was overriding series
+(pending) - FEATURE: Add sequential slot filling + weapon attribute restriction
+2fb4dc8b8 - FIX: Series display in tooltip - Gen_ExistPurpleEquipment was overriding series
 e994ce103 - FIX: Khoang thach series inheritance - Gen_Script was overriding series
 8606da9a8 - FIX: Purple item series inheritance - SetAttrib_CBR was overriding series
 16b0bdcf7 - DEBUG: Add series validation logs for purple item creation
@@ -484,6 +562,69 @@ pItem->SetGenre(item_purpleequip);
 
 ---
 
+## Latest Features: Sequential Slot Filling + Weapon Restriction (2026-01-05)
+
+### Feature 1: Sequential Slot Filling
+
+**Requirement**: Slots must be filled in order 0→1→2→3→4→5. Cannot skip empty slots.
+
+**Implementation**:
+- Before enchasing to slot N, check all slots 0 to N-1
+- If any previous slot is empty (type ≤ 0 or type = 53), reject enchasing
+- Error message: "Phai kham nam tuan tu! Slot X con trong, khong the kham slot Y!"
+
+**Code** (compound_master.lua:694-709):
+```lua
+local nTargetSlot = nKDetail - 146
+for nSlot = 0, nTargetSlot - 1 do
+    local nSlotType = GetItemMagicAttrib(nPurpleIdx, nSlot)
+    if not nSlotType or nSlotType <= 0 or nSlotType == 53 then
+        Talk(1, "", format("<color=red>Phai kham nam tuan tu! Slot %d con trong, khong the kham slot %d!<color>", nSlot + 1, nTargetSlot + 1))
+        return
+    end
+end
+```
+
+### Feature 2: Weapon Attribute Restriction
+
+**Requirement**: Weapon attributes can ONLY be enchased into purple weapons. Non-weapon attributes can be enchased anywhere.
+
+**Implementation**:
+1. When extracting attribute → Store source equipment detail type in generator level[5]
+2. When enchasing → Check source vs target:
+   - Weapon (detail 0,1) → Weapon: ✅ ALLOWED
+   - Weapon (detail 0,1) → Non-weapon: ❌ REJECTED
+   - Non-weapon (detail 2+) → Any: ✅ ALLOWED
+
+**Code** (compound_master.lua:725-738):
+```lua
+local bSourceIsWeapon = (nSourceEquipDetail == 0 or nSourceEquipDetail == 1)
+local bTargetIsWeapon = (nPurpleDetail == 0 or nPurpleDetail == 1)
+
+if bSourceIsWeapon and not bTargetIsWeapon then
+    Talk(1, "", format("<color=red>Thuoc tinh tu %s chi co the kham vao VU KHI TIM!<color>", szSourceType))
+    return
+end
+```
+
+**Files Modified**:
+- `Bin/Server/script/npc/compound_master.lua:569,680,687-744`
+- `PURPLE_ITEM_SYSTEM.md` (documentation)
+
+### Impact
+
+**Gameplay Balance**:
+- Sequential filling prevents players from cherry-picking high-value slots
+- Weapon restriction prevents overpowered non-weapon items with weapon stats
+- Maintains equipment type identity and progression
+
+**User Experience**:
+- Clear error messages explain why enchasing was rejected
+- Materials stay in UI when validation fails (no item loss)
+- Logical progression from slot 0 to 5
+
+---
+
 **Last Updated**: 2026-01-05
 **Branch**: claude/analyze-branch-differences-KD0Bv
-**Status**: Core system complete, all fixes applied including tooltip display
+**Status**: Core system complete, all validation rules implemented
