@@ -116,3 +116,8 @@ function DoUpgrade_2() PerformUpgrade(2) end
 function DoUpgrade_3() PerformUpgrade(3) end
 function DoUpgrade_4() PerformUpgrade(4) end
 function DoUpgrade_5() PerformUpgrade(5) end
+
+-- Cancel/Exit function (called by "Huy/no" and "Thoat/no" options)
+function no()
+    -- Do nothing, dialog will close automatically
+end

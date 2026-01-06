@@ -281,6 +281,13 @@ function DoUpgradeAttrib_5()
 end
 
 -- ------------------------------------------------------------
+-- Cancel/Exit function
+-- ------------------------------------------------------------
+function no()
+    -- Do nothing, dialog will close automatically
+end
+
+-- ------------------------------------------------------------
 -- Show Upgrade Guide
 -- ------------------------------------------------------------
 function ShowGuide()
