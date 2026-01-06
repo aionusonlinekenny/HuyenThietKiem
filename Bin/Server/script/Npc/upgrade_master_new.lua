@@ -323,7 +323,12 @@ function ShowGuide()
         "- Vat lieu bi mat khi nang cap\n" ..
         "- Khong the hoan tac sau khi nang"
 
-    Talk(1, "", szGuide)
+    -- CHANGED: Talk() -> SayImage() with ImageKey 40
+    SayImage(
+        szGuide,
+        "10/20/40",  -- ImageKey 40 = enemy169_st.spr
+        0            -- No options, auto-close when clicked
+    )
 end
 
 -- ------------------------------------------------------------
