@@ -13,12 +13,13 @@ HUYEN_TINH_MAX_DETAIL = 79    -- Huyen Tinh Cap 6
 -- PURPLE_LUCK_FLAG = 1000000000
 
 function main(NpcIndex)
-    Say("Ta la tho ren huyen bien, co the giup nguoi che tao trang bi tim tu nhung vat pham thuong thuong. Hay chon loai dich vu nguoi can:", 4,
-        "Che Tao Trang Bi Tim/open_compound",
-        "Huong Dan/guide",
-        "Gioi Thieu He Thong/introduce",
-        "Ket Thuc Doi Thoai/no")
+    Say("Ta lµ thÓ rÃn huy“n b›n, c„ th” giÛp ng≠Íi ch’ tπo trang bﬁ t›m tı nh˜ng vÀt ph»m th≠Íng th≠Íng. H∑y ch‰n loπi dﬁch vÙ ng≠Íi c«n:", 4,
+        "Ch’ Tπo Trang Bﬁ T›m/open_compound",
+        "H≠Ìng D…n/guide",
+        "GiÌi Thi÷u H÷ ThËng/introduce",
+        "K’t ThÛc ßËi Thoπi/no")
 end
+
 
 function open_compound()
     -- OpenCompoundUI is a C++ function exported to Lua
@@ -106,6 +107,10 @@ function ExeCompoundForge()
     -- Get equipment properties
     local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
 
+    -- Debug: Log blue item series
+    local szSeriesNames = {"Kim", "Moc", "Thuy", "Hoa", "Tho"}
+    Msg2Player(format("[SERIES DEBUG] Blue item series = %d (%s)", nSeries or -1, szSeriesNames[nSeries + 1] or "Unknown"))
+
     -- Validate equipment is blue (using new genre-based detection)
     if not IsBlueEquipment(nEquipIdx) then
         local itemType = GetItemTypeByGenre(nEquipIdx)
@@ -157,6 +162,12 @@ function ExeCompoundForge()
         nNumLines = random(nMinLines, nMaxLines)
     end
 
+    -- CRITICAL: Delete source items BEFORE creating purple item!
+    -- If we create purple item first, it changes inventory indices and
+    -- nEquipIdx/nCrystalIdx become invalid, causing DelItemByIndex to fail
+    DelItemByIndex(nEquipIdx)   -- Delete equipment
+    DelItemByIndex(nCrystalIdx) -- Delete crystal
+
     -- Create purple equipment using dedicated AddItemPurple function
     -- This function handles all the complexity internally:
     -- - Sets genre = item_purpleequip
@@ -164,6 +175,7 @@ function ExeCompoundForge()
     -- - Sets randomSeed = 1000000000 (for DecodePurple to generate Type=53 empty slots)
     -- - Calls Gen_PurpleEquipment to generate 6 "Chua kham nam" slots
     -- - Adds item directly to player's equipment room
+    Msg2Player(format("[SERIES DEBUG] Creating purple with series = %d (%s)", nSeries or -1, szSeriesNames[nSeries + 1] or "Unknown"))
     local nPurpleIdx = AddItemPurple(nDetail, nParti, nLevel, nSeries)
 
     if not nPurpleIdx or nPurpleIdx <= 0 then
@@ -171,9 +183,13 @@ function ExeCompoundForge()
         return
     end
 
-    -- Remove source items from build slots using DelItemByIndex
-    DelItemByIndex(nEquipIdx)   -- Delete equipment
-    DelItemByIndex(nCrystalIdx) -- Delete crystal
+    -- Verify purple item series
+    local _, _, _, _, nPurpleSeries = GetItemProp(nPurpleIdx)
+    Msg2Player(format("[SERIES DEBUG] Purple item created with series = %d (%s)", nPurpleSeries or -1, szSeriesNames[nPurpleSeries + 1] or "Unknown"))
+
+    if nPurpleSeries ~= nSeries then
+        Msg2Player(format("<color=red>[SERIES ERROR] Series mismatch! Blue=%d, Purple=%d<color>", nSeries, nPurpleSeries))
+    end
 
     -- Success message
     local szMsg = "<color=green>Che tao thanh cong trang bi tim voi " .. nNumLines .. " dong thuoc tinh!<color>"
@@ -551,11 +567,13 @@ function ExeExtractAttribute()
     Msg2Player(format("[EXTRACT DEBUG] Using ACTUAL value from equipment: Value=%d (NOT average)", nValue))
 
     -- Debug: log AddItemEx parameters (all 6 generator levels)
-    Msg2Player(format("[EXTRACT DEBUG] Calling AddItemEx with: Genre=7, Detail=%d, Series=%d, GenLvl=[%d,%d,%d,%d,%d,%d]", nKhoangDetail, nEquipSeries or -999, nOp, nValueMin, nValueMax, nValue, nEquipSeries, 0))
+    Msg2Player(format("[EXTRACT DEBUG] Calling AddItemEx with: Genre=7, Detail=%d, Series=%d, GenLvl=[%d,%d,%d,%d,%d,%d]", nKhoangDetail, nEquipSeries or -999, nOp, nValueMin, nValueMax, nValue, nEquipSeries, nEquipDetail))
 
     -- Create new khoang thach item FIRST (before deleting anything)
     -- Pass generator levels directly in AddItemEx to ensure ITEM_SYNC includes attributes
-    -- GenLvl[0]=Type, [1]=Min, [2]=Max, [3]=Value, [4]=Series, [5]=unused
+    -- GenLvl[0]=Type, [1]=Min, [2]=Max, [3]=Value, [4]=Series, [5]=SourceEquipDetail
+    -- GenLvl[5] stores source equipment detail type (0=meleeweapon, 1=rangeweapon, 2+=other)
+    -- This is used to enforce weapon attribute restriction: weapon attrs can only go on weapons
     local nNewKhoangIdx = AddItemEx(
         7,                   -- genre = 7 (script items)
         nKhoangDetail,       -- detail = same as original khoang thach (146-151)
@@ -563,7 +581,7 @@ function ExeExtractAttribute()
         0,                   -- level
         nEquipSeries,        -- series = KEEP equipment series (Kim/Moc/Thuy/Hoa/Tho)
         0,                   -- luck
-        nOp, nValueMin, nValueMax, nValue, nEquipSeries, 0,   -- ma1-ma6: Type,Min,Max,Value,Series,unused
+        nOp, nValueMin, nValueMax, nValue, nEquipSeries, nEquipDetail,   -- ma1-ma6: Type,Min,Max,Value,Series,SourceEquipDetail
         1,                   -- version
         0                    -- randomSeed
     )
@@ -632,6 +650,9 @@ function ExeEnchaseAttribute()
         return
     end
 
+    -- Get purple item properties (including series)
+    local nPurpleGenre, nPurpleDetail, nPurpleParti, nPurpleLevel, nPurpleSeries = GetItemProp(nPurpleIdx)
+
     -- Validate Huyen Tinh
     if not nHuyenTinhIdx or nHuyenTinhIdx <= 0 then
         Talk(1, "", "<color=red>Vui long dat HUYEN TINH vao o 1!<color>")
@@ -656,31 +677,136 @@ function ExeEnchaseAttribute()
         return
     end
 
-    -- Get attribute from khoang thach
-    local nType, nMin, nMax, nValue, nSeries, nUnused = GetItemGeneratorLevels(nKhoangIdx)
+    -- Get attribute from khoang thach (including its series and source equipment detail)
+    local nType, nMin, nMax, nValue, nKhoangSeries, nSourceEquipDetail = GetItemGeneratorLevels(nKhoangIdx)
 
     if not nType or nType <= 0 then
         Talk(1, "", "<color=red>Khoang thach khong chua thuoc tinh!<color>")
         return
     end
 
+    -- ============================================================
+    -- SEQUENTIAL SLOT FILLING VALIDATION
+    -- ============================================================
+    -- Must fill slots in order: 0 -> 1 -> 2 -> 3 -> 4 -> 5
+    -- Cannot skip empty slots (e.g., cannot fill slot 2 if slot 0 or 1 is empty)
+    -- ============================================================
+
     -- Calculate target slot (146->0, 147->1, ..., 151->5)
-    local nSlot = nKDetail - 146
+    local nTargetSlot = nKDetail - 146
 
-    -- CRITICAL FIX: Set attribute DIRECTLY on the existing purple item
-    -- SetPurpleItemMagicAttrib will:
-    -- 1. Set m_aryMagicAttrib[nSlot]
-    -- 2. Set luck=1000000001
-    -- 3. Encode into GenLvl[] for client sync
-    -- 4. Call SyncItem to update client
-    SetPurpleItemMagicAttrib(nPurpleIdx, nSlot, nType, nMin, nMax, nValue)
+    -- Check all slots before target slot to ensure they're filled
+    for nSlot = 0, nTargetSlot - 1 do
+        local nSlotType = GetItemMagicAttrib(nPurpleIdx, nSlot)
+        if not nSlotType or nSlotType <= 0 or nSlotType == 53 then
+            -- Found empty slot before target slot - reject enchasing
+            Talk(1, "", format(
+                "<color=red>Phai kham nam tuan tu! Slot %d con trong, khong the kham slot %d!<color>",
+                nSlot + 1, nTargetSlot + 1
+            ))
+            Msg2Player(format("[SLOT ORDER] Cannot skip slot %d (empty) to fill slot %d", nSlot + 1, nTargetSlot + 1))
+            return
+        end
+    end
 
-    -- Delete only the materials (keep the purple item!)
+    Msg2Player(format("[SLOT ORDER] All slots before slot %d are filled, can proceed", nTargetSlot + 1))
+
+    -- ============================================================
+    -- WEAPON ATTRIBUTE RESTRICTION
+    -- ============================================================
+    -- Attributes extracted from WEAPONS can ONLY be enchased into WEAPONS
+    -- Attributes from other equipment can be enchased into any purple item
+    --
+    -- Equipment detail types:
+    -- 0 = meleeweapon (vu khi can chien)
+    -- 1 = rangeweapon (vu khi tam xa)
+    -- 2+ = armor, ring, amulet, boots, belt, helm, cuff, pendant, etc.
+    -- ============================================================
+
+    local bSourceIsWeapon = (nSourceEquipDetail == 0 or nSourceEquipDetail == 1)
+    local bTargetIsWeapon = (nPurpleDetail == 0 or nPurpleDetail == 1)
+
+    if bSourceIsWeapon and not bTargetIsWeapon then
+        -- Trying to put weapon attribute into non-weapon item - REJECT!
+        local szSourceType = (nSourceEquipDetail == 0) and "Vu Khi Can Chien" or "Vu Khi Tam Xa"
+        local szTargetType = "Trang Bi Khong Phai Vu Khi"
+        Talk(1, "", format(
+            "<color=red>Thuoc tinh tu %s chi co the kham vao VU KHI TIM!<color>\n<color=yellow>Khong the kham vao %s!<color>",
+            szSourceType, szTargetType
+        ))
+        Msg2Player(format("[WEAPON RESTRICTION] Cannot enchase weapon attribute (detail=%d) into non-weapon (detail=%d)", nSourceEquipDetail, nPurpleDetail))
+        return
+    end
+
+    if bSourceIsWeapon then
+        Msg2Player(format("[WEAPON RESTRICTION] Weapon attribute ? Weapon target: OK (source=%d, target=%d)", nSourceEquipDetail, nPurpleDetail))
+    else
+        Msg2Player(format("[WEAPON RESTRICTION] Non-weapon attribute ? Any target: OK (source=%d, target=%d)", nSourceEquipDetail, nPurpleDetail))
+    end
+
+    -- ============================================================
+    -- SERIES (NGU HANH) VALIDATION LOGIC
+    -- ============================================================
+    -- Minerals 147, 149, 151 (odd): MUST match purple item series
+    -- Minerals 146, 148, 150 (even): Can be any series (no validation needed)
+    --
+    -- Series values: 0=Kim, 1=Moc, 2=Thuy, 3=Hoa, 4=Tho
+    --
+    -- NOTE: Series is an item-level property, not attribute-level.
+    -- The enchased attribute inherits the series from the purple item automatically.
+    -- We only validate that certain minerals require matching series before enchasing.
+    -- ============================================================
+
+    local szSeriesNames = {"Kim", "Moc", "Thuy", "Hoa", "Tho"}
+    local bStrictMineral = (nKDetail == 147 or nKDetail == 149 or nKDetail == 151)
+
+    if bStrictMineral then
+        -- Minerals 147/149/151: Series MUST match purple item series
+        if nKhoangSeries ~= nPurpleSeries then
+            local szPurpleSeries = szSeriesNames[nPurpleSeries + 1] or "Unknown"
+            local szKhoangSeries = szSeriesNames[nKhoangSeries + 1] or "Unknown"
+            Talk(1, "", format(
+                "<color=red>Khoang thach (%s) khong cung ngu hanh voi trang bi (%s)! Khong the kham nam!<color>",
+                szKhoangSeries, szPurpleSeries
+            ))
+            return
+        end
+        -- Success message for matching series
+        Msg2Player(format(
+            "[NGU HANH] Khoang thach va trang bi cung ngu hanh (%s), cho phep kham nam",
+            szSeriesNames[nPurpleSeries + 1] or "Unknown"
+        ))
+    else
+        -- Minerals 146/148/150: No series validation needed
+        -- Allow enchasing regardless of mineral series
+        Msg2Player(format(
+            "[NGU HANH] Khoang thach loai %d khong can kiem tra ngu hanh, cho phep kham nam",
+            nKDetail
+        ))
+    end
+
+    -- CRITICAL FIX: Don't delete and recreate item!
+    -- Just update the target slot directly on the existing purple item in BuildBox
+    -- This preserves ALL existing Type=53 slots
+
+    -- CRITICAL ORDER: Update attribute BEFORE deleting materials!
+    -- SetPurpleItemMagicAttrib will call SyncPurpleItem which needs item to still
+    -- be in m_Items[] array to find its BuildBox position (Place=15, X=0, Y=0).
+    -- If we delete materials first, client receives s2cRemoveItem and clears BuildBox
+    -- references, causing SyncPurpleItem to fail finding the item position!
+
+    -- Update the target slot with new attribute from khoang thach
+    -- This directly modifies Item[nPurpleIdx].m_aryMagicAttrib[nTargetSlot]
+    -- AND calls SyncPurpleItem to send updated item to client
+    SetPurpleItemMagicAttrib(nPurpleIdx, nTargetSlot, nType, nMin, nMax, nValue)
+
+    -- NOW delete materials after purple item is synced
+    -- Client will receive s2cRemoveItem for these and auto-clear Box1/Box2
     DelItemByIndex(nKhoangIdx)
     DelItemByIndex(nHuyenTinhIdx)
 
     -- Success message
-    local szMsg = format("<color=yellow>Kham nam thanh cong! Thuoc tinh da duoc ep vao o thu %d!<color>", nSlot + 1)
+    local szMsg = format("<color=yellow>Kham nam thanh cong! Thuoc tinh da duoc ep vao o thu %d!<color>", nTargetSlot + 1)
     Talk(1, "", szMsg)
     Msg2SubWorld("<pic=135><color=yellow> " .. GetName() .. "<color> da kham nam thanh cong thuoc tinh vao trang bi tim!")
 end
