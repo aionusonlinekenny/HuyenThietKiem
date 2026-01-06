@@ -179,7 +179,7 @@ void KUiUpgradeAttrib::LoadScheme(const char* pScheme)
 		m_pSelf->m_BtnClose.Init(&Ini, "CloseBtn");
 		m_pSelf->m_BtnClose.SetLabel("");  // Set button label
 		m_pSelf->m_TextPercent.Init(&Ini, "TextPercent");
-		m_pSelf->m_TextPercent.SetText("S½n sµng n©ng cÊp");  // Set initial text
+		m_pSelf->m_TextPercent.SetText("Sï¿½n sï¿½ng nï¿½ng cï¿½p");  // Set initial text
 
 		// Initialize slot labels
 		m_pSelf->m_EquipmentLabel.Init(&Ini, "EquipmentLabel");
@@ -216,7 +216,7 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 			{
 				g_DebugLog("[CLIENT] Validation passed, showing confirmation dialog");
 				if (m_EffectTime) break;
-				UIMessageBox("B¹n cã ch¾c muèn n©ng cÊp trang bÞ nµy?", this, "X¸c nhËn", "Hñy bá", ISP_DO_EVENT);
+				UIMessageBox("Bï¿½n cï¿½ chï¿½c muï¿½n nï¿½ng cï¿½p trang bï¿½ nï¿½y?", this, "Xï¿½c nhï¿½n", "Hï¿½y bï¿½", ISP_DO_EVENT);
 			}
 			else
 			{
@@ -231,18 +231,25 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 		break;
 
 	case WM_KEYDOWN:
+		g_DebugLog("[UPGRADE-ATTRIB] WM_KEYDOWN received: uParam=%d (VK_ESCAPE=%d)", uParam, VK_ESCAPE);
 		if (uParam == VK_RETURN)  // Enter
 		{
+			g_DebugLog("[UPGRADE-ATTRIB] Enter pressed, attempting upgrade");
 			if (ValidateUpgradeReady())
 			{
-				UIMessageBox("B¹n cã ch¾c muèn n©ng cÊp trang bÞ nµy?", this, "X¸c nhËn", "Hñy bá", ISP_DO_EVENT);
+				UIMessageBox("Bï¿½n cï¿½ chï¿½c muï¿½n nï¿½ng cï¿½p trang bï¿½ nï¿½y?", this, "Xï¿½c nhï¿½n", "Hï¿½y bï¿½", ISP_DO_EVENT);
 			}
-			nRet = 1;
+			return 1;
 		}
 		else if (uParam == VK_ESCAPE)  // ESC
 		{
+			g_DebugLog("[UPGRADE-ATTRIB] ESC pressed, calling CloseWindow()");
+			if (m_EffectTime) {
+				g_DebugLog("[UPGRADE-ATTRIB] ESC blocked - effect in progress");
+				return 1;
+			}
 			CloseWindow(true);
-			nRet = 1;
+			return 1;
 		}
 		break;
 
@@ -283,7 +290,7 @@ BOOL KUiUpgradeAttrib::ValidateUpgradeReady()
 	m_UpgradeSlot[0].GetObject(pObj);
 	if (pObj.uId == 0)
 	{
-		strcpy(szWarning, "Ch­a ®Æt trang bi vµo!");
+		strcpy(szWarning, "Chï¿½a ï¿½ï¿½t trang bi vï¿½o!");
 		nLen = strlen(szWarning);
 		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
 		return FALSE;
@@ -294,7 +301,7 @@ BOOL KUiUpgradeAttrib::ValidateUpgradeReady()
 	m_UpgradeSlot[1].GetObject(pObj);
 	if (pObj.uId == 0)
 	{
-		strcpy(szWarning, "Ch­a ®Æt ®¸ n©ng cÊp vµo.");
+		strcpy(szWarning, "Chï¿½a ï¿½ï¿½t ï¿½ï¿½ nï¿½ng cï¿½p vï¿½o.");
 		nLen = strlen(szWarning);
 		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
 		return FALSE;
