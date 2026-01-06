@@ -537,13 +537,9 @@ BOOL KItemGenerator::Gen_ExistPurpleEquipment(IN int nRecord,
 	pItem->SetGenre(item_purpleequip);
 
 #ifdef _DEBUG
-	if(pItem->m_GeneratorParam.nLuck == 1000000001)
+	if(pItem->m_GeneratorParam.nLuck >= 1000000000)
 	{
-		g_DebugLog("[GEN_EXIST_PURPLE] Enchased purple (luck=1000000001), skip DecodePurple to preserve DB attributes");
-	}
-	else if(pItem->m_GeneratorParam.nLuck == 1000000000)
-	{
-		g_DebugLog("[GEN_EXIST_PURPLE] Newly created purple (luck=1000000000), will run DecodePurple for Type=53 empty slots");
+		g_DebugLog("[GEN_EXIST_PURPLE] Custom purple (luck=%d >= 1000000000), skip DecodePurple to preserve DB attributes", pItem->m_GeneratorParam.nLuck);
 	}
 	else
 	{
@@ -551,8 +547,9 @@ BOOL KItemGenerator::Gen_ExistPurpleEquipment(IN int nRecord,
 	}
 #endif
 
-	// For luck=1000000001: SKIP DecodePurple to preserve magic attributes from database
-	if(pItem->m_GeneratorParam.nLuck == 1000000001)
+	// For luck >= 1000000000: SKIP DecodePurple to preserve magic attributes from database
+	// This includes both newly created (luck=1000000000) and enchased (luck=1000000001) purple items
+	if(pItem->m_GeneratorParam.nLuck >= 1000000000)
 	{
 		return TRUE;  // Keep m_aryMagicAttrib restored from database
 	}
