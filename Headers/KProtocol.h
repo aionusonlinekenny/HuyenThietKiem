@@ -375,7 +375,7 @@ typedef struct PLAYER_TEAM_ADD_MEMBER_DATA
 	int 	m_HP;
 	int 	m_MHP;
 	int 	m_TP;
-	int 	m_SubWorldID;     // Thêm bien SubWorldID
+	int 	m_SubWorldID;     // Thï¿½m bien SubWorldID
 	PLAYER_TEAM_ADD_MEMBER_DATA() {memset(m_szName, 0, 32);};
 } PLAYER_TEAM_ADD_MEMBER;
 
@@ -790,7 +790,9 @@ typedef struct
 	//
 } CURPLAYER_SYNC;
 
-#define MAX_SCIRPTACTION_BUFFERNUM 1024
+// CHANGED: Increased from 1024 to 2048 bytes to support longer dialog text
+// WARNING: Server and Client MUST use same value! Rebuild both when changing!
+#define MAX_SCIRPTACTION_BUFFERNUM 2048
 
 typedef struct
 {
@@ -870,40 +872,40 @@ typedef struct
 
 typedef struct
 {
-	BYTE			ProtocolType;		// Ð­ÒéÀàÐÍ
+	BYTE			ProtocolType;		// Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	DWORD			dwID;
 	DWORD			dwTimePacker;
-	int				m_nTargetPlayerIdx;	// ±»½ÓÊÜplayer idx
-} CHAT_ADD_FRIEND_COMMAND;				// Ìí¼ÓÄ³Íæ¼ÒÎªÁÄÌìºÃÓÑ
+	int				m_nTargetPlayerIdx;	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½player idx
+} CHAT_ADD_FRIEND_COMMAND;				// ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 typedef struct
 {
-	BYTE			ProtocolType;		// Ð­ÒéÀàÐÍ
+	BYTE			ProtocolType;		// Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	DWORD			dwID;
 	DWORD			dwTimePacker;
-	int				m_nTargetPlayerIdx;	// ±»¾Ü¾øplayer idx
-} CHAT_REFUSE_FRIEND_COMMAND;			// ¾Ü¾øÌí¼ÓÄ³Íæ¼ÒÎªÁÄÌìºÃÓÑ
+	int				m_nTargetPlayerIdx;	// ï¿½ï¿½ï¿½Ü¾ï¿½player idx
+} CHAT_REFUSE_FRIEND_COMMAND;			// ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 typedef struct
 {
-	BYTE			ProtocolType;		// Ð­ÒéÀàÐÍ
-	DWORD			m_dwID;				// ÐÂÌí¼ÓºÃÓÑµÄ id
-	int				m_nIdx;				// ÐÂÌí¼ÓºÃÓÑÔÚ player Êý×éÖÐµÄÎ»ÖÃ
-	char			m_szName[32];		// ÐÂÌí¼ÓºÃÓÑµÄÃû×Ö
-} CHAT_ADD_FRIEND_SYNC;					// Í¨Öª¿Í»§¶Ë³É¹¦Ìí¼ÓÒ»¸öÁÄÌìºÃÓÑ
+	BYTE			ProtocolType;		// Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	DWORD			m_dwID;				// ï¿½ï¿½ï¿½ï¿½ï¿½Óºï¿½ï¿½Ñµï¿½ id
+	int				m_nIdx;				// ï¿½ï¿½ï¿½ï¿½ï¿½Óºï¿½ï¿½ï¿½ï¿½ï¿½ player ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Î»ï¿½ï¿½
+	char			m_szName[32];		// ï¿½ï¿½ï¿½ï¿½ï¿½Óºï¿½ï¿½Ñµï¿½ï¿½ï¿½ï¿½ï¿½
+} CHAT_ADD_FRIEND_SYNC;					// Í¨Öªï¿½Í»ï¿½ï¿½Ë³É¹ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 typedef struct
 {
-	BYTE			ProtocolType;		// Ð­ÒéÀàÐÍ
+	BYTE			ProtocolType;		// Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	WORD			m_wLength;
-	char			m_szName[32];		// ¾Ü¾øÕßÃû×Ö
-} CHAT_REFUSE_FRIEND_SYNC;				// Í¨Öª¿Í»§¶ËÌí¼ÓÁÄÌìºÃÓÑµÄÉêÇë±»¾Ü¾ø
+	char			m_szName[32];		// ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+} CHAT_REFUSE_FRIEND_SYNC;				// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñµï¿½ï¿½ï¿½ï¿½ë±»ï¿½Ü¾ï¿½
 
 typedef struct
 {
-	BYTE			ProtocolType;		// Ð­ÒéÀàÐÍ
-	int				m_nTargetPlayerIdx;	// ³ö´í player idx (Ò»°ã¿ÉÄÜÊÇ´ËplayerÏÂÏß»òÕß»»·þÎñÆ÷ÁË)
-} CHAT_ADD_FRIEND_FAIL_SYNC;			// Í¨Öª¿Í»§¶ËÌí¼ÓÁÄÌìºÃÓÑÊ§°Ü
+	BYTE			ProtocolType;		// Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	int				m_nTargetPlayerIdx;	// ï¿½ï¿½ï¿½ï¿½ player idx (Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½playerï¿½ï¿½ï¿½ß»ï¿½ï¿½ß»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+} CHAT_ADD_FRIEND_FAIL_SYNC;			// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
 
 typedef struct
 {
@@ -1272,71 +1274,71 @@ struct NEW_PLAYER_COMMAND
 
 typedef struct
 {
-	BYTE			ProtocolType;		// Ð­ÒéÀàÐÍ
-	DWORD			m_dwID;				// ºÃÓÑ id
-	int				m_nPlayerIdx;		// ºÃÓÑ player index
-} CHAT_LOGIN_FRIEND_NONAME_SYNC;		// Íæ¼ÒµÇÂ¼Ê±·¢ËÍÍæ¼ÒÁÄÌìºÃÓÑÊý¾Ý£¨²»´øÃû×Ö£©
+	BYTE			ProtocolType;		// Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	DWORD			m_dwID;				// ï¿½ï¿½ï¿½ï¿½ id
+	int				m_nPlayerIdx;		// ï¿½ï¿½ï¿½ï¿½ player index
+} CHAT_LOGIN_FRIEND_NONAME_SYNC;		// ï¿½ï¿½Òµï¿½Â¼Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½
 
 typedef struct
 {
-	BYTE			ProtocolType;		// Ð­ÒéÀàÐÍ
+	BYTE			ProtocolType;		// Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	WORD			m_wLength;
-	DWORD			m_dwID;				// ºÃÓÑ id
-	int				m_nPlayerIdx;		// ºÃÓÑ player index
-	char			m_szName[32];		// ºÃÓÑÃû×Ö
-} CHAT_LOGIN_FRIEND_NAME_SYNC;			// Íæ¼ÒµÇÂ¼Ê±·¢ËÍÍæ¼ÒÁÄÌìºÃÓÑÊý¾Ý£¨´øÃû×Ö£©
+	DWORD			m_dwID;				// ï¿½ï¿½ï¿½ï¿½ id
+	int				m_nPlayerIdx;		// ï¿½ï¿½ï¿½ï¿½ player index
+	char			m_szName[32];		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+} CHAT_LOGIN_FRIEND_NAME_SYNC;			// ï¿½ï¿½Òµï¿½Â¼Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½
 
 typedef struct
 {
-	BYTE			ProtocolType;		// Ð­ÒéÀàÐÍ
+	BYTE			ProtocolType;		// Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	DWORD			dwID;
 	DWORD			dwTimePacker;
 } CHAT_APPLY_RESEND_ALL_FRIEND_NAME_COMMAND;
 
 typedef struct
 {
-	BYTE			ProtocolType;		// Ð­ÒéÀàÐÍ
+	BYTE			ProtocolType;		// Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	DWORD			dwID;
 	DWORD			dwTimePacker;
-	DWORD			m_dwID;				// ºÃÓÑ id	
-} CHAT_APPLY_SEND_ONE_FRIEND_NAME_COMMAND;	// ÉêÇëµÃµ½Íæ¼ÒÄ³¸öÁÄÌìºÃÓÑµÄÍêÕûÊý¾Ý
+	DWORD			m_dwID;				// ï¿½ï¿½ï¿½ï¿½ id	
+} CHAT_APPLY_SEND_ONE_FRIEND_NAME_COMMAND;	// ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 typedef struct
 {
-	BYTE			ProtocolType;		// Ð­ÒéÀàÐÍ
-	DWORD			m_dwID;				// ºÃÓÑ id
-	int				m_nPlayerIdx;		// ºÃÓÑ player index
-	char			m_szName[32];		// ºÃÓÑÃû×Ö
-} CHAT_ONE_FRIEND_DATA_SYNC;			// ·¢ËÍÍæ¼ÒÄ³Ò»¸öÁÄÌìºÃÓÑÊý¾Ý£¨´øÃû×Ö£©
+	BYTE			ProtocolType;		// Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	DWORD			m_dwID;				// ï¿½ï¿½ï¿½ï¿½ id
+	int				m_nPlayerIdx;		// ï¿½ï¿½ï¿½ï¿½ player index
+	char			m_szName[32];		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+} CHAT_ONE_FRIEND_DATA_SYNC;			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½
 
 typedef struct
 {
-	BYTE			ProtocolType;		// Ð­ÒéÀàÐÍ
-	DWORD			m_dwID;				// ºÃÓÑ id
-	int				m_nPlayerIdx;		// ºÃÓÑ player index
-} CHAT_FRIEND_ONLINE_SYNC;				// Í¨Öª¿Í»§¶ËÓÐºÃÓÑÉÏÏß
+	BYTE			ProtocolType;		// Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	DWORD			m_dwID;				// ï¿½ï¿½ï¿½ï¿½ id
+	int				m_nPlayerIdx;		// ï¿½ï¿½ï¿½ï¿½ player index
+} CHAT_FRIEND_ONLINE_SYNC;				// Í¨Öªï¿½Í»ï¿½ï¿½ï¿½ï¿½Ðºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 typedef struct
 {
-	BYTE			ProtocolType;		// Ð­ÒéÀàÐÍ
+	BYTE			ProtocolType;		// Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	DWORD			dwID;
 	DWORD			dwTimePacker;
-	DWORD			m_dwID;				// ±»É¾³ýid
-} CHAT_DELETE_FRIEND_COMMAND;			// É¾³ýÄ³¸öÁÄÌìºÃÓÑ
+	DWORD			m_dwID;				// ï¿½ï¿½É¾ï¿½ï¿½id
+} CHAT_DELETE_FRIEND_COMMAND;			// É¾ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 typedef struct
 {
-	BYTE			ProtocolType;		// Ð­ÒéÀàÐÍ
-	DWORD			m_dwID;				// É¾³ýid
-} CHAT_DELETE_FRIEND_SYNC;				// ±»Ä³¸öÁÄÌìºÃÓÑÉ¾³ý
+	BYTE			ProtocolType;		// Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	DWORD			m_dwID;				// É¾ï¿½ï¿½id
+} CHAT_DELETE_FRIEND_SYNC;				// ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½
 
 typedef struct
 {
-	BYTE			ProtocolType;		// Ð­ÒéÀàÐÍ
+	BYTE			ProtocolType;		// Ð­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	DWORD			dwID;
 	DWORD			dwTimePacker;
-	DWORD			m_dwID;				// ±»É¾³ýid
-} CHAT_REDELETE_FRIEND_COMMAND;			// É¾³ýÄ³¸öÁÄÌìºÃÓÑ
+	DWORD			m_dwID;				// ï¿½ï¿½É¾ï¿½ï¿½id
+} CHAT_REDELETE_FRIEND_COMMAND;			// É¾ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 typedef struct 
 {

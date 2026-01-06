@@ -395,13 +395,13 @@ enum PLAYER_INSTANT_STATE
 enum CHAT_STATUS
 {
 	CHAT_S_ONLINE = 0,		//????
-	CHAT_S_BUSY,			//æµ
+	CHAT_S_BUSY,			//ï¿½
 	CHAT_S_HIDE,			//????
 	CHAT_S_LEAVE,			//??
 	CHAT_S_DISCONNECT,		//????
 };
 
-// ?????ö???????????(by zroc)
+// ?????ï¿½???????????(by zroc)
 enum OBJ_ATTRIBYTE_TYPE
 {
 	series_metal = 0,		//	???
@@ -697,7 +697,9 @@ struct KUiMsgParam
 
 struct KUiInformationParam
 {
-	char	sInformation[512];
+	// CHANGED: Increased from 512 to 1024 bytes to support longer text per sentence
+	// This allows each Talk() sentence to be up to 1KB instead of 512 bytes
+	char	sInformation[1024];
 	char	sConfirmText[64];
 	short	nInforLen;
 	bool	bNeedConfirmNotify;
@@ -717,7 +719,7 @@ enum PLAYER_ACTION_LIST
 //==================================
 enum SYS_MESSAGE_TYPE
 {
-	SMT_NORMAL = 0,	//???µ????????
+	SMT_NORMAL = 0,	//???ï¿½????????
 	SMT_SYSTEM,		//???????????
 	SMT_PLAYER,		//??????
 	SMT_TEAM,		//??????
