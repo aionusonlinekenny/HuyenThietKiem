@@ -20,6 +20,7 @@
 #include "UiGetString.h"
 #include "UiGetNumber.h"
 #include "UiTongSetTax.h"
+#include "UiCompoundItem.h"
 #include "../../../core/src/coreshell.h"
 #include "../../../core/src/GameDataDef.h"
 #include "../UiBase.h"
@@ -70,6 +71,11 @@ void KUiItem::CloseWindow(bool bDestroy)
 {
 	if (m_pSelf)
 	{
+		if (KUiComItem::GetIfVisible())
+		{
+			g_DebugLog("[INVENTORY] Closing crafting UI along with inventory");
+			KUiComItem::CloseWindow();
+		}
 		KUiShop::CancelTrade();
 		if (bDestroy == false)
 			m_pSelf->Hide();

@@ -377,9 +377,13 @@ BOOL KItemGenerator::Gen_PurpleEquipment(IN int nDetailType,
 
 	// Step 2: Call SetAttrib_CBR to copy base attributes from equipment table
 	// This will set genre=item_equip (0) temporarily - we'll override it in step 3
-	// CRITICAL: This is REQUIRED even for luck=1000000001 to get name, damage, defense, etc.
+	// CRITICAL: SetAttrib_CBR uses "*this = *pData" which OVERRIDES series to -1!
+	//           We must call SetSeries AGAIN after SetAttrib_CBR!
 	pItem->SetAttrib_CBR(pEqu);
 
+	// Step 2.5: RESTORE series after SetAttrib_CBR (which overrode it to -1)
+	// This is CRITICAL for purple items to inherit series from blue items
+	pItem->SetSeries(nSeriesReq);
 	// Step 3: NOW set genre to purple (this overwrites the genre from SetAttrib_CBR)
 	// This MUST be after SetAttrib_CBR to ensure genre stays as item_purpleequip
 	pItem->SetGenre(item_purpleequip);
@@ -521,9 +525,13 @@ BOOL KItemGenerator::Gen_ExistPurpleEquipment(IN int nRecord,
 
 	// Step 2: Call SetAttrib_CBR to copy base attributes from equipment table
 	// This will set genre=item_equip (0) temporarily - we'll override it in step 3
-	// CRITICAL: This is REQUIRED even for luck=1000000001 to get name, damage, defense, etc.
+	// CRITICAL: SetAttrib_CBR uses "*this = *pData" which OVERRIDES series to -1!
+	//           We must call SetSeries AGAIN after SetAttrib_CBR!
 	pItem->SetAttrib_CBR(pEqu);
 
+	// Step 2.5: RESTORE series after SetAttrib_CBR (which overrode it to -1)
+	// This is CRITICAL for purple items to display correct series in tooltip
+	pItem->SetSeries(nSeries);
 	// Step 3: NOW set genre to purple (this overwrites the genre from SetAttrib_CBR)
 	// This MUST be after SetAttrib_CBR to ensure genre stays as item_purpleequip
 	pItem->SetGenre(item_purpleequip);

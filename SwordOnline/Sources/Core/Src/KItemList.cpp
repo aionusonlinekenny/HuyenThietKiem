@@ -2902,7 +2902,17 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 					m_Hand = 0;
 				}
 #ifdef _SERVER
-				g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
+				// CRITICAL FIX: For purple items, use SyncPurpleItem to preserve all 6 magic attributes
+				if (Item[nTempHand].GetGenre() == item_purpleequip &&
+				    Item[nTempHand].GetGeneratorParam()->nLuck >= 1000000000)
+				{
+					g_DebugLog("[EQUIPROOM SYNC] Purple item moved to inventory, syncing with SyncPurpleItem");
+					SyncPurpleItem(nTempHand);
+				}
+				else
+				{
+					g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
+				}
 #endif
 			}
 			else
@@ -2921,7 +2931,17 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 				m_Items[nListIdx].nPlace = pos_hand;
 				m_Hand = nEquipIdx1;
 #ifdef _SERVER
-				g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
+				// CRITICAL FIX: For purple items being picked up, use SyncPurpleItem
+				if (Item[nEquipIdx1].GetGenre() == item_purpleequip &&
+				    Item[nEquipIdx1].GetGeneratorParam()->nLuck >= 1000000000)
+				{
+					g_DebugLog("[EQUIPROOM SYNC] Purple item picked up to hand, syncing with SyncPurpleItem");
+					SyncPurpleItem(nEquipIdx1);
+				}
+				else
+				{
+					g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
+				}
 #endif
 			}
 		}
@@ -2945,7 +2965,20 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 				m_Hand = nEquipIdx1;
 				m_Items[FindSame(nEquipIdx1)].nPlace = pos_hand;
 #ifdef _SERVER
-				g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
+				// CRITICAL FIX: For purple items, use SyncPurpleItem to preserve all 6 magic attributes
+				// PLAYER_MOVE_ITEM_SYNC doesn't carry the 6 attributes, causing them to be lost
+				int nBuildItemListIdx = FindSame(m_BuildItem[DesPos->nX]);
+				if (nBuildItemListIdx > 0 &&
+				    Item[m_BuildItem[DesPos->nX]].GetGenre() == item_purpleequip &&
+				    Item[m_BuildItem[DesPos->nX]].GetGeneratorParam()->nLuck >= 1000000000)
+				{
+					g_DebugLog("[BUILDBOX SYNC] Purple item moved to BuildBox, syncing with SyncPurpleItem");
+					SyncPurpleItem(m_BuildItem[DesPos->nX]);
+				}
+				else
+				{
+					g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
+				}
 #endif
 			}
 			else if (nEquipIdx1)
@@ -5614,19 +5647,19 @@ void KItemList::SyncPurpleItem(int nIdx, BOOL bIsNew, int nPlace, int nX, int nY
 
     // Copy all 6 magic attributes with full data (Type, Value, Min, Max)
     g_DebugLog("[SERVER-SYNC-PURPLE] Copying 6 magic attributes:");
-    for (int i = 0; i < 6; ++i)
+    for (int a = 0; a < 6; ++a)
     {
-        sPurpleItem.m_MagicAttrib[i].nType  = (WORD)Item[nIdx].m_aryMagicAttrib[i].nAttribType;
-        sPurpleItem.m_MagicAttrib[i].nValue = (WORD)Item[nIdx].m_aryMagicAttrib[i].nValue[0];
-        sPurpleItem.m_MagicAttrib[i].nMin   = (WORD)Item[nIdx].m_aryMagicAttrib[i].nMin;
-        sPurpleItem.m_MagicAttrib[i].nMax   = (WORD)Item[nIdx].m_aryMagicAttrib[i].nMax;
+        sPurpleItem.m_MagicAttrib[a].nType  = (WORD)Item[nIdx].m_aryMagicAttrib[a].nAttribType;
+        sPurpleItem.m_MagicAttrib[a].nValue = (WORD)Item[nIdx].m_aryMagicAttrib[a].nValue[0];
+        sPurpleItem.m_MagicAttrib[a].nMin   = (WORD)Item[nIdx].m_aryMagicAttrib[a].nMin;
+        sPurpleItem.m_MagicAttrib[a].nMax   = (WORD)Item[nIdx].m_aryMagicAttrib[a].nMax;
 
         g_DebugLog("[SERVER-SYNC-PURPLE]   Slot[%d]: Type=%d (0x%04X), Value=%d (0x%04X), Min=%d (0x%04X), Max=%d (0x%04X)",
-            i,
-            sPurpleItem.m_MagicAttrib[i].nType, sPurpleItem.m_MagicAttrib[i].nType,
-            sPurpleItem.m_MagicAttrib[i].nValue, sPurpleItem.m_MagicAttrib[i].nValue,
-            sPurpleItem.m_MagicAttrib[i].nMin, sPurpleItem.m_MagicAttrib[i].nMin,
-            sPurpleItem.m_MagicAttrib[i].nMax, sPurpleItem.m_MagicAttrib[i].nMax);
+            a,
+            sPurpleItem.m_MagicAttrib[a].nType, sPurpleItem.m_MagicAttrib[a].nType,
+            sPurpleItem.m_MagicAttrib[a].nValue, sPurpleItem.m_MagicAttrib[a].nValue,
+            sPurpleItem.m_MagicAttrib[a].nMin, sPurpleItem.m_MagicAttrib[a].nMin,
+            sPurpleItem.m_MagicAttrib[a].nMax, sPurpleItem.m_MagicAttrib[a].nMax);
     }
 
     int netIdx = (nPlayerIndex > 0 && nPlayerIndex < MAX_PLAYER)
@@ -5640,14 +5673,14 @@ void KItemList::SyncPurpleItem(int nIdx, BOOL bIsNew, int nPlace, int nX, int nY
     BYTE* pBytes = (BYTE*)&sPurpleItem;
     char szHexDump[512];
     szHexDump[0] = '\0';
-    for (int i = 0; i < 93 && i < sizeof(ITEM_PURPLE_SYNC); i++)
+    for (int b = 0; b < 93 && b < sizeof(ITEM_PURPLE_SYNC); b++)
     {
         char szByte[8];
-        sprintf(szByte, "%02X ", pBytes[i]);
+        sprintf(szByte, "%02X ", pBytes[b]);
         strcat(szHexDump, szByte);
-        if ((i + 1) % 16 == 0)
+        if ((b + 1) % 16 == 0)
         {
-            g_DebugLog("[SERVER-SYNC-PURPLE] Bytes [%02d-%02d]: %s", i - 15, i, szHexDump);
+            g_DebugLog("[SERVER-SYNC-PURPLE] Bytes [%02d-%02d]: %s", b - 15, b, szHexDump);
             szHexDump[0] = '\0';
         }
     }

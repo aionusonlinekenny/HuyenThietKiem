@@ -6,7 +6,7 @@
 --------------------Configuration: Common - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4D89.tmp" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP32DB.tmp" with contents
 [
 /nologo /MT /W3 /GX /Zi /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D _WIN32_WINNT=0x0400 /Fp"Release/Common.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Buffer.cpp"
@@ -33,20 +33,20 @@ Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4D89.tmp" with con
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Utils.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\Win32Exception.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP4D89.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4D8A.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP32DB.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP32DC.tmp" with contents
 [
 /nologo /MT /W3 /GX /Zi /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D _WIN32_WINNT=0x0400 /Fo"Release/" /Fd"Release/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\CRC32.C"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP4D8A.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4D8B.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP32DC.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP32DD.tmp" with contents
 [
 /nologo /MT /W3 /GX /Zi /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D _WIN32_WINNT=0x0400 /Fp"Release/Common.pch" /Yc"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\MultiServer\Common\stdafx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP4D8B.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4D8C.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP32DD.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP32DE.tmp" with contents
 [
 /nologo /out:"Release\Common.lib" 
 .\Release\Buffer.obj
@@ -75,7 +75,7 @@ Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4D8C.tmp" with con
 .\Release\Utils.obj
 .\Release\Win32Exception.obj
 ]
-Creating command line "link.exe -lib @C:\Users\kenny\AppData\Local\Temp\RSP4D8C.tmp"
+Creating command line "link.exe -lib @C:\Users\kenny\AppData\Local\Temp\RSP32DE.tmp"
 <h3>Output Window</h3>
 Compiling...
 stdafx.cpp
@@ -124,14 +124,14 @@ Generating Code...
 Compiling...
 CRC32.C
 Creating library...
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP5E08.bat" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP45EA.bat" with contents
 [
 @echo off
 md ..\..\..\Lib\release
 copy release\common.lib ..\..\..\Lib\release\common.lib
 copy release\common.lib ..\..\..\Lib\common.lib
 ]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP5E08.bat"
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP45EA.bat"
 
 A subdirectory or file ..\..\..\Lib\release already exists.
         1 file(s) copied.
@@ -145,7 +145,7 @@ Common.lib - 0 error(s), 0 warning(s)
 --------------------Configuration: ExpandPackageStaticLib - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP5F03.tmp" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4742.tmp" with contents
 [
 /nologo /ML /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /Fp"Release/ExpandPackageStaticLib.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\BlockSource.cpp"
@@ -157,8 +157,8 @@ Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP5F03.tmp" with con
 "E:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\PackageFileHead.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\ExpandPackage2.0\StdAfx.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP5F03.tmp" 
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP5F04.tmp" with contents
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP4742.tmp" 
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4743.tmp" with contents
 [
 /nologo /out:"Release\ExpandPackageStaticLib.lib" 
 .\Release\BlockSource.obj
@@ -170,7 +170,7 @@ Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP5F04.tmp" with con
 .\Release\PackageFileHead.obj
 .\Release\StdAfx.obj
 ]
-Creating command line "link.exe -lib @C:\Users\kenny\AppData\Local\Temp\RSP5F04.tmp"
+Creating command line "link.exe -lib @C:\Users\kenny\AppData\Local\Temp\RSP4743.tmp"
 <h3>Output Window</h3>
 Compiling...
 BlockSource.cpp
@@ -182,13 +182,13 @@ Package.cpp
 PackageFileHead.cpp
 StdAfx.cpp
 Creating library...
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP6474.bat" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4D7E.bat" with contents
 [
 @echo off
 copy Release\ExpandPackageStaticLib.lib ..\..\lib\Release\ExpandPackageStaticLib.lib
 copy Release\ExpandPackageStaticLib.lib ..\..\lib\ExpandPackageStaticLib.lib
 ]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP6474.bat"
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP4D7E.bat"
 
         1 file(s) copied.
         1 file(s) copied.
@@ -201,20 +201,20 @@ ExpandPackageStaticLib.lib - 0 error(s), 0 warning(s)
 --------------------Configuration: FilterText_StaticLib - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP65AD.tmp" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP4EE6.tmp" with contents
 [
 /nologo /MD /W3 /GX /Zi /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "FILTERTEXT_STATICLIB" /FR"FilterText_StaticLib___Win32_Release/" /Fp"FilterText_StaticLib___Win32_Release/FilterText_StaticLib.pch" /YX /Fo"FilterText_StaticLib___Win32_Release/" /Fd"FilterText_StaticLib___Win32_Release/" /FD /c 
 "E:\HuyenThietKiem\SwordOnline\Sources\FilterText\FilterText.cpp"
 "E:\HuyenThietKiem\SwordOnline\Sources\FilterText\Regexp.cpp"
 ]
-Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP65AD.tmp" 
+Creating command line "cl.exe @C:\Users\kenny\AppData\Local\Temp\RSP4EE6.tmp" 
 Creating command line "link.exe -lib /nologo /out:"FilterText_StaticLib___Win32_Release\FilterText_StaticLib.lib"  .\FilterText_StaticLib___Win32_Release\FilterText.obj .\FilterText_StaticLib___Win32_Release\Regexp.obj "
 <h3>Output Window</h3>
 Compiling...
 FilterText.cpp
 Regexp.cpp
 Creating library...
-Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP69A6.bat" with contents
+Creating temporary file "C:\Users\kenny\AppData\Local\Temp\RSP533D.bat" with contents
 [
 @echo off
 md ..\..\lib\release
@@ -222,7 +222,7 @@ copy FilterText_StaticLib___Win32_Release\FilterText_StaticLib.lib ..\..\lib\rel
 md ..\..\lib
 copy FilterText_StaticLib___Win32_Release\FilterText_StaticLib.lib ..\..\lib\FilterText_StaticLib.lib
 ]
-Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP69A6.bat"
+Creating command line "C:\Users\kenny\AppData\Local\Temp\RSP533D.bat"
 
 A subdirectory or file ..\..\lib\release already exists.
         1 file(s) copied.

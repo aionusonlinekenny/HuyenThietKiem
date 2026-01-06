@@ -100,6 +100,7 @@ private:
 
     // Animation status (added for enchase effect)
     int m_nStatus;  // STATUS_WAITING_MATERIALS, STATUS_BEGIN_TREMBLE, STATUS_TREMBLING, etc.
+    int m_EffectTime;  // Animation time counter (like Upgrade tab)
 
     KCanGetNumImage2
             m_TrembleEffect1;                   //?????????

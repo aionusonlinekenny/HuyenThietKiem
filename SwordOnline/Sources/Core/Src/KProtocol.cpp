@@ -144,7 +144,7 @@ int	g_nProtocolSize[MAX_PROTOCOL_NUM] =
 	sizeof(PLAYER_SEND_TOP_TK_NEW),			// s2c_playersendtoptknew /ID: 125 ////Report Battle by kinnox;
 	sizeof(S2C_NOTIFICATION),				// s2c_notification /ID: 126 //Notification by kinnox;
 	sizeof(ITEM_RIGHT_AUTO_MOVE),			// s2c_RightItemAutoMove
-	
+	sizeof(ITEM_PURPLE_SYNC),				// s2c_syncpurpleitem - Purple item sync with all 6 attributes
 #else
 	sizeof(LOGIN_COMMAND),		//	c2s_login,
 	sizeof(tagLogicLogin),		//	c2s_logicLogin,

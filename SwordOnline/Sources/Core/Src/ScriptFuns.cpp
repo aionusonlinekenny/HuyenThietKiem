@@ -10705,7 +10705,14 @@ int LuaAddItemPurple(Lua_State * L)
 		char szData[128];
 		Item[nItemIdx].GetItemBackupInfo(szData);
 		Player[nPlayerIndex].SaveLog(2, szData, "LUA_ADD PURPLE", Item[nItemIdx].GetName());
+
 		g_DebugLog("[CREATE FLOW] Item added to equipment room successfully");
+
+		// CRITICAL: Sync purple item to client immediately after creation
+		// Without this, client doesn't know the item exists until enchasing!
+		g_DebugLog("[CREATE FLOW] Syncing purple item to client via ITEM_PURPLE_SYNC protocol");
+		Player[nPlayerIndex].m_ItemList.SyncPurpleItem(nItemIdx);
+		g_DebugLog("[CREATE FLOW] Purple item synced to client successfully");
 		g_DebugLog("[CREATE FLOW] Purple item created with 6 Type=53 empty slots ready for enchasing");
 		g_DebugLog("[CREATE FLOW] Creation workflow completed successfully");
 		g_DebugLog("========================================");
@@ -10762,6 +10769,12 @@ int LuaAddItemPurple(Lua_State * L)
 	Player[nPlayerIndex].m_ItemList.Add(nItemIdx, pos_hand, 0, 0);
 
 	g_DebugLog("[CREATE FLOW] Item added to hand successfully");
+
+	// CRITICAL: Sync purple item to client immediately after creation
+	// Without this, client doesn't know the item exists until enchasing!
+	g_DebugLog("[CREATE FLOW] Syncing purple item to client via ITEM_PURPLE_SYNC protocol");
+	Player[nPlayerIndex].m_ItemList.SyncPurpleItem(nItemIdx);
+	g_DebugLog("[CREATE FLOW] Purple item synced to client successfully");
 	g_DebugLog("[CREATE FLOW] Purple item created with 6 Type=53 empty slots ready for enchasing");
 	g_DebugLog("[CREATE FLOW] Creation workflow completed successfully");
 	g_DebugLog("========================================");

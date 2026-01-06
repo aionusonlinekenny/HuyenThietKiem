@@ -1312,10 +1312,10 @@ void KProtocolProcess::s2cRemoveItem(BYTE* pMsg)
 		Player[CLIENT_PLAYER_INDEX].m_ItemList.Remove(nIdx);
 		Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 	}
+ 
 
-	
+
 }
-
 //	功能：收到服务器发来的门派信息
 
 void KProtocolProcess::s2cSetFactionData(BYTE* pMsg)
@@ -1414,7 +1414,8 @@ void KProtocolProcess::s2cSyncItem(BYTE* pMsg)
 	
 	if( (nIndex <= 0) || (nIndex >= MAX_ITEM) )
 	{
-		Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
+		// REMOVED: UnlockOperation() without corresponding LockOperation() causes crash
+		// Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 		return;
 	}
 
@@ -1431,8 +1432,8 @@ void KProtocolProcess::s2cSyncItem(BYTE* pMsg)
 	Item[nIndex].SetPlayerShopPrice(pItemSync->m_ShopPrice);
 
 	Player[CLIENT_PLAYER_INDEX].m_ItemList.Add(nIndex, pItemSync->m_Place, pItemSync->m_X, pItemSync->m_Y);
-	//
-	Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
+	// REMOVED: UnlockOperation() without corresponding LockOperation() causes crash/undefined behavior
+	// Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 }
 
 //	NEW: Handle s2c_syncpurpleitem - Purple item sync with all 6 magic attributes
@@ -1446,6 +1447,19 @@ void KProtocolProcess::s2cSyncPurpleItem(BYTE* pMsg)
 		pPurpleSync->m_ID, pPurpleSync->m_Genre, pPurpleSync->m_Detail,
 		pPurpleSync->m_Level, pPurpleSync->m_Luck);
 
+	// CRITICAL: Remove existing item with same ID to prevent duplicates
+	// This happens when enchasing - item is moved to compound container,
+	// then server sends SyncPurpleItem which would create a duplicate
+	for (int idx = 0; idx < MAX_ITEM; idx++)
+	{
+		if (Item[idx].GetID() == pPurpleSync->m_ID && pPurpleSync->m_ID > 0)
+		{
+			g_DebugLog("[CLIENT-PURPLE] Found existing item with ID=%d at index %d, removing to prevent duplicate",
+				pPurpleSync->m_ID, idx);
+			Player[CLIENT_PLAYER_INDEX].m_ItemList.Remove(idx);
+			break;
+		}
+	}
 	// First, use standard AddExist to create/update the item with base properties
 	int pnMagicParam[6] = {0};  // Purple items don't use standard magic encoding
 
@@ -1465,7 +1479,6 @@ void KProtocolProcess::s2cSyncPurpleItem(BYTE* pMsg)
 	if( (nIndex <= 0) || (nIndex >= MAX_ITEM) )
 	{
 		g_DebugLog("[CLIENT-PURPLE] ERROR: Invalid item index %d, aborting", nIndex);
-		Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 		return;
 	}
 
@@ -1505,8 +1518,6 @@ void KProtocolProcess::s2cSyncPurpleItem(BYTE* pMsg)
 	Player[CLIENT_PLAYER_INDEX].m_ItemList.Add(nIndex, pPurpleSync->m_Place, pPurpleSync->m_X, pPurpleSync->m_Y);
 
 	g_DebugLog("[CLIENT-PURPLE] Purple item sync complete, item added to inventory");
-
-	Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 }
 //	功能：收到服务器发过来的同步money的消息
 

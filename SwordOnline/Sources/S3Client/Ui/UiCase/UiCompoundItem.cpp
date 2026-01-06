@@ -105,10 +105,19 @@ KUiComItem *KUiComItem::OpenWindow() {
         m_pSelf->BringToTop();
         m_pSelf->Show();
 
+        // Lock player movement when crafting UI is open
+        Wnd_GameSpaceHandleInput(false);
+
         if (KUiItem::GetIfVisible() == NULL)
             KUiItem::OpenWindow();
         else
             UiSoundPlay(UI_SI_WND_OPENCLOSE);
+
+        // CRITICAL: Bring crafting UI to top AFTER opening inventory
+        // This ensures crafting UI receives keyboard input (like ESC) before inventory
+        m_pSelf->BringToTop();
+        g_DebugLog("[COMPOUND-MAIN] BringToTop called after inventory open to receive ESC key");
+
         // NOTE: Do NOT call OnNpcTradeMode(true) - it disables inventory drag!
         // Crafting UIs need players to drag items FROM inventory
     }
@@ -131,6 +140,16 @@ KUiComItem *KUiComItem::GetIfVisible() {
 **********************************************************************/
 void KUiComItem::CloseWindow(bool bDestory) {
     if (m_pSelf) {
+        // Return any items in BuildBox to player inventory before closing
+        // Server will only return items actually in pos_builditem container
+        if (g_pCoreShell) {
+            g_pCoreShell->OperationRequest(GOI_RECOVERY_BOX_COMMAND, pos_builditem, 0);
+            g_DebugLog("[COMPOUND] Called GOI_RECOVERY_BOX_COMMAND on UI close");
+        }
+
+        // Unlock player movement when UI closes
+        Wnd_GameSpaceHandleInput(true);
+
         m_pSelf->Hide();
         if (bDestory) {
             m_pSelf->Destroy();
@@ -196,6 +215,15 @@ int KUiComItem::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             } else if (uParam == (unsigned int) &m_AtlasPadBtn) {
                 m_nNum = WINDOWS_ATLAS;
                 ShowWindow(4);
+            }
+            break;
+
+        case WM_KEYDOWN:
+            g_DebugLog("[COMPOUND-MAIN] WM_KEYDOWN received: uParam=%d (VK_ESCAPE=%d)", uParam, VK_ESCAPE);
+            if (uParam == VK_ESCAPE) {
+                g_DebugLog("[COMPOUND-MAIN] ESC pressed, calling CloseWindow()");
+                CloseWindow();
+                return 1;
             }
             break;
 
@@ -778,6 +806,15 @@ int KUiCompound::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
             }
             break;
 
+        case WM_KEYDOWN:
+            g_DebugLog("[COMPOUND-TAB] WM_KEYDOWN received: uParam=%d (VK_ESCAPE=%d)", uParam, VK_ESCAPE);
+            if (uParam == VK_ESCAPE) {
+                g_DebugLog("[COMPOUND-TAB] ESC pressed, calling CloseWindow()");
+                KUiComItem::CloseWindow();
+                return 1;
+            }
+            break;
+
         default:
             return KWndImage::WndProc(uMsg, uParam, nParam);
     }
@@ -1100,7 +1137,7 @@ void KUiCompound::SetPosText(int i) {
             m_Pos1.SetText("[1] Nh?n");
             m_Pos2.SetText("[1] D?y chuy?n/h? th?n ph?");
             m_Pos3.SetText("[1] Ng?c b?i/h??ng nang");
-            g_DebugLog("[COMPOUND] SetPosText: Switched to case 1 (Equipment) - [1] Nh?n, Dây chuy?n, Ng?c b?i");
+            g_DebugLog("[COMPOUND] SetPosText: Switched to case 1 (Equipment) - [1] Nh?n, D?y chuy?n, Ng?c b?i");
             break;
         case 2:
             m_nSelect = 1;
@@ -1114,7 +1151,7 @@ void KUiCompound::SetPosText(int i) {
             m_Pos1.SetText("[3] Kho?ng th?ch 1");
             m_Pos2.SetText("[3] Kho?ng th?ch 2");
             m_Pos3.SetText("[3] Kho?ng th?ch 3");
-            g_DebugLog("[COMPOUND] SetPosText: Switched to case 3 (Mineral) - [3] Khoáng th?ch 1, 2, 3");
+            g_DebugLog("[COMPOUND] SetPosText: Switched to case 3 (Mineral) - [3] Kho?ng th?ch 1, 2, 3");
             break;
     }
 
@@ -1453,6 +1490,15 @@ int KUiDistill::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                 m_Box2.EnablePickPut(false);
                 m_ItemBox.EnablePickPut(false);
                 g_DebugLog("[DISTILL] Starting extraction effect, boxes disabled");
+            }
+            break;
+
+        case WM_KEYDOWN:
+            g_DebugLog("[DISTILL-TAB] WM_KEYDOWN received: uParam=%d (VK_ESCAPE=%d)", uParam, VK_ESCAPE);
+            if (uParam == VK_ESCAPE) {
+                g_DebugLog("[DISTILL-TAB] ESC pressed, calling CloseWindow()");
+                KUiComItem::CloseWindow();
+                return 1;
             }
             break;
 
@@ -2048,6 +2094,14 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                 StartEffect();
             }
             break;
+        case WM_KEYDOWN:
+            g_DebugLog("[FORGE-TAB] WM_KEYDOWN received: uParam=%d (VK_ESCAPE=%d)", uParam, VK_ESCAPE);
+            if (uParam == VK_ESCAPE) {
+                g_DebugLog("[FORGE-TAB] ESC pressed, calling CloseWindow()");
+                KUiComItem::CloseWindow();
+                return 1;
+            }
+            break;
         default:
             return KWndImage::WndProc(uMsg, uParam, nParam);
     }
@@ -2247,6 +2301,7 @@ void KUiForge::CleanItem() {
 
 KUiEnchaseTim::KUiEnchaseTim() {
     m_nStatus = STATUS_WAITING_MATERIALS;
+    m_EffectTime = 0;  // Initialize effect timer
 }
 
 void KUiEnchaseTim::PaintWindow() {
@@ -2458,6 +2513,14 @@ int KUiEnchaseTim::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                 g_DebugLog("[ENCHASE] Starting enchase effect, boxes disabled");
             }
             break;
+        case WM_KEYDOWN:
+            g_DebugLog("[ENCHASE-TAB] WM_KEYDOWN received: uParam=%d (VK_ESCAPE=%d)", uParam, VK_ESCAPE);
+            if (uParam == VK_ESCAPE) {
+                g_DebugLog("[ENCHASE-TAB] ESC pressed, calling CloseWindow()");
+                KUiComItem::CloseWindow();
+                return 1;
+            }
+            break;
         default:
             return KWndImage::WndProc(uMsg, uParam, nParam);
     }
@@ -2612,7 +2675,9 @@ void KUiEnchaseTim::UpdateItem(KUiDraggedObject *pItem, int bAdd) {
 }
 
 void KUiEnchaseTim::CleanItem() {
-    m_BigBox.Clear();
+    // KEEP BigBox - player needs to manually retrieve enchased purple item
+    // Only clear material boxes (Box1=Huyen Tinh, Box2=Khoang thach)
+    // m_BigBox.Clear();  // REMOVED - keep purple item visible in BigBox
     m_Box1.Clear();
     m_Box2.Clear();
     m_ItemBox.Clear();
@@ -2673,38 +2738,83 @@ KUiAtlas::KUiAtlas() {
 }
 
 // Animation frame update - called every frame to handle enchase effect
+// FIXED: Now follows Upgrade tab pattern - uses EffectTime counter
 void KUiEnchaseTim::Breathe() {
+    // START EFFECT: Show sprites and begin animation
     if (m_nStatus == STATUS_BEGIN_TREMBLE) {
-        // Show all 3 effects (BigBox, Box1, Box2)
         m_TrembleEffect1.Show();
         m_TrembleEffect1.SetFrame(0);
         m_TrembleEffect2.Show();
         m_TrembleEffect2.SetFrame(0);
         m_TrembleEffect3.Show();
         m_TrembleEffect3.SetFrame(0);
+
+        m_EffectTime = 1;  // Start counting from 1 (like Upgrade tab)
         m_nStatus = STATUS_TREMBLING;
-        g_DebugLog("[ENCHASE] Started enchase effect animation on all 3 boxes");
-    } else if (m_nStatus == STATUS_TREMBLING) {
-        if (!PlayEffect()) {
-            m_nStatus = STATUS_CHANGING_ITEM;
+        g_DebugLog("[ENCHASE] Effect started, EffectTime=1");
+    }
+
+    // ANIMATE: Advance frames and increment time counter
+    if (m_nStatus == STATUS_TREMBLING) {
+        // Debug: Check if effects are actually visible
+        static bool bFirstLog = true;
+        if (bFirstLog) {
+            int nMax1 = m_TrembleEffect1.GetMaxFrame();
+            int nMax2 = m_TrembleEffect2.GetMaxFrame();
+            int nMax3 = m_TrembleEffect3.GetMaxFrame();
+            int bVis1 = m_TrembleEffect1.IsVisible();
+            int bVis2 = m_TrembleEffect2.IsVisible();
+            int bVis3 = m_TrembleEffect3.IsVisible();
+
+            g_DebugLog("[ENCHASE] Effect check: MaxFrames=%d,%d,%d Visible=%d,%d,%d",
+                nMax1, nMax2, nMax3, bVis1, bVis2, bVis3);
+            bFirstLog = false;
+        }
+
+        // Advance frames - ALWAYS call NextFrame, don't check IsVisible
+        // (IsVisible may return false due to sprite loading issues)
+        m_TrembleEffect1.NextFrame();
+        m_TrembleEffect2.NextFrame();
+        m_TrembleEffect3.NextFrame();
+
+        // Increment time
+        m_EffectTime++;
+
+        // Log every 10 frames
+        if (m_EffectTime % 10 == 0) {
+            int nFrame1 = m_TrembleEffect1.GetCurrentFrame();
+            g_DebugLog("[ENCHASE] Animating: Frame %d, EffectTime=%d", nFrame1, m_EffectTime);
+        }
+
+        // CRITICAL: Run effect for at least 55 frames (matching Upgrade/Forge timing)
+        // This ensures effect is visible even if sprites load slowly
+        if (m_EffectTime >= 55) {
+            // STOP EFFECT: Hide sprites, clear shadow boxes, send request
             m_TrembleEffect1.Hide();
             m_TrembleEffect2.Hide();
             m_TrembleEffect3.Hide();
-            g_DebugLog("[ENCHASE] Animation finished, hiding all effects");
+
+            // Clear material box shadows (server already deleted items)
+            m_Box1.Clear();
+            m_Box2.Clear();
+            g_DebugLog("[ENCHASE] Effect stopped at frame %d, material boxes cleared", m_EffectTime);
+
+            // Send enchase request to server
+            UpdateResult();
+
+            // Reset for next operation
+            m_EffectTime = 0;
+            m_nStatus = STATUS_WAITING_MATERIALS;
+            bFirstLog = true;  // Reset for next animation
+
+            // Re-enable boxes
+            m_BigBox.EnablePickPut(true);
+            m_Box1.EnablePickPut(true);
+            m_Box2.EnablePickPut(true);
+            m_ItemBox.EnablePickPut(true);
+
+            g_DebugLog("[ENCHASE] Ready for next enchase");
         }
-    } else if (m_nStatus == STATUS_CHANGING_ITEM) {
-        UpdateResult();
-        m_nStatus = STATUS_FINISH;
-        g_DebugLog("[ENCHASE] Breathe: Set status to STATUS_FINISH");
-    } else if (m_nStatus == STATUS_FINISH) {
-        // Reset to waiting state for next enchase
-        m_nStatus = STATUS_WAITING_MATERIALS;
-        // Re-enable boxes for next operation
-        m_BigBox.EnablePickPut(true);
-        m_Box1.EnablePickPut(true);
-        m_Box2.EnablePickPut(true);
-        m_ItemBox.EnablePickPut(true);
-        g_DebugLog("[ENCHASE] Breathe: Reset status to STATUS_WAITING_MATERIALS, boxes re-enabled");
     }
 }
 
@@ -2782,10 +2892,14 @@ void KUiEnchaseTim::UpdateResult() {
         g_DebugLog("[ENCHASE] ERROR: g_pCoreShell is NULL!");
     }
 
-    // Clear all boxes after sending request
-    CleanItem();
-    g_DebugLog("[ENCHASE] Boxes cleared after enchase request");
+    // CRITICAL FIX: DO NOT call CleanItem() here!
+    // Server will modify the purple item in BuildBox and send s2cSyncPurpleItem
+    // which will automatically update the item display in BigBox.
+    // Calling CleanItem() here causes the item to disappear before server response.
+    // Materials (Box1, Box2) will be cleared by server when it deletes them.
 
+    // Wait for server to send updated purple item via s2cSyncPurpleItem
+    g_DebugLog("[ENCHASE] Waiting for server to sync updated purple item");
     g_DebugLog("[ENCHASE] UpdateResult complete");
 }
 
@@ -2794,6 +2908,18 @@ void KUiAtlas::PaintWindow() {
 }
 
 int KUiAtlas::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
+    switch (uMsg) {
+        case WM_KEYDOWN:
+            g_DebugLog("[ATLAS-TAB] WM_KEYDOWN received: uParam=%d (VK_ESCAPE=%d)", uParam, VK_ESCAPE);
+            if (uParam == VK_ESCAPE) {
+                g_DebugLog("[ATLAS-TAB] ESC pressed, calling CloseWindow()");
+                KUiComItem::CloseWindow();
+                return 1;
+            }
+            break;
+        default:
+            return KWndImage::WndProc(uMsg, uParam, nParam);
+    }
     return 1;
 }
 
