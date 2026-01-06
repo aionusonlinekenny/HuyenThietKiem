@@ -1,11 +1,15 @@
--- NPC: Upgrade Master - NEW VERSION (no Include error)
+-- NPC: Upgrade Master - NEW VERSION (with SayImage NPC avatar)
+-- ImageKey 40 = enemy169_st.spr
+
 function main(NpcIndex)
-    local tbSay = {
+    SayImage(
+        "Cao thu ren duc: Ta co the giup nguoi nang cap tung thuoc tinh cua trang bi xanh!",
+        "10/20/40",  -- ImageKey 40 = enemy169_st.spr
+        3,
         "Nang cap thuoc tinh trang bi xanh/OpenUpgradeUI",
         "Huong dan/ShowGuide",
-        "Thoat/no",
-    }
-    Say("Cao thu ren duc: Ta co the giup nguoi nang cap thuoc tinh trang bi xanh!", getn(tbSay), tbSay)
+        "Thoat/no"
+    )
 end
 
 function OpenUpgradeUI()
@@ -85,7 +89,20 @@ function ExeUpgradeAttrib()
 
     nCount = nCount + 1
     tbOpts[nCount] = "Huy/no"
-    Say("Chon thuoc tinh:", getn(tbOpts), tbOpts)
+
+    -- Use SayImage for attribute selection menu
+    SayImage(
+        "Chon thuoc tinh muon nang cap:",
+        "10/20/40",  -- ImageKey 40 = enemy169_st.spr
+        getn(tbOpts),
+        tbOpts[1] or "",
+        tbOpts[2] or "",
+        tbOpts[3] or "",
+        tbOpts[4] or "",
+        tbOpts[5] or "",
+        tbOpts[6] or "",
+        tbOpts[7] or ""
+    )
 end
 
 function PerformUpgrade(nSlot)
