@@ -4,7 +4,10 @@
 -- Date: 2025-12-21
 -----------------------------------------------------------------
 
-Include("\\script\\lib\\TaskLib.lua")
+-- NOTE: Removed Include("\\script\\lib\\TaskLib.lua") because:
+-- 1. Script doesn't use any functions from TaskLib
+-- 2. Include() may not be available in NPC script context
+-- 3. Caused "attempt to call a nil value" error
 
 -- ------------------------------------------------------------
 -- Configuration - Item IDs
