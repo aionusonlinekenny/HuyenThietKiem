@@ -276,7 +276,7 @@ function PerformUpgrade(nAttribSlot)
     end
 
     -- IMPORTANT: Deduct money and xu BEFORE upgrade attempt
-    Spend(UPGRADE_COST_MONEY, "Nang cap trang bi xanh")
+    Pay(UPGRADE_COST_MONEY)  -- Pay() deducts money
     DelTaskItem(19, UPGRADE_COST_XU)  -- Delete xu (task item ID 19)
 
     -- Use FIXED upgrade percentage
