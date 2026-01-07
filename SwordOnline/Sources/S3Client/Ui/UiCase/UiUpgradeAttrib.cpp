@@ -634,19 +634,11 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
  *********************************************************************/
 void KUiUpgradeAttrib::OnUpgrade()
 {
-	// Check if player has selected an attribute
-	if (m_nSelectedAttrib < 0)
-	{
-		g_DebugLog("[CLIENT] OnUpgrade() - No attribute selected!");
-		KUiMsgCentrePad::SystemMessageArrival("Ban chua chon thuoc tinh nao!", strlen("Ban chua chon thuoc tinh nao!"));
-		return;
-	}
+	// Simply call Lua script - Lua will handle attribute selection
+	char szFunc[32];
+	sprintf(szFunc, "ExeUpgradeAttrib");
 
-	char szFunc[64];
-	// Send selected attribute index to Lua
-	sprintf(szFunc, "PerformUpgrade#%d", m_nSelectedAttrib);
-
-	g_DebugLog("[CLIENT] OnUpgrade() - Calling script: %s (attribute slot %d)", szFunc, m_nSelectedAttrib);
+	g_DebugLog("[CLIENT] OnUpgrade() - Calling script: %s", szFunc);
 
 	if (g_pCoreShell->GetLixian())
 	{
@@ -657,7 +649,6 @@ void KUiUpgradeAttrib::OnUpgrade()
 	else
 	{
 		g_DebugLog("[CLIENT] ERROR: GetLixian() = FALSE! Cannot execute script!");
-		g_DebugLog("[CLIENT] This usually means player is in offline/test mode");
 	}
 }
 
@@ -867,23 +858,23 @@ void KUiUpgradeAttrib::DisplayAttributeList()
 
 	// Show buttons for each attribute
 	char szLabel[128];
-	for (int i = 0; i < m_nAttributeCount; i++)
+	for (int j = 0; j < m_nAttributeCount; j++)
 	{
-		if (m_Attributes[i].bCanUpgrade)
+		if (m_Attributes[j].bCanUpgrade)
 		{
-			sprintf(szLabel, "%d -> %d (+10%%)", 
-				m_Attributes[i].nValue, m_Attributes[i].nNewValue);
+			sprintf(szLabel, "%d -> %d (+10%%)",
+				m_Attributes[j].nValue, m_Attributes[j].nNewValue);
 		}
 		else
 		{
-			sprintf(szLabel, "%d (MAX)", m_Attributes[i].nValue);
+			sprintf(szLabel, "%d (MAX)", m_Attributes[j].nValue);
 		}
 
-		m_BtnAttrib[i].SetLabel(szLabel);
-		m_BtnAttrib[i].Show();
-		m_BtnAttrib[i].Enable(m_Attributes[i].bCanUpgrade ? 1 : 0);
+		m_BtnAttrib[j].SetLabel(szLabel);
+		m_BtnAttrib[j].Show();
+		m_BtnAttrib[j].Enable(m_Attributes[j].bCanUpgrade ? 1 : 0);
 
-		g_DebugLog("[UPGRADE-ATTRIB] Button %d: %s", i, szLabel);
+		g_DebugLog("[UPGRADE-ATTRIB] Button %d: %s", j, szLabel);
 	}
 
 	m_TextGuide.SetText("Chon thuoc tinh muon nang cap:");
