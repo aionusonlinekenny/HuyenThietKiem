@@ -241,30 +241,37 @@ BOOL KUiTrembleItem::EnoughItemToGo()
 	char szWarning[128];
 	int nCount = 0;
 	KUiDraggedObject pObj;
+
+	// Count all items in slots (equipment + materials)
 	for (int i = 0; i < _ITEM_TREMBLE_COUNT - 1; i++)
 	{
 		pObj.uId = 0;
 		m_TrembleBox[i].GetObject(pObj);
 		if (pObj.uId > 0)
-			nCount += 1;		
+			nCount += 1;
 	}
 
+	// Minimum: need at least 2 items (equipment + 1 material)
 	if (nCount < 2)
 	{
 		strcpy(szWarning,ArrayReturnInfo[1]);
-		nLen = strlen(szWarning);					
+		nLen = strlen(szWarning);
 		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
-		return FALSE;	
+		return FALSE;
 	}
-	
-	if (nCount > 2)
+
+	// Maximum: allow up to 4 items (equipment + 3 materials/crystals)
+	// Changed from 2 to 4 to allow 3 types of crystals
+	if (nCount > 4)
 	{
 		strcpy(szWarning,ArrayReturnInfo[2]);
-		nLen = strlen(szWarning);					
+		nLen = strlen(szWarning);
 		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
-		return FALSE;		
+		return FALSE;
 	}
-	return TRUE;	
+
+	g_DebugLog("[TREMBLE] EnoughItemToGo: %d items placed (valid: 2-4 items)", nCount);
+	return TRUE;
 }
 
 BOOL KUiTrembleItem::EnoughItemPickDrop(KWndWindow* pWnd, int nIndex)
