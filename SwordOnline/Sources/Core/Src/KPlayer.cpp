@@ -8811,22 +8811,42 @@ void KPlayer::ProcessRemoveEnhance()
 //	
 
 void	KPlayer::ExeScriptButton(BYTE* pProtocol)
-{	
-		EXE_SCRIPT_COMMAND*	 pExe = (EXE_SCRIPT_COMMAND*)pProtocol;
+{
+	EXE_SCRIPT_COMMAND*	 pExe = (EXE_SCRIPT_COMMAND*)pProtocol;
+
+	g_DebugLog("[SERVER EXESCRIPT] ExeScriptButton called for player %d", m_nPlayerIndex);
 
 	if(!pExe)
+	{
+		g_DebugLog("[SERVER EXESCRIPT] ERROR: pExe is NULL!");
 		return;
+	}
 	if(!pExe->m_btExeId)
+	{
+		g_DebugLog("[SERVER EXESCRIPT] ERROR: m_btExeId is 0!");
 		return;
+	}
+
+	g_DebugLog("[SERVER EXESCRIPT] m_btExeId=%d, m_szContent='%s'", pExe->m_btExeId, pExe->m_szContent ? pExe->m_szContent : "NULL");
+
 	//Lixian by kinnox;
 	BOOL nRet = FALSE;
 	int nMapLimited = SubWorld[Npc[m_nIndex].m_SubWorldIndex].m_SubWorldID;
+	g_DebugLog("[SERVER EXESCRIPT] MapID=%d, FightMode=%d", nMapLimited, Npc[m_nIndex].m_FightMode);
+
 	if (!Npc[m_nIndex].m_FightMode && (nMapLimited == 11 || nMapLimited == 1 ||
 		nMapLimited == 37 || nMapLimited == 78 || nMapLimited == 176 ||
-		nMapLimited == 162 || nMapLimited == 80 || nMapLimited == 53) ) //mess errror by kinnox;		
+		nMapLimited == 162 || nMapLimited == 80 || nMapLimited == 53) ) //mess errror by kinnox;
 	{
 		nRet = TRUE;
-	}	
+		g_DebugLog("[SERVER EXESCRIPT] Map check PASSED (nRet=TRUE)");
+	}
+	else
+	{
+		g_DebugLog("[SERVER EXESCRIPT] Map check FAILED (nRet=FALSE)");
+	}
+
+	g_DebugLog("[SERVER EXESCRIPT] Entering switch(m_btExeId=%d)", pExe->m_btExeId);
 	switch(pExe->m_btExeId)
 	{
 	case 1:
@@ -8910,20 +8930,31 @@ void	KPlayer::ExeScriptButton(BYTE* pProtocol)
 			this->ExecuteScript(szScriptFile, pExe->m_szContent, pId);
 		}
 		break;
-	case 4: 
+	case 4:
 		{
+			g_DebugLog("[SERVER EXESCRIPT] Entered case 4 (upgrade system)");
+
 			if(!pExe->m_szContent || !pExe->m_szContent[0])
-				break;		
-				
+			{
+				g_DebugLog("[SERVER EXESCRIPT] ERROR: m_szContent is empty!");
+				break;
+			}
+
+			g_DebugLog("[SERVER EXESCRIPT] m_szContent = '%s'", pExe->m_szContent);
+
 			if (!nRet)
 			{
+				g_DebugLog("[SERVER EXESCRIPT] ERROR: Map check failed! Sending OFFLINE_MARKET message to client");
 				SHOW_MSG_SYNC	sMsg;
 				sMsg.ProtocolType = s2c_msgshow;
 				sMsg.m_wMsgID = enumMSG_ID_OFFLINE_MARKET;
 				sMsg.m_wLength = sizeof(SHOW_MSG_SYNC) - 1 - sizeof(LPVOID);
 				g_pServer->PackDataToClient(m_nNetConnectIdx, &sMsg, sMsg.m_wLength + 1);
-				break;	
+				break;
 			}
+
+			g_DebugLog("[SERVER EXESCRIPT] Map check passed, parsing function name");
+
 			char szScriptFile[64];
 			char* pId = NULL;
 
@@ -9002,8 +9033,11 @@ void	KPlayer::ExeScriptButton(BYTE* pProtocol)
 		}
 		break;
 	default:
+		g_DebugLog("[SERVER EXESCRIPT] WARNING: Unhandled m_btExeId=%d! No case matched.", pExe->m_btExeId);
 		break;
 	}
+
+	g_DebugLog("[SERVER EXESCRIPT] ExeScriptButton completed");
 }
 #endif
 
