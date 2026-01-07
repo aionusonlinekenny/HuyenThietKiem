@@ -146,7 +146,7 @@ end
 function ExeUpgradeAttrib()
     -- DEBUG: Function entry
     Msg2Player("DEBUG: ExeUpgradeAttrib called")
-    WriteLog("[LUA-UPGRADE] ExeUpgradeAttrib() called")
+    -- WriteLog removed (function not available)
 
     local nPos = 15  -- pos_builditem (same container as Tremble)
 
@@ -156,26 +156,26 @@ function ExeUpgradeAttrib()
     -- Validate equipment exists
     if not nEquipIdx or nEquipIdx <= 0 then
         Talk(1, "", "Chua dat trang bi vao!")
-        WriteLog("[LUA-UPGRADE] No equipment in slot 0")
+    -- WriteLog removed (function not available)
         return
     end
 
-    WriteLog("[LUA-UPGRADE] Equipment index: "..nEquipIdx)
+    -- WriteLog removed (function not available)
 
     -- Get equipment info
     local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
 
     if not nGenre then
         Talk(1, "", "Loi: Khong doc duoc thong tin trang bi!")
-        WriteLog("[LUA-UPGRADE] GetItemProp failed")
+    -- WriteLog removed (function not available)
         return
     end
 
-    WriteLog("[LUA-UPGRADE] Equipment: genre="..nGenre..", detail="..nDetail..", luck="..nLuck)
+    -- WriteLog removed (function not available)
 
     -- Check if equipment is blue (genre 0 with luck < 1000000000)
     if nGenre ~= 0 then
-        WriteLog("[LUA-UPGRADE] Invalid genre: "..nGenre.." (must be 0 for equipment)")
+    -- WriteLog removed (function not available)
         Talk(1, "", "Chi co the nang cap trang bi xanh!")
         return
     end
@@ -319,19 +319,19 @@ function PerformUpgrade(nAttribSlot)
 
     -- IMPORTANT: Delete materials FIRST (before upgrade attempt)
     -- Minerals and lucky stone are consumed regardless of upgrade success
-    WriteLog("[LUA-UPGRADE] Consuming materials...")
+    -- WriteLog removed (function not available)
     local nMineralsUsed = 0
     for i = 1, 5 do
         local nItemIdx = GetPOItem(nPos, i)
         if nItemIdx and nItemIdx > 0 then
             DelItemByIndex(nItemIdx)
             nMineralsUsed = nMineralsUsed + 1
-            WriteLog("[LUA-UPGRADE] Deleted material in slot "..i)
+    -- WriteLog removed (function not available)
         end
     end
 
     -- IMPORTANT: Deduct money and xu BEFORE upgrade attempt
-    WriteLog("[LUA-UPGRADE] Deducting costs: "..UPGRADE_COST_MONEY.." luong, "..UPGRADE_COST_XU.." xu")
+    -- WriteLog removed (function not available)
     Spend(UPGRADE_COST_MONEY, "Nang cap trang bi xanh")
     DelTaskItem(19, UPGRADE_COST_XU)  -- Delete xu (task item ID 19)
 
@@ -345,12 +345,12 @@ function PerformUpgrade(nAttribSlot)
     if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
     -- Now perform upgrade (materials and costs already paid)
-    WriteLog("[LUA-UPGRADE] Calling UpgradeItemAttributes...")
+    -- WriteLog removed (function not available)
     local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, nPos)
 
     if nNewItemIdx == 0 then
         Talk(1, "", "Loi: Khong the nang cap! (Luu y: Vat lieu va tien da bi tru)")
-        WriteLog("[LUA-UPGRADE] UpgradeItemAttributes failed")
+    -- WriteLog removed (function not available)
         return
     end
 
@@ -358,7 +358,7 @@ function PerformUpgrade(nAttribSlot)
     local szAttribName = GetAttribName(nAttribType)
     local szMsg = "Nang cap thanh cong!\n" .. szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)\nDa tru: "..nMineralsUsed.." khoang thach, 1,000,000 luong + 2 xu"
     Talk(1, "", szMsg)
-    WriteLog("[LUA-UPGRADE] Upgrade successful: "..nOldValue.." -> "..nNewValue)
+    -- WriteLog removed (function not available)
 end
 
 -- ------------------------------------------------------------
