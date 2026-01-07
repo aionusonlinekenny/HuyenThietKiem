@@ -13,7 +13,20 @@ Function    : Upgrade equipment magic attributes
 #include "../../../core/src/gamedatadef.h"
 #include "../Elem/WndShowAnimate.h"
 
-#define _UPGRADE_ATTRIB_SLOT_COUNT 3
+// Total slots: 1 equipment + 4 minerals + 1 lucky stone = 6
+#define _UPGRADE_ATTRIB_SLOT_COUNT 6
+
+// Slot indices
+#define SLOT_EQUIPMENT  0  // Blue equipment to upgrade
+#define SLOT_MINERAL1   1  // Special mineral type 1 (3 levels)
+#define SLOT_MINERAL2   2  // Special mineral type 2 (3 levels)
+#define SLOT_MINERAL3   3  // Special mineral type 3 (3 levels)
+#define SLOT_MINERAL4   4  // Special mineral type 4 (3 levels)
+#define SLOT_LUCKY_STONE 5 // Lucky stone for success boost
+
+// Requirements
+#define UPGRADE_COST_MONEY  1000000  // 100 vạn lượng
+#define UPGRADE_COST_XU     2        // 2 xu
 
 struct KUiObjAtRegion;
 
@@ -49,6 +62,11 @@ private:
 	void          UpdatePickPut(bool bLock);
 	BOOL          ValidateItemPickDrop(KWndWindow* pWnd, int nIndex);
 	BOOL          ValidateUpgradeReady();
+
+	// NEW: Success rate calculation
+	int           CalculateSuccessRate();
+	void          UpdateSuccessRateDisplay();
+	int           GetMineralLevel(int nItemIndex);  // Get mineral level (1-3)
 
 private:
 	KWndObjectBox      m_UpgradeSlot[_UPGRADE_ATTRIB_SLOT_COUNT]; // Item slots

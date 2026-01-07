@@ -37,9 +37,12 @@ static struct UA_CTRL_MAP
 
 CtrlItemMap[_UPGRADE_ATTRIB_SLOT_COUNT] =
 {
-	{ UIEP_BUILDITEM1, "Equipment" },  // Equipment slot
-	{ UIEP_BUILDITEM2, "Material" },   // Material slot
-	{ UIEP_BUILDITEM3, "Spare" },      // Spare slot (future use)
+	{ UIEP_BUILDITEM1, "Equipment" },   // Slot 0: Blue equipment to upgrade
+	{ UIEP_BUILDITEM2, "Mineral1" },    // Slot 1: Special mineral type 1 (level 1-3)
+	{ UIEP_BUILDITEM3, "Mineral2" },    // Slot 2: Special mineral type 2 (level 1-3)
+	{ UIEP_BUILDITEM4, "Mineral3" },    // Slot 3: Special mineral type 3 (level 1-3)
+	{ UIEP_BUILDITEM5, "Mineral4" },    // Slot 4: Special mineral type 4 (level 1-3)
+	{ UIEP_BUILDITEM6, "LuckyStone" },  // Slot 5: Lucky stone for success boost
 };
 
 /*********************************************************************
@@ -285,35 +288,58 @@ BOOL KUiUpgradeAttrib::ValidateUpgradeReady()
 	char szWarning[128];
 	KUiDraggedObject pObj;
 
-	// Check equipment slot
+	// Check equipment slot (mandatory)
 	pObj.uId = 0;
-	m_UpgradeSlot[0].GetObject(pObj);
+	m_UpgradeSlot[SLOT_EQUIPMENT].GetObject(pObj);
 	if (pObj.uId == 0)
 	{
-		strcpy(szWarning, "Ch�a ��t trang bi v�o!");
+		strcpy(szWarning, "Chua dat trang bi vao!");
 		nLen = strlen(szWarning);
 		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
 		return FALSE;
 	}
 
-	// Check material slot
-	pObj.uId = 0;
-	m_UpgradeSlot[1].GetObject(pObj);
-	if (pObj.uId == 0)
+	// Check if at least one mineral is placed (not mandatory but recommended)
+	// User can proceed without minerals but success rate will be low
+	int nMineralCount = 0;
+	for (int i = SLOT_MINERAL1; i <= SLOT_MINERAL4; i++)
 	{
-		strcpy(szWarning, "Ch�a ��t �� n�ng c�p v�o.");
-		nLen = strlen(szWarning);
-		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
-		return FALSE;
+		pObj.uId = 0;
+		m_UpgradeSlot[i].GetObject(pObj);
+		if (pObj.uId > 0)
+			nMineralCount++;
 	}
 
-	// Check attribute selection (skip this check for now - will use first attribute)
-	// User can select attributes in future version
+	// Check attribute selection
 	if (m_nSelectedAttrib < 0)
 	{
-		m_nSelectedAttrib = 0;  // Default to first attribute
+		strcpy(szWarning, m_szReturnInfo[5]);  // "Chua chon thuoc tinh can nang cap"
+		nLen = strlen(szWarning);
+		KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
+		return FALSE;
 	}
 
+	// Check money and xu requirements
+	if (g_pCoreShell)
+	{
+		// Get player's current money
+		int nMoney = g_pCoreShell->GetGameData(GDI_PLAYER_HOLD_MONEY, 0, 0);
+		int nXu = g_pCoreShell->GetGameData(GDI_PLAYER_HOLD_XU, 0, 0);
+
+		g_DebugLog("[UPGRADE-ATTRIB] Player money: %d, xu: %d", nMoney, nXu);
+		g_DebugLog("[UPGRADE-ATTRIB] Required: %d money, %d xu", UPGRADE_COST_MONEY, UPGRADE_COST_XU);
+
+		if (nMoney < UPGRADE_COST_MONEY || nXu < UPGRADE_COST_XU)
+		{
+			strcpy(szWarning, m_szReturnInfo[6]);  // "Khong du tien!"
+			nLen = strlen(szWarning);
+			KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
+			g_DebugLog("[UPGRADE-ATTRIB] Validation failed: insufficient funds");
+			return FALSE;
+		}
+	}
+
+	g_DebugLog("[UPGRADE-ATTRIB] Validation passed! Minerals: %d", nMineralCount);
 	return TRUE;
 }
 
@@ -322,16 +348,56 @@ BOOL KUiUpgradeAttrib::ValidateUpgradeReady()
  *********************************************************************/
 BOOL KUiUpgradeAttrib::ValidateItemPickDrop(KWndWindow* pWnd, int nIndex)
 {
-	// Slot 0: Only blue equipment
-	if (pWnd == &m_UpgradeSlot[0])
+	if (!g_pCoreShell)
+		return FALSE;
+
+	int nGenre = g_pCoreShell->GetGenreItem(nIndex);
+	int nDetail = g_pCoreShell->GetDetailItem(nIndex);
+	int nParticular = g_pCoreShell->GetParticularItem(nIndex);
+	char szWarning[128];
+	int nLen;
+
+	// Slot 0: Only blue equipment (genre = item_equip, quality = blue)
+	if (pWnd == &m_UpgradeSlot[SLOT_EQUIPMENT])
 	{
-		// Will add validation for blue equipment here
+		if (nGenre != item_equip)
+		{
+			strcpy(szWarning, m_szReturnInfo[3]);  // "O nay chi dat trang bi xanh vao"
+			nLen = strlen(szWarning);
+			KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
+			return FALSE;
+		}
+		// TODO: Add blue quality check when item system is implemented
 		return TRUE;
 	}
-	// Slot 1: Only upgrade materials
-	else if (pWnd == &m_UpgradeSlot[1])
+	// Slots 1-4: Mineral slots (genre = item_task, detail = special mineral type)
+	else if (pWnd == &m_UpgradeSlot[SLOT_MINERAL1] ||
+		     pWnd == &m_UpgradeSlot[SLOT_MINERAL2] ||
+		     pWnd == &m_UpgradeSlot[SLOT_MINERAL3] ||
+		     pWnd == &m_UpgradeSlot[SLOT_MINERAL4])
 	{
-		// Will add validation for material items here
+		// TODO: Add proper mineral validation when items are created
+		// For now, allow task items (minerals will be created as task items)
+		if (nGenre != item_task)
+		{
+			strcpy(szWarning, m_szReturnInfo[4]);  // "O nay chi dat Khoang thach dac biet"
+			nLen = strlen(szWarning);
+			KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
+			return FALSE;
+		}
+		return TRUE;
+	}
+	// Slot 5: Lucky stone
+	else if (pWnd == &m_UpgradeSlot[SLOT_LUCKY_STONE])
+	{
+		// TODO: Add proper lucky stone validation when item is created
+		if (nGenre != item_task)
+		{
+			strcpy(szWarning, m_szReturnInfo[7]);  // "O nay chi dat Da May Man"
+			nLen = strlen(szWarning);
+			KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
+			return FALSE;
+		}
 		return TRUE;
 	}
 
@@ -519,6 +585,9 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
 			}
 		}
 		g_DebugLog("[CLIENT] UpdateItem() completed");
+
+		// Update success rate display after item is added/removed
+		UpdateSuccessRateDisplay();
 	}
 	else
 	{
@@ -575,4 +644,95 @@ void KUiUpgradeAttrib::UpdatePickPut(bool bLock)
 
 	m_BtnUpgrade.Enable(bLock);
 	m_BtnClose.Enable(bLock);
+}
+/*********************************************************************
+ * Get Mineral Level (1-3)
+ * Returns the level of a mineral item based on its item properties
+ *********************************************************************/
+int KUiUpgradeAttrib::GetMineralLevel(int nItemIndex)
+{
+	if (!g_pCoreShell || nItemIndex == 0)
+		return 0;
+
+	// TODO: Implement this when items are created
+	// For now, return level based on item detail or particular value
+	// Example: Could use GetParticularItem() to determine level
+	int nDetail = g_pCoreShell->GetDetailItem(nItemIndex);
+	int nParticular = g_pCoreShell->GetParticularItem(nItemIndex);
+
+	// Placeholder logic - will need to update when actual minerals are created
+	// Assume: particular value 1,2,3 = mineral levels
+	if (nParticular >= 1 && nParticular <= 3)
+		return nParticular;
+
+	return 1;  // Default to level 1
+}
+
+/*********************************************************************
+ * Calculate Success Rate
+ * Base rate + bonuses from minerals (level-based) + lucky stone
+ *********************************************************************/
+int KUiUpgradeAttrib::CalculateSuccessRate()
+{
+	int nSuccessRate = 30;  // Base success rate: 30%
+	KUiDraggedObject obj;
+
+	g_DebugLog("[UPGRADE-ATTRIB] Calculating success rate...");
+
+	// Check each mineral slot (slots 1-4)
+	for (int i = SLOT_MINERAL1; i <= SLOT_MINERAL4; i++)
+	{
+		obj.uId = 0;
+		m_UpgradeSlot[i].GetObject(obj);
+		if (obj.uId > 0)
+		{
+			int nLevel = GetMineralLevel(obj.uId);
+			int nBonus = 0;
+
+			// Level-based bonus:
+			// Level 1: +5%
+			// Level 2: +10%
+			// Level 3: +15%
+			switch (nLevel)
+			{
+			case 1: nBonus = 5; break;
+			case 2: nBonus = 10; break;
+			case 3: nBonus = 15; break;
+			default: nBonus = 0; break;
+			}
+
+			nSuccessRate += nBonus;
+			g_DebugLog("[UPGRADE-ATTRIB] Mineral slot %d: level %d, bonus +%d%%", i, nLevel, nBonus);
+		}
+	}
+
+	// Check lucky stone slot (slot 5)
+	obj.uId = 0;
+	m_UpgradeSlot[SLOT_LUCKY_STONE].GetObject(obj);
+	if (obj.uId > 0)
+	{
+		int nLuckyBonus = 10;  // Lucky stone adds +10%
+		nSuccessRate += nLuckyBonus;
+		g_DebugLog("[UPGRADE-ATTRIB] Lucky stone present, bonus +%d%%", nLuckyBonus);
+	}
+
+	// Cap at 100%
+	if (nSuccessRate > 100)
+		nSuccessRate = 100;
+
+	g_DebugLog("[UPGRADE-ATTRIB] Total success rate: %d%%", nSuccessRate);
+	return nSuccessRate;
+}
+
+/*********************************************************************
+ * Update Success Rate Display
+ * Updates the percentage text whenever items are added/removed
+ *********************************************************************/
+void KUiUpgradeAttrib::UpdateSuccessRateDisplay()
+{
+	int nRate = CalculateSuccessRate();
+	char szText[128];
+	sprintf(szText, "Ty le thanh cong: %d%%", nRate);
+	m_TextPercent.SetText(szText);
+	g_DebugLog("[UPGRADE-ATTRIB] Updated success rate display: %s", szText);
 }
