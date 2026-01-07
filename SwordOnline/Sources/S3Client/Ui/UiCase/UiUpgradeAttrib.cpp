@@ -71,16 +71,22 @@ KUiUpgradeAttrib* KUiUpgradeAttrib::OpenWindow()
 		g_DebugLog("[CLIENT] Playing open sound");
 		UiSoundPlay(UI_SI_WND_OPENCLOSE);
 
+		g_DebugLog("[CLIENT] Calling BringToTop() before Show()");
+		m_pSelf->BringToTop();
+		g_DebugLog("[CLIENT] Calling Show()");
+		m_pSelf->Show();
+
 		g_DebugLog("[CLIENT] Opening KUiItem if needed");
 		if (!KUiItem::GetIfVisible())
 			KUiItem::OpenWindow();
 
+		// CRITICAL: Bring upgrade UI to top AFTER opening inventory
+		// This ensures upgrade UI receives keyboard input (like ESC) before inventory
+		m_pSelf->BringToTop();
+		g_DebugLog("[UPGRADE-ATTRIB] BringToTop called after inventory open to receive ESC key");
+
 		g_DebugLog("[CLIENT] Calling UpdateData()");
 		m_pSelf->UpdateData();
-		g_DebugLog("[CLIENT] Calling BringToTop()");
-		m_pSelf->BringToTop();
-		g_DebugLog("[CLIENT] Calling Show()");
-		m_pSelf->Show();
 		g_DebugLog("[CLIENT] Setting input handling");
 		Wnd_GameSpaceHandleInput(false);
 		g_DebugLog("[CLIENT] OpenWindow() completed successfully");
