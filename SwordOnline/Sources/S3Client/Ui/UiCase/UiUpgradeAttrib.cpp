@@ -233,46 +233,36 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 	switch (uMsg)
 	{
 	case WND_N_BUTTON_CLICK:
-		// Check if it's an attribute selection button
-		for (int i = 0; i < 6; i++)
 		{
-			if (uParam == (unsigned int)&m_BtnAttrib[i])
-			{
-				g_DebugLog("[CLIENT] Attribute button %d clicked", i);
-				OnSelectAttribute(i);
-				return 1;
-			}
-		}
-
-		if (uParam == (unsigned int)&m_BtnUpgrade)
-		{
-			g_DebugLog("[CLIENT] Upgrade button clicked");
-			if (ValidateUpgradeReady())
-			{
-				g_DebugLog("[CLIENT] Validation passed, showing confirmation dialog");
-				if (m_EffectTime) break;
-				UIMessageBox("B�n c� ch�c mu�n n�ng c�p trang b� n�y?", this, "X�c nh�n", "H�y b�", ISP_DO_EVENT);
-			}
-			else
-			{
-				g_DebugLog("[CLIENT] Validation failed");
-			}
-		}
-		else if (uParam == (unsigned int)&m_BtnClose)
-		{
-			if (m_EffectTime) break;
-			CloseWindow(true);
-		}
-		// NEW: Handle attribute selection button clicks
-		else
-		{
+			// Check if it's an attribute selection button
 			for (int i = 0; i < 6; i++)
 			{
 				if (uParam == (unsigned int)&m_BtnAttrib[i])
 				{
+					g_DebugLog("[CLIENT] Attribute button %d clicked", i);
 					OnSelectAttribute(i);
-					break;
+					return 1;
 				}
+			}
+
+			if (uParam == (unsigned int)&m_BtnUpgrade)
+			{
+				g_DebugLog("[CLIENT] Upgrade button clicked");
+				if (ValidateUpgradeReady())
+				{
+					g_DebugLog("[CLIENT] Validation passed, showing confirmation dialog");
+					if (m_EffectTime) break;
+					UIMessageBox("B�n c� ch�c mu�n n�ng c�p trang b� n�y?", this, "X�c nh�n", "H�y b�", ISP_DO_EVENT);
+				}
+				else
+				{
+					g_DebugLog("[CLIENT] Validation failed");
+				}
+			}
+			else if (uParam == (unsigned int)&m_BtnClose)
+			{
+				if (m_EffectTime) break;
+				CloseWindow(true);
 			}
 		}
 		break;
