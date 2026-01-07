@@ -3,7 +3,7 @@
 -- Functions: Tho ren;
 Include("\\script\\system_config.lua")
 Include("\\script\\upgrade\\tremble_header.lua");
-Include("\\script\\Npc\\upgrade_master_new.lua");  -- Upgrade attributes with minerals
+Include("\\script\\Npc\\upgrade_master.lua");  -- Upgrade attributes with minerals
 BlackSmith = {};
 
 function main(nNpcIdx)
