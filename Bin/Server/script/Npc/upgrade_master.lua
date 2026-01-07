@@ -25,6 +25,13 @@ UPGRADE_FIXED_PERCENT = 10      -- % tang co dinh
 UPGRADE_COST_MONEY = 1000000    -- 100 van luong
 UPGRADE_COST_XU = 2             -- 2 xu (task item ID 19)
 
+-- Success rate settings
+UPGRADE_BASE_SUCCESS_RATE = 30  -- 30% co ban
+MINERAL_LEVEL1_BONUS = 5        -- +5% per level 1 mineral
+MINERAL_LEVEL2_BONUS = 10       -- +10% per level 2 mineral
+MINERAL_LEVEL3_BONUS = 15       -- +15% per level 3 mineral
+LUCKY_STONE_BONUS = 10          -- +10% from lucky stone
+
 -- ------------------------------------------------------------
 -- Validation Helpers (Lua = Game Logic Layer)
 -- ------------------------------------------------------------
@@ -201,8 +208,41 @@ function PerformUpgrade(nAttribSlotStr, _)
 
     Msg2Player("[LUA DEBUG 16] Attribute info retrieved successfully")
 
-    -- IMPORTANT: Delete materials FIRST (before upgrade attempt)
-    -- Minerals and lucky stone are consumed regardless of upgrade success
+    -- STEP 1: Calculate success rate BEFORE deleting materials
+    -- Count minerals and their levels
+    local nSuccessRate = UPGRADE_BASE_SUCCESS_RATE
+    local nMineralCount = 0
+
+    for i = 1, 4 do
+        local nItemIdx = GetPOItem(nPos, i)
+        if nItemIdx and nItemIdx > 0 then
+            local nGenre, nDetail, nParti = GetItemProp(nItemIdx)
+            if nGenre then
+                -- Get mineral level from particular (1/2/3)
+                local nMineralLevel = nParti
+                if nMineralLevel == 1 then
+                    nSuccessRate = nSuccessRate + MINERAL_LEVEL1_BONUS
+                elseif nMineralLevel == 2 then
+                    nSuccessRate = nSuccessRate + MINERAL_LEVEL2_BONUS
+                elseif nMineralLevel == 3 then
+                    nSuccessRate = nSuccessRate + MINERAL_LEVEL3_BONUS
+                end
+                nMineralCount = nMineralCount + 1
+            end
+        end
+    end
+
+    -- Check lucky stone
+    local bHasLuckyStone = 0
+    local nLuckyStoneIdx = GetPOItem(nPos, 5)
+    if nLuckyStoneIdx and nLuckyStoneIdx > 0 then
+        nSuccessRate = nSuccessRate + LUCKY_STONE_BONUS
+        bHasLuckyStone = 1
+    end
+
+    Msg2Player("[LUA DEBUG 17] Success rate calculated: " .. nSuccessRate .. "% (base=" .. UPGRADE_BASE_SUCCESS_RATE .. ", minerals=" .. nMineralCount .. ", lucky=" .. bHasLuckyStone .. ")")
+
+    -- STEP 2: Delete materials and deduct costs (consumed regardless of success)
     local nMineralsUsed = 0
     for i = 1, 5 do
         local nItemIdx = GetPOItem(nPos, i)
@@ -212,11 +252,31 @@ function PerformUpgrade(nAttribSlotStr, _)
         end
     end
 
-    -- IMPORTANT: Deduct money and xu BEFORE upgrade attempt
-    Pay(UPGRADE_COST_MONEY)  -- Pay() deducts money
-    DelTaskItem(19, UPGRADE_COST_XU)  -- Delete xu (task item ID 19)
+    Pay(UPGRADE_COST_MONEY)
+    DelTaskItem(19, UPGRADE_COST_XU)
 
-    -- Use FIXED upgrade percentage
+    -- STEP 3: Random check for success/failure
+    local nRoll = random(1, 100)  -- Random 1-100
+    local bUpgradeSuccess = (nRoll <= nSuccessRate)
+
+    Msg2Player("[LUA DEBUG 18] Random roll: " .. nRoll .. " vs success rate: " .. nSuccessRate .. "% => " .. (bUpgradeSuccess and "SUCCESS" or "FAIL"))
+
+    local szAttribName = GetAttribName(nAttribType)
+
+    if not bUpgradeSuccess then
+        -- FAILURE: Upgrade failed, item remains unchanged
+        Msg2Player("[LUA DEBUG 19] Upgrade FAILED - equipment preserved")
+        local szFailMsg = "<color=red>[THAT BAI]<color> Nang cap that bai!\n" ..
+                          szAttribName .. ": " .. nOldValue .. " (khong doi)\n" ..
+                          "Trang bi giu nguyen, chi mat vat pham.\n" ..
+                          "Da mat: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
+        Talk(1, "", szFailMsg)
+        Msg2Player(szFailMsg)
+        -- Equipment is still in container at pos 15, no need to do anything
+        return
+    end
+
+    -- STEP 4: SUCCESS - Perform actual upgrade
     local nIncreasePercent = UPGRADE_FIXED_PERCENT
 
     -- Calculate new value
@@ -225,26 +285,22 @@ function PerformUpgrade(nAttribSlotStr, _)
     local nNewValue = nOldValue + nIncrease
     if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
-    -- Now perform upgrade (materials and costs already paid)
-    Msg2Player("[LUA DEBUG 17] About to call UpgradeItemAttributes with Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent)
+    Msg2Player("[LUA DEBUG 20] Calling UpgradeItemAttributes with Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent)
     local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, nPos)
-    Msg2Player("[LUA DEBUG 18] UpgradeItemAttributes returned: " .. tostring(nNewItemIdx))
-
-    local szAttribName = GetAttribName(nAttribType)
+    Msg2Player("[LUA DEBUG 21] UpgradeItemAttributes returned: " .. tostring(nNewItemIdx))
 
     if nNewItemIdx == 0 then
-        -- FAILURE: Upgrade failed
-        Msg2Player("[LUA DEBUG 19] Upgrade FAILED")
-        local szFailMsg = "<color=red>[THAT BAI]<color> Nang cap that bai!\n" ..
-                          szAttribName .. ": " .. nOldValue .. " (khong doi)\n" ..
-                          "Da mat: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
-        Talk(1, "", szFailMsg)
-        Msg2Player(szFailMsg)
+        -- Technical error during upgrade
+        Msg2Player("[LUA DEBUG 22] ERROR: UpgradeItemAttributes failed")
+        local szErrorMsg = "<color=red>[LOI KY THUAT]<color> Loi khi nang cap!\n" ..
+                           "Vui long lien he GM."
+        Talk(1, "", szErrorMsg)
+        Msg2Player(szErrorMsg)
         return
     end
 
-    -- SUCCESS: Upgrade succeeded
-    Msg2Player("[LUA DEBUG 20] Upgrade SUCCESS")
+    -- SUCCESS
+    Msg2Player("[LUA DEBUG 23] Upgrade SUCCESS")
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong!\n" ..
                          szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)\n" ..
                          "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
