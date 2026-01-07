@@ -152,57 +152,26 @@ function ExeUpgradeAttrib()
 
     -- Get equipment from slot 0
     local nEquipIdx = GetPOItem(nPos, 0)
-    WriteLog("[LUA-UPGRADE] GetPOItem(15, 0) returned: "..nEquipIdx)
 
     -- Validate equipment exists
-    if nEquipIdx <= 0 then
+    if not nEquipIdx or nEquipIdx <= 0 then
         Talk(1, "", "Chua dat trang bi vao!")
         WriteLog("[LUA-UPGRADE] No equipment in slot 0")
         return
     end
 
-    -- Validate minerals in slots 1-4 (if present)
-    -- NOTE: Minerals are optional but if present, must be valid
-    for i = 1, 4 do
-        local nItemIdx = GetPOItem(nPos, i)
-        if nItemIdx > 0 then
-            local nGenre, nDetail = GetItemProp(nItemIdx)
-            -- Use Lua validation function to check if valid mineral
-            if IsMineralItem(nGenre, nDetail) == 0 then
-                Talk(1, "", "Khoang thach khong hop le! Chi chap nhan Hoa/Kim/Moc/Thuy Linh Thach (Cap 1-3).")
-                return
-            end
-        end
-    end
-
-    -- Validate lucky stone in slot 5 (if present)
-    local nLuckyStoneIdx = GetPOItem(nPos, 5)
-    if nLuckyStoneIdx > 0 then
-        local nGenre, nDetail = GetItemProp(nLuckyStoneIdx)
-        -- Use Lua validation function to check if valid lucky stone
-        if IsLuckyStone(nGenre, nDetail) == 0 then
-            Talk(1, "", "Chi chap nhan Da May Man o vi tri nay!")
-            return
-        end
-    end
-
-    -- Check money and xu requirements
-    local nPlayerMoney = GetCash()
-    local nPlayerXu = GetReputation()  -- Xu is stored as reputation
-
-    if nPlayerMoney < UPGRADE_COST_MONEY then
-        Talk(1, "", "Khong du tien! Ban can co it nhat 1,000,000 luong de nang cap.")
-        return
-    end
-
-    if nPlayerXu < UPGRADE_COST_XU then
-        Talk(1, "", "Khong du xu! Ban can co it nhat 2 xu de nang cap.")
-        return
-    end
+    WriteLog("[LUA-UPGRADE] Equipment index: "..nEquipIdx)
 
     -- Get equipment info
     local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
-    WriteLog("[LUA-UPGRADE] Equipment genre="..nGenre..", detail="..nDetail..", luck="..nLuck)
+
+    if not nGenre then
+        Talk(1, "", "Loi: Khong doc duoc thong tin trang bi!")
+        WriteLog("[LUA-UPGRADE] GetItemProp failed")
+        return
+    end
+
+    WriteLog("[LUA-UPGRADE] Equipment: genre="..nGenre..", detail="..nDetail..", luck="..nLuck)
 
     -- Check if equipment is blue (genre 0 with luck < 1000000000)
     if nGenre ~= 0 then
@@ -229,6 +198,49 @@ function ExeUpgradeAttrib()
     if bHasMagicAttrib == 0 then
         Talk(1, "", "Trang bi nay khong co thuoc tinh magic!")
         return
+    end
+
+    -- Check money and xu requirements FIRST (before validating minerals)
+    local nPlayerMoney = GetCash()
+    local nPlayerXu = GetReputation()
+
+    if nPlayerMoney < UPGRADE_COST_MONEY then
+        Talk(1, "", "Khong du tien! Ban can co it nhat 1,000,000 luong de nang cap.")
+        return
+    end
+
+    if nPlayerXu < UPGRADE_COST_XU then
+        Talk(1, "", "Khong du xu! Ban can co it nhat 2 xu de nang cap.")
+        return
+    end
+
+    -- Validate minerals in slots 1-4 (if present)
+    -- NOTE: Minerals are optional but if present, must be valid
+    for i = 1, 4 do
+        local nItemIdx = GetPOItem(nPos, i)
+        if nItemIdx and nItemIdx > 0 then
+            local nGenre, nDetail = GetItemProp(nItemIdx)
+            if nGenre then
+                -- Use Lua validation function to check if valid mineral
+                if IsMineralItem(nGenre, nDetail) == 0 then
+                    Talk(1, "", "Khoang thach khong hop le! Chi chap nhan Hoa/Kim/Moc/Thuy Linh Thach (Cap 1-3).")
+                    return
+                end
+            end
+        end
+    end
+
+    -- Validate lucky stone in slot 5 (if present)
+    local nLuckyStoneIdx = GetPOItem(nPos, 5)
+    if nLuckyStoneIdx and nLuckyStoneIdx > 0 then
+        local nGenre, nDetail = GetItemProp(nLuckyStoneIdx)
+        if nGenre then
+            -- Use Lua validation function to check if valid lucky stone
+            if IsLuckyStone(nGenre, nDetail) == 0 then
+                Talk(1, "", "Chi chap nhan Da May Man o vi tri nay!")
+                return
+            end
+        end
     end
 
     -- Build list of all upgradeable attributes
@@ -292,13 +304,36 @@ function PerformUpgrade(nAttribSlot)
 
     -- Get equipment (must exist)
     local nEquipIdx = GetPOItem(nPos, 0)
-    if nEquipIdx <= 0 then
+    if not nEquipIdx or nEquipIdx <= 0 then
         Talk(1, "", "Loi: Trang bi bi mat!")
         return
     end
 
     -- Get attribute info for the selected slot
     local nAttribType, nOldValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
+
+    if not nAttribType or nAttribType <= 0 then
+        Talk(1, "", "Loi: Khong tim thay thuoc tinh!")
+        return
+    end
+
+    -- IMPORTANT: Delete materials FIRST (before upgrade attempt)
+    -- Minerals and lucky stone are consumed regardless of upgrade success
+    WriteLog("[LUA-UPGRADE] Consuming materials...")
+    local nMineralsUsed = 0
+    for i = 1, 5 do
+        local nItemIdx = GetPOItem(nPos, i)
+        if nItemIdx and nItemIdx > 0 then
+            DelItemByIndex(nItemIdx)
+            nMineralsUsed = nMineralsUsed + 1
+            WriteLog("[LUA-UPGRADE] Deleted material in slot "..i)
+        end
+    end
+
+    -- IMPORTANT: Deduct money and xu BEFORE upgrade attempt
+    WriteLog("[LUA-UPGRADE] Deducting costs: "..UPGRADE_COST_MONEY.." luong, "..UPGRADE_COST_XU.." xu")
+    Spend(UPGRADE_COST_MONEY, "Nang cap trang bi xanh")
+    SetReputation(-UPGRADE_COST_XU)  -- Negative to subtract
 
     -- Use FIXED upgrade percentage
     local nIncreasePercent = UPGRADE_FIXED_PERCENT
@@ -309,31 +344,21 @@ function PerformUpgrade(nAttribSlot)
     local nNewValue = nOldValue + nIncrease
     if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
-    -- Create upgraded item (C++ will handle removing old equipment and placing new one)
+    -- Now perform upgrade (materials and costs already paid)
+    WriteLog("[LUA-UPGRADE] Calling UpgradeItemAttributes...")
     local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, nPos)
 
     if nNewItemIdx == 0 then
-        Talk(1, "", "Loi: Khong the nang cap! Co the do rong hoac loi khac.")
+        Talk(1, "", "Loi: Khong the nang cap! (Luu y: Vat lieu va tien da bi tru)")
+        WriteLog("[LUA-UPGRADE] UpgradeItemAttributes failed")
         return
     end
 
-    -- Delete all minerals (slots 1-4) and lucky stone (slot 5) that were used
-    -- Equipment already handled by C++ function
-    for i = 1, 5 do
-        local nItemIdx = GetPOItem(nPos, i)
-        if nItemIdx > 0 then
-            DelItemByIndex(nItemIdx)
-        end
-    end
-
-    -- Deduct money and xu (Game Logic Layer - proper place for this)
-    Spend(UPGRADE_COST_MONEY, "Nang cap trang bi xanh")  -- Spend money
-    SetReputation(-UPGRADE_COST_XU)  -- Deduct xu (negative value to subtract)
-
-    -- Success message with Vietnamese attribute name
+    -- Success message
     local szAttribName = GetAttribName(nAttribType)
-    local szMsg = "Nang cap thanh cong!\n" .. szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)\nDa tru: 1,000,000 luong + 2 xu"
+    local szMsg = "Nang cap thanh cong!\n" .. szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)\nDa tru: "..nMineralsUsed.." khoang thach, 1,000,000 luong + 2 xu"
     Talk(1, "", szMsg)
+    WriteLog("[LUA-UPGRADE] Upgrade successful: "..nOldValue.." -> "..nNewValue)
 end
 
 -- ------------------------------------------------------------
