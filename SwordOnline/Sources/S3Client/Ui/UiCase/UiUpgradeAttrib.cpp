@@ -151,7 +151,7 @@ void KUiUpgradeAttrib::Initialize()
 	m_nSelectedAttrib = -1;  // No attribute selected initially
 	m_nAttributeCount = 0;   // No attributes loaded
 	m_bUpgradeInProgress = FALSE;  // Not upgrading
-	m_nUpgradeLockTime = 0;  // No lock timestamp
+	m_nUpgradeLockFrames = 0;  // No lock frames
 
 	char Scheme[256];
 	g_UiBase.GetCurSchemePath(Scheme, 256);
@@ -503,17 +503,17 @@ void KUiUpgradeAttrib::Breathe()
 	}
 
 	// CRITICAL: Fail-safe unlock after 5 seconds (in case upgrade fails and equipment not updated)
-	if (m_bUpgradeInProgress && m_nUpgradeLockTime > 0)
+	// Breathe is called every frame (~16ms), so 300 frames = ~5 seconds
+	if (m_bUpgradeInProgress)
 	{
-		unsigned int nCurrentTick = g_pCoreShell->GetGameWorldTick();
-		unsigned int nElapsed = nCurrentTick - m_nUpgradeLockTime;
+		m_nUpgradeLockFrames++;
 
-		// Timeout after 5000 ticks (~5 seconds)
-		if (nElapsed > 5000)
+		// Timeout after 300 frames (~5 seconds at 60fps)
+		if (m_nUpgradeLockFrames > 300)
 		{
-			g_DebugLog("[CLIENT] Upgrade lock timeout - force releasing after %d ticks", nElapsed);
+			g_DebugLog("[CLIENT] Upgrade lock timeout - force releasing after %d frames", m_nUpgradeLockFrames);
 			m_bUpgradeInProgress = FALSE;
-			m_nUpgradeLockTime = 0;
+			m_nUpgradeLockFrames = 0;
 
 			// Refresh success rate display
 			UpdateSuccessRateDisplay();
@@ -690,7 +690,7 @@ void KUiUpgradeAttrib::OnUpgrade()
 
 		// CRITICAL: Set upgrade in progress flag to prevent UI updates during processing
 		m_bUpgradeInProgress = TRUE;
-		m_nUpgradeLockTime = g_pCoreShell->GetGameWorldTick();  // Record lock time
+		m_nUpgradeLockFrames = 0;  // Reset frame counter
 		g_DebugLog("[CLIENT] Upgrade lock enabled - blocking UI updates");
 
 		// CRITICAL: Pass m_btExeId = 4 (upgrade system), NOT strlen!
