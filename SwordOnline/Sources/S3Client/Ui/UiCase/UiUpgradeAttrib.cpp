@@ -740,8 +740,16 @@ int KUiUpgradeAttrib::CalculateSuccessRate()
 	{
 		obj.uId = 0;
 		m_UpgradeSlot[i].GetObject(obj);
-		if (obj.uId > 0)
+		if (obj.uId > 0 && g_pCoreShell)
 		{
+			// Verify item still exists before accessing
+			int nGenre = g_pCoreShell->GetGenreItem(obj.uId);
+			if (nGenre < 0)
+			{
+				g_DebugLog("[UPGRADE-ATTRIB] Mineral slot %d: item %d no longer valid, skipping", i, obj.uId);
+				continue;
+			}
+
 			int nLevel = GetMineralLevel(obj.uId);
 			int nBonus = 0;
 
@@ -765,11 +773,20 @@ int KUiUpgradeAttrib::CalculateSuccessRate()
 	// Check lucky stone slot (slot 5)
 	obj.uId = 0;
 	m_UpgradeSlot[SLOT_LUCKY_STONE].GetObject(obj);
-	if (obj.uId > 0)
+	if (obj.uId > 0 && g_pCoreShell)
 	{
-		int nLuckyBonus = 10;  // Lucky stone adds +10%
-		nSuccessRate += nLuckyBonus;
-		g_DebugLog("[UPGRADE-ATTRIB] Lucky stone present, bonus +%d%%", nLuckyBonus);
+		// Verify item still exists
+		int nGenre = g_pCoreShell->GetGenreItem(obj.uId);
+		if (nGenre >= 0)
+		{
+			int nLuckyBonus = 10;  // Lucky stone adds +10%
+			nSuccessRate += nLuckyBonus;
+			g_DebugLog("[UPGRADE-ATTRIB] Lucky stone present, bonus +%d%%", nLuckyBonus);
+		}
+		else
+		{
+			g_DebugLog("[UPGRADE-ATTRIB] Lucky stone item %d no longer valid, skipping", obj.uId);
+		}
 	}
 
 	// Cap at 100%
@@ -786,6 +803,19 @@ int KUiUpgradeAttrib::CalculateSuccessRate()
  *********************************************************************/
 void KUiUpgradeAttrib::UpdateSuccessRateDisplay()
 {
+	// Safety check: Only update if window is visible
+	if (!IsVisible())
+		return;
+
+	// Safety check: Only calculate if we have equipment
+	KUiDraggedObject obj;
+	m_UpgradeSlot[SLOT_EQUIPMENT].GetObject(obj);
+	if (obj.uId == 0)
+	{
+		m_TextPercent.SetText("Ty le thanh cong: 0%");
+		return;
+	}
+
 	int nRate = CalculateSuccessRate();
 	char szText[128];
 	sprintf(szText, "Ty le thanh cong: %d%%", nRate);
