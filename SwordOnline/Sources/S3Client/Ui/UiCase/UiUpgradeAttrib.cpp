@@ -815,7 +815,8 @@ void KUiUpgradeAttrib::LoadEquipmentAttributes()
 		int nType, nValue, nMin, nMax;
 		if (g_pCoreShell && g_pCoreShell->GetItemMagicAttribInfo(obj.uId, i, &nType, &nValue, &nMin, &nMax))
 		{
-			if (nType > 0 && nValue > 0)
+			// Only check nType > 0, allow nValue = 0 (some attributes can be 0)
+			if (nType > 0)
 			{
 				m_Attributes[m_nAttributeCount].nType = nType;
 				m_Attributes[m_nAttributeCount].nValue = nValue;
@@ -829,8 +830,12 @@ void KUiUpgradeAttrib::LoadEquipmentAttributes()
 				if (nMax > 0 && nNewValue > nMax) nNewValue = nMax;
 				m_Attributes[m_nAttributeCount].nNewValue = nNewValue;
 
-				// Check if can upgrade (not at max)
-				m_Attributes[m_nAttributeCount].bCanUpgrade = (nMax <= 0 || nValue < nMax);
+				// Check if can upgrade:
+				// - If nMax <= 0: no max limit, always can upgrade
+				// - If nMax > 0: can upgrade only if current value < max
+				// - If nValue >= nMax: already at or over max, cannot upgrade
+				BOOL bCanUpgrade = (nMax <= 0) || (nValue < nMax);
+				m_Attributes[m_nAttributeCount].bCanUpgrade = bCanUpgrade;
 
 				g_DebugLog("[UPGRADE-ATTRIB] Attribute %d: type=%d, value=%d, max=%d, newValue=%d, canUpgrade=%d",
 					m_nAttributeCount, nType, nValue, nMax, nNewValue, m_Attributes[m_nAttributeCount].bCanUpgrade);
@@ -872,19 +877,29 @@ void KUiUpgradeAttrib::DisplayAttributeList()
 	{
 		if (m_Attributes[j].bCanUpgrade)
 		{
-			sprintf(szLabel, "%d -> %d (+10%%)",
-				m_Attributes[j].nValue, m_Attributes[j].nNewValue);
+			// Show: current/max -> new (if has max)
+			if (m_Attributes[j].nMax > 0)
+			{
+				sprintf(szLabel, "%d/%d -> %d",
+					m_Attributes[j].nValue, m_Attributes[j].nMax, m_Attributes[j].nNewValue);
+			}
+			else
+			{
+				sprintf(szLabel, "%d -> %d (+10%%)",
+					m_Attributes[j].nValue, m_Attributes[j].nNewValue);
+			}
 		}
 		else
 		{
-			sprintf(szLabel, "%d (MAX)", m_Attributes[j].nValue);
+			// Attribute at MAX - show value and MAX indicator
+			sprintf(szLabel, "%d/%d (MAX)", m_Attributes[j].nValue, m_Attributes[j].nMax);
 		}
 
 		m_BtnAttrib[j].SetLabel(szLabel);
 		m_BtnAttrib[j].Show();
-		m_BtnAttrib[j].Enable(m_Attributes[j].bCanUpgrade ? 1 : 0);
+		m_BtnAttrib[j].Enable(m_Attributes[j].bCanUpgrade ? 1 : 0);  // Disable if at MAX
 
-		g_DebugLog("[UPGRADE-ATTRIB] Button %d: %s", j, szLabel);
+		g_DebugLog("[UPGRADE-ATTRIB] Button %d: %s, canUpgrade=%d", j, szLabel, m_Attributes[j].bCanUpgrade);
 	}
 
 	m_TextGuide.SetText("Chon thuoc tinh muon nang cap:");
