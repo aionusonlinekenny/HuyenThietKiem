@@ -150,6 +150,8 @@ void KUiUpgradeAttrib::Initialize()
 
 	m_nSelectedAttrib = -1;  // No attribute selected initially
 	m_nAttributeCount = 0;   // No attributes loaded
+	m_bUpgradeInProgress = FALSE;  // Not upgrading
+	m_nUpgradeLockTime = 0;  // No lock timestamp
 
 	char Scheme[256];
 	g_UiBase.GetCurSchemePath(Scheme, 256);
@@ -499,6 +501,24 @@ void KUiUpgradeAttrib::Breathe()
 		StopEffect();
 		m_EffectTime = 0;
 	}
+
+	// CRITICAL: Fail-safe unlock after 5 seconds (in case upgrade fails and equipment not updated)
+	if (m_bUpgradeInProgress && m_nUpgradeLockTime > 0)
+	{
+		unsigned int nCurrentTick = g_pCoreShell->GetGameWorldTick();
+		unsigned int nElapsed = nCurrentTick - m_nUpgradeLockTime;
+
+		// Timeout after 5000 ticks (~5 seconds)
+		if (nElapsed > 5000)
+		{
+			g_DebugLog("[CLIENT] Upgrade lock timeout - force releasing after %d ticks", nElapsed);
+			m_bUpgradeInProgress = FALSE;
+			m_nUpgradeLockTime = 0;
+
+			// Refresh success rate display
+			UpdateSuccessRateDisplay();
+		}
+	}
 }
 
 /*********************************************************************
@@ -601,6 +621,14 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
 					// NEW: Load equipment attributes when equipment is added to slot 0
 					if (i == SLOT_EQUIPMENT)
 					{
+						// CRITICAL: Unlock upgrade processing when equipment updated
+						// This happens after successful upgrade or initial placement
+						if (m_bUpgradeInProgress)
+						{
+							m_bUpgradeInProgress = FALSE;
+							g_DebugLog("[CLIENT] Upgrade lock released - equipment updated");
+						}
+
 						LoadEquipmentAttributes();
 					}
 				}
@@ -659,6 +687,12 @@ void KUiUpgradeAttrib::OnUpgrade()
 	if (g_pCoreShell->GetLixian())
 	{
 		g_DebugLog("[CLIENT] GetLixian() = TRUE, calling OperationRequest");
+
+		// CRITICAL: Set upgrade in progress flag to prevent UI updates during processing
+		m_bUpgradeInProgress = TRUE;
+		m_nUpgradeLockTime = g_pCoreShell->GetGameWorldTick();  // Record lock time
+		g_DebugLog("[CLIENT] Upgrade lock enabled - blocking UI updates");
+
 		// CRITICAL: Pass m_btExeId = 4 (upgrade system), NOT strlen!
 		// Server expects case 4 for ExeTremble/ExeUpgradeAttrib/PerformUpgrade
 		g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
@@ -803,6 +837,13 @@ int KUiUpgradeAttrib::CalculateSuccessRate()
  *********************************************************************/
 void KUiUpgradeAttrib::UpdateSuccessRateDisplay()
 {
+	// CRITICAL: Skip all updates during upgrade processing to prevent crash
+	if (m_bUpgradeInProgress)
+	{
+		g_DebugLog("[UPGRADE-ATTRIB] Skipping success rate update - upgrade in progress");
+		return;
+	}
+
 	// Safety check: Only update if window is visible
 	if (!IsVisible())
 		return;

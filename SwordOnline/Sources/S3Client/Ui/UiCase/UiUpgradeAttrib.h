@@ -97,6 +97,8 @@ private:
 	KCanGetNumImage    m_UpgradeEffect;         // Effect animation
 	unsigned int       m_EffectTime;            // Effect duration
 	int                m_nSelectedAttrib;       // Selected attribute index (0-5)
+	BOOL               m_bUpgradeInProgress;    // Lock flag during upgrade processing
+	unsigned int       m_nUpgradeLockTime;      // Timestamp when lock was set (for timeout)
 	KWndText80         m_TextPercent;           // Success rate display
 	KWndText80         m_EquipmentLabel;        // Equipment slot label
 	KWndText80         m_MaterialLabel;         // Material slot label
