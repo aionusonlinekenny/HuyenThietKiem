@@ -103,6 +103,7 @@ public:
 	int 	GetNumStack(unsigned int uId );
 	int 	CheckPositionBarrier(int nMapX, int nMapY);
 	BOOL 	GetItemMagicAttribInfo(unsigned int uItemId, int nSlot, int* pnType, int* pnValue, int* pnMin, int* pnMax);
+	int 	GetMagicAttribMaxValue(int nAttribType, int nSeries, int nLevel);
 };
 
 static KCoreShell	g_CoreShell;
