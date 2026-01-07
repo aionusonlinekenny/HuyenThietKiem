@@ -3,6 +3,7 @@
 -- Functions: Tho ren;
 Include("\\script\\system_config.lua")
 Include("\\script\\upgrade\\tremble_header.lua");
+Include("\\script\\Npc\\upgrade_master_new.lua");  -- Upgrade attributes with minerals
 BlackSmith = {};
 
 function main(nNpcIdx)
@@ -15,12 +16,13 @@ end;
 
 function BlackSmith:BlackSmith(nMsgId)
 	local tbSay = {
-		"Giao dÞch./OnBuy",
-		"S÷a trang bÞ h­ tæn/RestoreItem",
-		"GhÐp trang bÞ hång ¶nh/ExcuterHA",
-		"Kh¶m n¹m trang bÞ xanh/TrembleTalk",
-		"Ho¸n binh vò khÝ/CoverMelee",
-		"Ta chØ ghÐ ngang qua./OnCancel",
+		"Giao dï¿½ch./OnBuy",
+		"Sï¿½a trang bï¿½ hï¿½ tï¿½n/RestoreItem",
+		"Ghï¿½p trang bï¿½ hï¿½ng ï¿½nh/ExcuterHA",
+		"Khï¿½m nï¿½m trang bï¿½ xanh/TrembleTalk",
+		"Nï¿½ng cï¿½p thuï¿½c tï¿½nh trang bï¿½ xanh/UpgradeAttribTalk",
+		"Hoï¿½n binh vï¿½ khï¿½/CoverMelee",
+		"Ta chï¿½ ghï¿½ ngang qua./OnCancel",
 	}
 	Say(nMsgId,getn(tbSay),tbSay);
 end;
@@ -49,7 +51,7 @@ function OnBuy()
 end;
 
 function RestoreItem()
-	OpenGiveBox("Giao diÖn söa ®å","Söa ch÷a trang bÞ h­ tæn       Trang bÞ xanh: 3 tiÒn ®ång + 50 v¹n l­îng.                    Trang bÞ hoµng kim: 50 tiÒn ®ång + 150 v¹n l­îng ","OnRestoreItem")
+	OpenGiveBox("Giao diï¿½n sï¿½a ï¿½ï¿½","Sï¿½a chï¿½a trang bï¿½ hï¿½ tï¿½n       Trang bï¿½ xanh: 3 tiï¿½n ï¿½ï¿½ng + 50 vï¿½n lï¿½ï¿½ng.                    Trang bï¿½ hoï¿½ng kim: 50 tiï¿½n ï¿½ï¿½ng + 150 vï¿½n lï¿½ï¿½ng ","OnRestoreItem")
 end;
 
 function OnRestoreItem()
@@ -67,7 +69,7 @@ function OnRestoreItem()
 	end
 	
 	if (FindEmptyPlace(6,6) == 0) then 
-		Talk(1,"","H·y s¾p xÕp l¹i r­¬ng hµnh trang cña c¸c h¹, ®¶m b¶o ®ñ <color=yellow> 6x6 <color> chç trèng! ");
+		Talk(1,"","Hï¿½y sï¿½p xï¿½p lï¿½i rï¿½ï¿½ng hï¿½nh trang cï¿½a cï¿½c hï¿½, ï¿½ï¿½m bï¿½o ï¿½ï¿½ <color=yellow> 6x6 <color> chï¿½ trï¿½ng! ");
 		return
 	end;
 	
@@ -83,7 +85,7 @@ function OnRestoreItem()
 	end
 	
 	if not nCount or nCount == 0 or nCount > 1 then
-		Talk(1,"","Mçi lÇn bá mét vËt phÈm, hiÓu vÊn ®Ò ch­a ®¹i hiÖp!");
+		Talk(1,"","Mï¿½i lï¿½n bï¿½ mï¿½t vï¿½t phï¿½m, hiï¿½u vï¿½n ï¿½ï¿½ chï¿½a ï¿½ï¿½i hiï¿½p!");
 		return
 	end;
 		
@@ -100,7 +102,7 @@ function OnRestoreItem()
 							DelTaskItem(19,nCashGold);
 							Pay(nPriceGold);
 						else
-							Talk(1,"","Trang bÞ gi¸ trÞ nh­ vËy cÇn nhiÒu c«ng ®o¹n söa ch÷a, Ng­êi kh«ng cã ®ñ <color=red>"..nCashGold.."<color> tiÒn ®ång vµ <color=red>"..(nPriceGold/10000).."<color> v¹n l­îng tiÒn c«ng sao gi¸m ®Õn t×m ta?");
+							Talk(1,"","Trang bï¿½ giï¿½ trï¿½ nhï¿½ vï¿½y cï¿½n nhiï¿½u cï¿½ng ï¿½oï¿½n sï¿½a chï¿½a, Ngï¿½ï¿½i khï¿½ng cï¿½ ï¿½ï¿½ <color=red>"..nCashGold.."<color> tiï¿½n ï¿½ï¿½ng vï¿½ <color=red>"..(nPriceGold/10000).."<color> vï¿½n lï¿½ï¿½ng tiï¿½n cï¿½ng sao giï¿½m ï¿½ï¿½n tï¿½m ta?");
 						return
 						end;
 					else
@@ -108,15 +110,15 @@ function OnRestoreItem()
 							DelTaskItem(19,nCashBlue);
 							Pay(nPriceBlue);
 						else
-							Talk(1,"","Trang bÞ gi¸ trÞ nh­ vËy cÇn nhiÒu c«ng ®o¹n söa ch÷a, Ng­êi kh«ng cã ®ñ <color=red>"..nCashBlue.."<color> tiÒn ®ång vµ <color=red>"..(nPriceBlue/10000).."<color> v¹n l­îng tiÒn c«ng sao gi¸m ®Õn t×m ta?");
+							Talk(1,"","Trang bï¿½ giï¿½ trï¿½ nhï¿½ vï¿½y cï¿½n nhiï¿½u cï¿½ng ï¿½oï¿½n sï¿½a chï¿½a, Ngï¿½ï¿½i khï¿½ng cï¿½ ï¿½ï¿½ <color=red>"..nCashBlue.."<color> tiï¿½n ï¿½ï¿½ng vï¿½ <color=red>"..(nPriceBlue/10000).."<color> vï¿½n lï¿½ï¿½ng tiï¿½n cï¿½ng sao giï¿½m ï¿½ï¿½n tï¿½m ta?");
 						return
 						end;
 					end; 
 					
 					RestoreBrokenEquip(nItemIdx);
-					Talk(1,"","S÷a trang bÞ h­ tæn thµnh c«ng, cã viÖc g× l¹i t×m ta nhÐ!");
+					Talk(1,"","Sï¿½a trang bï¿½ hï¿½ tï¿½n thï¿½nh cï¿½ng, cï¿½ viï¿½c gï¿½ lï¿½i tï¿½m ta nhï¿½!");
 				else
-					Talk(1,"","Kh«ng cã trang bÞ nµo h­ tæn, ng­¬i ®Õn ®Ó trªu ®ïa ta sao?");
+					Talk(1,"","Khï¿½ng cï¿½ trang bï¿½ nï¿½o hï¿½ tï¿½n, ngï¿½ï¿½i ï¿½ï¿½n ï¿½ï¿½ trï¿½u ï¿½ï¿½a ta sao?");
 				end;
 			end
 		end
@@ -128,11 +130,11 @@ end
 function ExcuterHA()
 	SetTask(899,0);
 	local tbSay = {
-		"Hång ¶nh ThÈm Viªn UyÓn/ChooseItem#204",
-		"Hång ¶nh KiÕm Bµi/ChooseItem#205",
-		"Hång ¶nh Môc Tóc/ChooseItem#206",
-		"Hång ¶nh Tô Chiªu/ChooseItem#207",
-		"Ta chØ ghÐ ngang qua./OnCancel",
+		"Hï¿½ng ï¿½nh Thï¿½m Viï¿½n Uyï¿½n/ChooseItem#204",
+		"Hï¿½ng ï¿½nh Kiï¿½m Bï¿½i/ChooseItem#205",
+		"Hï¿½ng ï¿½nh Mï¿½c Tï¿½c/ChooseItem#206",
+		"Hï¿½ng ï¿½nh Tï¿½ Chiï¿½u/ChooseItem#207",
+		"Ta chï¿½ ghï¿½ ngang qua./OnCancel",
 	}
 	Say(10227,getn(tbSay),tbSay);
 end;
@@ -144,7 +146,7 @@ function ChooseItem(nSel, nIndex)
 end;
 
 function ExcuterGVB()
-	OpenGiveBox("§Æt vËt phÈm vµo trong ","Ta cÇn 6 m·nh ®Ó cã thÓ Ðp ra trang bÞ cho ng­¬i,300 v¹n l­îng vµ ®Æt thñy tinh ®Ó t¨ng tØ lÖ thµnh c«ng ","Ephonganh")
+	OpenGiveBox("ï¿½ï¿½t vï¿½t phï¿½m vï¿½o trong ","Ta cï¿½n 6 mï¿½nh ï¿½ï¿½ cï¿½ thï¿½ ï¿½p ra trang bï¿½ cho ngï¿½ï¿½i,300 vï¿½n lï¿½ï¿½ng vï¿½ ï¿½ï¿½t thï¿½y tinh ï¿½ï¿½ tï¿½ng tï¿½ lï¿½ thï¿½nh cï¿½ng ","Ephonganh")
 end;
 
 function Ephonganh()
@@ -253,18 +255,18 @@ function Ephonganh()
 	local bCount = 0;
 	for i = 1,6 do
 		if (nIndexItem[i] == nil) then
-			Talk(1,"","C¸c h¹ thiÕu m·nh ghÐp M¶nh trang bÞ hång ¶nh sè <color=yellow> "..i.."<color>. Ta cÇn ®ñ 6 m¶nh.");
+			Talk(1,"","Cï¿½c hï¿½ thiï¿½u mï¿½nh ghï¿½p Mï¿½nh trang bï¿½ hï¿½ng ï¿½nh sï¿½ <color=yellow> "..i.."<color>. Ta cï¿½n ï¿½ï¿½ 6 mï¿½nh.");
 			return
 		else
 			bCount = bCount + 1;
 		end;
 	end;
 	if (GetCash() < nCash) then
-		Talk(1,"","C«ng rÌn t¹o ra tr¨ng søc rÊt lín, trªn giang hå nµy ta ch­a mét lÇn nãi th¸ch. Mang 300 v¹n ®Õn ®©y.");
+		Talk(1,"","Cï¿½ng rï¿½n tï¿½o ra trï¿½ng sï¿½c rï¿½t lï¿½n, trï¿½n giang hï¿½ nï¿½y ta chï¿½a mï¿½t lï¿½n nï¿½i thï¿½ch. Mang 300 vï¿½n ï¿½ï¿½n ï¿½ï¿½y.");
 		return
 	end
 	if (bCountGem < 2 ) then
-		Talk(1,"","Ta kh«ng thÓ m¹o hiÓm khi kh«ng cã thñy tinh ®Ýnh kÌm, rÊt nguy hiÓm. Ýt nhÊt ph¶i cã 2 viªn thñy tinh(lo¹i nµo còng ®­îc).");
+		Talk(1,"","Ta khï¿½ng thï¿½ mï¿½o hiï¿½m khi khï¿½ng cï¿½ thï¿½y tinh ï¿½ï¿½nh kï¿½m, rï¿½t nguy hiï¿½m. ï¿½t nhï¿½t phï¿½i cï¿½ 2 viï¿½n thï¿½y tinh(loï¿½i nï¿½o cï¿½ng ï¿½ï¿½ï¿½c).");
 		return
 	end
 	----------------Tinh ty le
@@ -286,7 +288,7 @@ function Ephonganh()
 			
 			SetTask(899,0);
 			nIndexItem = {};
-			Msg2Player("<color=yellow> C¸c h¹ ghÐp thµnh c«ng trang bÞ Hång ¶nh<color>");
+			Msg2Player("<color=yellow> Cï¿½c hï¿½ ghï¿½p thï¿½nh cï¿½ng trang bï¿½ Hï¿½ng ï¿½nh<color>");
 			EndGiveBox();
 		end;
 	else
@@ -294,18 +296,18 @@ function Ephonganh()
 			DelItemByIndex(nIndexGem[i]);
 			nIndexGem[i] = nil;
 		end;
-		Msg2Player("<color=cyan>GhÐp trang bÞ thÊt b¹i, h«m nay ng­êi kh«ng ®­îc may m¾n. thö t¨ng tØ lÖ xem sao?<color>");
+		Msg2Player("<color=cyan>Ghï¿½p trang bï¿½ thï¿½t bï¿½i, hï¿½m nay ngï¿½ï¿½i khï¿½ng ï¿½ï¿½ï¿½c may mï¿½n. thï¿½ tï¿½ng tï¿½ lï¿½ xem sao?<color>");
 	end;
 	Pay(nCash);
 end;
 
 function Update()
-OpenGiveBox("§Æt vËt phÈm vµo trong ","Test ","CoverMeele")
+OpenGiveBox("ï¿½ï¿½t vï¿½t phï¿½m vï¿½o trong ","Test ","CoverMeele")
 end;
 
 function CoverMeele()
 	-- if not nCount or nCount == 0 or nCount > 1 then 
-		-- Talk(1,"","yªu cÇu bá 1 thø vµo. ")
+		-- Talk(1,"","yï¿½u cï¿½u bï¿½ 1 thï¿½ vï¿½o. ")
 		-- return 0
 	-- end
 	local nItemIdx, nG, nD, nP, nL, Ser

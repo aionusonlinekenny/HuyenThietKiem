@@ -144,14 +144,20 @@ end
 -- This function validates items and shows attribute selection menu
 -- ------------------------------------------------------------
 function ExeUpgradeAttrib()
+    -- DEBUG: Function entry
+    Msg2Player("DEBUG: ExeUpgradeAttrib called")
+    WriteLog("[LUA-UPGRADE] ExeUpgradeAttrib() called")
+
     local nPos = 15  -- pos_builditem (same container as Tremble)
 
     -- Get equipment from slot 0
     local nEquipIdx = GetPOItem(nPos, 0)
+    WriteLog("[LUA-UPGRADE] GetPOItem(15, 0) returned: "..nEquipIdx)
 
     -- Validate equipment exists
     if nEquipIdx <= 0 then
         Talk(1, "", "Chua dat trang bi vao!")
+        WriteLog("[LUA-UPGRADE] No equipment in slot 0")
         return
     end
 
@@ -196,9 +202,11 @@ function ExeUpgradeAttrib()
 
     -- Get equipment info
     local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
+    WriteLog("[LUA-UPGRADE] Equipment genre="..nGenre..", detail="..nDetail..", luck="..nLuck)
 
     -- Check if equipment is blue (genre 0 with luck < 1000000000)
     if nGenre ~= 0 then
+        WriteLog("[LUA-UPGRADE] Invalid genre: "..nGenre.." (must be 0 for equipment)")
         Talk(1, "", "Chi co the nang cap trang bi xanh!")
         return
     end
