@@ -319,25 +319,9 @@ BOOL KUiUpgradeAttrib::ValidateUpgradeReady()
 		return FALSE;
 	}
 
-	// Check money and xu requirements
-	if (g_pCoreShell)
-	{
-		// Get player's current money
-		int nMoney = g_pCoreShell->GetGameData(GDI_PLAYER_HOLD_MONEY, 0, 0);
-		int nXu = g_pCoreShell->GetGameData(GDI_PLAYER_HOLD_XU, 0, 0);
-
-		g_DebugLog("[UPGRADE-ATTRIB] Player money: %d, xu: %d", nMoney, nXu);
-		g_DebugLog("[UPGRADE-ATTRIB] Required: %d money, %d xu", UPGRADE_COST_MONEY, UPGRADE_COST_XU);
-
-		if (nMoney < UPGRADE_COST_MONEY || nXu < UPGRADE_COST_XU)
-		{
-			strcpy(szWarning, m_szReturnInfo[6]);  // "Khong du tien!"
-			nLen = strlen(szWarning);
-			KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
-			g_DebugLog("[UPGRADE-ATTRIB] Validation failed: insufficient funds");
-			return FALSE;
-		}
-	}
+	// NOTE: Money/xu validation is done in Lua script (ExeUpgradeAttrib)
+	// Following game architecture: Lua = Game Logic, C++ = UI Presentation
+	// C++ UI only validates basic requirements (items present), not game rules
 
 	g_DebugLog("[UPGRADE-ATTRIB] Validation passed! Minerals: %d", nMineralCount);
 	return TRUE;

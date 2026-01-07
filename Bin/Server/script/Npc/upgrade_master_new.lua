@@ -19,6 +19,10 @@ UPGRADE_MATERIAL_DETAIL = 18    -- Luc Thuy Tinh (Green Crystal) - tam thoi
 UPGRADE_FIXED_PERCENT = 20      -- % tang co dinh (FIXED 20%)
 UPGRADE_SUCCESS_RATE = 100      -- Ti le thanh cong (%)
 
+-- Cost requirements (these values are also defined in C++ for UI display)
+UPGRADE_COST_MONEY = 1000000    -- 100 van luong
+UPGRADE_COST_XU = 2             -- 2 xu
+
 -- Attribute names (Vietnamese without tone marks, GLOBAL for old Lua compatibility)
 ATTRIB_NAMES = {
     [28]  = "S¸t th­¬ng nhá nhÊt",
@@ -136,6 +140,20 @@ function ExeUpgradeAttrib()
 
     if nMatGenre ~= UPGRADE_MATERIAL_GENRE or nMatDetail ~= UPGRADE_MATERIAL_DETAIL then
         Talk(1, "", "Vat lieu khong dung! Can su dung Da Nang Cap.")
+        return
+    end
+
+    -- Check money and xu requirements
+    local nPlayerMoney = GetCash()
+    local nPlayerXu = GetReputation()  -- Xu is stored as reputation
+
+    if nPlayerMoney < UPGRADE_COST_MONEY then
+        Talk(1, "", "Khong du tien! Ban can co it nhat 1,000,000 luong de nang cap.")
+        return
+    end
+
+    if nPlayerXu < UPGRADE_COST_XU then
+        Talk(1, "", "Khong du xu! Ban can co it nhat 2 xu de nang cap.")
         return
     end
 
@@ -259,9 +277,13 @@ function PerformUpgrade(nAttribSlot)
     -- Delete material only (equipment already handled by C++ function)
     DelItemByIndex(nMaterialIdx)
 
+    -- Deduct money and xu (Game Logic Layer - proper place for this)
+    Spend(UPGRADE_COST_MONEY, "Nang cap trang bi xanh")  -- Spend money
+    SetReputation(-UPGRADE_COST_XU)  -- Deduct xu (negative value to subtract)
+
     -- Success message with Vietnamese attribute name
     local szAttribName = GetAttribName(nAttribType)
-    local szMsg = "Nang cap thanh cong!\n" .. szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)"
+    local szMsg = "Nang cap thanh cong!\n" .. szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)\nDa tru: 1,000,000 luong + 2 xu"
     Talk(1, "", szMsg)
 end
 
