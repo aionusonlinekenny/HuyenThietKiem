@@ -146,28 +146,38 @@ end
 function ExeUpgradeAttrib()
     local nPos = 15  -- pos_builditem (same container as Tremble)
 
-    -- Get items from UI slots
-    local nEquipIdx = GetPOItem(nPos, 0)    -- Equipment slot
-    local nMaterialIdx = GetPOItem(nPos, 1) -- Material slot
+    -- Get equipment from slot 0
+    local nEquipIdx = GetPOItem(nPos, 0)
 
-    -- Validate equipment
+    -- Validate equipment exists
     if nEquipIdx <= 0 then
         Talk(1, "", "Chua dat trang bi vao!")
         return
     end
 
-    -- Validate material exists
-    if nMaterialIdx <= 0 then
-        Talk(1, "", "Chua dat Da Nang Cap!")
-        return
+    -- Validate minerals in slots 1-4 (if present)
+    -- NOTE: Minerals are optional but if present, must be valid
+    for i = 1, 4 do
+        local nItemIdx = GetPOItem(nPos, i)
+        if nItemIdx > 0 then
+            local nGenre, nDetail = GetItemProp(nItemIdx)
+            -- Use Lua validation function to check if valid mineral
+            if IsMineralItem(nGenre, nDetail) == 0 then
+                Talk(1, "", "Khoang thach khong hop le! Chi chap nhan Hoa/Kim/Moc/Thuy Linh Thach (Cap 1-3).")
+                return
+            end
+        end
     end
 
-    -- Validate material type (must be correct upgrade material)
-    local nMatGenre, nMatDetail = GetItemProp(nMaterialIdx)
-
-    if nMatGenre ~= UPGRADE_MATERIAL_GENRE or nMatDetail ~= UPGRADE_MATERIAL_DETAIL then
-        Talk(1, "", "Vat lieu khong dung! Can su dung Da Nang Cap.")
-        return
+    -- Validate lucky stone in slot 5 (if present)
+    local nLuckyStoneIdx = GetPOItem(nPos, 5)
+    if nLuckyStoneIdx > 0 then
+        local nGenre, nDetail = GetItemProp(nLuckyStoneIdx)
+        -- Use Lua validation function to check if valid lucky stone
+        if IsLuckyStone(nGenre, nDetail) == 0 then
+            Talk(1, "", "Chi chap nhan Da May Man o vi tri nay!")
+            return
+        end
     end
 
     -- Check money and xu requirements
@@ -272,12 +282,10 @@ end
 function PerformUpgrade(nAttribSlot)
     local nPos = 15  -- pos_builditem
 
-    -- Get items again (in case they changed)
+    -- Get equipment (must exist)
     local nEquipIdx = GetPOItem(nPos, 0)
-    local nMaterialIdx = GetPOItem(nPos, 1)
-
-    if nEquipIdx <= 0 or nMaterialIdx <= 0 then
-        Talk(1, "", "Loi: Trang bi hoac vat lieu bi mat!")
+    if nEquipIdx <= 0 then
+        Talk(1, "", "Loi: Trang bi bi mat!")
         return
     end
 
@@ -301,8 +309,14 @@ function PerformUpgrade(nAttribSlot)
         return
     end
 
-    -- Delete material only (equipment already handled by C++ function)
-    DelItemByIndex(nMaterialIdx)
+    -- Delete all minerals (slots 1-4) and lucky stone (slot 5) that were used
+    -- Equipment already handled by C++ function
+    for i = 1, 5 do
+        local nItemIdx = GetPOItem(nPos, i)
+        if nItemIdx > 0 then
+            DelItemByIndex(nItemIdx)
+        end
+    end
 
     -- Deduct money and xu (Game Logic Layer - proper place for this)
     Spend(UPGRADE_COST_MONEY, "Nang cap trang bi xanh")  -- Spend money
