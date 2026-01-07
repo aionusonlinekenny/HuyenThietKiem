@@ -202,7 +202,7 @@ function ExeUpgradeAttrib()
 
     -- Check money and xu requirements FIRST (before validating minerals)
     local nPlayerMoney = GetCash()
-    local nPlayerXu = GetReputation()
+    local nPlayerXu = GetTaskItemCount(19)  -- Xu = task item ID 19
 
     if nPlayerMoney < UPGRADE_COST_MONEY then
         Talk(1, "", "Khong du tien! Ban can co it nhat 1,000,000 luong de nang cap.")
@@ -333,7 +333,7 @@ function PerformUpgrade(nAttribSlot)
     -- IMPORTANT: Deduct money and xu BEFORE upgrade attempt
     WriteLog("[LUA-UPGRADE] Deducting costs: "..UPGRADE_COST_MONEY.." luong, "..UPGRADE_COST_XU.." xu")
     Spend(UPGRADE_COST_MONEY, "Nang cap trang bi xanh")
-    SetReputation(-UPGRADE_COST_XU)  -- Negative to subtract
+    DelTaskItem(19, UPGRADE_COST_XU)  -- Delete xu (task item ID 19)
 
     -- Use FIXED upgrade percentage
     local nIncreasePercent = UPGRADE_FIXED_PERCENT
