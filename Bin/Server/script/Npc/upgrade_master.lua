@@ -230,7 +230,7 @@ function ExeUpgradeAttrib()
     -- Show attribute selection menu
     SayImage(
         "Chon thuoc tinh muon nang cap:",
-        "10/20/40",  -- ImageKey 40 = enemy169_st.spr
+        "-85/-85/70",  -- NPC coordinates
         getn(tbSayOptions),
         tbSayOptions[1] or "",
         tbSayOptions[2] or "",
@@ -291,15 +291,24 @@ function PerformUpgrade(nAttribSlot)
     -- Now perform upgrade (materials and costs already paid)
     local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, nPos)
 
+    local szAttribName = GetAttribName(nAttribType)
+
     if nNewItemIdx == 0 then
-        Talk(1, "", "Loi: Khong the nang cap! (Luu y: Vat lieu va tien da bi tru)")
+        -- FAILURE: Upgrade failed
+        local szFailMsg = "<color=red>[THAT BAI]<color> Nang cap that bai!\n" ..
+                          szAttribName .. ": " .. nOldValue .. " (khong doi)\n" ..
+                          "Da mat: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
+        Talk(1, "", szFailMsg)
+        Msg2Player(szFailMsg)
         return
     end
 
-    -- Success message
-    local szAttribName = GetAttribName(nAttribType)
-    local szMsg = "Nang cap thanh cong!\n" .. szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)\nDa tru: "..nMineralsUsed.." khoang thach, 1,000,000 luong + 2 xu"
-    Talk(1, "", szMsg)
+    -- SUCCESS: Upgrade succeeded
+    local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong!\n" ..
+                         szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)\n" ..
+                         "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
+    Talk(1, "", szSuccessMsg)
+    Msg2Player(szSuccessMsg)
 end
 
 -- ------------------------------------------------------------
