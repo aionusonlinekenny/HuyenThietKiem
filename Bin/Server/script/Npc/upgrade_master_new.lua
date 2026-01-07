@@ -13,7 +13,34 @@
 -- Configuration - Item IDs
 -- ------------------------------------------------------------
 UPGRADE_MATERIAL_GENRE = 6      -- item_task
-UPGRADE_MATERIAL_DETAIL = 18    -- Luc Thuy Tinh (Green Crystal) - tam thoi
+
+-- Mineral Details (all are genre 6 = item_task, particular 1/2/3 = level)
+MINERAL_FIRE_DETAIL_MIN = 74    -- Hoa Nguyen Thach Level 1
+MINERAL_FIRE_DETAIL_MAX = 76    -- Hoa Nguyen Thach Level 3
+MINERAL_METAL_DETAIL_MIN = 77   -- Kim Linh Thach Level 1
+MINERAL_METAL_DETAIL_MAX = 79   -- Kim Linh Thach Level 3
+MINERAL_WOOD_DETAIL_MIN = 80    -- Moc Linh Thach Level 1
+MINERAL_WOOD_DETAIL_MAX = 82    -- Moc Linh Thach Level 3
+MINERAL_WATER_DETAIL_MIN = 83   -- Thuy Linh Thach Level 1
+MINERAL_WATER_DETAIL_MAX = 85   -- Thuy Linh Thach Level 3
+LUCKY_STONE_DETAIL = 86         -- Da May Man
+
+-- Helper function to check if item is a valid mineral
+function IsMineralItem(nGenre, nDetail)
+    if nGenre ~= UPGRADE_MATERIAL_GENRE then
+        return 0
+    end
+    -- Check if detail is in any mineral range (74-85)
+    if nDetail >= MINERAL_FIRE_DETAIL_MIN and nDetail <= MINERAL_WATER_DETAIL_MAX then
+        return 1
+    end
+    return 0
+end
+
+-- Helper function to check if item is lucky stone
+function IsLuckyStone(nGenre, nDetail)
+    return (nGenre == UPGRADE_MATERIAL_GENRE and nDetail == LUCKY_STONE_DETAIL)
+end
 
 -- Upgrade settings
 UPGRADE_FIXED_PERCENT = 20      -- % tang co dinh (FIXED 20%)

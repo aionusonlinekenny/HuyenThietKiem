@@ -354,14 +354,13 @@ BOOL KUiUpgradeAttrib::ValidateItemPickDrop(KWndWindow* pWnd, int nIndex)
 		// TODO: Add blue quality check when item system is implemented
 		return TRUE;
 	}
-	// Slots 1-4: Mineral slots (genre = item_task, detail = special mineral type)
+	// Slots 1-4: Mineral slots (genre 6 = item_task, detail 74-85)
 	else if (pWnd == &m_UpgradeSlot[SLOT_MINERAL1] ||
 		     pWnd == &m_UpgradeSlot[SLOT_MINERAL2] ||
 		     pWnd == &m_UpgradeSlot[SLOT_MINERAL3] ||
 		     pWnd == &m_UpgradeSlot[SLOT_MINERAL4])
 	{
-		// TODO: Add proper mineral validation when items are created
-		// For now, allow task items (minerals will be created as task items)
+		// Must be task item
 		if (nGenre != item_task)
 		{
 			strcpy(szWarning, m_szReturnInfo[4]);  // "O nay chi dat Khoang thach dac biet"
@@ -369,19 +368,38 @@ BOOL KUiUpgradeAttrib::ValidateItemPickDrop(KWndWindow* pWnd, int nIndex)
 			KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
 			return FALSE;
 		}
+
+		// Must be valid mineral (details 74-85)
+		// 74-76: Hoa Nguyen Thach (Fire)
+		// 77-79: Kim Linh Thach (Metal)
+		// 80-82: Moc Linh Thach (Wood)
+		// 83-85: Thuy Linh Thach (Water)
+		if (nDetail < 74 || nDetail > 85)
+		{
+			strcpy(szWarning, m_szReturnInfo[4]);  // "O nay chi dat Khoang thach dac biet"
+			nLen = strlen(szWarning);
+			KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
+			g_DebugLog("[UPGRADE-ATTRIB] Invalid mineral: detail=%d (must be 74-85)", nDetail);
+			return FALSE;
+		}
+
+		g_DebugLog("[UPGRADE-ATTRIB] Valid mineral accepted: detail=%d, particular=%d (level)", nDetail, nParticular);
 		return TRUE;
 	}
-	// Slot 5: Lucky stone
+	// Slot 5: Lucky stone (genre 6 = item_task, detail 86)
 	else if (pWnd == &m_UpgradeSlot[SLOT_LUCKY_STONE])
 	{
-		// TODO: Add proper lucky stone validation when item is created
-		if (nGenre != item_task)
+		// Must be task item with detail 86
+		if (nGenre != item_task || nDetail != 86)
 		{
 			strcpy(szWarning, m_szReturnInfo[7]);  // "O nay chi dat Da May Man"
 			nLen = strlen(szWarning);
 			KUiMsgCentrePad::SystemMessageArrival(szWarning, nLen);
+			g_DebugLog("[UPGRADE-ATTRIB] Invalid lucky stone: genre=%d, detail=%d", nGenre, nDetail);
 			return FALSE;
 		}
+
+		g_DebugLog("[UPGRADE-ATTRIB] Valid lucky stone accepted");
 		return TRUE;
 	}
 
@@ -632,24 +650,37 @@ void KUiUpgradeAttrib::UpdatePickPut(bool bLock)
 /*********************************************************************
  * Get Mineral Level (1-3)
  * Returns the level of a mineral item based on its item properties
+ *
+ * Mineral Items (genre 6 = item_task):
+ * - Hoa Nguyen Thach (Fire): details 74-76 (level 1-3)
+ * - Kim Linh Thach (Metal): details 77-79 (level 1-3)
+ * - Moc Linh Thach (Wood): details 80-82 (level 1-3)
+ * - Thuy Linh Thach (Water): details 83-85 (level 1-3)
+ *
+ * Each mineral has particular value = level (1, 2, or 3)
  *********************************************************************/
 int KUiUpgradeAttrib::GetMineralLevel(int nItemIndex)
 {
 	if (!g_pCoreShell || nItemIndex == 0)
 		return 0;
 
-	// TODO: Implement this when items are created
-	// For now, return level based on item detail or particular value
-	// Example: Could use GetParticularItem() to determine level
+	int nGenre = g_pCoreShell->GetGenreItem(nItemIndex);
 	int nDetail = g_pCoreShell->GetDetailItem(nItemIndex);
 	int nParticular = g_pCoreShell->GetParticularItem(nItemIndex);
 
-	// Placeholder logic - will need to update when actual minerals are created
-	// Assume: particular value 1,2,3 = mineral levels
+	// Validate: must be task item (genre 6) and within mineral detail range (74-85)
+	if (nGenre != item_task)
+		return 0;
+
+	if (nDetail < 74 || nDetail > 85)
+		return 0;  // Not a mineral
+
+	// Particular value (1, 2, 3) = mineral level
 	if (nParticular >= 1 && nParticular <= 3)
 		return nParticular;
 
-	return 1;  // Default to level 1
+	g_DebugLog("[UPGRADE-ATTRIB] WARNING: Mineral item %d has invalid particular: %d", nItemIndex, nParticular);
+	return 1;  // Default to level 1 if particular is invalid
 }
 
 /*********************************************************************
