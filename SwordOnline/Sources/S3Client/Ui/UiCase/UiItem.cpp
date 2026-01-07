@@ -21,6 +21,7 @@
 #include "UiGetNumber.h"
 #include "UiTongSetTax.h"
 #include "UiCompoundItem.h"
+#include "UiUpgradeAttrib.h"
 #include "../../../core/src/coreshell.h"
 #include "../../../core/src/GameDataDef.h"
 #include "../UiBase.h"
@@ -32,7 +33,7 @@
 extern iCoreShell*		g_pCoreShell;
 
 #define SCHEME_INI_ITEM	"UiItem.ini"
-#define	SELL_MESSAGES	"Ên gi÷ <color=green>Shift + chuét ph¶i<color> vµo vËt phÈm, lËp tøc b¸n ®­îc vËt phÈm."
+#define	SELL_MESSAGES	"ï¿½n giï¿½ <color=green>Shift + chuï¿½t phï¿½i<color> vï¿½o vï¿½t phï¿½m, lï¿½p tï¿½c bï¿½n ï¿½ï¿½ï¿½c vï¿½t phï¿½m."
 
 KUiItem* KUiItem::m_pSelf = NULL;
 
@@ -71,11 +72,20 @@ void KUiItem::CloseWindow(bool bDestroy)
 {
 	if (m_pSelf)
 	{
+		// If crafting UI is visible, close it when inventory closes
 		if (KUiComItem::GetIfVisible())
 		{
 			g_DebugLog("[INVENTORY] Closing crafting UI along with inventory");
 			KUiComItem::CloseWindow();
 		}
+
+		// If upgrade attrib UI is visible, close it when inventory closes
+		if (KUiUpgradeAttrib::GetIfVisible())
+		{
+			g_DebugLog("[INVENTORY] Closing upgrade attrib UI along with inventory");
+			KUiUpgradeAttrib::CloseWindow();
+		}
+
 		KUiShop::CancelTrade();
 		if (bDestroy == false)
 			m_pSelf->Hide();
@@ -687,7 +697,7 @@ void KUiItem::MoveItemToRepository(KUiDraggedObject* pItem)
 			Msg.byPriority = 0;
 			Msg.eType = SMT_NORMAL;
 			Msg.uReservedForUi = 0;
-			strcpy(Msg.szMessage, "B¹n ch­a më r­¬ng chøa nµy !");
+			strcpy(Msg.szMessage, "Bï¿½n chï¿½a mï¿½ rï¿½ï¿½ng chï¿½a nï¿½y !");
 			KUiSysMsgCentre::AMessageArrival(&Msg, NULL);
 			return;
         }
@@ -700,7 +710,7 @@ void KUiItem::MoveItemToRepository(KUiDraggedObject* pItem)
             Msg.byPriority = 0;
             Msg.eType = SMT_NORMAL;
             Msg.uReservedForUi = 0;
-            strcpy(Msg.szMessage, "R­¬ng ®ang më kh«ng cßn chç trèng!");
+            strcpy(Msg.szMessage, "Rï¿½ï¿½ng ï¿½ang mï¿½ khï¿½ng cï¿½n chï¿½ trï¿½ng!");
             KUiSysMsgCentre::AMessageArrival(&Msg, NULL);
             return;
         }
@@ -726,7 +736,7 @@ void KUiItem::MoveItemToInventory(KUiDraggedObject* pItem)
     Pick.Region.h = pItem->DataX;
     Pick.Region.v = pItem->DataY;
 
-    // container hi?n t?i xác ??nh theo t?ng page m?
+    // container hi?n t?i xï¿½c ??nh theo t?ng page m?
     KUiStoreBox* pStoreBox = KUiStoreBox::GetIfVisible();
     if (!pStoreBox)
     {
@@ -736,7 +746,7 @@ void KUiItem::MoveItemToInventory(KUiDraggedObject* pItem)
         Msg.byPriority = 0;
         Msg.eType = SMT_NORMAL;
         Msg.uReservedForUi = 0;
-        strcpy(Msg.szMessage, "B¹n ch­a më r­¬ng chøa nµy !");
+        strcpy(Msg.szMessage, "Bï¿½n chï¿½a mï¿½ rï¿½ï¿½ng chï¿½a nï¿½y !");
         KUiSysMsgCentre::AMessageArrival(&Msg, NULL);
         return;
     }
@@ -750,7 +760,7 @@ void KUiItem::MoveItemToInventory(KUiDraggedObject* pItem)
         Msg.byPriority = 0;
         Msg.eType = SMT_NORMAL;
         Msg.uReservedForUi = 0;
-        strcpy(Msg.szMessage, "R­¬ng ®ang më kh«ng hîp lÖ !");
+        strcpy(Msg.szMessage, "Rï¿½ï¿½ng ï¿½ang mï¿½ khï¿½ng hï¿½p lï¿½ !");
         KUiSysMsgCentre::AMessageArrival(&Msg, NULL);
         return;
     }
