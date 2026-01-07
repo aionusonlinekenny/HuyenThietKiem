@@ -100,13 +100,13 @@ end
 -- C++ sends: PerformUpgrade#X where X is the attribute slot (0-5)
 -- IMPORTANT: Materials + money + xu are consumed BEFORE upgrade
 -- ------------------------------------------------------------
-function PerformUpgrade(_, nAttribSlot)
+function PerformUpgrade(nAttribSlotStr, _)
     -- DEBUG: Function entry
     Msg2Player("[LUA DEBUG 1] PerformUpgrade function entered")
-    Msg2Player("[LUA DEBUG 2] Raw parameter received: " .. tostring(nAttribSlot))
+    Msg2Player("[LUA DEBUG 2] Raw parameter received: " .. tostring(nAttribSlotStr))
 
-    -- Parse attribute slot from parameter
-    nAttribSlot = tonumber(nAttribSlot)
+    -- Parse attribute slot from parameter (C++ sends as string in first param, 0 in second)
+    local nAttribSlot = tonumber(nAttribSlotStr)
     if not nAttribSlot then
         Msg2Player("[LUA ERROR] Invalid attribute slot parameter")
         return
