@@ -99,7 +99,11 @@ void KUiTrembleItem::CloseWindow(bool bDestory)
 {
 	if (m_pSelf)
 	{
-		Wnd_GameSpaceHandleInput(true);		
+		// CRITICAL: Call OnCancel() BEFORE Destroy() to avoid null pointer crash
+		// OnCancel() returns items from BuildBox to inventory
+		m_pSelf->OnCancel();
+
+		Wnd_GameSpaceHandleInput(true);
 		if (bDestory)
 		{
 			m_pSelf->Destroy();
@@ -107,8 +111,6 @@ void KUiTrembleItem::CloseWindow(bool bDestory)
 		}
 		else
 			m_pSelf->Hide();
-			
-		m_pSelf->OnCancel();				
 	}
 }
 /*********************************************************************
@@ -564,11 +566,26 @@ void KUiTrembleItem::OnCancel()
 {
 	if (g_pCoreShell)
 	{
-		KUiObjAtRegion	Item[_ITEM_TREMBLE_COUNT];
-		int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Item, 0);	
-		if (nCount)	
+		// CRITICAL FIX: Use MAX_BUILDITEM_SLOTS to prevent buffer overflow
+		// GetGameData may return items from other systems (up to 17 items)
+		KUiObjAtRegion Item[MAX_BUILDITEM_SLOTS];
+		memset(Item, 0, sizeof(Item));  // Safe initialization
+
+		int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Item, 0);
+
+		// Bounds check
+		if (nCount < 0 || nCount > MAX_BUILDITEM_SLOTS)
+		{
+			g_DebugLog("[TREMBLE] OnCancel: Invalid item count: %d", nCount);
+			return;
+		}
+
+		if (nCount > 0)
+		{
+			g_DebugLog("[TREMBLE] OnCancel: Returning %d items to inventory", nCount);
 			g_pCoreShell->OperationRequest(GOI_RECOVERY_BOX_COMMAND, pos_builditem, 0);
-	}				
+		}
+	}
 }
 
 void KUiTrembleItem::UpdatePickPut(bool bLock)
