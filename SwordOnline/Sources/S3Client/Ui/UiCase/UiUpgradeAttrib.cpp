@@ -233,6 +233,17 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 	switch (uMsg)
 	{
 	case WND_N_BUTTON_CLICK:
+		// Check if it's an attribute selection button
+		for (int i = 0; i < 6; i++)
+		{
+			if (uParam == (unsigned int)&m_BtnAttrib[i])
+			{
+				g_DebugLog("[CLIENT] Attribute button %d clicked", i);
+				OnSelectAttribute(i);
+				return 1;
+			}
+		}
+
 		if (uParam == (unsigned int)&m_BtnUpgrade)
 		{
 			g_DebugLog("[CLIENT] Upgrade button clicked");
@@ -634,11 +645,20 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
  *********************************************************************/
 void KUiUpgradeAttrib::OnUpgrade()
 {
-	// Simply call Lua script - Lua will handle attribute selection
-	char szFunc[32];
-	sprintf(szFunc, "ExeUpgradeAttrib");
+	// Check if player selected an attribute
+	if (m_nSelectedAttrib < 0)
+	{
+		g_DebugLog("[CLIENT] ERROR: No attribute selected!");
+		// TODO: Show error message to player
+		return;
+	}
 
-	g_DebugLog("[CLIENT] OnUpgrade() - Calling script: %s", szFunc);
+	// Call Lua function with selected attribute index
+	// Format: PerformUpgrade#<slot> where slot is 0-5
+	char szFunc[64];
+	sprintf(szFunc, "PerformUpgrade#%d", m_nSelectedAttrib);
+
+	g_DebugLog("[CLIENT] OnUpgrade() - Calling script: %s (attribute slot: %d)", szFunc, m_nSelectedAttrib);
 
 	if (g_pCoreShell->GetLixian())
 	{
