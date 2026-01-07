@@ -83,6 +83,7 @@ private:
 		int nMin;       // Min value
 		int nMax;       // Max value
 		int nNewValue;  // Calculated new value after upgrade
+		int nActualSlot; // ACTUAL slot index in equipment (0-5)
 		bool bCanUpgrade; // Can this attribute be upgraded?
 	};
 

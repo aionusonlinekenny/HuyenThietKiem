@@ -643,12 +643,18 @@ void KUiUpgradeAttrib::OnUpgrade()
 		return;
 	}
 
-	// Call Lua function with selected attribute index
-	// Format: PerformUpgrade#<slot> where slot is 0-5
-	char szFunc[64];
-	sprintf(szFunc, "PerformUpgrade#%d", m_nSelectedAttrib);
+	// CRITICAL: Use ACTUAL slot index from equipment, not button index!
+	// m_nSelectedAttrib = button index (0-5 in filtered list)
+	// nActualSlot = actual equipment slot (0-5 in equipment)
+	int nActualSlot = m_Attributes[m_nSelectedAttrib].nActualSlot;
 
-	g_DebugLog("[CLIENT] OnUpgrade() - Calling script: %s (attribute slot: %d)", szFunc, m_nSelectedAttrib);
+	// Call Lua function with ACTUAL equipment slot index
+	// Format: PerformUpgrade#<slot> where slot is actual equipment slot 0-5
+	char szFunc[64];
+	sprintf(szFunc, "PerformUpgrade#%d", nActualSlot);
+
+	g_DebugLog("[CLIENT] OnUpgrade() - Button index: %d, Actual slot: %d, Calling script: %s",
+		m_nSelectedAttrib, nActualSlot, szFunc);
 
 	if (g_pCoreShell->GetLixian())
 	{
@@ -839,8 +845,12 @@ void KUiUpgradeAttrib::LoadEquipmentAttributes()
 				BOOL bCanUpgrade = (nMax <= 0) || (nValue < nMax);
 				m_Attributes[m_nAttributeCount].bCanUpgrade = bCanUpgrade;
 
-				g_DebugLog("[UPGRADE-ATTRIB] Attribute %d: type=%d, value=%d, max=%d, newValue=%d, canUpgrade=%d",
-					m_nAttributeCount, nType, nValue, nMax, nNewValue, m_Attributes[m_nAttributeCount].bCanUpgrade);
+				// CRITICAL: Store ACTUAL slot index from equipment (0-5)
+				// Player selects button index, but we must upgrade correct slot!
+				m_Attributes[m_nAttributeCount].nActualSlot = i;
+
+				g_DebugLog("[UPGRADE-ATTRIB] Attribute %d: type=%d, value=%d, max=%d, newValue=%d, actualSlot=%d, canUpgrade=%d",
+					m_nAttributeCount, nType, nValue, nMax, nNewValue, i, m_Attributes[m_nAttributeCount].bCanUpgrade);
 
 				m_nAttributeCount++;
 			}
