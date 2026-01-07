@@ -653,8 +653,10 @@ void KUiUpgradeAttrib::OnUpgrade()
 	if (g_pCoreShell->GetLixian())
 	{
 		g_DebugLog("[CLIENT] GetLixian() = TRUE, calling OperationRequest");
-		g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, (int)strlen(szFunc));
-		g_DebugLog("[CLIENT] OnUpgrade() - Script call sent");
+		// CRITICAL: Pass m_btExeId = 4 (upgrade system), NOT strlen!
+		// Server expects case 4 for ExeTremble/ExeUpgradeAttrib/PerformUpgrade
+		g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
+		g_DebugLog("[CLIENT] OnUpgrade() - Script call sent with ExeId=4");
 	}
 	else
 	{
