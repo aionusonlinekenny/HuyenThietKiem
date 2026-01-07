@@ -5805,10 +5805,14 @@ int KCoreShell::CheckPositionBarrier(int nMapX, int nMapY)
 BOOL KCoreShell::GetItemMagicAttribInfo(unsigned int uItemId, int nSlot, int* pnType, int* pnValue, int* pnMin, int* pnMax)
 {
 	// Validate parameters
-	if (uItemId == 0 || nSlot < 0 || nSlot >= 6)
+	if (uItemId == 0 || uItemId >= MAX_ITEM || nSlot < 0 || nSlot >= 6)
 		return FALSE;
 
 	if (!pnType || !pnValue || !pnMin || !pnMax)
+		return FALSE;
+
+	// Check if item exists by checking genre
+	if (Item[uItemId].GetGenre() < 0)
 		return FALSE;
 
 	// Get attribute type
