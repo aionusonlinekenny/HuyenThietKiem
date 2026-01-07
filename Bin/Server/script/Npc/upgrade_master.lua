@@ -96,33 +96,32 @@ function UpgradeAttribTalk()
 end
 
 -- ------------------------------------------------------------
--- Execute Upgrade (called when player clicks "Upgrade" button)
--- This validates items and shows attribute selection menu
+-- Perform Upgrade (called directly from C++ with attribute slot)
+-- C++ sends: PerformUpgrade#X where X is the attribute slot (0-5)
+-- IMPORTANT: Materials + money + xu are consumed BEFORE upgrade
 -- ------------------------------------------------------------
-function ExeUpgradeAttrib()
-    Msg2Player("DEBUG: ExeUpgradeAttrib called")
+function PerformUpgrade(_, nAttribSlot)
+    -- Parse attribute slot from parameter
+    nAttribSlot = tonumber(nAttribSlot)
+    if not nAttribSlot then
+        Msg2Player("[LUA ERROR] Invalid attribute slot parameter")
+        return
+    end
 
-    local nPos = 15  -- pos_builditem (same container as Tremble)
+    Msg2Player("DEBUG: PerformUpgrade called with slot " .. nAttribSlot)
 
-    -- Get equipment from slot 0
+    local nPos = 15  -- pos_builditem
+
+    -- Get equipment (must exist)
     local nEquipIdx = GetPOItem(nPos, 0)
-
-    -- Validate equipment exists
     if not nEquipIdx or nEquipIdx <= 0 then
-        Talk(1, "", "Chua dat trang bi vao!")
+        Talk(1, "", "Loi: Trang bi bi mat!")
         return
     end
 
-    -- Get equipment info
+    -- Validate equipment is blue
     local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
-
-    if not nGenre then
-        Talk(1, "", "Loi: Khong doc duoc thong tin trang bi!")
-        return
-    end
-
-    -- Check if equipment is blue (genre 0 with luck < 1000000000)
-    if nGenre ~= 0 then
+    if not nGenre or nGenre ~= 0 then
         Talk(1, "", "Chi co the nang cap trang bi xanh!")
         return
     end
@@ -132,45 +131,14 @@ function ExeUpgradeAttrib()
         return
     end
 
-    -- Check if equipment has magic attributes
-    local bHasMagicAttrib = 0
-    for i = 0, 5 do
-        local nAttribType, nValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
-        if nAttribType and nAttribType > 0 then
-            bHasMagicAttrib = 1
-            break
-        end
-    end
-
-    if bHasMagicAttrib == 0 then
-        Talk(1, "", "Trang bi nay khong co thuoc tinh magic!")
-        return
-    end
-
-    -- Check money and xu requirements FIRST (before validating minerals)
-    local nPlayerMoney = GetCash()
-    local nPlayerXu = GetTaskItemCount(19)  -- Xu = task item ID 19
-
-    if nPlayerMoney < UPGRADE_COST_MONEY then
-        Talk(1, "", "Khong du tien! Ban can co it nhat 1,000,000 luong de nang cap.")
-        return
-    end
-
-    if nPlayerXu < UPGRADE_COST_XU then
-        Talk(1, "", "Khong du xu! Ban can co it nhat 2 xu de nang cap.")
-        return
-    end
-
     -- Validate minerals in slots 1-4 (if present)
-    -- NOTE: Minerals are optional but if present, must be valid
     for i = 1, 4 do
         local nItemIdx = GetPOItem(nPos, i)
         if nItemIdx and nItemIdx > 0 then
             local nGenre, nDetail = GetItemProp(nItemIdx)
             if nGenre then
-                -- Use Lua validation function to check if valid mineral
                 if IsMineralItem(nGenre, nDetail) == 0 then
-                    Talk(1, "", "Khoang thach khong hop le! Chi chap nhan Hoa/Kim/Moc/Thuy Linh Thach (Cap 1-3).")
+                    Talk(1, "", "Khoang thach khong hop le!")
                     return
                 end
             end
@@ -182,7 +150,6 @@ function ExeUpgradeAttrib()
     if nLuckyStoneIdx and nLuckyStoneIdx > 0 then
         local nGenre, nDetail = GetItemProp(nLuckyStoneIdx)
         if nGenre then
-            -- Use Lua validation function to check if valid lucky stone
             if IsLuckyStone(nGenre, nDetail) == 0 then
                 Talk(1, "", "Chi chap nhan Da May Man o vi tri nay!")
                 return
@@ -190,69 +157,17 @@ function ExeUpgradeAttrib()
         end
     end
 
-    -- Build list of all upgradeable attributes
-    local tbSayOptions = {}
-    local nCount = 0
+    -- Check money and xu requirements
+    local nPlayerMoney = GetCash()
+    local nPlayerXu = GetTaskItemCount(19)
 
-    for i = 0, 5 do
-        local nAttribType, nValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
-
-        if nAttribType and nAttribType > 0 then
-            -- Check if this attribute can be upgraded
-            if nMax <= 0 or nValue < nMax then
-                -- Calculate potential new value
-                local nIncrease = (nValue * UPGRADE_FIXED_PERCENT) / 100
-                if nIncrease < 1 then nIncrease = 1 end
-                local nNewValue = nValue + nIncrease
-                if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
-
-                -- Build option string with Vietnamese name
-                local szAttribName = GetAttribName(nAttribType)
-                local szOption = szAttribName .. ": " .. nValue .. " -> " .. nNewValue .. "/DoUpgradeAttrib_" .. i
-
-                -- Add to table (old Lua style - no tinsert)
-                nCount = nCount + 1
-                tbSayOptions[nCount] = szOption
-            end
-        end
-    end
-
-    -- Check if we have any upgradeable attributes
-    if nCount == 0 then
-        Talk(1, "", "Tat ca thuoc tinh da dat MAX!")
+    if nPlayerMoney < UPGRADE_COST_MONEY then
+        Talk(1, "", "Khong du tien! Ban can co it nhat 1,000,000 luong.")
         return
     end
 
-    -- Add cancel option (old Lua style - no tinsert)
-    nCount = nCount + 1
-    tbSayOptions[nCount] = "Huy bo/no"
-
-    -- Show attribute selection menu
-    SayImage(
-        "Chon thuoc tinh muon nang cap:",
-        "-85/-85/70",  -- NPC coordinates
-        getn(tbSayOptions),
-        tbSayOptions[1] or "",
-        tbSayOptions[2] or "",
-        tbSayOptions[3] or "",
-        tbSayOptions[4] or "",
-        tbSayOptions[5] or "",
-        tbSayOptions[6] or "",
-        tbSayOptions[7] or ""
-    )
-end
-
--- ------------------------------------------------------------
--- Perform Upgrade (called after player selects attribute)
--- IMPORTANT: Materials + money + xu are consumed BEFORE upgrade
--- ------------------------------------------------------------
-function PerformUpgrade(nAttribSlot)
-    local nPos = 15  -- pos_builditem
-
-    -- Get equipment (must exist)
-    local nEquipIdx = GetPOItem(nPos, 0)
-    if not nEquipIdx or nEquipIdx <= 0 then
-        Talk(1, "", "Loi: Trang bi bi mat!")
+    if nPlayerXu < UPGRADE_COST_XU then
+        Talk(1, "", "Khong du xu! Ban can co it nhat 2 xu.")
         return
     end
 
@@ -309,34 +224,6 @@ function PerformUpgrade(nAttribSlot)
                          "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
     Talk(1, "", szSuccessMsg)
     Msg2Player(szSuccessMsg)
-end
-
--- ------------------------------------------------------------
--- Dynamic upgrade functions for each attribute slot (0-5)
--- These are called from the SayImage menu options
--- ------------------------------------------------------------
-function DoUpgradeAttrib_0()
-    PerformUpgrade(0)
-end
-
-function DoUpgradeAttrib_1()
-    PerformUpgrade(1)
-end
-
-function DoUpgradeAttrib_2()
-    PerformUpgrade(2)
-end
-
-function DoUpgradeAttrib_3()
-    PerformUpgrade(3)
-end
-
-function DoUpgradeAttrib_4()
-    PerformUpgrade(4)
-end
-
-function DoUpgradeAttrib_5()
-    PerformUpgrade(5)
 end
 
 -- ------------------------------------------------------------

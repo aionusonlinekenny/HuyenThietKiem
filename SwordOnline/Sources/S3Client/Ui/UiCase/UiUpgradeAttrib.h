@@ -68,6 +68,27 @@ private:
 	void          UpdateSuccessRateDisplay();
 	int           GetMineralLevel(int nItemIndex);  // Get mineral level (1-3)
 
+	// NEW: Attribute list display
+	void          LoadEquipmentAttributes();         // Load attributes from equipment
+	void          DisplayAttributeList();            // Display attribute list in UI
+	void          OnSelectAttribute(int nSlot);      // Player clicks attribute
+	void          ClearAttributeList();              // Clear when equipment removed
+
+private:
+	// Attribute info structure
+	struct AttributeInfo
+	{
+		int nType;      // Attribute type
+		int nValue;     // Current value
+		int nMin;       // Min value
+		int nMax;       // Max value
+		int nNewValue;  // Calculated new value after upgrade
+		bool bCanUpgrade; // Can this attribute be upgraded?
+	};
+
+	AttributeInfo m_Attributes[6];  // Up to 6 magic attributes
+	int           m_nAttributeCount; // Number of valid attributes
+
 private:
 	KWndObjectBox      m_UpgradeSlot[_UPGRADE_ATTRIB_SLOT_COUNT]; // Item slots
 	KWndLabeledButton  m_BtnUpgrade;            // Upgrade button
@@ -79,6 +100,10 @@ private:
 	KWndText80         m_EquipmentLabel;        // Equipment slot label
 	KWndText80         m_MaterialLabel;         // Material slot label
 	char               m_szReturnInfo[8][128];  // Error messages
+
+	// NEW: Attribute selection buttons
+	KWndLabeledButton  m_BtnAttrib[6];          // Attribute selection buttons (up to 6)
+	KWndText80         m_TextGuide;             // Guide text below material label
 
 	enum STRING_NOTE_EVENT
 	{

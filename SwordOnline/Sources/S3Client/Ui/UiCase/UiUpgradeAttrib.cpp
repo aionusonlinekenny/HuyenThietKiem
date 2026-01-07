@@ -132,6 +132,14 @@ void KUiUpgradeAttrib::Initialize()
 	AddChild(&m_TextPercent);
 	AddChild(&m_EquipmentLabel);
 	AddChild(&m_MaterialLabel);
+	AddChild(&m_TextGuide);
+
+	// NEW: Initialize attribute selection buttons
+	for (i = 0; i < 6; i++)
+	{
+		AddChild(&m_BtnAttrib[i]);
+		m_BtnAttrib[i].Hide();  // Hidden until equipment is placed
+	}
 
 	for (i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
 	{
@@ -140,7 +148,8 @@ void KUiUpgradeAttrib::Initialize()
 		m_UpgradeSlot[i].SetContainerId((int)UOC_BUILD_ITEM);
 	}
 
-	m_nSelectedAttrib = 0;  // Default to first attribute
+	m_nSelectedAttrib = -1;  // No attribute selected initially
+	m_nAttributeCount = 0;   // No attributes loaded
 
 	char Scheme[256];
 	g_UiBase.GetCurSchemePath(Scheme, 256);
@@ -187,6 +196,18 @@ void KUiUpgradeAttrib::LoadScheme(const char* pScheme)
 		// Initialize slot labels
 		m_pSelf->m_EquipmentLabel.Init(&Ini, "EquipmentLabel");
 		m_pSelf->m_MaterialLabel.Init(&Ini, "MaterialLabel");
+		m_pSelf->m_TextGuide.Init(&Ini, "TextGuide");
+		m_pSelf->m_TextGuide.SetText("D�t trang b� xanh v�o �� xem thu�c t�nh");
+
+		// NEW: Initialize attribute selection buttons
+		char szBtnName[32];
+		for (i = 0; i < 6; i++)
+		{
+			sprintf(szBtnName, "BtnAttrib%d", i);
+			m_pSelf->m_BtnAttrib[i].Init(&Ini, szBtnName);
+			m_pSelf->m_BtnAttrib[i].SetLabel("");
+			m_pSelf->m_BtnAttrib[i].Hide();  // Start hidden
+		}
 
 		for (i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
 		{
@@ -230,6 +251,18 @@ int KUiUpgradeAttrib::WndProc(unsigned int uMsg, unsigned int uParam, int nParam
 		{
 			if (m_EffectTime) break;
 			CloseWindow(true);
+		}
+		// NEW: Handle attribute selection button clicks
+		else
+		{
+			for (int i = 0; i < 6; i++)
+			{
+				if (uParam == (unsigned int)&m_BtnAttrib[i])
+				{
+					OnSelectAttribute(i);
+					break;
+				}
+			}
 		}
 		break;
 
@@ -563,12 +596,24 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
 					m_UpgradeSlot[i].HoldObject(pItem->Obj.uGenre, pItem->Obj.uId,
 						pItem->Region.Width, pItem->Region.Height);
 					g_DebugLog("[CLIENT] HoldObject completed");
+
+					// NEW: Load equipment attributes when equipment is added to slot 0
+					if (i == SLOT_EQUIPMENT)
+					{
+						LoadEquipmentAttributes();
+					}
 				}
 				else
 				{
 					g_DebugLog("[CLIENT] Calling HoldObject(CGOG_NOTHING)");
 					m_UpgradeSlot[i].HoldObject(CGOG_NOTHING, 0, 0, 0);
 					g_DebugLog("[CLIENT] HoldObject completed");
+
+					// NEW: Clear attribute list when equipment is removed from slot 0
+					if (i == SLOT_EQUIPMENT)
+					{
+						ClearAttributeList();
+					}
 				}
 				break;
 			}
@@ -589,15 +634,24 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
  *********************************************************************/
 void KUiUpgradeAttrib::OnUpgrade()
 {
-	char szFunc[32];
-	sprintf(szFunc, "ExeUpgradeAttrib");
+	// Check if player has selected an attribute
+	if (m_nSelectedAttrib < 0)
+	{
+		g_DebugLog("[CLIENT] OnUpgrade() - No attribute selected!");
+		KUiMsgCentrePad::SystemMessageArrival("Ban chua chon thuoc tinh nao!", strlen("Ban chua chon thuoc tinh nao!"));
+		return;
+	}
 
-	g_DebugLog("[CLIENT] OnUpgrade() - Calling script: %s, SelectedAttrib=%d", szFunc, m_nSelectedAttrib);
+	char szFunc[64];
+	// Send selected attribute index to Lua
+	sprintf(szFunc, "PerformUpgrade#%d", m_nSelectedAttrib);
+
+	g_DebugLog("[CLIENT] OnUpgrade() - Calling script: %s (attribute slot %d)", szFunc, m_nSelectedAttrib);
 
 	if (g_pCoreShell->GetLixian())
 	{
 		g_DebugLog("[CLIENT] GetLixian() = TRUE, calling OperationRequest");
-		g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
+		g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, (int)strlen(szFunc));
 		g_DebugLog("[CLIENT] OnUpgrade() - Script call sent");
 	}
 	else
@@ -728,4 +782,163 @@ void KUiUpgradeAttrib::UpdateSuccessRateDisplay()
 	sprintf(szText, "Ty le thanh cong: %d%%", nRate);
 	m_TextPercent.SetText(szText);
 	g_DebugLog("[UPGRADE-ATTRIB] Updated success rate display: %s", szText);
+}
+
+/*********************************************************************
+ * Load Equipment Attributes
+ * Called when equipment is placed in slot 0
+ * Reads all magic attributes and displays them for selection
+ *********************************************************************/
+void KUiUpgradeAttrib::LoadEquipmentAttributes()
+{
+	g_DebugLog("[UPGRADE-ATTRIB] LoadEquipmentAttributes() called");
+
+	// Clear previous data
+	m_nAttributeCount = 0;
+	m_nSelectedAttrib = -1;
+
+	// Get equipment from slot 0
+	KUiDraggedObject obj;
+	m_UpgradeSlot[SLOT_EQUIPMENT].GetObject(obj);
+
+	if (obj.uId == 0)
+	{
+		g_DebugLog("[UPGRADE-ATTRIB] No equipment in slot 0");
+		ClearAttributeList();
+		return;
+	}
+
+	// Read all magic attributes from equipment
+	for (int i = 0; i < 6; i++)
+	{
+		int nType, nValue, nMin, nMax;
+		if (g_pCoreShell && g_pCoreShell->GetItemMagicAttribInfo(obj.uId, i, &nType, &nValue, &nMin, &nMax))
+		{
+			if (nType > 0 && nValue > 0)
+			{
+				m_Attributes[m_nAttributeCount].nType = nType;
+				m_Attributes[m_nAttributeCount].nValue = nValue;
+				m_Attributes[m_nAttributeCount].nMin = nMin;
+				m_Attributes[m_nAttributeCount].nMax = nMax;
+
+				// Calculate new value (10% increase)
+				int nIncrease = (nValue * 10) / 100;
+				if (nIncrease < 1) nIncrease = 1;
+				int nNewValue = nValue + nIncrease;
+				if (nMax > 0 && nNewValue > nMax) nNewValue = nMax;
+				m_Attributes[m_nAttributeCount].nNewValue = nNewValue;
+
+				// Check if can upgrade (not at max)
+				m_Attributes[m_nAttributeCount].bCanUpgrade = (nMax <= 0 || nValue < nMax);
+
+				g_DebugLog("[UPGRADE-ATTRIB] Attribute %d: type=%d, value=%d, max=%d, newValue=%d, canUpgrade=%d",
+					m_nAttributeCount, nType, nValue, nMax, nNewValue, m_Attributes[m_nAttributeCount].bCanUpgrade);
+
+				m_nAttributeCount++;
+			}
+		}
+	}
+
+	g_DebugLog("[UPGRADE-ATTRIB] Loaded %d attributes", m_nAttributeCount);
+
+	// Display the attribute list
+	DisplayAttributeList();
+}
+
+/*********************************************************************
+ * Display Attribute List
+ * Shows all attributes as buttons for player to click
+ *********************************************************************/
+void KUiUpgradeAttrib::DisplayAttributeList()
+{
+	g_DebugLog("[UPGRADE-ATTRIB] DisplayAttributeList() - showing %d attributes", m_nAttributeCount);
+
+	// Hide all buttons first
+	for (int i = 0; i < 6; i++)
+	{
+		m_BtnAttrib[i].Hide();
+	}
+
+	if (m_nAttributeCount == 0)
+	{
+		m_TextGuide.SetText("Trang bi nay khong co thuoc tinh magic!");
+		return;
+	}
+
+	// Show buttons for each attribute
+	char szLabel[128];
+	for (int i = 0; i < m_nAttributeCount; i++)
+	{
+		if (m_Attributes[i].bCanUpgrade)
+		{
+			sprintf(szLabel, "%d -> %d (+10%%)", 
+				m_Attributes[i].nValue, m_Attributes[i].nNewValue);
+		}
+		else
+		{
+			sprintf(szLabel, "%d (MAX)", m_Attributes[i].nValue);
+		}
+
+		m_BtnAttrib[i].SetLabel(szLabel);
+		m_BtnAttrib[i].Show();
+		m_BtnAttrib[i].Enable(m_Attributes[i].bCanUpgrade ? 1 : 0);
+
+		g_DebugLog("[UPGRADE-ATTRIB] Button %d: %s", i, szLabel);
+	}
+
+	m_TextGuide.SetText("Chon thuoc tinh muon nang cap:");
+}
+
+/*********************************************************************
+ * On Select Attribute
+ * Called when player clicks an attribute button
+ *********************************************************************/
+void KUiUpgradeAttrib::OnSelectAttribute(int nSlot)
+{
+	if (nSlot < 0 || nSlot >= m_nAttributeCount)
+	{
+		g_DebugLog("[UPGRADE-ATTRIB] OnSelectAttribute() - invalid slot %d", nSlot);
+		return;
+	}
+
+	if (!m_Attributes[nSlot].bCanUpgrade)
+	{
+		g_DebugLog("[UPGRADE-ATTRIB] OnSelectAttribute() - attribute %d cannot be upgraded (at MAX)", nSlot);
+		return;
+	}
+
+	m_nSelectedAttrib = nSlot;
+	g_DebugLog("[UPGRADE-ATTRIB] OnSelectAttribute() - selected attribute %d (type=%d, %d->%d)", 
+		nSlot, m_Attributes[nSlot].nType, m_Attributes[nSlot].nValue, m_Attributes[nSlot].nNewValue);
+
+	// Highlight selected button
+	for (int i = 0; i < m_nAttributeCount; i++)
+	{
+		// You can add visual feedback here (e.g., change button color)
+		// For now, just log it
+	}
+
+	char szText[128];
+	sprintf(szText, "Da chon: %d -> %d", m_Attributes[nSlot].nValue, m_Attributes[nSlot].nNewValue);
+	m_TextGuide.SetText(szText);
+}
+
+/*********************************************************************
+ * Clear Attribute List
+ * Called when equipment is removed from slot 0
+ *********************************************************************/
+void KUiUpgradeAttrib::ClearAttributeList()
+{
+	g_DebugLog("[UPGRADE-ATTRIB] ClearAttributeList() called");
+
+	m_nAttributeCount = 0;
+	m_nSelectedAttrib = -1;
+
+	// Hide all attribute buttons
+	for (int i = 0; i < 6; i++)
+	{
+		m_BtnAttrib[i].Hide();
+	}
+
+	m_TextGuide.SetText("Dat trang bi xanh vao de xem thuoc tinh");
 }
