@@ -22,6 +22,7 @@
 #include "UiTongSetTax.h"
 #include "UiCompoundItem.h"
 #include "UiUpgradeAttrib.h"
+#include "UiTrembleItem.h"
 #include "../../../core/src/coreshell.h"
 #include "../../../core/src/GameDataDef.h"
 #include "../UiBase.h"
@@ -84,6 +85,13 @@ void KUiItem::CloseWindow(bool bDestroy)
 		{
 			g_DebugLog("[INVENTORY] Closing upgrade attrib UI along with inventory");
 			KUiUpgradeAttrib::CloseWindow();
+		}
+
+		// If tremble item UI is visible, close it when inventory closes
+		if (KUiTrembleItem::GetIfVisible())
+		{
+			g_DebugLog("[INVENTORY] Closing tremble item UI along with inventory");
+			KUiTrembleItem::CloseWindow();
 		}
 
 		KUiShop::CancelTrade();
