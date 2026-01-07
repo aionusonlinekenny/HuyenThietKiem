@@ -817,6 +817,10 @@ void KUiUpgradeAttrib::LoadEquipmentAttributes()
 		return;
 	}
 
+	// Get equipment series and level (needed to look up max values from attribute definition table)
+	int nSeries = g_pCoreShell ? g_pCoreShell->GetSeriesItem(obj.uId) : -1;
+	int nLevel = g_pCoreShell ? g_pCoreShell->GetLevelItem(obj.uId) : 0;
+
 	// Read all magic attributes from equipment
 	for (int i = 0; i < 6; i++)
 	{
@@ -831,26 +835,30 @@ void KUiUpgradeAttrib::LoadEquipmentAttributes()
 				m_Attributes[m_nAttributeCount].nMin = nMin;
 				m_Attributes[m_nAttributeCount].nMax = nMax;
 
+				// CRITICAL FIX: Get REAL max value from attribute definition table
+				// Blue equipment doesn't store max in item data - it's in the definition table
+				int nRealMax = g_pCoreShell->GetMagicAttribMaxValue(nType, nSeries, nLevel);
+
 				// Calculate new value (10% increase)
 				int nIncrease = (nValue * 10) / 100;
 				if (nIncrease < 1) nIncrease = 1;
 				int nNewValue = nValue + nIncrease;
-				if (nMax > 0 && nNewValue > nMax) nNewValue = nMax;
+				if (nRealMax > 0 && nNewValue > nRealMax) nNewValue = nRealMax;
 				m_Attributes[m_nAttributeCount].nNewValue = nNewValue;
 
-				// Check if can upgrade:
-				// - If nMax <= 0: no max limit, always can upgrade
-				// - If nMax > 0: can upgrade only if current value < max
-				// - If nValue >= nMax: already at or over max, cannot upgrade
-				BOOL bCanUpgrade = (nMax <= 0) || (nValue < nMax);
+				// Check if can upgrade using REAL max value:
+				// - If nRealMax <= 0: no max limit found, always can upgrade
+				// - If nRealMax > 0: can upgrade only if current value < real max
+				// - If nValue >= nRealMax: already at or over max, cannot upgrade
+				BOOL bCanUpgrade = (nRealMax <= 0) || (nValue < nRealMax);
 				m_Attributes[m_nAttributeCount].bCanUpgrade = bCanUpgrade;
 
 				// CRITICAL: Store ACTUAL slot index from equipment (0-5)
 				// Player selects button index, but we must upgrade correct slot!
 				m_Attributes[m_nAttributeCount].nActualSlot = i;
 
-				g_DebugLog("[UPGRADE-ATTRIB] Attribute %d: type=%d, value=%d, max=%d, newValue=%d, actualSlot=%d, canUpgrade=%d",
-					m_nAttributeCount, nType, nValue, nMax, nNewValue, i, m_Attributes[m_nAttributeCount].bCanUpgrade);
+				g_DebugLog("[UPGRADE-ATTRIB] Attribute %d: type=%d, value=%d, realMax=%d, newValue=%d, actualSlot=%d, canUpgrade=%d",
+					m_nAttributeCount, nType, nValue, nRealMax, nNewValue, i, m_Attributes[m_nAttributeCount].bCanUpgrade);
 
 				m_nAttributeCount++;
 			}

@@ -711,6 +711,7 @@ struct _declspec (novtable) iCoreShell
 	virtual int GetNumStack(unsigned int uId ) = 0;
 	virtual int CheckPositionBarrier(int nMapX, int nMapY) = 0; // Check if position has barrier - returns 0 if no barrier
 	virtual BOOL GetItemMagicAttribInfo(unsigned int uItemId, int nSlot, int* pnType, int* pnValue, int* pnMin, int* pnMax) = 0; // Get magic attribute info for equipment
+	virtual int GetMagicAttribMaxValue(int nAttribType, int nSeries, int nLevel) = 0; // Get max value for attribute type from definition table
 };
 
 #ifndef CORE_EXPORTS

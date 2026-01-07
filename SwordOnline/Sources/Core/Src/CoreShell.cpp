@@ -5831,4 +5831,23 @@ BOOL KCoreShell::GetItemMagicAttribInfo(unsigned int uItemId, int nSlot, int* pn
 
 	return TRUE;
 }
+
+// Get max value for an attribute type from the definition table
+// Returns the GLOBAL MAX value for this attribute type across ALL levels
+// This uses the existing GetGlobalMinMax function which scans all records
+// Returns 0 if not found or error
+int KCoreShell::GetMagicAttribMaxValue(int nAttribType, int nSeries, int nLevel)
+{
+	if (nAttribType <= 0)
+		return 0;
+
+	// Use the existing GetGlobalMinMax function which scans all magic attribute
+	// records and returns the global min/max across all levels for this attribute type
+	// This is the same function used when generating blue equipment
+	int nGlobalMin = 0, nGlobalMax = 0;
+	ItemGen.GetGlobalMinMax(nAttribType, nGlobalMin, nGlobalMax);
+
+	// Return the global max value
+	return nGlobalMax;
+}
 //
