@@ -275,21 +275,29 @@ function PerformUpgrade(nAttribSlotStr, _)
         return
     end
 
-    -- STEP 4: SUCCESS - Use UpgradeItemAttributes() then reset Luck
-    -- UpgradeItemAttributes() properly syncs to client (user sees change immediately)
-    -- BUT it sets Luck=999900010 (exact mode) which breaks next upgrade
-    -- SOLUTION: Reset Luck to 10 immediately after UpgradeItemAttributes()
+    -- STEP 4: SUCCESS - Use UpgradeItemAttributes() with Luck reset strategy
+    -- PROBLEM: UpgradeItemAttributes() FAILS if item already has Luck=999900010 (exact mode)
+    -- SOLUTION:
+    --   1. Reset Luck BEFORE calling UpgradeItemAttributes() if needed
+    --   2. Call UpgradeItemAttributes() to upgrade (it will set Luck=999900010)
+    --   3. Reset Luck AFTER to allow future upgrades
     local nIncreasePercent = UPGRADE_FIXED_PERCENT
 
-    print("[LUA-UPGRADE] 20] SUCCESS - Calling UpgradeItemAttributes with Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent)
+    -- Check if item already has exact mode encoding from previous upgrade
+    if nLuck >= 999900000 and nLuck < 1000000000 then
+        print("[LUA-UPGRADE] 20] Item has exact mode Luck=" .. nLuck .. ", resetting to 10 BEFORE upgrade")
+        SetItemLuck(nEquipIdx, 10)
+    end
+
+    print("[LUA-UPGRADE] 21] SUCCESS - Calling UpgradeItemAttributes with Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent)
 
     -- Call UpgradeItemAttributes to upgrade and sync to client
     -- Parameters: itemIdx, attrSlot, percent, containerPos
     local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, BUILD_CONTAINER_POS)
-    print("[LUA-UPGRADE] 21] UpgradeItemAttributes returned: " .. tostring(nNewItemIdx))
+    print("[LUA-UPGRADE] 22] UpgradeItemAttributes returned: " .. tostring(nNewItemIdx))
 
     if nNewItemIdx == nil or nNewItemIdx == 0 then
-        print("[LUA-UPGRADE] 22] ERROR: UpgradeItemAttributes failed")
+        print("[LUA-UPGRADE] 23] ERROR: UpgradeItemAttributes failed")
         Msg2Player("<color=red>LOI: Khong the nang cap thuoc tinh!<color>")
         return
     end
@@ -297,15 +305,15 @@ function PerformUpgrade(nAttribSlotStr, _)
     -- CRITICAL: Reset Luck to normal value immediately to allow future upgrades
     -- UpgradeItemAttributes() sets Luck=999900010 (exact mode encoding)
     -- Reset to 10 so next upgrade won't fail
-    print("[LUA-UPGRADE] 23] Resetting Luck to 10 for item " .. nNewItemIdx .. " (allow future upgrades)")
+    print("[LUA-UPGRADE] 24] Resetting Luck to 10 for item " .. nNewItemIdx .. " (allow future upgrades)")
     SetItemLuck(nNewItemIdx, 10)
 
     -- Get new attribute value to show in message
     local nAttribType2, nNewValue, nMin2, nMax2 = GetItemMagicAttribInfo(nNewItemIdx, nAttribSlot)
-    print("[LUA-UPGRADE] 24] New attribute value: " .. nNewValue)
+    print("[LUA-UPGRADE] 25] New attribute value: " .. nNewValue)
 
     -- SUCCESS
-    print("[LUA-UPGRADE] 25] Upgrade complete - new item index: " .. nNewItemIdx .. ", Luck reset to 10")
+    print("[LUA-UPGRADE] 26] Upgrade complete - new item index: " .. nNewItemIdx .. ", Luck reset to 10")
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
                          szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
                          "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
