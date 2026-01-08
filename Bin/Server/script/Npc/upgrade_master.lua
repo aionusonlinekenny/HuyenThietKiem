@@ -308,10 +308,10 @@ function PerformUpgrade(nAttribSlotStr, _)
         end
     end
 
-    -- TEST: Create new item WITHOUT setting attributes to isolate the disconnect cause
-    -- If this doesn't disconnect, then SetItemMagicAttrib is the problem
-    -- If this still disconnects, then something else is wrong
-    print("[LUA-UPGRADE] 23] Creating new item (TEST: no attribute setting)...")
+    -- FINAL SOLUTION: Create new item with upgraded attributes, DON'T delete old item
+    -- ROOT CAUSE: DelItemByIndex() when UI is open causes client disconnect
+    -- WORKAROUND: Leave old item in BUILD_CONTAINER, new upgraded item goes to inventory
+    print("[LUA-UPGRADE] 23] Creating new item with upgraded attributes...")
     local nNewItemIdx = AddItemEx(nGenre, nDetail, nParti, nLevel, nSeries, 10, 0, 0, 0, 0, 0, 0, 0, 0)
     print("[LUA-UPGRADE] 24] AddItemEx returned: " .. tostring(nNewItemIdx))
 
@@ -321,17 +321,25 @@ function PerformUpgrade(nAttribSlotStr, _)
         return
     end
 
-    -- SKIP setting attributes for now to test
-    print("[LUA-UPGRADE] 26] Skipping attribute setting (testing)")
+    -- Set all 6 attributes manually on new item
+    print("[LUA-UPGRADE] 26] Setting attributes on new item...")
+    for i = 0, 5 do
+        if tAttribs[i].nType > 0 then
+            -- SetItemMagicAttrib(itemIdx, slot, type, min, max, actualValue)
+            SetItemMagicAttrib(nNewItemIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
+        end
+    end
 
-    -- NOW delete old item
-    print("[LUA-UPGRADE] 27] Deleting old item index: " .. nEquipIdx)
-    DelItemByIndex(nEquipIdx)
+    -- DO NOT delete old item (causes disconnect when UI is open)
+    -- User must manually remove old item from BUILD_CONTAINER slot
+    print("[LUA-UPGRADE] 27] Upgrade complete - old item NOT deleted to prevent disconnect")
 
-    -- SUCCESS (item has random attributes, not upgraded ones, but testing if it disconnects)
-    print("[LUA-UPGRADE] 28] Test complete - new item created without attribute setting")
-    local szSuccessMsg = "<color=green>[TEST]<color> Item moi tao thanh cong (chua set attrib). " ..
-                         "<color=yellow>TRANG BI DA VAO TUI DO (INVENTORY)!</color>"
+    -- SUCCESS (new upgraded item in inventory, old item still in BUILD_CONTAINER)
+    local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
+                         szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
+                         "<color=yellow>TRANG BI MOI DA VAO TUI DO!</color> " ..
+                         "<color=red>ITEM CU TRONG KHAY - BAN TU XOA NHE!</color> " ..
+                         "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
     Msg2Player(szSuccessMsg)
 end
 
