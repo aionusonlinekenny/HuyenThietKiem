@@ -205,13 +205,13 @@ int LuaModifyRepute(Lua_State *L)
 	if (nValue < 0)
 	{
 		char szMsg[100];
-		sprintf(szMsg, "Danh väng b¹n gi¶m <color=green>%d ®iÓm<color>!", -nValue);		
+		sprintf(szMsg, "Danh vï¿½ng bï¿½n giï¿½m <color=green>%d ï¿½iï¿½m<color>!", -nValue);		
 		KPlayerChat::SendSystemInfo(1, nPlayerIndex, MESSAGE_SYSTEM_ANNOUCE_HEAD, (char *) szMsg, strlen(szMsg) );
 	}
 	else
 	{
 		char szMsg[100];
-		sprintf(szMsg, "Danh väng b¹n t¨ng <color=green>%d ®iÓm<color>!", nValue);		
+		sprintf(szMsg, "Danh vï¿½ng bï¿½n tï¿½ng <color=green>%d ï¿½iï¿½m<color>!", nValue);		
 		KPlayerChat::SendSystemInfo(1, nPlayerIndex, MESSAGE_SYSTEM_ANNOUCE_HEAD, (char *) szMsg, strlen(szMsg) );
 	}
 	
@@ -246,13 +246,13 @@ int LuaModifyFuyuan(Lua_State *L)
 	if (nValue < 0)
 	{
 		char szMsg[100];
-		sprintf(szMsg, "Phóc duyªn b¹n gi¶m <color=green>%d ®iÓm<color>!", -nValue);		
+		sprintf(szMsg, "Phï¿½c duyï¿½n bï¿½n giï¿½m <color=green>%d ï¿½iï¿½m<color>!", -nValue);		
 		KPlayerChat::SendSystemInfo(1, nPlayerIndex, MESSAGE_SYSTEM_ANNOUCE_HEAD, (char *) szMsg, strlen(szMsg) );
 	}
 	else
 	{
 		char szMsg[100];
-		sprintf(szMsg, "Phóc duyªn b¹n t¨ng <color=green>%d ®iÓm<color>!", nValue);		
+		sprintf(szMsg, "Phï¿½c duyï¿½n bï¿½n tï¿½ng <color=green>%d ï¿½iï¿½m<color>!", nValue);		
 		KPlayerChat::SendSystemInfo(1, nPlayerIndex, MESSAGE_SYSTEM_ANNOUCE_HEAD, (char *) szMsg, strlen(szMsg) );
 	}
 	
@@ -327,11 +327,11 @@ lab_subworldidx2id:
 Say(sMainInfo, nSelCount, sSel1, sSel2, sSel3, .....,sSeln) 
 Say(nMainInfo, nSelCount, sSel1, sSel2, sSel3, .....,sSeln) 
 Say(nMainInfo, nSelCount, SelTab)
-????????????????????????????ß???
+????????????????????????????ï¿½???
 
   Say(100, 3, 10, 23,43)
-  Say("????ô??", 2, "??/yes", "??/no");
-  Say("??ô?", 2, SelTab);
+  Say("????ï¿½??", 2, "??/yes", "??/no");
+  Say("??ï¿½?", 2, SelTab);
 */
 //**************************************************************************************************************************************************************
 //												????u?
@@ -1824,7 +1824,7 @@ if (Lua_GetTopIndex(L) <= 0) return 0;
 		}
 		else
 		{
-			KPlayerChat::SendSystemInfo(1, nPlayerIndex, "Lçi Bug", "Bug hµm LuaMsgToPlayer vui lßng b¸o BQT", 48);
+			KPlayerChat::SendSystemInfo(1, nPlayerIndex, "Lï¿½i Bug", "Bug hï¿½m LuaMsgToPlayer vui lï¿½ng bï¿½o BQT", 48);
 		}
 	}
 	return 0;
@@ -1846,7 +1846,7 @@ int LuaMsgToTeam(Lua_State * L)
 		const char* szMsg = Lua_ValueToString(L,1);
 		int nTeamLeaderId = g_Team[Player[nPlayerIndex].m_cTeam.m_nID].m_nCaptain;
 		if (nTeamLeaderId > 0)
-			KPlayerChat::SendSystemInfo(1, nTeamLeaderId, "Tin tøc tæ ®éi",(char *) szMsg, strlen(szMsg) );
+			KPlayerChat::SendSystemInfo(1, nTeamLeaderId, "Tin tï¿½c tï¿½ ï¿½ï¿½i",(char *) szMsg, strlen(szMsg) );
 		
 		for (int i = 0; i < MAX_TEAM_MEMBER; i ++)
 		{
@@ -1854,7 +1854,7 @@ int LuaMsgToTeam(Lua_State * L)
 			if (nMemberId > 0)
 			{
 				if (szMsg)
-					KPlayerChat::SendSystemInfo(1, nMemberId, "Tin tøc tæ ®éi", (char *)szMsg, strlen(szMsg) );
+					KPlayerChat::SendSystemInfo(1, nMemberId, "Tin tï¿½c tï¿½ ï¿½ï¿½i", (char *)szMsg, strlen(szMsg) );
 			}
 		}
 	}
@@ -6528,7 +6528,7 @@ int LuaGetStationName(Lua_State * L)
 	}
 	int nStationId = (int)Lua_ValueToNumber(L,1);
 	char szName[50];
-	g_StationTabFile.GetString(nStationId + 1, "DESC", "ÎÞÃû³Ç",  szName, 50 );
+	g_StationTabFile.GetString(nStationId + 1, "DESC", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",  szName, 50 );
 	Lua_PushString(L, szName);
 	return 1;
 }
@@ -6547,7 +6547,7 @@ int LuaGetWayPointName(Lua_State * L)
 	}
 	int nWayPointId = (int)Lua_ValueToNumber(L,1);
 	char szName[50];
-	g_WayPointTabFile.GetString(nWayPointId + 1, "DESC", "Î´¼ÇÂ¼",  szName, 50 );
+	g_WayPointTabFile.GetString(nWayPointId + 1, "DESC", "Î´ï¿½ï¿½Â¼",  szName, 50 );
 	Lua_PushString(L, szName);
 	return 1;
 }
@@ -6821,11 +6821,11 @@ int LuaGetDockName(Lua_State * L)
 	
 	if (nDock > g_DockPriceTabFile.GetHeight() - 1)
 	{
-		strcpy(szName, "Î´ÖªÂëÍ·");
+		strcpy(szName, "Î´Öªï¿½ï¿½Í·");
 		goto DockName;
 	}
 	
-	g_DockTabFile.GetString(nDock + 1, "DESC", "Î´ÖªÂëÍ·", szName, 100);
+	g_DockTabFile.GetString(nDock + 1, "DESC", "Î´Öªï¿½ï¿½Í·", szName, 100);
 	
 DockName:
 	Lua_PushString (L, szName);
@@ -10933,7 +10933,9 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 
    
 	int nIncrease = (nOldValue * nUpgradePercent) / 100;
-	if (nIncrease < 1) nIncrease = 1;
+	// Only force minimum increase of 1 when actually upgrading (percent > 0)
+	// When percent = 0 (failure case), keep original value (increase = 0)
+	if (nUpgradePercent > 0 && nIncrease < 1) nIncrease = 1;
 	int nNewValue = nOldValue + nIncrease;
 
 	// STEP 3: Compare with MagicAttrib max - cap if needed
