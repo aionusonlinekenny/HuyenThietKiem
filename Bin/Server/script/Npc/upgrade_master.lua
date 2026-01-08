@@ -5,6 +5,28 @@
 -----------------------------------------------------------------
 
 -- ------------------------------------------------------------
+-- Helper Functions
+-- ------------------------------------------------------------
+-- Floor function (Lua 5.0 doesn't have math library or % operator)
+function floor(n)
+    if n >= 0 then
+        -- For positive numbers, truncate decimal part
+        local int_part = 0
+        while int_part + 1 <= n do
+            int_part = int_part + 1
+        end
+        return int_part
+    else
+        -- For negative numbers, round down
+        local int_part = 0
+        while int_part - 1 >= n do
+            int_part = int_part - 1
+        end
+        return int_part
+    end
+end
+
+-- ------------------------------------------------------------
 -- Configuration
 -- ------------------------------------------------------------
 UPGRADE_MATERIAL_GENRE = 6      -- item_task
@@ -281,11 +303,11 @@ function PerformUpgrade(nAttribSlotStr, _)
     -- SOLUTION: Delete old item, create new item, set all attributes manually
     local nIncreasePercent = UPGRADE_FIXED_PERCENT
 
-    -- Calculate new value
+    -- Calculate new value (MUST be integer for generator levels)
     local nIncrease = (nOldValue * nIncreasePercent) / 100
     if nIncrease < 1 then nIncrease = 1 end
-    local nNewValue = nOldValue + nIncrease
-    if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
+    local nNewValue = floor(nOldValue + nIncrease)  -- Floor to integer
+    if nMax > 0 and nNewValue > nMax then nNewValue = floor(nMax) end
 
     print("[LUA-UPGRADE] 20] SUCCESS - Recreating item with upgraded attribute " .. nAttribSlot .. " from " .. nOldValue .. " to " .. nNewValue)
 
@@ -313,10 +335,10 @@ function PerformUpgrade(nAttribSlotStr, _)
     -- SOLUTION: Use exact mode encoding like UpgradeItemAttributes() does, but from Lua
 
     -- Encode attributes using exact mode (same as C++ UpgradeItemAttributes)
-    -- Generator levels = attribute VALUES (0-255)
+    -- Generator levels = attribute VALUES (0-255) - MUST BE INTEGERS
     local nGenLevels = {}
     for i = 0, 5 do
-        nGenLevels[i] = tAttribs[i].nValue or 0
+        nGenLevels[i] = floor(tAttribs[i].nValue or 0)  -- Ensure integer
     end
 
     -- Encode attribute TYPES into seed (types 0-3, 32 bits) and version (types 4-5, 16 bits)
