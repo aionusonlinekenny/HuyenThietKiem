@@ -265,20 +265,28 @@ function PerformUpgrade(nAttribSlotStr, _)
 
     if not bUpgradeSuccess then
         -- FAILURE: Delete equipment from build container
-        -- Equipment will be automatically returned to inventory
+        -- Equipment should be automatically returned to inventory
         -- This triggers UpdateItem(bAdd=0) → Client unlocks (C++ fix)
         print("[LUA-UPGRADE] 19] Upgrade FAILED - deleting equipment from build container")
 
         DelItemByIndex(nEquipIdx)
-        print("[LUA-UPGRADE] 19b] Equipment deleted, will return to inventory")
+        print("[LUA-UPGRADE] 19b] Equipment deleted")
 
-        local szFailMsg = "<color=red>[THAT BAI]<color> Nang cap that bai!\n" ..
-                          szAttribName .. ": " .. nOldValue .. " (khong doi)\n" ..
-                          "Trang bi da duoc tra ve tui do.\n" ..
-                          "Da mat: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
-        Talk(1, "", szFailMsg)
+        -- IMPORTANT: DO NOT use Talk() - it's blocking and client is locked!
+        -- Only use Msg2Player() which is non-blocking
+        local szFailMsg = "<color=red>[THAT BAI]<color> Nang cap that bai! " ..
+                          szAttribName .. ": " .. nOldValue .. " (khong doi). " ..
+                          "Trang bi da duoc tra ve tui do. " ..
+                          "Da mat: " .. nMineralsUsed .. " khoang thach + tien"
         Msg2Player(szFailMsg)
-        print("[LUA-UPGRADE] 19c] Failure handling complete")
+        print("[LUA-UPGRADE] 19c] Failure message sent, checking if item returned...")
+
+        -- Give server time to move item back to inventory
+        -- Check if player has the item in inventory
+        local nCheckIdx = GetItemIndex(0)  -- Check first inventory slot
+        print("[LUA-UPGRADE] 19d] First inventory slot check: " .. tostring(nCheckIdx))
+
+        print("[LUA-UPGRADE] 19e] Failure handling complete")
         return
     end
 
