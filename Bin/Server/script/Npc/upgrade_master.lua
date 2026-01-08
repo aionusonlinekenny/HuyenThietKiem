@@ -175,7 +175,7 @@ function PerformUpgrade(nAttribSlotStr, _)
         local nGenre, nDetail = GetItemProp(nLuckyStoneIdx)
         if nGenre then
             if IsLuckyStone(nGenre, nDetail) == 0 then
-                Talk(1, "", "Chi chap nhan Da May Man o vi tri nay!")
+                Msg2Player("Chi chap nhan Da May Man o vi tri nay!")
                 return
             end
         end
@@ -186,12 +186,12 @@ function PerformUpgrade(nAttribSlotStr, _)
     local nPlayerXu = GetTaskItemCount(19)
 
     if nPlayerMoney < UPGRADE_COST_MONEY then
-        Talk(1, "", "Khong du tien! Ban can co it nhat 1,000,000 luong.")
+        Msg2Player("Khong du tien! Ban can co it nhat 1,000,000 luong.")
         return
     end
 
     if nPlayerXu < UPGRADE_COST_XU then
-        Talk(1, "", "Khong du xu! Ban can co it nhat 2 xu.")
+        Msg2Player("Khong du xu! Ban can co it nhat 2 xu.")
         return
     end
 
@@ -201,7 +201,7 @@ function PerformUpgrade(nAttribSlotStr, _)
     print("[LUA-UPGRADE] 14] GetItemMagicAttribInfo returned - Type: " .. tostring(nAttribType) .. ", Value: " .. tostring(nOldValue) .. ", Min: " .. tostring(nMin) .. ", Max: " .. tostring(nMax))
 
     if not nAttribType or nAttribType <= 0 then
-        Talk(1, "", "Loi: Khong tim thay thuoc tinh!")
+        Msg2Player("Loi: Khong tim thay thuoc tinh!")
         print("[LUA-UPGRADE] 15] Attribute type invalid or not found")
         return
     end
@@ -305,19 +305,16 @@ function PerformUpgrade(nAttribSlotStr, _)
     if nNewItemIdx == 0 then
         -- Technical error during upgrade
         print("[LUA-UPGRADE] 22] ERROR: UpgradeItemAttributes failed")
-        local szErrorMsg = "<color=red>[LOI KY THUAT]<color> Loi khi nang cap!\n" ..
-                           "Vui long lien he GM."
-        Talk(1, "", szErrorMsg)
+        local szErrorMsg = "<color=red>[LOI KY THUAT]<color> Loi khi nang cap! Vui long lien he GM."
         Msg2Player(szErrorMsg)
         return
     end
 
     -- SUCCESS
     print("[LUA-UPGRADE] 23] Upgrade SUCCESS")
-    local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong!\n" ..
-                         szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)\n" ..
+    local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
+                         szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
                          "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
-    Talk(1, "", szSuccessMsg)
     Msg2Player(szSuccessMsg)
 end
 
