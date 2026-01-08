@@ -339,7 +339,7 @@ function PerformUpgrade(nAttribSlotStr, _)
     print("[LUA-UPGRADE] 29] Upgrade complete - new item created in inventory with upgraded attributes")
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
                          szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
-                         "<color=yellow>DONG HOP THOAI NAY (ESC) VA MO LAI DE THAY THAY DOI!<color> " ..
+                         "<color=yellow>TRANG BI DA VAO TUI DO (INVENTORY)!</color> " ..
                          "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
     Msg2Player(szSuccessMsg)
 end
