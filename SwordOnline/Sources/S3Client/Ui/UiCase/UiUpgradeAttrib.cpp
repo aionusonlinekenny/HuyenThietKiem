@@ -512,11 +512,14 @@ void KUiUpgradeAttrib::Breathe()
 		if (m_nUpgradeLockFrames > 300)
 		{
 			g_DebugLog("[CLIENT] Upgrade lock timeout - force releasing after %d frames", m_nUpgradeLockFrames);
+			g_DebugLog("[CLIENT] Timeout indicates upgrade failed - materials deleted, equipment preserved");
 			m_bUpgradeInProgress = FALSE;
 			m_nUpgradeLockFrames = 0;
 
-			// Refresh success rate display
-			UpdateSuccessRateDisplay();
+			// DO NOT call UpdateSuccessRateDisplay() here!
+			// When upgrade fails, materials are deleted but equipment stays
+			// Calling UpdateSuccessRateDisplay() would try to access deleted materials and crash
+			// UI will refresh naturally when user interacts with it (removes equipment, etc.)
 		}
 	}
 }
