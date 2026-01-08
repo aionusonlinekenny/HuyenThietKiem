@@ -109,8 +109,8 @@ end
 -- ------------------------------------------------------------
 function PerformUpgrade(nAttribSlotStr, _)
     -- DEBUG: Function entry
-    Msg2Player("[LUA DEBUG 1] PerformUpgrade function entered")
-    Msg2Player("[LUA DEBUG 2] Raw parameter received: " .. tostring(nAttribSlotStr))
+    print("[LUA-UPGRADE] 1] PerformUpgrade function entered")
+    print("[LUA-UPGRADE] 2] Raw parameter received: " .. tostring(nAttribSlotStr))
 
     -- Parse attribute slot from parameter (C++ sends as string in first param, 0 in second)
     local nAttribSlot = tonumber(nAttribSlotStr)
@@ -119,41 +119,41 @@ function PerformUpgrade(nAttribSlotStr, _)
         return
     end
 
-    Msg2Player("[LUA DEBUG 3] Parsed slot: " .. nAttribSlot)
+    print("[LUA-UPGRADE] 3] Parsed slot: " .. nAttribSlot)
 
     local nPos = 15  -- pos_builditem
-    Msg2Player("[LUA DEBUG 4] About to call GetPOItem(15, 0)")
+    print("[LUA-UPGRADE] 4] About to call GetPOItem(15, 0)")
 
     -- Get equipment (must exist)
     local nEquipIdx = GetPOItem(nPos, 0)
-    Msg2Player("[LUA DEBUG 5] GetPOItem returned: " .. tostring(nEquipIdx))
+    print("[LUA-UPGRADE] 5] GetPOItem returned: " .. tostring(nEquipIdx))
 
     if not nEquipIdx or nEquipIdx <= 0 then
         Talk(1, "", "Loi: Trang bi bi mat!")
-        Msg2Player("[LUA DEBUG 6] Equipment not found in slot")
+        print("[LUA-UPGRADE] 6] Equipment not found in slot")
         return
     end
 
-    Msg2Player("[LUA DEBUG 7] Equipment found, index: " .. nEquipIdx)
+    print("[LUA-UPGRADE] 7] Equipment found, index: " .. nEquipIdx)
 
     -- Validate equipment is blue
-    Msg2Player("[LUA DEBUG 8] Calling GetItemProp")
+    print("[LUA-UPGRADE] 8] Calling GetItemProp")
     local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
-    Msg2Player("[LUA DEBUG 9] GetItemProp - Genre: " .. tostring(nGenre) .. ", Luck: " .. tostring(nLuck))
+    print("[LUA-UPGRADE] 9] GetItemProp - Genre: " .. tostring(nGenre) .. ", Luck: " .. tostring(nLuck))
 
     if not nGenre or nGenre ~= 0 then
         Talk(1, "", "Chi co the nang cap trang bi xanh!")
-        Msg2Player("[LUA DEBUG 10] Equipment is not blue (genre != 0)")
+        print("[LUA-UPGRADE] 10] Equipment is not blue (genre != 0)")
         return
     end
 
     if nLuck >= 1000000000 then
         Talk(1, "", "Trang bi nay la tim/vang, khong the nang cap!")
-        Msg2Player("[LUA DEBUG 11] Equipment is purple/gold (luck >= 1000000000)")
+        print("[LUA-UPGRADE] 11] Equipment is purple/gold (luck >= 1000000000)")
         return
     end
 
-    Msg2Player("[LUA DEBUG 12] Equipment validation passed")
+    print("[LUA-UPGRADE] 12] Equipment validation passed")
 
     -- Validate minerals in slots 1-4 (if present)
     for i = 1, 4 do
@@ -196,17 +196,17 @@ function PerformUpgrade(nAttribSlotStr, _)
     end
 
     -- Get attribute info for the selected slot
-    Msg2Player("[LUA DEBUG 13] About to call GetItemMagicAttribInfo with ItemIdx=" .. nEquipIdx .. ", Slot=" .. nAttribSlot)
+    print("[LUA-UPGRADE] 13] About to call GetItemMagicAttribInfo with ItemIdx=" .. nEquipIdx .. ", Slot=" .. nAttribSlot)
     local nAttribType, nOldValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
-    Msg2Player("[LUA DEBUG 14] GetItemMagicAttribInfo returned - Type: " .. tostring(nAttribType) .. ", Value: " .. tostring(nOldValue) .. ", Min: " .. tostring(nMin) .. ", Max: " .. tostring(nMax))
+    print("[LUA-UPGRADE] 14] GetItemMagicAttribInfo returned - Type: " .. tostring(nAttribType) .. ", Value: " .. tostring(nOldValue) .. ", Min: " .. tostring(nMin) .. ", Max: " .. tostring(nMax))
 
     if not nAttribType or nAttribType <= 0 then
         Talk(1, "", "Loi: Khong tim thay thuoc tinh!")
-        Msg2Player("[LUA DEBUG 15] Attribute type invalid or not found")
+        print("[LUA-UPGRADE] 15] Attribute type invalid or not found")
         return
     end
 
-    Msg2Player("[LUA DEBUG 16] Attribute info retrieved successfully")
+    print("[LUA-UPGRADE] 16] Attribute info retrieved successfully")
 
     -- STEP 1: Calculate success rate BEFORE deleting materials
     -- Count minerals and their levels
@@ -240,7 +240,7 @@ function PerformUpgrade(nAttribSlotStr, _)
         bHasLuckyStone = 1
     end
 
-    Msg2Player("[LUA DEBUG 17] Success rate calculated: " .. nSuccessRate .. "% (base=" .. UPGRADE_BASE_SUCCESS_RATE .. ", minerals=" .. nMineralCount .. ", lucky=" .. bHasLuckyStone .. ")")
+    print("[LUA-UPGRADE] 17] Success rate calculated: " .. nSuccessRate .. "% (base=" .. UPGRADE_BASE_SUCCESS_RATE .. ", minerals=" .. nMineralCount .. ", lucky=" .. bHasLuckyStone .. ")")
 
     -- STEP 2: Delete materials and deduct costs (consumed regardless of success)
     local nMineralsUsed = 0
@@ -259,7 +259,7 @@ function PerformUpgrade(nAttribSlotStr, _)
     local nRoll = random(1, 100)  -- Random 1-100
     local bUpgradeSuccess = (nRoll <= nSuccessRate)
 
-    Msg2Player("[LUA DEBUG 18] Random roll: " .. nRoll .. " vs success rate: " .. nSuccessRate .. "% => " .. (bUpgradeSuccess and "SUCCESS" or "FAIL"))
+    print("[LUA-UPGRADE] 18] Random roll: " .. nRoll .. " vs success rate: " .. nSuccessRate .. "% => " .. (bUpgradeSuccess and "SUCCESS" or "FAIL"))
 
     local szAttribName = GetAttribName(nAttribType)
 
@@ -267,15 +267,15 @@ function PerformUpgrade(nAttribSlotStr, _)
         -- FAILURE: Call UpgradeItemAttributes with 1% (minimum increase)
         -- This ensures item is updated and triggers UpdateItem event
         -- C++ now unlocks on BOTH add and remove from slot 0
-        Msg2Player("[LUA DEBUG 19] Upgrade FAILED - calling UpgradeItemAttributes with 1%")
+        print("[LUA-UPGRADE] 19] Upgrade FAILED - calling UpgradeItemAttributes with 1%")
 
         local nMinPercent = 1  -- Minimum 1% to ensure API accepts it
         local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nMinPercent, nPos)
-        Msg2Player("[LUA DEBUG 19b] UpgradeItemAttributes(1%) returned: " .. tostring(nNewItemIdx))
+        print("[LUA-UPGRADE] 19b] UpgradeItemAttributes(1%) returned: " .. tostring(nNewItemIdx))
 
         if nNewItemIdx == 0 then
             -- Technical error
-            Msg2Player("[LUA DEBUG 19c] ERROR: UpgradeItemAttributes(1%) failed - trying DelItem method")
+            print("[LUA-UPGRADE] 19c] ERROR: UpgradeItemAttributes(1%) failed - trying DelItem method")
             -- Fallback: Just delete item, it will return to inventory automatically
             DelItemByIndex(nEquipIdx)
             local szErrorMsg = "<color=red>[LOI KY THUAT]<color> Loi khi nang cap!\n" ..
@@ -308,13 +308,13 @@ function PerformUpgrade(nAttribSlotStr, _)
     local nNewValue = nOldValue + nIncrease
     if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
-    Msg2Player("[LUA DEBUG 20] Calling UpgradeItemAttributes with Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent)
+    print("[LUA-UPGRADE] 20] Calling UpgradeItemAttributes with Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent)
     local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, nPos)
-    Msg2Player("[LUA DEBUG 21] UpgradeItemAttributes returned: " .. tostring(nNewItemIdx))
+    print("[LUA-UPGRADE] 21] UpgradeItemAttributes returned: " .. tostring(nNewItemIdx))
 
     if nNewItemIdx == 0 then
         -- Technical error during upgrade
-        Msg2Player("[LUA DEBUG 22] ERROR: UpgradeItemAttributes failed")
+        print("[LUA-UPGRADE] 22] ERROR: UpgradeItemAttributes failed")
         local szErrorMsg = "<color=red>[LOI KY THUAT]<color> Loi khi nang cap!\n" ..
                            "Vui long lien he GM."
         Talk(1, "", szErrorMsg)
@@ -323,7 +323,7 @@ function PerformUpgrade(nAttribSlotStr, _)
     end
 
     -- SUCCESS
-    Msg2Player("[LUA DEBUG 23] Upgrade SUCCESS")
+    print("[LUA-UPGRADE] 23] Upgrade SUCCESS")
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong!\n" ..
                          szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)\n" ..
                          "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
