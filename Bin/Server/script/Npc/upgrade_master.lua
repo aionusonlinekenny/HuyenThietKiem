@@ -331,8 +331,11 @@ function PerformUpgrade(nAttribSlotStr, _)
     nEncodedVersion = nEncodedVersion + ((tAttribs[5].nType or 0) * 256)  -- bits 8-15
 
     -- Exact mode luck = 999900000 + original luck (mod 100000)
-    -- Lua 5.0 doesn't support % operator, use math.mod
-    local nLuckMod = math.mod(nLuck, 100000)
+    -- Lua 5.0 doesn't support % operator and math module not available, manual modulo
+    local nLuckMod = nLuck
+    while nLuckMod >= 100000 do
+        nLuckMod = nLuckMod - 100000
+    end
     local nExactModeLuck = 999900000 + nLuckMod
 
     print("[LUA-UPGRADE] 23] Creating item with EXACT MODE encoding...")
