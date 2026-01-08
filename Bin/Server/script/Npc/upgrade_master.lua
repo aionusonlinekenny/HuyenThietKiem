@@ -175,10 +175,6 @@ function PerformUpgrade(nAttribSlotStr, _)
 
     print(string.format("[LUA-UPGRADE] Random roll: %d/%d, Success: %s", nRandom, nSuccessRate, tostring(bSuccess)))
 
-    -- Get attribute type for display
-    local nAttribType = GetItemPartAttribType(15, 0, nAttribSlot)
-    local szAttribName = GetAttribName(nAttribType)
-
     if bSuccess then
         -- SUCCESS CASE
         print("[LUA-UPGRADE] UPGRADE SUCCESS!")
@@ -197,8 +193,8 @@ function PerformUpgrade(nAttribSlotStr, _)
         UpgradeItemAttributes(15, 0, nAttribSlot, nNewValue)
 
         -- Show success message
-        Msg2Player(string.format("Nâng cấp thành công! %s: %d -> %d (+%d)",
-            szAttribName, nCurrentValue, nNewValue, nIncreaseValue))
+        Msg2Player(string.format("Nâng cấp thành công! Thuộc tính tăng: %d -> %d (+%d)",
+            nCurrentValue, nNewValue, nIncreaseValue))
         print("[LUA-UPGRADE] UpgradeItemAttributes completed, UpdateItem sent to client")
 
     else
@@ -212,8 +208,7 @@ function PerformUpgrade(nAttribSlotStr, _)
         UpgradeItemAttributes(15, 0, nAttribSlot, nCurrentValue)
 
         -- Show failure message
-        Msg2Player(string.format("Nâng cấp thất bại! %s vẫn giữ nguyên giá trị %d.",
-            szAttribName, nCurrentValue))
+        Msg2Player(string.format("Nâng cấp thất bại! Thuộc tính vẫn giữ nguyên giá trị %d.", nCurrentValue))
         print("[LUA-UPGRADE] Failure handling complete, UpdateItem sent to client")
     end
 
