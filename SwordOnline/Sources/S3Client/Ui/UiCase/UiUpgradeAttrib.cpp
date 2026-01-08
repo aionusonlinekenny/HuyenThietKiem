@@ -621,14 +621,16 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
 					// NEW: Load equipment attributes when equipment is added to slot 0
 					if (i == SLOT_EQUIPMENT)
 					{
-						// CRITICAL: Unlock upgrade processing when equipment updated
+						// CRITICAL: Unlock upgrade processing BEFORE loading attributes
 						// This happens after successful upgrade or initial placement
 						if (m_bUpgradeInProgress)
 						{
 							m_bUpgradeInProgress = FALSE;
+							m_nUpgradeLockFrames = 0;
 							g_DebugLog("[CLIENT] Upgrade lock released - equipment updated");
 						}
 
+						// Now safe to load attributes (lock is released)
 						LoadEquipmentAttributes();
 					}
 				}
@@ -648,6 +650,14 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
 			}
 		}
 		g_DebugLog("[CLIENT] UpdateItem() completed");
+
+		// CRITICAL: Skip success rate update during upgrade processing
+		// When materials are deleted during upgrade failure, this prevents crash
+		if (m_bUpgradeInProgress)
+		{
+			g_DebugLog("[CLIENT] Skipping UpdateSuccessRateDisplay - upgrade in progress (double-check guard)");
+			return;
+		}
 
 		// Update success rate display after item is added/removed
 		UpdateSuccessRateDisplay();
@@ -872,6 +882,13 @@ void KUiUpgradeAttrib::UpdateSuccessRateDisplay()
 void KUiUpgradeAttrib::LoadEquipmentAttributes()
 {
 	g_DebugLog("[UPGRADE-ATTRIB] LoadEquipmentAttributes() called");
+
+	// CRITICAL: Skip if upgrade in progress to prevent crash during material deletion
+	if (m_bUpgradeInProgress)
+	{
+		g_DebugLog("[UPGRADE-ATTRIB] Skipping LoadEquipmentAttributes - upgrade in progress");
+		return;
+	}
 
 	// Clear previous data
 	m_nAttributeCount = 0;
