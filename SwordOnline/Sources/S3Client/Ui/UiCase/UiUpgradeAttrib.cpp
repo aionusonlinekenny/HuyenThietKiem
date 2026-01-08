@@ -521,7 +521,9 @@ void KUiUpgradeAttrib::Breathe()
 	{
 		g_DebugLog("[CLIENT-BREATHE] Effect animation complete, calling StopEffect()");
 		StopEffect();
+		g_DebugLog("[CLIENT-BREATHE] StopEffect() returned, setting m_EffectTime = 0");
 		m_EffectTime = 0;
+		g_DebugLog("[CLIENT-BREATHE] Effect handling complete, exiting condition");
 	}
 
 	// CRITICAL: Fail-safe unlock after 5 seconds (in case upgrade fails and equipment not updated)
@@ -563,12 +565,16 @@ void KUiUpgradeAttrib::StartEffect()
 void KUiUpgradeAttrib::StopEffect()
 {
 	g_DebugLog("[CLIENT-EFFECT] StopEffect() called");
+	g_DebugLog("[CLIENT-EFFECT] Calling m_UpgradeEffect.Hide()");
 	m_UpgradeEffect.Hide();
+	g_DebugLog("[CLIENT-EFFECT] m_UpgradeEffect.Hide() completed");
 	g_DebugLog("[CLIENT-EFFECT] Calling UpdatePickPut(true)");
 	UpdatePickPut(true);
+	g_DebugLog("[CLIENT-EFFECT] UpdatePickPut(true) completed");
 	g_DebugLog("[CLIENT-EFFECT] Calling OnUpgrade()");
 	OnUpgrade();
-	g_DebugLog("[CLIENT-EFFECT] OnUpgrade() returned, StopEffect() finished");
+	g_DebugLog("[CLIENT-EFFECT] OnUpgrade() returned");
+	g_DebugLog("[CLIENT-EFFECT] StopEffect() about to return");
 }
 
 /*********************************************************************
@@ -771,11 +777,20 @@ void KUiUpgradeAttrib::OnCancel()
  *********************************************************************/
 void KUiUpgradeAttrib::UpdatePickPut(bool bLock)
 {
+	g_DebugLog("[CLIENT-PICKPUT] UpdatePickPut(%d) called", bLock);
+	g_DebugLog("[CLIENT-PICKPUT] Enabling %d slots", _UPGRADE_ATTRIB_SLOT_COUNT);
 	for (int i = 0; i < _UPGRADE_ATTRIB_SLOT_COUNT; i++)
+	{
+		g_DebugLog("[CLIENT-PICKPUT] Enabling slot %d", i);
 		m_UpgradeSlot[i].EnablePickPut(bLock);
+	}
+	g_DebugLog("[CLIENT-PICKPUT] All slots enabled, enabling buttons");
 
 	m_BtnUpgrade.Enable(bLock);
+	g_DebugLog("[CLIENT-PICKPUT] Upgrade button enabled");
 	m_BtnClose.Enable(bLock);
+	g_DebugLog("[CLIENT-PICKPUT] Close button enabled");
+	g_DebugLog("[CLIENT-PICKPUT] UpdatePickPut() finished");
 }
 /*********************************************************************
  * Get Mineral Level (1-3)
