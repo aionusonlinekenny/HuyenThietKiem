@@ -264,33 +264,28 @@ function PerformUpgrade(nAttribSlotStr, _)
     local szAttribName = GetAttribName(nAttribType)
 
     if not bUpgradeSuccess then
-        -- FAILURE: Recreate item with basic properties (magic attributes will be random)
-        print("[LUA-UPGRADE] 19] Upgrade FAILED - saving item data for recreation")
+        -- FAILURE: Call UpgradeItemAttributes with 0% increase (same as SUCCESS case)
+        -- This properly handles item removal/addition in correct container
+        print("[LUA-UPGRADE] 19] Upgrade FAILED - returning equipment with 0% increase")
 
-        -- Delete item from build container (triggers UpdateItem bAdd=0 → unlock client)
-        DelItemByIndex(nEquipIdx)
-        print("[LUA-UPGRADE] 19b] Equipment deleted from build container")
+        -- Call same API as SUCCESS case but with 0% increase
+        -- This ensures item is properly returned to correct container position
+        local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, 0, nPos)
+        print("[LUA-UPGRADE] 19b] UpgradeItemAttributes(0%) returned: " .. tostring(nNewItemIdx))
 
-        -- Recreate item in INVENTORY using simple AddItem() API
-        -- NOTE: Magic attributes will be randomly generated, not preserved exactly
-        -- AddItem(genus, detail, particular, level, series, luck1, luck2)
-        local nNewIdx = AddItem(0, nDetail, nParticular, nLevel, nSeries, nLuck, nLuck)
-        print("[LUA-UPGRADE] 19c] Equipment recreated with AddItem(), newIdx=" .. tostring(nNewIdx))
-
-        if not nNewIdx or nNewIdx <= 0 then
-            print("[LUA-UPGRADE] 19d] ERROR: Failed to recreate equipment!")
-            Msg2Player("<color=red>LOI KY THUAT: Khong the tao lai trang bi! Lien he GM.<color>")
+        if nNewItemIdx == 0 then
+            print("[LUA-UPGRADE] 19c] ERROR: UpgradeItemAttributes failed!")
+            Msg2Player("<color=red>LOI KY THUAT: Khong the tra lai trang bi! Lien he GM.<color>")
             return
         end
 
-        -- Success - equipment returned to inventory
-        -- NOTE: Magic attributes may be different (randomly regenerated)
+        -- Success - equipment returned to correct container
         local szFailMsg = "<color=red>[THAT BAI]<color> Nang cap that bai! " ..
                           szAttribName .. ": " .. nOldValue .. " (khong doi). " ..
-                          "Trang bi da duoc tra ve tui do (thuoc tinh co the khac). " ..
+                          "Trang bi da duoc tra ve. " ..
                           "Da mat: " .. nMineralsUsed .. " khoang thach + tien"
         Msg2Player(szFailMsg)
-        print("[LUA-UPGRADE] 19e] Failure handling complete")
+        print("[LUA-UPGRADE] 19d] Failure handling complete")
         return
     end
 
