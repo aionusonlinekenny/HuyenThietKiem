@@ -120,96 +120,82 @@ function PerformUpgrade(nAttribSlotStr, _)
     local nAttribSlot = tonumber(nAttribSlotStr)
     if not nAttribSlot then
         Msg2Player("Lỗi: Không thể xác định thuộc tính cần nâng cấp")
+        print("[LUA-UPGRADE] ERROR: Invalid attribute slot parameter")
         return
     end
 
     print("[LUA-UPGRADE] Attribute slot to upgrade: " .. nAttribSlot)
 
-    -- IMPORTANT: Materials, money, xu already consumed by C++ BEFORE calling this function
-    -- We only need to check equipment and perform the upgrade logic
-
     -- Step 1: Get equipment from build container
-    local nEquipPos = GetPlayerEquipRoom(15, 0, 0)  -- Container 15, slot 0
-    if nEquipPos == 0 or nEquipPos == -1 then
+    local nEquipIdx = GetPOItem(15, 0)  -- Container 15 (pos_builditem), slot 0
+    if not nEquipIdx or nEquipIdx <= 0 then
         Msg2Player("Lỗi: Không tìm thấy trang bị trong ô nâng cấp")
         print("[LUA-UPGRADE] ERROR: Equipment not found in build container")
         return
     end
 
-    print("[LUA-UPGRADE] Equipment found at position: " .. nEquipPos)
+    print("[LUA-UPGRADE] Equipment index: " .. nEquipIdx)
 
     -- Step 2: Get equipment info
-    local nGenre, nDetail, nParticular, nLevel, nSeries, nLuck = GetPlayerEquipInfo(15, 0)
+    local nGenre, nDetail, nParticular, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
     print(string.format("[LUA-UPGRADE] Equipment: genre=%d, detail=%d, particular=%d, level=%d, series=%d, luck=%d",
-        nGenre, nDetail, nParticular, nLevel, nSeries, nLuck))
+        nGenre or -1, nDetail or -1, nParticular or -1, nLevel or -1, nSeries or -1, nLuck or -1))
 
-    -- Step 3: Validate equipment is blue quality (Lam)
-    if nLuck ~= 200 then
-        Msg2Player("Chỉ có thể nâng cấp trang bị phẩm chất Lam (200 may)")
-        print("[LUA-UPGRADE] ERROR: Equipment is not blue quality, luck=" .. nLuck)
-        return
-    end
-
-    -- Step 4: Get current attribute value
-    local nCurrentValue = GetItemPartAttrib(15, 0, nAttribSlot)
-    if nCurrentValue <= 0 then
+    -- Step 3: Get current attribute value
+    local nAttribType, nCurrentValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
+    if not nAttribType or nAttribType <= 0 or not nCurrentValue or nCurrentValue <= 0 then
         Msg2Player("Thuộc tính này chưa có giá trị, không thể nâng cấp")
         print("[LUA-UPGRADE] ERROR: Attribute slot " .. nAttribSlot .. " has no value")
         return
     end
 
-    print("[LUA-UPGRADE] Current attribute value at slot " .. nAttribSlot .. ": " .. nCurrentValue)
+    print(string.format("[LUA-UPGRADE] Current attribute slot %d: type=%d, value=%d, min=%d, max=%d",
+        nAttribSlot, nAttribType, nCurrentValue, nMin or 0, nMax or 0))
 
-    -- Step 5: Calculate success rate (this was already calculated in C++ UI, but recalculate for verification)
+    -- Step 4: Calculate success rate (use base rate for now)
     local nSuccessRate = UPGRADE_BASE_SUCCESS_RATE
-
-    -- Add mineral bonuses (already consumed, but we calculated in C++)
-    -- For now, use base rate since materials are already gone
-    -- In full implementation, C++ should pass the calculated rate
 
     print("[LUA-UPGRADE] Success rate: " .. nSuccessRate .. "%")
 
-    -- Step 6: Random check for success/failure
+    -- Step 5: Random check for success/failure
     local nRandom = random(1, 100)
     local bSuccess = (nRandom <= nSuccessRate)
 
     print(string.format("[LUA-UPGRADE] Random roll: %d/%d, Success: %s", nRandom, nSuccessRate, tostring(bSuccess)))
 
+    -- Step 6: Perform upgrade
+    local nUpgradePercent = 0
     if bSuccess then
-        -- SUCCESS CASE
-        print("[LUA-UPGRADE] UPGRADE SUCCESS!")
-
-        -- Calculate new value (increase by fixed percentage)
-        local nIncreaseValue = floor(nCurrentValue * UPGRADE_FIXED_PERCENT / 100)
-        if nIncreaseValue < 1 then
-            nIncreaseValue = 1  -- Minimum increase of 1
-        end
-
-        local nNewValue = nCurrentValue + nIncreaseValue
-        print(string.format("[LUA-UPGRADE] Upgrading attribute: %d -> %d (+%d)", nCurrentValue, nNewValue, nIncreaseValue))
-
-        -- Perform the upgrade using C++ function
-        -- This will automatically update the item and trigger UpdateItem event on client
-        UpgradeItemAttributes(15, 0, nAttribSlot, nNewValue)
-
-        -- Show success message
-        Msg2Player(string.format("Nâng cấp thành công! Thuộc tính tăng: %d -> %d (+%d)",
-            nCurrentValue, nNewValue, nIncreaseValue))
-        print("[LUA-UPGRADE] UpgradeItemAttributes completed, UpdateItem sent to client")
-
+        -- SUCCESS: Increase by UPGRADE_FIXED_PERCENT
+        nUpgradePercent = UPGRADE_FIXED_PERCENT
+        print("[LUA-UPGRADE] UPGRADE SUCCESS! Increasing by " .. nUpgradePercent .. "%")
     else
-        -- FAILURE CASE
-        print("[LUA-UPGRADE] UPGRADE FAILED!")
+        -- FAILURE: No increase (0%)
+        nUpgradePercent = 0
+        print("[LUA-UPGRADE] UPGRADE FAILED! No increase (0%)")
+    end
 
-        -- SIMPLE FIX: Call UpgradeItemAttributes with SAME value (0% increase)
-        -- This triggers UpdateItem event on client without changing the attribute
-        -- Equipment is preserved with original value, client UI gets unlocked
-        print(string.format("[LUA-UPGRADE] Calling UpgradeItemAttributes with same value: %d", nCurrentValue))
-        UpgradeItemAttributes(15, 0, nAttribSlot, nCurrentValue)
+    -- Call C++ upgrade function
+    -- This will update the item and trigger UpdateItem event on client
+    print(string.format("[LUA-UPGRADE] Calling UpgradeItemMagicAttrib(itemIdx=%d, slot=%d, percent=%d)",
+        nEquipIdx, nAttribSlot, nUpgradePercent))
 
-        -- Show failure message
-        Msg2Player(string.format("Nâng cấp thất bại! Thuộc tính vẫn giữ nguyên giá trị %d.", nCurrentValue))
-        print("[LUA-UPGRADE] Failure handling complete, UpdateItem sent to client")
+    local nResult = UpgradeItemMagicAttrib(nEquipIdx, nAttribSlot, nUpgradePercent)
+
+    print(string.format("[LUA-UPGRADE] UpgradeItemMagicAttrib returned: %d", nResult or -1))
+
+    -- Get new value after upgrade
+    local _, nNewValue, _, _ = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
+
+    print(string.format("[LUA-UPGRADE] After upgrade: %d -> %d", nCurrentValue, nNewValue or nCurrentValue))
+
+    -- Show result message
+    if bSuccess then
+        local nIncrease = (nNewValue or nCurrentValue) - nCurrentValue
+        Msg2Player(string.format("Nâng cấp thành công! Thuộc tính tăng: %d -> %d (+%d)",
+            nCurrentValue, nNewValue or nCurrentValue, nIncrease))
+    else
+        Msg2Player(string.format("Nâng cấp thất bại! Thuộc tính vẫn giữ nguyên: %d", nCurrentValue))
     end
 
     print("[LUA-UPGRADE] PerformUpgrade finished")
