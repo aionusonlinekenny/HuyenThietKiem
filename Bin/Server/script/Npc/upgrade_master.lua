@@ -297,100 +297,45 @@ function PerformUpgrade(nAttribSlotStr, _)
         return
     end
 
-    -- STEP 4: SUCCESS - Recreate item with upgraded attribute
-    -- PROBLEM: SetItemMagicAttribValueAndSync() causes client disconnect
-    -- PROBLEM: UpgradeItemAttributes() fails randomly (ItemSet.Add or m_ItemList.Add)
-    -- SOLUTION: Delete old item, create new item, set all attributes manually
+    -- STEP 4: SUCCESS - Use UpgradeItemAttributes C++ function
+    -- This function handles everything atomically:
+    -- 1. Preserves all 6 attributes with exact types
+    -- 2. Upgrades the specified slot by the percentage
+    -- 3. Removes old item
+    -- 4. Creates new item with exact mode encoding
+    -- 5. Adds new item to same position
     local nIncreasePercent = UPGRADE_FIXED_PERCENT
 
-    -- Calculate new value (MUST be integer for generator levels)
+    -- Calculate expected new value for logging
     local nIncrease = (nOldValue * nIncreasePercent) / 100
     if nIncrease < 1 then nIncrease = 1 end
-    local nNewValue = floor(nOldValue + nIncrease)  -- Floor to integer
+    local nNewValue = floor(nOldValue + nIncrease)
     if nMax > 0 and nNewValue > nMax then nNewValue = floor(nMax) end
 
-    print("[LUA-UPGRADE] 20] SUCCESS - Recreating item with upgraded attribute " .. nAttribSlot .. " from " .. nOldValue .. " to " .. nNewValue)
+    print("[LUA-UPGRADE] 20] SUCCESS - Calling UpgradeItemAttributes")
+    print("[LUA-UPGRADE] 21] Parameters: ItemIdx=" .. nEquipIdx .. ", Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent .. ", Pos=15")
+    print("[LUA-UPGRADE] 22] Expected: " .. szAttribName .. " " .. nOldValue .. " -> " .. nNewValue)
 
-    -- Get all item properties for recreation
-    local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
-    print("[LUA-UPGRADE] 21] Item props: Genre=" .. nGenre .. ", Detail=" .. nDetail .. ", Parti=" .. nParti .. ", Level=" .. nLevel .. ", Series=" .. nSeries .. ", Luck=" .. nLuck)
+    -- UpgradeItemAttributes(oldItemIdx, upgradeSlot, upgradePercent, position)
+    -- Position 15 = BUILD_CONTAINER (where the item currently is)
+    local nResult = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, 15)
 
-    -- Get ALL 6 attributes (we'll restore all of them)
-    local tAttribs = {}
-    for i = 0, 5 do
-        local nType, nVal, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
-        tAttribs[i] = {
-            nType = nType or 0,
-            nValue = (i == nAttribSlot) and nNewValue or (nVal or 0),  -- Use new value for upgraded slot
-            nMin = nMin or 0,
-            nMax = nMax or 0
-        }
-        if nType and nType > 0 then
-            print("[LUA-UPGRADE] 22] Attribute[" .. i .. "]: Type=" .. nType .. ", OldVal=" .. (nVal or 0) .. ", NewVal=" .. tAttribs[i].nValue .. ", Min=" .. (nMin or 0) .. ", Max=" .. (nMax or 0))
-        end
-    end
+    print("[LUA-UPGRADE] 23] UpgradeItemAttributes returned: " .. tostring(nResult))
 
-    -- FINAL SOLUTION: Use EXACT MODE ENCODING to create item with exact attributes
-    -- ROOT CAUSE: SetItemMagicAttrib() causes disconnect (all attrib-related functions do)
-    -- SOLUTION: Use exact mode encoding like UpgradeItemAttributes() does, but from Lua
-
-    -- Encode attributes using exact mode (same as C++ UpgradeItemAttributes)
-    -- Generator levels = attribute VALUES (0-255) - MUST BE INTEGERS
-    local nGenLevels = {}
-    for i = 0, 5 do
-        nGenLevels[i] = floor(tAttribs[i].nValue or 0)  -- Ensure integer
-    end
-
-    -- Encode attribute TYPES into seed (types 0-3, 32 bits) and version (types 4-5, 16 bits)
-    local nEncodedSeed = 0
-    nEncodedSeed = nEncodedSeed + ((tAttribs[0].nType or 0) * 1)          -- bits 0-7
-    nEncodedSeed = nEncodedSeed + ((tAttribs[1].nType or 0) * 256)        -- bits 8-15
-    nEncodedSeed = nEncodedSeed + ((tAttribs[2].nType or 0) * 65536)      -- bits 16-23
-    nEncodedSeed = nEncodedSeed + ((tAttribs[3].nType or 0) * 16777216)   -- bits 24-31
-
-    local nEncodedVersion = 0
-    nEncodedVersion = nEncodedVersion + ((tAttribs[4].nType or 0) * 1)    -- bits 0-7
-    nEncodedVersion = nEncodedVersion + ((tAttribs[5].nType or 0) * 256)  -- bits 8-15
-
-    -- Exact mode luck = 999900000 + original luck (mod 100000)
-    -- Lua 5.0 doesn't support % operator and math module not available, manual modulo
-    local nLuckMod = nLuck
-    while nLuckMod >= 100000 do
-        nLuckMod = nLuckMod - 100000
-    end
-    local nExactModeLuck = 999900000 + nLuckMod
-
-    print("[LUA-UPGRADE] 23] Creating item with EXACT MODE encoding...")
-    print("[LUA-UPGRADE] 23a] GenLvls=" .. nGenLevels[0] .. "," .. nGenLevels[1] .. "," .. nGenLevels[2] .. "," .. nGenLevels[3] .. "," .. nGenLevels[4] .. "," .. nGenLevels[5])
-    print("[LUA-UPGRADE] 23b] Seed=" .. nEncodedSeed .. ", Version=" .. nEncodedVersion .. ", Luck=" .. nExactModeLuck)
-
-    -- AddItemEx(genre, detail, particular, level, series, luck, genLvl0-5, version, seed)
-    local nNewItemIdx = AddItemEx(nGenre, nDetail, nParti, nLevel, nSeries, nExactModeLuck,
-                                    nGenLevels[0], nGenLevels[1], nGenLevels[2],
-                                    nGenLevels[3], nGenLevels[4], nGenLevels[5],
-                                    nEncodedVersion, nEncodedSeed)
-    print("[LUA-UPGRADE] 24] AddItemEx returned: " .. tostring(nNewItemIdx))
-
-    if nNewItemIdx == nil or nNewItemIdx == 0 then
-        print("[LUA-UPGRADE] 25] ERROR: Failed to create new item with exact mode!")
-        Msg2Player("<color=red>LOI: Khong the tao item moi!<color>")
+    if nResult == nil or nResult == 0 then
+        print("[LUA-UPGRADE] 24] ERROR: UpgradeItemAttributes failed!")
+        Msg2Player("<color=red>LOI: Khong the nang cap (UpgradeItemAttributes failed)!<color>")
         return
     end
 
-    -- DO NOT set attributes (causes disconnect)
-    -- DO NOT delete old item (causes disconnect)
-    print("[LUA-UPGRADE] 26] Exact mode item created successfully (no SetItemMagicAttrib calls)")
-
-    -- SUCCESS (new item with exact attributes in inventory, old item in BUILD_CONTAINER)
+    -- SUCCESS
+    print("[LUA-UPGRADE] 25] SUCCESS - Item upgraded, new item index: " .. nResult)
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
-                         szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
-                         "<color=yellow>TRANG BI MOI DA VAO TUI DO!</color> " ..
-                         "<color=red>ITEM CU CON TRONG KHAY - BAN TU XOA!</color> " ..
-                         "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
+                         szAttribName .. ": " .. nOldValue .. " -> ~" .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
+                         "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu. " ..
+                         "<color=yellow>Co the tiep tuc nang cap!</color>"
     Msg2Player(szSuccessMsg)
-
-    -- Note: New item has Luck=999900010 (exact mode), can be upgraded again without issues
-    print("[LUA-UPGRADE] 27] SUCCESS - New item created with exact attributes, old item preserved")
+    print("[LUA-UPGRADE] 26] Upgrade complete")
 end
 
 -- ------------------------------------------------------------
