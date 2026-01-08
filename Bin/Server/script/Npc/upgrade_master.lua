@@ -275,10 +275,10 @@ function PerformUpgrade(nAttribSlotStr, _)
         return
     end
 
-    -- STEP 4: SUCCESS - Use safe in-place attribute update
-    -- CRITICAL: UpgradeItemAttributes() is UNRELIABLE - can fail and lose item
-    -- Even with Luck=10, it returns 0 and item is lost (ItemSet.Add or m_ItemList.Add can fail)
-    -- SOLUTION: Use SetItemMagicAttribValueAndSync() - 100% SAFE, never loses item
+    -- STEP 4: SUCCESS - Recreate item with upgraded attribute
+    -- PROBLEM: SetItemMagicAttribValueAndSync() causes client disconnect
+    -- PROBLEM: UpgradeItemAttributes() fails randomly (ItemSet.Add or m_ItemList.Add)
+    -- SOLUTION: Delete old item, create new item, set all attributes manually
     local nIncreasePercent = UPGRADE_FIXED_PERCENT
 
     -- Calculate new value
@@ -287,22 +287,56 @@ function PerformUpgrade(nAttribSlotStr, _)
     local nNewValue = nOldValue + nIncrease
     if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
-    print("[LUA-UPGRADE] 20] SUCCESS - Updating attribute " .. nAttribSlot .. " from " .. nOldValue .. " to " .. nNewValue)
+    print("[LUA-UPGRADE] 20] SUCCESS - Recreating item with upgraded attribute " .. nAttribSlot .. " from " .. nOldValue .. " to " .. nNewValue)
 
-    -- Update attribute value in-place (item NEVER deleted)
-    local bResult = SetItemMagicAttribValueAndSync(nEquipIdx, nAttribSlot, nNewValue)
-    print("[LUA-UPGRADE] 21] SetItemMagicAttribValueAndSync returned: " .. tostring(bResult))
+    -- Get all item properties for recreation
+    local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
+    print("[LUA-UPGRADE] 21] Item props: Genre=" .. nGenre .. ", Detail=" .. nDetail .. ", Parti=" .. nParti .. ", Level=" .. nLevel .. ", Series=" .. nSeries .. ", Luck=" .. nLuck)
 
-    if bResult == 0 then
-        print("[LUA-UPGRADE] 22] ERROR: Failed to update attribute value")
-        Msg2Player("<color=red>LOI: Khong the cap nhat thuoc tinh!<color>")
+    -- Get ALL 6 attributes (we'll restore all of them)
+    local tAttribs = {}
+    for i = 0, 5 do
+        local nType, nVal, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
+        tAttribs[i] = {
+            nType = nType or 0,
+            nValue = (i == nAttribSlot) and nNewValue or (nVal or 0),  -- Use new value for upgraded slot
+            nMin = nMin or 0,
+            nMax = nMax or 0
+        }
+        if nType and nType > 0 then
+            print("[LUA-UPGRADE] 22] Attribute[" .. i .. "]: Type=" .. nType .. ", OldVal=" .. (nVal or 0) .. ", NewVal=" .. tAttribs[i].nValue .. ", Min=" .. (nMin or 0) .. ", Max=" .. (nMax or 0))
+        end
+    end
+
+    -- Delete old item
+    print("[LUA-UPGRADE] 23] Deleting old item index: " .. nEquipIdx)
+    DelItemByIndex(nEquipIdx)
+
+    -- Create new item in BUILD_CONTAINER (pos=15, slot 0)
+    -- AddItemEx(genre, detail, particular, level, series, luck, genLvl0-5, version, seed, pos)
+    -- Use luck=10 (normal), version=current, seed=0 (random), genLvl all 0
+    print("[LUA-UPGRADE] 24] Creating new item...")
+    local nNewItemIdx = AddItemEx(nGenre, nDetail, nParti, nLevel, nSeries, 10, 0, 0, 0, 0, 0, 0, 0, 0, BUILD_CONTAINER_POS)
+    print("[LUA-UPGRADE] 25] AddItemEx returned: " .. tostring(nNewItemIdx))
+
+    if nNewItemIdx == nil or nNewItemIdx == 0 then
+        print("[LUA-UPGRADE] 26] ERROR: Failed to create new item!")
+        Msg2Player("<color=red>LOI: Khong the tao item moi!<color>")
         return
     end
 
-    -- SUCCESS - Attribute updated on server
-    -- NOTE: Do NOT call SetItemLuck() here - it causes client disconnect when item is in BUILD_CONTAINER
-    -- Item will keep Luck=999900010 but that's OK, validation check (line 150) doesn't block it
-    print("[LUA-UPGRADE] 23] Upgrade complete - attribute updated safely (Luck unchanged to prevent disconnect)")
+    -- Set all 6 attributes manually
+    print("[LUA-UPGRADE] 27] Setting attributes on new item...")
+    for i = 0, 5 do
+        if tAttribs[i].nType > 0 then
+            -- SetItemMagicAttrib(itemIdx, slot, type, min, max, actualValue)
+            local bResult = SetItemMagicAttrib(nNewItemIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
+            print("[LUA-UPGRADE] 28] SetItemMagicAttrib slot " .. i .. " returned: " .. tostring(bResult))
+        end
+    end
+
+    -- SUCCESS
+    print("[LUA-UPGRADE] 29] Upgrade complete - new item created with upgraded attributes")
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
                          szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
                          "<color=yellow>DONG HOP THOAI NAY (ESC) VA MO LAI DE THAY THAY DOI!<color> " ..
