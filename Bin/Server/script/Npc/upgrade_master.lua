@@ -175,6 +175,10 @@ function PerformUpgrade(nAttribSlotStr, _)
 
     print(string.format("[LUA-UPGRADE] Random roll: %d/%d, Success: %s", nRandom, nSuccessRate, tostring(bSuccess)))
 
+    -- Get attribute type for display
+    local nAttribType = GetItemPartAttribType(15, 0, nAttribSlot)
+    local szAttribName = GetAttribName(nAttribType)
+
     if bSuccess then
         -- SUCCESS CASE
         print("[LUA-UPGRADE] UPGRADE SUCCESS!")
@@ -187,10 +191,6 @@ function PerformUpgrade(nAttribSlotStr, _)
 
         local nNewValue = nCurrentValue + nIncreaseValue
         print(string.format("[LUA-UPGRADE] Upgrading attribute: %d -> %d (+%d)", nCurrentValue, nNewValue, nIncreaseValue))
-
-        -- Get attribute type for display
-        local nAttribType = GetItemPartAttribType(15, 0, nAttribSlot)
-        local szAttribName = GetAttribName(nAttribType)
 
         -- Perform the upgrade using C++ function
         -- This will automatically update the item and trigger UpdateItem event on client
@@ -205,45 +205,16 @@ function PerformUpgrade(nAttribSlotStr, _)
         -- FAILURE CASE
         print("[LUA-UPGRADE] UPGRADE FAILED!")
 
-        -- CRITICAL FIX: Equipment is preserved, but we need to trigger UpdateItem
-        -- to notify client that upgrade is complete
-        -- Solution: Remove equipment and re-add it back to same position
-
-        print("[LUA-UPGRADE] Saving all equipment attributes before removal")
-
-        -- Save all 6 attribute slots BEFORE removing equipment
-        local tbAttributes = {}
-        for i = 0, 5 do
-            tbAttributes[i] = {
-                nType = GetItemPartAttribType(15, 0, i),
-                nValue = GetItemPartAttrib(15, 0, i)
-            }
-            if tbAttributes[i].nType > 0 and tbAttributes[i].nValue > 0 then
-                print(string.format("[LUA-UPGRADE] Saved slot %d: type=%d, value=%d",
-                    i, tbAttributes[i].nType, tbAttributes[i].nValue))
-            end
-        end
-
-        print("[LUA-UPGRADE] Triggering UpdateItem by removing and re-adding equipment")
-
-        -- Remove equipment from build container
-        RemovePlayerEquip(15, 0)
-        print("[LUA-UPGRADE] Equipment removed from build container")
-
-        -- Re-add equipment back to build container at slot 0
-        -- This triggers UpdateItem event on client, signaling operation complete
-        AddPlayerEquip(15, 0, nGenre, nDetail, nParticular, nLevel, nSeries, nLuck,
-            tbAttributes[0].nType, tbAttributes[0].nValue,
-            tbAttributes[1].nType, tbAttributes[1].nValue,
-            tbAttributes[2].nType, tbAttributes[2].nValue,
-            tbAttributes[3].nType, tbAttributes[3].nValue,
-            tbAttributes[4].nType, tbAttributes[4].nValue,
-            tbAttributes[5].nType, tbAttributes[5].nValue)
-        print("[LUA-UPGRADE] Equipment re-added to build container with all attributes, UpdateItem triggered")
+        -- SIMPLE FIX: Call UpgradeItemAttributes with SAME value (0% increase)
+        -- This triggers UpdateItem event on client without changing the attribute
+        -- Equipment is preserved with original value, client UI gets unlocked
+        print(string.format("[LUA-UPGRADE] Calling UpgradeItemAttributes with same value: %d", nCurrentValue))
+        UpgradeItemAttributes(15, 0, nAttribSlot, nCurrentValue)
 
         -- Show failure message
-        Msg2Player("Nâng cấp thất bại! Trang bị được giữ nguyên.")
-        print("[LUA-UPGRADE] Failure handling complete")
+        Msg2Player(string.format("Nâng cấp thất bại! %s vẫn giữ nguyên giá trị %d.",
+            szAttribName, nCurrentValue))
+        print("[LUA-UPGRADE] Failure handling complete, UpdateItem sent to client")
     end
 
     print("[LUA-UPGRADE] PerformUpgrade finished")
