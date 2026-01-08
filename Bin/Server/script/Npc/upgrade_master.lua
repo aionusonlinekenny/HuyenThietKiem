@@ -299,14 +299,10 @@ function PerformUpgrade(nAttribSlotStr, _)
         return
     end
 
-    -- Reset Luck if it was in exact mode (from old UpgradeItemAttributes attempts)
-    if nLuck >= 999900000 and nLuck < 1000000000 then
-        print("[LUA-UPGRADE] 23] Resetting exact mode Luck from " .. nLuck .. " to 10")
-        SetItemLuck(nEquipIdx, 10)
-    end
-
     -- SUCCESS - Attribute updated on server
-    print("[LUA-UPGRADE] 24] Upgrade complete - attribute updated safely")
+    -- NOTE: Do NOT call SetItemLuck() here - it causes client disconnect when item is in BUILD_CONTAINER
+    -- Item will keep Luck=999900010 but that's OK, validation check (line 150) doesn't block it
+    print("[LUA-UPGRADE] 23] Upgrade complete - attribute updated safely (Luck unchanged to prevent disconnect)")
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
                          szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
                          "<color=yellow>DONG HOP THOAI NAY (ESC) VA MO LAI DE THAY THAY DOI!<color> " ..
