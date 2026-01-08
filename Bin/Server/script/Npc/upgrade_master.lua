@@ -309,6 +309,7 @@ function PerformUpgrade(nAttribSlotStr, _)
     print("[LUA-UPGRADE] 24] Upgrade complete - attribute updated safely")
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
                          szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
+                         "<color=yellow>DONG HOP THOAI NAY (ESC) VA MO LAI DE THAY THAY DOI!<color> " ..
                          "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
     Msg2Player(szSuccessMsg)
 end
