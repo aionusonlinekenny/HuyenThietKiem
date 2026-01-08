@@ -297,12 +297,16 @@ function PerformUpgrade(nAttribSlotStr, _)
         return
     end
 
+    -- CRITICAL: Reset Luck to normal value to prevent disconnect
+    -- Items with Luck=999900010 (exact mode) cause client disconnect when synced
+    -- Reset to 10 (standard luck) immediately after updating attribute
+    print("[LUA-UPGRADE] 22.5] Resetting Luck from " .. nLuck .. " to 10 (prevent disconnect)")
+    SetItemLuck(nEquipIdx, 10)
+
     -- SUCCESS - Attribute updated server-side
-    -- Client requires item to be dropped and picked up to see changes
-    print("[LUA-UPGRADE] 23] Attribute updated successfully on server")
+    print("[LUA-UPGRADE] 23] Attribute updated successfully, Luck reset to normal")
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
                          szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
-                         "<color=yellow>VO TRANG BI RA VA MAC LAI DE THAY THAY DOI!<color> " ..
                          "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
     Msg2Player(szSuccessMsg)
 end
