@@ -264,38 +264,21 @@ function PerformUpgrade(nAttribSlotStr, _)
     local szAttribName = GetAttribName(nAttribType)
 
     if not bUpgradeSuccess then
-        -- FAILURE: Call UpgradeItemAttributes with 1% (minimum increase)
-        -- This ensures item is updated and triggers UpdateItem event
-        -- C++ now unlocks on BOTH add and remove from slot 0
-        print("[LUA-UPGRADE] 19] Upgrade FAILED - calling UpgradeItemAttributes with 1%")
+        -- FAILURE: Delete equipment from build container
+        -- Equipment will be automatically returned to inventory
+        -- This triggers UpdateItem(bAdd=0) → Client unlocks (C++ fix)
+        print("[LUA-UPGRADE] 19] Upgrade FAILED - deleting equipment from build container")
 
-        local nMinPercent = 1  -- Minimum 1% to ensure API accepts it
-        local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nMinPercent, nPos)
-        print("[LUA-UPGRADE] 19b] UpgradeItemAttributes(1%) returned: " .. tostring(nNewItemIdx))
-
-        if nNewItemIdx == 0 then
-            -- Technical error
-            print("[LUA-UPGRADE] 19c] ERROR: UpgradeItemAttributes(1%) failed - trying DelItem method")
-            -- Fallback: Just delete item, it will return to inventory automatically
-            DelItemByIndex(nEquipIdx)
-            local szErrorMsg = "<color=red>[LOI KY THUAT]<color> Loi khi nang cap!\n" ..
-                               "Trang bi da duoc tra ve tui do.\n" ..
-                               "Vui long lien he GM."
-            Talk(1, "", szErrorMsg)
-            Msg2Player(szErrorMsg)
-            return
-        end
-
-        -- Get actual new value after 1% increase
-        local _, nNewValue, _, _ = GetItemMagicAttribInfo(nNewItemIdx, nAttribSlot)
-        local nActualIncrease = (nNewValue or nOldValue) - nOldValue
+        DelItemByIndex(nEquipIdx)
+        print("[LUA-UPGRADE] 19b] Equipment deleted, will return to inventory")
 
         local szFailMsg = "<color=red>[THAT BAI]<color> Nang cap that bai!\n" ..
-                          szAttribName .. ": " .. nOldValue .. " -> " .. (nNewValue or nOldValue) .. " (+1% do loi, thay vi +0%)\n" ..
-                          "Trang bi giu nguyen (tang toi thieu do he thong).\n" ..
+                          szAttribName .. ": " .. nOldValue .. " (khong doi)\n" ..
+                          "Trang bi da duoc tra ve tui do.\n" ..
                           "Da mat: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
         Talk(1, "", szFailMsg)
         Msg2Player(szFailMsg)
+        print("[LUA-UPGRADE] 19c] Failure handling complete")
         return
     end
 
