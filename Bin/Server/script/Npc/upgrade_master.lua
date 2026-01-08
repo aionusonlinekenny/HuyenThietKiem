@@ -4,6 +4,12 @@
 -- Architecture: Lua = Game Logic, C++ = UI Presentation
 -----------------------------------------------------------------
 
+-- CRITICAL: Global-level log to verify file is loaded
+print("[LUA FILE LOAD] upgrade_master.lua is being loaded/executed")
+
+-- Also try to send to player if possible (may not work at file load time)
+-- This will execute when file is loaded, BEFORE any function is called
+
 -- ------------------------------------------------------------
 -- Configuration
 -- ------------------------------------------------------------
