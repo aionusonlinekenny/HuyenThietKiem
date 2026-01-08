@@ -493,16 +493,30 @@ void KUiUpgradeAttrib::OnItemPickDrop(ITEM_PICKDROP_PLACE* pPickPos, ITEM_PICKDR
 void KUiUpgradeAttrib::Breathe()
 {
 	static int nBreatheCallCount = 0;
-	if (m_bUpgradeInProgress && (nBreatheCallCount % 60 == 0))  // Log every 60 frames (~1 second)
+	static int nLastLogFrame = -1;
+
+	// ALWAYS log first few breaths after lock to detect crash
+	if (m_bUpgradeInProgress)
 	{
-		g_DebugLog("[CLIENT-BREATHE] Breathe() called, upgrade in progress, frames=%d", m_nUpgradeLockFrames);
+		if (m_nUpgradeLockFrames < 10 || (nBreatheCallCount % 60 == 0))
+		{
+			g_DebugLog("[CLIENT-BREATHE] Breathe() called, upgrade in progress, frames=%d, count=%d",
+				m_nUpgradeLockFrames, nBreatheCallCount);
+			nLastLogFrame = nBreatheCallCount;
+		}
 	}
 	nBreatheCallCount++;
 
 	if (m_UpgradeEffect.IsVisible())
+	{
 		m_UpgradeEffect.NextFrame();
+	}
+
 	if (m_EffectTime)
+	{
 		m_EffectTime++;
+	}
+
 	if (m_EffectTime == (m_UpgradeEffect.GetMaxFrame()) * (LOOP * 2) / 2 + 1)
 	{
 		g_DebugLog("[CLIENT-BREATHE] Effect animation complete, calling StopEffect()");
