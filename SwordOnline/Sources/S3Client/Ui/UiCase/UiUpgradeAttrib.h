@@ -98,7 +98,6 @@ private:
 	unsigned int       m_EffectTime;            // Effect duration
 	int                m_nSelectedAttrib;       // Selected attribute index (0-5)
 	BOOL               m_bUpgradeInProgress;    // Lock flag during upgrade processing
-	int                m_nUpgradeLockFrames;    // Frame counter for timeout (increments in Breathe)
 	KWndText80         m_TextPercent;           // Success rate display
 	KWndText80         m_EquipmentLabel;        // Equipment slot label
 	KWndText80         m_MaterialLabel;         // Material slot label

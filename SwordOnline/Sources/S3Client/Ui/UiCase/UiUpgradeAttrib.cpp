@@ -151,7 +151,6 @@ void KUiUpgradeAttrib::Initialize()
 	m_nSelectedAttrib = -1;  // No attribute selected initially
 	m_nAttributeCount = 0;   // No attributes loaded
 	m_bUpgradeInProgress = FALSE;  // Not upgrading
-	m_nUpgradeLockFrames = 0;  // No lock frames
 
 	char Scheme[256];
 	g_UiBase.GetCurSchemePath(Scheme, 256);
@@ -492,59 +491,23 @@ void KUiUpgradeAttrib::OnItemPickDrop(ITEM_PICKDROP_PLACE* pPickPos, ITEM_PICKDR
  *********************************************************************/
 void KUiUpgradeAttrib::Breathe()
 {
-	static int nBreatheCallCount = 0;
-	static int nLastLogFrame = -1;
-
-	// ALWAYS log first few breaths after lock to detect crash
-	if (m_bUpgradeInProgress)
-	{
-		if (m_nUpgradeLockFrames < 10 || (nBreatheCallCount % 60 == 0))
-		{
-			g_DebugLog("[CLIENT-BREATHE] Breathe() called, upgrade in progress, frames=%d, count=%d",
-				m_nUpgradeLockFrames, nBreatheCallCount);
-			nLastLogFrame = nBreatheCallCount;
-		}
-	}
-	nBreatheCallCount++;
-
+	// Advance animation frame
 	if (m_UpgradeEffect.IsVisible())
 	{
 		m_UpgradeEffect.NextFrame();
 	}
 
+	// Count effect time
 	if (m_EffectTime)
 	{
 		m_EffectTime++;
 	}
 
+	// When effect animation completes, stop effect and execute upgrade
 	if (m_EffectTime == (m_UpgradeEffect.GetMaxFrame()) * (LOOP * 2) / 2 + 1)
 	{
-		g_DebugLog("[CLIENT-BREATHE] Effect animation complete, calling StopEffect()");
-		StopEffect();
-		g_DebugLog("[CLIENT-BREATHE] StopEffect() returned, setting m_EffectTime = 0");
+		StopEffect();  // This calls OnUpgrade() which sends Lua script
 		m_EffectTime = 0;
-		g_DebugLog("[CLIENT-BREATHE] Effect handling complete, exiting condition");
-	}
-
-	// CRITICAL: Fail-safe unlock after 5 seconds (in case upgrade fails and equipment not updated)
-	// Breathe is called every frame (~16ms), so 300 frames = ~5 seconds
-	if (m_bUpgradeInProgress)
-	{
-		m_nUpgradeLockFrames++;
-
-		// Timeout after 300 frames (~5 seconds at 60fps)
-		if (m_nUpgradeLockFrames > 300)
-		{
-			g_DebugLog("[CLIENT] Upgrade lock timeout - force releasing after %d frames", m_nUpgradeLockFrames);
-			g_DebugLog("[CLIENT] Timeout indicates upgrade failed - materials deleted, equipment preserved");
-			m_bUpgradeInProgress = FALSE;
-			m_nUpgradeLockFrames = 0;
-
-			// DO NOT call UpdateSuccessRateDisplay() here!
-			// When upgrade fails, materials are deleted but equipment stays
-			// Calling UpdateSuccessRateDisplay() would try to access deleted materials and crash
-			// UI will refresh naturally when user interacts with it (removes equipment, etc.)
-		}
 	}
 }
 
@@ -663,7 +626,6 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
 						if (m_bUpgradeInProgress)
 						{
 							m_bUpgradeInProgress = FALSE;
-							m_nUpgradeLockFrames = 0;
 							g_DebugLog("[CLIENT] Upgrade lock released - equipment added to slot 0");
 						}
 
@@ -684,7 +646,6 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
 						if (m_bUpgradeInProgress)
 						{
 							m_bUpgradeInProgress = FALSE;
-							m_nUpgradeLockFrames = 0;
 							g_DebugLog("[CLIENT] Upgrade lock released - equipment removed from slot 0");
 						}
 
@@ -746,7 +707,6 @@ void KUiUpgradeAttrib::OnUpgrade()
 		// Enable upgrade lock to prevent UI updates during server processing
 		// Lock will be released when UpdateItem is received (equipment updated)
 		m_bUpgradeInProgress = TRUE;
-		m_nUpgradeLockFrames = 0;  // Reset frame counter
 		g_DebugLog("[CLIENT] Upgrade lock ENABLED - will unlock on UpdateItem");
 
 		// CRITICAL: Pass m_btExeId = 4 (upgrade system), NOT strlen!
