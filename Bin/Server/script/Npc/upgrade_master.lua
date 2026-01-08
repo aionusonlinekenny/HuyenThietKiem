@@ -283,17 +283,13 @@ function PerformUpgrade(nAttribSlotStr, _)
 
     print("[LUA-UPGRADE] 20] SUCCESS - Calling UpgradeItemAttributes with Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent)
 
-    -- Get equipment position in container for UpgradeItemAttributes
-    local nX, nY = 0, 0
-    local nResult = GetItemPos(nEquipIdx, nX, nY)
-    print("[LUA-UPGRADE] 21] GetItemPos returned: X=" .. nX .. ", Y=" .. nY)
-
     -- Call UpgradeItemAttributes to upgrade and sync to client
+    -- Parameters: itemIdx, attrSlot, percent, containerPos
     local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, BUILD_CONTAINER_POS)
-    print("[LUA-UPGRADE] 22] UpgradeItemAttributes returned: " .. tostring(nNewItemIdx))
+    print("[LUA-UPGRADE] 21] UpgradeItemAttributes returned: " .. tostring(nNewItemIdx))
 
     if nNewItemIdx == nil or nNewItemIdx == 0 then
-        print("[LUA-UPGRADE] 23] ERROR: UpgradeItemAttributes failed")
+        print("[LUA-UPGRADE] 22] ERROR: UpgradeItemAttributes failed")
         Msg2Player("<color=red>LOI: Khong the nang cap thuoc tinh!<color>")
         return
     end
@@ -301,15 +297,15 @@ function PerformUpgrade(nAttribSlotStr, _)
     -- CRITICAL: Reset Luck to normal value immediately to allow future upgrades
     -- UpgradeItemAttributes() sets Luck=999900010 (exact mode encoding)
     -- Reset to 10 so next upgrade won't fail
-    print("[LUA-UPGRADE] 24] Resetting Luck to 10 for item " .. nNewItemIdx .. " (allow future upgrades)")
+    print("[LUA-UPGRADE] 23] Resetting Luck to 10 for item " .. nNewItemIdx .. " (allow future upgrades)")
     SetItemLuck(nNewItemIdx, 10)
 
     -- Get new attribute value to show in message
     local nAttribType2, nNewValue, nMin2, nMax2 = GetItemMagicAttribInfo(nNewItemIdx, nAttribSlot)
-    print("[LUA-UPGRADE] 25] New attribute value: " .. nNewValue)
+    print("[LUA-UPGRADE] 24] New attribute value: " .. nNewValue)
 
     -- SUCCESS
-    print("[LUA-UPGRADE] 26] Upgrade complete - new item index: " .. nNewItemIdx .. ", Luck reset to 10")
+    print("[LUA-UPGRADE] 25] Upgrade complete - new item index: " .. nNewItemIdx .. ", Luck reset to 10")
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
                          szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
                          "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
