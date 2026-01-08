@@ -308,35 +308,35 @@ function PerformUpgrade(nAttribSlotStr, _)
         end
     end
 
-    -- Delete old item
-    print("[LUA-UPGRADE] 23] Deleting old item index: " .. nEquipIdx)
-    DelItemByIndex(nEquipIdx)
-
-    -- Create new item in BUILD_CONTAINER (pos=15, slot 0)
-    -- AddItemEx(genre, detail, particular, level, series, luck, genLvl0-5, version, seed, pos)
-    -- Use luck=10 (normal), version=current, seed=0 (random), genLvl all 0
-    print("[LUA-UPGRADE] 24] Creating new item...")
-    local nNewItemIdx = AddItemEx(nGenre, nDetail, nParti, nLevel, nSeries, 10, 0, 0, 0, 0, 0, 0, 0, 0, BUILD_CONTAINER_POS)
-    print("[LUA-UPGRADE] 25] AddItemEx returned: " .. tostring(nNewItemIdx))
+    -- Create new item FIRST (don't delete old item yet to avoid loss if AddItemEx fails)
+    -- AddItemEx(genre, detail, particular, level, series, luck, genLvl0-5, version, seed)
+    -- Don't specify pos (param 15), let it auto-add to equiproom first
+    print("[LUA-UPGRADE] 23] Creating new item (without deleting old one yet)...")
+    local nNewItemIdx = AddItemEx(nGenre, nDetail, nParti, nLevel, nSeries, 10, 0, 0, 0, 0, 0, 0, 0, 0)
+    print("[LUA-UPGRADE] 24] AddItemEx returned: " .. tostring(nNewItemIdx))
 
     if nNewItemIdx == nil or nNewItemIdx == 0 then
-        print("[LUA-UPGRADE] 26] ERROR: Failed to create new item!")
+        print("[LUA-UPGRADE] 25] ERROR: Failed to create new item!")
         Msg2Player("<color=red>LOI: Khong the tao item moi!<color>")
         return
     end
 
-    -- Set all 6 attributes manually
-    print("[LUA-UPGRADE] 27] Setting attributes on new item...")
+    -- Set all 6 attributes manually on new item
+    print("[LUA-UPGRADE] 26] Setting attributes on new item...")
     for i = 0, 5 do
         if tAttribs[i].nType > 0 then
             -- SetItemMagicAttrib(itemIdx, slot, type, min, max, actualValue)
             local bResult = SetItemMagicAttrib(nNewItemIdx, i, tAttribs[i].nType, tAttribs[i].nMin, tAttribs[i].nMax, tAttribs[i].nValue)
-            print("[LUA-UPGRADE] 28] SetItemMagicAttrib slot " .. i .. " returned: " .. tostring(bResult))
+            print("[LUA-UPGRADE] 27] SetItemMagicAttrib slot " .. i .. " returned: " .. tostring(bResult))
         end
     end
 
-    -- SUCCESS
-    print("[LUA-UPGRADE] 29] Upgrade complete - new item created with upgraded attributes")
+    -- NOW delete old item (new item already created successfully in equiproom/hand)
+    print("[LUA-UPGRADE] 28] Deleting old item index: " .. nEquipIdx)
+    DelItemByIndex(nEquipIdx)
+
+    -- SUCCESS (new item is in equiproom or hand, not in BUILD_CONTAINER slot 0, but at least not lost)
+    print("[LUA-UPGRADE] 29] Upgrade complete - new item created in inventory with upgraded attributes")
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
                          szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
                          "<color=yellow>DONG HOP THOAI NAY (ESC) VA MO LAI DE THAY THAY DOI!<color> " ..
