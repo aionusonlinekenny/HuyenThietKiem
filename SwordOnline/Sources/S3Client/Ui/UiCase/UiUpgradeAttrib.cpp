@@ -735,10 +735,11 @@ void KUiUpgradeAttrib::OnUpgrade()
 	{
 		g_DebugLog("[CLIENT] GetLixian() = TRUE, calling OperationRequest");
 
-		// TEMPORARY: DISABLE LOCK TO TEST IF LOCK CAUSES CRASH
-		// m_bUpgradeInProgress = TRUE;
-		// m_nUpgradeLockFrames = 0;  // Reset frame counter
-		g_DebugLog("[CLIENT] Upgrade lock DISABLED for testing");
+		// Enable upgrade lock to prevent UI updates during server processing
+		// Lock will be released when UpdateItem is received (equipment updated)
+		m_bUpgradeInProgress = TRUE;
+		m_nUpgradeLockFrames = 0;  // Reset frame counter
+		g_DebugLog("[CLIENT] Upgrade lock ENABLED - will unlock on UpdateItem");
 
 		// CRITICAL: Pass m_btExeId = 4 (upgrade system), NOT strlen!
 		// Server expects case 4 for ExeTremble/ExeUpgradeAttrib/PerformUpgrade
