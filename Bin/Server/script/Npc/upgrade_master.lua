@@ -108,18 +108,24 @@ end
 -- IMPORTANT: Materials + money + xu are consumed BEFORE upgrade
 -- ------------------------------------------------------------
 function PerformUpgrade(nAttribSlotStr, _)
+    -- CRITICAL: First thing - show dialog to user to verify function is called
+    Talk(1, "", "=== [DEBUG] PerformUpgrade CALLED ===")
+
     -- DEBUG: Function entry
     Msg2Player("[LUA DEBUG 1] PerformUpgrade function entered")
     Msg2Player("[LUA DEBUG 2] Raw parameter received: " .. tostring(nAttribSlotStr))
+    Talk(1, "", "[DEBUG] Param: " .. tostring(nAttribSlotStr))
 
     -- Parse attribute slot from parameter (C++ sends as string in first param, 0 in second)
     local nAttribSlot = tonumber(nAttribSlotStr)
     if not nAttribSlot then
         Msg2Player("[LUA ERROR] Invalid attribute slot parameter")
+        Talk(1, "", "[ERROR] Invalid param!")
         return
     end
 
     Msg2Player("[LUA DEBUG 3] Parsed slot: " .. nAttribSlot)
+    Talk(1, "", "[DEBUG] Slot parsed: " .. nAttribSlot)
 
     local nPos = 15  -- pos_builditem
     Msg2Player("[LUA DEBUG 4] About to call GetPOItem(15, 0)")
