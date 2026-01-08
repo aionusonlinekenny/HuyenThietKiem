@@ -664,7 +664,7 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
 						{
 							m_bUpgradeInProgress = FALSE;
 							m_nUpgradeLockFrames = 0;
-							g_DebugLog("[CLIENT] Upgrade lock released - equipment updated");
+							g_DebugLog("[CLIENT] Upgrade lock released - equipment added to slot 0");
 						}
 
 						// Now safe to load attributes (lock is released)
@@ -677,9 +677,17 @@ void KUiUpgradeAttrib::UpdateItem(KUiObjAtRegion* pItem, int bAdd)
 					m_UpgradeSlot[i].HoldObject(CGOG_NOTHING, 0, 0, 0);
 					g_DebugLog("[CLIENT] HoldObject completed");
 
-					// NEW: Clear attribute list when equipment is removed from slot 0
+					// CRITICAL: Also unlock when equipment is REMOVED from slot 0
+					// This handles failure case: DelItemByIndex(equip) triggers UpdateItem(slot=0, bAdd=0)
 					if (i == SLOT_EQUIPMENT)
 					{
+						if (m_bUpgradeInProgress)
+						{
+							m_bUpgradeInProgress = FALSE;
+							m_nUpgradeLockFrames = 0;
+							g_DebugLog("[CLIENT] Upgrade lock released - equipment removed from slot 0");
+						}
+
 						ClearAttributeList();
 					}
 				}

@@ -264,38 +264,35 @@ function PerformUpgrade(nAttribSlotStr, _)
     local szAttribName = GetAttribName(nAttribType)
 
     if not bUpgradeSuccess then
-        -- FAILURE: Delete item from build and recreate in inventory to preserve it
-        Msg2Player("[LUA DEBUG 19] Upgrade FAILED - preserving equipment")
+        -- FAILURE: Call UpgradeItemAttributes with 1% (minimum increase)
+        -- This ensures item is updated and triggers UpdateItem event
+        -- C++ now unlocks on BOTH add and remove from slot 0
+        Msg2Player("[LUA DEBUG 19] Upgrade FAILED - calling UpgradeItemAttributes with 1%")
 
-        -- Save all 6 magic attributes before deleting
-        local tbAttributes = {}
-        for i = 0, 5 do
-            local nType, nValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
-            tbAttributes[i] = {nType or 0, nValue or 0, nMin or 0, nMax or 0}
-            Msg2Player("[LUA DEBUG 19a] Saved attribute " .. i .. ": type=" .. (nType or 0) .. " value=" .. (nValue or 0))
+        local nMinPercent = 1  -- Minimum 1% to ensure API accepts it
+        local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nMinPercent, nPos)
+        Msg2Player("[LUA DEBUG 19b] UpgradeItemAttributes(1%) returned: " .. tostring(nNewItemIdx))
+
+        if nNewItemIdx == 0 then
+            -- Technical error
+            Msg2Player("[LUA DEBUG 19c] ERROR: UpgradeItemAttributes(1%) failed - trying DelItem method")
+            -- Fallback: Just delete item, it will return to inventory automatically
+            DelItemByIndex(nEquipIdx)
+            local szErrorMsg = "<color=red>[LOI KY THUAT]<color> Loi khi nang cap!\n" ..
+                               "Trang bi da duoc tra ve tui do.\n" ..
+                               "Vui long lien he GM."
+            Talk(1, "", szErrorMsg)
+            Msg2Player(szErrorMsg)
+            return
         end
 
-        -- Delete item from build container (triggers UpdateItem with bAdd=0)
-        DelItemByIndex(nEquipIdx)
-        Msg2Player("[LUA DEBUG 19b] Equipment deleted from build container")
-
-        -- Recreate item in inventory with same attributes
-        -- AddItemEx params: (nGenre, nDetail, nParticular, nLevel, nSeries, nLuck,
-        --                    Ma1Type, Ma1Value, Ma2Type, Ma2Value, ..., Ma6Type, Ma6Value)
-        local nNewIdx = AddItemEx(
-            nGenre, nDetail, nParticular, nLevel, nSeries, nLuck,
-            tbAttributes[0][1], tbAttributes[0][2], tbAttributes[0][3], tbAttributes[0][4],
-            tbAttributes[1][1], tbAttributes[1][2], tbAttributes[1][3], tbAttributes[1][4],
-            tbAttributes[2][1], tbAttributes[2][2], tbAttributes[2][3], tbAttributes[2][4],
-            tbAttributes[3][1], tbAttributes[3][2], tbAttributes[3][3], tbAttributes[3][4],
-            tbAttributes[4][1], tbAttributes[4][2], tbAttributes[4][3], tbAttributes[4][4],
-            tbAttributes[5][1], tbAttributes[5][2], tbAttributes[5][3], tbAttributes[5][4]
-        )
-        Msg2Player("[LUA DEBUG 19c] Equipment recreated in inventory, idx=" .. tostring(nNewIdx))
+        -- Get actual new value after 1% increase
+        local _, nNewValue, _, _ = GetItemMagicAttribInfo(nNewItemIdx, nAttribSlot)
+        local nActualIncrease = (nNewValue or nOldValue) - nOldValue
 
         local szFailMsg = "<color=red>[THAT BAI]<color> Nang cap that bai!\n" ..
-                          szAttribName .. ": " .. nOldValue .. " (khong doi)\n" ..
-                          "Trang bi da duoc tra ve tui do.\n" ..
+                          szAttribName .. ": " .. nOldValue .. " -> " .. (nNewValue or nOldValue) .. " (+1% do loi, thay vi +0%)\n" ..
+                          "Trang bi giu nguyen (tang toi thieu do he thong).\n" ..
                           "Da mat: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
         Talk(1, "", szFailMsg)
         Msg2Player(szFailMsg)
