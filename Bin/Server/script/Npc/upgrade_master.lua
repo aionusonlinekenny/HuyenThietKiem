@@ -264,45 +264,49 @@ function PerformUpgrade(nAttribSlotStr, _)
     local szAttribName = GetAttribName(nAttribType)
 
     if not bUpgradeSuccess then
-        -- FAILURE: Keep equipment with original attributes (no change needed)
-        print("[LUA-UPGRADE] 19] Upgrade FAILED - equipment kept with original value")
+        -- FAILURE: Equipment keeps original value - NO ACTION NEEDED
+        -- Item stays in container unchanged, already has correct attributes
+        print("[LUA-UPGRADE] 19] Upgrade FAILED - equipment unchanged")
 
         local szFailMsg = "<color=red>[THAT BAI]<color> Nang cap that bai! " ..
                           szAttribName .. ": " .. nOldValue .. " (khong doi). " ..
-                          "Trang bi duoc giu lai. " ..
+                          "Trang bi giu nguyen. " ..
                           "Da mat: " .. nMineralsUsed .. " khoang thach + tien"
         Msg2Player(szFailMsg)
         print("[LUA-UPGRADE] 19d] Failure handling complete")
         return
     end
 
-    -- STEP 4: SUCCESS - Update attribute value directly (no delete/recreate)
+    -- STEP 4: SUCCESS - Use UpgradeItemAttributes() for proper client sync
+    -- This API deletes old item and creates new item with updated attributes
+    -- Client receives UpdateItem events automatically
     local nIncreasePercent = UPGRADE_FIXED_PERCENT
 
-    -- Calculate new value
+    -- Calculate new value for message only (C++ will calculate actual increase)
     local nIncrease = (nOldValue * nIncreasePercent) / 100
     if nIncrease < 1 then nIncrease = 1 end
     local nNewValue = nOldValue + nIncrease
     if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
-    print("[LUA-UPGRADE] 20] Calling SetItemMagicAttribValueAndSync with Slot=" .. nAttribSlot .. ", OldVal=" .. nOldValue .. ", NewVal=" .. nNewValue)
+    print("[LUA-UPGRADE] 20] Calling UpgradeItemAttributes with Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent .. ", Pos=" .. nPos)
 
-    -- Update attribute value directly in-place (no item recreation)
-    local bResult = SetItemMagicAttribValueAndSync(nEquipIdx, nAttribSlot, nNewValue)
-    print("[LUA-UPGRADE] 21] SetItemMagicAttribValueAndSync returned: " .. tostring(bResult))
+    -- CRITICAL: This API deletes old item and creates new item
+    -- Returns new item index, or 0 on failure
+    local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, nPos)
+    print("[LUA-UPGRADE] 21] UpgradeItemAttributes returned: " .. tostring(nNewItemIdx))
 
-    if bResult == 0 then
-        -- Technical error during update
-        print("[LUA-UPGRADE] 22] ERROR: SetItemMagicAttribValueAndSync failed")
-        local szErrorMsg = "<color=red>[LOI KY THUAT]<color> Loi khi nang cap! Vui long lien he GM."
+    if not nNewItemIdx or nNewItemIdx == 0 then
+        -- CRITICAL ERROR: Item was deleted but not recreated!
+        print("[LUA-UPGRADE] 22] ERROR: UpgradeItemAttributes failed - equipment may be lost!")
+        local szErrorMsg = "<color=red>[LOI NGHIEM TRONG]<color> Loi khi nang cap! Trang bi co the bi mat! Lien he GM ngay!"
         Msg2Player(szErrorMsg)
         return
     end
 
     -- SUCCESS
-    print("[LUA-UPGRADE] 23] Upgrade SUCCESS")
+    print("[LUA-UPGRADE] 23] Upgrade SUCCESS - new item index: " .. nNewItemIdx)
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
-                         szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
+                         szAttribName .. ": " .. nOldValue .. " -> ~" .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
                          "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
     Msg2Player(szSuccessMsg)
 end
