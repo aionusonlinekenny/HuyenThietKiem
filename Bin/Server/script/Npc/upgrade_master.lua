@@ -153,13 +153,6 @@ function PerformUpgrade(nAttribSlotStr, _)
         return
     end
 
-    -- NEW: Prevent upgrading already-upgraded items (Luck = 999900010 = exact mode encoding)
-    if nLuck >= 999900000 and nLuck < 1000000000 then
-        Msg2Player("<color=red>Trang bi nay da duoc nang cap roi! Khong the nang cap them.<color>")
-        print("[LUA-UPGRADE] 11b] Equipment already upgraded (exact mode, luck=" .. nLuck .. ")")
-        return
-    end
-
     print("[LUA-UPGRADE] 12] Equipment validation passed")
 
     -- Validate minerals in slots 1-4 (if present)
@@ -282,36 +275,34 @@ function PerformUpgrade(nAttribSlotStr, _)
         return
     end
 
-    -- STEP 4: SUCCESS - Use UpgradeItemAttributes() for proper sync
-    -- IMPORTANT: This only works for items NOT YET UPGRADED (Luck < 999900000)
-    -- After upgrade, item gets Luck=999900010 and CANNOT be upgraded again
+    -- STEP 4: SUCCESS - Update attribute value IN-PLACE (no delete/recreate)
+    -- NOTE: UpgradeItemAttributes() causes client disconnect, so we use safe in-place update
     local nIncreasePercent = UPGRADE_FIXED_PERCENT
 
-    -- Calculate expected new value for message
+    -- Calculate new value
     local nIncrease = (nOldValue * nIncreasePercent) / 100
     if nIncrease < 1 then nIncrease = 1 end
     local nNewValue = nOldValue + nIncrease
     if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
-    print("[LUA-UPGRADE] 20] Calling UpgradeItemAttributes with Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent .. ", Pos=" .. nPos)
+    print("[LUA-UPGRADE] 20] SUCCESS - Updating attribute " .. nAttribSlot .. " from " .. nOldValue .. " to " .. nNewValue)
 
-    -- Use UpgradeItemAttributes() - this creates new item with exact mode encoding
-    -- After this, item will have Luck=999900010 and cannot be upgraded again
-    local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, nPos)
-    print("[LUA-UPGRADE] 21] UpgradeItemAttributes returned: " .. tostring(nNewItemIdx))
+    -- Update attribute value directly in-place (item NEVER deleted)
+    local bResult = SetItemMagicAttribValueAndSync(nEquipIdx, nAttribSlot, nNewValue)
+    print("[LUA-UPGRADE] 21] SetItemMagicAttribValueAndSync returned: " .. tostring(bResult))
 
-    if not nNewItemIdx or nNewItemIdx == 0 then
-        -- CRITICAL: Item deleted but not recreated!
-        print("[LUA-UPGRADE] 22] ERROR: UpgradeItemAttributes FAILED - item may be lost!")
-        Msg2Player("<color=red>[LOI NGHIEM TRONG]<color> Loi khi nang cap! Trang bi co the bi mat! Lien he GM ngay!")
+    if bResult == 0 then
+        print("[LUA-UPGRADE] 22] ERROR: Failed to update attribute value")
+        Msg2Player("<color=red>LOI: Khong the cap nhat thuoc tinh!<color>")
         return
     end
 
-    -- SUCCESS
-    print("[LUA-UPGRADE] 23] Upgrade SUCCESS - new item index: " .. nNewItemIdx)
+    -- SUCCESS - Attribute updated server-side
+    -- Client requires item to be dropped and picked up to see changes
+    print("[LUA-UPGRADE] 23] Attribute updated successfully on server")
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
-                         szAttribName .. ": " .. nOldValue .. " -> ~" .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
-                         "<color=yellow>CHI NANG CAP DUOC 1 LAN!<color> " ..
+                         szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
+                         "<color=yellow>VO TRANG BI RA VA MAC LAI DE THAY THAY DOI!<color> " ..
                          "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu"
     Msg2Player(szSuccessMsg)
 end
