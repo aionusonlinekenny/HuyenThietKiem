@@ -264,45 +264,18 @@ function PerformUpgrade(nAttribSlotStr, _)
     local szAttribName = GetAttribName(nAttribType)
 
     if not bUpgradeSuccess then
-        -- FAILURE: Must recreate item and return to inventory
-        -- DelItemByIndex() DELETES item completely, doesn't auto-return to inventory
+        -- FAILURE: Recreate item with basic properties (magic attributes will be random)
         print("[LUA-UPGRADE] 19] Upgrade FAILED - saving item data for recreation")
 
-        -- Save ALL 6 magic attributes BEFORE deleting
-        local tbMagicAttribs = {}
-        for i = 0, 5 do
-            local nType, nValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
-            tbMagicAttribs[i] = {
-                nType = nType or 0,
-                nValue = nValue or 0,
-                nMin = nMin or 0,
-                nMax = nMax or 0
-            }
-            if nType and nType > 0 then
-                print("[LUA-UPGRADE] 19a] Saved attr " .. i .. ": type=" .. nType .. " value=" .. nValue .. " min=" .. nMin .. " max=" .. nMax)
-            end
-        end
-
-        -- Delete item from build container (triggers UpdateItem bAdd=0 → unlock)
+        -- Delete item from build container (triggers UpdateItem bAdd=0 → unlock client)
         DelItemByIndex(nEquipIdx)
         print("[LUA-UPGRADE] 19b] Equipment deleted from build container")
 
-        -- Recreate item in INVENTORY with all saved data
-        -- AddItemEx signature: (genre, detail, particular, level, series, luck, ma1-ma6..., version, randomSeed)
-        -- For equipment: each magic attribute needs type,value,min,max (4 values x 6 attrs = 24 params)
-        local nNewIdx = AddItemEx(
-            nGenre, nDetail, nParticular, nLevel, nSeries, nLuck,
-            tbMagicAttribs[0].nType, tbMagicAttribs[0].nValue, tbMagicAttribs[0].nMin, tbMagicAttribs[0].nMax,
-            tbMagicAttribs[1].nType, tbMagicAttribs[1].nValue, tbMagicAttribs[1].nMin, tbMagicAttribs[1].nMax,
-            tbMagicAttribs[2].nType, tbMagicAttribs[2].nValue, tbMagicAttribs[2].nMin, tbMagicAttribs[2].nMax,
-            tbMagicAttribs[3].nType, tbMagicAttribs[3].nValue, tbMagicAttribs[3].nMin, tbMagicAttribs[3].nMax,
-            tbMagicAttribs[4].nType, tbMagicAttribs[4].nValue, tbMagicAttribs[4].nMin, tbMagicAttribs[4].nMax,
-            tbMagicAttribs[5].nType, tbMagicAttribs[5].nValue, tbMagicAttribs[5].nMin, tbMagicAttribs[5].nMax,
-            1,  -- version
-            0   -- randomSeed
-        )
-
-        print("[LUA-UPGRADE] 19c] Equipment recreated in inventory, newIdx=" .. tostring(nNewIdx))
+        -- Recreate item in INVENTORY using simple AddItem() API
+        -- NOTE: Magic attributes will be randomly generated, not preserved exactly
+        -- AddItem(genus, detail, particular, level, series, luck1, luck2)
+        local nNewIdx = AddItem(0, nDetail, nParticular, nLevel, nSeries, nLuck, nLuck)
+        print("[LUA-UPGRADE] 19c] Equipment recreated with AddItem(), newIdx=" .. tostring(nNewIdx))
 
         if not nNewIdx or nNewIdx <= 0 then
             print("[LUA-UPGRADE] 19d] ERROR: Failed to recreate equipment!")
@@ -310,10 +283,11 @@ function PerformUpgrade(nAttribSlotStr, _)
             return
         end
 
-        -- Success - equipment returned to inventory with original attributes
+        -- Success - equipment returned to inventory
+        -- NOTE: Magic attributes may be different (randomly regenerated)
         local szFailMsg = "<color=red>[THAT BAI]<color> Nang cap that bai! " ..
                           szAttribName .. ": " .. nOldValue .. " (khong doi). " ..
-                          "Trang bi da duoc tra ve tui do. " ..
+                          "Trang bi da duoc tra ve tui do (thuoc tinh co the khac). " ..
                           "Da mat: " .. nMineralsUsed .. " khoang thach + tien"
         Msg2Player(szFailMsg)
         print("[LUA-UPGRADE] 19e] Failure handling complete")
