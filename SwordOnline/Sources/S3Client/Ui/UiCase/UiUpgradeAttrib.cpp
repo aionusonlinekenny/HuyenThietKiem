@@ -492,12 +492,20 @@ void KUiUpgradeAttrib::OnItemPickDrop(ITEM_PICKDROP_PLACE* pPickPos, ITEM_PICKDR
  *********************************************************************/
 void KUiUpgradeAttrib::Breathe()
 {
+	static int nBreatheCallCount = 0;
+	if (m_bUpgradeInProgress && (nBreatheCallCount % 60 == 0))  // Log every 60 frames (~1 second)
+	{
+		g_DebugLog("[CLIENT-BREATHE] Breathe() called, upgrade in progress, frames=%d", m_nUpgradeLockFrames);
+	}
+	nBreatheCallCount++;
+
 	if (m_UpgradeEffect.IsVisible())
 		m_UpgradeEffect.NextFrame();
 	if (m_EffectTime)
 		m_EffectTime++;
 	if (m_EffectTime == (m_UpgradeEffect.GetMaxFrame()) * (LOOP * 2) / 2 + 1)
 	{
+		g_DebugLog("[CLIENT-BREATHE] Effect animation complete, calling StopEffect()");
 		StopEffect();
 		m_EffectTime = 0;
 	}
@@ -529,8 +537,10 @@ void KUiUpgradeAttrib::Breathe()
  *********************************************************************/
 void KUiUpgradeAttrib::StartEffect()
 {
+	g_DebugLog("[CLIENT-EFFECT] StartEffect() called");
 	m_UpgradeEffect.Show();
 	UpdatePickPut(false);
+	g_DebugLog("[CLIENT-EFFECT] StartEffect() finished");
 }
 
 /*********************************************************************
@@ -538,9 +548,13 @@ void KUiUpgradeAttrib::StartEffect()
  *********************************************************************/
 void KUiUpgradeAttrib::StopEffect()
 {
+	g_DebugLog("[CLIENT-EFFECT] StopEffect() called");
 	m_UpgradeEffect.Hide();
+	g_DebugLog("[CLIENT-EFFECT] Calling UpdatePickPut(true)");
 	UpdatePickPut(true);
+	g_DebugLog("[CLIENT-EFFECT] Calling OnUpgrade()");
 	OnUpgrade();
+	g_DebugLog("[CLIENT-EFFECT] OnUpgrade() returned, StopEffect() finished");
 }
 
 /*********************************************************************
@@ -708,13 +722,18 @@ void KUiUpgradeAttrib::OnUpgrade()
 
 		// CRITICAL: Pass m_btExeId = 4 (upgrade system), NOT strlen!
 		// Server expects case 4 for ExeTremble/ExeUpgradeAttrib/PerformUpgrade
+		g_DebugLog("[CLIENT] Calling OperationRequest with szFunc='%s', ExeId=4", szFunc);
 		g_pCoreShell->OperationRequest(GOI_EXESCRIPT_BUTTON, (unsigned int)szFunc, 4);
+		g_DebugLog("[CLIENT] OperationRequest returned successfully");
 		g_DebugLog("[CLIENT] OnUpgrade() - Script call sent with ExeId=4");
+		g_DebugLog("[CLIENT] OnUpgrade() function exiting normally");
 	}
 	else
 	{
 		g_DebugLog("[CLIENT] ERROR: GetLixian() = FALSE! Cannot execute script!");
 	}
+
+	g_DebugLog("[CLIENT] OnUpgrade() finished");
 }
 
 /*********************************************************************
