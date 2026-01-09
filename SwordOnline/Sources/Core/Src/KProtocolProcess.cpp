@@ -4,6 +4,7 @@
 #include "../../Headers/IClient.h"
 #include "CoreShell.h"
 #include "KViewItem.h"
+#include "../../S3Client/Ui/UiCase/UiItem.h"
 #endif
 #include "KObjSet.h"
 #include "KNpcSet.h"
@@ -3947,23 +3948,22 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 			Item[nIdx].SetStackCount(pICI->m_uChange);
 			g_DebugLog("[CLIENT-STACK-SYNC] After SetStackCount: durability=%d", Item[nIdx].GetDurability());
 
-			// CRITICAL FIX: Send GDCNI_OBJECT_CHANGED instead of GDCNI_CONTAINER_OBJECT_CHANGED
-			// GDCNI_CONTAINER_OBJECT_CHANGED has NO HANDLER in GameSpaceChangedNotify.cpp
-			// GDCNI_OBJECT_CHANGED has handler that calls KUiItem::UpdateItem() for UI refresh
-			{
-				KUiObjAtContRegion Region;
-				Region.Obj.uGenre = CGOG_ITEM;
-				Region.Obj.uId = nIdx;
-				Region.Region.Width = Item[nIdx].GetWidth();
-				Region.Region.Height = Item[nIdx].GetHeight();
-				Region.eContainer = UOC_ITEM_TAKE_WITH;  // Equipment inventory
-
-				g_DebugLog("[CLIENT-STACK-SYNC] Sending GDCNI_OBJECT_CHANGED to trigger UI refresh");
-				CoreDataChanged(GDCNI_OBJECT_CHANGED, (unsigned int)&Region, 1);
-			}
-
 			Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
-			g_DebugLog("[CLIENT-STACK-SYNC] UnlockOperation called");
+
+			// CRITICAL FIX: Force full inventory UI refresh using UpdateData()
+			// This works for both NEW items and items LOADED FROM DB
+			// UpdateItem() only works for NEW items (uses AddObject which doesn't update existing)
+			// UpdateData() reloads entire inventory which updates existing items correctly
+#ifndef _SERVER
+			{
+				KUiItem* pItemsBar = KUiItem::GetIfVisible();
+				if (pItemsBar)
+				{
+					g_DebugLog("[CLIENT-STACK-SYNC] Calling UpdateData() to refresh inventory UI");
+					pItemsBar->UpdateData();
+				}
+			}
+#endif
 			break;
 		case 2:
 			Item[nIdx].SetBindState(pICI->m_uChange);
