@@ -3946,12 +3946,31 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 			g_DebugLog("[CLIENT-STACK-SYNC] Case 1: SetStackCount to %u (old=%d)",
 				pICI->m_uChange, Item[nIdx].GetDurability());
 
-			// Unlock first to allow UI refresh
-			Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
-			g_DebugLog("[CLIENT-STACK-SYNC] UnlockOperation called FIRST");
-
 			Item[nIdx].SetStackCount(pICI->m_uChange);
 			g_DebugLog("[CLIENT-STACK-SYNC] After SetStackCount: durability=%d", Item[nIdx].GetDurability());
+
+			// Force UI refresh by sending container update notification
+			// Try all possible container types to force refresh
+			{
+				KUiObjAtContRegion Region;
+				Region.Obj.uGenre = CGOG_ITEM;
+				Region.Obj.uId = nIdx;
+				Region.Region.Width = 0;
+				Region.Region.Height = 0;
+
+				// Try equipment room (most common for stack items)
+				Region.eContainer = UOC_ITEM_TAKE_WITH;
+				g_DebugLog("[CLIENT-STACK-SYNC] Sending CONTAINER_OBJECT_CHANGED for equipment room");
+				CoreDataChanged(GDCNI_CONTAINER_OBJECT_CHANGED, (unsigned int)&Region, 1);
+
+				// Try immediacy
+				Region.eContainer = UOC_IMMEDIA_ITEM;
+				g_DebugLog("[CLIENT-STACK-SYNC] Sending CONTAINER_OBJECT_CHANGED for immediacy");
+				CoreDataChanged(GDCNI_CONTAINER_OBJECT_CHANGED, (unsigned int)&Region, 1);
+			}
+
+			Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
+			g_DebugLog("[CLIENT-STACK-SYNC] UnlockOperation called");
 			break;
 		case 2:
 			Item[nIdx].SetBindState(pICI->m_uChange);
