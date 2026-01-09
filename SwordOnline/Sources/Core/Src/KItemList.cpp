@@ -2948,7 +2948,7 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 		break;
 	//
 	case pos_builditem: //TrembleItem by kinnox;
-		if (Player[this->m_PlayerIdx].CheckTrading())	// Èç¹ûÕýÔÚ½»Ò×
+		if (Player[this->m_PlayerIdx].CheckTrading())	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½
 			return;
 		if (SrcPos->nX < 0 || SrcPos->nX >= MAX_PART_BUILD || DesPos->nX < 0 || DesPos->nX >= MAX_PART_BUILD)
 			return;
@@ -4844,14 +4844,14 @@ void KItemList::SetItemBindState(int nIndex, BYTE btState, BYTE btDay)
 		// if(btDay > 0)
 		// {	
 			// char szMsg[512];//80  //luu y do dai cua ky tu khi build release by kinnox;
-			// sprintf(szMsg, "§· më khãa b¶o hiÓm vËt phÈm <color=green>[%s]<color>.", Item[nIndex].GetName());
-			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "VËt phÈm", szMsg, strlen(szMsg));
+			// sprintf(szMsg, "ï¿½ï¿½ mï¿½ khï¿½a bï¿½o hiï¿½m vï¿½t phï¿½m <color=green>[%s]<color>.", Item[nIndex].GetName());
+			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "Vï¿½t phï¿½m", szMsg, strlen(szMsg));
 		// }
 		// else
 		// {	
 			// char szMsg[512];//80  //luu y do dai cua ky tu khi build release by kinnox;
-			// sprintf(szMsg, "§· khãa b¶o hiÓm vËt phÈm <color=green>[%s]<color>.", Item[nIndex].GetName());
-			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "VËt phÈm", szMsg, strlen(szMsg));
+			// sprintf(szMsg, "ï¿½ï¿½ khï¿½a bï¿½o hiï¿½m vï¿½t phï¿½m <color=green>[%s]<color>.", Item[nIndex].GetName());
+			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "Vï¿½t phï¿½m", szMsg, strlen(szMsg));
 		// }
 	// }
 	ITEM_CHANGE_INFO sChange;
@@ -5181,35 +5181,96 @@ BOOL KItemList::ExchangeStack(const int nIdxBeStack, const int nIdxForStack)
 		return FALSE;
 
 	const int nResult = StackItem(nIdxBeStack, nIdxForStack);
-	// 
+	//
 	if(nResult == 0)
 	{
 		RemoveByIndex(nIdxForStack);
 	}
-	
-	ITEM_CHANGE_INFO sChange;
-	sChange.ProtocolType	= s2c_itemchangeinfosync;
-	sChange.m_btType		= 1;
-	sChange.m_dwItemID		= Item[nIdxBeStack].GetID();
-	sChange.m_uChange		= (UINT)Item[nIdxBeStack].GetDurability();
-	if(g_pServer)
-		g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
-	
+
+	// Send full ITEM_SYNC for nIdxBeStack (destination stack) with position data
+	// This fixes the bug where stack splits don't persist after client reconnect
+	{
+		// Find position for nIdxBeStack in m_Items array
+		int nPlace = 0, nX = 0, nY = 0;
+		for (int i = 0; i < MAX_ITEM; i++)
+		{
+			if (m_Items[i].nIdx == nIdxBeStack)
+			{
+				nPlace = m_Items[i].nPlace;
+				nX = m_Items[i].nX;
+				nY = m_Items[i].nY;
+				break;
+			}
+		}
+
+		ITEM_SYNC sItem;
+		sItem.ProtocolType = s2c_syncitem;
+		sItem.m_ID = Item[nIdxBeStack].GetID();
+		sItem.m_Genre = Item[nIdxBeStack].GetGenre();
+		sItem.m_Detail = Item[nIdxBeStack].GetDetailType();
+		sItem.m_Level = Item[nIdxBeStack].GetLevel();
+		sItem.m_Series = Item[nIdxBeStack].GetSeries();
+		sItem.m_Luck = Item[nIdxBeStack].m_GeneratorParam.nLuck;
+		sItem.m_Place = nPlace;
+		sItem.m_X = nX;
+		sItem.m_Y = nY;
+		for (int j = 0; j < 6; j++)
+			sItem.m_MagicLevel[j] = (BYTE)Item[nIdxBeStack].m_GeneratorParam.nGeneratorLevel[j];
+		sItem.m_RandomSeed = Item[nIdxBeStack].m_GeneratorParam.dwRandomSeed;
+		sItem.m_Version = Item[nIdxBeStack].m_GeneratorParam.nVersion;
+		sItem.m_Durability = Item[nIdxBeStack].GetDurability();
+		sItem.m_Record = Item[nIdxBeStack].GetRecord();
+		sItem.m_ExpiredTime = Item[nIdxBeStack].GetTime();
+		sItem.m_BindState = Item[nIdxBeStack].GetBindState();
+		sItem.m_ShopPrice = Item[nIdxBeStack].GetPlayerShopPrice();
+		if(g_pServer)
+			g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sItem, sizeof(ITEM_SYNC));
+	}
+
 	//
 	if(nResult < 0)
-	{	
+	{
 		RemoveByIndex(nIdxForStack);
 	}
 	//
 	if(nResult > 0)
-	{	
-		ITEM_CHANGE_INFO sChange;
-		sChange.ProtocolType	= s2c_itemchangeinfosync;
-		sChange.m_btType		= 1;
-		sChange.m_dwItemID		= Item[nIdxForStack].GetID();
-		sChange.m_uChange		= (UINT)Item[nIdxForStack].GetDurability();
+	{
+		// Send full ITEM_SYNC for nIdxForStack (source stack) with position data
+		// Find position for nIdxForStack in m_Items array
+		int nPlace = 0, nX = 0, nY = 0;
+		for (int i = 0; i < MAX_ITEM; i++)
+		{
+			if (m_Items[i].nIdx == nIdxForStack)
+			{
+				nPlace = m_Items[i].nPlace;
+				nX = m_Items[i].nX;
+				nY = m_Items[i].nY;
+				break;
+			}
+		}
+
+		ITEM_SYNC sItem;
+		sItem.ProtocolType = s2c_syncitem;
+		sItem.m_ID = Item[nIdxForStack].GetID();
+		sItem.m_Genre = Item[nIdxForStack].GetGenre();
+		sItem.m_Detail = Item[nIdxForStack].GetDetailType();
+		sItem.m_Level = Item[nIdxForStack].GetLevel();
+		sItem.m_Series = Item[nIdxForStack].GetSeries();
+		sItem.m_Luck = Item[nIdxForStack].m_GeneratorParam.nLuck;
+		sItem.m_Place = nPlace;
+		sItem.m_X = nX;
+		sItem.m_Y = nY;
+		for (int j = 0; j < 6; j++)
+			sItem.m_MagicLevel[j] = (BYTE)Item[nIdxForStack].m_GeneratorParam.nGeneratorLevel[j];
+		sItem.m_RandomSeed = Item[nIdxForStack].m_GeneratorParam.dwRandomSeed;
+		sItem.m_Version = Item[nIdxForStack].m_GeneratorParam.nVersion;
+		sItem.m_Durability = Item[nIdxForStack].GetDurability();
+		sItem.m_Record = Item[nIdxForStack].GetRecord();
+		sItem.m_ExpiredTime = Item[nIdxForStack].GetTime();
+		sItem.m_BindState = Item[nIdxForStack].GetBindState();
+		sItem.m_ShopPrice = Item[nIdxForStack].GetPlayerShopPrice();
 		if(g_pServer)
-			g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
+			g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sItem, sizeof(ITEM_SYNC));
 	}
 
 	return TRUE;
@@ -5266,9 +5327,9 @@ int KItemList::MapPlaceToUIContainer(int nPlace)
     case pos_expandtoryroom1:  return UOC_EXPAND_BOX1;
     case pos_givebox:          return UOC_GIVE_BOX;
 
-    // N?u c?n thì b? sung thêm các place khác ? ?ây
+    // N?u c?n thï¿½ b? sung thï¿½m cï¿½c place khï¿½c ? ?ï¿½y
 
-    default:                   return 0; // 0/NULL: container không h?p l?
+    default:                   return 0; // 0/NULL: container khï¿½ng h?p l?
     }
 }
 #endif // !_SERVER
@@ -5372,7 +5433,7 @@ void KItemList::UnBuildItem(int nIdx, int nPos/* = -1*/)
 	}
 	else
 	{
-		if (m_BuildItem[nPos] != nIdx)	// ¶«Î÷²»¶Ô
+		if (m_BuildItem[nPos] != nIdx)	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			return;
 		i = nPos;
 	}
@@ -5389,7 +5450,7 @@ int KItemList::PositionToRoom(int nPlace)
     else if (nPlace >= pos_repositoryroom && nPlace < pos_repositoryroom + 10)
         return room_repository + (nPlace - pos_repositoryroom);
     else
-        return -1;  // ? Không h?p l?
+        return -1;  // ? Khï¿½ng h?p l?
 }
 
 #ifdef _SERVER
