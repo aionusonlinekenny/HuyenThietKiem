@@ -313,12 +313,13 @@ function PerformUpgrade(nAttribSlotStr, _)
     if nMax > 0 and nNewValue > nMax then nNewValue = floor(nMax) end
 
     print("[LUA-UPGRADE] 20] SUCCESS - Calling UpgradeItemAttributes")
-    print("[LUA-UPGRADE] 21] Parameters: ItemIdx=" .. nEquipIdx .. ", Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent .. ", Pos=15")
+    print("[LUA-UPGRADE] 21] Parameters: ItemIdx=" .. nEquipIdx .. ", Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent .. ", Pos=3")
     print("[LUA-UPGRADE] 22] Expected: " .. szAttribName .. " " .. nOldValue .. " -> " .. nNewValue)
 
     -- UpgradeItemAttributes(oldItemIdx, upgradeSlot, upgradePercent, position)
-    -- Position 15 = BUILD_CONTAINER (where the item currently is)
-    local nResult = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, 15)
+    -- Position 3 = pos_equiproom (equipment inventory room)
+    -- Don't use pos 15 (BUILD_CONTAINER) - causes disconnect when UI is open
+    local nResult = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, 3)
 
     print("[LUA-UPGRADE] 23] UpgradeItemAttributes returned: " .. tostring(nResult))
 
@@ -333,7 +334,8 @@ function PerformUpgrade(nAttribSlotStr, _)
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
                          szAttribName .. ": " .. nOldValue .. " -> ~" .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
                          "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu. " ..
-                         "<color=yellow>Co the tiep tuc nang cap!</color>"
+                         "<color=yellow>TRANG BI MOI DA VAO TUI DO (Equipment Room)!</color> " ..
+                         "<color=red>HAY LAY ITEM CU RA KHOI KHAY!</color>"
     Msg2Player(szSuccessMsg)
     print("[LUA-UPGRADE] 26] Upgrade complete")
 end
