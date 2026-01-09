@@ -16,7 +16,7 @@
 #define	REQUEST_EQUIP_ITEM_TO_REPOSITORY4		9
 #define	REQUEST_EQUIP_ITEM_TO_REPOSITORY5		10
 #ifndef _SERVER
-extern bool g_RightMoveBusy;   // ch? khai báo (extern)
+extern bool g_RightMoveBusy;   // ch? khai bï¿½o (extern)
 #endif
 typedef struct
 {
@@ -246,6 +246,8 @@ public:
 	inline	int	IsActiveSet() const { return m_bActiveSet; };
 	BOOL		CountCommonItem(int nGenre, int nDetailType, int P = pos_equiproom);//AutoAI by kinnox;
 	BOOL		SearchEquipment(int nWidth, int nHeight);//AutoAI by kinnox;
+	//
+	void		NotifyItemChange(int nItemIdx);  // Notify UI to refresh item display
 #endif
 };
 #endif

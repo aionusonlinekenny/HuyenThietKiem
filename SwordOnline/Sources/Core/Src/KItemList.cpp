@@ -4303,6 +4303,78 @@ void KItemList::UnlockOperation()
 	}
 	m_bLockOperation = FALSE;
 }
+
+// --
+//
+// --
+void KItemList::NotifyItemChange(int nItemIdx)
+{
+	// Find item in m_Items array
+	int nListIdx = IsMyItem(nItemIdx);
+	if (nListIdx <= 0)
+	{
+		g_DebugLog("[CLIENT-NOTIFY] ERROR: Item %d not in player inventory!", nItemIdx);
+		return;
+	}
+
+	// Construct UI notification structure
+	KUiObjAtContRegion pInfo;
+	pInfo.Obj.uGenre = CGOG_ITEM;
+	pInfo.Obj.uId = nItemIdx;
+	pInfo.Region.Width = Item[nItemIdx].GetWidth();
+	pInfo.Region.Height = Item[nItemIdx].GetHeight();
+
+	// Get item position from m_Items array
+	int nPlace = m_Items[nListIdx].nPlace;
+	int nX = m_Items[nListIdx].nX;
+	int nY = m_Items[nListIdx].nY;
+
+	pInfo.Region.h = nX;
+	pInfo.Region.v = nY;
+
+	// Map position to container type (same logic as KItemList::Add)
+	switch(nPlace)
+	{
+	case pos_immediacy:
+		pInfo.eContainer = UOC_IMMEDIA_ITEM;
+		break;
+	case pos_equiproom:
+		pInfo.eContainer = UOC_ITEM_TAKE_WITH;
+		break;
+	case pos_repositoryroom:
+		pInfo.eContainer = UOC_STORE_BOX;
+		break;
+	case pos_repositoryroom1:
+		pInfo.eContainer = UOC_STORE_BOX1;
+		break;
+	case pos_repositoryroom2:
+		pInfo.eContainer = UOC_STORE_BOX2;
+		break;
+	case pos_repositoryroom3:
+		pInfo.eContainer = UOC_STORE_BOX3;
+		break;
+	case pos_repositoryroom4:
+		pInfo.eContainer = UOC_STORE_BOX4;
+		break;
+	case pos_repositoryroom5:
+		pInfo.eContainer = UOC_STORE_BOX5;
+		break;
+	case pos_expandtoryroom1:
+		pInfo.eContainer = UOC_EXPAND_BOX1;
+		break;
+	case pos_givebox:
+		pInfo.eContainer = UOC_GIVE_BOX;
+		break;
+	default:
+		pInfo.eContainer = UOC_ITEM_TAKE_WITH;
+		break;
+	}
+
+	g_DebugLog("[CLIENT-NOTIFY] Notifying UI: ItemIdx=%d, Container=%d, Pos=(%d,%d)",
+		nItemIdx, pInfo.eContainer, nX, nY);
+	CoreDataChanged(GDCNI_OBJECT_CHANGED, (DWORD)&pInfo, 1);
+	g_DebugLog("[CLIENT-NOTIFY] CoreDataChanged called - UI should refresh");
+}
 #endif
 
 // --
