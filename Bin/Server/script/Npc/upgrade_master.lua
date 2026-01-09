@@ -297,47 +297,90 @@ function PerformUpgrade(nAttribSlotStr, _)
         return
     end
 
-    -- STEP 4: SUCCESS - Use UpgradeItemAttributes C++ function
-    -- This function handles everything atomically:
-    -- 1. Preserves all 6 attributes with exact types
-    -- 2. Upgrades the specified slot by the percentage
-    -- 3. Removes old item
-    -- 4. Creates new item with exact mode encoding
-    -- 5. Adds new item to same position
+    -- STEP 4: SUCCESS - Create new item with upgraded attribute using exact mode encoding
+    -- PROBLEM: UpgradeItemAttributes fails when coordinates from BUILD_CONTAINER
+    --          are invalid for target position (equipment room has different grid)
+    -- SOLUTION: Use AddItemEx with exact mode encoding, let it auto-place
+    --           DON'T delete old item (causes disconnect)
     local nIncreasePercent = UPGRADE_FIXED_PERCENT
 
-    -- Calculate expected new value for logging
+    -- Calculate new value (MUST be integer for generator levels)
     local nIncrease = (nOldValue * nIncreasePercent) / 100
     if nIncrease < 1 then nIncrease = 1 end
     local nNewValue = floor(nOldValue + nIncrease)
     if nMax > 0 and nNewValue > nMax then nNewValue = floor(nMax) end
 
-    print("[LUA-UPGRADE] 20] SUCCESS - Calling UpgradeItemAttributes")
-    print("[LUA-UPGRADE] 21] Parameters: ItemIdx=" .. nEquipIdx .. ", Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent .. ", Pos=3")
-    print("[LUA-UPGRADE] 22] Expected: " .. szAttribName .. " " .. nOldValue .. " -> " .. nNewValue)
+    print("[LUA-UPGRADE] 20] SUCCESS - Creating upgraded item with exact mode encoding")
+    print("[LUA-UPGRADE] 21] Attribute " .. nAttribSlot .. ": " .. szAttribName .. " " .. nOldValue .. " -> " .. nNewValue)
 
-    -- UpgradeItemAttributes(oldItemIdx, upgradeSlot, upgradePercent, position)
-    -- Position 3 = pos_equiproom (equipment inventory room)
-    -- Don't use pos 15 (BUILD_CONTAINER) - causes disconnect when UI is open
-    local nResult = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, 3)
+    -- Get all item properties for recreation
+    local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
 
-    print("[LUA-UPGRADE] 23] UpgradeItemAttributes returned: " .. tostring(nResult))
+    -- Get ALL 6 attributes (preserve all, upgrade one)
+    local tAttribs = {}
+    for i = 0, 5 do
+        local nType, nVal, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
+        tAttribs[i] = {
+            nType = nType or 0,
+            nValue = (i == nAttribSlot) and nNewValue or (nVal or 0),
+            nMin = nMin or 0,
+            nMax = nMax or 0
+        }
+    end
 
-    if nResult == nil or nResult == 0 then
-        print("[LUA-UPGRADE] 24] ERROR: UpgradeItemAttributes failed!")
-        Msg2Player("<color=red>LOI: Khong the nang cap (UpgradeItemAttributes failed)!<color>")
+    -- EXACT MODE ENCODING (same as C++ UpgradeItemAttributes)
+    -- Generator levels = attribute VALUES (0-255) - MUST BE INTEGERS
+    local nGenLevels = {}
+    for i = 0, 5 do
+        nGenLevels[i] = floor(tAttribs[i].nValue or 0)
+    end
+
+    -- Encode attribute TYPES into seed (types 0-3) and version (types 4-5)
+    local nEncodedSeed = 0
+    nEncodedSeed = nEncodedSeed + ((tAttribs[0].nType or 0) * 1)
+    nEncodedSeed = nEncodedSeed + ((tAttribs[1].nType or 0) * 256)
+    nEncodedSeed = nEncodedSeed + ((tAttribs[2].nType or 0) * 65536)
+    nEncodedSeed = nEncodedSeed + ((tAttribs[3].nType or 0) * 16777216)
+
+    local nEncodedVersion = 0
+    nEncodedVersion = nEncodedVersion + ((tAttribs[4].nType or 0) * 1)
+    nEncodedVersion = nEncodedVersion + ((tAttribs[5].nType or 0) * 256)
+
+    -- Exact mode luck = 999900000 + original luck (mod 100000)
+    local nLuckMod = nLuck
+    while nLuckMod >= 100000 do
+        nLuckMod = nLuckMod - 100000
+    end
+    local nExactModeLuck = 999900000 + nLuckMod
+
+    print("[LUA-UPGRADE] 22] Encoded: Luck=" .. nExactModeLuck .. ", Seed=" .. nEncodedSeed .. ", Ver=" .. nEncodedVersion)
+    print("[LUA-UPGRADE] 23] GenLevels: [" .. nGenLevels[0] .. "," .. nGenLevels[1] .. "," .. nGenLevels[2] .. "," .. nGenLevels[3] .. "," .. nGenLevels[4] .. "," .. nGenLevels[5] .. "]")
+
+    -- Create new item with exact attributes (AddItemEx auto-places in equipment room)
+    -- DON'T specify position parameter - let it auto-place
+    local nNewItemIdx = AddItemEx(nGenre, nDetail, nParti, nLevel, nSeries, nExactModeLuck,
+                                    nGenLevels[0], nGenLevels[1], nGenLevels[2],
+                                    nGenLevels[3], nGenLevels[4], nGenLevels[5],
+                                    nEncodedVersion, nEncodedSeed)
+
+    print("[LUA-UPGRADE] 24] AddItemEx returned: " .. tostring(nNewItemIdx))
+
+    if nNewItemIdx == nil or nNewItemIdx == 0 then
+        print("[LUA-UPGRADE] 25] ERROR: Failed to create new item!")
+        Msg2Player("<color=red>LOI: Khong the tao item moi (AddItemEx failed)!<color>")
         return
     end
 
-    -- SUCCESS
-    print("[LUA-UPGRADE] 25] SUCCESS - Item upgraded, new item index: " .. nResult)
+    -- SUCCESS - new item created with upgraded attributes
+    -- DON'T delete old item (causes disconnect)
+    print("[LUA-UPGRADE] 26] SUCCESS - New item created, index: " .. nNewItemIdx)
     local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
-                         szAttribName .. ": " .. nOldValue .. " -> ~" .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
+                         szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
                          "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu. " ..
-                         "<color=yellow>TRANG BI MOI DA VAO TUI DO (Equipment Room)!</color> " ..
+                         "<color=yellow>TRANG BI MOI DA VAO TUI DO!</color> " ..
                          "<color=red>HAY LAY ITEM CU RA KHOI KHAY!</color>"
     Msg2Player(szSuccessMsg)
-    print("[LUA-UPGRADE] 26] Upgrade complete")
+    print("[LUA-UPGRADE] 27] Upgrade complete")
 end
 
 -- ------------------------------------------------------------
