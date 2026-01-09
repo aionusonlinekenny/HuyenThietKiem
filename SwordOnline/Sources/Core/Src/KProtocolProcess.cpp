@@ -5072,11 +5072,19 @@ void KProtocolProcess::PlayerRideCommand(int nIndex, BYTE* pProtocol)
 
 // --
 void KProtocolProcess::ExeScriptCommand(int nIndex, BYTE* pProtocol)
-{	
-	if (nIndex <= 0 || nIndex >= MAX_PLAYER)
-		return;
+{
+	EXE_SCRIPT_COMMAND* pExe = (EXE_SCRIPT_COMMAND*)pProtocol;
+	g_DebugLog("[SERVER PROTOCOL] ExeScriptCommand received: PlayerIndex=%d, ExeId=%d", nIndex, pExe ? pExe->m_btExeId : -1);
 
+	if (nIndex <= 0 || nIndex >= MAX_PLAYER)
+	{
+		g_DebugLog("[SERVER PROTOCOL] ERROR: Invalid player index %d (must be 1-%d)", nIndex, MAX_PLAYER-1);
+		return;
+	}
+
+	g_DebugLog("[SERVER PROTOCOL] Forwarding to Player[%d].ExeScriptButton()", nIndex);
 	Player[nIndex].ExeScriptButton(pProtocol);
+	g_DebugLog("[SERVER PROTOCOL] ExeScriptCommand completed");
 }
 
 // --

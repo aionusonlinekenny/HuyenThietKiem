@@ -6,8 +6,8 @@ Include("\\script\\lib\\item_helpers.lua")
 
 -- Configuration
 HUYEN_TINH_GENRE = 6      -- item_task
-HUYEN_TINH_MIN_DETAIL = 74    -- Huyen Tinh Cap 1
-HUYEN_TINH_MAX_DETAIL = 79    -- Huyen Tinh Cap 6
+HUYEN_TINH_MIN_DETAIL = 87    -- Huyen Tinh Cap 1
+HUYEN_TINH_MAX_DETAIL = 90    -- Huyen Tinh Cap 4
 
 -- DEPRECATED: Old luck-based detection (kept for reference only)
 -- PURPLE_LUCK_FLAG = 1000000000
@@ -139,21 +139,21 @@ function ExeCompoundForge()
     end
 
     if nCrystalDetail < HUYEN_TINH_MIN_DETAIL or nCrystalDetail > HUYEN_TINH_MAX_DETAIL then
-        Talk(1, "", "<color=red>Chi duoc dat Huyen Tinh (Cap 1-6) vao o nho!<color>")
+        Talk(1, "", "<color=red>Chi duoc dat Huyen Tinh (Cap 1-4) vao o nho!<color>")
         return
     end
 
-    -- Calculate crystal level (74=1, 75=2, ..., 79=6)
-    local nCrystalLevel = nCrystalDetail - 73
+    -- Calculate crystal level (87=1, 88=2, 89=3, 90=4)
+    local nCrystalLevel = nCrystalDetail - 86
 
-    -- Determine number of magic attribute lines based on crystal level
+    -- Determine number of magic attribute lines based on crystal level (1-4)
     local nNumLines = 0
-    if nCrystalLevel >= 5 then
-        -- Level 5-6: Guaranteed 6 lines
+    if nCrystalLevel >= 4 then
+        -- Level 4: Guaranteed 6 lines
         nNumLines = 6
     else
-        -- Level 1-4: Random based on crystal level
-        -- Level 1: 2-3, Level 2: 2-4, Level 3: 3-5, Level 4: 3-6
+        -- Level 1-3: Random based on crystal level
+        -- Level 1: 2-3, Level 2: 2-4, Level 3: 3-5
         local nMinLines = 2
         if nCrystalLevel >= 3 then
             nMinLines = 3
@@ -251,19 +251,19 @@ function ExeCompoundEquipment()
     -- No need to floor - comparisons work fine with decimal values
     local nAvgLevel = (nRingLevel + nNeckLevel + nPendLevel) / 3
 
-    -- Determine Huyen Tinh level (1-6) based on average equipment level
+    -- Determine Huyen Tinh level (1-4) based on average equipment level
     -- Level mapping:
-    -- Equip Avg 1-20:   70% chance level 1, 25% level 2, 5% level 3
-    -- Equip Avg 21-40:  50% level 2, 35% level 3, 15% level 4
-    -- Equip Avg 41-60:  40% level 3, 40% level 4, 15% level 5, 5% level 6
-    -- Equip Avg 61-80:  30% level 4, 40% level 5, 25% level 6, 5% level 7 (cap at 6)
-    -- Equip Avg 81+:    20% level 5, 50% level 6, 30% level 7 (cap at 6)
+    -- Equip Avg 1-30:   70% chance level 1, 25% level 2, 5% level 3
+    -- Equip Avg 31-60:  50% level 2, 40% level 3, 10% level 4
+																											   
+    -- Equip Avg 61-80:  30% level 2, 50% level 3, 20% level 4
+    -- Equip Avg 81+:    20% level 3, 80% level 4
 
     local nHuyenTinhLevel = 1
     local nRand = random(1, 100)
 
-    if nAvgLevel <= 20 then
-        -- Low level: mostly level 1
+    if nAvgLevel <= 30 then
+        -- Low level: mostly level 1-2
         if nRand <= 70 then
             nHuyenTinhLevel = 1
         elseif nRand <= 95 then
@@ -271,50 +271,52 @@ function ExeCompoundEquipment()
         else
             nHuyenTinhLevel = 3
         end
-    elseif nAvgLevel <= 40 then
-        -- Mid-low level
+    elseif nAvgLevel <= 60 then
+        -- Mid level: focus on 2-3
         if nRand <= 50 then
             nHuyenTinhLevel = 2
-        elseif nRand <= 85 then
+        elseif nRand <= 90 then
             nHuyenTinhLevel = 3
         else
             nHuyenTinhLevel = 4
-        end
-    elseif nAvgLevel <= 60 then
-        -- Mid level
-        if nRand <= 40 then
-            nHuyenTinhLevel = 3
-        elseif nRand <= 80 then
-            nHuyenTinhLevel = 4
-        elseif nRand <= 95 then
-            nHuyenTinhLevel = 5
-        else
-            nHuyenTinhLevel = 6
         end
     elseif nAvgLevel <= 80 then
-        -- Mid-high level
+        -- Mid-high level: focus on 3-4
         if nRand <= 30 then
-            nHuyenTinhLevel = 4
-        elseif nRand <= 70 then
-            nHuyenTinhLevel = 5
+            nHuyenTinhLevel = 2
+        elseif nRand <= 80 then
+            nHuyenTinhLevel = 3
+							   
+							   
+							   
+							   
         else
-            nHuyenTinhLevel = 6
+							   
+		   
+							   
+						 
+						   
+            nHuyenTinhLevel = 4
+							   
+							   
+			
+							   
         end
     else
-        -- High level: better chances for level 5-6
+        -- High level: mostly level 4
         if nRand <= 20 then
-            nHuyenTinhLevel = 5
+            nHuyenTinhLevel = 3
         else
-            nHuyenTinhLevel = 6
+            nHuyenTinhLevel = 4
         end
     end
 
     -- Create Huyen Tinh item
-    -- Genre = 6 (item_task), Detail = 74-79 (level 1-6)
-    local nHuyenTinhDetail = 73 + nHuyenTinhLevel
+    -- Genre = 6 (item_task), Detail = 87-90 (level 1-4)
+    local nHuyenTinhDetail = 86 + nHuyenTinhLevel
     local nHuyenTinhIdx = AddItemEx(
         HUYEN_TINH_GENRE,    -- genre = 6 (item_task)
-        nHuyenTinhDetail,    -- detail = 74-79 (level 1-6)
+        nHuyenTinhDetail,    -- detail = 87-90 (level 1-4)
         0,                   -- particular
         0,                   -- level
         0,                   -- series
@@ -335,7 +337,7 @@ function ExeCompoundEquipment()
     DelItemByIndex(nPendantIdx)
 
     -- Success message
-    local szLevelName = {"I", "II", "III", "IV", "V", "VI"}
+    local szLevelName = {"I", "II", "III", "IV"}
     local szMsg = "<color=green>Hop thanh thanh cong Huyen Tinh cap " .. szLevelName[nHuyenTinhLevel] .. "!<color>"
     Talk(1, "", szMsg)
     Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da hop thanh <color=cyan>HUYEN TINH CAP " .. szLevelName[nHuyenTinhLevel] .. "<color> tu 3 trang bi!")
@@ -390,19 +392,19 @@ function ExeCompoundCrystal()
         return
     end
 
-    -- Validate all are within valid range (74-79 for levels 1-6)
+    -- Validate all are within valid range (87-90 for levels 1-4)
     if nDetail1 < HUYEN_TINH_MIN_DETAIL or nDetail1 > HUYEN_TINH_MAX_DETAIL then
-        Talk(1, "", "<color=red>O 1 phai la Huyen Tinh cap 1-6!<color>")
+        Talk(1, "", "<color=red>O 1 phai la Huyen Tinh cap 1-4!<color>")
         return
     end
 
     if nDetail2 < HUYEN_TINH_MIN_DETAIL or nDetail2 > HUYEN_TINH_MAX_DETAIL then
-        Talk(1, "", "<color=red>O 2 phai la Huyen Tinh cap 1-6!<color>")
+        Talk(1, "", "<color=red>O 2 phai la Huyen Tinh cap 1-4!<color>")
         return
     end
 
     if nDetail3 < HUYEN_TINH_MIN_DETAIL or nDetail3 > HUYEN_TINH_MAX_DETAIL then
-        Talk(1, "", "<color=red>O 3 phai la Huyen Tinh cap 1-6!<color>")
+        Talk(1, "", "<color=red>O 3 phai la Huyen Tinh cap 1-4!<color>")
         return
     end
 
@@ -412,16 +414,16 @@ function ExeCompoundCrystal()
         return
     end
 
-    -- Check if already at max level (detail = 79 = level 6)
+    -- Check if already at max level (detail = 90 = level 4)
     if nDetail1 >= HUYEN_TINH_MAX_DETAIL then
         Talk(1, "", "<color=red>Huyen Tinh da dat cap toi da, khong the nang cap!<color>")
         return
     end
 
-    -- Calculate success rate based on crystal level
-    -- Level 1: 80% success, Level 2: 70%, Level 3: 60%, Level 4: 50%, Level 5: 40%
-    local nCrystalLevel = nDetail1 - 73
-    local nSuccessRate = 90 - (nCrystalLevel * 10)  -- 80, 70, 60, 50, 40
+    -- Calculate success rate based on crystal level (1-4)
+    -- Level 1: 80% success, Level 2: 70%, Level 3: 60%
+    local nCrystalLevel = nDetail1 - 86
+    local nSuccessRate = 90 - (nCrystalLevel * 10)  -- 80, 70, 60, 50
 
     -- Random check for success/failure
     local nRand = random(1, 100)
@@ -453,8 +455,8 @@ function ExeCompoundCrystal()
         end
 
         -- Success message
-        local szLevelName = {"I", "II", "III", "IV", "V", "VI"}
-        local nNewLevel = nNewDetail - 73
+        local szLevelName = {"I", "II", "III", "IV"}
+        local nNewLevel = nNewDetail - 86
         local szMsg = "<color=green>Nang cap thanh cong! Nhan duoc Huyen Tinh cap " .. szLevelName[nNewLevel] .. "!<color>"
         Talk(1, "", szMsg)
         Msg2SubWorld("<pic=135><color=green> " .. GetName() .. "<color> da nang cap thanh cong <color=cyan>HUYEN TINH CAP " .. szLevelName[nNewLevel] .. "<color>!")
@@ -507,7 +509,7 @@ function ExeExtractAttribute()
 
     -- Validate Huyen Tinh
     if nHTGenre ~= HUYEN_TINH_GENRE or nHTDetail < HUYEN_TINH_MIN_DETAIL or nHTDetail > HUYEN_TINH_MAX_DETAIL then
-        Talk(1, "", "<color=red>O 1 phai la HUYEN TINH cap 1-6!<color>")
+        Talk(1, "", "<color=red>O 1 phai la HUYEN TINH cap 1-4!<color>")
         return
     end
 
@@ -660,8 +662,8 @@ function ExeEnchaseAttribute()
     end
 
     local nHTGenre, nHTDetail = GetItemProp(nHuyenTinhIdx)
-    if nHTGenre ~= HUYEN_TINH_GENRE or nHTDetail < 76 or nHTDetail > HUYEN_TINH_MAX_DETAIL then
-        Talk(1, "", "<color=red>O 1 phai la HUYEN TINH cap 4-6!<color>")
+    if nHTGenre ~= HUYEN_TINH_GENRE or nHTDetail < 89 or nHTDetail > HUYEN_TINH_MAX_DETAIL then
+        Talk(1, "", "<color=red>O 1 phai la HUYEN TINH cap 3-4!<color>")
         return
     end
 

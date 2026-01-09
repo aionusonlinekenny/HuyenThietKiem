@@ -102,6 +102,8 @@ public:
 	int 	GetSeriesItem(unsigned int uId );
 	int 	GetNumStack(unsigned int uId );
 	int 	CheckPositionBarrier(int nMapX, int nMapY);
+	BOOL 	GetItemMagicAttribInfo(unsigned int uItemId, int nSlot, int* pnType, int* pnValue, int* pnMin, int* pnMax);
+	int 	GetMagicAttribMaxValue(int nAttribType, int nSeries, int nLevel);
 };
 
 static KCoreShell	g_CoreShell;
@@ -5754,34 +5756,55 @@ int	KCoreShell::SceneMapFindPosOperation(unsigned int uOper, unsigned int uParam
 }
 //
 
-//
 int KCoreShell::GetGenreItem(unsigned int uId )
 {
+	if (uId == 0 || uId >= MAX_ITEM)
+		return -1;
 	return Item[uId].GetGenre();
 }
 
 int KCoreShell::GetDetailItem(unsigned int uId )
 {
+	if (uId == 0 || uId >= MAX_ITEM)
+		return -1;
+	if (Item[uId].GetGenre() < 0)
+		return -1;
 	return Item[uId].GetDetailType();
 }
 
 int KCoreShell::GetParticularItem(unsigned int uId )
 {
+	if (uId == 0 || uId >= MAX_ITEM)
+		return -1;
+	if (Item[uId].GetGenre() < 0)
+		return -1;
 	return Item[uId].GetParticular();
 }
 
 int KCoreShell::GetLevelItem(unsigned int uId )
 {
+	if (uId == 0 || uId >= MAX_ITEM)
+		return 0;
+	if (Item[uId].GetGenre() < 0)
+		return 0;
 	return Item[uId].GetLevel();
 }
 
 int KCoreShell::GetSeriesItem(unsigned int uId )
 {
+	if (uId == 0 || uId >= MAX_ITEM)
+		return -1;
+	if (Item[uId].GetGenre() < 0)
+		return -1;
 	return Item[uId].GetSeries();
 }
 
 int KCoreShell::GetNumStack(unsigned int uId )
 {
+	if (uId == 0 || uId >= MAX_ITEM)
+		return 0;
+	if (Item[uId].GetGenre() < 0)
+		return 0;
 	return Item[uId].GetStackCount();
 }
 int KCoreShell::CheckPositionBarrier(int nMapX, int nMapY)
@@ -5797,5 +5820,55 @@ int KCoreShell::CheckPositionBarrier(int nMapX, int nMapY)
 	// Get barrier at position
 	// Returns 0 if no barrier (Obstacle_NULL), >0 if has barrier
 	return SubWorld[nSubWorldIndex].GetBarrier(nMapX, nMapY);
+}
+
+// Get magic attribute info for equipment
+// Returns TRUE if attribute exists, FALSE if empty slot
+BOOL KCoreShell::GetItemMagicAttribInfo(unsigned int uItemId, int nSlot, int* pnType, int* pnValue, int* pnMin, int* pnMax)
+{
+	// Validate parameters
+	if (uItemId == 0 || uItemId >= MAX_ITEM || nSlot < 0 || nSlot >= 6)
+		return FALSE;
+
+	if (!pnType || !pnValue || !pnMin || !pnMax)
+		return FALSE;
+
+	// Check if item exists by checking genre
+	if (Item[uItemId].GetGenre() < 0)
+		return FALSE;
+	
+	// Get attribute type
+	int nType = Item[uItemId].GetMagicAttrib(nSlot, 0);
+	if (nType <= 0)
+		return FALSE; // Empty attribute slot
+
+	// Get values: GetMagicAttrib(slot, type) where type: 0=Type, 1=Value[0], 2=Value[1], 3=Value[2]
+	// nValue[0] = current value
+	// nValue[1] = min value
+	// nValue[2] = max value
+	*pnType = nType;
+	*pnValue = Item[uItemId].GetMagicAttrib(nSlot, 1);  // Current value
+	*pnMin = Item[uItemId].GetMagicAttrib(nSlot, 2);    // Min value
+	*pnMax = Item[uItemId].GetMagicAttrib(nSlot, 3);    // Max value
+
+	return TRUE;
+}
+// Get max value for an attribute type from the definition table
+// Returns the GLOBAL MAX value for this attribute type across ALL levels
+// This uses the existing GetGlobalMinMax function which scans all records
+// Returns 0 if not found or error
+int KCoreShell::GetMagicAttribMaxValue(int nAttribType, int nSeries, int nLevel)
+{
+	if (nAttribType <= 0)
+		return 0;
+
+	// Use the existing GetGlobalMinMax function which scans all magic attribute
+	// records and returns the global min/max across all levels for this attribute type
+	// This is the same function used when generating blue equipment
+	int nGlobalMin = 0, nGlobalMax = 0;
+	ItemGen.GetGlobalMinMax(nAttribType, nGlobalMin, nGlobalMax);
+
+	// Return the global max value
+	return nGlobalMax;
 }
 //

@@ -1,310 +1,339 @@
 -----------------------------------------------------------------
 -- NPC: Upgrade Master (Cao Thu Ren Duc)
--- Function: Opens equipment attribute upgrade UI
--- Date: 2025-12-21
+-- Function: Upgrade blue equipment attributes with minerals
+-- Architecture: Lua = Game Logic, C++ = UI Presentation
 -----------------------------------------------------------------
 
-Include("\\script\\lib\\TaskLib.lua")
+-- ------------------------------------------------------------
+-- Helper Functions
+-- ------------------------------------------------------------
+-- Floor function (Lua 5.0 doesn't have math library or % operator)
+function floor(n)
+    if n >= 0 then
+        -- For positive numbers, truncate decimal part
+        local int_part = 0
+        while int_part + 1 <= n do
+            int_part = int_part + 1
+        end
+        return int_part
+    else
+        -- For negative numbers, round down
+        local int_part = 0
+        while int_part - 1 >= n do
+            int_part = int_part - 1
+        end
+        return int_part
+    end
+end
 
 -- ------------------------------------------------------------
--- Configuration - Item IDs
+-- Configuration
 -- ------------------------------------------------------------
 UPGRADE_MATERIAL_GENRE = 6      -- item_task
-UPGRADE_MATERIAL_DETAIL = 18    -- Luc Thuy Tinh (Green Crystal) - tam thoi
+
+-- Mineral Details (genre 6, particular 1/2/3 = level)
+MINERAL_FIRE_DETAIL_MIN = 74    -- Hoa Nguyen Thach Level 1
+MINERAL_FIRE_DETAIL_MAX = 76    -- Hoa Nguyen Thach Level 3
+MINERAL_METAL_DETAIL_MIN = 77   -- Kim Linh Thach Level 1
+MINERAL_METAL_DETAIL_MAX = 79   -- Kim Linh Thach Level 3
+MINERAL_WOOD_DETAIL_MIN = 80    -- Moc Linh Thach Level 1
+MINERAL_WOOD_DETAIL_MAX = 82    -- Moc Linh Thach Level 3
+MINERAL_WATER_DETAIL_MIN = 83   -- Thuy Linh Thach Level 1
+MINERAL_WATER_DETAIL_MAX = 85   -- Thuy Linh Thach Level 3
+LUCKY_STONE_DETAIL = 86         -- Da May Man
 
 -- Upgrade settings
-UPGRADE_FIXED_PERCENT = 20      -- % tang co dinh (FIXED 20%)
-UPGRADE_SUCCESS_RATE = 100      -- Ti le thanh cong (%)
+UPGRADE_FIXED_PERCENT = 10      -- % tang co dinh
+UPGRADE_COST_MONEY = 1000000    -- 100 van luong
+UPGRADE_COST_XU = 2             -- 2 xu (task item ID 19)
 
--- Attribute names (Vietnamese without tone marks, GLOBAL for old Lua compatibility)
-ATTRIB_NAMES = {
-    [28] = "Sat thuong nho nhat",
-    [29] = "Sat thuong lon nhat",
-    [30] = "Ne tranh",
-    [56] = "Do chinh xac",
-    [57] = "Do chinh xac",
-    [59] = "Sat thuong vat ly",
-    [60] = "Bang sat",
-    [61] = "Hoa sat",
-    [62] = "Loi sat",
-    [63] = "Doc sat",
-    [64] = "Sat thuong ngu hanh",
-    [70] = "Sat thuong vat ly",
-    [85] = "Sinh luc toi da",
-    [86] = "Sinh luc toi da",
-    [87] = "Sinh luc",
-    [88] = "Phuc hoi sinh luc",
-    [89] = "Noi luc toi da",
-    [90] = "Noi luc toi da",
-    [91] = "Noi luc",
-    [92] = "Phuc hoi noi luc",
-    [93] = "The luc toi da",
-    [94] = "The luc toi da",
-    [95] = "The luc",
-    [97] = "Suc manh",
-    [98] = "Than phap",
-    [99] = "Sinh khi",
-    [100] = "Noi cong",
-    [101] = "Khang doc",
-    [102] = "Khang hoa",
-    [103] = "Khang loi",
-    [104] = "Phong thu vat ly",
-    [105] = "Khang bang",
-    [106] = "Giam thoi gian lam cham",
-    [107] = "Giam thoi gian dot",
-    [108] = "Giam thoi gian trung doc",
-    [110] = "Giam thoi gian choang",
-    [111] = "Toc do di chuyen",
-    [113] = "Thoi gian phuc hoi",
-    [114] = "Khang tat ca",
-    [115] = "Toc do danh ngoai cong",
-    [116] = "Toc do danh noi cong",
-    [121] = "Sat thuong vat ly ngoai cong",
-    [122] = "Hoa sat ngoai cong",
-    [123] = "Bang sat ngoai cong",
-    [124] = "Loi sat ngoai cong",
-    [125] = "Doc sat ngoai cong",
-    [126] = "Sat thuong vat ly phan tram",
-    [128] = "Mo hoac doi phuong",
-    [129] = "Phong thu vat ly",
-    [150] = "Ne tranh",
-    [151] = "Ne tranh phan tram",
-    [166] = "Ti le tan cong chinh xac",
-    [167] = "Ti le tan cong chinh xac phan tram",
-    [168] = "Sat thuong vat ly noi cong",
-    [169] = "Bang sat noi cong",
-    [170] = "Hoa sat noi cong",
-    [171] = "Loi sat noi cong",
-    [172] = "Doc sat noi cong"
-}
+-- Success rate settings
+UPGRADE_BASE_SUCCESS_RATE = 20  -- 30% co ban
+MINERAL_LEVEL1_BONUS = 5        -- +5% per level 1 mineral
+MINERAL_LEVEL2_BONUS = 10       -- +10% per level 2 mineral
+MINERAL_LEVEL3_BONUS = 15       -- +15% per level 3 mineral
+LUCKY_STONE_BONUS = 100          -- +10% from lucky stone
 
--- Get attribute display name
+-- ------------------------------------------------------------
+-- Validation Helpers (Lua = Game Logic Layer)
+-- ------------------------------------------------------------
+function IsMineralItem(nGenre, nDetail)
+    if nGenre ~= UPGRADE_MATERIAL_GENRE then
+        return 0
+    end
+
+    if nDetail >= MINERAL_FIRE_DETAIL_MIN and nDetail <= MINERAL_WATER_DETAIL_MAX then
+        return 1
+    end
+
+    return 0
+end
+
+function IsLuckyStone(nGenre, nDetail)
+    if nGenre ~= UPGRADE_MATERIAL_GENRE then
+        return 0
+    end
+
+    if nDetail == LUCKY_STONE_DETAIL then
+        return 1
+    end
+
+    return 0
+end
+
+-- ------------------------------------------------------------
+-- Get Vietnamese Attribute Name
+-- ------------------------------------------------------------
 function GetAttribName(nAttribType)
-    return ATTRIB_NAMES[nAttribType] or ("Type " .. nAttribType)
+    -- Map attribute type to Vietnamese name
+    local tbAttribNames = {
+        [0] = "Khong ro",
+        -- Sinh luc/Noi cong/Ngoai cong
+        [2] = "Sinh luc toi da",
+        [6] = "Noi cong",
+        [5] = "Ngoai cong",
+        -- Phong ngu
+        [3] = "Phong ngu",
+        -- He
+        [27] = "Kim cong",
+        [28] = "Moc cong",
+        [29] = "Thuy cong",
+        [30] = "Hoa cong",
+        [31] = "Tho cong",
+        -- Khang he
+        [32] = "Kim khang",
+        [33] = "Moc khang",
+        [34] = "Thuy khang",
+        [35] = "Hoa khang",
+        [36] = "Tho khang",
+        -- Cac loai khac
+        [93] = "Luc",
+        [85] = "Than phap",
+        [123] = "May man",
+        [126] = "Linh hoat",
+        [169] = "Sinh menh"
+    }
+
+    return tbAttribNames[nAttribType] or ("Thuoc tinh #" .. nAttribType)
 end
 
 -- ------------------------------------------------------------
 -- NPC Talk Entry Point
--- -----------------------------------------------------------
+-- ------------------------------------------------------------
 function UpgradeAttribTalk()
-    local tbSay = {
-        "Nang cap thuoc tinh trang bi xanh/OpenUpgradeUI",
-        "Huong dan nang cap/ShowGuide",
-        "Ta chi ghe ngang qua/no",
-    }
-    Say("Cao thu ren duc: Ta co the giup nguoi nang cap tung thuoc tinh cua trang bi xanh!",
-        getn(tbSay), tbSay)
-end
-
--- ------------------------------------------------------------
--- Open Upgrade UI
--- ------------------------------------------------------------
-function OpenUpgradeUI()
     OpenUpgradeAttribUI()  -- Call C++ function to open UI
 end
 
 -- ------------------------------------------------------------
--- Execute Upgrade (called when player clicks "Upgrade" button)
--- This function validates items and shows attribute selection menu
+-- Perform Upgrade (called directly from C++ with attribute slot)
+-- C++ sends: PerformUpgrade#X where X is the attribute slot (0-5)
+-- IMPORTANT: Materials + money + xu are consumed BEFORE upgrade
 -- ------------------------------------------------------------
-function ExeUpgradeAttrib()
-    local nPos = 15  -- pos_builditem (same container as Tremble)
+function PerformUpgrade(nAttribSlotStr, _)
+    -- DEBUG: Function entry
+    print("[LUA-UPGRADE] 1] PerformUpgrade function entered")
+    print("[LUA-UPGRADE] 2] Raw parameter received: " .. tostring(nAttribSlotStr))
 
-    -- Get items from UI slots
-    local nEquipIdx = GetPOItem(nPos, 0)    -- Equipment slot
-    local nMaterialIdx = GetPOItem(nPos, 1) -- Material slot
-
-    -- Validate equipment
-    if nEquipIdx <= 0 then
-        Talk(1, "", "Chua dat trang bi vao!")
+    -- Parse attribute slot from parameter (C++ sends as string in first param, 0 in second)
+    local nAttribSlot = tonumber(nAttribSlotStr)
+    if not nAttribSlot then
+        Msg2Player("[LUA ERROR] Invalid attribute slot parameter")
         return
     end
 
-    -- Validate material exists
-    if nMaterialIdx <= 0 then
-        Talk(1, "", "Chua dat Da Nang Cap!")
+    print("[LUA-UPGRADE] 3] Parsed slot: " .. nAttribSlot)
+
+    local nPos = 15  -- pos_builditem
+    print("[LUA-UPGRADE] 4] About to call GetPOItem(15, 0)")
+
+    -- Get equipment (must exist)
+    local nEquipIdx = GetPOItem(nPos, 0)
+    print("[LUA-UPGRADE] 5] GetPOItem returned: " .. tostring(nEquipIdx))
+
+    if not nEquipIdx or nEquipIdx <= 0 then
+        Talk(1, "", "Loi: Trang bi bi mat!")
+        print("[LUA-UPGRADE] 6] Equipment not found in slot")
         return
     end
 
-    -- Validate material type (must be correct upgrade material)
-    local nMatGenre, nMatDetail = GetItemProp(nMaterialIdx)
+    print("[LUA-UPGRADE] 7] Equipment found, index: " .. nEquipIdx)
 
-    if nMatGenre ~= UPGRADE_MATERIAL_GENRE or nMatDetail ~= UPGRADE_MATERIAL_DETAIL then
-        Talk(1, "", "Vat lieu khong dung! Can su dung Da Nang Cap.")
-        return
-    end
-
-    -- Get equipment info
+    -- Validate equipment is blue
+    print("[LUA-UPGRADE] 8] Calling GetItemProp")
     local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
+    print("[LUA-UPGRADE] 9] GetItemProp - Genre: " .. tostring(nGenre) .. ", Luck: " .. tostring(nLuck))
 
-    -- Check if equipment is blue (genre 0 with luck < 1000000000)
-    if nGenre ~= 0 then
+    if not nGenre or nGenre ~= 0 then
         Talk(1, "", "Chi co the nang cap trang bi xanh!")
+        print("[LUA-UPGRADE] 10] Equipment is not blue (genre != 0)")
         return
     end
 
     if nLuck >= 1000000000 then
-        Talk(1, "", "Trang bi nay la tim/vang, khong the nang cap!")
+        Msg2Player("Trang bi nay la tim/vang, khong the nang cap!")
+        print("[LUA-UPGRADE] 11] Equipment is purple/gold (luck >= 1000000000)")
         return
     end
 
-    -- Check if equipment has magic attributes
-    local bHasMagicAttrib = 0
-    for i = 0, 5 do
-        local nAttribType, nValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
-        if nAttribType and nAttribType > 0 then
-            bHasMagicAttrib = 1
-            break
-        end
-    end
+    print("[LUA-UPGRADE] 12] Equipment validation passed")
 
-    if bHasMagicAttrib == 0 then
-        Talk(1, "", "Trang bi nay khong co thuoc tinh magic!")
-        return
-    end
-
-    -- Build list of all upgradeable attributes
-    local tbSayOptions = {}
-    local nCount = 0
-
-    for i = 0, 5 do
-        local nAttribType, nValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
-
-        if nAttribType and nAttribType > 0 then
-            -- Check if this attribute can be upgraded
-            if nMax <= 0 or nValue < nMax then
-                -- Calculate potential new value
-                local nIncrease = (nValue * UPGRADE_FIXED_PERCENT) / 100
-                if nIncrease < 1 then nIncrease = 1 end
-                local nNewValue = nValue + nIncrease
-                if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
-
-                -- Build option string with Vietnamese name (no tone marks)
-                local szAttribName = GetAttribName(nAttribType)
-                local szOption = szAttribName .. ": " .. nValue .. " -> " .. nNewValue .. "/DoUpgradeAttrib_" .. i
-
-                -- Add to table (old Lua style - no tinsert)
-                nCount = nCount + 1
-                tbSayOptions[nCount] = szOption
+    -- Validate minerals in slots 1-4 (if present)
+    for i = 1, 4 do
+        local nItemIdx = GetPOItem(nPos, i)
+        if nItemIdx and nItemIdx > 0 then
+            local nGenre, nDetail = GetItemProp(nItemIdx)
+            if nGenre then
+                if IsMineralItem(nGenre, nDetail) == 0 then
+                    Talk(1, "", "Khoang thach khong hop le!")
+                    return
+                end
             end
         end
     end
 
-    -- Check if we have any upgradeable attributes
-    if nCount == 0 then
-        Talk(1, "", "Tat ca thuoc tinh da dat MAX!")
+    -- Validate lucky stone in slot 5 (if present)
+    local nLuckyStoneIdx = GetPOItem(nPos, 5)
+    if nLuckyStoneIdx and nLuckyStoneIdx > 0 then
+        local nGenre, nDetail = GetItemProp(nLuckyStoneIdx)
+        if nGenre then
+            if IsLuckyStone(nGenre, nDetail) == 0 then
+                Msg2Player("Chi chap nhan Da May Man o vi tri nay!")
+                return
+            end
+        end
+    end
+
+    -- Check money and xu requirements
+    local nPlayerMoney = GetCash()
+    local nPlayerXu = GetTaskItemCount(19)
+
+    if nPlayerMoney < UPGRADE_COST_MONEY then
+        Msg2Player("Khong du tien! Ban can co it nhat 1,000,000 luong.")
         return
     end
 
-    -- Add cancel option (old Lua style - no tinsert)
-    nCount = nCount + 1
-    tbSayOptions[nCount] = "Huy bo/no"
-
-    -- Show selection menu
-    Say("Chon thuoc tinh muon nang cap:", getn(tbSayOptions), tbSayOptions)
-end
-
--- ------------------------------------------------------------
--- Perform actual upgrade on selected attribute slot
--- Called by dynamic functions DoUpgradeAttrib_0 through DoUpgradeAttrib_5
--- ------------------------------------------------------------
-function PerformUpgrade(nAttribSlot)
-    local nPos = 15  -- pos_builditem
-
-    -- Get items again (in case they changed)
-    local nEquipIdx = GetPOItem(nPos, 0)
-    local nMaterialIdx = GetPOItem(nPos, 1)
-
-    if nEquipIdx <= 0 or nMaterialIdx <= 0 then
-        Talk(1, "", "Loi: Trang bi hoac vat lieu bi mat!")
+    if nPlayerXu < UPGRADE_COST_XU then
+        Msg2Player("Khong du xu! Ban can co it nhat 2 xu.")
         return
     end
 
     -- Get attribute info for the selected slot
+    print("[LUA-UPGRADE] 13] About to call GetItemMagicAttribInfo with ItemIdx=" .. nEquipIdx .. ", Slot=" .. nAttribSlot)
     local nAttribType, nOldValue, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, nAttribSlot)
+    print("[LUA-UPGRADE] 14] GetItemMagicAttribInfo returned - Type: " .. tostring(nAttribType) .. ", Value: " .. tostring(nOldValue) .. ", Min: " .. tostring(nMin) .. ", Max: " .. tostring(nMax))
 
-    -- Use FIXED upgrade percentage
+    if not nAttribType or nAttribType <= 0 then
+        Msg2Player("Loi: Khong tim thay thuoc tinh!")
+        print("[LUA-UPGRADE] 15] Attribute type invalid or not found")
+        return
+    end
+
+    print("[LUA-UPGRADE] 16] Attribute info retrieved successfully")
+
+    -- STEP 1: Calculate success rate BEFORE deleting materials
+    -- Count minerals and their levels
+    local nSuccessRate = UPGRADE_BASE_SUCCESS_RATE
+    local nMineralCount = 0
+
+    for i = 1, 4 do
+        local nItemIdx = GetPOItem(nPos, i)
+        if nItemIdx and nItemIdx > 0 then
+            local nGenre, nDetail, nParti = GetItemProp(nItemIdx)
+            if nGenre then
+                -- Get mineral level from particular (1/2/3)
+                local nMineralLevel = nParti
+                if nMineralLevel == 1 then
+                    nSuccessRate = nSuccessRate + MINERAL_LEVEL1_BONUS
+                elseif nMineralLevel == 2 then
+                    nSuccessRate = nSuccessRate + MINERAL_LEVEL2_BONUS
+                elseif nMineralLevel == 3 then
+                    nSuccessRate = nSuccessRate + MINERAL_LEVEL3_BONUS
+                end
+                nMineralCount = nMineralCount + 1
+            end
+        end
+    end
+
+    -- Check lucky stone
+    local bHasLuckyStone = 0
+    local nLuckyStoneIdx = GetPOItem(nPos, 5)
+    if nLuckyStoneIdx and nLuckyStoneIdx > 0 then
+        nSuccessRate = nSuccessRate + LUCKY_STONE_BONUS
+        bHasLuckyStone = 1
+    end
+
+    print("[LUA-UPGRADE] 17] Success rate calculated: " .. nSuccessRate .. "% (base=" .. UPGRADE_BASE_SUCCESS_RATE .. ", minerals=" .. nMineralCount .. ", lucky=" .. bHasLuckyStone .. ")")
+
+    -- STEP 2: Delete materials and deduct costs (consumed regardless of success)
+    local nMineralsUsed = 0
+    for i = 1, 5 do
+        local nItemIdx = GetPOItem(nPos, i)
+        if nItemIdx and nItemIdx > 0 then
+            DelItemByIndex(nItemIdx)
+            nMineralsUsed = nMineralsUsed + 1
+        end
+    end
+
+    Pay(UPGRADE_COST_MONEY)
+    DelTaskItem(19, UPGRADE_COST_XU)
+
+    -- STEP 3: Random check for success/failure
+    local nRoll = random(1, 100)  -- Random 1-100
+    local bUpgradeSuccess = (nRoll <= nSuccessRate)
+
+    print("[LUA-UPGRADE] 18] Random roll: " .. nRoll .. " vs success rate: " .. nSuccessRate .. "% => " .. (bUpgradeSuccess and "SUCCESS" or "FAIL"))
+
+    local szAttribName = GetAttribName(nAttribType)
+
+    if not bUpgradeSuccess then
+        -- FAILURE: Equipment keeps original value - NO ACTION NEEDED
+        -- DON'T call UpgradeItemAttributes (can return 0 and lose item)
+        -- Equipment stays in BUILD_CONTAINER unchanged
+        print("[LUA-UPGRADE] 19] Upgrade FAILED - equipment unchanged (no item modification)")
+
+        local szFailMsg = "<color=red>[THAT BAI]<color> Nang cap that bai! " ..
+                          szAttribName .. ": " .. nOldValue .. " (khong doi). " ..
+                          "Da mat: " .. nMineralsUsed .. " khoang thach + tien"
+        Msg2Player(szFailMsg)
+        print("[LUA-UPGRADE] 19d] Failure handling complete")
+        return
+    end
+
+    -- STEP 4: SUCCESS - Perform actual upgrade
+    -- Use UpgradeItemAttributes C++ function (same as old working code)
     local nIncreasePercent = UPGRADE_FIXED_PERCENT
 
-    -- Calculate new value
+    -- Calculate new value for display message
     local nIncrease = (nOldValue * nIncreasePercent) / 100
     if nIncrease < 1 then nIncrease = 1 end
     local nNewValue = nOldValue + nIncrease
     if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
-    -- Create upgraded item (C++ will handle removing old equipment and placing new one)
+    print("[LUA-UPGRADE] 20] Calling UpgradeItemAttributes with Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent)
+
+    -- Call UpgradeItemAttributes with pos=15 (BUILD_CONTAINER) - same as old code
     local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, nPos)
+    print("[LUA-UPGRADE] 21] UpgradeItemAttributes returned: " .. tostring(nNewItemIdx))
 
     if nNewItemIdx == 0 then
-        Talk(1, "", "Loi: Khong the nang cap! Co the do rong hoac loi khac.")
+        -- Technical error during upgrade
+        print("[LUA-UPGRADE] 22] ERROR: UpgradeItemAttributes failed")
+        local szErrorMsg = "<color=red>Loi ky thuat:<color> <color=yellow>Khong the tra lai trang bi! Lien he GM.<color>"
+        Msg2Player(szErrorMsg)
         return
     end
 
-    -- Delete material only (equipment already handled by C++ function)
-    DelItemByIndex(nMaterialIdx)
+    -- SUCCESS
+    print("[LUA-UPGRADE] 23] Upgrade SUCCESS")
+    local szSuccessMsg = "<color=green>[THANH CONG]<color> <color=yellow>Nang cap thanh cong! " ..
+                         szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
+                         "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu<color>"
 
-    -- Success message
-    local szAttribName = GetAttribName(nAttribType)
-    local szMsg = "Nang cap thanh cong!\n" .. szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%)"
-    Talk(1, "", szMsg)
+    Msg2Player(szSuccessMsg)
 end
 
 -- ------------------------------------------------------------
--- Dynamic upgrade functions for each attribute slot (0-5)
--- These are called from the Say menu
--- ------------------------------------------------------------
-function DoUpgradeAttrib_0()
-    PerformUpgrade(0)
-end
-
-function DoUpgradeAttrib_1()
-    PerformUpgrade(1)
-end
-
-function DoUpgradeAttrib_2()
-    PerformUpgrade(2)
-end
-
-function DoUpgradeAttrib_3()
-    PerformUpgrade(3)
-end
-
-function DoUpgradeAttrib_4()
-    PerformUpgrade(4)
-end
-
-function DoUpgradeAttrib_5()
-    PerformUpgrade(5)
-end
-
--- ------------------------------------------------------------
--- Show Upgrade Guide
--- ------------------------------------------------------------
-function ShowGuide()
-    local szGuide = "=== HUONG DAN NANG CAP THUOC TINH ===\n\n" ..
-        "Cach thuc hien:\n" ..
-        "1. Dat trang bi xanh vao o tren\n" ..
-        "2. Dat Da Nang Cap vao o duoi\n" ..
-        "3. Nhan nut Nang Cap\n" ..
-        "4. Chon thuoc tinh muon nang cap tu menu\n" ..
-        "5. Xac nhan de hoan tat\n\n" ..
-        "Chi tiet:\n" ..
-        "- Chi nang cap duoc trang bi xanh\n" ..
-        "- Moi lan nang tang 20% gia tri\n" ..
-        "- Khong the vuot qua gia tri MAX\n" ..
-        "- Ti le thanh cong: 100%\n" ..
-        "- Mat 1 Da Nang Cap moi lan\n\n" ..
-        "Luu y:\n" ..
-        "- Thuoc tinh da MAX khong the nang them\n" ..
-        "- Ban co the chon bat ky thuoc tinh nao de nang\n" ..
-        "- Vat lieu bi mat khi nang cap\n" ..
-        "- Khong the hoan tac sau khi nang"
-
-    Talk(1, "", szGuide)
-end
-
--- ------------------------------------------------------------
--- Main Entry Point
+-- NPC main function (called when player talks to NPC)
 -- ------------------------------------------------------------
 function main(NpcIndex)
     UpgradeAttribTalk()

@@ -10933,7 +10933,9 @@ int LuaUpgradeItemAttributes(Lua_State * L)
 
    
 	int nIncrease = (nOldValue * nUpgradePercent) / 100;
-	if (nIncrease < 1) nIncrease = 1;
+	// Only force minimum increase of 1 when actually upgrading (percent > 0)
+	// When percent = 0 (failure case), keep original value (increase = 0)
+	if (nUpgradePercent > 0 && nIncrease < 1) nIncrease = 1;
 	int nNewValue = nOldValue + nIncrease;
 
 	// STEP 3: Compare with MagicAttrib max - cap if needed

@@ -14,11 +14,11 @@ function main(nNpcIdx)
 	if(sPlayer_Faction == "") then
 		Talk(2, "Enroll_Select", 10055, 10056)
 	elseif(sPlayer_Faction == "tangmen") then
-		local sNpcName = format("<color=wood>%s<color>:", GetNpcName(nNpcIdx))
+		local sNpcName = format("<color=wood>%s:", GetNpcName(nNpcIdx))
 		local sImage = "-85/-85/34"
 		local n = GetTask(0)
 		if(GetByte(n,1) == 0) then
-			SayImage(""..sNpcName.." RÌn luyÖn kü n¨ng ¸m s¸t kh«ng ph¶i mét sím mét chiÒu lµ ®­îc! T¹i sao ng­êi kh«ng tËp luyÖn mµ l¹i lang thang ë ®©y?",sImage,4, "Ta muèn xuÊt s­./Leave", "T×m hiÓu khu vùc luyÖn c«ng./map_help","T×m hiÓu vâ nghÖ bæn m«n./SkillHelp", "Nh©n tiÖn ghÐ qua./OnCancel")
+			SayImage(""..sNpcName.." <color><color=white>RÌn luyÖn kü n¨ng ¸m s¸t kh«ng ph¶i mét sím mét chiÒu lµ ®­îc! T¹i sao ng­êi kh«ng tËp luyÖn mµ l¹i lang thang ë ®©y?<color>",sImage,4, "Ta muèn xuÊt s­./Leave", "T×m hiÓu khu vùc luyÖn c«ng./map_help","T×m hiÓu vâ nghÖ bæn m«n./SkillHelp", "Nh©n tiÖn ghÐ qua./OnCancel")
 		else
 			if(GetTongID() ~= 0) then
 				if(GetTongFigure() < 3) then

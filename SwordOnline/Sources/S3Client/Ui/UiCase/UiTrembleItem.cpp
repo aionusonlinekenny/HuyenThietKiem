@@ -25,6 +25,19 @@ extern iCoreShell*		g_pCoreShell;
 #define LOOP 2
 #define TREMBLE_ITEM_INI "UiTremble.ini"
 
+// Maximum BUILDITEM slots across ALL systems (Purple Smith uses up to BUILDITEM17 = index 16)
+// This prevents buffer overflow when GetGameData returns items from other systems
+#define MAX_BUILDITEM_SLOTS 17
+
+// Compile-time safety check: ensure TrembleItem's slot count doesn't exceed max
+#if _ITEM_TREMBLE_COUNT > MAX_BUILDITEM_SLOTS
+#error "TrembleItem slot count cannot exceed MAX_BUILDITEM_SLOTS"
+#endif
+
+// Compile-time safety check: ensure UIEP_BUILDITEM9 is within bounds
+#if UIEP_BUILDITEM9 >= MAX_BUILDITEM_SLOTS
+#error "UIEP_BUILDITEM9 must be less than MAX_BUILDITEM_SLOTS"
+#endif
 KUiTrembleItem* KUiTrembleItem::m_pSelf = NULL;
 
 static struct UE_CTRL_MAP
@@ -85,16 +98,18 @@ void KUiTrembleItem::CloseWindow(bool bDestory)
 {
 	if (m_pSelf)
 	{
-		Wnd_GameSpaceHandleInput(true);		
+		// CRITICAL: Call OnCancel() BEFORE Destroy() to avoid null pointer crash
+		// OnCancel() returns items from BuildBox to inventory
+		m_pSelf->OnCancel();
+
+		Wnd_GameSpaceHandleInput(true);
 		if (bDestory)
 		{
 			m_pSelf->Destroy();
 			m_pSelf = NULL;
 		}
 		else
-			m_pSelf->Hide();
-			
-		m_pSelf->OnCancel();				
+			m_pSelf->Hide();		
 	}
 }
 /*********************************************************************
@@ -241,7 +256,7 @@ BOOL KUiTrembleItem::EnoughItemToGo()
 		return FALSE;	
 	}
 	
-	if (nCount > 2)
+	if (nCount > 4)
 	{
 		strcpy(szWarning,ArrayReturnInfo[2]);
 		nLen = strlen(szWarning);					
@@ -492,18 +507,47 @@ void KUiTrembleItem::UpdateItem( KUiObjAtRegion* pItem, int bAdd )
 **********************************************************************/
 void KUiTrembleItem::UpdateData()
 {
-	KUiObjAtRegion	Item[_ITEM_TREMBLE_COUNT];
+	// CRITICAL FIX: Use MAX_BUILDITEM_SLOTS to prevent buffer overflow
+	// BuildBox is shared between TrembleItem (slots 0-8) and PurpleSmith (slots 9-16)
+	// GetGameData returns ALL items, so we need buffer size = 17
+	KUiObjAtRegion Item[MAX_BUILDITEM_SLOTS];
+	memset(Item, 0, sizeof(Item));  // Safe initialization
+
 	int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Item, 0);
-	int	i;
+
+	// Bounds check - prevent crashes from corrupted data
+	if (nCount < 0 || nCount > MAX_BUILDITEM_SLOTS)
+	{
+		//g_DebugLog("[TREMBLE] ERROR: Invalid item count from GetGameData: %d (max: %d)", nCount, MAX_BUILDITEM_SLOTS);
+		return;
+	}
+
+	//g_DebugLog("[TREMBLE] UpdateData: received %d items from BuildBox", nCount);
+
+	// Clear all TrembleItem boxes first
+	int i;
 	for (i = 0; i < _ITEM_TREMBLE_COUNT; i++)
 		m_TrembleBox[i].Clear();
+
+	// Process items, but ONLY update items that belong to TrembleItem (slots 0-8)
+	// Ignore items in slots 9-16 (used by PurpleSmith)
 	for (i = 0; i < nCount; i++)
 	{
 		if (Item[i].Obj.uGenre != CGOG_NOTHING)
-			UpdateItem(&Item[i], true);
-	}	
+		{
+			// Filter: only process items in TrembleItem's slot range
+			if (Item[i].Region.v >= UIEP_BUILDITEM1 && Item[i].Region.v <= UIEP_BUILDITEM9)
+			{
+				//g_DebugLog("[TREMBLE] Updating item in slot %d", Item[i].Region.v);
+				UpdateItem(&Item[i], true);
+			}
+			else
+			{
+				//g_DebugLog("[TREMBLE] Ignoring item in slot %d (outside TrembleItem range 0-8)", Item[i].Region.v);
+			}
+		}
+	}
 }
-
 /*********************************************************************
 **********************************************************************/
 void KUiTrembleItem::OnOk()
@@ -520,11 +564,26 @@ void KUiTrembleItem::OnCancel()
 {
 	if (g_pCoreShell)
 	{
-		KUiObjAtRegion	Item[_ITEM_TREMBLE_COUNT];
-		int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Item, 0);	
-		if (nCount)	
+		// CRITICAL FIX: Use MAX_BUILDITEM_SLOTS to prevent buffer overflow
+		// GetGameData may return items from other systems (up to 17 items)
+		KUiObjAtRegion Item[MAX_BUILDITEM_SLOTS];
+		memset(Item, 0, sizeof(Item));  // Safe initialization
+
+		int nCount = g_pCoreShell->GetGameData(GDI_BUILD_ITEM, (unsigned int)&Item, 0);
+
+		// Bounds check
+		if (nCount < 0 || nCount > MAX_BUILDITEM_SLOTS)
+		{
+			//g_DebugLog("[TREMBLE] OnCancel: Invalid item count: %d", nCount);
+			return;
+		}
+
+		if (nCount > 0)
+		{
+			//g_DebugLog("[TREMBLE] OnCancel: Returning %d items to inventory", nCount);
 			g_pCoreShell->OperationRequest(GOI_RECOVERY_BOX_COMMAND, pos_builditem, 0);
-	}				
+		}
+	}
 }
 
 void KUiTrembleItem::UpdatePickPut(bool bLock)
@@ -540,11 +599,11 @@ void KUiTrembleItem::PecentSuccess(BYTE btType)
 {
 	if (btType == 1)
 	{
-		m_TextPecent.SetText("Tû lÖ thµnh c«ng 75%");
+		m_TextPecent.SetText("Tû lÖ thµnh c«ng 50%");
 	}
 	else if(btType == 2)
 	{
-		m_TextPecent.SetText("Tû lÖ thµnh c«ng 50%");
+		m_TextPecent.SetText("Tû lÖ thµnh c«ng 75%");
 	}
 	else if (btType == 3)
 	{

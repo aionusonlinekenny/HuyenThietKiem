@@ -75,7 +75,8 @@ public:
 	void DecodeExactValues(DWORD dwSeed, int* pOutValues);
 	// Encode 6 exact attribute values into 32-bit seed (5 bits per value)
 	DWORD EncodeExactValues(const int* pInValues, const int* pMinValues);
-
+	// Helper function to get global min/max across all levels for an attribute type
+	void GetGlobalMinMax(int nAttribType, int& outGlobalMin, int& outGlobalMax);
 private:
 	//
 	// Ham tra ve mot Level ngau nhien dua vao phan tram truyen vao cac muc Level
@@ -83,12 +84,6 @@ private:
 	//
 	// Ham kiem tra xem mot trang bi co cot level bang 10 hay khong
 	BOOL IsMagicAttribLuckyLevel(const KMAGICATTRIB_TABFILE* pMAItem,int nLucky);
-
-	//
-	// Helper function to get global min/max across all levels for an attribute type
-	void GetGlobalMinMax(int nAttribType, int& outGlobalMin, int& outGlobalMax);
-
-
 	BOOL Gen_MagicAttrib(int, const int*, int, int, KItemNormalAttrib*, int nVersion, BOOL bChangeOption = FALSE, DWORD dwRandomSeed = 0);
 	BOOL Gen_PurpleMagicAttrib(int, const int*, const int*, int, int, KItemNormalAttrib*, int nVersion);
 	//

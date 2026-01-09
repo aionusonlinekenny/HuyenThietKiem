@@ -73,9 +73,20 @@ Hå Tiªu LÖnh	6	70	1	\spr\item\questkey\card_xnk.spr	385	1	1	PhÇn th­ëng tõ event
 T¨ng Tèc	6	71	1	\spr\item\questkey\taskobj105.spr	41	1	1	T¨ng tôc ®Ó di chuyÓn trong thêi gian ng¾n. Dµnh cho event VËn Tiªu.	50
 Håi M¸u	6	72	1	\spr\item\questkey\huihuangzhiguo.spr	380	1	1	Håi phôc sinh lùc nhanh chãng. Dµng riªng cho VËn Tiªu.	50
 DŞch ChuyÓn	6	73	1	\spr\item\questkey\006.spr	385	1	1	DŞch chuyÓn ®Õn vŞ trİ an toµn. Dµnh riªng cho VËn Tiªu.	50
-HuyÒn Tinh CÊp 1	6	74	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +8 Luck cho trang bŞ Tİm."	50
-HuyÒn Tinh CÊp 2	6	75	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +9 Luck cho trang bŞ Tİm."	50
-HuyÒn Tinh CÊp 3	6	76	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +10 Luck cho trang bŞ Tİm."	50
-HuyÒn Tinh CÊp 4	6	77	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +11 Luck cho trang bŞ Tİm."	50
-HuyÒn Tinh CÊp 5	6	78	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +12 Luck cho trang bŞ Tİm."	50
-HuyÒn Tinh CÊp 6	6	79	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +13 Luck cho trang bŞ Tİm."	50
+Háa Nguyªn Th¹ch [CÊp 1]	6	74	1	\spr\item\UpgradeItem\hoalinhthach.spr	385	1	1	"<color=yellow>§¸ Kho¸ng Th¹ch MÖnh Háa, tinh hoa hãa nguyªn tİch tô ngµn n¨m. Dung nhËp vµo trang bŞ xanh,chİnh khİ gia t¨ng, uy lùc bÒn v÷ng.<color>"	10
+Háa Nguyªn Th¹ch [CÊp 2]	6	75	1	\spr\item\UpgradeItem\hoalinhthach.spr	385	1	1	"<color=yellow>§¸ Kho¸ng Th¹ch MÖnh Háa, tinh hoa hãa nguyªn tİch tô ngµn n¨m. Dung nhËp vµo trang bŞ xanh,chİnh khİ gia t¨ng, uy lùc bÒn v÷ng.<color>"	10
+Háa Nguyªn Th¹ch [CÊp 3]	6	76	1	\spr\item\UpgradeItem\hoalinhthach.spr	385	1	1	"<color=yellow>§¸ Kho¸ng Th¹ch MÖnh Háa, tinh hoa hãa nguyªn tİch tô ngµn n¨m. Dung nhËp vµo trang bŞ xanh,chİnh khİ gia t¨ng, uy lùc bÒn v÷ng.<color>"	10
+Kim Linh Th¹ch [CÊp 1]	6	77	1	\spr\item\UpgradeItem\hoangkimthach.spr	385	1	1	"<color=yellow>Kim Linh Th¹ch, tinh hoa kim khİ trêi ®Êt hîp thµnh. Dung nhËp vµo trang bŞ xanh, chİnh khİ cøng r¾n, phßng thñ vµ uy lùc gia t¨ng.<color>"	10
+Kim Linh Th¹ch [CÊp 2]	6	78	1	\spr\item\UpgradeItem\hoangkimthach.spr	385	1	1	"<color=yellow>Kim Linh Th¹ch, tinh hoa kim khİ trêi ®Êt hîp thµnh. Dung nhËp vµo trang bŞ xanh, chİnh khİ cøng r¾n, phßng thñ vµ uy lùc gia t¨ng.<color>"	10
+Kim Linh Th¹ch [CÊp 3]	6	79	1	\spr\item\UpgradeItem\hoangkimthach.spr	385	1	1	"<color=yellow>Kim Linh Th¹ch, tinh hoa kim khİ trêi ®Êt hîp thµnh. Dung nhËp vµo trang bŞ xanh, chİnh khİ cøng r¾n, phßng thñ vµ uy lùc gia t¨ng.<color>"	10
+Méc Linh Th¹ch [CÊp 1]	6	80	1	\spr\item\UpgradeItem\moclinhthach.spr	385	1	1	"<color=yellow>Méc Linh Th¹ch, tinh hoa méc khİ sinh s«i kh«ng døt. Dung nhËp vµo trang bŞ xanh, sinh khİ gia t¨ng, c¨n c¬ bÒn v÷ng.<color>"	10
+Méc Linh Th¹ch [CÊp 2]	6	81	1	\spr\item\UpgradeItem\moclinhthach.spr	385	1	1	"<color=yellow>Méc Linh Th¹ch, tinh hoa méc khİ sinh s«i kh«ng døt. Dung nhËp vµo trang bŞ xanh, sinh khİ gia t¨ng, c¨n c¬ bÒn v÷ng.<color>"	10
+Méc Linh Th¹ch [CÊp 3]	6	82	1	\spr\item\UpgradeItem\moclinhthach.spr	385	1	1	"<color=yellow>Méc Linh Th¹ch, tinh hoa méc khİ sinh s«i kh«ng døt. Dung nhËp vµo trang bŞ xanh, sinh khİ gia t¨ng, c¨n c¬ bÒn v÷ng.<color>"	10
+Thñy Linh Th¹ch [CÊp 1]	6	83	1	\spr\item\UpgradeItem\thuylinhthach.spr	385	1	1	"<color=yellow>Thñy Linh Th¹ch, tinh hoa Thñy khİ nhu hßa tİch tô. Dung nhËp vµo trang bŞ xanh, néi lùc bÒn dµi, uy lùc l­u chuyÓn kh«ng ngõng.<color>"	10
+Thñy Linh Th¹ch [CÊp 2]	6	84	1	\spr\item\UpgradeItem\thuylinhthach.spr	385	1	1	"<color=yellow>Thñy Linh Th¹ch, tinh hoa Thñy khİ nhu hßa tİch tô. Dung nhËp vµo trang bŞ xanh, néi lùc bÒn dµi, uy lùc l­u chuyÓn kh«ng ngõng.<color>"	10
+Thñy Linh Th¹ch [CÊp 3]	6	85	1	\spr\item\UpgradeItem\thuylinhthach.spr	385	1	1	"<color=yellow>Thñy Linh Th¹ch, tinh hoa Thñy khİ nhu hßa tİch tô. Dung nhËp vµo trang bŞ xanh, néi lùc bÒn dµi, uy lùc l­u chuyÓn kh«ng ngõng.<color>"	10
+C¸t Linh Th¹ch	6	86	1	\spr\item\UpgradeItem\catlinhthach.spr	385	1	1	"<color=yellow>C¸t Linh Th¹ch, tinh hoa c¸t khİ trêi ®Êt hîp thµnh. Dïng trong luyÖn khİ cã thÓ gia t¨ng c¬ duyªn, khiÕn qu¸ tr×nh Ğp ®å thuËn lîi h¬n.<color>"	10
+HuyÒn Tinh CÊp 1	6	87	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +8 Luck cho trang bŞ Tİm"	50
+HuyÒn Tinh CÊp 2	6	88	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +9 Luck cho trang bŞ Tİm"	50
+HuyÒn Tinh CÊp 3	6	89	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh huyÒn tho¹i, +10 Luck cho trang bŞ Tİm"	50
+HuyÒn Tinh CÊp 4	6	90	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	"HuyÒn Tinh siªu huyÒn tho¹i, +11 Luck cho trang bŞ Tİm"	50

@@ -73,3 +73,9 @@ Hå Tiªu LÖnh	6	70	1	\spr\item\questkey\card_xnk.spr	385	1	1	PhÇn th­ëng tõ event
 T¨ng Tèc	6	71	1	\spr\item\questkey\taskobj105.spr	41	1	1	T¨ng tôc ®Ó di chuyÓn trong thêi gian ng¾n. Dµnh cho event VËn Tiªu.	50
 Håi M¸u	6	72	1	\spr\item\questkey\huihuangzhiguo.spr	380	1	1	Håi phôc sinh lùc nhanh chãng. Dµng riªng cho VËn Tiªu.	50
 DŞch ChuyÓn	6	73	1	\spr\item\questkey\006.spr	385	1	1	DŞch chuyÓn ®Õn vŞ trİ an toµn. Dµnh riªng cho VËn Tiªu.	50
+Háa Nguyªn Th¹ch [CÊp 1]­	6	74	1	\spr\item\UpgradeItem\hoalinhthach.spr	385	1	1	<color=yellow>§¸ Kho¸ng Th¹ch MÖnh Háa, tinh hoa hãa nguyªn tİch tô ngµn n¨m. Dung nhËp vµo trang bŞ xanh,chİnh khİ gia t¨ng, uy lùc bÒn v÷ng.	10
+Háa Nguyªn Th¹ch [CÊp 2]­	6	74	2	\spr\item\UpgradeItem\hoalinhthach.spr	385	1	1	<color=yellow>§¸ Kho¸ng Th¹ch MÖnh Háa, tinh hoa hãa nguyªn tİch tô ngµn n¨m. Dung nhËp vµo trang bŞ xanh,chİnh khİ gia t¨ng, uy lùc bÒn v÷ng.	10
+Háa Nguyªn Th¹ch [CÊp 3]­	6	74	3	\spr\item\UpgradeItem\hoalinhthach.spr	385	1	1	<color=yellow>§¸ Kho¸ng Th¹ch MÖnh Háa, tinh hoa hãa nguyªn tİch tô ngµn n¨m. Dung nhËp vµo trang bŞ xanh,chİnh khİ gia t¨ng, uy lùc bÒn v÷ng.	10
+Kim Linh Th¹ch [CÊp 1]­	6	75	1	\spr\item\UpgradeItem\hoangkimthach.spr	385	1	1	<color=yellow>Kim Linh Th¹ch, tinh hoa kim khİ trêi ®Êt hîp thµnh. Dung nhËp vµo trang bŞ xanh, chİnh khİ cøng r¾n, phßng thñ vµ uy lùc gia t¨ng.	10
+Kim Linh Th¹ch [CÊp 2]­	6	75	2	\spr\item\UpgradeItem\hoangkimthach.spr	385	1	1	<color=yellow>Kim Linh Th¹ch, tinh hoa kim khİ trêi ®Êt hîp thµnh. Dung nhËp vµo trang bŞ xanh, chİnh khİ cøng r¾n, phßng thñ vµ uy lùc gia t¨ng.	10
+Kim Linh Th¹ch [CÊp 3]­	6	75	3	\spr\item\UpgradeItem\hoangkimthach.spr	385	1	1	<color=yellow>Kim Linh Th¹ch, tinh hoa kim khİ trêi ®Êt hîp thµnh. Dung nhËp vµo trang bŞ xanh, chİnh khİ cøng r¾n, phßng thñ vµ uy lùc gia t¨ng.	10

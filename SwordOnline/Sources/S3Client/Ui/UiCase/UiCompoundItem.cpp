@@ -605,7 +605,7 @@ int KUiCompound::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                         }
 
                         // Must be Huyen Tinh (detail = 74-79 for levels 1-6)
-                        if (nDetail < 74 || nDetail > 79) {
+                        if (nDetail < 87 || nDetail > 90) {
                             g_DebugLog("[COMPOUND] REJECT Box1 Mode2: Detail %d is not Huyen Tinh (need 74-79)", nDetail);
                             KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH cap 1-6!", 256);
                             break;
@@ -653,7 +653,7 @@ int KUiCompound::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                             break;
                         }
 
-                        if (nDetail < 74 || nDetail > 79) {
+                        if (nDetail < 87 || nDetail > 90) {
                             g_DebugLog("[COMPOUND] REJECT Box2 Mode2: Detail %d is not Huyen Tinh (need 74-79)", nDetail);
                             KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH cap 1-6!", 256);
                             break;
@@ -701,7 +701,7 @@ int KUiCompound::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                             break;
                         }
 
-                        if (nDetail < 74 || nDetail > 79) {
+                        if (nDetail < 87 || nDetail > 90) {
                             g_DebugLog("[COMPOUND] REJECT Box3 Mode2: Detail %d is not Huyen Tinh (need 74-79)", nDetail);
                             KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH cap 1-6!", 256);
                             break;
@@ -1367,7 +1367,7 @@ int KUiDistill::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                         }
 
                         // Must be Huyen Tinh (detail = 74-79 for levels 1-6)
-                        if (nDetail < 74 || nDetail > 79) {
+                        if (nDetail < 87 || nDetail > 90) {
                             g_DebugLog("[DISTILL] REJECT Box1: Detail %d is not Huyen Tinh (need 74-79)", nDetail);
                             KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH cap 1-6!", 256);
                             break;
@@ -2010,7 +2010,7 @@ int KUiForge::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                         }
 
                         // Optional: Check if it's specifically Huyen Tinh (detail 74-79)
-                        if (nDetail < 74 || nDetail > 79) {
+                        if (nDetail < 87 || nDetail > 90) {
                             g_DebugLog("[FORGE] REJECT SmallBox: Detail %d is not Huyen Tinh (74-79)", nDetail);
                             KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat Huyen Tinh vao o nay!", 256);
                             break;

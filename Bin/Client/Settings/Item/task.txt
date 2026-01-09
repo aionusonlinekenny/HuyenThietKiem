@@ -28,8 +28,3 @@ Thæ ®Şa phï (sö dông v« h¹n)	6	25	1	\spr\item\special\Obj_TownPortal.spr	38	1	1	
 ThÇn Hµnh Phï	6	26	1	\spr\item\special\Obj_TownPortal_l.spr	38	1	1	"ThÇn Hµnh ThuËt, lµm cho ®¹i hiÖp ®i bÊt cø thµnh thŞ th«n trÊn chØ ®Şnh nµo"	0
 S­ ®å thiÕp	6	27	1	\spr\item\questkey\taskobj091.spr	38	1	1	"Ng­êi ch¬i d­íi cÊp 80 dïng ®Ó nhËn s­ phô, trªn cÊp 80 dïng ®Ó nhËn ®Ö tö."	0
 Khiªu chiÕn lÖnh	6	28	1	\spr\item\vietnam\tiaozhanling.spr	41	1	1	Tİch lòy ®ñ 50 c¸I gÆp B¹o nh©n ë m¹c b¾c th¶o nguyªn ®Ó ®æi KiÕm hiÖp lÖnh	100
-HuyÒn Tinh CÊp 1	6	29	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	HuyÒn Tinh huyÒn tho¹i, +8 Luck cho trang bŞ Tİm	50
-HuyÒn Tinh CÊp 1	6	30	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	HuyÒn Tinh huyÒn tho¹i, +9 Luck cho trang bŞ Tİm	50
-HuyÒn Tinh CÊp 1	6	31	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	HuyÒn Tinh huyÒn tho¹i, +10 Luck cho trang bŞ Tİm	50
-HuyÒn Tinh CÊp 1	6	32	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	HuyÒn Tinh siªu huyÒn tho¹i, +11 Luck cho trang bŞ Tİm	50
-HuyÒn Tinh CÊp 1	6	33	1	\spr\item\script\item_xuanjingkuangshi.spr	333	1	1	HuyÒn Tinh tèi th­îng, +12 Luck cho trang bŞ Tİm	50

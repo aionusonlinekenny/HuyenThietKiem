@@ -13,7 +13,20 @@ Function    : Upgrade equipment magic attributes
 #include "../../../core/src/gamedatadef.h"
 #include "../Elem/WndShowAnimate.h"
 
-#define _UPGRADE_ATTRIB_SLOT_COUNT 3
+// Total slots: 1 equipment + 4 minerals + 1 lucky stone = 6
+#define _UPGRADE_ATTRIB_SLOT_COUNT 6
+
+// Slot indices
+#define SLOT_EQUIPMENT  0  // Blue equipment to upgrade
+#define SLOT_MINERAL1   1  // Special mineral type 1 (3 levels)
+#define SLOT_MINERAL2   2  // Special mineral type 2 (3 levels)
+#define SLOT_MINERAL3   3  // Special mineral type 3 (3 levels)
+#define SLOT_MINERAL4   4  // Special mineral type 4 (3 levels)
+#define SLOT_LUCKY_STONE 5 // Lucky stone for success boost
+
+// Requirements
+#define UPGRADE_COST_MONEY  1000000  // 100 v?n lu?ng
+#define UPGRADE_COST_XU     2        // 2 xu
 
 struct KUiObjAtRegion;
 
@@ -50,6 +63,33 @@ private:
 	BOOL          ValidateItemPickDrop(KWndWindow* pWnd, int nIndex);
 	BOOL          ValidateUpgradeReady();
 
+	// NEW: Success rate calculation
+	int           CalculateSuccessRate();
+	void          UpdateSuccessRateDisplay();
+	int           GetMineralLevel(int nItemIndex);  // Get mineral level (1-3)
+
+	// NEW: Attribute list display
+	void          LoadEquipmentAttributes();         // Load attributes from equipment
+	void          DisplayAttributeList();            // Display attribute list in UI
+	void          OnSelectAttribute(int nSlot);      // Player clicks attribute
+	void          ClearAttributeList();              // Clear when equipment removed
+
+private:
+	// Attribute info structure
+	struct AttributeInfo
+	{
+		int nType;      // Attribute type
+		int nValue;     // Current value
+		int nMin;       // Min value
+		int nMax;       // Max value
+		int nNewValue;  // Calculated new value after upgrade
+		int nActualSlot; // ACTUAL slot index in equipment (0-5)
+		bool bCanUpgrade; // Can this attribute be upgraded?
+	};
+
+	AttributeInfo m_Attributes[6];  // Up to 6 magic attributes
+	int           m_nAttributeCount; // Number of valid attributes
+
 private:
 	KWndObjectBox      m_UpgradeSlot[_UPGRADE_ATTRIB_SLOT_COUNT]; // Item slots
 	KWndLabeledButton  m_BtnUpgrade;            // Upgrade button
@@ -57,10 +97,15 @@ private:
 	KCanGetNumImage    m_UpgradeEffect;         // Effect animation
 	unsigned int       m_EffectTime;            // Effect duration
 	int                m_nSelectedAttrib;       // Selected attribute index (0-5)
+	BOOL               m_bUpgradeInProgress;    // Lock flag during upgrade processing
 	KWndText80         m_TextPercent;           // Success rate display
 	KWndText80         m_EquipmentLabel;        // Equipment slot label
 	KWndText80         m_MaterialLabel;         // Material slot label
 	char               m_szReturnInfo[8][128];  // Error messages
+
+	// NEW: Attribute selection buttons
+	KWndLabeledButton  m_BtnAttrib[6];          // Attribute selection buttons (up to 6)
+	KWndText80         m_TextGuide;             // Guide text below material label
 
 	enum STRING_NOTE_EVENT
 	{
