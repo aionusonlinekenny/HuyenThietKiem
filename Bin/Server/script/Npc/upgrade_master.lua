@@ -286,27 +286,14 @@ function PerformUpgrade(nAttribSlotStr, _)
     local szAttribName = GetAttribName(nAttribType)
 
     if not bUpgradeSuccess then
-        -- FAILURE: Call UpgradeItemAttributes with 0% increase (same as SUCCESS case)
-        -- This properly handles item removal/addition in correct container
-        print("[LUA-UPGRADE] 19] Upgrade FAILED - returning equipment with 0% increase")
+        -- FAILURE: Equipment keeps original value - NO ACTION NEEDED
+        -- DON'T call UpgradeItemAttributes (can return 0 and lose item)
+        -- Equipment stays in BUILD_CONTAINER unchanged
+        print("[LUA-UPGRADE] 19] Upgrade FAILED - equipment unchanged (no item modification)")
 
-        -- Call same API as SUCCESS case but with 0% increase
-        -- This ensures item is properly returned to correct container position
-        local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, 0, nPos)
-        print("[LUA-UPGRADE] 19b] UpgradeItemAttributes(0%) returned: " .. tostring(nNewItemIdx))
-
-        if nNewItemIdx == 0 then
-            print("[LUA-UPGRADE] 19c] ERROR: UpgradeItemAttributes failed!")
-            Msg2Player("<color=red>Loi ky thuat:<color> <color=yellow>Khong the tra lai trang bi! Lien he GM.<color>")
-            return
-        end
-
-        -- Success - equipment returned to correct container
-        local szFailMsg = "<color=red>[THAT BAI]<color><color=yellow> Nang cap that bai! " ..
+        local szFailMsg = "<color=red>[THAT BAI]<color> Nang cap that bai! " ..
                           szAttribName .. ": " .. nOldValue .. " (khong doi). " ..
-                          "Trang bi da duoc tra ve. " ..
-                          "Da mat: " .. nMineralsUsed .. " khoang thach + tien<color>"
-
+                          "Da mat: " .. nMineralsUsed .. " khoang thach + tien"
         Msg2Player(szFailMsg)
         print("[LUA-UPGRADE] 19d] Failure handling complete")
         return
