@@ -246,6 +246,8 @@ public:
 	inline	int	IsActiveSet() const { return m_bActiveSet; };
 	BOOL		CountCommonItem(int nGenre, int nDetailType, int P = pos_equiproom);//AutoAI by kinnox;
 	BOOL		SearchEquipment(int nWidth, int nHeight);//AutoAI by kinnox;
+   	//
+	void		NotifyItemChange(int nItemIdx);  // Notify UI to refresh item display
 #endif
 };
 #endif

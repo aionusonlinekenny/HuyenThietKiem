@@ -4303,6 +4303,78 @@ void KItemList::UnlockOperation()
 	}
 	m_bLockOperation = FALSE;
 }
+
+// --
+//
+// --
+void KItemList::NotifyItemChange(int nItemIdx)
+{
+	// Find item in m_Items array
+	int nListIdx = IsMyItem(nItemIdx);
+	if (nListIdx <= 0)
+	{
+		g_DebugLog("[CLIENT-NOTIFY] ERROR: Item %d not in player inventory!", nItemIdx);
+		return;
+	}
+
+	// Construct UI notification structure
+	KUiObjAtContRegion pInfo;
+	pInfo.Obj.uGenre = CGOG_ITEM;
+	pInfo.Obj.uId = nItemIdx;
+	pInfo.Region.Width = Item[nItemIdx].GetWidth();
+	pInfo.Region.Height = Item[nItemIdx].GetHeight();
+
+	// Get item position from m_Items array
+	int nPlace = m_Items[nListIdx].nPlace;
+	int nX = m_Items[nListIdx].nX;
+	int nY = m_Items[nListIdx].nY;
+
+	pInfo.Region.h = nX;
+	pInfo.Region.v = nY;
+
+	// Map position to container type (same logic as KItemList::Add)
+	switch(nPlace)
+	{
+	case pos_immediacy:
+		pInfo.eContainer = UOC_IMMEDIA_ITEM;
+		break;
+	case pos_equiproom:
+		pInfo.eContainer = UOC_ITEM_TAKE_WITH;
+		break;
+	case pos_repositoryroom:
+		pInfo.eContainer = UOC_STORE_BOX;
+		break;
+	case pos_repositoryroom1:
+		pInfo.eContainer = UOC_STORE_BOX1;
+		break;
+	case pos_repositoryroom2:
+		pInfo.eContainer = UOC_STORE_BOX2;
+		break;
+	case pos_repositoryroom3:
+		pInfo.eContainer = UOC_STORE_BOX3;
+		break;
+	case pos_repositoryroom4:
+		pInfo.eContainer = UOC_STORE_BOX4;
+		break;
+	case pos_repositoryroom5:
+		pInfo.eContainer = UOC_STORE_BOX5;
+		break;
+	case pos_expandtoryroom1:
+		pInfo.eContainer = UOC_EXPAND_BOX1;
+		break;
+	case pos_givebox:
+		pInfo.eContainer = UOC_GIVE_BOX;
+		break;
+	default:
+		pInfo.eContainer = UOC_ITEM_TAKE_WITH;
+		break;
+	}
+
+	g_DebugLog("[CLIENT-NOTIFY] Notifying UI: ItemIdx=%d, Container=%d, Pos=(%d,%d)",
+		nItemIdx, pInfo.eContainer, nX, nY);
+	CoreDataChanged(GDCNI_OBJECT_CHANGED, (DWORD)&pInfo, 1);
+	g_DebugLog("[CLIENT-NOTIFY] CoreDataChanged called - UI should refresh");
+}
 #endif
 
 // --
@@ -5181,35 +5253,65 @@ BOOL KItemList::ExchangeStack(const int nIdxBeStack, const int nIdxForStack)
 		return FALSE;
 
 	const int nResult = StackItem(nIdxBeStack, nIdxForStack);
-	// 
+
+	g_DebugLog("[SERVER-STACK-SPLIT] StackItem result: %d (0=merge complete, >0=split, <0=merge partial)", nResult);
+	g_DebugLog("[SERVER-STACK-SPLIT] nIdxBeStack=%d: Name=%s, ItemID=%u, Durability=%d",
+		nIdxBeStack, Item[nIdxBeStack].GetName(), Item[nIdxBeStack].GetID(), Item[nIdxBeStack].GetDurability());
+
+	//
 	if(nResult == 0)
 	{
 		RemoveByIndex(nIdxForStack);
 	}
-	
+
+	// CRITICAL FIX: Use ITEM_CHANGE_INFO type=1 (SetStackCount) instead of ITEM_SYNC
+	// ITEM_SYNC calls ItemSet.AddExist() which can create duplicate items or fail to find
+	// existing items loaded from DB because ItemID may change. ITEM_CHANGE_INFO type=1
+	// uses ItemSet.SearchID() to find the existing item by its current ItemID and updates
+	// it in place without creating duplicates.
 	ITEM_CHANGE_INFO sChange;
 	sChange.ProtocolType	= s2c_itemchangeinfosync;
-	sChange.m_btType		= 1;
+	sChange.m_btType		= 1;  // Type 1 = SetStackCount (client: KProtocolProcess.cpp:3938) 
 	sChange.m_dwItemID		= Item[nIdxBeStack].GetID();
 	sChange.m_uChange		= (UINT)Item[nIdxBeStack].GetDurability();
+	g_DebugLog("[SERVER-STACK-SPLIT] Sending ITEM_CHANGE_INFO for nIdxBeStack: ItemID=%u, NewDurability=%u",
+		sChange.m_dwItemID, sChange.m_uChange);
 	if(g_pServer)
 		g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
-	
+  
+
 	//
 	if(nResult < 0)
-	{	
+	{
 		RemoveByIndex(nIdxForStack);
 	}
 	//
 	if(nResult > 0)
-	{	
+	{
+		g_DebugLog("[SERVER-STACK-SPLIT] nIdxForStack=%d: Name=%s, ItemID=%u, Durability=%d",
+			nIdxForStack, Item[nIdxForStack].GetName(), Item[nIdxForStack].GetID(), Item[nIdxForStack].GetDurability());
+
 		ITEM_CHANGE_INFO sChange;
 		sChange.ProtocolType	= s2c_itemchangeinfosync;
-		sChange.m_btType		= 1;
+		sChange.m_btType		= 1;  // Type 1 = SetStackCount (client: KProtocolProcess.cpp:3938)
 		sChange.m_dwItemID		= Item[nIdxForStack].GetID();
 		sChange.m_uChange		= (UINT)Item[nIdxForStack].GetDurability();
+		g_DebugLog("[SERVER-STACK-SPLIT] Sending ITEM_CHANGE_INFO for nIdxForStack: ItemID=%u, NewDurability=%u",
+			sChange.m_dwItemID, sChange.m_uChange);
 		if(g_pServer)
 			g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
+	}
+	
+
+	// CRITICAL FIX: Save player data to database immediately after stack split
+	// This ensures durability changes persist across client reconnects
+	// Without this, stack splits revert to old values after reconnect because
+	// the database still has the old durability values when client reloads items
+	if(g_pServer)
+	{
+		Player[m_PlayerIdx].m_uMustSave = SAVE_REQUEST;
+		Player[m_PlayerIdx].Save();
+		g_DebugLog("[STACK-SPLIT-SAVE] Player[%d] marked for save after stack split", m_PlayerIdx);				 
 	}
 
 	return TRUE;
