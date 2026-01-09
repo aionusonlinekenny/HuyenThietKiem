@@ -286,101 +286,63 @@ function PerformUpgrade(nAttribSlotStr, _)
     local szAttribName = GetAttribName(nAttribType)
 
     if not bUpgradeSuccess then
-        -- FAILURE: Equipment keeps original value - NO ACTION NEEDED
-        print("[LUA-UPGRADE] 19] Upgrade FAILED - equipment unchanged")
+        -- FAILURE: Call UpgradeItemAttributes with 0% increase (same as SUCCESS case)
+        -- This properly handles item removal/addition in correct container
+        print("[LUA-UPGRADE] 19] Upgrade FAILED - returning equipment with 0% increase")
 
-        local szFailMsg = "<color=red>[THAT BAI]<color> Nang cap that bai! " ..
+        -- Call same API as SUCCESS case but with 0% increase
+        -- This ensures item is properly returned to correct container position
+        local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, 0, nPos)
+        print("[LUA-UPGRADE] 19b] UpgradeItemAttributes(0%) returned: " .. tostring(nNewItemIdx))
+
+        if nNewItemIdx == 0 then
+            print("[LUA-UPGRADE] 19c] ERROR: UpgradeItemAttributes failed!")
+            Msg2Player("<color=red>Loi ky thuat:<color> <color=yellow>Khong the tra lai trang bi! Lien he GM.<color>")
+            return
+        end
+
+        -- Success - equipment returned to correct container
+        local szFailMsg = "<color=red>[THAT BAI]<color><color=yellow> Nang cap that bai! " ..
                           szAttribName .. ": " .. nOldValue .. " (khong doi). " ..
-                          "Da mat: " .. nMineralsUsed .. " khoang thach + tien"
+                          "Trang bi da duoc tra ve. " ..
+                          "Da mat: " .. nMineralsUsed .. " khoang thach + tien<color>"
+
         Msg2Player(szFailMsg)
         print("[LUA-UPGRADE] 19d] Failure handling complete")
         return
     end
 
-    -- STEP 4: SUCCESS - Create new item with upgraded attribute using exact mode encoding
-    -- PROBLEM: UpgradeItemAttributes fails when coordinates from BUILD_CONTAINER
-    --          are invalid for target position (equipment room has different grid)
-    -- SOLUTION: Use AddItemEx with exact mode encoding, let it auto-place
-    --           DON'T delete old item (causes disconnect)
+    -- STEP 4: SUCCESS - Perform actual upgrade
+    -- Use UpgradeItemAttributes C++ function (same as old working code)
     local nIncreasePercent = UPGRADE_FIXED_PERCENT
 
-    -- Calculate new value (MUST be integer for generator levels)
+    -- Calculate new value for display message
     local nIncrease = (nOldValue * nIncreasePercent) / 100
     if nIncrease < 1 then nIncrease = 1 end
-    local nNewValue = floor(nOldValue + nIncrease)
-    if nMax > 0 and nNewValue > nMax then nNewValue = floor(nMax) end
+    local nNewValue = nOldValue + nIncrease
+    if nMax > 0 and nNewValue > nMax then nNewValue = nMax end
 
-    print("[LUA-UPGRADE] 20] SUCCESS - Creating upgraded item with exact mode encoding")
-    print("[LUA-UPGRADE] 21] Attribute " .. nAttribSlot .. ": " .. szAttribName .. " " .. nOldValue .. " -> " .. nNewValue)
+    print("[LUA-UPGRADE] 20] Calling UpgradeItemAttributes with Slot=" .. nAttribSlot .. ", Percent=" .. nIncreasePercent)
 
-    -- Get all item properties for recreation
-    local nGenre, nDetail, nParti, nLevel, nSeries, nLuck = GetItemProp(nEquipIdx)
+    -- Call UpgradeItemAttributes with pos=15 (BUILD_CONTAINER) - same as old code
+    local nNewItemIdx = UpgradeItemAttributes(nEquipIdx, nAttribSlot, nIncreasePercent, nPos)
+    print("[LUA-UPGRADE] 21] UpgradeItemAttributes returned: " .. tostring(nNewItemIdx))
 
-    -- Get ALL 6 attributes (preserve all, upgrade one)
-    local tAttribs = {}
-    for i = 0, 5 do
-        local nType, nVal, nMin, nMax = GetItemMagicAttribInfo(nEquipIdx, i)
-        tAttribs[i] = {
-            nType = nType or 0,
-            nValue = (i == nAttribSlot) and nNewValue or (nVal or 0),
-            nMin = nMin or 0,
-            nMax = nMax or 0
-        }
-    end
-
-    -- EXACT MODE ENCODING (same as C++ UpgradeItemAttributes)
-    -- Generator levels = attribute VALUES (0-255) - MUST BE INTEGERS
-    local nGenLevels = {}
-    for i = 0, 5 do
-        nGenLevels[i] = floor(tAttribs[i].nValue or 0)
-    end
-
-    -- Encode attribute TYPES into seed (types 0-3) and version (types 4-5)
-    local nEncodedSeed = 0
-    nEncodedSeed = nEncodedSeed + ((tAttribs[0].nType or 0) * 1)
-    nEncodedSeed = nEncodedSeed + ((tAttribs[1].nType or 0) * 256)
-    nEncodedSeed = nEncodedSeed + ((tAttribs[2].nType or 0) * 65536)
-    nEncodedSeed = nEncodedSeed + ((tAttribs[3].nType or 0) * 16777216)
-
-    local nEncodedVersion = 0
-    nEncodedVersion = nEncodedVersion + ((tAttribs[4].nType or 0) * 1)
-    nEncodedVersion = nEncodedVersion + ((tAttribs[5].nType or 0) * 256)
-
-    -- Exact mode luck = 999900000 + original luck (mod 100000)
-    local nLuckMod = nLuck
-    while nLuckMod >= 100000 do
-        nLuckMod = nLuckMod - 100000
-    end
-    local nExactModeLuck = 999900000 + nLuckMod
-
-    print("[LUA-UPGRADE] 22] Encoded: Luck=" .. nExactModeLuck .. ", Seed=" .. nEncodedSeed .. ", Ver=" .. nEncodedVersion)
-    print("[LUA-UPGRADE] 23] GenLevels: [" .. nGenLevels[0] .. "," .. nGenLevels[1] .. "," .. nGenLevels[2] .. "," .. nGenLevels[3] .. "," .. nGenLevels[4] .. "," .. nGenLevels[5] .. "]")
-
-    -- Create new item with exact attributes (AddItemEx auto-places in equipment room)
-    -- DON'T specify position parameter - let it auto-place
-    local nNewItemIdx = AddItemEx(nGenre, nDetail, nParti, nLevel, nSeries, nExactModeLuck,
-                                    nGenLevels[0], nGenLevels[1], nGenLevels[2],
-                                    nGenLevels[3], nGenLevels[4], nGenLevels[5],
-                                    nEncodedVersion, nEncodedSeed)
-
-    print("[LUA-UPGRADE] 24] AddItemEx returned: " .. tostring(nNewItemIdx))
-
-    if nNewItemIdx == nil or nNewItemIdx == 0 then
-        print("[LUA-UPGRADE] 25] ERROR: Failed to create new item!")
-        Msg2Player("<color=red>LOI: Khong the tao item moi (AddItemEx failed)!<color>")
+    if nNewItemIdx == 0 then
+        -- Technical error during upgrade
+        print("[LUA-UPGRADE] 22] ERROR: UpgradeItemAttributes failed")
+        local szErrorMsg = "<color=red>Loi ky thuat:<color> <color=yellow>Khong the tra lai trang bi! Lien he GM.<color>"
+        Msg2Player(szErrorMsg)
         return
     end
 
-    -- SUCCESS - new item created with upgraded attributes
-    -- DON'T delete old item (causes disconnect)
-    print("[LUA-UPGRADE] 26] SUCCESS - New item created, index: " .. nNewItemIdx)
-    local szSuccessMsg = "<color=green>[THANH CONG]<color> Nang cap thanh cong! " ..
+    -- SUCCESS
+    print("[LUA-UPGRADE] 23] Upgrade SUCCESS")
+    local szSuccessMsg = "<color=green>[THANH CONG]<color> <color=yellow>Nang cap thanh cong! " ..
                          szAttribName .. ": " .. nOldValue .. " -> " .. nNewValue .. " (+" .. nIncreasePercent .. "%). " ..
-                         "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu. " ..
-                         "<color=yellow>TRANG BI MOI DA VAO TUI DO!</color> " ..
-                         "<color=red>HAY LAY ITEM CU RA KHOI KHAY!</color>"
+                         "Da tru: " .. nMineralsUsed .. " khoang thach, 1,000,000 luong + 2 xu<color>"
+
     Msg2Player(szSuccessMsg)
-    print("[LUA-UPGRADE] 27] Upgrade complete")
 end
 
 -- ------------------------------------------------------------
