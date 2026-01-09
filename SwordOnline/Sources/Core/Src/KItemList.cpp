@@ -2948,7 +2948,7 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 		break;
 	//
 	case pos_builditem: //TrembleItem by kinnox;
-		if (Player[this->m_PlayerIdx].CheckTrading())	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½
+		if (Player[this->m_PlayerIdx].CheckTrading())	// Èç¹ûÕýÔÚ½»Ò×
 			return;
 		if (SrcPos->nX < 0 || SrcPos->nX >= MAX_PART_BUILD || DesPos->nX < 0 || DesPos->nX >= MAX_PART_BUILD)
 			return;
@@ -4916,14 +4916,14 @@ void KItemList::SetItemBindState(int nIndex, BYTE btState, BYTE btDay)
 		// if(btDay > 0)
 		// {	
 			// char szMsg[512];//80  //luu y do dai cua ky tu khi build release by kinnox;
-			// sprintf(szMsg, "ï¿½ï¿½ mï¿½ khï¿½a bï¿½o hiï¿½m vï¿½t phï¿½m <color=green>[%s]<color>.", Item[nIndex].GetName());
-			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "Vï¿½t phï¿½m", szMsg, strlen(szMsg));
+			// sprintf(szMsg, "§· më khãa b¶o hiÓm vËt phÈm <color=green>[%s]<color>.", Item[nIndex].GetName());
+			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "VËt phÈm", szMsg, strlen(szMsg));
 		// }
 		// else
 		// {	
 			// char szMsg[512];//80  //luu y do dai cua ky tu khi build release by kinnox;
-			// sprintf(szMsg, "ï¿½ï¿½ khï¿½a bï¿½o hiï¿½m vï¿½t phï¿½m <color=green>[%s]<color>.", Item[nIndex].GetName());
-			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "Vï¿½t phï¿½m", szMsg, strlen(szMsg));
+			// sprintf(szMsg, "§· khãa b¶o hiÓm vËt phÈm <color=green>[%s]<color>.", Item[nIndex].GetName());
+			// KPlayerChat::SendSystemInfo(1, m_PlayerIdx, "VËt phÈm", szMsg, strlen(szMsg));
 		// }
 	// }
 	ITEM_CHANGE_INFO sChange;
@@ -5264,24 +5264,20 @@ BOOL KItemList::ExchangeStack(const int nIdxBeStack, const int nIdxForStack)
 		RemoveByIndex(nIdxForStack);
 	}
 
-	// CRITICAL FIX V2: Use SyncItem() to send complete item data
-	// This forces full UI refresh just like when item is first added to inventory
-	// Find item position in inventory
-	int nPlace1 = 0, nX1 = 0, nY1 = 0;
-	for (int i = 0; i < MAX_PLAYER_ITEM; i++)
-	{
-		if (m_Items[i].nIdx == nIdxBeStack)
-		{
-			nPlace1 = m_Items[i].nPlace;
-			nX1 = m_Items[i].nX;
-			nY1 = m_Items[i].nY;
-			break;
-		}
-	}
-	g_DebugLog("[SERVER-STACK-SPLIT] Calling SyncItem for nIdxBeStack: ItemID=%u, Durability=%d, Pos=(%d,%d,%d)",
-		Item[nIdxBeStack].GetID(), Item[nIdxBeStack].GetDurability(), nPlace1, nX1, nY1);
-	if (nPlace1 > 0)
-		SyncItem(nIdxBeStack, FALSE, nPlace1, nX1, nY1);
+	// CRITICAL FIX: Use ITEM_CHANGE_INFO type=1 (SetStackCount) instead of ITEM_SYNC
+	// ITEM_SYNC calls ItemSet.AddExist() which can create duplicate items or fail to find
+	// existing items loaded from DB because ItemID may change. ITEM_CHANGE_INFO type=1
+	// uses ItemSet.SearchID() to find the existing item by its current ItemID and updates
+	// it in place without creating duplicates.
+	ITEM_CHANGE_INFO sChange;
+	sChange.ProtocolType	= s2c_itemchangeinfosync;
+	sChange.m_btType		= 1;  // Type 1 = SetStackCount (client: KProtocolProcess.cpp:3938) 
+	sChange.m_dwItemID		= Item[nIdxBeStack].GetID();
+	sChange.m_uChange		= (UINT)Item[nIdxBeStack].GetDurability();
+	g_DebugLog("[SERVER-STACK-SPLIT] Sending ITEM_CHANGE_INFO for nIdxBeStack: ItemID=%u, NewDurability=%u",
+		sChange.m_dwItemID, sChange.m_uChange);
+	if(g_pServer)
+		g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
   
 
 	//
@@ -5295,22 +5291,15 @@ BOOL KItemList::ExchangeStack(const int nIdxBeStack, const int nIdxForStack)
 		g_DebugLog("[SERVER-STACK-SPLIT] nIdxForStack=%d: Name=%s, ItemID=%u, Durability=%d",
 			nIdxForStack, Item[nIdxForStack].GetName(), Item[nIdxForStack].GetID(), Item[nIdxForStack].GetDurability());
 
-		// Find position for split item
-		int nPlace2 = 0, nX2 = 0, nY2 = 0;
-		for (int i = 0; i < MAX_PLAYER_ITEM; i++)
-		{
-			if (m_Items[i].nIdx == nIdxForStack)
-			{
-				nPlace2 = m_Items[i].nPlace;
-				nX2 = m_Items[i].nX;
-				nY2 = m_Items[i].nY;
-				break;
-			}
-		}
-		g_DebugLog("[SERVER-STACK-SPLIT] Calling SyncItem for nIdxForStack: ItemID=%u, Durability=%d, Pos=(%d,%d,%d)",
-			Item[nIdxForStack].GetID(), Item[nIdxForStack].GetDurability(), nPlace2, nX2, nY2);
-		if (nPlace2 > 0)
-			SyncItem(nIdxForStack, FALSE, nPlace2, nX2, nY2);
+		ITEM_CHANGE_INFO sChange;
+		sChange.ProtocolType	= s2c_itemchangeinfosync;
+		sChange.m_btType		= 1;  // Type 1 = SetStackCount (client: KProtocolProcess.cpp:3938)
+		sChange.m_dwItemID		= Item[nIdxForStack].GetID();
+		sChange.m_uChange		= (UINT)Item[nIdxForStack].GetDurability();
+		g_DebugLog("[SERVER-STACK-SPLIT] Sending ITEM_CHANGE_INFO for nIdxForStack: ItemID=%u, NewDurability=%u",
+			sChange.m_dwItemID, sChange.m_uChange);
+		if(g_pServer)
+			g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
 	}
 	
 
@@ -5379,9 +5368,9 @@ int KItemList::MapPlaceToUIContainer(int nPlace)
     case pos_expandtoryroom1:  return UOC_EXPAND_BOX1;
     case pos_givebox:          return UOC_GIVE_BOX;
 
-    // N?u c?n thï¿½ b? sung thï¿½m cï¿½c place khï¿½c ? ?ï¿½y
+    // N?u c?n thì b? sung thêm các place khác ? ?ây
 
-    default:                   return 0; // 0/NULL: container khï¿½ng h?p l?
+    default:                   return 0; // 0/NULL: container không h?p l?
     }
 }
 #endif // !_SERVER
@@ -5485,7 +5474,7 @@ void KItemList::UnBuildItem(int nIdx, int nPos/* = -1*/)
 	}
 	else
 	{
-		if (m_BuildItem[nPos] != nIdx)	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		if (m_BuildItem[nPos] != nIdx)	// ¶«Î÷²»¶Ô
 			return;
 		i = nPos;
 	}
@@ -5502,7 +5491,7 @@ int KItemList::PositionToRoom(int nPlace)
     else if (nPlace >= pos_repositoryroom && nPlace < pos_repositoryroom + 10)
         return room_repository + (nPlace - pos_repositoryroom);
     else
-        return -1;  // ? Khï¿½ng h?p l?
+        return -1;  // ? Không h?p l?
 }
 
 #ifdef _SERVER
