@@ -3947,6 +3947,76 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 				pICI->m_uChange, Item[nIdx].GetDurability());
 			Item[nIdx].SetStackCount(pICI->m_uChange);
 			g_DebugLog("[CLIENT-STACK-SYNC] After SetStackCount: durability=%d", Item[nIdx].GetDurability());
+
+			// CRITICAL FIX: Notify UI to refresh the item display
+			// Find item position in player's inventory to construct notification
+			{
+				int nListIdx = Player[CLIENT_PLAYER_INDEX].m_ItemList.IsMyItem(nIdx);
+				if (nListIdx > 0)
+				{
+					KUiObjAtContRegion pInfo;
+					pInfo.Obj.uGenre = CGOG_ITEM;
+					pInfo.Obj.uId = nIdx;
+					pInfo.Region.Width = Item[nIdx].GetWidth();
+					pInfo.Region.Height = Item[nIdx].GetHeight();
+
+					// Get item position from m_Items array
+					int nPlace = Player[CLIENT_PLAYER_INDEX].m_ItemList.m_Items[nListIdx].nPlace;
+					int nX = Player[CLIENT_PLAYER_INDEX].m_ItemList.m_Items[nListIdx].nX;
+					int nY = Player[CLIENT_PLAYER_INDEX].m_ItemList.m_Items[nListIdx].nY;
+
+					pInfo.Region.h = nX;
+					pInfo.Region.v = nY;
+
+					// Map position to container type (same logic as KItemList::Add)
+					switch(nPlace)
+					{
+					case pos_immediacy:
+						pInfo.eContainer = UOC_IMMEDIA_ITEM;
+						break;
+					case pos_equiproom:
+						pInfo.eContainer = UOC_ITEM_TAKE_WITH;
+						break;
+					case pos_repositoryroom:
+						pInfo.eContainer = UOC_STORE_BOX;
+						break;
+					case pos_repositoryroom1:
+						pInfo.eContainer = UOC_STORE_BOX1;
+						break;
+					case pos_repositoryroom2:
+						pInfo.eContainer = UOC_STORE_BOX2;
+						break;
+					case pos_repositoryroom3:
+						pInfo.eContainer = UOC_STORE_BOX3;
+						break;
+					case pos_repositoryroom4:
+						pInfo.eContainer = UOC_STORE_BOX4;
+						break;
+					case pos_repositoryroom5:
+						pInfo.eContainer = UOC_STORE_BOX5;
+						break;
+					case pos_expandtoryroom1:
+						pInfo.eContainer = UOC_EXPAND_BOX1;
+						break;
+					case pos_givebox:
+						pInfo.eContainer = UOC_GIVE_BOX;
+						break;
+					default:
+						pInfo.eContainer = UOC_ITEM_TAKE_WITH;
+						break;
+					}
+
+					g_DebugLog("[CLIENT-STACK-SYNC] Calling CoreDataChanged: Container=%d, Pos=(%d,%d)",
+						pInfo.eContainer, nX, nY);
+					CoreDataChanged(GDCNI_OBJECT_CHANGED, (DWORD)&pInfo, 1);
+					g_DebugLog("[CLIENT-STACK-SYNC] CoreDataChanged called - UI should refresh now");
+				}
+				else
+				{
+					g_DebugLog("[CLIENT-STACK-SYNC] ERROR: Item not in player inventory list!");
+				}
+			}
+
 			Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 			g_DebugLog("[CLIENT-STACK-SYNC] UnlockOperation called");
 			break;
