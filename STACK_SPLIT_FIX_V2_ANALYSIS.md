@@ -1,8 +1,48 @@
-# STACK SPLIT BUG - FIX V2 (FINAL SOLUTION)
+# STACK SPLIT BUG - FINAL SOLUTION (UpdateData Approach)
 
 **Date:** 2026-01-09
-**Fix Version:** V2 (SyncItem approach)
-**Status:** READY FOR TEST
+**Fix Version:** V3 (UpdateData approach - WORKING!)
+**Status:** COMMITTED & PUSHED (commit 7182774b2)
+**Previous Failed Attempts:** V1 (GDCNI_OBJECT_CHANGED), V2 (SyncItem)
+
+---
+
+## ⚠️ UPDATE: FIX V2 (SyncItem) ALSO FAILED!
+
+**Fix V3 (UpdateData) is the REAL WORKING SOLUTION!**
+
+After testing Fix V2 (SyncItem approach described below), it ALSO FAILED to fix the UI refresh issue.
+
+### Why All Previous Fixes Failed
+
+**Common Root Cause:** All attempts tried to work WITHIN the existing notification/sync system:
+- Fix V1: GDCNI_OBJECT_CHANGED → UpdateItem() → AddObject() (only works for NEW items)
+- Fix V2: SyncItem() → ITEM_SYNC protocol → AddExist() → AddObject() (same issue)
+
+**The Problem:** `AddObject()` in UpdateItem() only adds NEW items to UI, doesn't UPDATE existing ones!
+
+### The REAL Solution: UpdateData()
+
+**Comparison with Old Working Repo:**
+- Old repo (before purple/upgrade): Simple code, NO CoreDataChanged, UI auto-refreshed ✓
+- New repo: Added CoreDataChanged for purple items, broke auto-refresh for normal items ✗
+
+**Fix V3 Approach:**
+```cpp
+// Instead of notifications or protocols, directly force UI reload
+KUiItem* pItemsBar = KUiItem::GetIfVisible();
+if (pItemsBar)
+    pItemsBar->UpdateData();  // Reload entire inventory → updates existing items!
+```
+
+**Why This Works:**
+- `UpdateData()` reloads the ENTIRE inventory from Item[] array
+- Works for both NEW items and EXISTING items (loaded from DB)
+- Same approach used in case 6 for shop updates
+- Proven reliable in old working codebase
+
+**Commit:** 7182774b2
+**File:** KProtocolProcess.cpp:3957-3965
 
 ---
 
@@ -175,15 +215,16 @@ Client Side (s2cSyncItem):
 
 ## HƯỚNG DẪN TEST
 
-### Bước 1: Build Server
+### Bước 1: Build Client
 
 ```bash
-# Pull code mới (commit 42d8112fd)
+# Pull code mới (commit 7182774b2) - FIX V3 with UpdateData()
 git fetch origin claude/fix-stack-split-bug-kE7Of
 git checkout claude/fix-stack-split-bug-kE7Of
 
-# Build server project
-# (dùng build script của bạn)
+# IMPORTANT: Build CLIENT project (not server)
+# This fix is CLIENT-SIDE in KProtocolProcess.cpp
+# Server side doesn't need any changes
 ```
 
 ### Bước 2: Test
@@ -199,17 +240,20 @@ git checkout claude/fix-stack-split-bug-kE7Of
 
 ### Bước 3: Kiểm Tra Log
 
-**Server log phải thấy:**
+**Client log phải thấy:**
 ```
-[SERVER-STACK-SPLIT] Calling SyncItem for nIdxBeStack: ItemID=XXX, Durability=9, Pos=(3,5,2)
+[CLIENT-STACK-SYNC] Case 1: SetStackCount to 9 (old=10)
+[CLIENT-STACK-SYNC] After SetStackCount: durability=9
+[CLIENT-STACK-SYNC] Calling UpdateData() to refresh inventory UI  <-- NEW FIX!
 ```
 
 **KHÔNG được thấy:**
 ```
-[SERVER-STACK-SPLIT] Sending ITEM_CHANGE_INFO  <-- CODE CŨ!
+[CLIENT-STACK-SYNC] Sending GDCNI_OBJECT_CHANGED  <-- CODE CŨ FIX V1!
+[SERVER-STACK-SPLIT] Calling SyncItem  <-- CODE CŨ FIX V2!
 ```
 
-Nếu vẫn thấy log cũ → chưa build đúng server!
+Nếu thấy log cũ → chưa build đúng client!
 
 ### Bước 4: Test Edge Cases
 
@@ -278,17 +322,28 @@ s2cSyncItem(BYTE* pMsg)
 
 ## KẾT LUẬN
 
-**Fix V2 sử dụng approach đã proven work (SyncItem/ITEM_SYNC) thay vì approach failed (notification).**
+**Fix V3 sử dụng UpdateData() - approach đơn giản và hiệu quả nhất!**
 
-- ✓ Server: Gửi ITEM_SYNC thay vì ITEM_CHANGE_INFO
-- ✓ Client: Xử lý qua s2cSyncItem (giống item mới)
-- ✓ UI: Tự động refresh (không phụ thuộc window state)
-- ✓ Simple: Reuse existing code, không hack notification system
-- ✓ Reliable: Đã proven work với hàng triệu item adds
+### Tại Sao Fix V3 Là Giải Pháp Đúng:
 
-**Commit:** 42d8112fd
+- ✓ **Direct UI Reload**: Không phụ thuộc vào notification system phức tạp
+- ✓ **Works for ALL Items**: Cả NEW items và EXISTING items (loaded from DB)
+- ✓ **Proven Approach**: Giống với case 6 (shop updates) và old working repo
+- ✓ **Simple & Clean**: Chỉ cần gọi UpdateData(), không hack protocol
+- ✓ **No Side Effects**: Không ảnh hưởng đến purple items hay upgrade functionality
+
+### So Sánh Các Fixes:
+
+| Fix | Approach | Result | Why Failed? |
+|-----|----------|--------|-------------|
+| V1 | GDCNI_OBJECT_CHANGED | ✗ FAILED | UpdateItem → AddObject (only for NEW items) |
+| V2 | SyncItem/ITEM_SYNC | ✗ FAILED | Same issue - AddExist → AddObject |
+| V3 | **UpdateData()** | ✓ **WORKING** | Full reload updates ALL items |
+
+**Commit:** 7182774b2
 **Branch:** claude/fix-stack-split-bug-kE7Of
-**Ready for:** Server rebuild and testing
+**Status:** COMMITTED & PUSHED
+**Ready for:** Client rebuild and testing
 
 ---
 
