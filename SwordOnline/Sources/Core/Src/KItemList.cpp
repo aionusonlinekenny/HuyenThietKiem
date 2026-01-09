@@ -5181,6 +5181,11 @@ BOOL KItemList::ExchangeStack(const int nIdxBeStack, const int nIdxForStack)
 		return FALSE;
 
 	const int nResult = StackItem(nIdxBeStack, nIdxForStack);
+
+	g_DebugLog("[SERVER-STACK-SPLIT] StackItem result: %d (0=merge complete, >0=split, <0=merge partial)", nResult);
+	g_DebugLog("[SERVER-STACK-SPLIT] nIdxBeStack=%d: Name=%s, ItemID=%u, Durability=%d",
+		nIdxBeStack, Item[nIdxBeStack].GetName(), Item[nIdxBeStack].GetID(), Item[nIdxBeStack].GetDurability());
+
 	//
 	if(nResult == 0)
 	{
@@ -5197,6 +5202,8 @@ BOOL KItemList::ExchangeStack(const int nIdxBeStack, const int nIdxForStack)
 	sChange.m_btType		= 1;  // Type 1 = SetStackCount (client: KProtocolProcess.cpp:3938)
 	sChange.m_dwItemID		= Item[nIdxBeStack].GetID();
 	sChange.m_uChange		= (UINT)Item[nIdxBeStack].GetDurability();
+	g_DebugLog("[SERVER-STACK-SPLIT] Sending ITEM_CHANGE_INFO for nIdxBeStack: ItemID=%u, NewDurability=%u",
+		sChange.m_dwItemID, sChange.m_uChange);
 	if(g_pServer)
 		g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
 
@@ -5208,11 +5215,16 @@ BOOL KItemList::ExchangeStack(const int nIdxBeStack, const int nIdxForStack)
 	//
 	if(nResult > 0)
 	{
+		g_DebugLog("[SERVER-STACK-SPLIT] nIdxForStack=%d: Name=%s, ItemID=%u, Durability=%d",
+			nIdxForStack, Item[nIdxForStack].GetName(), Item[nIdxForStack].GetID(), Item[nIdxForStack].GetDurability());
+
 		ITEM_CHANGE_INFO sChange;
 		sChange.ProtocolType	= s2c_itemchangeinfosync;
 		sChange.m_btType		= 1;  // Type 1 = SetStackCount (client: KProtocolProcess.cpp:3938)
 		sChange.m_dwItemID		= Item[nIdxForStack].GetID();
 		sChange.m_uChange		= (UINT)Item[nIdxForStack].GetDurability();
+		g_DebugLog("[SERVER-STACK-SPLIT] Sending ITEM_CHANGE_INFO for nIdxForStack: ItemID=%u, NewDurability=%u",
+			sChange.m_dwItemID, sChange.m_uChange);
 		if(g_pServer)
 			g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
 	}

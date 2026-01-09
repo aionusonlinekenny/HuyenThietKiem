@@ -3912,10 +3912,18 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 {
 	ITEM_CHANGE_INFO	*pICI = (ITEM_CHANGE_INFO *)pMsg;
 
+	g_DebugLog("[CLIENT-STACK-SYNC] ItemChangeInfo: Type=%d, ItemID=%u, Change=%u",
+		pICI->m_btType, pICI->m_dwItemID, pICI->m_uChange);
+
 	int nIdx = ItemSet.SearchID(pICI->m_dwItemID);
-	
+
+	g_DebugLog("[CLIENT-STACK-SYNC] SearchID returned: nIdx=%d", nIdx);
+
 	if (nIdx)
-	{	
+	{
+		g_DebugLog("[CLIENT-STACK-SYNC] Item found! Name=%s, Current durability=%d",
+			Item[nIdx].GetName(), Item[nIdx].GetDurability());
+
 		switch(pICI->m_btType)
 		{
 		case 0:
@@ -3935,8 +3943,12 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 			}
 			break;
 		case 1:
+			g_DebugLog("[CLIENT-STACK-SYNC] Case 1: SetStackCount to %u (old=%d)",
+				pICI->m_uChange, Item[nIdx].GetDurability());
 			Item[nIdx].SetStackCount(pICI->m_uChange);
+			g_DebugLog("[CLIENT-STACK-SYNC] After SetStackCount: durability=%d", Item[nIdx].GetDurability());
 			Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
+			g_DebugLog("[CLIENT-STACK-SYNC] UnlockOperation called");
 			break;
 		case 2:
 			Item[nIdx].SetBindState(pICI->m_uChange);
@@ -3958,6 +3970,10 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 		default:
 			break;
 		}
+	}
+	else
+	{
+		g_DebugLog("[CLIENT-STACK-SYNC] ERROR: Item not found! ItemID=%u", pICI->m_dwItemID);
 	}
 }
 
