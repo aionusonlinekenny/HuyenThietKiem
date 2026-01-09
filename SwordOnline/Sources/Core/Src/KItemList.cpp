@@ -5187,45 +5187,18 @@ BOOL KItemList::ExchangeStack(const int nIdxBeStack, const int nIdxForStack)
 		RemoveByIndex(nIdxForStack);
 	}
 
-	// Send full ITEM_SYNC for nIdxBeStack (destination stack) with position data
-	// This fixes the bug where stack splits don't persist after client reconnect
-	{
-		// Find position for nIdxBeStack in m_Items array
-		int nPlace = 0, nX = 0, nY = 0;
-		for (int i = 0; i < MAX_ITEM; i++)
-		{
-			if (m_Items[i].nIdx == nIdxBeStack)
-			{
-				nPlace = m_Items[i].nPlace;
-				nX = m_Items[i].nX;
-				nY = m_Items[i].nY;
-				break;
-			}
-		}
-
-		ITEM_SYNC sItem;
-		sItem.ProtocolType = s2c_syncitem;
-		sItem.m_ID = Item[nIdxBeStack].GetID();
-		sItem.m_Genre = Item[nIdxBeStack].GetGenre();
-		sItem.m_Detail = Item[nIdxBeStack].GetDetailType();
-		sItem.m_Level = Item[nIdxBeStack].GetLevel();
-		sItem.m_Series = Item[nIdxBeStack].GetSeries();
-		sItem.m_Luck = Item[nIdxBeStack].m_GeneratorParam.nLuck;
-		sItem.m_Place = nPlace;
-		sItem.m_X = nX;
-		sItem.m_Y = nY;
-		for (int j = 0; j < 6; j++)
-			sItem.m_MagicLevel[j] = (BYTE)Item[nIdxBeStack].m_GeneratorParam.nGeneratorLevel[j];
-		sItem.m_RandomSeed = Item[nIdxBeStack].m_GeneratorParam.dwRandomSeed;
-		sItem.m_Version = Item[nIdxBeStack].m_GeneratorParam.nVersion;
-		sItem.m_Durability = Item[nIdxBeStack].GetDurability();
-		sItem.m_Record = Item[nIdxBeStack].GetRecord();
-		sItem.m_ExpiredTime = Item[nIdxBeStack].GetTime();
-		sItem.m_BindState = Item[nIdxBeStack].GetBindState();
-		sItem.m_ShopPrice = Item[nIdxBeStack].GetPlayerShopPrice();
-		if(g_pServer)
-			g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sItem, sizeof(ITEM_SYNC));
-	}
+	// CRITICAL FIX: Use ITEM_CHANGE_INFO type=1 (SetStackCount) instead of ITEM_SYNC
+	// ITEM_SYNC calls ItemSet.AddExist() which can create duplicate items or fail to find
+	// existing items loaded from DB because ItemID may change. ITEM_CHANGE_INFO type=1
+	// uses ItemSet.SearchID() to find the existing item by its current ItemID and updates
+	// it in place without creating duplicates.
+	ITEM_CHANGE_INFO sChange;
+	sChange.ProtocolType	= s2c_itemchangeinfosync;
+	sChange.m_btType		= 1;  // Type 1 = SetStackCount (client: KProtocolProcess.cpp:3938)
+	sChange.m_dwItemID		= Item[nIdxBeStack].GetID();
+	sChange.m_uChange		= (UINT)Item[nIdxBeStack].GetDurability();
+	if(g_pServer)
+		g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
 
 	//
 	if(nResult < 0)
@@ -5235,42 +5208,13 @@ BOOL KItemList::ExchangeStack(const int nIdxBeStack, const int nIdxForStack)
 	//
 	if(nResult > 0)
 	{
-		// Send full ITEM_SYNC for nIdxForStack (source stack) with position data
-		// Find position for nIdxForStack in m_Items array
-		int nPlace = 0, nX = 0, nY = 0;
-		for (int i = 0; i < MAX_ITEM; i++)
-		{
-			if (m_Items[i].nIdx == nIdxForStack)
-			{
-				nPlace = m_Items[i].nPlace;
-				nX = m_Items[i].nX;
-				nY = m_Items[i].nY;
-				break;
-			}
-		}
-
-		ITEM_SYNC sItem;
-		sItem.ProtocolType = s2c_syncitem;
-		sItem.m_ID = Item[nIdxForStack].GetID();
-		sItem.m_Genre = Item[nIdxForStack].GetGenre();
-		sItem.m_Detail = Item[nIdxForStack].GetDetailType();
-		sItem.m_Level = Item[nIdxForStack].GetLevel();
-		sItem.m_Series = Item[nIdxForStack].GetSeries();
-		sItem.m_Luck = Item[nIdxForStack].m_GeneratorParam.nLuck;
-		sItem.m_Place = nPlace;
-		sItem.m_X = nX;
-		sItem.m_Y = nY;
-		for (int j = 0; j < 6; j++)
-			sItem.m_MagicLevel[j] = (BYTE)Item[nIdxForStack].m_GeneratorParam.nGeneratorLevel[j];
-		sItem.m_RandomSeed = Item[nIdxForStack].m_GeneratorParam.dwRandomSeed;
-		sItem.m_Version = Item[nIdxForStack].m_GeneratorParam.nVersion;
-		sItem.m_Durability = Item[nIdxForStack].GetDurability();
-		sItem.m_Record = Item[nIdxForStack].GetRecord();
-		sItem.m_ExpiredTime = Item[nIdxForStack].GetTime();
-		sItem.m_BindState = Item[nIdxForStack].GetBindState();
-		sItem.m_ShopPrice = Item[nIdxForStack].GetPlayerShopPrice();
+		ITEM_CHANGE_INFO sChange;
+		sChange.ProtocolType	= s2c_itemchangeinfosync;
+		sChange.m_btType		= 1;  // Type 1 = SetStackCount (client: KProtocolProcess.cpp:3938)
+		sChange.m_dwItemID		= Item[nIdxForStack].GetID();
+		sChange.m_uChange		= (UINT)Item[nIdxForStack].GetDurability();
 		if(g_pServer)
-			g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sItem, sizeof(ITEM_SYNC));
+			g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
 	}
 
 	// CRITICAL FIX: Save player data to database immediately after stack split
