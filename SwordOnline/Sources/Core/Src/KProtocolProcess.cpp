@@ -1397,6 +1397,10 @@ void KProtocolProcess::s2cSyncItem(BYTE* pMsg)
 {
 	ITEM_SYNC* pItemSync = (ITEM_SYNC*)pMsg;
 
+	g_DebugLog("[CLIENT-SYNC-ITEM] s2cSyncItem called - ID=%u, Genre=%d, Detail=%d, Durability=%d, Place=%d, Pos=(%d,%d)",
+		pItemSync->m_ID, pItemSync->m_Genre, pItemSync->m_Detail,
+		pItemSync->m_Durability, pItemSync->m_Place, pItemSync->m_X, pItemSync->m_Y);
+
 	int i, pnMagicParam[6];
 	for(i = 0; i < 6; i++)
 		pnMagicParam[i] = pItemSync->m_MagicLevel[i];
@@ -1411,9 +1415,12 @@ void KProtocolProcess::s2cSyncItem(BYTE* pMsg)
 		pnMagicParam,
 		pItemSync->m_Version,
 		pItemSync->m_RandomSeed);
-	
+
+	g_DebugLog("[CLIENT-SYNC-ITEM] ItemSet.AddExist returned nIndex=%d", nIndex);
+
 	if( (nIndex <= 0) || (nIndex >= MAX_ITEM) )
 	{
+		g_DebugLog("[CLIENT-SYNC-ITEM] ERROR: Invalid item index, aborting");
 		// REMOVED: UnlockOperation() without corresponding LockOperation() causes crash
 		// Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 		return;
@@ -1421,6 +1428,9 @@ void KProtocolProcess::s2cSyncItem(BYTE* pMsg)
 
 	Item[nIndex].SetID(pItemSync->m_ID);
 	Item[nIndex].SetDurability((short)pItemSync->m_Durability);
+	g_DebugLog("[CLIENT-SYNC-ITEM] Set durability to %d for item %s",
+		pItemSync->m_Durability, Item[nIndex].GetName());
+
 	//
 	if(pItemSync->m_BindState > 2000000000)
 		Item[nIndex].SetBindState(pItemSync->m_BindState, TRUE);
@@ -1432,6 +1442,7 @@ void KProtocolProcess::s2cSyncItem(BYTE* pMsg)
 	Item[nIndex].SetPlayerShopPrice(pItemSync->m_ShopPrice);
 
 	Player[CLIENT_PLAYER_INDEX].m_ItemList.Add(nIndex, pItemSync->m_Place, pItemSync->m_X, pItemSync->m_Y);
+	g_DebugLog("[CLIENT-SYNC-ITEM] Item sync complete - added to inventory");
 	// REMOVED: UnlockOperation() without corresponding LockOperation() causes crash/undefined behavior
 	// Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 }
@@ -3942,20 +3953,13 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 			}
 			break;
 		case 1:
-			g_DebugLog("[CLIENT-STACK-SYNC] Case 1: SetStackCount to %u (old=%d)",
+			// NOTE: This handler is deprecated - server now sends ITEM_SYNC instead of ITEM_CHANGE_INFO
+			// for stack splits. This case is kept for backwards compatibility only.
+			g_DebugLog("[CLIENT-STACK-SYNC-DEPRECATED] Case 1: SetStackCount to %u (old=%d) - Server should use ITEM_SYNC instead!",
 				pICI->m_uChange, Item[nIdx].GetDurability());
 			Item[nIdx].SetStackCount(pICI->m_uChange);
-			g_DebugLog("[CLIENT-STACK-SYNC] After SetStackCount: durability=%d", Item[nIdx].GetDurability());
-
-			// CRITICAL FIX: Use NotifyItemChange() to properly refresh UI
-			// Previous code sent GDCNI_CONTAINER_OBJECT_CHANGED which has NO HANDLER
-			// NotifyItemChange() sends GDCNI_OBJECT_CHANGED which DOES have handler
-			// and automatically detects correct container type (equipment/immediacy/store/etc)
-			g_DebugLog("[CLIENT-STACK-SYNC] Calling NotifyItemChange to refresh UI");
-			Player[CLIENT_PLAYER_INDEX].m_ItemList.NotifyItemChange(nIdx);
-
+			g_DebugLog("[CLIENT-STACK-SYNC-DEPRECATED] After SetStackCount: durability=%d", Item[nIdx].GetDurability());
 			Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
-			g_DebugLog("[CLIENT-STACK-SYNC] UnlockOperation called");
 			break;
 		case 2:
 			Item[nIdx].SetBindState(pICI->m_uChange);
