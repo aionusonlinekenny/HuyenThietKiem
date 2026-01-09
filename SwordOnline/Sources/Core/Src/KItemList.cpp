@@ -5312,6 +5312,43 @@ BOOL KItemList::ExchangeStack(const int nIdxBeStack, const int nIdxForStack)
 		g_DebugLog("[STACK-SPLIT-SAVE] Player[%d] marked for save after stack split", m_PlayerIdx);
 	}
 
+	// CRITICAL FIX: Send PLAYER_MOVE_ITEM_SYNC to trigger client-side ExchangeItem()
+	// which properly refreshes the UI. Without this, ITEM_CHANGE_INFO only updates
+	// memory but doesn't trigger UI refresh, causing DB-loaded items to appear
+	// unchanged in UI even though memory and DB are correct.
+	//
+	// Root cause: In ExchangeItem() at line 2867, when ExchangeStack() returns TRUE,
+	// it exits immediately without sending PLAYER_MOVE_ITEM_SYNC (line 2914 is never reached).
+	// This causes client to receive only ITEM_CHANGE_INFO which updates memory via SetStackCount()
+	// but doesn't call the client-side ExchangeItem() which is responsible for UI updates.
+	//
+	// Fresh items work because they trigger different code paths that send ITEM_SYNC packets
+	// which call m_ItemList.Add() that refreshes UI. But for existing items, only this
+	// PLAYER_MOVE_ITEM_SYNC triggers the necessary client-side ExchangeItem() call.
+	if(g_pServer)
+	{
+		int nListIdxSrc = IsMyItem(nIdxBeStack);
+		int nListIdxDst = IsMyItem(nIdxForStack);
+
+		if (nListIdxSrc > 0 && nListIdxDst > 0)
+		{
+			PLAYER_MOVE_ITEM_SYNC sMove;
+			sMove.ProtocolType = s2c_playermoveitem;
+			sMove.m_btDownPos = m_Items[nListIdxSrc].nPlace;
+			sMove.m_btDownX = m_Items[nListIdxSrc].nX;
+			sMove.m_btDownY = m_Items[nListIdxSrc].nY;
+			sMove.m_btUpPos = m_Items[nListIdxDst].nPlace;
+			sMove.m_btUpX = m_Items[nListIdxDst].nX;
+			sMove.m_btUpY = m_Items[nListIdxDst].nY;
+
+			g_DebugLog("[STACK-SPLIT-UI-FIX] Sending PLAYER_MOVE_ITEM_SYNC to trigger UI refresh: Src(%d,%d,%d) -> Dst(%d,%d,%d)",
+				sMove.m_btDownPos, sMove.m_btDownX, sMove.m_btDownY,
+				sMove.m_btUpPos, sMove.m_btUpX, sMove.m_btUpY);
+
+			g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
+		}
+	}
+
 	return TRUE;
 }
 #endif
