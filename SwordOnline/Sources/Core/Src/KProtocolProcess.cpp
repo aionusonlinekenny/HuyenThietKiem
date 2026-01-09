@@ -3945,14 +3945,13 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 		case 1:
 			g_DebugLog("[CLIENT-STACK-SYNC] Case 1: SetStackCount to %u (old=%d)",
 				pICI->m_uChange, Item[nIdx].GetDurability());
+
+			// Unlock first to allow UI refresh
+			Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
+			g_DebugLog("[CLIENT-STACK-SYNC] UnlockOperation called FIRST");
+
 			Item[nIdx].SetStackCount(pICI->m_uChange);
 			g_DebugLog("[CLIENT-STACK-SYNC] After SetStackCount: durability=%d", Item[nIdx].GetDurability());
-
-			// CRITICAL FIX: Notify UI to refresh the item display
-			Player[CLIENT_PLAYER_INDEX].m_ItemList.NotifyItemChange(nIdx);
-
-			Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
-			g_DebugLog("[CLIENT-STACK-SYNC] UnlockOperation called");
 			break;
 		case 2:
 			Item[nIdx].SetBindState(pICI->m_uChange);
