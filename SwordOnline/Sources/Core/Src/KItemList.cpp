@@ -5273,6 +5273,17 @@ BOOL KItemList::ExchangeStack(const int nIdxBeStack, const int nIdxForStack)
 			g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sItem, sizeof(ITEM_SYNC));
 	}
 
+	// CRITICAL FIX: Save player data to database immediately after stack split
+	// This ensures durability changes persist across client reconnects
+	// Without this, stack splits revert to old values after reconnect because
+	// the database still has the old durability values when client reloads items
+	if(g_pServer)
+	{
+		Player[m_PlayerIdx].m_uMustSave = SAVE_REQUEST;
+		Player[m_PlayerIdx].Save();
+		g_DebugLog("[STACK-SPLIT-SAVE] Player[%d] marked for save after stack split", m_PlayerIdx);
+	}
+
 	return TRUE;
 }
 #endif
