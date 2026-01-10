@@ -4314,6 +4314,7 @@ void KItemList::NotifyItemChange(int nItemIdx)
 	if (nListIdx <= 0)
 	{
 		g_DebugLog("[CLIENT-NOTIFY] Item %d not in m_Items - may be in hand or consumed", nItemIdx);
+		g_DebugLog("[CLIENT-NOTIFY] Current m_Hand value: %d", m_Hand);
 
 		// Check if item is in hand
 		if (m_Hand == nItemIdx)
