@@ -2388,7 +2388,7 @@ int KUiEnchaseTim::WndProc(unsigned int uMsg, unsigned int uParam, int nParam) {
                         }
 
                         // Must be Huyen Tinh level 3+ (detail = 76-79, levels 3-6)
-                        if (nDetail < 76 || nDetail > 79) {
+                        if (nDetail < 87 || nDetail > 90) {
                             g_DebugLog("[ENCHASE] REJECT Box1: Detail %d - need Huyen Tinh cap 3+ (detail 76-79)", nDetail);
                             KUiMsgCentrePad::SystemMessageArrival("Chi duoc dat HUYEN TINH CAP 3 TRO LEN vao o nay!", 256);
                             break;

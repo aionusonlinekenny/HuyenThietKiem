@@ -152,7 +152,21 @@ void CoreDataChangedCallback(unsigned int uDataId, unsigned int uParam, int nPar
 				{
 					KUiItem* pItemsBar = KUiItem::GetIfVisible();
 					if (pItemsBar)
-						pItemsBar->UpdateItem((KUiObjAtRegion*)uParam, nParam);
+					{
+						// CRITICAL FIX: nParam=-1 signals UPDATE of existing item
+						// AddObject() only works for NEW items (doesn't update existing)
+						// Solution: Remove the old item first, then Add it back with new data
+						if (nParam == -1)
+						{
+							g_DebugLog("[UI-NOTIFY] Stack UPDATE detected, removing and re-adding item");
+							pItemsBar->UpdateItem((KUiObjAtRegion*)uParam, 0);   // 0 = Remove
+							pItemsBar->UpdateItem((KUiObjAtRegion*)uParam, 1);   // 1 = Add back
+						}
+							else
+						{
+							pItemsBar->UpdateItem((KUiObjAtRegion*)uParam, nParam);
+						}
+					}
 				}
 			}
 			else if (pObject->eContainer == UOC_EQUIPTMENT)

@@ -1,0 +1,14 @@
+is_global = true
+build_property.ApplicationManifest = 
+build_property.StartupObject = MapTool.Program
+build_property.ApplicationDefaultFont = 
+build_property.ApplicationHighDpiMode = 
+build_property.ApplicationUseCompatibleTextRendering = 
+build_property.ApplicationVisualStyles = 
+build_property.RootNamespace = MapTool
+build_property.ProjectDir = C:\Users\Administrator\Downloads\HuyenThietKiem-claude-fix-map-loading-01Ljy9dmd8n9d8Gh1uvcEZN9(1)\HuyenThietKiem-claude-fix-map-loading-01Ljy9dmd8n9d8Gh1uvcEZN9\SwordOnline\Sources\Tool\MapTool\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 

@@ -1,0 +1,780 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Bishop - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Bishop.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Core - Win32 Server Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\kinno\AppData\Local\Temp\RSPFE18.tmp" with contents
+[
+/nologo /MTd /W2 /Gm /GX /Zi /Od /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /D "_DEBUG" /D "_SERVER" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FR"ServerDebug/" /Fp"ServerDebug/Core.pch" /Yu"KCore.h" /Fo"ServerDebug/" /Fd"ServerDebug/" /FD /LD /GZ /c 
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPartnerSkill.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerPartner.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KThiefSkill.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KMissle.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KMissleRes.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KMissleSet.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KSkillList.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KSkillManager.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KSkills.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KSkillSpecial.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KFaction.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KNpc.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KNpcAI.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KNpcAttribModify.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KNpcDeathCalcExp.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KNpcFindPath.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KNpcGold.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KNpcRes.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KNpcResList.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KNpcResNode.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KNpcSet.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KNpcTemplate.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayer.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerAI.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerChat.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerDBFuns.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerFaction.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerMenuState.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerMove.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerPK.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerSet.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerShop.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerTask.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerTeam.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerTong.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KPlayerTrade.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KSprControl.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KBasPropTbl.CPP"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KBuySell.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KInventory.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KItem.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KItemChangeRes.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KItemGenerator.CPP"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KItemList.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KItemSet.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KObj.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KObjSet.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KViewItem.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KCore.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KSubWorld.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KSubWorldSet.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KWeatherMgr.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KRegion.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KMath.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KGMProcess.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KNewProtocolProcess.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KProtocol.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KProtocolProcess.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\ScriptFuns.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KScriptValueSet.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KSortScript.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\src\CoreServerShell.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\Scene\KWeather.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KMagicDesc.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KMission.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KTaskFuns.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KOption.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KMapMusic.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KLadder.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\ZLoadFile.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\KWorldMsg.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\MSSQL\KB_MSSQL.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\MSSQL\ZEG_MSSQLServer_Connection.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\MSSQL\ZEG_MSSQLServer_Result.cpp"
+]
+Creating command line "cl.exe @C:\Users\kinno\AppData\Local\Temp\RSPFE18.tmp" 
+Creating temporary file "C:\Users\kinno\AppData\Local\Temp\RSPFE19.tmp" with contents
+[
+/nologo /MTd /W2 /Gm /GX /Zi /Od /I "..\engine\src" /I "..\engine\include" /I "..\Network" /I "..\..\Headers" /D "_DEBUG" /D "_SERVER" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CORE_EXPORTS" /FR"ServerDebug/" /Fp"ServerDebug/Core.pch" /Yc"KCore.h" /Fo"ServerDebug/" /Fd"ServerDebug/" /FD /LD /GZ /c 
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\Core\Src\stdafx.cpp"
+]
+Creating command line "cl.exe @C:\Users\kinno\AppData\Local\Temp\RSPFE19.tmp" 
+Creating temporary file "C:\Users\kinno\AppData\Local\Temp\RSPFE1A.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib lualibdll.lib Ws2_32.lib Winmm.lib Shlwapi.lib /nologo /dll /incremental:no /pdb:"ServerDebug/CoreServer.pdb" /map:"ServerDebug/CoreServer.map" /debug /machine:I386 /nodefaultlib:"libc.lib" /nodefaultlib:"libcmt.lib" /nodefaultlib:"msvcrt.lib" /nodefaultlib:"libcd.lib" /nodefaultlib:"msvcrtd.lib" /out:"ServerDebug\CoreServer.dll" /implib:"ServerDebug/CoreServer.lib" /pdbtype:sept /libpath:"../../lib/" 
+.\ServerDebug\KPartnerSkill.obj
+.\ServerDebug\KPlayerPartner.obj
+.\ServerDebug\KThiefSkill.obj
+.\ServerDebug\KMissle.obj
+.\ServerDebug\KMissleRes.obj
+.\ServerDebug\KMissleSet.obj
+.\ServerDebug\KSkillList.obj
+.\ServerDebug\KSkillManager.obj
+.\ServerDebug\KSkills.obj
+.\ServerDebug\KSkillSpecial.obj
+.\ServerDebug\KFaction.obj
+.\ServerDebug\KNpc.obj
+.\ServerDebug\KNpcAI.obj
+.\ServerDebug\KNpcAttribModify.obj
+.\ServerDebug\KNpcDeathCalcExp.obj
+.\ServerDebug\KNpcFindPath.obj
+.\ServerDebug\KNpcGold.obj
+.\ServerDebug\KNpcRes.obj
+.\ServerDebug\KNpcResList.obj
+.\ServerDebug\KNpcResNode.obj
+.\ServerDebug\KNpcSet.obj
+.\ServerDebug\KNpcTemplate.obj
+.\ServerDebug\KPlayer.obj
+.\ServerDebug\KPlayerAI.obj
+.\ServerDebug\KPlayerChat.obj
+.\ServerDebug\KPlayerDBFuns.obj
+.\ServerDebug\KPlayerFaction.obj
+.\ServerDebug\KPlayerMenuState.obj
+.\ServerDebug\KPlayerMove.obj
+.\ServerDebug\KPlayerPK.obj
+.\ServerDebug\KPlayerSet.obj
+.\ServerDebug\KPlayerShop.obj
+.\ServerDebug\KPlayerTask.obj
+.\ServerDebug\KPlayerTeam.obj
+.\ServerDebug\KPlayerTong.obj
+.\ServerDebug\KPlayerTrade.obj
+.\ServerDebug\KSprControl.obj
+.\ServerDebug\KBasPropTbl.obj
+.\ServerDebug\KBuySell.obj
+.\ServerDebug\KInventory.obj
+.\ServerDebug\KItem.obj
+.\ServerDebug\KItemChangeRes.obj
+.\ServerDebug\KItemGenerator.obj
+.\ServerDebug\KItemList.obj
+.\ServerDebug\KItemSet.obj
+.\ServerDebug\KObj.obj
+.\ServerDebug\KObjSet.obj
+.\ServerDebug\KViewItem.obj
+.\ServerDebug\KCore.obj
+.\ServerDebug\KSubWorld.obj
+.\ServerDebug\KSubWorldSet.obj
+.\ServerDebug\KWeatherMgr.obj
+.\ServerDebug\KRegion.obj
+.\ServerDebug\KMath.obj
+.\ServerDebug\KGMProcess.obj
+.\ServerDebug\KNewProtocolProcess.obj
+.\ServerDebug\KProtocol.obj
+.\ServerDebug\KProtocolProcess.obj
+.\ServerDebug\ScriptFuns.obj
+.\ServerDebug\KScriptValueSet.obj
+.\ServerDebug\KSortScript.obj
+.\ServerDebug\CoreServerShell.obj
+.\ServerDebug\KWeather.obj
+.\ServerDebug\KMagicDesc.obj
+.\ServerDebug\KMission.obj
+.\ServerDebug\KTaskFuns.obj
+.\ServerDebug\KOption.obj
+.\ServerDebug\KMapMusic.obj
+.\ServerDebug\KLadder.obj
+.\ServerDebug\ZLoadFile.obj
+.\ServerDebug\KWorldMsg.obj
+.\ServerDebug\KB_MSSQL.obj
+.\ServerDebug\ZEG_MSSQLServer_Connection.obj
+.\ServerDebug\ZEG_MSSQLServer_Result.obj
+.\ServerDebug\stdafx.obj
+..\..\Lib\debug\engine.lib
+..\..\Lib\debug\common.lib
+.\Src\USBKey\EP1KDL20.LIB
+.\Src\USBKey\EpsForJoLib.lib
+]
+Creating command line "link.exe @C:\Users\kinno\AppData\Local\Temp\RSPFE1A.tmp"
+<h3>Output Window</h3>
+Compiling...
+stdafx.cpp
+Compiling...
+KPartnerSkill.cpp
+KPlayerPartner.cpp
+KThiefSkill.cpp
+KMissle.cpp
+KMissleRes.cpp
+KMissleSet.cpp
+KSkillList.cpp
+KSkillManager.cpp
+KSkills.cpp
+KSkillSpecial.cpp
+KFaction.cpp
+KNpc.cpp
+KNpcAI.cpp
+KNpcAttribModify.cpp
+KNpcDeathCalcExp.cpp
+KNpcFindPath.cpp
+KNpcGold.cpp
+KNpcRes.cpp
+KNpcResList.cpp
+KNpcResNode.cpp
+Generating Code...
+Compiling...
+KNpcSet.cpp
+KNpcTemplate.cpp
+KPlayer.cpp
+KPlayerAI.cpp
+KPlayerChat.cpp
+KPlayerDBFuns.cpp
+KPlayerFaction.cpp
+KPlayerMenuState.cpp
+KPlayerMove.cpp
+KPlayerPK.cpp
+KPlayerSet.cpp
+KPlayerShop.cpp
+KPlayerTask.cpp
+KPlayerTeam.cpp
+KPlayerTong.cpp
+KPlayerTrade.cpp
+KSprControl.cpp
+KBasPropTbl.CPP
+KBuySell.cpp
+KInventory.cpp
+Generating Code...
+Compiling...
+KItem.cpp
+KItemChangeRes.cpp
+KItemGenerator.CPP
+KItemList.cpp
+KItemSet.cpp
+KObj.cpp
+KObjSet.cpp
+KViewItem.cpp
+KCore.cpp
+KSubWorld.cpp
+KSubWorldSet.cpp
+KWeatherMgr.cpp
+KRegion.cpp
+KMath.cpp
+KGMProcess.cpp
+KNewProtocolProcess.cpp
+KProtocol.cpp
+KProtocolProcess.cpp
+ScriptFuns.cpp
+KScriptValueSet.cpp
+Generating Code...
+Compiling...
+KSortScript.cpp
+CoreServerShell.cpp
+KWeather.cpp
+KMagicDesc.cpp
+KMission.cpp
+KTaskFuns.cpp
+KOption.cpp
+KMapMusic.cpp
+KLadder.cpp
+ZLoadFile.cpp
+KWorldMsg.cpp
+KB_MSSQL.cpp
+ZEG_MSSQLServer_Connection.cpp
+ZEG_MSSQLServer_Result.cpp
+Generating Code...
+Linking...
+   Creating library ServerDebug/CoreServer.lib and object ServerDebug/CoreServer.exp
+ServerDebug\CoreServer.dll : warning LNK4084: total image size 666120192 exceeds max (268435456); image may not run
+Creating temporary file "C:\Users\kinno\AppData\Local\Temp\RSPC34.bat" with contents
+[
+@echo off
+md ..\..\..\bin\GameServer\debug
+md ..\..\lib\debug
+copy ServerDebug\CoreServer.map ..\..\..\bin\GameServer\Coreserver.map
+copy ServerDebug\CoreServer.pdb ..\..\..\bin\GameServer\Coreserver.pdb
+copy ServerDebug\CoreServer.dll ..\..\..\bin\GameServer\Coreserver.dll
+copy ServerDebug\CoreServer.map ..\..\..\bin\GameServer\debug\Coreserver.map
+copy ServerDebug\CoreServer.pdb ..\..\..\bin\GameServer\debug\Coreserver.pdb
+copy ServerDebug\CoreServer.dll ..\..\..\bin\GameServer\debug\Coreserver.dll
+copy ServerDebug\CoreServer.lib ..\..\lib\debug\CoreServer.lib
+]
+Creating command line "C:\Users\kinno\AppData\Local\Temp\RSPC34.bat"
+
+A subdirectory or file ..\..\..\bin\GameServer\debug already exists.
+A subdirectory or file ..\..\lib\debug already exists.
+        1 file(s) copied.
+        1 file(s) copied.
+The process cannot access the file because it is being used by another process.
+        0 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+
+
+
+<h3>Results</h3>
+CoreServer.dll - 0 error(s), 1 warning(s)
+<h3>
+--------------------Configuration: Core - Win32 Client Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+CoreClient.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Engine - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Engine.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Engine - Win32 OutRead Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Engine.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: ExpandPackage - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+ExpandPackage.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: FilterText - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+FilterText.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: GameServer - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\kinno\AppData\Local\Temp\RSPDEB.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib LIBCMTD.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/GameServer.pdb" /debug /machine:I386 /nodefaultlib:"LIBCMT" /out:"Debug/GameServer.exe" /pdbtype:sept 
+.\Debug\GameServer.obj
+.\Debug\KSOServer.obj
+.\Debug\KTransferUnit.obj
+.\Debug\StdAfx.obj
+.\Debug\Script1.res
+..\..\..\Lib\debug\engine.lib
+..\..\..\Lib\debug\CoreServer.lib
+..\..\..\Lib\debug\common.lib
+]
+Creating command line "link.exe @C:\Users\kinno\AppData\Local\Temp\RSPDEB.tmp"
+<h3>Output Window</h3>
+Linking...
+Creating temporary file "C:\Users\kinno\AppData\Local\Temp\RSPEB7.bat" with contents
+[
+@echo off
+md ..\..\..\..\bin\GameServer\debug
+copy debug\GameServer.exe ..\..\..\..\bin\GameServer\GameServer.exe
+copy debug\GameServer.exe ..\..\..\..\bin\GameServer\GameServer.map
+copy debug\GameServer.exe ..\..\..\..\bin\GameServer\GameServer.pdb
+]
+Creating command line "C:\Users\kinno\AppData\Local\Temp\RSPEB7.bat"
+
+A subdirectory or file ..\..\..\..\bin\GameServer\debug already exists.
+The process cannot access the file because it is being used by another process.
+        0 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+
+
+
+<h3>Results</h3>
+GameServer.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Goddess - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Goddess.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Heaven - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Heaven.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: LuaLibDll - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+LuaLibDll.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Rainbow - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Rainbow.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Represent2 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Represent2.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Represent3 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Represent3.dll - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: S3Client - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\kinno\AppData\Local\Temp\RSP1010.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /Zi /Od /I "../Engine/src" /I "../Core/src" /I "../Engine/include" /I "../../Headers" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "SWORDONLINE_SHOW_DBUG_INFO" /D "SWORDONLINE_USE_MD5_PASSWORD" /D "_USE_GM_TOOL" /FR"Debug/" /Fp"Debug/S3Client.pch" /Yu"KWin32.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\LightLoop.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\MouseHover.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\PopupMenu.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\SpaceOver.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\SpecialFuncs.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\TextPic.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\UiCursor.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\UiImage.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndButton.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndChessPanel.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndEdit.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndImage.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndImage2.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndImagePart.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndLabeledButton.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndList.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndList2.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndListFilterItem.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndListPoint.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndMessageListBox.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndMovingImage.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndObjContainer.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndPureTextBtn.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndScrollBar.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\elem\WndShadow.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndText.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndToolBar.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndValueImage.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\Elem\WndWindow.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiConnectInfo.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChooseFace.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiFaceSelector.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiPlayerBar.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiInit.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTeamBuild.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChaPW.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiCreatPW.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiExpandItem.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiKeyBoard.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiLoginPW.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSkills.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSkillTree.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\uicase\UiStoreBox.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTimeBox.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSelPlayer.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChatCentre.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiInformation3.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiChatItemInfo.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\uicase\UiMsgCentrePad.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiSysMsgCentre.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiCaveMap.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\uicase\UiMiniMap.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiWorldMap.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiPlayVideo.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTaskNote.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiNewsMessage.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiNewsMessageEx.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiAutoPlay.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiMiniBuff.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiCase\UiTopTKNew.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\ShortcutKey.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiBase.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\Ui\UiShell.cpp"
+"D:\ProjectHuyenThietKiem\SwordOnline\Sources\S3Client\S3Client.cpp"
+]
+Creating command line "cl.exe @C:\Users\kinno\AppData\Local\Temp\RSP1010.tmp" 
+Creating temporary file "C:\Users\kinno\AppData\Local\Temp\RSP1011.tmp" with contents
+[
+Winmm.lib shlwapi.lib lualibdll.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:no /pdb:"Debug/Game.pdb" /map:"Debug/Game.map" /debug /machine:I386 /out:"Debug/Game.exe" /libpath:"../../lib/" 
+.\Debug\AutoLocateWnd.obj
+.\Debug\ComWindow.obj
+.\Debug\LightLoop.obj
+.\Debug\MouseHover.obj
+.\Debug\PopupMenu.obj
+.\Debug\SpaceOver.obj
+.\Debug\SpecialFuncs.obj
+.\Debug\TextPic.obj
+.\Debug\UiCursor.obj
+.\Debug\UiImage.obj
+.\Debug\WndButton.obj
+.\Debug\WndChessPanel.obj
+.\Debug\WndEdit.obj
+.\Debug\WndImage.obj
+.\Debug\WndImage2.obj
+.\Debug\WndImagePart.obj
+.\Debug\WndLabeledButton.obj
+.\Debug\WndList.obj
+.\Debug\WndList2.obj
+.\Debug\WndListFilterItem.obj
+.\Debug\WndListPoint.obj
+.\Debug\WndMessageListBox.obj
+.\Debug\WndMovingImage.obj
+.\Debug\WndObjContainer.obj
+.\Debug\WndPage.obj
+.\Debug\WndPureTextBtn.obj
+.\Debug\Wnds.obj
+.\Debug\WndScrollBar.obj
+.\Debug\WndShadow.obj
+.\Debug\WndShowAnimate.obj
+.\Debug\WndText.obj
+.\Debug\WndToolBar.obj
+.\Debug\WndValueImage.obj
+.\Debug\WndWindow.obj
+.\Debug\UiConnectInfo.obj
+.\Debug\UiLogin.obj
+.\Debug\UiLoginBg.obj
+.\Debug\UiSelServer.obj
+.\Debug\UiChooseFace.obj
+.\Debug\UiFaceSelector.obj
+.\Debug\UiPlayerBar.obj
+.\Debug\UiStatus.obj
+.\Debug\UiOptions.obj
+.\Debug\UiInit.obj
+.\Debug\UiTeamBuild.obj
+.\Debug\UiChaPW.obj
+.\Debug\UiCreatPW.obj
+.\Debug\UiExpandItem.obj
+.\Debug\UiGetMoney.obj
+.\Debug\UiGiveBox.obj
+.\Debug\UiItem.obj
+.\Debug\UiKeyBoard.obj
+.\Debug\UiLoginPW.obj
+.\Debug\UiReWard.obj
+.\Debug\UiSkills.obj
+.\Debug\UiSkillTree.obj
+.\Debug\UiStoreBox.obj
+.\Debug\UiTimeBox.obj
+.\Debug\UiESCDlg.obj
+.\Debug\UiGetNumber.obj
+.\Debug\UiGetString.obj
+.\Debug\UiMsgSel.obj
+.\Debug\UiMsgSel2.obj
+.\Debug\UiParadeItem.obj
+.\Debug\UiSelPlayerNearby.obj
+.\Debug\UiNewPlayer.obj
+.\Debug\UiSelNativePlace.obj
+.\Debug\UiSelPlayer.obj
+.\Debug\UiChannelSubscibe.obj
+.\Debug\UiChatCentre.obj
+.\Debug\UiChatPhrase.obj
+.\Debug\UiChatStatus.obj
+.\Debug\UiInformation.obj
+.\Debug\UiInformation2.obj
+.\Debug\UiInformation3.obj
+.\Debug\UiTeamManage.obj
+.\Debug\UiTeamStatus.obj
+.\Debug\UiChatItemInfo.obj
+.\Debug\UiHeaderControlBar.obj
+.\Debug\UiMsgCentrePad.obj
+.\Debug\UiMakeAdv.obj
+.\Debug\UiMarket.obj
+.\Debug\UiMarkPrice.obj
+.\Debug\UiPlayerShop.obj
+.\Debug\UiShop.obj
+.\Debug\UiShoppingCart.obj
+.\Debug\UiTrade.obj
+.\Debug\UiTradeConfirmWnd.obj
+.\Debug\UiGame.obj
+.\Debug\UiNotification.obj
+.\Debug\UiSysMsgCentre.obj
+.\Debug\UiCaveMap.obj
+.\Debug\UiFindPos.obj
+.\Debug\UiMiniMap.obj
+.\Debug\UiWorldMap.obj
+.\Debug\UiSelColor.obj
+.\Debug\UiNewPlayerStartMsg.obj
+.\Debug\UiPlayVideo.obj
+.\Debug\UiHelper.obj
+.\Debug\UiHelper2.obj
+.\Debug\UiHelperMission.obj
+.\Debug\UiReconnect.obj
+.\Debug\UiRevive.obj
+.\Debug\UiTaskDataFile.obj
+.\Debug\UiTaskNote.obj
+.\Debug\UiNewsMessage.obj
+.\Debug\UiNewsMessageEx.obj
+.\Debug\UiStrengthRank.obj
+.\Debug\UiPopupPasswordQuery.obj
+.\Debug\UiTongAssignBox.obj
+.\Debug\UiTongChangeTitle.obj
+.\Debug\UiTongCreateSheet.obj
+.\Debug\UiTongInformation.obj
+.\Debug\UiTongManager.obj
+".\Debug\UiTongSetTax .obj"
+.\Debug\UiAutoPlay.obj
+.\Debug\UiMiniBuff.obj
+.\Debug\UiTopTKNew.obj
+.\Debug\UiTrembleItem.obj
+.\Debug\TrayMode.obj
+.\Debug\UiSoundSetting.obj
+.\Debug\GameSpaceChangedNotify.obj
+.\Debug\ShortcutKey.obj
+.\Debug\UiBase.obj
+.\Debug\UiShell.obj
+.\Debug\ChatFilter.obj
+.\Debug\FilterTextLib.obj
+.\Debug\S3Client.obj
+.\Debug\NetConnectAgent.obj
+.\Debug\Login.obj
+.\Debug\TextCtrlCmd.obj
+.\Debug\ErrorCode.obj
+.\Debug\stdafx.obj
+.\Debug\Script1.res
+..\..\Lib\debug\engine.lib
+..\..\Lib\debug\CoreClient.lib
+]
+Creating command line "link.exe @C:\Users\kinno\AppData\Local\Temp\RSP1011.tmp"
+<h3>Output Window</h3>
+Compiling...
+UiPlayerBar.cpp
+UiSkills.cpp
+UiSkillTree.cpp
+UiMsgCentrePad.cpp
+ShortcutKey.cpp
+UiBase.cpp
+Generating Code...
+Compiling...
+LightLoop.cpp
+MouseHover.cpp
+PopupMenu.cpp
+SpaceOver.cpp
+SpecialFuncs.cpp
+TextPic.cpp
+UiImage.cpp
+WndButton.cpp
+WndChessPanel.cpp
+WndEdit.cpp
+WndImage.cpp
+WndImage2.cpp
+WndImagePart.cpp
+WndLabeledButton.cpp
+WndList.cpp
+WndList2.cpp
+WndListFilterItem.cpp
+WndListPoint.cpp
+WndMessageListBox.cpp
+WndObjContainer.cpp
+Generating Code...
+Compiling...
+WndPureTextBtn.cpp
+WndScrollBar.cpp
+WndShadow.cpp
+WndText.cpp
+WndValueImage.cpp
+WndWindow.cpp
+UiConnectInfo.cpp
+UiChooseFace.cpp
+UiFaceSelector.cpp
+UiExpandItem.cpp
+UiStoreBox.cpp
+UiChatCentre.cpp
+UiChatItemInfo.cpp
+UiSysMsgCentre.cpp
+UiMiniMap.cpp
+UiPlayVideo.cpp
+UiNewsMessage.cpp
+UiNewsMessageEx.cpp
+UiTopTKNew.cpp
+UiShell.cpp
+Generating Code...
+Compiling...
+S3Client.cpp
+Generating Code...
+Skipping... (no relevant changes detected)
+UiCursor.cpp
+WndMovingImage.cpp
+WndToolBar.cpp
+UiInit.cpp
+UiTeamBuild.cpp
+UiChaPW.cpp
+UiCreatPW.cpp
+UiKeyBoard.cpp
+UiLoginPW.cpp
+UiTimeBox.cpp
+UiSelPlayer.cpp
+UiInformation3.cpp
+UiCaveMap.cpp
+UiWorldMap.cpp
+UiTaskNote.cpp
+UiAutoPlay.cpp
+UiMiniBuff.cpp
+Linking...
+Creating temporary file "C:\Users\kinno\AppData\Local\Temp\RSP1FD1.bat" with contents
+[
+@echo off
+md ..\..\..\bin\client\debug\
+copy debug\Game.exe ..\..\..\bin\Client\Game.exe
+copy debug\Game.exe ..\..\..\bin\Client\Game.map
+copy debug\Game.exe ..\..\..\bin\Client\Game.pdb
+]
+Creating command line "C:\Users\kinno\AppData\Local\Temp\RSP1FD1.bat"
+
+A subdirectory or file ..\..\..\bin\client\debug\ already exists.
+        1 file(s) copied.
+        1 file(s) copied.
+        1 file(s) copied.
+
+
+
+<h3>Results</h3>
+Game.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: S3Relay - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+S3Relay.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: S3RelayServer - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+S3RelayServer.exe - 0 error(s), 0 warning(s)
+<h3>
+--------------------Configuration: Sword3PaySys - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+
+
+
+<h3>Results</h3>
+Sword3PaySys.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

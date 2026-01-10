@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "+E2b1KDFaf8=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Administrator\\Downloads\\HuyenThietKiem-claude-fix-map-loading-01Ljy9dmd8n9d8Gh1uvcEZN9(5)\\HuyenThietKiem-claude-fix-map-loading-01Ljy9dmd8n9d8Gh1uvcEZN9\\SwordOnline\\Sources\\Tool\\PakExtractTool\\PakExtractTool.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.3\\microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net48\\1.0.3\\microsoft.netframework.referenceassemblies.net48.1.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
