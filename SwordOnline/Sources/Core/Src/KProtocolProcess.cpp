@@ -3950,17 +3950,17 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 
 			Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 
-			// CRITICAL FIX: Force full inventory UI refresh using UpdateData()
-			// This works for both NEW items and items LOADED FROM DB
-			// UpdateItem() only works for NEW items (uses AddObject which doesn't update existing)
-			// UpdateData() reloads entire inventory which updates existing items correctly
+			// CRITICAL FIX: Force full inventory UI refresh
+			// Call UpdateItem(NULL, 0) which triggers UpdateData() internally
+			// UpdateData() is private, but UpdateItem(NULL) calls it (see UiItem.cpp:198)
+			// This reloads entire inventory - works for both NEW and EXISTING items
 #ifndef _SERVER
 			{
 				KUiItem* pItemsBar = KUiItem::GetIfVisible();
 				if (pItemsBar)
 				{
-					g_DebugLog("[CLIENT-STACK-SYNC] Calling UpdateData() to refresh inventory UI");
-					pItemsBar->UpdateData();
+					g_DebugLog("[CLIENT-STACK-SYNC] Calling UpdateItem(NULL) to trigger full inventory refresh");
+					pItemsBar->UpdateItem(NULL, 0);  // NULL triggers UpdateData() internally
 				}
 			}
 #endif
