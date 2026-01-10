@@ -2871,6 +2871,16 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 
 					g_DebugLog("[SERVER-AUTOMATE] ExchangeStack success - placing items back");
 
+					// Prepare move notification for client
+					PLAYER_MOVE_ITEM_SYNC sMove;
+					sMove.ProtocolType = s2c_playermoveitem;
+					sMove.m_btSrcPos = pos_equiproom;
+					sMove.m_btDesPo = pos_equiproom;
+					sMove.m_wSrcX = SrcPos->nX;
+					sMove.m_wSrcY = SrcPos->nY;
+					sMove.m_wDesX = DesPos->nX;
+					sMove.m_wDesY = DesPos->nY;
+
 					// nEquipIdx1 (BeStack) always exists after stack operation (with updated durability)
 					// Place it at DesPos
 					if (m_Room[room_equipment].PlaceItem(DesPos->nX, DesPos->nY, nEquipIdx1,
@@ -2909,6 +2919,10 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 					{
 						g_DebugLog("[SERVER-AUTOMATE] nIdxForStack=%d was removed (merge complete)", nTempHand);
 					}
+
+					// Notify client about the move (items are now at proper positions)
+					g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
+					g_DebugLog("[SERVER-AUTOMATE] Sent PLAYER_MOVE_ITEM_SYNC to client");
 
 					m_Hand = 0;
 					return;
