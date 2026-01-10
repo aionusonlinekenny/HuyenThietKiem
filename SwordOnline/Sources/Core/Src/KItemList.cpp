@@ -2874,12 +2874,12 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 					// Prepare move notification for client
 					PLAYER_MOVE_ITEM_SYNC sMove;
 					sMove.ProtocolType = s2c_playermoveitem;
-					sMove.m_btSrcPos = pos_equiproom;
-					sMove.m_btDesPo = pos_equiproom;
-					sMove.m_wSrcX = SrcPos->nX;
-					sMove.m_wSrcY = SrcPos->nY;
-					sMove.m_wDesX = DesPos->nX;
-					sMove.m_wDesY = DesPos->nY;
+					sMove.m_btUpPos = pos_equiproom;
+					sMove.m_btUpX = SrcPos->nX;
+					sMove.m_btUpY = SrcPos->nY;
+					sMove.m_btDownPos = pos_equiproom;
+					sMove.m_btDownX = DesPos->nX;
+					sMove.m_btDownY = DesPos->nY;
 
 					// nEquipIdx1 (BeStack) always exists after stack operation (with updated durability)
 					// Place it at DesPos
