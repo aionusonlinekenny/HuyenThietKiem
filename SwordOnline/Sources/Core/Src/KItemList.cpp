@@ -2857,15 +2857,62 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 
 		nEquipIdx1 = m_Room[room_equipment].FindItem(SrcPos->nX, SrcPos->nY);
 		if(nEquipIdx1)
-		{	
+		{
 			nListIdx = IsMyItem(nEquipIdx1);
 			if(nListIdx <= 0)
 				return;
 #ifdef _SERVER
 			if(nTempHand)
-			{	
+			{
 				if( ExchangeStack(nEquipIdx1, nTempHand) )
+				{
+					// CRITICAL FIX: After successful ExchangeStack, items need to be placed back
+					// ExchangeStack merged/split items but did NOT place them in inventory
+
+					g_DebugLog("[SERVER-AUTOMATE] ExchangeStack success - placing items back");
+
+					// nEquipIdx1 (BeStack) always exists after stack operation (with updated durability)
+					// Place it at DesPos
+					if (m_Room[room_equipment].PlaceItem(DesPos->nX, DesPos->nY, nEquipIdx1,
+						Item[nEquipIdx1].GetWidth(), Item[nEquipIdx1].GetHeight()))
+					{
+						nListIdx = FindSame(nEquipIdx1);
+						if (nListIdx > 0)
+						{
+							m_Items[nListIdx].nPlace = pos_equiproom;
+							m_Items[nListIdx].nX = DesPos->nX;
+							m_Items[nListIdx].nY = DesPos->nY;
+						}
+						g_DebugLog("[SERVER-AUTOMATE] Placed nIdxBeStack=%d at (%d,%d)",
+							nEquipIdx1, DesPos->nX, DesPos->nY);
+					}
+
+					// nTempHand (ForStack) may still exist if split occurred
+					// Check if it still exists and place at SrcPos
+					if (IsMyItem(nTempHand) > 0)
+					{
+						if (m_Room[room_equipment].PlaceItem(SrcPos->nX, SrcPos->nY, nTempHand,
+							Item[nTempHand].GetWidth(), Item[nTempHand].GetHeight()))
+						{
+							nListIdx = FindSame(nTempHand);
+							if (nListIdx > 0)
+							{
+								m_Items[nListIdx].nPlace = pos_equiproom;
+								m_Items[nListIdx].nX = SrcPos->nX;
+								m_Items[nListIdx].nY = SrcPos->nY;
+							}
+							g_DebugLog("[SERVER-AUTOMATE] Placed nIdxForStack=%d at (%d,%d)",
+								nTempHand, SrcPos->nX, SrcPos->nY);
+						}
+					}
+					else
+					{
+						g_DebugLog("[SERVER-AUTOMATE] nIdxForStack=%d was removed (merge complete)", nTempHand);
+					}
+
+					m_Hand = 0;
 					return;
+				}
 			}
 #endif
 			if( !m_Room[room_equipment].PickUpItem(nEquipIdx1, SrcPos->nX, SrcPos->nY, Item[nEquipIdx1].GetWidth(), Item[nEquipIdx1].GetHeight()) )
