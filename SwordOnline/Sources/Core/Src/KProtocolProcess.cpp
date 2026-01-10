@@ -3947,21 +3947,9 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 			Item[nIdx].SetStackCount(pICI->m_uChange);
 			g_DebugLog("[CLIENT-STACK-SYNC] After SetStackCount: durability=%d", Item[nIdx].GetDurability());
 
-			// CRITICAL FIX: Send notification with nParam=-1 to signal UPDATE (not ADD)
-			// GameSpaceChangedNotify will handle this by forcing full inventory reload
-			{
-				KUiObjAtContRegion Region;
-				Region.Obj.uGenre = CGOG_ITEM;
-				Region.Obj.uId = nIdx;
-				Region.Region.Width = Item[nIdx].GetWidth();
-				Region.Region.Height = Item[nIdx].GetHeight();
-				Region.eContainer = UOC_ITEM_TAKE_WITH;
-
-				g_DebugLog("[CLIENT-STACK-SYNC] Sending GDCNI_OBJECT_CHANGED with nParam=-1 (UPDATE signal)");
-				CoreDataChanged(GDCNI_OBJECT_CHANGED, (unsigned int)&Region, -1);  // -1 = UPDATE existing item
-			}
-
 			Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
+
+			g_DebugLog("[CLIENT-STACK-SYNC] Simple approach: no notification, let rendering auto-update");
 			break;
 		case 2:
 			Item[nIdx].SetBindState(pICI->m_uChange);
