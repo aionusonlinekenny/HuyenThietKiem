@@ -1103,8 +1103,8 @@ void KItem::Paint(int nX, int nY, BOOL bStack)
 		DWORD now = GetTickCount();
 		if (m_nCurrentDur != g_lastLoggedDur || (now - g_lastLogTime) > 1000)
 		{
-			g_DebugLog("[PAINT-DEBUG] Painting stack item '%s' (ID=%d) with count=%d at (%d,%d)",
-				GetName(), m_nIndex, m_nCurrentDur, nX, nY);
+			g_DebugLog("[PAINT-DEBUG] Painting stack item '%s' (ID=%u) with count=%d at (%d,%d)",
+				GetName(), GetID(), m_nCurrentDur, nX, nY);
 			g_lastLoggedDur = m_nCurrentDur;
 			g_lastLogTime = now;
 		}
