@@ -3937,6 +3937,22 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 		g_DebugLog("[CLIENT-STACK-SYNC] Item found! Name=%s, Current durability=%d",
 			Item[nIdx].GetName(), Item[nIdx].GetDurability());
 
+		// CRITICAL CHECK: Verify item is actually in player's inventory
+		// Items in ItemSet but not in m_ItemList are either:
+		// - Orphaned (bug from incomplete removal)
+		// - In special containers (compound box, trade window, etc.)
+		// - Being consumed/used
+		// We should NOT process ITEM_CHANGE_INFO for these items
+		int nListIdx = Player[CLIENT_PLAYER_INDEX].m_ItemList.IsMyItem(nIdx);
+		if (nListIdx <= 0)
+		{
+			g_DebugLog("[CLIENT-STACK-SYNC] Item nIdx=%d exists in ItemSet but NOT in m_ItemList (nListIdx=%d)",
+				nIdx, nListIdx);
+			g_DebugLog("[CLIENT-STACK-SYNC] Skipping ITEM_CHANGE_INFO - item not in active inventory");
+			// Silently ignore - this is normal for items in compound/trade containers
+			return;
+		}
+
 		switch(pICI->m_btType)
 		{
 		case 0:
