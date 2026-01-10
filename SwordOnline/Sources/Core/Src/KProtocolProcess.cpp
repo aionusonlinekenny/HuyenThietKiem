@@ -3959,25 +3959,40 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 
 			g_DebugLog("[CLIENT-STACK-SYNC] Case 1: SetStackCount to %u (old=%d)",
 				pICI->m_uChange, Item[nIdx].GetDurability());
+
+			// Debug: Check item status
+			int nListIdx = Player[CLIENT_PLAYER_INDEX].m_ItemList.IsMyItem(nIdx);
+			int nHand = Player[CLIENT_PLAYER_INDEX].m_ItemList.Hand();
+			g_DebugLog("[CLIENT-STACK-SYNC] DEBUG: nIdx=%d, IsMyItem=%d, Hand=%d",
+				nIdx, nListIdx, nHand);
+
 			Item[nIdx].SetStackCount(pICI->m_uChange);
 			g_DebugLog("[CLIENT-STACK-SYNC] After SetStackCount: durability=%d", Item[nIdx].GetDurability());
 
 			// CRITICAL FIX: If item is in hand, force refresh by re-setting mouse item
 			// This triggers repaint with updated durability value
-			if (Player[CLIENT_PLAYER_INDEX].m_ItemList.Hand() == nIdx)
+			if (nHand == nIdx)
 			{
 				g_DebugLog("[CLIENT-STACK-SYNC] Item is in hand - forcing mouse item refresh");
 				// MenuSetMouseItem() reads m_Hand and sends GDCNI_HOLD_OBJECT to refresh cursor
 				Player[CLIENT_PLAYER_INDEX].m_ItemList.MenuSetMouseItem();
 			}
+			else if (nListIdx > 0)
+			{
+				// Item is in inventory - use NotifyItemChange
+				g_DebugLog("[CLIENT-STACK-SYNC] Item in inventory (listIdx=%d) - using NotifyItemChange", nListIdx);
+				Player[CLIENT_PLAYER_INDEX].m_ItemList.NotifyItemChange(nIdx);
+			}
 			else
 			{
-				// Use NotifyItemChange to find correct container and notify UI
-				Player[CLIENT_PLAYER_INDEX].m_ItemList.NotifyItemChange(nIdx);
+				// Item not in hand and not in inventory - orphaned item or timing issue
+				g_DebugLog("[CLIENT-STACK-SYNC] WARNING: Item nIdx=%d is orphaned (not in hand, not in m_Items)", nIdx);
+				g_DebugLog("[CLIENT-STACK-SYNC] This may be a split operation in progress - skip notification");
+				// Don't notify - let the subsequent ITEM_SYNC or Add() handle UI update
 			}
 
 			Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
-			g_DebugLog("[CLIENT-STACK-SYNC] Refresh completed, UI should update");
+			g_DebugLog("[CLIENT-STACK-SYNC] Refresh completed");
 			break;
 		case 2:
 			Item[nIdx].SetBindState(pICI->m_uChange);
