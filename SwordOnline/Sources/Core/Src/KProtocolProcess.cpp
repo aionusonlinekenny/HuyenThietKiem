@@ -3962,11 +3962,22 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 			Item[nIdx].SetStackCount(pICI->m_uChange);
 			g_DebugLog("[CLIENT-STACK-SYNC] After SetStackCount: durability=%d", Item[nIdx].GetDurability());
 
-			// Use NotifyItemChange to find correct container and notify UI
-			Player[CLIENT_PLAYER_INDEX].m_ItemList.NotifyItemChange(nIdx);
+			// CRITICAL FIX: If item is in hand, force refresh by re-setting mouse item
+			// This triggers repaint with updated durability value
+			if (Player[CLIENT_PLAYER_INDEX].m_ItemList.GetHand() == nIdx)
+			{
+				g_DebugLog("[CLIENT-STACK-SYNC] Item is in hand - forcing mouse item refresh");
+				// Re-set mouse item to trigger repaint
+				Player[CLIENT_PLAYER_INDEX].m_ItemList.MenuSetMouseItem(nIdx);
+			}
+			else
+			{
+				// Use NotifyItemChange to find correct container and notify UI
+				Player[CLIENT_PLAYER_INDEX].m_ItemList.NotifyItemChange(nIdx);
+			}
 
 			Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
-			g_DebugLog("[CLIENT-STACK-SYNC] NotifyItemChange called, UI should refresh");
+			g_DebugLog("[CLIENT-STACK-SYNC] Refresh completed, UI should update");
 			break;
 		case 2:
 			Item[nIdx].SetBindState(pICI->m_uChange);
