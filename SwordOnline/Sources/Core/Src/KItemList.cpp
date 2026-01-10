@@ -2924,6 +2924,26 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 					g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
 					g_DebugLog("[SERVER-AUTOMATE] Sent PLAYER_MOVE_ITEM_SYNC to client");
 
+					// NOW send ITEM_CHANGE_INFO for durability updates (items are in inventory now)
+					ITEM_CHANGE_INFO sChange;
+					sChange.ProtocolType = s2c_itemchangeinfosync;
+					sChange.m_btType = 1;  // Type 1 = SetStackCount
+					sChange.m_dwItemID = Item[nEquipIdx1].GetID();
+					sChange.m_uChange = (UINT)Item[nEquipIdx1].GetDurability();
+					g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
+					g_DebugLog("[SERVER-AUTOMATE] Sent ITEM_CHANGE_INFO for nIdxBeStack: ItemID=%u, Durability=%u",
+						sChange.m_dwItemID, sChange.m_uChange);
+
+					// If split occurred, send ITEM_CHANGE_INFO for the split item too
+					if (IsMyItem(nTempHand) > 0)
+					{
+						sChange.m_dwItemID = Item[nTempHand].GetID();
+						sChange.m_uChange = (UINT)Item[nTempHand].GetDurability();
+						g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
+						g_DebugLog("[SERVER-AUTOMATE] Sent ITEM_CHANGE_INFO for nIdxForStack: ItemID=%u, Durability=%u",
+							sChange.m_dwItemID, sChange.m_uChange);
+					}
+
 					m_Hand = 0;
 					return;
 				}
@@ -5385,10 +5405,11 @@ BOOL KItemList::ExchangeStack(const int nIdxBeStack, const int nIdxForStack)
 		 
    
   
-	g_DebugLog("[SERVER-STACK-SPLIT] Sending ITEM_CHANGE_INFO for nIdxBeStack: ItemID=%u, NewDurability=%u",
+	g_DebugLog("[SERVER-STACK-SPLIT] SKIPPING notification for nIdxBeStack (orphaned): ItemID=%u, NewDurability=%u",
 		sChange.m_dwItemID, sChange.m_uChange);
-	if(g_pServer)
-		g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
+	// DISABLED: Items are still orphaned, will notify after placement in AutoMoveItem()
+	// if(g_pServer)
+	//	g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
   
 
 	//
@@ -5414,10 +5435,11 @@ BOOL KItemList::ExchangeStack(const int nIdxBeStack, const int nIdxForStack)
 		  
 	
    
-		g_DebugLog("[SERVER-STACK-SPLIT] Sending ITEM_CHANGE_INFO for nIdxForStack: ItemID=%u, NewDurability=%u",
+		g_DebugLog("[SERVER-STACK-SPLIT] SKIPPING notification for nIdxForStack (orphaned): ItemID=%u, NewDurability=%u",
 			sChange.m_dwItemID, sChange.m_uChange);
-		if(g_pServer)
-			g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
+		// DISABLED: Items are still orphaned, will notify after placement in AutoMoveItem()
+		// if(g_pServer)
+		//	g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
 	}
 	// CRITICAL FIX: Save player data to database immediately after stack split
 	// This ensures durability changes persist across client reconnects
