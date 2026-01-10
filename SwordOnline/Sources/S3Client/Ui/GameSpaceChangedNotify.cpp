@@ -154,12 +154,13 @@ void CoreDataChangedCallback(unsigned int uDataId, unsigned int uParam, int nPar
 					if (pItemsBar)
 					{
 						// CRITICAL FIX: nParam=-1 signals UPDATE of existing item
-						// UpdateItem(region, 1) only works for ADD (new items)
-						// For UPDATE, call UpdateItem(NULL) to trigger full reload
+						// AddObject() only works for NEW items (doesn't update existing)
+						// Solution: Remove the old item first, then Add it back with new data
 						if (nParam == -1)
 						{
-							g_DebugLog("[UI-NOTIFY] Stack UPDATE detected, forcing full inventory reload");
-							pItemsBar->UpdateItem(NULL, 0);  // NULL triggers UpdateData()
+							g_DebugLog("[UI-NOTIFY] Stack UPDATE detected, removing and re-adding item");
+							pItemsBar->UpdateItem((KUiObjAtRegion*)uParam, 0);   // 0 = Remove
+							pItemsBar->UpdateItem((KUiObjAtRegion*)uParam, 1);   // 1 = Add back
 						}
 						else
 						{
