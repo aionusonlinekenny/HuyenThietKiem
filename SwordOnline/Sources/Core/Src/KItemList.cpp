@@ -4313,11 +4313,30 @@ void KItemList::NotifyItemChange(int nItemIdx)
 	int nListIdx = IsMyItem(nItemIdx);
 	if (nListIdx <= 0)
 	{
-		g_DebugLog("[CLIENT-NOTIFY] ERROR: Item %d not in player inventory!", nItemIdx);
+		g_DebugLog("[CLIENT-NOTIFY] Item %d not in m_Items - may be in hand or consumed", nItemIdx);
+
+		// Check if item is in hand
+		if (m_Hand == nItemIdx)
+		{
+			g_DebugLog("[CLIENT-NOTIFY] Item is in hand, notifying UOC_IN_HAND");
+			KUiObjAtContRegion pInfo;
+			pInfo.Obj.uGenre = CGOG_ITEM;
+			pInfo.Obj.uId = nItemIdx;
+			pInfo.eContainer = UOC_IN_HAND;
+			pInfo.Region.Width = Item[nItemIdx].GetWidth();
+			pInfo.Region.Height = Item[nItemIdx].GetHeight();
+			pInfo.Region.h = 0;
+			pInfo.Region.v = 0;
+			CoreDataChanged(GDCNI_OBJECT_CHANGED, (DWORD)&pInfo, 1);
+			CoreDataChanged(GDCNI_CONTAINER_OBJECT_CHANGED, (unsigned int)UOC_IN_HAND, 0);
+			return;
+		}
+
 		// Fallback: Force refresh all containers to ensure UI updates
 		g_DebugLog("[CLIENT-NOTIFY] Fallback: Broadcasting container refresh to all");
 		CoreDataChanged(GDCNI_CONTAINER_OBJECT_CHANGED, UOC_ITEM_TAKE_WITH, 0);
 		CoreDataChanged(GDCNI_CONTAINER_OBJECT_CHANGED, UOC_IMMEDIA_ITEM, 0);
+		CoreDataChanged(GDCNI_CONTAINER_OBJECT_CHANGED, UOC_IN_HAND, 0);
 		return;
 	}
 
@@ -5222,6 +5241,24 @@ BOOL KItemList::CheckStackItem(const int nIdxBeStack, const int nIdxForStack)
 		return FALSE;
 	if(Item[nIdxBeStack].GetTime() != Item[nIdxForStack].GetTime())
 		return FALSE;
+
+	// CRITICAL FIX: Check magic attributes for stackable items (khoang thach, etc)
+	// Items with different attributes (e.g. upgraded vs non-upgraded minerals) cannot stack
+	for (int i = 0; i < 6; i++)
+	{
+		if (Item[nIdxBeStack].m_aryMagicAttrib[i].nAttribType != Item[nIdxForStack].m_aryMagicAttrib[i].nAttribType)
+		{
+			g_DebugLog("[SERVER-STACK-CHECK] Cannot stack: Different magic attrib type at slot %d (BeStack=%d, ForStack=%d)",
+				i, Item[nIdxBeStack].m_aryMagicAttrib[i].nAttribType, Item[nIdxForStack].m_aryMagicAttrib[i].nAttribType);
+			return FALSE;
+		}
+		if (Item[nIdxBeStack].m_aryMagicAttrib[i].nValue[0] != Item[nIdxForStack].m_aryMagicAttrib[i].nValue[0])
+		{
+			g_DebugLog("[SERVER-STACK-CHECK] Cannot stack: Different magic attrib value at slot %d (BeStack=%d, ForStack=%d)",
+				i, Item[nIdxBeStack].m_aryMagicAttrib[i].nValue[0], Item[nIdxForStack].m_aryMagicAttrib[i].nValue[0]);
+			return FALSE;
+		}
+	}
 
 	return TRUE;
 }
