@@ -1309,12 +1309,23 @@ void KProtocolProcess::s2cRemoveItem(BYTE* pMsg)
 	nIdx = Player[CLIENT_PLAYER_INDEX].m_ItemList.SearchID(pRemove->m_ID);
 	if (nIdx > 0)
 	{
+		g_DebugLog("[CLIENT-REMOVE] Removing item: ID=%u, nIdx=%d, Name=%s",
+			pRemove->m_ID, nIdx, Item[nIdx].GetName());
+
 		Player[CLIENT_PLAYER_INDEX].m_ItemList.Remove(nIdx);
+
+		// CRITICAL FIX: Must also remove from ItemSet to prevent orphaned items
+		// Without this, removed items still exist in ItemSet and cause issues with
+		// ITEM_CHANGE_INFO updates that try to update already-removed items
+		ItemSet.Remove(nIdx);
+		g_DebugLog("[CLIENT-REMOVE] Removed from both m_ItemList and ItemSet");
+
 		Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 	}
- 
-
-
+	else
+	{
+		g_DebugLog("[CLIENT-REMOVE] ERROR: Item ID=%u not found in ItemList", pRemove->m_ID);
+	}
 }
 //	���ܣ��յ�������������������Ϣ
 
