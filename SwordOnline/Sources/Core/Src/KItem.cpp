@@ -1096,19 +1096,6 @@ void KItem::Paint(int nX, int nY, BOOL bStack)
 	{
 		char szBuffer[8];
 		sprintf(szBuffer, "%d", m_nCurrentDur);
-
-		// DEBUG: Log Paint() calls for stack items to verify rendering
-		static int g_lastLoggedDur = -1;
-		static DWORD g_lastLogTime = 0;
-		DWORD now = GetTickCount();
-		if (m_nCurrentDur != g_lastLoggedDur || (now - g_lastLogTime) > 1000)
-		{
-			g_DebugLog("[PAINT-DEBUG] Painting stack item '%s' (ID=%u) with count=%d at (%d,%d)",
-				GetName(), GetID(), m_nCurrentDur, nX, nY);
-			g_lastLoggedDur = m_nCurrentDur;
-			g_lastLogTime = now;
-		}
-
 		g_pRepresent->OutputText(12, szBuffer, KRF_ZERO_END,
 		nX + (m_CommonAttrib.bWidth * 27) - g_StrLen(szBuffer) * 12 / 2,
 		nY + (m_CommonAttrib.bHeight) + 12 + 1, 0xffffff00, 0, TEXT_IN_SINGLE_PLANE_COORD, 0xff000000);
