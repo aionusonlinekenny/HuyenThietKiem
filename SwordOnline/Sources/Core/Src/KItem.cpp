@@ -1092,7 +1092,13 @@ void KItem::Paint(int nX, int nY, BOOL bStack)
 	m_Image.bRenderStyle = IMAGE_RENDER_STYLE_ALPHA;
 	g_pRepresent->DrawPrimitives(1, &m_Image, RU_T_IMAGE, TRUE);
 
-	if( CanStack() && bStack)
+	// CRITICAL FIX: Display stack count if item has durability attribute
+	// Don't use CanStack() here - it's for inventory stacking logic, not display!
+	// Purple/upgrade items may not stack, but still need to show count
+	if (bStack &&
+	    m_CommonAttrib.cGenre >= item_task &&
+	    m_CommonAttrib.cGenre <= item_mine &&
+	    m_aryBaseAttrib[0].nAttribType == magic_durability_v)
 	{
 		char szBuffer[8];
 		sprintf(szBuffer, "%d", m_nCurrentDur);
