@@ -3964,11 +3964,11 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 
 			// CRITICAL FIX: If item is in hand, force refresh by re-setting mouse item
 			// This triggers repaint with updated durability value
-			if (Player[CLIENT_PLAYER_INDEX].m_ItemList.GetHand() == nIdx)
+			if (Player[CLIENT_PLAYER_INDEX].m_ItemList.Hand() == nIdx)
 			{
 				g_DebugLog("[CLIENT-STACK-SYNC] Item is in hand - forcing mouse item refresh");
-				// Re-set mouse item to trigger repaint
-				Player[CLIENT_PLAYER_INDEX].m_ItemList.MenuSetMouseItem(nIdx);
+				// MenuSetMouseItem() reads m_Hand and sends GDCNI_HOLD_OBJECT to refresh cursor
+				Player[CLIENT_PLAYER_INDEX].m_ItemList.MenuSetMouseItem();
 			}
 			else
 			{
