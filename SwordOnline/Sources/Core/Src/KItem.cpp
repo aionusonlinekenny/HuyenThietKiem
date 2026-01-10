@@ -1096,6 +1096,19 @@ void KItem::Paint(int nX, int nY, BOOL bStack)
 	{
 		char szBuffer[8];
 		sprintf(szBuffer, "%d", m_nCurrentDur);
+
+		// DEBUG: Log Paint() calls for stack items to verify rendering
+		static int g_lastLoggedDur = -1;
+		static DWORD g_lastLogTime = 0;
+		DWORD now = GetTickCount();
+		if (m_nCurrentDur != g_lastLoggedDur || (now - g_lastLogTime) > 1000)
+		{
+			g_DebugLog("[PAINT-DEBUG] Painting stack item '%s' (ID=%d) with count=%d at (%d,%d)",
+				GetName(), m_nIndex, m_nCurrentDur, nX, nY);
+			g_lastLoggedDur = m_nCurrentDur;
+			g_lastLogTime = now;
+		}
+
 		g_pRepresent->OutputText(12, szBuffer, KRF_ZERO_END,
 		nX + (m_CommonAttrib.bWidth * 27) - g_StrLen(szBuffer) * 12 / 2,
 		nY + (m_CommonAttrib.bHeight) + 12 + 1, 0xffffff00, 0, TEXT_IN_SINGLE_PLANE_COORD, 0xff000000);
@@ -1141,7 +1154,7 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 		m_CommonAttrib.cGenre == item_brokenequip)
 	{	
 		char szTmp[16];
-		sprintf(szTmp, " (CÊp %d)", m_CommonAttrib.bLevel);
+		sprintf(szTmp, " (Cï¿½p %d)", m_CommonAttrib.bLevel);
 		strcat(pszMsg, szTmp);
 	}
 
@@ -1152,7 +1165,7 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 		if(m_CommonAttrib.nParticularType == 0)
 		{
 			strcat(pszMsg, "\n");
-			strcat(pszMsg, "<color=red>VËt phÈm kh«ng thÓ b¸n, giao dÞch <color>");
+			strcat(pszMsg, "<color=red>Vï¿½t phï¿½m khï¿½ng thï¿½ bï¿½n, giao dï¿½ch <color>");
 		}
 	}
 	//gioi han
@@ -1165,9 +1178,9 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 			strcat(pszMsg, "\n");
 			if(j >= m_CommonAttrib.nTaskIdScriptMax)
 			{
-				sprintf(szTmp, "<color=Green>§· dïng hÕt %d vËt phÈm h«m nay<color>",m_CommonAttrib.nTaskIdScriptMax);
+				sprintf(szTmp, "<color=Green>ï¿½ï¿½ dï¿½ng hï¿½t %d vï¿½t phï¿½m hï¿½m nay<color>",m_CommonAttrib.nTaskIdScriptMax);
 			}else{
-				sprintf(szTmp, "<color=Green>Giíi h¹n trong ngµy: %d/%d <color>", j,m_CommonAttrib.nTaskIdScriptMax);
+				sprintf(szTmp, "<color=Green>Giï¿½i hï¿½n trong ngï¿½y: %d/%d <color>", j,m_CommonAttrib.nTaskIdScriptMax);
 			}
 			strcat(pszMsg, szTmp);
 			strcat(pszMsg, "\n");
@@ -1177,12 +1190,12 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 	if(m_dwBindState == 1)
 	{
 		strcat(pszMsg, "\n");
-		strcat(pszMsg, "<color=green>VËt phÈm ®· khãa b¶o hiÓm<color>");
+		strcat(pszMsg, "<color=green>Vï¿½t phï¿½m ï¿½ï¿½ khï¿½a bï¿½o hiï¿½m<color>");
 	}
 	else if(m_dwBindState == 2)
 	{
 		strcat(pszMsg, "\n");
-		strcat(pszMsg, "<color=green>VËt phÈm ®Ýnh kÌm nh©n vËt<color>");
+		strcat(pszMsg, "<color=green>Vï¿½t phï¿½m ï¿½ï¿½nh kï¿½m nhï¿½n vï¿½t<color>");
 	}
 	else if(m_dwBindState >= 2000000000)
 	{
@@ -1202,10 +1215,10 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 				GetPriceDesc(-1, nPriceScale, "Xu", "<color=green>", szPrice);
 				break;
 			case 3:
-				GetPriceDesc(-1, nPriceScale, "®iÓm", "<color=violet>", szPrice);
+				GetPriceDesc(-1, nPriceScale, "ï¿½iï¿½m", "<color=violet>", szPrice);
 				break;
 			default:
-				GetPriceDesc(-1, nPriceScale, "l­îng", "<color=yellow>", szPrice);
+				GetPriceDesc(-1, nPriceScale, "lï¿½ï¿½ng", "<color=yellow>", szPrice);
 				break;
 		}
 		strcat(pszMsg, szPrice);
@@ -1220,19 +1233,19 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 		switch(m_CommonAttrib.cSeries)
 		{
 			case series_metal:
-				strcat(pszMsg, "\n<color=White>Thuéc tÝnh ngò hµnh: <color=Metal>Kim");
+				strcat(pszMsg, "\n<color=White>Thuï¿½c tï¿½nh ngï¿½ hï¿½nh: <color=Metal>Kim");
 				break;
 			case series_wood:
-				strcat(pszMsg, "\n<color=White>Thuéc tÝnh ngò hµnh: <color=Wood>Méc");
+				strcat(pszMsg, "\n<color=White>Thuï¿½c tï¿½nh ngï¿½ hï¿½nh: <color=Wood>Mï¿½c");
 				break;
 			case series_water:
-				strcat(pszMsg, "\n<color=White>Thuéc tÝnh ngò hµnh: <color=Water>Thñy");
+				strcat(pszMsg, "\n<color=White>Thuï¿½c tï¿½nh ngï¿½ hï¿½nh: <color=Water>Thï¿½y");
 				break;
 			case series_fire:
-				strcat(pszMsg, "\n<color=White>Thuéc tÝnh ngò hµnh: <color=Fire>Háa");
+				strcat(pszMsg, "\n<color=White>Thuï¿½c tï¿½nh ngï¿½ hï¿½nh: <color=Fire>Hï¿½a");
 				break;
 			case series_earth:
-				strcat(pszMsg, "\n<color=White>Thuéc tÝnh ngò hµnh: <color=Earth>Thæ ");
+				strcat(pszMsg, "\n<color=White>Thuï¿½c tï¿½nh ngï¿½ hï¿½nh: <color=Earth>Thï¿½ ");
 				break;
 		}
 	}
@@ -1307,7 +1320,7 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 		{
 			char szTmp[16];
 			strcat(pszMsg, "\n");
-			sprintf(szTmp, "<color=purple>PhÈm chÊt: %d <color>", m_CommonAttrib.bLevel);
+			sprintf(szTmp, "<color=purple>Phï¿½m chï¿½t: %d <color>", m_CommonAttrib.bLevel);
 			strcat(pszMsg, szTmp);
 			strcat(pszMsg, "\n");
 		}
@@ -1332,16 +1345,16 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 				if(m_CommonAttrib.cGenre == 4)
 				{
 					char	szDurInfo[32];
-					sprintf(szDurInfo, "<color=red>Trang bÞ tæn h¹i<color>");
+					sprintf(szDurInfo, "<color=red>Trang bï¿½ tï¿½n hï¿½i<color>");
 					strcat(pszMsg, szDurInfo);
 				}
 				else
 				{
 					char	szDurInfo[32];
 					if (m_nCurrentDur == -1)
-						sprintf(szDurInfo, "<color=Yellow>Kh«ng thÓ ph¸ hñy<color=White>");
+						sprintf(szDurInfo, "<color=Yellow>Khï¿½ng thï¿½ phï¿½ hï¿½y<color=White>");
 					else
-						sprintf(szDurInfo, "§é bÒn: %3d / %3d", GetDurability(), GetMaxDurability());
+						sprintf(szDurInfo, "ï¿½ï¿½ bï¿½n: %3d / %3d", GetDurability(), GetMaxDurability());
 					strcat(pszMsg, szDurInfo);
 				}
 			}
@@ -1487,7 +1500,7 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 		if( (this->GetDurability() > 0) && (this->GetMaxStackCount() <= 0) )
 		{	
 			char szInfo[64];
-			sprintf(szInfo, "Cã thÓ sö dông:<color=green> %d  <color>lÇn.", this->GetDurability());
+			sprintf(szInfo, "Cï¿½ thï¿½ sï¿½ dï¿½ng:<color=green> %d  <color>lï¿½n.", this->GetDurability());
 			strcat(pszMsg, "\n");
 			strcat(pszMsg, szInfo);
 			strcat(pszMsg, "\n");
@@ -1547,7 +1560,7 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 				if(Item[nIndex].GetID() == this->m_dwID && this->m_dwID != 0)
 				{
 					strcat(pszMsg, GetRequireSeries(m_CommonAttrib.cSeries));
-					strcat(pszMsg, "cña <color=green>D©y ChuyÒn<color> vµ <color=green>Y Phôc<color> ®Ó kÝch thuéc tÝnh Èn<color>\n");
+					strcat(pszMsg, "cï¿½a <color=green>Dï¿½y Chuyï¿½n<color> vï¿½ <color=green>Y Phï¿½c<color> ï¿½ï¿½ kï¿½ch thuï¿½c tï¿½nh ï¿½n<color>\n");
 					strcat(pszMsg, "\n");
 				}
 				break;
@@ -1564,7 +1577,7 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 				if(Item[nIndex].GetID() == this->m_dwID && this->m_dwID != 0)
 				{
 					strcat(pszMsg, GetRequireSeries(m_CommonAttrib.cSeries));
-					strcat(pszMsg, "cña <color=green>NhÉn D­íi<color> vµ <color=green>Th¾t L­ng<color> ®Ó kÝch thuéc tÝnh Èn<color>\n");
+					strcat(pszMsg, "cï¿½a <color=green>Nhï¿½n Dï¿½ï¿½i<color> vï¿½ <color=green>Thï¿½t Lï¿½ng<color> ï¿½ï¿½ kï¿½ch thuï¿½c tï¿½nh ï¿½n<color>\n");
 					strcat(pszMsg, "\n");
 				}
 				break;
@@ -1584,7 +1597,7 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 					if(Item[nIndex].GetID() == this->m_dwID && this->m_dwID != 0)
 					{	
 						strcat(pszMsg, GetRequireSeries(m_CommonAttrib.cSeries));
-						strcat(pszMsg, "cña <color=green>Mò <color>vµ <color=green>Vò KhÝ <color>®Ó kÝch thuéc tÝnh Èn<color>\n");
+						strcat(pszMsg, "cï¿½a <color=green>Mï¿½ <color>vï¿½ <color=green>Vï¿½ Khï¿½ <color>ï¿½ï¿½ kï¿½ch thuï¿½c tï¿½nh ï¿½n<color>\n");
 						strcat(pszMsg, "\n");
 
 						if(m_CommonAttrib.nDetailType == equip_boots)
@@ -1603,7 +1616,7 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 					if(Item[nIndex].GetID() == this->m_dwID && this->m_dwID != 0)
 					{	
 						strcat(pszMsg, GetRequireSeries(m_CommonAttrib.cSeries));
-						strcat(pszMsg, "cña <color=green>Ngäc Béi<color> vµ <color=green>Bao Tay<color> ®Ó kÝch ho¹t thuéc tÝnh Èn\n");
+						strcat(pszMsg, "cï¿½a <color=green>Ngï¿½c Bï¿½i<color> vï¿½ <color=green>Bao Tay<color> ï¿½ï¿½ kï¿½ch hoï¿½t thuï¿½c tï¿½nh ï¿½n\n");
 						strcat(pszMsg, "\n");
 						if(m_CommonAttrib.nDetailType == itempart_belt)
 							break;		
@@ -1623,7 +1636,7 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 				if(Item[nIndex].GetID() == this->m_dwID && this->m_dwID != 0)
 				{	
 					strcat(pszMsg, GetRequireSeries(m_CommonAttrib.cSeries));
-					strcat(pszMsg, "cña <color=green>Giµy<color> vµ <color=green>NhÉn Trªn<color> ®Ó kÝch thuéc tÝnh Èn<color>\n");
+					strcat(pszMsg, "cï¿½a <color=green>Giï¿½y<color> vï¿½ <color=green>Nhï¿½n Trï¿½n<color> ï¿½ï¿½ kï¿½ch thuï¿½c tï¿½nh ï¿½n<color>\n");
 					strcat(pszMsg, "\n");
 				}
 				break;
@@ -1642,7 +1655,7 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 				GetPriceDesc(0, nPriceScale, "xu", "<color=green>", szPrice);
 				break;
 			default:
-				GetPriceDesc(0, nPriceScale, "l­îng", "<color=yellow>", szPrice);
+				GetPriceDesc(0, nPriceScale, "lï¿½ï¿½ng", "<color=yellow>", szPrice);
 				break;
 		}
 		strcat(pszMsg, szPrice);
@@ -1661,7 +1674,7 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 	if(m_btDaySell > 0)
 	{
 		char szBuffer[32];
-		sprintf(szBuffer, "<color=fire>Thêi gian b¸n: %02d ngµy 00 giê 00 phót", 
+		sprintf(szBuffer, "<color=fire>Thï¿½i gian bï¿½n: %02d ngï¿½y 00 giï¿½ 00 phï¿½t", 
 				m_btDaySell);
 		strcat(pszMsg, "\n\n");
 		strcat(pszMsg, szBuffer);
@@ -1673,7 +1686,7 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 		char szInfo[64];
 		if(m_nShopPrice < 10000)
 		{	
-			sprintf(szInfo, "<color=yellow>Gi¸ niªm yÕt: %d l­îng<color>", m_nShopPrice);
+			sprintf(szInfo, "<color=yellow>Giï¿½ niï¿½m yï¿½t: %d lï¿½ï¿½ng<color>", m_nShopPrice);
 		}
 		else
 		{
@@ -1682,11 +1695,11 @@ void KItem::GetDesc(char* pszMsg, bool bShowPrice, int nPriceScale, int nActiveA
 
 			if(!nMod)
 			{	
-				sprintf(szInfo, "<color=yellow>Gi¸ niªm yÕt: %d v¹n l­îng<color>", nDivisor);
+				sprintf(szInfo, "<color=yellow>Giï¿½ niï¿½m yï¿½t: %d vï¿½n lï¿½ï¿½ng<color>", nDivisor);
 			}
 			else
 			{	
-				sprintf(szInfo, "<color=yellow>Gi¸ niªm yÕt: %d v¹n %d l­îng<color>", nDivisor, nMod);
+				sprintf(szInfo, "<color=yellow>Giï¿½ niï¿½m yï¿½t: %d vï¿½n %d lï¿½ï¿½ng<color>", nDivisor, nMod);
 			}
 		}
 		strcat(pszMsg, "\n");
@@ -1803,19 +1816,19 @@ char* KItem::GetRequireSeries(char cSeries) const
 	switch(cSeries)
 	{
 		case series_metal:
-			return "<color=Yellow>CÇn hÖ <color=earth>(Thæ)<color> ";
+			return "<color=Yellow>Cï¿½n hï¿½ <color=earth>(Thï¿½)<color> ";
 			break;
 		case series_wood:
-			return "<color=Yellow>CÇn hÖ <color=water>(Thñy)<color> ";
+			return "<color=Yellow>Cï¿½n hï¿½ <color=water>(Thï¿½y)<color> ";
 			break;
 		case series_water:
-			return "<color=Yellow>CÇn hÖ <color=metal>(Kim)<color> ";
+			return "<color=Yellow>Cï¿½n hï¿½ <color=metal>(Kim)<color> ";
 			break;
 		case series_fire:
-			return "<color=Yellow>CÇn hÖ <color=wood>(Méc)<color> ";
+			return "<color=Yellow>Cï¿½n hï¿½ <color=wood>(Mï¿½c)<color> ";
 			break;
 		case series_earth:
-			return "<color=Yellow>CÇn hÖ <color=fire>(Háa)<color> ";
+			return "<color=Yellow>Cï¿½n hï¿½ <color=fire>(Hï¿½a)<color> ";
 			break;
 		default:
 			return "";
@@ -1877,7 +1890,7 @@ void KItem::GetPriceDesc(char cDisCount, int nPriceScale, const char* pszUnit, c
 	{	
 		if(nTotalPrice/* / nPriceScale */< 10000)
 		{	
-			sprintf(lpszPrice, "%sGi¸ c¶: %d %s<color>", pszColor, nTotalPrice/* / nPriceScale*/, pszUnit);
+			sprintf(lpszPrice, "%sGiï¿½ cï¿½: %d %s<color>", pszColor, nTotalPrice/* / nPriceScale*/, pszUnit);
 		}
 		else
 		{
@@ -1886,11 +1899,11 @@ void KItem::GetPriceDesc(char cDisCount, int nPriceScale, const char* pszUnit, c
 
 			if(!nMod)
 			{	
-				sprintf(lpszPrice, "%sGi¸ c¶: %d v¹n %s<color>", pszColor, nDivisor, pszUnit);
+				sprintf(lpszPrice, "%sGiï¿½ cï¿½: %d vï¿½n %s<color>", pszColor, nDivisor, pszUnit);
 			}
 			else
 			{	
-				sprintf(lpszPrice, "%sGi¸ c¶: %d v¹n %d %s<color>", pszColor, nDivisor, nMod, pszUnit);
+				sprintf(lpszPrice, "%sGiï¿½ cï¿½: %d vï¿½n %d %s<color>", pszColor, nDivisor, nMod, pszUnit);
 			}
 		}			
 	}
@@ -1898,7 +1911,7 @@ void KItem::GetPriceDesc(char cDisCount, int nPriceScale, const char* pszUnit, c
 	{
 		if(m_CommonAttrib.nPrice/* / nPriceScale */< 10000)
 		{	
-			sprintf(lpszPrice, "<color=red>Gi¸ cò: %d %s<color>\n", m_CommonAttrib.nPrice/* / nPriceScale*/, pszUnit);
+			sprintf(lpszPrice, "<color=red>Giï¿½ cï¿½: %d %s<color>\n", m_CommonAttrib.nPrice/* / nPriceScale*/, pszUnit);
 		}
 		else
 		{
@@ -1907,11 +1920,11 @@ void KItem::GetPriceDesc(char cDisCount, int nPriceScale, const char* pszUnit, c
 
 			if(!nMod)
 			{	
-				sprintf(lpszPrice, "<color=red>Gi¸ cò: %d v¹n %s<color>", nDivisor, pszUnit);
+				sprintf(lpszPrice, "<color=red>Giï¿½ cï¿½: %d vï¿½n %s<color>", nDivisor, pszUnit);
 			}
 			else
 			{	
-				sprintf(lpszPrice, "<color=red>Gi¸ cò: %d v¹n %d %s<color>", nDivisor, nMod, pszUnit);
+				sprintf(lpszPrice, "<color=red>Giï¿½ cï¿½: %d vï¿½n %d %s<color>", nDivisor, nMod, pszUnit);
 			}
 		}
 	}
@@ -2171,11 +2184,11 @@ void KItem::GetTimeDesc(char* pszTime, BOOL bBind /*= FALSE*/)
 	{	
 		if(bBind == TRUE)
 		{
-			sprintf(pszTime, "<color=green>Thêi gian më khãa: %02d:%02d %02d-%02d-%02d<color>\n", nHour, nMin, nDate, nMonth, nYear + 2000);
+			sprintf(pszTime, "<color=green>Thï¿½i gian mï¿½ khï¿½a: %02d:%02d %02d-%02d-%02d<color>\n", nHour, nMin, nDate, nMonth, nYear + 2000);
 		}
 		else
 		{
-			sprintf(pszTime, "<color=fire>Thêi h¹n sö dông:<color> <color=green>%02d:%02d %02d-%02d-%02d \n", nHour, nMin, nDate, nMonth, nYear + 2000);
+			sprintf(pszTime, "<color=fire>Thï¿½i hï¿½n sï¿½ dï¿½ng:<color> <color=green>%02d:%02d %02d-%02d-%02d \n", nHour, nMin, nDate, nMonth, nYear + 2000);
 			
 		}		
 	}
