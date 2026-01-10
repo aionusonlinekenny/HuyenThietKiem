@@ -4,7 +4,6 @@
 #include "../../Headers/IClient.h"
 #include "CoreShell.h"
 #include "KViewItem.h"
-#include "../../S3Client/Ui/UiCase/UiItem.h"
 #endif
 #include "KObjSet.h"
 #include "KNpcSet.h"
@@ -3948,22 +3947,21 @@ void	KProtocolProcess::ItemChangeInfo(BYTE* pMsg)
 			Item[nIdx].SetStackCount(pICI->m_uChange);
 			g_DebugLog("[CLIENT-STACK-SYNC] After SetStackCount: durability=%d", Item[nIdx].GetDurability());
 
-			Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
-
-			// CRITICAL FIX: Force full inventory UI refresh
-			// Call UpdateItem(NULL, 0) which triggers UpdateData() internally
-			// UpdateData() is private, but UpdateItem(NULL) calls it (see UiItem.cpp:198)
-			// This reloads entire inventory - works for both NEW and EXISTING items
-#ifndef _SERVER
+			// CRITICAL FIX: Send notification with nParam=-1 to signal UPDATE (not ADD)
+			// GameSpaceChangedNotify will handle this by forcing full inventory reload
 			{
-				KUiItem* pItemsBar = KUiItem::GetIfVisible();
-				if (pItemsBar)
-				{
-					g_DebugLog("[CLIENT-STACK-SYNC] Calling UpdateItem(NULL) to trigger full inventory refresh");
-					pItemsBar->UpdateItem(NULL, 0);  // NULL triggers UpdateData() internally
-				}
+				KUiObjAtContRegion Region;
+				Region.Obj.uGenre = CGOG_ITEM;
+				Region.Obj.uId = nIdx;
+				Region.Region.Width = Item[nIdx].GetWidth();
+				Region.Region.Height = Item[nIdx].GetHeight();
+				Region.eContainer = UOC_ITEM_TAKE_WITH;
+
+				g_DebugLog("[CLIENT-STACK-SYNC] Sending GDCNI_OBJECT_CHANGED with nParam=-1 (UPDATE signal)");
+				CoreDataChanged(GDCNI_OBJECT_CHANGED, (unsigned int)&Region, -1);  // -1 = UPDATE existing item
 			}
-#endif
+
+			Player[CLIENT_PLAYER_INDEX].m_ItemList.UnlockOperation();
 			break;
 		case 2:
 			Item[nIdx].SetBindState(pICI->m_uChange);
