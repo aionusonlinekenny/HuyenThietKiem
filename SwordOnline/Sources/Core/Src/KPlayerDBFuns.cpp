@@ -630,8 +630,17 @@ int	KPlayer::LoadPlayerItemList(BYTE * pRoleBuffer , BYTE* &pItemBuffer, unsigne
 		}
 
 		if(pItemData->idurability)
+		{
 			NewItem.SetDurability(pItemData->idurability);
-		
+
+			// Debug: Log durability load for stackable items
+			if (NewItem.CanStack())
+			{
+				g_DebugLog("[LOAD-STACK] Item genre=%d, detail=%d: Loading durability=%d from DB",
+					pItemData->igenre, pItemData->idetailtype, pItemData->idurability);
+			}
+		}
+
 		if(pItemData->iexpiredtime)
 		{
 			NewItem.SetTime(pItemData->iexpiredtime);
@@ -1197,6 +1206,13 @@ int	KPlayer::SavePlayerItemList(BYTE * pRoleBuffer)
 
 		// ilucky is already set above (line 982)
 		pItemData->idurability = Item[nItemIndex].GetDurability();
+
+		// Debug: Log durability save for stackable items
+		if (Item[nItemIndex].CanStack())
+		{
+			g_DebugLog("[SAVE-STACK] Item %s (ID=%u): Saving durability=%d to DB",
+				Item[nItemIndex].GetName(), Item[nItemIndex].GetID(), pItemData->idurability);
+		}
 		//
 		pItemData->irecord			= Item[nItemIndex].GetRecord();
 		//
