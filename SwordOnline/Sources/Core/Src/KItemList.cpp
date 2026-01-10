@@ -2871,16 +2871,6 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 
 					g_DebugLog("[SERVER-AUTOMATE] ExchangeStack success - placing items back");
 
-					// Prepare move notification for client
-					PLAYER_MOVE_ITEM_SYNC sMove;
-					sMove.ProtocolType = s2c_playermoveitem;
-					sMove.m_btUpPos = pos_equiproom;
-					sMove.m_btUpX = SrcPos->nX;
-					sMove.m_btUpY = SrcPos->nY;
-					sMove.m_btDownPos = pos_equiproom;
-					sMove.m_btDownX = DesPos->nX;
-					sMove.m_btDownY = DesPos->nY;
-
 					// nEquipIdx1 (BeStack) always exists after stack operation (with updated durability)
 					// Place it at DesPos
 					if (m_Room[room_equipment].PlaceItem(DesPos->nX, DesPos->nY, nEquipIdx1,
@@ -2920,28 +2910,56 @@ void KItemList::ExchangeItem(ItemPos* SrcPos, ItemPos* DesPos)
 						g_DebugLog("[SERVER-AUTOMATE] nIdxForStack=%d was removed (merge complete)", nTempHand);
 					}
 
-					// Notify client about the move (items are now at proper positions)
-					g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sMove, sizeof(PLAYER_MOVE_ITEM_SYNC));
-					g_DebugLog("[SERVER-AUTOMATE] Sent PLAYER_MOVE_ITEM_SYNC to client");
+					// Notify client with ITEM_SYNC to properly add items to m_ItemList
+					// Send ITEM_SYNC for nIdxBeStack at DesPos
+					ITEM_SYNC sItem;
+					sItem.ProtocolType = s2c_syncitem;
+					sItem.m_ID = Item[nEquipIdx1].GetID();
+					sItem.m_Genre = Item[nEquipIdx1].GetGenre();
+					sItem.m_Detail = Item[nEquipIdx1].GetDetailType();
+					sItem.m_Level = Item[nEquipIdx1].GetLevel();
+					sItem.m_Series = Item[nEquipIdx1].GetSeries();
+					sItem.m_Luck = Item[nEquipIdx1].m_GeneratorParam.nLuck;
+					sItem.m_Place = pos_equiproom;
+					sItem.m_X = DesPos->nX;
+					sItem.m_Y = DesPos->nY;
+					for (int j = 0; j < 6; j++)
+						sItem.m_MagicLevel[j] = (BYTE)Item[nEquipIdx1].m_GeneratorParam.nGeneratorLevel[j];
+					sItem.m_RandomSeed = Item[nEquipIdx1].m_GeneratorParam.dwRandomSeed;
+					sItem.m_Version = Item[nEquipIdx1].m_GeneratorParam.nVersion;
+					sItem.m_Durability = Item[nEquipIdx1].GetDurability();
+					sItem.m_Record = Item[nEquipIdx1].GetRecord();
+					sItem.m_ExpiredTime = Item[nEquipIdx1].GetTime();
+					sItem.m_BindState = Item[nEquipIdx1].GetBindState();
+					sItem.m_ShopPrice = Item[nEquipIdx1].GetPlayerShopPrice();
+					g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sItem, sizeof(ITEM_SYNC));
+					g_DebugLog("[SERVER-AUTOMATE] Sent ITEM_SYNC for nIdxBeStack: ItemID=%u, Durability=%u at (%d,%d)",
+						sItem.m_ID, sItem.m_Durability, DesPos->nX, DesPos->nY);
 
-					// NOW send ITEM_CHANGE_INFO for durability updates (items are in inventory now)
-					ITEM_CHANGE_INFO sChange;
-					sChange.ProtocolType = s2c_itemchangeinfosync;
-					sChange.m_btType = 1;  // Type 1 = SetStackCount
-					sChange.m_dwItemID = Item[nEquipIdx1].GetID();
-					sChange.m_uChange = (UINT)Item[nEquipIdx1].GetDurability();
-					g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
-					g_DebugLog("[SERVER-AUTOMATE] Sent ITEM_CHANGE_INFO for nIdxBeStack: ItemID=%u, Durability=%u",
-						sChange.m_dwItemID, sChange.m_uChange);
-
-					// If split occurred, send ITEM_CHANGE_INFO for the split item too
+					// If split occurred, send ITEM_SYNC for the split item too
 					if (IsMyItem(nTempHand) > 0)
 					{
-						sChange.m_dwItemID = Item[nTempHand].GetID();
-						sChange.m_uChange = (UINT)Item[nTempHand].GetDurability();
-						g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, &sChange, sizeof(ITEM_CHANGE_INFO));
-						g_DebugLog("[SERVER-AUTOMATE] Sent ITEM_CHANGE_INFO for nIdxForStack: ItemID=%u, Durability=%u",
-							sChange.m_dwItemID, sChange.m_uChange);
+						sItem.m_ID = Item[nTempHand].GetID();
+						sItem.m_Genre = Item[nTempHand].GetGenre();
+						sItem.m_Detail = Item[nTempHand].GetDetailType();
+						sItem.m_Level = Item[nTempHand].GetLevel();
+						sItem.m_Series = Item[nTempHand].GetSeries();
+						sItem.m_Luck = Item[nTempHand].m_GeneratorParam.nLuck;
+						sItem.m_Place = pos_equiproom;
+						sItem.m_X = SrcPos->nX;
+						sItem.m_Y = SrcPos->nY;
+						for (int j = 0; j < 6; j++)
+							sItem.m_MagicLevel[j] = (BYTE)Item[nTempHand].m_GeneratorParam.nGeneratorLevel[j];
+						sItem.m_RandomSeed = Item[nTempHand].m_GeneratorParam.dwRandomSeed;
+						sItem.m_Version = Item[nTempHand].m_GeneratorParam.nVersion;
+						sItem.m_Durability = Item[nTempHand].GetDurability();
+						sItem.m_Record = Item[nTempHand].GetRecord();
+						sItem.m_ExpiredTime = Item[nTempHand].GetTime();
+						sItem.m_BindState = Item[nTempHand].GetBindState();
+						sItem.m_ShopPrice = Item[nTempHand].GetPlayerShopPrice();
+						g_pServer->PackDataToClient(Player[m_PlayerIdx].m_nNetConnectIdx, (BYTE*)&sItem, sizeof(ITEM_SYNC));
+						g_DebugLog("[SERVER-AUTOMATE] Sent ITEM_SYNC for nIdxForStack: ItemID=%u, Durability=%u at (%d,%d)",
+							sItem.m_ID, sItem.m_Durability, SrcPos->nX, SrcPos->nY);
 					}
 
 					m_Hand = 0;
